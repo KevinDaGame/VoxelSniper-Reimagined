@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -61,7 +62,7 @@ public class SetRedstoneRotateBrush extends Brush
         if (bl.getType() == Material.REPEATER)
         {
             this.undo.put(bl);
-            bl.setData((((bl.getData() % 4) + 1 < 5) ? (byte) (bl.getData() + 1) : (byte) (bl.getData() - 4)));
+            bl.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(bl.getType()), (((bl.getData() % 4) + 1 < 5) ? (byte) (bl.getData() + 1) : (byte) (bl.getData() - 4))));
         }
     }
 

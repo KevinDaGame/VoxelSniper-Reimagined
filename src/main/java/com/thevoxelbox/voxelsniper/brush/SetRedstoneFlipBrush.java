@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -66,12 +67,12 @@ public class SetRedstoneFlipBrush extends Brush
                 if ((bl.getData() % 4) == 1)
                 {
                     this.undo.put(bl);
-                    bl.setData((byte) (bl.getData() + 2));
+                    bl.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(bl.getType()), (byte) (bl.getData() + 2)));
                 }
                 else if ((bl.getData() % 4) == 3)
                 {
                     this.undo.put(bl);
-                    bl.setData((byte) (bl.getData() - 2));
+                    bl.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(bl.getType()), (byte) (bl.getData() - 2)));
                 }
             }
             else
@@ -79,12 +80,12 @@ public class SetRedstoneFlipBrush extends Brush
                 if ((bl.getData() % 4) == 2)
                 {
                     this.undo.put(bl);
-                    bl.setData((byte) (bl.getData() - 2));
+                    bl.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(bl.getType()), (byte) (bl.getData() - 2)));
                 }
                 else if ((bl.getData() % 4) == 0)
                 {
                     this.undo.put(bl);
-                    bl.setData((byte) (bl.getData() + 2));
+                    bl.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(bl.getType()), (byte) (bl.getData() + 2)));
                 }
             }
         }
