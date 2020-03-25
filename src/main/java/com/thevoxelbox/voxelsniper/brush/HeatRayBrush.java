@@ -22,21 +22,6 @@ import org.bukkit.util.noise.PerlinNoiseGenerator;
 public class HeatRayBrush extends Brush
 {
 
-    /**
-     * @author MikeMatrix
-     */
-    private enum FlameableBlock
-    {
-        WOOD(Material.OAK_WOOD), SAPLING(Material.OAK_SAPLING), LOG(Material.OAK_LOG), LEAVES(Material.OAK_LEAVES), SPONGE(Material.SPONGE), WEB(Material.COBWEB), LONG_GRASS(Material.TALL_GRASS), DEAD_BUSH(Material.DEAD_BUSH), WOOL(Material.WHITE_WOOL), YELLOW_FLOWER(Material.DANDELION), RED_ROSE(Material.ROSE_RED), TORCH(Material.TORCH), FIRE(Material.FIRE), WOOD_STAIRS(Material.OAK_STAIRS), CROPS(Material.WHEAT), SIGN_POST(Material.SIGN), WOODEN_DOOR(Material.OAK_DOOR), LADDER(Material.LADDER), WALL_SIGN(Material.WALL_SIGN), WOOD_PLATE(Material.OAK_PRESSURE_PLATE), SNOW(Material.SNOW), ICE(Material.ICE), SUGAR_CANE_BLOCK(Material.SUGAR_CANE), FENCE(Material.OAK_FENCE), TRAP_DOOR(Material.OAK_TRAPDOOR), VINE(Material.VINE), FENCE_GATE(Material.OAK_FENCE_GATE), WATER_LILLY(Material.LILY_PAD);
-
-        private Material material;
-
-        FlameableBlock(final Material material)
-        {
-            this.material = material;
-        }
-    }
-
     private static final double REQUIRED_OBSIDIAN_DENSITY = 0.6;
     private static final double REQUIRED_COBBLE_DENSITY = 0.5;
     private static final double REQUIRED_FIRE_DENSITY = -0.25;
@@ -51,10 +36,62 @@ public class HeatRayBrush extends Brush
 
     static
     {
-        for (final FlameableBlock flameableBlock : FlameableBlock.values())
-        {
-            HeatRayBrush.FLAMABLE_BLOCKS.add(flameableBlock.material);
-        }
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_SAPLING);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_SAPLING);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_SAPLING);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_SAPLING);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_SAPLING);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_SAPLING);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_LEAVES);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_LEAVES);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_LEAVES);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_LEAVES);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_LEAVES);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_LEAVES);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_LOG);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_LOG);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_LOG);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_LOG);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_LOG);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_LOG);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_WOOD);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_WOOD);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_WOOD);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_WOOD);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_WOOD);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_WOOD);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPONGE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.COBWEB);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.TALL_GRASS);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DEAD_BUSH);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WHITE_WOOL);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DANDELION);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.POPPY);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BLUE_ORCHID);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ALLIUM);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.AZURE_BLUET);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.RED_TULIP);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ORANGE_TULIP);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WHITE_TULIP);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.PINK_TULIP);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OXEYE_DAISY);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.TORCH);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.FIRE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_STAIRS);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WHEAT);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SIGN);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_DOOR);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.LADDER);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WALL_SIGN);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_PRESSURE_PLATE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SNOW);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ICE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SUGAR_CANE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_FENCE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_TRAPDOOR);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.VINE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_FENCE_GATE);
+        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.LILY_PAD);
     }
 
 
