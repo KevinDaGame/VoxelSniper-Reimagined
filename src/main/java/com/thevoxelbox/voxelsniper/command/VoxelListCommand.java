@@ -1,9 +1,6 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.RangeBlockHelper;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Sniper;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.api.command.VoxelCommand;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -28,7 +25,7 @@ public class VoxelListCommand extends VoxelCommand
         {
             final RangeBlockHelper rangeBlockHelper = new RangeBlockHelper(player, player.getWorld());
             final Block targetBlock = rangeBlockHelper.getTargetBlock();
-            snipeData.getVoxelList().add(new int[]{ targetBlock.getTypeId(), targetBlock.getData() });
+            snipeData.getVoxelList().add(new int[]{ MagicValues.getIdFor(targetBlock.getBlockData()), targetBlock.getData() });
             snipeData.getVoxelMessage().voxelList();
             return true;
         }

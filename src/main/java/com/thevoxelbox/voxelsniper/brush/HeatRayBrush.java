@@ -27,7 +27,7 @@ public class HeatRayBrush extends Brush
      */
     private enum FlameableBlock
     {
-        WOOD(Material.WOOD), SAPLING(Material.SAPLING), LOG(Material.LOG), LEAVES(Material.LEAVES), SPONGE(Material.SPONGE), WEB(Material.WEB), LONG_GRASS(Material.LONG_GRASS), DEAD_BUSH(Material.DEAD_BUSH), WOOL(Material.WOOL), YELLOW_FLOWER(Material.YELLOW_FLOWER), RED_ROSE(Material.RED_ROSE), TORCH(Material.TORCH), FIRE(Material.FIRE), WOOD_STAIRS(Material.WOOD_STAIRS), CROPS(Material.CROPS), SIGN_POST(Material.SIGN_POST), WOODEN_DOOR(Material.WOODEN_DOOR), LADDER(Material.LADDER), WALL_SIGN(Material.WALL_SIGN), WOOD_PLATE(Material.WOOD_PLATE), SNOW(Material.SNOW), ICE(Material.ICE), SUGAR_CANE_BLOCK(Material.SUGAR_CANE_BLOCK), FENCE(Material.FENCE), TRAP_DOOR(Material.TRAP_DOOR), VINE(Material.VINE), FENCE_GATE(Material.FENCE_GATE), WATER_LILLY(Material.WATER_LILY);
+        WOOD(Material.OAK_WOOD), SAPLING(Material.OAK_SAPLING), LOG(Material.OAK_LOG), LEAVES(Material.OAK_LEAVES), SPONGE(Material.SPONGE), WEB(Material.COBWEB), LONG_GRASS(Material.TALL_GRASS), DEAD_BUSH(Material.DEAD_BUSH), WOOL(Material.WHITE_WOOL), YELLOW_FLOWER(Material.DANDELION), RED_ROSE(Material.ROSE_RED), TORCH(Material.TORCH), FIRE(Material.FIRE), WOOD_STAIRS(Material.OAK_STAIRS), CROPS(Material.WHEAT), SIGN_POST(Material.SIGN), WOODEN_DOOR(Material.OAK_DOOR), LADDER(Material.LADDER), WALL_SIGN(Material.WALL_SIGN), WOOD_PLATE(Material.OAK_PRESSURE_PLATE), SNOW(Material.SNOW), ICE(Material.ICE), SUGAR_CANE_BLOCK(Material.SUGAR_CANE), FENCE(Material.OAK_FENCE), TRAP_DOOR(Material.OAK_TRAPDOOR), VINE(Material.VINE), FENCE_GATE(Material.OAK_FENCE_GATE), WATER_LILLY(Material.LILY_PAD);
 
         private Material material;
 

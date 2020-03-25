@@ -1,9 +1,6 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.RangeBlockHelper;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Sniper;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.api.command.VoxelCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,12 +27,12 @@ public class VoxelVoxelCommand extends VoxelCommand
             Block targetBlock = new RangeBlockHelper(player, player.getWorld()).getTargetBlock();
             if (targetBlock != null)
             {
-                if (!player.hasPermission("voxelsniper.ignorelimitations") && plugin.getVoxelSniperConfiguration().getLiteSniperRestrictedItems().contains(targetBlock.getTypeId()))
+                if (!player.hasPermission("voxelsniper.ignorelimitations") && plugin.getVoxelSniperConfiguration().getLiteSniperRestrictedItems().contains(MagicValues.getIdFor(targetBlock.getBlockData())))
                 {
                     player.sendMessage("You are not allowed to use " + targetBlock.getType().name() + ".");
                     return true;
                 }
-                snipeData.setVoxelId(targetBlock.getTypeId());
+                snipeData.setVoxelId(MagicValues.getIdFor(targetBlock.getBlockData()));
                 snipeData.getVoxelMessage().voxel();
             }
             return true;

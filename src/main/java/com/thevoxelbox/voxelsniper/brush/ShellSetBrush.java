@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -63,31 +64,31 @@ public class ShellSetBrush extends Brush
                     {
                         for (int z = lowZ; z <= highZ; z++)
                         {
-                            if (this.getWorld().getBlockTypeIdAt(x, y, z) == v.getReplaceId())
+                            if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y, z).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
-                            else if (this.getWorld().getBlockTypeIdAt(x + 1, y, z) == v.getReplaceId())
+                            else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x + 1, y, z).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
-                            else if (this.getWorld().getBlockTypeIdAt(x - 1, y, z) == v.getReplaceId())
+                            else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x - 1, y, z).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
-                            else if (this.getWorld().getBlockTypeIdAt(x, y, z + 1) == v.getReplaceId())
+                            else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y, z + 1).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
-                            else if (this.getWorld().getBlockTypeIdAt(x, y, z - 1) == v.getReplaceId())
+                            else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y, z - 1).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
-                            else if (this.getWorld().getBlockTypeIdAt(x, y + 1, z) == v.getReplaceId())
+                            else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y + 1, z).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
-                            else if (this.getWorld().getBlockTypeIdAt(x, y - 1, z) == v.getReplaceId())
+                            else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y - 1, z).getType()) == v.getReplaceId())
                             {
                                 continue;
                             }
@@ -102,10 +103,10 @@ public class ShellSetBrush extends Brush
                 final Undo undo = new Undo();
                 for (final Block currentBlock : blocks)
                 {
-                    if (currentBlock.getTypeId() != v.getVoxelId())
+                    if (MagicValues.getIdFor(currentBlock.getType()) != v.getVoxelId())
                     {
                         undo.put(currentBlock);
-                        currentBlock.setTypeId(v.getVoxelId());
+                        currentBlock.setBlockData(MagicValues.getBlockDataFor(v.getVoxelId()));
                     }
                 }
                 v.owner().storeUndo(undo);

@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
@@ -70,7 +71,7 @@ public class OverlayBrush extends PerformBrush
     @SuppressWarnings("deprecation")
 	private boolean isIgnoredBlock(int materialId)
     {
-        return materialId == 9 || materialId == 8 || Material.getMaterial(materialId).isTransparent() || materialId == Material.CACTUS.getId();
+        return materialId == 9 || materialId == 8 || MagicValues.getBlockDataFor(materialId).getMaterial().isTransparent() || materialId == Material.CACTUS.getId();
     }
 
     @SuppressWarnings("deprecation")

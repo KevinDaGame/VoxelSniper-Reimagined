@@ -1,9 +1,6 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.RangeBlockHelper;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Sniper;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.api.command.VoxelCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,7 +27,7 @@ public class VoxelReplaceCommand extends VoxelCommand
             Block targetBlock = new RangeBlockHelper(player, player.getWorld()).getTargetBlock();
             if (targetBlock != null)
             {
-                snipeData.setReplaceId(targetBlock.getTypeId());
+                snipeData.setReplaceId(MagicValues.getIdFor(targetBlock.getBlockData()));
                 snipeData.getVoxelMessage().replace();
             }
             return true;

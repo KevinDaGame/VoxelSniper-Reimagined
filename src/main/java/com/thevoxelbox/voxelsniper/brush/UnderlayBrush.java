@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Underlay_Brush
@@ -57,7 +58,7 @@ public class UnderlayBrush extends PerformBrush
                                     case 78:
                                         for (int d = 0; (d < this.depth); d++)
                                         {
-                                            if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getTypeId() != 0)
+                                            if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getType() != Material.AIR)
                                             {
                                                 this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                                 // parameters
@@ -74,7 +75,7 @@ public class UnderlayBrush extends PerformBrush
                             {
                                 for (int d = 0; (d < this.depth); d++)
                                 {
-                                    if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getTypeId() != 0)
+                                    if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getType() != Material.AIR)
                                     {
                                         this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                         // parameters

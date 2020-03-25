@@ -58,7 +58,7 @@ public class SetRedstoneRotateBrush extends Brush
     @SuppressWarnings("deprecation")
 	private void perform(final Block bl)
     {
-        if (bl.getType() == Material.DIODE_BLOCK_ON || bl.getType() == Material.DIODE_BLOCK_OFF)
+        if (bl.getType() == Material.REPEATER)
         {
             this.undo.put(bl);
             bl.setData((((bl.getData() % 4) + 1 < 5) ? (byte) (bl.getData() + 1) : (byte) (bl.getData() - 4)));

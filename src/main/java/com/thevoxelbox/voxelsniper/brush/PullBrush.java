@@ -1,8 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.HashSet;
@@ -110,8 +112,7 @@ public class PullBrush extends Brush
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         if (this.getBlockIdAt(block.getX(), block.getY() - 1, block.getZ()) == 0)
         {
-            currentBlock.setTypeId(block.getId());
-            currentBlock.setData(block.getD());
+            currentBlock.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
             for (int y = block.getY(); y < currentBlock.getY(); y++)
             {
                 this.setBlockIdAt(block.getZ(), block.getX(), y, 0);
@@ -119,13 +120,11 @@ public class PullBrush extends Brush
         }
         else
         {
-            currentBlock.setTypeId(block.getId());
-            currentBlock.setData(block.getD());
+            currentBlock.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++)
             {
                 final Block current = this.clampY(block.getX(), y, block.getZ());
-                current.setTypeId(block.getId());
-                current.setData(block.getD());
+                current.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
             }
         }
     }
@@ -134,8 +133,7 @@ public class PullBrush extends Brush
 	private void setBlockDown(final BlockWrapper block)
     {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
-        currentBlock.setTypeId(block.getId());
-        currentBlock.setData(block.getD());
+        currentBlock.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
         for (int y = block.getY(); y > currentBlock.getY(); y--)
         {
             this.setBlockIdAt(block.getZ(), block.getX(), y, 0);
@@ -206,7 +204,7 @@ public class PullBrush extends Brush
                         final double volume = zSquared + xSquared + (y * y);
 
                         // Is this in the range of the brush?
-                        if (volume <= brushSizeSquared && this.getWorld().getBlockTypeIdAt(actualX, this.getTargetBlock().getY() + y, actualZ) != 0)
+                        if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != Material.AIR)
                         {
 
                             int actualY = this.getTargetBlock().getY() + y;
@@ -216,7 +214,7 @@ public class PullBrush extends Brush
                             lastStr = (int) (this.vh * str);
                             lastY = actualY + lastStr;
 
-                            this.clampY(actualX, lastY, actualZ).setTypeId(this.getWorld().getBlockTypeIdAt(actualX, actualY, actualZ));
+                            this.clampY(actualX, lastY, actualZ).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
 
                             if (str == 1)
                             {
@@ -231,10 +229,10 @@ public class PullBrush extends Brush
                                 }
                                 lastStr = (int) (this.vh * str);
                                 newY = actualY + lastStr;
-                                id = this.getWorld().getBlockTypeIdAt(actualX, actualY, actualZ);
+                                id = MagicValues.getIdFor(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
                                 for (int i = newY; i < lastY; i++)
                                 {
-                                    this.clampY(actualX, i, actualZ).setTypeId(id);
+                                    this.clampY(actualX, i, actualZ).setBlockData(MagicValues.getBlockDataFor(id));
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -258,20 +256,20 @@ public class PullBrush extends Brush
                     for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++)
                     {
                         double volume = (xSquared + Math.pow(y, 2) + zSquared);
-                        if (volume <= brushSizeSquared && this.getWorld().getBlockTypeIdAt(actualX, this.getTargetBlock().getY() + y, actualZ) != 0)
+                        if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != Material.AIR)
                         {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                            this.clampY(actualX, lastY, actualZ).setTypeId(this.getWorld().getBlockTypeIdAt(actualX, actualY, actualZ));
+                            this.clampY(actualX, lastY, actualZ).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared)
                             {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                                final int blockId = this.getWorld().getBlockTypeIdAt(actualX, this.getTargetBlock().getY() + y, actualZ);
+                                final int blockId = MagicValues.getIdFor(this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType());
                                 for (int i = blockY; i < lastY; i++)
                                 {
-                                    this.clampY(actualX, i, actualZ).setTypeId(blockId);
+                                    this.clampY(actualX, i, actualZ).setBlockData(MagicValues.getBlockDataFor(blockId));
                                 }
                                 lastY = blockY;
                                 y++;
@@ -305,7 +303,7 @@ public class PullBrush extends Brush
         @SuppressWarnings("deprecation")
 		public BlockWrapper(final Block block, final double st)
         {
-            this.id = block.getTypeId();
+            this.id = MagicValues.getIdFor(block.getType());
             this.d = block.getData();
             this.x = block.getX();
             this.y = block.getY();

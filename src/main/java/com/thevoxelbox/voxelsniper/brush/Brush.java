@@ -1,9 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.RangeBlockHelper;
-import com.thevoxelbox.voxelsniper.SnipeAction;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import org.bukkit.ChatColor;
@@ -223,7 +220,7 @@ public abstract class Brush implements IBrush
     @SuppressWarnings("deprecation")
 	protected int getBlockIdAt(int x, int y, int z)
     {
-        return getWorld().getBlockTypeIdAt(x, y, z);
+        return MagicValues.getIdFor(getWorld().getBlockAt(x, y, z).getBlockData());
     }
 
     /**
@@ -264,7 +261,7 @@ public abstract class Brush implements IBrush
     @Deprecated
     protected final void setBlock(BlockWrapper blockWrapper)
     {
-        this.getWorld().getBlockAt(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setTypeId(blockWrapper.getId());
+        this.getWorld().getBlockAt(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setBlockData(MagicValues.getBlockDataFor(blockWrapper.getId()));
     }
 
     /**
@@ -278,7 +275,7 @@ public abstract class Brush implements IBrush
     @SuppressWarnings("deprecation")
 	protected final void setBlockIdAt(int z, int x, int y, int id)
     {
-        this.getWorld().getBlockAt(x, y, z).setTypeId(id);
+        this.getWorld().getBlockAt(x, y, z).setBlockData(MagicValues.getBlockDataFor(id));
     }
 
     /**
@@ -293,6 +290,6 @@ public abstract class Brush implements IBrush
     @SuppressWarnings("deprecation")
 	protected final void setBlockIdAndDataAt(int x, int y, int z, int id, byte data)
     {
-        this.getWorld().getBlockAt(x, y, z).setTypeIdAndData(id, data, true);
+        this.getWorld().getBlockAt(x, y, z).setBlockData(MagicValues.getBlockDataFor(id, data), true);
     }
 }

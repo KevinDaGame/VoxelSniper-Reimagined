@@ -9,11 +9,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import com.google.common.io.Files;
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -102,7 +104,7 @@ public class StencilBrush extends Brush
                             for (int j = 0; j < numLoops; j++)
                             {
                                 undo.put(this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ));
-                                this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setTypeIdAndData(id, (byte) data, false);
+                                this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setBlockData(MagicValues.getBlockDataFor(id, (byte) data), false);
                                 currX++;
                                 if (currX == this.x - this.xRef)
                                 {
@@ -119,7 +121,7 @@ public class StencilBrush extends Brush
                         else
                         {
                             undo.put(this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ));
-                            this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setTypeIdAndData((in.readByte() + 128), (byte) (in.readByte() + 128), false);
+                            this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setBlockData(MagicValues.getBlockDataFor(in.readByte() + 128, (byte) (in.readByte() + 128)), false);
                             currX++;
                             if (currX == this.x - this.xRef)
                             {
@@ -145,10 +147,10 @@ public class StencilBrush extends Brush
                             data = (in.readByte() + 128);
                             for (int j = 0; j < numLoops; j++)
                             {
-                                if (id != 0 && this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).getTypeId() == 0)
+                                if (id != 0 && this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).getType() == Material.AIR)
                                 {
                                     undo.put(this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ));
-                                    this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setTypeIdAndData(id, (byte) (data), false);
+                                    this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setBlockData(MagicValues.getBlockDataFor(id, (byte) (data)), false);
                                 }
                                 currX++;
                                 if (currX == this.x - this.xRef)
@@ -167,11 +169,11 @@ public class StencilBrush extends Brush
                         {
                             id = (in.readByte() + 128);
                             data = (in.readByte() + 128);
-                            if (id != 0 && this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).getTypeId() == 0)
+                            if (id != 0 && this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).getType() == Material.AIR)
                             {
                                 undo.put(this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ));
                                 // v.sendMessage("currX:" + currX + " currZ:"+currZ + " currY:" + currY + " id:" + id + " data:" + (byte)data);
-                                this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setTypeIdAndData(id, (byte) (data), false);
+                                this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setBlockData(MagicValues.getBlockDataFor(id, (byte) (data)), false);
                             }
                             currX++;
                             if (currX == this.x - this.xRef)
@@ -201,7 +203,7 @@ public class StencilBrush extends Brush
                                 if (id != 0)
                                 {
                                     undo.put(this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ));
-                                    this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setTypeIdAndData(id, (byte) data, false);
+                                    this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setBlockData(MagicValues.getBlockDataFor(id, (byte) data), false);
                                 }
                                 currX++;
                                 if (currX == this.x - this.xRef)
@@ -223,7 +225,7 @@ public class StencilBrush extends Brush
                             if (id != 0)
                             {
                                 undo.put(this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ));
-                                this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setTypeIdAndData(id, (byte) data, false);
+                                this.clampY(blockPositionX + currX, blockPositionY + currY, blockPositionZ + currZ).setBlockData(MagicValues.getBlockDataFor(id, (byte) data), false);
                             }
                             currX++;
                             if (currX == this.x)
@@ -294,7 +296,7 @@ public class StencilBrush extends Brush
             byte[] dataArray = new byte[this.x * this.z * this.y];
             byte[] runSizeArray = new byte[this.x * this.z * this.y];
 
-            byte lastId = (byte) (this.getWorld().getBlockTypeIdAt(blockPositionX, blockPositionY, blockPositionZ) - 128);
+            byte lastId = (byte) (MagicValues.getIdFor(this.getWorld().getBlockAt(blockPositionX, blockPositionY, blockPositionZ).getType()) - 128);
             byte lastData = (byte) (this.clampY(blockPositionX, blockPositionY, blockPositionZ).getData() - 128);
             byte thisId;
             byte thisData;
@@ -307,7 +309,7 @@ public class StencilBrush extends Brush
                     for (int x = 0; x < this.x; x++)
                     {
                         Block currentBlock = getWorld().getBlockAt(blockPositionX + x, blockPositionY + y, blockPositionZ + z);
-                        thisId = (byte) (currentBlock.getTypeId() - 128);
+                        thisId = (byte) (MagicValues.getIdFor(currentBlock.getType()) - 128);
                         thisData = (byte) (currentBlock.getData() - 128);
                         if (thisId != lastId || thisData != lastData || counter == 255)
                         {

@@ -6,6 +6,7 @@ import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
 import com.martiansoftware.jsap.UnflaggedOption;
 import com.martiansoftware.jsap.stringparsers.EnumeratedStringParser;
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -105,7 +106,7 @@ public class ErodeBrush extends Brush
         for (final BlockWrapper blockWrapper : blockChangeTracker.getAll())
         {
             undo.put(blockWrapper.getBlock());
-            blockWrapper.getBlock().setTypeIdAndData(blockWrapper.getMaterial().getId(), blockWrapper.getData(), true);
+            blockWrapper.getBlock().setBlockData(MagicValues.getBlockDataFor(blockWrapper.getMaterial().getId(), blockWrapper.getData()), true);
         }
 
         v.owner().storeUndo(undo);
@@ -472,9 +473,7 @@ public class ErodeBrush extends Brush
             switch (this.material)
             {
                 case WATER:
-                case STATIONARY_WATER:
                 case LAVA:
-                case STATIONARY_LAVA:
                     return true;
                 default:
                     return false;

@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.util;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -22,11 +23,11 @@ public class BlockWrapper
     @SuppressWarnings("deprecation")
 	public BlockWrapper(final Block block)
     {
-        this.setId(block.getTypeId());
+        this.setId(MagicValues.getIdFor(block.getBlockData()));
         this.setX(block.getX());
         this.setY(block.getY());
         this.setZ(block.getZ());
-        this.setData(block.getData());
+        this.setData(MagicValues.getDataFor(block.getBlockData()));
         this.setWorld(block.getWorld());
     }
 

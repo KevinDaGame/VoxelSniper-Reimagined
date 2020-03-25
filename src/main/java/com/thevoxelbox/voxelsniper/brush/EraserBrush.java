@@ -21,7 +21,7 @@ public class EraserBrush extends Brush
     private static final Set<Material> EXCLUSIVE_MATERIALS = EnumSet.of(
             Material.AIR, Material.STONE, Material.GRASS, Material.DIRT, Material.SAND, Material.GRAVEL, Material.SANDSTONE);
     private static final Set<Material> EXCLUSIVE_LIQUIDS = EnumSet.of(
-            Material.WATER, Material.STATIONARY_WATER, Material.LAVA, Material.STATIONARY_LAVA);
+            Material.WATER, Material.LAVA);
 
     /**
      *

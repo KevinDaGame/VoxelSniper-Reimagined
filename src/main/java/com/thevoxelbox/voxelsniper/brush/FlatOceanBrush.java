@@ -39,11 +39,11 @@ public class FlatOceanBrush extends Brush
                     }
                     else if (y <= this.waterLevel)
                     {
-                        chunk.getBlock(x, y, z).setTypeId(Material.STATIONARY_WATER.getId(), false);
+                        chunk.getBlock(x, y, z).setType(Material.WATER, false);
                     }
                     else
                     {
-                        chunk.getBlock(x, y, z).setTypeId(Material.AIR.getId(), false);
+                        chunk.getBlock(x, y, z).setType(Material.AIR, false);
                     }
                 }
             }

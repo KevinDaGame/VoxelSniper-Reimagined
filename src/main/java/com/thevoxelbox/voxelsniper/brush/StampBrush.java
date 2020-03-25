@@ -2,11 +2,13 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import java.util.HashSet;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -34,7 +36,7 @@ public class StampBrush extends Brush
         @SuppressWarnings("deprecation")
 		public BlockWrapper(final Block b, final int blx, final int bly, final int blz)
         {
-            this.id = b.getTypeId();
+            this.id = MagicValues.getIdFor(b.getType());
             this.d = b.getData();
             this.x = blx;
             this.y = bly;
@@ -133,8 +135,7 @@ public class StampBrush extends Brush
     {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
-        block.setTypeId(cb.id);
-        block.setData(cb.d);
+        block.setBlockData(MagicValues.getBlockDataFor(cb.id, cb.d));
     }
 
     /**
@@ -144,11 +145,10 @@ public class StampBrush extends Brush
 	protected final void setBlockFill(final BlockWrapper cb)
     {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
-        if (block.getTypeId() == 0)
+        if (block.getType() == Material.AIR)
         {
             this.undo.put(block);
-            block.setTypeId(cb.id);
-            block.setData(cb.d);
+            block.setBlockData(MagicValues.getBlockDataFor(cb.id, cb.d));
         }
     }
 

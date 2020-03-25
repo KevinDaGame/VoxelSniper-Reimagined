@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
 import java.util.Random;
 
@@ -149,7 +150,7 @@ public class SplatterOverlayBrush extends PerformBrush
 
                                             for (int d = this.depth - 1; ((this.depth - d) <= depth); d--)
                                             {
-                                                if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getTypeId() != 0)
+                                                if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR)
                                                 {
                                                     // fills down as many layers as you specify in parameters
                                                     this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
@@ -167,7 +168,7 @@ public class SplatterOverlayBrush extends PerformBrush
                                     final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--)
                                     {
-                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getTypeId() != 0)
+                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR)
                                         {
                                             // fills down as many layers as you specify in parameters
                                             this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));

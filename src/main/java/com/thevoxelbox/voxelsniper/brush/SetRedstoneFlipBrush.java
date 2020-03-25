@@ -59,7 +59,7 @@ public class SetRedstoneFlipBrush extends Brush
     @SuppressWarnings("deprecation")
 	private void perform(final Block bl)
     {
-        if (bl.getType() == Material.DIODE_BLOCK_ON || bl.getType() == Material.DIODE_BLOCK_OFF)
+        if (bl.getType() == Material.REPEATER)
         {
             if (this.northSouth)
             {

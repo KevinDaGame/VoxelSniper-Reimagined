@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -61,7 +62,9 @@ public class CopyPastaBrush extends Brush
                     for (int k = 0; k < this.arraySize[2]; k++)
                     {
                         final int currentPosition = i + this.arraySize[0] * j + this.arraySize[0] * this.arraySize[1] * k;
-                        this.blockArray[currentPosition] = this.getWorld().getBlockTypeIdAt(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k);
+                        this.blockArray[currentPosition] = MagicValues.getIdFor(
+                                this.getWorld().getBlockAt(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k).getType()
+                        );
                         this.dataArray[currentPosition] = this.clampY(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k).getData();
                     }
                 }
@@ -107,11 +110,11 @@ public class CopyPastaBrush extends Brush
 
                     if (!(this.blockArray[currentPosition] == 0 && !this.pasteAir))
                     {
-                        if (block.getTypeId() != this.blockArray[currentPosition] || block.getData() != this.dataArray[currentPosition])
+                        if (MagicValues.getIdFor(block.getType()) != this.blockArray[currentPosition] || block.getData() != this.dataArray[currentPosition])
                         {
                             undo.put(block);
                         }
-                        block.setTypeIdAndData(this.blockArray[currentPosition], this.dataArray[currentPosition], true);
+                        block.setBlockData(MagicValues.getBlockDataFor(this.blockArray[currentPosition], this.dataArray[currentPosition]), true);
                     }
                 }
             }

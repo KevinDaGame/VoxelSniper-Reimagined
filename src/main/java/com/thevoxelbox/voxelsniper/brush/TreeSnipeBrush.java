@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.base.Objects;
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -40,7 +41,7 @@ public class TreeSnipeBrush extends Brush
         blockBelow.setType(Material.GRASS);
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);
         Undo undo = undoDelegate.getUndo();
-        blockBelow.setTypeIdAndData(currentState.getTypeId(), currentState.getRawData(), true);
+        blockBelow.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(currentState.getType()), currentState.getRawData()), true);
         undo.put(blockBelow);
         v.owner().storeUndo(undo);
     }

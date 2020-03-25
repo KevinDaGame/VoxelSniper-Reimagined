@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -114,7 +115,7 @@ public class Rot3DBrush extends Brush
                     {
                         final Block block = this.clampY(sx, sz, sz);
                         this.snap[x][y][z] = new BlockWrapper(block);
-                        block.setTypeId(0);
+                        block.setType(Material.AIR);
                         sz++;
                     }
                 }

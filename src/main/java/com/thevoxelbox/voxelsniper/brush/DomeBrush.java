@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -88,10 +89,10 @@ public class DomeBrush extends Brush
         for (final Vector vector : changeablePositions)
         {
             final Block currentTargetBlock = vector.toLocation(this.getTargetBlock().getWorld()).getBlock();
-            if (currentTargetBlock.getTypeId() != v.getVoxelId() || currentTargetBlock.getData() != v.getData())
+            if (MagicValues.getIdFor(currentTargetBlock.getType()) != v.getVoxelId() || currentTargetBlock.getData() != v.getData())
             {
                 undo.put(currentTargetBlock);
-                currentTargetBlock.setTypeIdAndData(v.getVoxelId(), v.getData(), true);
+                currentTargetBlock.setBlockData(MagicValues.getBlockDataFor(v.getVoxelId(), v.getData()), true);
             }
         }
 

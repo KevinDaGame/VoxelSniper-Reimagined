@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -51,7 +52,7 @@ public class Rot2DBrush extends Brush
                     {
                         final Block block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        block.setTypeId(0);
+                        block.setType(Material.AIR);
                         sy++;
                     }
                 }
