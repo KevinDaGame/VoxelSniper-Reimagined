@@ -71,7 +71,16 @@ public class MoveBrush extends Brush
         MoveBrush.BREAKABLE_MATERIALS.add(Material.TORCH);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.FIRE);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.WHEAT);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_WALL_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_WALL_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_WALL_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_WALL_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_DOOR);
@@ -83,7 +92,6 @@ public class MoveBrush extends Brush
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACTIVATOR_RAIL);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.DETECTOR_RAIL);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.POWERED_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.LEVER);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.STONE_PRESSURE_PLATE);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.IRON_DOOR);

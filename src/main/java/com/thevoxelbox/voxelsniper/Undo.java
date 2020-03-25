@@ -9,8 +9,8 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.Dispenser;
 import org.bukkit.block.Furnace;
-import org.bukkit.block.NoteBlock;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.util.Vector;
 
 import java.util.EnumSet;
@@ -69,8 +69,16 @@ public class Undo {
             Material.TORCH,
             Material.FIRE,
             Material.WHEAT,
-            Material.SIGN,
-            Material.WALL_SIGN,
+            Material.ACACIA_SIGN,
+            Material.BIRCH_SIGN,
+            Material.DARK_OAK_SIGN,
+            Material.JUNGLE_SIGN,
+            Material.OAK_SIGN,
+            Material.ACACIA_WALL_SIGN,
+            Material.BIRCH_WALL_SIGN,
+            Material.DARK_OAK_WALL_SIGN,
+            Material.JUNGLE_WALL_SIGN,
+            Material.OAK_WALL_SIGN,
             Material.ACACIA_DOOR,
             Material.BIRCH_DOOR,
             Material.DARK_OAK_DOOR,
@@ -78,7 +86,6 @@ public class Undo {
             Material.OAK_DOOR,
             Material.LADDER,
             Material.RAIL,
-            Material.WALL_SIGN,
             Material.LEVER,
             Material.STONE_PRESSURE_PLATE,
             Material.IRON_DOOR,

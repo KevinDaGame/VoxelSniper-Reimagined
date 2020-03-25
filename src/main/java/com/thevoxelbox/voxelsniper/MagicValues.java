@@ -172,12 +172,12 @@ public class MagicValues {
         toBlockData.put("60", Material.FARMLAND.createBlockData());
         toBlockData.put("61", Material.FURNACE.createBlockData());
         toBlockData.put("62", Material.FURNACE.createBlockData()); // TODO set burning
-        toBlockData.put("63", Material.SIGN.createBlockData()); // TODO add other wood data values
+        toBlockData.put("63", Material.OAK_SIGN.createBlockData()); // TODO add other wood data values
         toBlockData.put("64", Material.OAK_DOOR.createBlockData()); // TODO add other wood data values
         toBlockData.put("65", Material.LADDER.createBlockData());
         toBlockData.put("66", Material.RAIL.createBlockData());
         toBlockData.put("67", Material.COBBLESTONE_STAIRS.createBlockData());
-        toBlockData.put("68", Material.WALL_SIGN.createBlockData()); // TODO add other wood data values
+        toBlockData.put("68", Material.OAK_WALL_SIGN.createBlockData()); // TODO add other wood data values
         toBlockData.put("69", Material.LEVER.createBlockData());
         toBlockData.put("70", Material.STONE_PRESSURE_PLATE.createBlockData());
         toBlockData.put("71", Material.IRON_DOOR.createBlockData());
