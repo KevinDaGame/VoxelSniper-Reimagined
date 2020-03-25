@@ -71,13 +71,13 @@ public class OverlayBrush extends PerformBrush
     @SuppressWarnings("deprecation")
 	private boolean isIgnoredBlock(int materialId)
     {
-        return materialId == 9 || materialId == 8 || MagicValues.getBlockDataFor(materialId).getMaterial().isTransparent() || materialId == Material.CACTUS.getId();
+        return materialId == 9 || materialId == 8 || MagicValues.getBlockDataFor(materialId).getMaterial().isTransparent() || materialId == MagicValues.getIdFor(Material.CACTUS);
     }
 
     @SuppressWarnings("deprecation")
 	private boolean isOverrideableMaterial(int materialId)
     {
-        if (allBlocks && !(materialId == Material.AIR.getId()))
+        if (allBlocks && !(materialId == 0))
         {
             return true;
         }

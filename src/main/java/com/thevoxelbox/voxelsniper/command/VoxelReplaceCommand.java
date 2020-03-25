@@ -38,7 +38,7 @@ public class VoxelReplaceCommand extends VoxelCommand
         {
             if (material.isBlock())
             {
-                snipeData.setReplaceId(material.getId());
+                snipeData.setReplaceId(MagicValues.getIdFor(material));
                 snipeData.getVoxelMessage().replace();
                 return true;
             }

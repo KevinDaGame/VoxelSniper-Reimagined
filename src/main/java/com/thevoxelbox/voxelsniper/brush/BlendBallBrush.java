@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 
@@ -83,7 +84,7 @@ public class BlendBallBrush extends BlendBrushBase
                     // Find most common neighboring material.
                     for (int i = 0; i <= BlendBrushBase.getMaxBlockMaterialID(); i++)
                     {
-                        if (materialFrequency[i] > modeMatCount && !(this.excludeAir && i == Material.AIR.getId()) && !(this.excludeWater && (i == Material.WATER.getId())))
+                        if (materialFrequency[i] > modeMatCount && !(this.excludeAir && i == 0) && !(this.excludeWater && (i == MagicValues.getIdFor(Material.WATER))))
                         {
                             modeMatCount = materialFrequency[i];
                             modeMatId = i;
@@ -92,7 +93,7 @@ public class BlendBallBrush extends BlendBrushBase
                     // Make sure there'world not a tie for most common
                     for (int i = 0; i < modeMatId; i++)
                     {
-                        if (materialFrequency[i] == modeMatCount && !(this.excludeAir && i == Material.AIR.getId()) && !(this.excludeWater && (i == Material.WATER.getId())))
+                        if (materialFrequency[i] == modeMatCount && !(this.excludeAir && i == 0) && !(this.excludeWater && (i == MagicValues.getIdFor(Material.WATER))))
                         {
                             tiecheck = false;
                         }
@@ -123,7 +124,7 @@ public class BlendBallBrush extends BlendBrushBase
                 {
                     if (xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared)
                     {
-                        if (!(this.excludeAir && newMaterials[x][y][z] == Material.AIR.getId()) && !(this.excludeWater && (newMaterials[x][y][z] == Material.WATER.getId())))
+                        if (!(this.excludeAir && newMaterials[x][y][z] == 0) && !(this.excludeWater && (newMaterials[x][y][z] == MagicValues.getIdFor(Material.WATER))))
                         {
                             if (this.getBlockIdAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z) != newMaterials[x][y][z])
                             {

@@ -41,12 +41,12 @@ public class VoxelVoxelCommand extends VoxelCommand
         Material material = Material.matchMaterial(args[0]);
         if (material != null && material.isBlock())
         {
-            if (!player.hasPermission("voxelsniper.ignorelimitations") && plugin.getVoxelSniperConfiguration().getLiteSniperRestrictedItems().contains(material.getId()))
+            if (!player.hasPermission("voxelsniper.ignorelimitations") && plugin.getVoxelSniperConfiguration().getLiteSniperRestrictedItems().contains(MagicValues.getIdFor(material)))
             {
                 player.sendMessage("You are not allowed to use " + material.name() + ".");
                 return true;
             }
-            snipeData.setVoxelId(material.getId());
+            snipeData.setVoxelId(MagicValues.getIdFor(material));
             snipeData.getVoxelMessage().voxel();
             return true;
         }

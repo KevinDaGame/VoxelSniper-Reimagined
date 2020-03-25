@@ -24,7 +24,7 @@ public class SnowConeBrush extends Brush
         int blockPositionX = targetBlock.getX();
         int blockPositionY = targetBlock.getY();
         int blockPositionZ = targetBlock.getZ();
-        if (this.getBlockIdAt(blockPositionX, blockPositionY, blockPositionZ) == Material.AIR.getId())
+        if (this.getBlockIdAt(blockPositionX, blockPositionY, blockPositionZ) == 0)
         {
             brushSize = 0;
         }
@@ -49,7 +49,7 @@ public class SnowConeBrush extends Brush
                 { // overlay
                     if (flag)
                     {
-                        if ((this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i, blockPositionZ - brushSize + z) == 0 || this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i, blockPositionZ - brushSize + z) == Material.SNOW.getId()) && this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i - 1, blockPositionZ - brushSize + z) != Material.AIR.getId() && this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i - 1, blockPositionZ - brushSize + z) != Material.SNOW.getId())
+                        if ((this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i, blockPositionZ - brushSize + z) == 0 || this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i, blockPositionZ - brushSize + z) == MagicValues.getIdFor(Material.SNOW) && this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i - 1, blockPositionZ - brushSize + z) != 0 && this.getBlockIdAt(blockPositionX - brushSize + x, blockPositionY - i - 1, blockPositionZ - brushSize + z) != MagicValues.getIdFor(Material.SNOW)))
                         {
                             flag = false;
                             yOffset[x][z] = i;
@@ -77,16 +77,16 @@ public class SnowConeBrush extends Brush
                     switch (snowData)
                     {
                         case 0:
-                            if (snowcone[x][z] == Material.AIR.getId())
+                            if (snowcone[x][z] == 0)
                             {
-                                snowcone[x][z] = Material.SNOW.getId();
+                                snowcone[x][z] = MagicValues.getIdFor(Material.SNOW);
                                 snowconeData[x][z] = 0;
                             }
                             break;
                         case 7: // Turn largest snowtile into snowblock
-                            if (snowcone[x][z] == Material.SNOW.getId())
+                            if (snowcone[x][z] == MagicValues.getIdFor(Material.SNOW))
                             {
-                                snowcone[x][z] = Material.SNOW_BLOCK.getId();
+                                snowcone[x][z] = MagicValues.getIdFor(Material.SNOW_BLOCK);
                                 snowconeData[x][z] = 0;
                             }
                             break;
@@ -98,7 +98,7 @@ public class SnowConeBrush extends Brush
                                 {
                                     case 0:
                                         snowconeData[x][z] = snowData;
-                                        snowcone[x][z] = Material.SNOW.getId();
+                                        snowcone[x][z] = MagicValues.getIdFor(Material.SNOW);
                                     case 78:
                                         snowconeData[x][z] = snowData;
                                         break;
@@ -107,13 +107,13 @@ public class SnowConeBrush extends Brush
 
                                 }
                             }
-                            else if (yOffset[x][z] > 0 && snowcone[x][z] == Material.SNOW.getId())
+                            else if (yOffset[x][z] > 0 && snowcone[x][z] == MagicValues.getIdFor(Material.SNOW))
                             {
                                 snowconeData[x][z]++;
                                 if (snowconeData[x][z] == 7)
                                 {
                                     snowconeData[x][z] = 0;
-                                    snowcone[x][z] = Material.SNOW_BLOCK.getId();
+                                    snowcone[x][z] = MagicValues.getIdFor(Material.SNOW_BLOCK);
                                 }
                             }
                             break;

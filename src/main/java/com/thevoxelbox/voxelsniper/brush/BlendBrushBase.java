@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 
@@ -21,7 +22,7 @@ public abstract class BlendBrushBase extends Brush
         // Find highest placeable block ID
         for (Material material : Material.values())
         {
-            maxBlockMaterialID = ((material.isBlock() && (material.getId() > maxBlockMaterialID)) ? material.getId() : maxBlockMaterialID);
+            maxBlockMaterialID = ((material.isBlock() && (MagicValues.getIdFor(material) > maxBlockMaterialID)) ? MagicValues.getIdFor(material) : maxBlockMaterialID);
         }
     }
 

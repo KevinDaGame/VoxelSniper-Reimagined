@@ -106,7 +106,7 @@ public class ErodeBrush extends Brush
         for (final BlockWrapper blockWrapper : blockChangeTracker.getAll())
         {
             undo.put(blockWrapper.getBlock());
-            blockWrapper.getBlock().setBlockData(MagicValues.getBlockDataFor(blockWrapper.getMaterial().getId(), blockWrapper.getData()), true);
+            blockWrapper.getBlock().setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(blockWrapper.getMaterial()), blockWrapper.getData()), true);
         }
 
         v.owner().storeUndo(undo);
