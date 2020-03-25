@@ -152,7 +152,7 @@ public class Sniper
                                 {
                                     int originalVoxel = snipeData.getVoxelId();
                                     snipeData.setVoxelId(0);
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, new MaterialData(originalVoxel, snipeData.getData()), new MaterialData(snipeData.getVoxelId(), snipeData.getData()));
+                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalVoxel, snipeData.getData()), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().voxel();
                                     return true;
@@ -162,7 +162,7 @@ public class Sniper
                                 {
                                     byte originalData = snipeData.getData();
                                     snipeData.setData(targetBlock.getData());
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, new MaterialData(snipeData.getVoxelId(), originalData), new MaterialData(snipeData.getVoxelId(), snipeData.getData()));
+                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getVoxelId(), originalData), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().data();
                                     return true;
@@ -171,7 +171,7 @@ public class Sniper
                                 {
                                     byte originalData = snipeData.getData();
                                     snipeData.setData((byte) 0);
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, new MaterialData(snipeData.getVoxelId(), originalData), new MaterialData(snipeData.getVoxelId(), snipeData.getData()));
+                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getVoxelId(), originalData), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().data();
                                     return true;
@@ -198,8 +198,8 @@ public class Sniper
                                 if (targetBlock != null)
                                 {
                                     int originalId = snipeData.getReplaceId();
-                                    snipeData.setReplaceId(targetBlock.getTypeId());
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, new MaterialData(originalId, snipeData.getReplaceData()), new MaterialData(snipeData.getReplaceId(), snipeData.getReplaceData()));
+                                    snipeData.setReplaceId(MagicValues.getIdFor(targetBlock.getType()));
+                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalId, snipeData.getReplaceData()), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().replace();
                                     return true;
@@ -208,7 +208,7 @@ public class Sniper
                                 {
                                     int originalId = snipeData.getReplaceId();
                                     snipeData.setReplaceId(0);
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, new MaterialData(originalId, snipeData.getReplaceData()), new MaterialData(snipeData.getReplaceId(), snipeData.getReplaceData()));
+                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalId, snipeData.getReplaceData()), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().replace();
                                     return true;
@@ -218,7 +218,7 @@ public class Sniper
                                 {
                                     byte originalData = snipeData.getReplaceData();
                                     snipeData.setReplaceData(targetBlock.getData());
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, new MaterialData(snipeData.getReplaceId(), originalData), new MaterialData(snipeData.getReplaceId(), snipeData.getReplaceData()));
+                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getReplaceId(), originalData), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().replaceData();
                                     return true;
@@ -227,7 +227,7 @@ public class Sniper
                                 {
                                     byte originalData = snipeData.getReplaceData();
                                     snipeData.setReplaceData((byte) 0);
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, new MaterialData(snipeData.getReplaceId(), originalData), new MaterialData(snipeData.getReplaceId(), snipeData.getReplaceData()));
+                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getReplaceId(), originalData), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().replaceData();
                                     return true;
