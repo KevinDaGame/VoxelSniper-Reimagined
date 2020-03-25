@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import org.bukkit.block.Block;
 
 import com.thevoxelbox.voxelsniper.Message;
@@ -38,7 +39,7 @@ public class pInkMatNoPhys extends vPerformer
 	@Override
     public void perform(Block b)
     {
-        if (b.getTypeId() == ir)
+        if (MagicValues.getIdFor(b.getType()) == ir)
         {
             h.put(b);
             b.setData(d, false);

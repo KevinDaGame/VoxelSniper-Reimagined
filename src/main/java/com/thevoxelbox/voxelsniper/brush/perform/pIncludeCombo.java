@@ -4,6 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 
@@ -46,10 +47,10 @@ public class pIncludeCombo extends vPerformer
 	@Override
     public void perform(Block b)
     {
-        if (includeList.contains(new int[] {b.getTypeId(), b.getData()}))
+        if (includeList.contains(new int[] {MagicValues.getIdFor(b.getType()), b.getData()}))
         {
             h.put(b);
-            b.setTypeIdAndData(id, data, true);
+            b.setBlockData(MagicValues.getBlockDataFor(id, data), true);
         }
     }
 }

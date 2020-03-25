@@ -4,6 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 
 import org.bukkit.block.Block;
@@ -43,6 +44,6 @@ public class pCombo extends vPerformer
     public void perform(Block b)
     {
         h.put(b);
-        b.setTypeIdAndData(i, d, true);
+        b.setBlockData(MagicValues.getBlockDataFor(i, d), true);
     }
 }

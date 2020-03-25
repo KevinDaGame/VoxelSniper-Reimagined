@@ -4,6 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 
 import org.bukkit.block.Block;
@@ -42,10 +43,10 @@ public class pMatMatNoPhys extends vPerformer
 	@Override
     public void perform(Block b)
     {
-        if (b.getTypeId() == r)
+        if (MagicValues.getIdFor(b.getType()) == r)
         {
             h.put(b);
-            b.setTypeId(i, false);
+            b.setBlockData(MagicValues.getBlockDataFor(i), false);
         }
     }
 
