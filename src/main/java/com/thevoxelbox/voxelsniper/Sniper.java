@@ -140,10 +140,9 @@ public class Sniper
                             case ARROW:
                                 if (targetBlock != null)
                                 {
-                                    BlockData originalVoxel = snipeData.getVoxelData();
-                                    final BlockData blockData = targetBlock.getBlockData();
-                                    snipeData.setVoxelData(blockData);
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, originalVoxel, blockData);
+                                    int originalVoxel = snipeData.getVoxelId();
+                                    snipeData.setVoxelId(MagicValues.getIdFor(targetBlock.getType()));
+                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalVoxel, snipeData.getData()), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
                                     Bukkit.getPluginManager().callEvent(event);
                                     snipeData.getVoxelMessage().voxel();
                                     return true;

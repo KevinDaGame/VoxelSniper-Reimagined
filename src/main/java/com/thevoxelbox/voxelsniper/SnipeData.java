@@ -61,7 +61,6 @@ public class SnipeData
     private int range = 0;
     private boolean ranged = false;
     private boolean lightning = false;
-    private BlockData blockData = Material.AIR.createBlockData();
 
     /**
      * @param vs
@@ -295,13 +294,5 @@ public class SnipeData
     public void setLightningEnabled(boolean lightning)
     {
         this.lightning = lightning;
-    }
-
-    public void setVoxelData(BlockData blockData) {
-        this.blockData = blockData;
-    }
-
-    public BlockData getVoxelData() {
-        return this.blockData;
     }
 }
