@@ -71,7 +71,7 @@ public class VoxelListCommand extends VoxelCommand
                     xdat = -1;
                 }
 
-                if (Material.getMaterial(xint) != null && Material.getMaterial(xint).isBlock())
+                if (MagicValues.getBlockDataFor(xint).getMaterial() != null && MagicValues.getBlockDataFor(xint).getMaterial().isBlock())
                 {
                     if (!remove)
                     {
