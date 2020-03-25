@@ -89,7 +89,7 @@ public class Message
     @SuppressWarnings("deprecation")
     public void replace()
     {
-        snipeData.sendMessage(ChatColor.AQUA + "Replace Material: " + ChatColor.RED + snipeData.getReplaceId() + ChatColor.GRAY + " (" + Material.getMaterial(snipeData.getReplaceId()).toString() + ")");
+        snipeData.sendMessage(ChatColor.AQUA + "Replace Material: " + ChatColor.RED + snipeData.getReplaceId() + ChatColor.GRAY + " (" + MagicValues.getBlockDataFor(snipeData.getReplaceId()).getMaterial() + ")");
     }
 
     /**
@@ -142,7 +142,7 @@ public class Message
     @SuppressWarnings("deprecation")
     public void voxel()
     {
-        snipeData.sendMessage(ChatColor.GOLD + "Voxel: " + ChatColor.RED + snipeData.getVoxelId() + ChatColor.GRAY + " (" + Material.getMaterial(snipeData.getVoxelId()).toString() + ")");
+        snipeData.sendMessage(ChatColor.GOLD + "Voxel: " + ChatColor.RED + snipeData.getVoxelId() + ChatColor.GRAY + " (" + MagicValues.getBlockDataFor(snipeData.getVoxelId()).getMaterial() + ")");
     }
 
     /**
