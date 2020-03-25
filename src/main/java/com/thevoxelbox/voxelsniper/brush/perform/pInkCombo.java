@@ -49,7 +49,7 @@ public class pInkCombo extends vPerformer
         if (MagicValues.getIdFor(b.getType()) == ir && b.getData() == dr)
         {
             h.put(b);
-            b.setData(d);
+            b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d));
         }
     }
 

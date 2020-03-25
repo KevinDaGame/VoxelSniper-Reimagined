@@ -4,6 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 
 import org.bukkit.block.Block;
@@ -41,7 +42,7 @@ public class pInkNoUndo extends vPerformer
     {
         if (b.getData() != d)
         {
-            b.setData(d);
+            b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d));
         }
     }
 }

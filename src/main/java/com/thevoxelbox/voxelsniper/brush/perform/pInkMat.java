@@ -46,7 +46,7 @@ public class pInkMat extends vPerformer
         if (MagicValues.getIdFor(b.getType()) == ir)
         {
             h.put(b);
-            b.setData(d, true);
+            b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d), true);
         }
     }
 

@@ -4,6 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 
 import org.bukkit.block.Block;
@@ -40,6 +41,6 @@ public class pInk extends vPerformer
     public void perform(Block b)
     {
         h.put(b);
-        b.setData(d);
+        b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d));
     }
 }

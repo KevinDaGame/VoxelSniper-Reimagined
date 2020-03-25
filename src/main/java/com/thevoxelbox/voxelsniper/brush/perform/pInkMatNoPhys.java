@@ -42,7 +42,7 @@ public class pInkMatNoPhys extends vPerformer
         if (MagicValues.getIdFor(b.getType()) == ir)
         {
             h.put(b);
-            b.setData(d, false);
+            b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d), false);
         }
     }
 

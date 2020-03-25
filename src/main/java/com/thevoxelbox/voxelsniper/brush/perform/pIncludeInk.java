@@ -47,7 +47,7 @@ public class pIncludeInk extends vPerformer
         if (includeList.contains(new int[]{MagicValues.getIdFor(b.getType()), b.getData()}))
         {
             h.put(b);
-            b.setData(data);
+            b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), data));
         }
     }
 }
