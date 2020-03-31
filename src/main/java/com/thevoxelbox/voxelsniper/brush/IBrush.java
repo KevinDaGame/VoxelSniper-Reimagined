@@ -12,8 +12,7 @@ import org.bukkit.event.block.Action;
  * Brush Interface.
  *
  */
-public interface IBrush
-{
+public interface IBrush {
 
     /**
      * @param vm Message object
@@ -24,7 +23,7 @@ public interface IBrush
      * Handles parameters passed to brushes.
      *
      * @param par Array of string containing parameters
-     * @param v   Snipe Data
+     * @param v Snipe Data
      */
     void parameters(String[] par, SnipeData v);
 

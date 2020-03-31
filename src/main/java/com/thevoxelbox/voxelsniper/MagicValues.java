@@ -7,22 +7,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MagicValues {
+
     private static final Map<String, BlockData> toBlockData = new HashMap<>();
     private static final Map<Material, Integer> toId = new HashMap<>();
     private static final Map<Material, Byte> toData = new HashMap<>();
 
     public static BlockData getBlockDataFor(int material) {
         BlockData blockData = toBlockData.get("" + material);
-        if (blockData != null) return blockData;
-        else return toBlockData.get("0");
+        if (blockData != null) {
+            return blockData;
+        } else {
+            return toBlockData.get("0");
+        }
     }
 
     public static BlockData getBlockDataFor(int material, byte data) {
         if (data > 0) {
             BlockData blockData = toBlockData.get(material + ":" + data);
-            if (blockData == null) return getBlockDataFor(material);
-            else return blockData;
-        } else return getBlockDataFor(material);
+            if (blockData == null) {
+                return getBlockDataFor(material);
+            } else {
+                return blockData;
+            }
+        } else {
+            return getBlockDataFor(material);
+        }
     }
 
     public static BlockData getBlockDataFor(int material, int data) {
@@ -493,7 +502,9 @@ public class MagicValues {
             int id = Integer.parseInt(splitKey[0]);
             toId.put(value.getMaterial(), id);
             byte data = 0;
-            if (splitKey.length > 1) data = Byte.parseByte(splitKey[1]);
+            if (splitKey.length > 1) {
+                data = Byte.parseByte(splitKey[1]);
+            }
             toData.put(value.getMaterial(), data);
         });
     }

@@ -18,19 +18,17 @@ import org.bukkit.util.Vector;
  * @author Gavjenks
  * @author MikeMatrix
  */
-public class DomeBrush extends Brush
-{
+public class DomeBrush extends Brush {
+
     /**
      *
      */
-    public DomeBrush()
-    {
+    public DomeBrush() {
         this.setName("Dome");
     }
 
     @Override
-    public final void info(final Message vm)
-    {
+    public final void info(final Message vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();
@@ -42,11 +40,9 @@ public class DomeBrush extends Brush
      * @param targetBlock
      */
     @SuppressWarnings("deprecation")
-	private void generateDome(final SnipeData v, final Block targetBlock)
-    {
+    private void generateDome(final SnipeData v, final Block targetBlock) {
 
-        if (v.getVoxelHeight() == 0)
-        {
+        if (v.getVoxelHeight() == 0) {
             v.sendMessage("VoxelHeight must not be 0.");
             return;
         }
@@ -63,11 +59,9 @@ public class DomeBrush extends Brush
 
         final double stepSize = 1 / stepScale;
 
-        for (double u = 0; u <= Math.PI / 2; u += stepSize)
-        {
+        for (double u = 0; u <= Math.PI / 2; u += stepSize) {
             final double y = absoluteHeight * Math.sin(u);
-            for (double stepV = -Math.PI; stepV <= -(Math.PI / 2); stepV += stepSize)
-            {
+            for (double stepV = -Math.PI; stepV <= -(Math.PI / 2); stepV += stepSize) {
                 final double x = v.getBrushSize() * Math.cos(u) * Math.cos(stepV);
                 final double z = v.getBrushSize() * Math.cos(u) * Math.sin(stepV);
 
@@ -86,11 +80,9 @@ public class DomeBrush extends Brush
             }
         }
 
-        for (final Vector vector : changeablePositions)
-        {
+        for (final Vector vector : changeablePositions) {
             final Block currentTargetBlock = vector.toLocation(this.getTargetBlock().getWorld()).getBlock();
-            if (MagicValues.getIdFor(currentTargetBlock.getType()) != v.getVoxelId() || currentTargetBlock.getData() != v.getData())
-            {
+            if (MagicValues.getIdFor(currentTargetBlock.getType()) != v.getVoxelId() || currentTargetBlock.getData() != v.getData()) {
                 undo.put(currentTargetBlock);
                 currentTargetBlock.setBlockData(MagicValues.getBlockDataFor(v.getVoxelId(), v.getData()), true);
             }
@@ -100,20 +92,17 @@ public class DomeBrush extends Brush
     }
 
     @Override
-    protected final void arrow(final SnipeData v)
-    {
+    protected final void arrow(final SnipeData v) {
         this.generateDome(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v)
-    {
+    protected final void powder(final SnipeData v) {
         this.generateDome(v, this.getLastBlock());
     }
 
     @Override
-    public String getPermissionNode()
-    {
+    public String getPermissionNode() {
         return "voxelsniper.brush.dome";
     }
 }

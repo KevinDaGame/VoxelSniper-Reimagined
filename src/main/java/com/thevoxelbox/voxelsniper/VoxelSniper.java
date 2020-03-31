@@ -16,8 +16,8 @@ import java.util.logging.Level;
 /**
  * Bukkit extension point.
  */
-public class VoxelSniper extends JavaPlugin
-{
+public class VoxelSniper extends JavaPlugin {
+
     private static VoxelSniper instance;
     private SniperManager sniperManager = new SniperManager(this);
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
@@ -28,8 +28,7 @@ public class VoxelSniper extends JavaPlugin
      *
      * @return Brush Manager for current instance.
      */
-    public Brushes getBrushManager()
-    {
+    public Brushes getBrushManager() {
         return brushManager;
     }
 
@@ -38,8 +37,7 @@ public class VoxelSniper extends JavaPlugin
     /**
      * @return {@link VoxelSniper}
      */
-    public static VoxelSniper getInstance()
-    {
+    public static VoxelSniper getInstance() {
         return VoxelSniper.instance;
     }
 
@@ -48,8 +46,7 @@ public class VoxelSniper extends JavaPlugin
      *
      * @return {@link VoxelSniperConfiguration} object for accessing global VoxelSniper options.
      */
-    public VoxelSniperConfiguration getVoxelSniperConfiguration()
-    {
+    public VoxelSniperConfiguration getVoxelSniperConfiguration() {
         return voxelSniperConfiguration;
     }
 
@@ -58,20 +55,16 @@ public class VoxelSniper extends JavaPlugin
      *
      * @return SniperManager
      */
-    public SniperManager getSniperManager()
-    {
+    public SniperManager getSniperManager() {
         return sniperManager;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args)
-    {
-        if (sender instanceof Player)
-        {
+    public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
+        if (sender instanceof Player) {
             String[] arguments = args;
 
-            if (arguments == null)
-            {
+            if (arguments == null) {
                 arguments = new String[0];
             }
 
@@ -83,8 +76,7 @@ public class VoxelSniper extends JavaPlugin
     }
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         VoxelSniper.instance = this;
 
         registerBrushes();
@@ -100,8 +92,7 @@ public class VoxelSniper extends JavaPlugin
     /**
      * Registers all brushes.
      */
-    public void registerBrushes()
-    {
+    public void registerBrushes() {
         brushManager.registerSniperBrush(BallBrush.class, "b", "ball");
         brushManager.registerSniperBrush(BiomeBrush.class, "bio", "biome");
         brushManager.registerSniperBrush(BlendBallBrush.class, "bb", "blendball");

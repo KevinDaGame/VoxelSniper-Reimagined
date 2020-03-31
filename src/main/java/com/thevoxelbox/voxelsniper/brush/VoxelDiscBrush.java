@@ -10,22 +10,18 @@ import org.bukkit.block.Block;
  *
  * @author Voxel
  */
-public class VoxelDiscBrush extends PerformBrush
-{
+public class VoxelDiscBrush extends PerformBrush {
+
     /**
      *
      */
-    public VoxelDiscBrush()
-    {
+    public VoxelDiscBrush() {
         this.setName("Voxel Disc");
     }
 
-    private void disc(final SnipeData v, Block targetBlock)
-    {
-        for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--)
-        {
-            for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--)
-            {
+    private void disc(final SnipeData v, Block targetBlock) {
+        for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
+            for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
                 current.perform(targetBlock.getRelative(x, 0, z));
             }
         }
@@ -33,27 +29,23 @@ public class VoxelDiscBrush extends PerformBrush
     }
 
     @Override
-    protected final void arrow(final SnipeData v)
-    {
+    protected final void arrow(final SnipeData v) {
         this.disc(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v)
-    {
+    protected final void powder(final SnipeData v) {
         this.disc(v, this.getLastBlock());
     }
 
     @Override
-    public final void info(final Message vm)
-    {
+    public final void info(final Message vm) {
         vm.brushName(this.getName());
         vm.size();
     }
 
     @Override
-    public String getPermissionNode()
-    {
+    public String getPermissionNode() {
         return "voxelsniper.brush.voxeldisc";
     }
 }

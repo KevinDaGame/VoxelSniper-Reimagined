@@ -6,16 +6,15 @@ import org.bukkit.Material;
 /**
  *
  */
-public class Message
-{
+public class Message {
+
     private static final int BRUSH_SIZE_WARNING_THRESHOLD = 20;
     private final SnipeData snipeData;
 
     /**
      * @param snipeData
      */
-    public Message(SnipeData snipeData)
-    {
+    public Message(SnipeData snipeData) {
         this.snipeData = snipeData;
     }
 
@@ -24,8 +23,7 @@ public class Message
      *
      * @param brushMessage
      */
-    public void brushMessage(String brushMessage)
-    {
+    public void brushMessage(String brushMessage) {
         snipeData.sendMessage(ChatColor.LIGHT_PURPLE + brushMessage);
     }
 
@@ -34,16 +32,14 @@ public class Message
      *
      * @param brushName
      */
-    public void brushName(String brushName)
-    {
+    public void brushName(String brushName) {
         snipeData.sendMessage(ChatColor.AQUA + "Brush Type: " + ChatColor.LIGHT_PURPLE + brushName);
     }
 
     /**
      * Display Center Parameter.
      */
-    public void center()
-    {
+    public void center() {
         snipeData.sendMessage(ChatColor.DARK_BLUE + "Brush Center: " + ChatColor.DARK_RED + snipeData.getcCen());
     }
 
@@ -52,24 +48,21 @@ public class Message
      *
      * @param message
      */
-    public void custom(String message)
-    {
+    public void custom(String message) {
         snipeData.sendMessage(message);
     }
 
     /**
      * Display data value.
      */
-    public void data()
-    {
+    public void data() {
         snipeData.sendMessage(ChatColor.BLUE + "Data Variable: " + ChatColor.DARK_RED + snipeData.getData());
     }
 
     /**
      * Display voxel height.
      */
-    public void height()
-    {
+    public void height() {
         snipeData.sendMessage(ChatColor.DARK_AQUA + "Brush Height: " + ChatColor.DARK_RED + snipeData.getVoxelHeight());
     }
 
@@ -78,8 +71,7 @@ public class Message
      *
      * @param performerName
      */
-    public void performerName(String performerName)
-    {
+    public void performerName(String performerName) {
         this.snipeData.sendMessage(ChatColor.DARK_PURPLE + "Performer: " + ChatColor.DARK_GREEN + performerName);
     }
 
@@ -87,27 +79,23 @@ public class Message
      * Displaye replace material.
      */
     @SuppressWarnings("deprecation")
-    public void replace()
-    {
+    public void replace() {
         snipeData.sendMessage(ChatColor.AQUA + "Replace Material: " + ChatColor.RED + snipeData.getReplaceId() + ChatColor.GRAY + " (" + MagicValues.getBlockDataFor(snipeData.getReplaceId()).getMaterial() + ")");
     }
 
     /**
      * Display replace data value.
      */
-    public void replaceData()
-    {
+    public void replaceData() {
         snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Data Variable: " + ChatColor.DARK_RED + snipeData.getReplaceData());
     }
 
     /**
      * Display brush size.
      */
-    public void size()
-    {
+    public void size() {
         snipeData.sendMessage(ChatColor.GREEN + "Brush Size: " + ChatColor.DARK_RED + snipeData.getBrushSize());
-        if (snipeData.getBrushSize() >= BRUSH_SIZE_WARNING_THRESHOLD)
-        {
+        if (snipeData.getBrushSize() >= BRUSH_SIZE_WARNING_THRESHOLD) {
             snipeData.sendMessage(ChatColor.RED + "WARNING: Large brush size selected!");
         }
     }
@@ -115,24 +103,21 @@ public class Message
     /**
      * Display toggle lightning message.
      */
-    public void toggleLightning()
-    {
+    public void toggleLightning() {
         snipeData.sendMessage(ChatColor.GOLD + "Lightning mode has been toggled " + ChatColor.DARK_RED + ((snipeData.owner().getSnipeData(snipeData.owner().getCurrentToolId()).isLightningEnabled()) ? "on" : "off"));
     }
 
     /**
      * Display toggle printout message.
      */
-    public final void togglePrintout()
-    {
+    public final void togglePrintout() {
         snipeData.sendMessage(ChatColor.GOLD + "Brush info printout mode has been toggled " + ChatColor.DARK_RED + ((snipeData.owner().getSnipeData(snipeData.owner().getCurrentToolId()).isLightningEnabled()) ? "on" : "off"));
     }
 
     /**
      * Display toggle range message.
      */
-    public void toggleRange()
-    {
+    public void toggleRange() {
         snipeData.sendMessage(ChatColor.GOLD + "Distance Restriction toggled " + ChatColor.DARK_RED + ((snipeData.owner().getSnipeData(snipeData.owner().getCurrentToolId()).isRanged()) ? "on" : "off") + ChatColor.GOLD + ". Range is " + ChatColor.LIGHT_PURPLE + (double) snipeData.owner().getSnipeData(snipeData.owner().getCurrentToolId()).getRange());
     }
 
@@ -140,32 +125,25 @@ public class Message
      * Display voxel type.
      */
     @SuppressWarnings("deprecation")
-    public void voxel()
-    {
+    public void voxel() {
         snipeData.sendMessage(ChatColor.GOLD + "Voxel: " + ChatColor.RED + snipeData.getVoxelId() + ChatColor.GRAY + " (" + MagicValues.getBlockDataFor(snipeData.getVoxelId()).getMaterial() + ")");
     }
 
     /**
      * Display voxel list.
      */
-    public void voxelList()
-    {
-        if (snipeData.getVoxelList().isEmpty())
-        {
+    public void voxelList() {
+        if (snipeData.getVoxelList().isEmpty()) {
             snipeData.sendMessage(ChatColor.DARK_GREEN + "No blocks selected!");
-        }
-        else
-        {
+        } else {
             StringBuilder returnValueBuilder = new StringBuilder();
             returnValueBuilder.append(ChatColor.DARK_GREEN);
             returnValueBuilder.append("Block Types Selected: ");
             returnValueBuilder.append(ChatColor.AQUA);
 
-            for (int[] valuePair : snipeData.getVoxelList().getList())
-            {
+            for (int[] valuePair : snipeData.getVoxelList().getList()) {
                 returnValueBuilder.append(valuePair[0]);
-                if (valuePair[1] != -1)
-                {
+                if (valuePair[1] != -1) {
                     returnValueBuilder.append(":");
                     returnValueBuilder.append(valuePair[1]);
                 }

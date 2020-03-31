@@ -8,25 +8,22 @@ import org.bukkit.entity.Player;
 /**
  * @author MikeMatrix
  */
-public class WarpBrush extends Brush
-{
+public class WarpBrush extends Brush {
+
     /**
      *
      */
-    public WarpBrush()
-    {
+    public WarpBrush() {
         this.setName("Warp");
     }
 
     @Override
-    public final void info(final Message vm)
-    {
+    public final void info(final Message vm) {
         vm.brushName(this.getName());
     }
 
     @Override
-    protected final void arrow(final SnipeData v)
-    {
+    protected final void arrow(final SnipeData v) {
         Player player = v.owner().getPlayer();
         Location location = this.getLastBlock().getLocation();
         Location playerLocation = player.getLocation();
@@ -37,8 +34,7 @@ public class WarpBrush extends Brush
     }
 
     @Override
-    protected final void powder(final SnipeData v)
-    {
+    protected final void powder(final SnipeData v) {
         Player player = v.owner().getPlayer();
         Location location = this.getLastBlock().getLocation();
         Location playerLocation = player.getLocation();
@@ -51,8 +47,7 @@ public class WarpBrush extends Brush
     }
 
     @Override
-    public String getPermissionNode()
-    {
+    public String getPermissionNode() {
         return "voxelsniper.brush.warp";
     }
 }

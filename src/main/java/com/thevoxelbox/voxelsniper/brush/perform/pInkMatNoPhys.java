@@ -8,47 +8,40 @@ import com.thevoxelbox.voxelsniper.Message;
 /**
  * @author Voxel
  */
-public class pInkMatNoPhys extends vPerformer
-{
+public class pInkMatNoPhys extends vPerformer {
 
     private byte d;
     private int ir;
 
-    public pInkMatNoPhys()
-    {
+    public pInkMatNoPhys() {
         name = "Ink-Mat, No Physics";
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         d = v.getData();
         ir = v.getReplaceId();
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.data();
         vm.replace();
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (MagicValues.getIdFor(b.getType()) == ir)
-        {
+    @Override
+    public void perform(Block b) {
+        if (MagicValues.getIdFor(b.getType()) == ir) {
             h.put(b);
             b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d), false);
         }
     }
 
     @Override
-    public boolean isUsingReplaceMaterial()
-    {
+    public boolean isUsingReplaceMaterial() {
         return true;
     }
 }

@@ -12,36 +12,30 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pInkNoUndo extends vPerformer
-{
+public class pInkNoUndo extends vPerformer {
 
     private byte d;
 
-    public pInkNoUndo()
-    {
+    public pInkNoUndo() {
         name = "Ink, No-Undo"; // made name more descriptive - Giltwist
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         d = v.getData();
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.data();
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (b.getData() != d)
-        {
+    @Override
+    public void perform(Block b) {
+        if (b.getData() != d) {
             b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), d));
         }
     }

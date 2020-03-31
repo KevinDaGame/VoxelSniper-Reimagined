@@ -11,17 +11,15 @@ import org.bukkit.Material;
  * @author Monofraps
  */
 @SuppressWarnings("deprecation")
-public abstract class BlendBrushBase extends Brush
-{
+public abstract class BlendBrushBase extends Brush {
+
     private static int maxBlockMaterialID;
     protected boolean excludeAir = true;
     protected boolean excludeWater = true;
 
-    static
-    {
+    static {
         // Find highest placeable block ID
-        for (Material material : Material.values())
-        {
+        for (Material material : Material.values()) {
             maxBlockMaterialID = ((material.isBlock() && (MagicValues.getIdFor(material) > maxBlockMaterialID)) ? MagicValues.getIdFor(material) : maxBlockMaterialID);
         }
     }
@@ -32,22 +30,19 @@ public abstract class BlendBrushBase extends Brush
     protected abstract void blend(final SnipeData v);
 
     @Override
-    protected final void arrow(final SnipeData v)
-    {
+    protected final void arrow(final SnipeData v) {
         this.excludeAir = false;
         this.blend(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v)
-    {
+    protected final void powder(final SnipeData v) {
         this.excludeAir = true;
         this.blend(v);
     }
 
     @Override
-    public final void info(final Message vm)
-    {
+    public final void info(final Message vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();
@@ -55,12 +50,9 @@ public abstract class BlendBrushBase extends Brush
     }
 
     @Override
-    public void parameters(final String[] par, final SnipeData v)
-    {
-        for (int i = 1; i < par.length; ++i)
-        {
-            if (par[i].equalsIgnoreCase("water"))
-            {
+    public void parameters(final String[] par, final SnipeData v) {
+        for (int i = 1; i < par.length; ++i) {
+            if (par[i].equalsIgnoreCase("water")) {
                 this.excludeWater = !this.excludeWater;
                 v.sendMessage(ChatColor.AQUA + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
             }
@@ -70,48 +62,42 @@ public abstract class BlendBrushBase extends Brush
     /**
      * @return
      */
-    protected static int getMaxBlockMaterialID()
-    {
+    protected static int getMaxBlockMaterialID() {
         return maxBlockMaterialID;
     }
 
     /**
      * @param maxBlockMaterialID
      */
-    protected static void setMaxBlockMaterialID(int maxBlockMaterialID)
-    {
+    protected static void setMaxBlockMaterialID(int maxBlockMaterialID) {
         BlendBrushBase.maxBlockMaterialID = maxBlockMaterialID;
     }
 
     /**
      * @return
      */
-    protected final boolean isExcludeAir()
-    {
+    protected final boolean isExcludeAir() {
         return excludeAir;
     }
 
     /**
      * @param excludeAir
      */
-    protected final void setExcludeAir(boolean excludeAir)
-    {
+    protected final void setExcludeAir(boolean excludeAir) {
         this.excludeAir = excludeAir;
     }
 
     /**
      * @return
      */
-    protected final boolean isExcludeWater()
-    {
+    protected final boolean isExcludeWater() {
         return excludeWater;
     }
 
     /**
      * @param excludeWater
      */
-    protected final void setExcludeWater(boolean excludeWater)
-    {
+    protected final void setExcludeWater(boolean excludeWater) {
         this.excludeWater = excludeWater;
     }
 }

@@ -13,39 +13,33 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pExcludeInk extends vPerformer
-{
+public class pExcludeInk extends vPerformer {
 
     private VoxelList excludeList;
     private byte data;
 
-    public pExcludeInk()
-    {
+    public pExcludeInk() {
         name = "Exclude Ink";
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.voxelList();
         vm.data();
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         data = v.getData();
         excludeList = v.getVoxelList();
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (!excludeList.contains(new int[] {MagicValues.getIdFor(b.getType()), b.getData()}))
-        {
+    @Override
+    public void perform(Block b) {
+        if (!excludeList.contains(new int[]{MagicValues.getIdFor(b.getType()), b.getData()})) {
             h.put(b);
             b.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(b.getType()), data));
         }

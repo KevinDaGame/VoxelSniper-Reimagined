@@ -12,21 +12,18 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pMatComboNophys extends vPerformer
-{
+public class pMatComboNophys extends vPerformer {
 
     private byte dr;
     private int i;
     private int ir;
 
-    public pMatComboNophys()
-    {
+    public pMatComboNophys() {
         name = "Mat-Combo, No Physics";
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         dr = v.getReplaceData();
         i = v.getVoxelId();
@@ -34,8 +31,7 @@ public class pMatComboNophys extends vPerformer
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.voxel();
         vm.replace();
@@ -43,19 +39,16 @@ public class pMatComboNophys extends vPerformer
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (MagicValues.getIdFor(b.getType()) == ir && b.getData() == dr)
-        {
+    @Override
+    public void perform(Block b) {
+        if (MagicValues.getIdFor(b.getType()) == ir && b.getData() == dr) {
             h.put(b);
             b.setBlockData(MagicValues.getBlockDataFor(i), false);
         }
     }
 
     @Override
-    public boolean isUsingReplaceMaterial()
-    {
+    public boolean isUsingReplaceMaterial() {
         return true;
     }
 }

@@ -12,47 +12,40 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pMatMat extends vPerformer
-{
+public class pMatMat extends vPerformer {
 
     private int i;
     private int r;
 
-    public pMatMat()
-    {
+    public pMatMat() {
         name = "Mat-Mat";
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         i = v.getVoxelId();
         r = v.getReplaceId();
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.voxel();
         vm.replace();
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (MagicValues.getIdFor(b.getType()) == r)
-        {
+    @Override
+    public void perform(Block b) {
+        if (MagicValues.getIdFor(b.getType()) == r) {
             h.put(b);
             b.setBlockData(MagicValues.getBlockDataFor(i));
         }
     }
 
     @Override
-    public boolean isUsingReplaceMaterial()
-    {
+    public boolean isUsingReplaceMaterial() {
         return true;
     }
 }

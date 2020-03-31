@@ -32,15 +32,13 @@ import org.bukkit.ChatColor;
  * 
  */
 
-/* This enum is getting REALLY Long, would it be possible to algorithmically generate the full performer 
+ /* This enum is getting REALLY Long, would it be possible to algorithmically generate the full performer 
  * from the pieces? So if the performer name is of the for m*, you'll setTypeId whereas if it is of the
  * form c* you'd setTypeIdandData?  Similarly, if the performer is of the form *p, any setTypeId's or setTypeIdandData's
  * will be set to false instead of true? The middle bits might be tougher, being of the form _m* perhaps?
  * Regex to the rescue, am I right? - Giltwist
  */
-
-public enum PerformerE
-{
+public enum PerformerE {
 
     MATERIAL(pMaterial.class, "m", "material"),
     MATERIAL_NOPHYS(pMaterialNoPhys.class, "mp", "mat-nophys"),
@@ -90,7 +88,6 @@ public enum PerformerE
     //COMBO_INK_NOPHYS_UPDATE(  pComboInkNoPhysUpdate.class,    "ciup",         "combo-ink-update-nophys"), //              place combo, replace ink, graphical update, no physics
     //COMBO_COMBO_UPDATE(       pComboComboUpdate.class,        "ccu",          "combo-combo-update"),      //              place combo, replace combo, graphical update
     //COMBO_COMBO_NOPHYS_UPDATE(pComboComboNoPhysUpdate.class,  "ccup",         "combo-combo-update-nophys"),//             place combo, replace combo, graphical update, no physics
-
     private static Map<String, vPerformer> performers;
     private static Map<String, String> long_names;
     private Class<? extends vPerformer> pclass;
@@ -99,75 +96,52 @@ public enum PerformerE
     public static String performer_list_short = "";
     public static String performer_list_long = "";
 
-    private PerformerE(Class<? extends vPerformer> c, String s, String l)
-    {
+    private PerformerE(Class<? extends vPerformer> c, String s, String l) {
         pclass = c;
         short_name = s;
         long_name = l;
     }
 
-    private vPerformer getPerformer()
-    {
+    private vPerformer getPerformer() {
         vPerformer p;
-        try
-        {
-            try
-            {
+        try {
+            try {
                 p = pclass.getConstructor().newInstance();
                 return p;
-            }
-            catch (InstantiationException ex)
-            {
+            } catch (InstantiationException ex) {
+                Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
                 Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
             }
-            catch (IllegalAccessException ex)
-            {
-                Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (IllegalArgumentException ex)
-            {
-                Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (InvocationTargetException ex)
-            {
-                Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        catch (NoSuchMethodException ex)
-        {
+        } catch (NoSuchMethodException ex) {
             Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (SecurityException ex)
-        {
+        } catch (SecurityException ex) {
             Logger.getLogger(PerformerE.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public static vPerformer getPerformer(String s)
-    {
-        if (performers.containsKey(s))
-        {
+    public static vPerformer getPerformer(String s) {
+        if (performers.containsKey(s)) {
             return performers.get(s);
-        }
-        else
-        {
+        } else {
             return performers.get(long_names.get(s));
         }
     }
 
-    public static boolean has(String s)
-    {
+    public static boolean has(String s) {
         return performers.containsKey(s);
     }
 
-    static
-    {
+    static {
         performers = new TreeMap<String, vPerformer>();
         long_names = new TreeMap<String, String>();
 
-        for (PerformerE pe : values())
-        {
+        for (PerformerE pe : values()) {
             performers.put(pe.short_name, pe.getPerformer());
             long_names.put(pe.long_name, pe.short_name);
             performer_list_short = performer_list_short + ChatColor.GREEN + pe.short_name + ChatColor.RED + ", ";

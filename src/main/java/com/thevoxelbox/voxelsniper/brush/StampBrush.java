@@ -14,13 +14,13 @@ import org.bukkit.block.Block;
 /**
  *
  */
-public class StampBrush extends Brush
-{
+public class StampBrush extends Brush {
+
     /**
      * @author Voxel
      */
-    protected class BlockWrapper
-    {
+    protected class BlockWrapper {
+
         public int id;
         public int x;
         public int y;
@@ -34,8 +34,7 @@ public class StampBrush extends Brush
          * @param blz
          */
         @SuppressWarnings("deprecation")
-		public BlockWrapper(final Block b, final int blx, final int bly, final int blz)
-        {
+        public BlockWrapper(final Block b, final int blx, final int bly, final int blz) {
             this.id = MagicValues.getIdFor(b.getType());
             this.d = b.getData();
             this.x = blx;
@@ -47,8 +46,7 @@ public class StampBrush extends Brush
     /**
      * @author Monofraps
      */
-    protected enum StampType
-    {
+    protected enum StampType {
         NO_AIR, FILL, DEFAULT
     }
 
@@ -64,16 +62,14 @@ public class StampBrush extends Brush
     /**
      *
      */
-    public StampBrush()
-    {
+    public StampBrush() {
         this.setName("Stamp");
     }
 
     /**
      *
      */
-    public final void reSort()
-    {
+    public final void reSort() {
         this.sorted = false;
     }
 
@@ -82,8 +78,7 @@ public class StampBrush extends Brush
      *
      * @return
      */
-    protected final boolean falling(final int id)
-    {
+    protected final boolean falling(final int id) {
         return (id > 7 && id < 14);
     }
 
@@ -92,10 +87,8 @@ public class StampBrush extends Brush
      *
      * @return
      */
-    protected final boolean fallsOff(final int id)
-    {
-        switch (id)
-        {
+    protected final boolean fallsOff(final int id) {
+        switch (id) {
             // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83
             case (6):
             case (37):
@@ -131,8 +124,7 @@ public class StampBrush extends Brush
      * @param cb
      */
     @SuppressWarnings("deprecation")
-	protected final void setBlock(final BlockWrapper cb)
-    {
+    protected final void setBlock(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
         block.setBlockData(MagicValues.getBlockDataFor(cb.id, cb.d));
@@ -142,11 +134,9 @@ public class StampBrush extends Brush
      * @param cb
      */
     @SuppressWarnings("deprecation")
-	protected final void setBlockFill(final BlockWrapper cb)
-    {
+    protected final void setBlockFill(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
-        if (block.getType() == Material.AIR)
-        {
+        if (block.getType() == Material.AIR) {
             this.undo.put(block);
             block.setBlockData(MagicValues.getBlockDataFor(cb.id, cb.d));
         }
@@ -155,60 +145,44 @@ public class StampBrush extends Brush
     /**
      * @param type
      */
-    protected final void setStamp(final StampType type)
-    {
+    protected final void setStamp(final StampType type) {
         this.stamp = type;
     }
 
     /**
      * @param v
      */
-    protected final void stamp(final SnipeData v)
-    {
+    protected final void stamp(final SnipeData v) {
         this.undo = new Undo();
 
-        if (this.sorted)
-        {
-            for (final BlockWrapper block : this.solid)
-            {
+        if (this.sorted) {
+            for (final BlockWrapper block : this.solid) {
                 this.setBlock(block);
             }
-            for (final BlockWrapper block : this.drop)
-            {
+            for (final BlockWrapper block : this.drop) {
                 this.setBlock(block);
             }
-            for (final BlockWrapper block : this.fall)
-            {
+            for (final BlockWrapper block : this.fall) {
                 this.setBlock(block);
             }
-        }
-        else
-        {
+        } else {
             this.fall.clear();
             this.drop.clear();
             this.solid.clear();
-            for (final BlockWrapper block : this.clone)
-            {
-                if (this.fallsOff(block.id))
-                {
+            for (final BlockWrapper block : this.clone) {
+                if (this.fallsOff(block.id)) {
                     this.fall.add(block);
-                }
-                else if (this.falling(block.id))
-                {
+                } else if (this.falling(block.id)) {
                     this.drop.add(block);
-                }
-                else
-                {
+                } else {
                     this.solid.add(block);
                     this.setBlock(block);
                 }
             }
-            for (final BlockWrapper block : this.drop)
-            {
+            for (final BlockWrapper block : this.drop) {
                 this.setBlock(block);
             }
-            for (final BlockWrapper block : this.fall)
-            {
+            for (final BlockWrapper block : this.fall) {
                 this.setBlock(block);
             }
             this.sorted = true;
@@ -220,53 +194,38 @@ public class StampBrush extends Brush
     /**
      * @param v
      */
-    protected final void stampFill(final SnipeData v)
-    {
+    protected final void stampFill(final SnipeData v) {
 
         this.undo = new Undo();
 
-        if (this.sorted)
-        {
-            for (final BlockWrapper block : this.solid)
-            {
+        if (this.sorted) {
+            for (final BlockWrapper block : this.solid) {
                 this.setBlockFill(block);
             }
-            for (final BlockWrapper block : this.drop)
-            {
+            for (final BlockWrapper block : this.drop) {
                 this.setBlockFill(block);
             }
-            for (final BlockWrapper block : this.fall)
-            {
+            for (final BlockWrapper block : this.fall) {
                 this.setBlockFill(block);
             }
-        }
-        else
-        {
+        } else {
             this.fall.clear();
             this.drop.clear();
             this.solid.clear();
-            for (final BlockWrapper block : this.clone)
-            {
-                if (this.fallsOff(block.id))
-                {
+            for (final BlockWrapper block : this.clone) {
+                if (this.fallsOff(block.id)) {
                     this.fall.add(block);
-                }
-                else if (this.falling(block.id))
-                {
+                } else if (this.falling(block.id)) {
                     this.drop.add(block);
-                }
-                else if (block.id != 0)
-                {
+                } else if (block.id != 0) {
                     this.solid.add(block);
                     this.setBlockFill(block);
                 }
             }
-            for (final BlockWrapper block : this.drop)
-            {
+            for (final BlockWrapper block : this.drop) {
                 this.setBlockFill(block);
             }
-            for (final BlockWrapper block : this.fall)
-            {
+            for (final BlockWrapper block : this.fall) {
                 this.setBlockFill(block);
             }
             this.sorted = true;
@@ -278,53 +237,38 @@ public class StampBrush extends Brush
     /**
      * @param v
      */
-    protected final void stampNoAir(final SnipeData v)
-    {
+    protected final void stampNoAir(final SnipeData v) {
 
         this.undo = new Undo();
 
-        if (this.sorted)
-        {
-            for (final BlockWrapper block : this.solid)
-            {
+        if (this.sorted) {
+            for (final BlockWrapper block : this.solid) {
                 this.setBlock(block);
             }
-            for (final BlockWrapper block : this.drop)
-            {
+            for (final BlockWrapper block : this.drop) {
                 this.setBlock(block);
             }
-            for (final BlockWrapper block : this.fall)
-            {
+            for (final BlockWrapper block : this.fall) {
                 this.setBlock(block);
             }
-        }
-        else
-        {
+        } else {
             this.fall.clear();
             this.drop.clear();
             this.solid.clear();
-            for (final BlockWrapper block : this.clone)
-            {
-                if (this.fallsOff(block.id))
-                {
+            for (final BlockWrapper block : this.clone) {
+                if (this.fallsOff(block.id)) {
                     this.fall.add(block);
-                }
-                else if (this.falling(block.id))
-                {
+                } else if (this.falling(block.id)) {
                     this.drop.add(block);
-                }
-                else if (block.id != 0)
-                {
+                } else if (block.id != 0) {
                     this.solid.add(block);
                     this.setBlock(block);
                 }
             }
-            for (final BlockWrapper block : this.drop)
-            {
+            for (final BlockWrapper block : this.drop) {
                 this.setBlock(block);
             }
-            for (final BlockWrapper block : this.fall)
-            {
+            for (final BlockWrapper block : this.fall) {
                 this.setBlock(block);
             }
             this.sorted = true;
@@ -334,10 +278,8 @@ public class StampBrush extends Brush
     }
 
     @Override
-    protected final void arrow(final SnipeData v)
-    {
-        switch (this.stamp)
-        {
+    protected final void arrow(final SnipeData v) {
+        switch (this.stamp) {
             case DEFAULT:
                 this.stamp(v);
                 break;
@@ -357,20 +299,17 @@ public class StampBrush extends Brush
     }
 
     @Override
-    protected void powder(final SnipeData v)
-    {
+    protected void powder(final SnipeData v) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void info(final Message vm)
-    {
+    public void info(final Message vm) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getPermissionNode()
-    {
+    public String getPermissionNode() {
         return "voxelsniper.brush.stamp";
     }
 }

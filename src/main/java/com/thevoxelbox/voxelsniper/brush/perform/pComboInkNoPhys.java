@@ -12,21 +12,18 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pComboInkNoPhys extends vPerformer
-{
+public class pComboInkNoPhys extends vPerformer {
 
     private byte d;
     private byte dr;
     private int i;
 
-    public pComboInkNoPhys()
-    {
+    public pComboInkNoPhys() {
         name = "Combo-Ink, No Physics";
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         d = v.getData();
         dr = v.getReplaceData();
@@ -34,8 +31,7 @@ public class pComboInkNoPhys extends vPerformer
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.voxel();
         vm.data();
@@ -43,19 +39,16 @@ public class pComboInkNoPhys extends vPerformer
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (b.getData() == dr)
-        {
+    @Override
+    public void perform(Block b) {
+        if (b.getData() == dr) {
             h.put(b);
             b.setBlockData(MagicValues.getBlockDataFor(i, d), false);
         }
     }
 
     @Override
-    public boolean isUsingReplaceMaterial()
-    {
+    public boolean isUsingReplaceMaterial() {
         return true;
     }
 }

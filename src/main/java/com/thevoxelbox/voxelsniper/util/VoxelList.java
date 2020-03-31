@@ -11,37 +11,28 @@ import java.util.List;
 /**
  * Container class for multiple ID/Datavalue pairs.
  */
-public class VoxelList
-{
+public class VoxelList {
 
     private List<int[]> valuePairs = new ArrayList<int[]>();
 
     /**
      * Adds the specified id, data value pair to the VoxelList. A data value of -1 will operate on all data values of that id.
-     * 
+     *
      * @param i
      */
-    public void add(int[] i)
-    {
-        if (i[1] == -1)
-        {
-            if (!valuePairs.contains(i))
-            {
-                for (Iterator<int[]> it = valuePairs.iterator(); it.hasNext(); )
-                {
+    public void add(int[] i) {
+        if (i[1] == -1) {
+            if (!valuePairs.contains(i)) {
+                for (Iterator<int[]> it = valuePairs.iterator(); it.hasNext();) {
                     int[] in = it.next();
-                    if (in[0] == i[0])
-                    {
+                    if (in[0] == i[0]) {
                         it.remove();
                     }
                 }
                 valuePairs.add(i);
             }
-        }
-        else
-        {
-            if (!valuePairs.contains(i))
-            {
+        } else {
+            if (!valuePairs.contains(i)) {
                 valuePairs.add(i);
             }
         }
@@ -49,33 +40,24 @@ public class VoxelList
 
     /**
      * Removes the specified id, data value pair from the VoxelList.
-     * 
+     *
      * @param i
      * @return true if this list contained the specified element
      */
-    public boolean removeValue(final int[] i)
-    {
-        if (valuePairs.isEmpty())
-        {
+    public boolean removeValue(final int[] i) {
+        if (valuePairs.isEmpty()) {
             return false;
-        }
-        else
-        {
+        } else {
             boolean ret = false;
-            if (i[1] == -1)
-            {
-                for (Iterator<int[]> it = valuePairs.iterator(); it.hasNext(); )
-                {
+            if (i[1] == -1) {
+                for (Iterator<int[]> it = valuePairs.iterator(); it.hasNext();) {
                     int[] in = it.next();
-                    if (in[0] == i[0])
-                    {
+                    if (in[0] == i[0]) {
                         it.remove();
                         ret = true;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 ret = valuePairs.remove(i);
             }
             return ret;
@@ -86,12 +68,9 @@ public class VoxelList
      * @param i
      * @return true if this list contains the specified element
      */
-    public boolean contains(final int[] i)
-    {
-        for (int[] in : valuePairs)
-        {
-            if (in[0] == i[0] && (in[1] == i[1] || in[1] == -1))
-            {
+    public boolean contains(final int[] i) {
+        for (int[] in : valuePairs) {
+            if (in[0] == i[0] && (in[1] == i[1] || in[1] == -1)) {
                 return true;
             }
         }
@@ -101,8 +80,7 @@ public class VoxelList
     /**
      * Clears the VoxelList.
      */
-    public void clear()
-    {
+    public void clear() {
         valuePairs.clear();
     }
 
@@ -111,8 +89,7 @@ public class VoxelList
      *
      * @return true if this list contains no elements
      */
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return valuePairs.isEmpty();
     }
 
@@ -121,10 +98,8 @@ public class VoxelList
      *
      * @return defensive copy of the List with pairs
      */
-    public List<int[]> getList()
-    {
+    public List<int[]> getList() {
         return ImmutableList.copyOf(valuePairs);
     }
-
 
 }

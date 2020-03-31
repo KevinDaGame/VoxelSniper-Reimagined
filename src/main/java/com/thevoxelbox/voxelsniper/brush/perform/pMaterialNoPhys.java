@@ -12,35 +12,30 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pMaterialNoPhys extends vPerformer
-{
+public class pMaterialNoPhys extends vPerformer {
+
     private int i;
 
-    public pMaterialNoPhys()
-    {
+    public pMaterialNoPhys() {
         name = "Set, No-Physics";
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v)
-    {
+    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
         i = v.getVoxelId();
     }
 
     @Override
-    public void info(Message vm)
-    {
+    public void info(Message vm) {
         vm.performerName(name);
         vm.voxel();
     }
 
     @SuppressWarnings("deprecation")
-	@Override
-    public void perform(Block b)
-    {
-        if (MagicValues.getIdFor(b.getType()) != i)
-        {
+    @Override
+    public void perform(Block b) {
+        if (MagicValues.getIdFor(b.getType()) != i) {
             h.put(b);
             b.setBlockData(MagicValues.getBlockDataFor(i), false);
         }

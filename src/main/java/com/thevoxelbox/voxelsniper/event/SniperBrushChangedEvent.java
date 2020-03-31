@@ -9,50 +9,43 @@ import org.bukkit.event.HandlerList;
 /**
  *
  */
-public class SniperBrushChangedEvent extends Event
-{
+public class SniperBrushChangedEvent extends Event {
+
     private static final HandlerList handlers = new HandlerList();
     private final Sniper sniper;
     private final IBrush originalBrush;
     private final IBrush newBrush;
     private final String toolId;
 
-    public SniperBrushChangedEvent(Sniper sniper, String toolId, IBrush originalBrush, IBrush newBrush)
-    {
+    public SniperBrushChangedEvent(Sniper sniper, String toolId, IBrush originalBrush, IBrush newBrush) {
         this.sniper = sniper;
         this.originalBrush = originalBrush;
         this.newBrush = newBrush;
         this.toolId = toolId;
     }
 
-    public static HandlerList getHandlerList()
-    {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public IBrush getOriginalBrush()
-    {
+    public IBrush getOriginalBrush() {
         return originalBrush;
     }
 
-    public IBrush getNewBrush()
-    {
+    public IBrush getNewBrush() {
         return newBrush;
     }
 
-    public Sniper getSniper()
-    {
+    public Sniper getSniper() {
         return sniper;
     }
 
-    public String getToolId()
-    {
+    public String getToolId() {
         return toolId;
     }
 
     @Override
-    public HandlerList getHandlers()
-    {
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

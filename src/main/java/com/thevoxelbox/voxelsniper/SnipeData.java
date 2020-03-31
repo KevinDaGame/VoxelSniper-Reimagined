@@ -9,8 +9,7 @@ import org.bukkit.block.data.BlockData;
 /**
  * @author Piotr
  */
-public class SnipeData
-{
+public class SnipeData {
 
     public static final int DEFAULT_REPLACE_DATA_VALUE = 0;
     public static final int DEFAULT_CYLINDER_CENTER = 0;
@@ -65,24 +64,21 @@ public class SnipeData
     /**
      * @param vs
      */
-    public SnipeData(final Sniper vs)
-    {
+    public SnipeData(final Sniper vs) {
         this.owner = vs;
     }
 
     /**
      * @return the brushSize
      */
-    public final int getBrushSize()
-    {
+    public final int getBrushSize() {
         return this.brushSize;
     }
 
     /**
      * @return the cCen
      */
-    public final int getcCen()
-    {
+    public final int getcCen() {
         return this.cCen;
     }
 
@@ -90,8 +86,7 @@ public class SnipeData
      * @return the data
      */
     @Deprecated
-    public final byte getData()
-    {
+    public final byte getData() {
         return this.data;
     }
 
@@ -99,8 +94,7 @@ public class SnipeData
      * @return the replaceData
      */
     @Deprecated
-    public final byte getReplaceData()
-    {
+    public final byte getReplaceData() {
         return this.replaceData;
     }
 
@@ -108,16 +102,14 @@ public class SnipeData
      * @return the replaceId
      */
     @Deprecated
-    public final int getReplaceId()
-    {
+    public final int getReplaceId() {
         return this.replaceId;
     }
 
     /**
      * @return the voxelHeight
      */
-    public final int getVoxelHeight()
-    {
+    public final int getVoxelHeight() {
         return this.voxelHeight;
     }
 
@@ -125,48 +117,42 @@ public class SnipeData
      * @return the voxelId
      */
     @Deprecated
-    public final int getVoxelId()
-    {
+    public final int getVoxelId() {
         return this.voxelId;
     }
 
     /**
      * @return the voxelList
      */
-    public final VoxelList getVoxelList()
-    {
+    public final VoxelList getVoxelList() {
         return this.voxelList;
     }
 
     /**
      * @return the voxelMessage
      */
-    public final Message getVoxelMessage()
-    {
+    public final Message getVoxelMessage() {
         return this.voxelMessage;
     }
 
     /**
      * @return World
      */
-    public final World getWorld()
-    {
+    public final World getWorld() {
         return this.owner.getPlayer().getWorld();
     }
 
     /**
      * @return Sniper
      */
-    public final Sniper owner()
-    {
+    public final Sniper owner() {
         return this.owner;
     }
 
     /**
      * Reset to default values.
      */
-    public final void reset()
-    {
+    public final void reset() {
         this.voxelId = SnipeData.DEFAULT_VOXEL_ID;
         this.replaceId = SnipeData.DEFAULT_REPLACE_ID;
         this.data = SnipeData.DEFAULT_DATA_VALUE;
@@ -180,119 +166,94 @@ public class SnipeData
     /**
      * @param message
      */
-    public final void sendMessage(final String message)
-    {
+    public final void sendMessage(final String message) {
         this.owner.getPlayer().sendMessage(message);
     }
 
     /**
-     * @param brushSize
-     *         the brushSize to set
+     * @param brushSize the brushSize to set
      */
-    public final void setBrushSize(final int brushSize)
-    {
+    public final void setBrushSize(final int brushSize) {
         this.brushSize = brushSize;
     }
 
     /**
-     * @param cCen
-     *         the cCen to set
+     * @param cCen the cCen to set
      */
-    public final void setcCen(final int cCen)
-    {
+    public final void setcCen(final int cCen) {
         this.cCen = cCen;
     }
 
     /**
-     * @param data
-     *         the data to set
+     * @param data the data to set
      */
-    public final void setData(final byte data)
-    {
+    public final void setData(final byte data) {
         this.data = data;
     }
 
     /**
-     * @param replaceData
-     *         the replaceData to set
+     * @param replaceData the replaceData to set
      */
-    public final void setReplaceData(final byte replaceData)
-    {
+    public final void setReplaceData(final byte replaceData) {
         this.replaceData = replaceData;
     }
 
     /**
-     * @param replaceId
-     *         the replaceId to set
+     * @param replaceId the replaceId to set
      */
-    public final void setReplaceId(final int replaceId)
-    {
+    public final void setReplaceId(final int replaceId) {
         this.replaceId = replaceId;
     }
 
     /**
-     * @param voxelHeight
-     *         the voxelHeight to set
+     * @param voxelHeight the voxelHeight to set
      */
-    public final void setVoxelHeight(final int voxelHeight)
-    {
+    public final void setVoxelHeight(final int voxelHeight) {
         this.voxelHeight = voxelHeight;
     }
 
     /**
-     * @param voxelId
-     *         the voxelId to set
+     * @param voxelId the voxelId to set
      */
-    public final void setVoxelId(final int voxelId)
-    {
+    public final void setVoxelId(final int voxelId) {
         this.voxelId = voxelId;
     }
 
     /**
-     * @param voxelList
-     *         the voxelList to set
+     * @param voxelList the voxelList to set
      */
-    public final void setVoxelList(final VoxelList voxelList)
-    {
+    public final void setVoxelList(final VoxelList voxelList) {
         this.voxelList = voxelList;
     }
 
     /**
-     * @param voxelMessage
-     *         the voxelMessage to set
+     * @param voxelMessage the voxelMessage to set
      */
-    public final void setVoxelMessage(final Message voxelMessage)
-    {
+    public final void setVoxelMessage(final Message voxelMessage) {
         this.voxelMessage = voxelMessage;
     }
 
-    public int getRange()
-    {
+    public int getRange() {
         return range;
     }
 
-    public void setRange(int range)
-    {
+    public void setRange(int range) {
         this.range = range;
     }
 
-    public boolean isRanged()
-    {
+    public boolean isRanged() {
         return ranged;
     }
 
-    public void setRanged(boolean ranged)
-    {
+    public void setRanged(boolean ranged) {
         this.ranged = ranged;
     }
 
-    public boolean isLightningEnabled()
-    {
+    public boolean isLightningEnabled() {
         return lightning;
     }
 
-    public void setLightningEnabled(boolean lightning)
-    {
+    public void setLightningEnabled(boolean lightning) {
         this.lightning = lightning;
     }
 }

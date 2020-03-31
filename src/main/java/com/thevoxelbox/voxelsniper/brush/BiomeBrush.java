@@ -9,31 +9,26 @@ import org.bukkit.block.Block;
 /**
  *
  */
-public class BiomeBrush extends Brush
-{
+public class BiomeBrush extends Brush {
+
     private Biome selectedBiome = Biome.PLAINS;
 
     /**
      *
      */
-    public BiomeBrush()
-    {
+    public BiomeBrush() {
         this.setName("Biome (/b biome [Biome Name])");
     }
 
-    private void biome(final SnipeData v)
-    {
+    private void biome(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize, 2);
 
-        for (int x = -brushSize; x <= brushSize; x++)
-        {
+        for (int x = -brushSize; x <= brushSize; x++) {
             final double xSquared = Math.pow(x, 2);
 
-            for (int z = -brushSize; z <= brushSize; z++)
-            {
-                if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared)
-                {
+            for (int z = -brushSize; z <= brushSize; z++) {
+                if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
                     this.getWorld().setBiome(this.getTargetBlock().getX() + x, this.getTargetBlock().getZ() + z, this.selectedBiome);
                 }
             }
@@ -47,47 +42,38 @@ public class BiomeBrush extends Brush
         final int highChunkX = (block1.getX() >= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
         final int highChunkZ = (block1.getZ() >= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
 
-        for (int x = lowChunkX; x <= highChunkX; x++)
-        {
-            for (int z = lowChunkZ; z <= highChunkZ; z++)
-            {
+        for (int x = lowChunkX; x <= highChunkX; x++) {
+            for (int z = lowChunkZ; z <= highChunkZ; z++) {
                 this.getWorld().refreshChunk(x, z);
             }
         }
     }
 
     @Override
-    protected final void arrow(final SnipeData v)
-    {
+    protected final void arrow(final SnipeData v) {
         this.biome(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v)
-    {
+    protected final void powder(final SnipeData v) {
         this.biome(v);
     }
 
     @Override
-    public final void info(final Message vm)
-    {
+    public final void info(final Message vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.custom(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
     }
 
     @Override
-    public final void parameters(final String[] args, final SnipeData v)
-    {
-        if (args[1].equalsIgnoreCase("info"))
-        {
+    public final void parameters(final String[] args, final SnipeData v) {
+        if (args[1].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Biome Brush Parameters:");
             String availableBiomes = "";
 
-            for (final Biome biome : Biome.values())
-            {
-                if (availableBiomes.isEmpty())
-                {
+            for (final Biome biome : Biome.values()) {
+                if (availableBiomes.isEmpty()) {
                     availableBiomes = ChatColor.DARK_GREEN + biome.name();
                     continue;
                 }
@@ -96,20 +82,15 @@ public class BiomeBrush extends Brush
 
             }
             v.sendMessage(ChatColor.DARK_BLUE + "Available biomes: " + availableBiomes);
-        }
-        else
-        {
+        } else {
             // allows biome names with spaces in their name
             String biomeName = args[1];
-            for (int i = 2; i < args.length; i++)
-            {
+            for (int i = 2; i < args.length; i++) {
                 biomeName += " " + args[i];
             }
 
-            for (final Biome biome : Biome.values())
-            {
-                if (biome.name().equalsIgnoreCase(biomeName))
-                {
+            for (final Biome biome : Biome.values()) {
+                if (biome.name().equalsIgnoreCase(biomeName)) {
                     this.selectedBiome = biome;
                     break;
                 }
@@ -119,8 +100,7 @@ public class BiomeBrush extends Brush
     }
 
     @Override
-    public String getPermissionNode()
-    {
+    public String getPermissionNode() {
         return "voxelsniper.brush.biome";
     }
 }

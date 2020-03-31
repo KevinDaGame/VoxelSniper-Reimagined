@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Holds {@link BlockState}s that can be later on used to reset those block
- * locations back to the recorded states.
+ * Holds {@link BlockState}s that can be later on used to reset those block locations back to the recorded states.
  */
 public class Undo {
 
@@ -158,8 +157,7 @@ public class Undo {
     }
 
     /**
-     * Set the blockstates of all recorded blocks back to the state when they
-     * were inserted.
+     * Set the blockstates of all recorded blocks back to the state when they were inserted.
      */
     public void undo() {
 
