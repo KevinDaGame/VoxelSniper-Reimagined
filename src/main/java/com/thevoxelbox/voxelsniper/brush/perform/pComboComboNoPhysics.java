@@ -12,12 +12,12 @@ import org.bukkit.block.data.BlockData;
 /**
  * @author Voxel
  */
-public class pComboComboNoPhys extends vPerformer {
+public class pComboComboNoPhysics extends vPerformer {
 
     private BlockData voxelSubstance;
     private BlockData targetSubstance;
 
-    public pComboComboNoPhys() {
+    public pComboComboNoPhysics() {
         name = "Combo-Combo, No Physics";
     }
 

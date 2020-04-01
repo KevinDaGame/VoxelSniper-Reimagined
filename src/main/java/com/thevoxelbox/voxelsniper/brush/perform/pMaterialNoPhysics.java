@@ -12,11 +12,11 @@ import org.bukkit.block.Block;
 /**
  * @author Voxel
  */
-public class pMaterialNoPhys extends vPerformer {
+public class pMaterialNoPhysics extends vPerformer {
 
     private Material voxelMaterial;
 
-    public pMaterialNoPhys() {
+    public pMaterialNoPhysics() {
         name = "Material, No Physics";
     }
 
