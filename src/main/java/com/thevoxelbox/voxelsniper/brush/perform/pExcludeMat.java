@@ -4,9 +4,9 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import org.bukkit.Material;
 
 import org.bukkit.block.Block;
 
@@ -16,7 +16,7 @@ import org.bukkit.block.Block;
 public class pExcludeMat extends vPerformer {
 
     private VoxelList excludeList;
-    private int id;
+    private Material voxelMaterial;
 
     public pExcludeMat() {
         name = "Exclude Material";
@@ -32,16 +32,16 @@ public class pExcludeMat extends vPerformer {
     @Override
     public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
-        id = v.getVoxelId();
+        voxelMaterial = v.getVoxelMaterial();
         excludeList = v.getVoxelList();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
-        if (!excludeList.contains(new int[]{MagicValues.getIdFor(b.getType()), b.getData()})) {
+        if (!excludeList.contains(b.getType())) {
             h.put(b);
-            b.setBlockData(MagicValues.getBlockDataFor(id));
+            b.setBlockData(voxelMaterial.createBlockData());
         }
     }
 }

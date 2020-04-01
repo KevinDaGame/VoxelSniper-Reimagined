@@ -4,11 +4,11 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * @author Voxel
@@ -16,8 +16,7 @@ import org.bukkit.block.Block;
 public class pIncludeCombo extends vPerformer {
 
     private VoxelList includeList;
-    private int id;
-    private byte data;
+    private BlockData voxelSubstance;
 
     public pIncludeCombo() {
         name = "Include Combo";
@@ -34,17 +33,16 @@ public class pIncludeCombo extends vPerformer {
     @Override
     public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
-        id = v.getVoxelId();
-        data = v.getData();
         includeList = v.getVoxelList();
+        voxelSubstance = v.getVoxelSubstance();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
-        if (includeList.contains(new int[]{MagicValues.getIdFor(b.getType()), b.getData()})) {
+        if (includeList.contains(b.getType())) {
             h.put(b);
-            b.setBlockData(MagicValues.getBlockDataFor(id, data), true);
+            b.setBlockData(voxelSubstance, true);
         }
     }
 }

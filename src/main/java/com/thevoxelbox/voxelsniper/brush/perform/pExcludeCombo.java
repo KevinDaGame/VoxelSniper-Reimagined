@@ -4,11 +4,12 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import static jdk.nashorn.internal.runtime.Debug.id;
 
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * @author Voxel
@@ -16,8 +17,7 @@ import org.bukkit.block.Block;
 public class pExcludeCombo extends vPerformer {
 
     private VoxelList excludeList;
-    private int id;
-    private byte data;
+    private BlockData voxelSubstance;
 
     public pExcludeCombo() {
         name = "Exclude Combo";
@@ -34,17 +34,16 @@ public class pExcludeCombo extends vPerformer {
     @Override
     public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
-        id = v.getVoxelId();
-        data = v.getData();
+        voxelSubstance = v.getVoxelSubstance();
         excludeList = v.getVoxelList();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
-        if (!excludeList.contains(new int[]{MagicValues.getIdFor(b.getType()), b.getData()})) {
+        if (!excludeList.contains(b.getType())) {
             h.put(b);
-            b.setBlockData(MagicValues.getBlockDataFor(id, data), true);
+            b.setBlockData(voxelSubstance, true);
         }
     }
 }

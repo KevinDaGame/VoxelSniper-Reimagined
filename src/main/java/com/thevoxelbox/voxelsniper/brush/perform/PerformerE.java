@@ -45,7 +45,7 @@ public enum PerformerE {
     MAT_MAT(pMatMat.class, "mm", "mat-mat"),
     MAT_MAT_NOPHYS(pMatMatNoPhys.class, "mmp", "mat-mat-nophys"),
     MAT_COMBO(pMatCombo.class, "mc", "mat-combo"),
-    MAT_COMBO_NOPHYS(pMatComboNophys.class, "mcp", "mat-combo-nophys"),
+    MAT_COMBO_NOPHYS(pMatComboNoPhys.class, "mcp", "mat-combo-nophys"),
     COMBO(pCombo.class, "c", "combo"),
     COMBO_NOPHYS(pComboNoPhys.class, "cp", "combo-nophys"),
     COMBO_MAT(pComboMat.class, "cm", "combo-mat"),
@@ -55,7 +55,7 @@ public enum PerformerE {
     EXCLUDE_MATERIAL(pExcludeMat.class, "xm", "exclude-mat"),
     EXCLUDE_COMBO(pExcludeCombo.class, "xc", "exclude-combo"),
     INCLUDE_MATERIAL(pIncludeMat.class, "nm", "include-mat"),
-    INCLUDE_COMBO(pIncludeCombo.class, "nc", "include-combo"),
+    INCLUDE_COMBO(pIncludeCombo.class, "nc", "include-combo");
     //Other Performers which don't exist yet but are required for a full set of possibilities that actually could potentially do something:
     //List does not include any no-physics, unless materials are being placed (or combo), or any update unless ink is being placed (or combo) -Gavjenks
 

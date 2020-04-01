@@ -4,19 +4,19 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
+import org.bukkit.Material;
 
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * @author Voxel
  */
 public class pComboMatNoPhys extends vPerformer {
 
-    private byte d;
-    private int i;
-    private int ir;
+    private BlockData voxelSubstance;
+    private Material targetMaterial;
 
     public pComboMatNoPhys() {
         name = "Combo-Mat, No Physics";
@@ -25,9 +25,8 @@ public class pComboMatNoPhys extends vPerformer {
     @Override
     public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
         w = v.getWorld();
-        d = v.getData();
-        i = v.getVoxelId();
-        ir = v.getReplaceId();
+        voxelSubstance = v.getVoxelSubstance();
+        targetMaterial = v.getTargetMaterial();
     }
 
     @Override
@@ -41,9 +40,9 @@ public class pComboMatNoPhys extends vPerformer {
     @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
-        if (MagicValues.getIdFor(b.getType()) == ir) {
+        if (b.getType() == targetMaterial) {
             h.put(b);
-            b.setBlockData(MagicValues.getBlockDataFor(i, d), false);
+            b.setBlockData(voxelSubstance, false);
         }
     }
 
