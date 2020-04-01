@@ -5,7 +5,9 @@ import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Sniper;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.api.command.VoxelCommand;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 public class VoxelInkReplaceCommand extends VoxelCommand {
@@ -19,27 +21,26 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
     @Override
     public boolean onCommand(Player player, String[] args) {
         Sniper sniper = plugin.getSniperManager().getSniperForPlayer(player);
-
-        byte dataValue;
+        SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
+        BlockData blockData;
 
         if (args.length == 0) {
             Block targetBlock = new RangeBlockHelper(player, player.getWorld()).getTargetBlock();
             if (targetBlock != null) {
-                dataValue = targetBlock.getData();
+                blockData = targetBlock.getBlockData();
             } else {
                 return true;
             }
         } else {
             try {
-                dataValue = Byte.parseByte(args[0]);
-            } catch (NumberFormatException exception) {
-                player.sendMessage("Couldn't parse input.");
+                blockData = snipeData.getTargetMaterial().createBlockData("[" + args[0] + "]");
+            } catch (IllegalArgumentException e) {
+                player.sendMessage(ChatColor.RED + "Invalid block data for current material!");
                 return true;
             }
         }
 
-        SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
-        snipeData.setReplaceData(dataValue);
+        snipeData.setTargetSubstance(blockData);
         snipeData.getVoxelMessage().replaceData();
         return true;
     }

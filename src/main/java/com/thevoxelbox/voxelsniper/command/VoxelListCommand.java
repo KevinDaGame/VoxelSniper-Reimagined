@@ -22,7 +22,7 @@ public class VoxelListCommand extends VoxelCommand {
         if (args.length == 0) {
             final RangeBlockHelper rangeBlockHelper = new RangeBlockHelper(player, player.getWorld());
             final Block targetBlock = rangeBlockHelper.getTargetBlock();
-            snipeData.getVoxelList().add(new int[]{MagicValues.getIdFor(targetBlock.getBlockData()), targetBlock.getData()});
+            snipeData.getVoxelList().add(targetBlock.getBlockData().getMaterial());
             snipeData.getVoxelMessage().voxelList();
             return true;
         } else {
@@ -36,39 +36,27 @@ public class VoxelListCommand extends VoxelCommand {
         boolean remove = false;
 
         for (final String string : args) {
-            String tmpint;
-            Integer xint;
-            Integer xdat;
+            String materialId;
 
             if (string.startsWith("-")) {
                 remove = true;
-                tmpint = string.replaceAll("-", "");
+                materialId = string.replaceAll("-", "");
             } else {
-                tmpint = string;
+                materialId = string;
             }
 
-            try {
-                if (tmpint.contains(":")) {
-                    String[] tempintsplit = tmpint.split(":");
-                    xint = Integer.parseInt(tempintsplit[0]);
-                    xdat = Integer.parseInt(tempintsplit[1]);
+            Material material = Material.matchMaterial(materialId);
+
+            if (material != null && material.isBlock()) {
+                if (!remove) {
+                    snipeData.getVoxelList().add(material);
+                    snipeData.getVoxelMessage().voxelList();
                 } else {
-                    xint = Integer.parseInt(tmpint);
-                    xdat = -1;
+                    snipeData.getVoxelList().remove(material);
+                    snipeData.getVoxelMessage().voxelList();
                 }
-
-                if (MagicValues.getBlockDataFor(xint).getMaterial() != null && MagicValues.getBlockDataFor(xint).getMaterial().isBlock()) {
-                    if (!remove) {
-                        snipeData.getVoxelList().add(new int[]{xint, xdat});
-                        snipeData.getVoxelMessage().voxelList();
-                    } else {
-                        snipeData.getVoxelList().removeValue(new int[]{xint, xdat});
-                        snipeData.getVoxelMessage().voxelList();
-                    }
-                }
-
-            } catch (NumberFormatException ignored) {
             }
+
         }
         return true;
     }

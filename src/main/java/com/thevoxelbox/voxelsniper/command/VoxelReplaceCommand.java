@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 public class VoxelReplaceCommand extends VoxelCommand {
 
     public VoxelReplaceCommand(final VoxelSniper plugin) {
-        super("VoxelReplace", plugin);
-        setIdentifier("vr");
+        super("VoxelTarget", plugin);
+        setIdentifier("vt");
         setPermission("voxelsniper.sniper");
     }
 
@@ -21,25 +21,22 @@ public class VoxelReplaceCommand extends VoxelCommand {
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         if (args.length == 0) {
-            Block targetBlock = new RangeBlockHelper(player, player.getWorld()).getTargetBlock();
-            if (targetBlock != null) {
-                snipeData.setReplaceId(MagicValues.getIdFor(targetBlock.getBlockData()));
+            Block selectedBlock = new RangeBlockHelper(player, player.getWorld()).getTargetBlock();
+            if (selectedBlock != null) {
+                snipeData.setTargetSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().replace();
             }
             return true;
         }
 
         Material material = Material.matchMaterial(args[0]);
-        if (material != null) {
-            if (material.isBlock()) {
-                snipeData.setReplaceId(MagicValues.getIdFor(material));
-                snipeData.getVoxelMessage().replace();
-                return true;
-            } else {
-                player.sendMessage(ChatColor.RED + "You have entered an invalid Item ID.");
-                return true;
-            }
+        if (material != null && material.isBlock()) {
+            snipeData.setTargetSubstance(material.createBlockData());
+            snipeData.getVoxelMessage().replace();
+            return true;
         }
-        return false;
+
+        player.sendMessage(ChatColor.RED + "You have entered an invalid item ID.");
+        return true;
     }
 }

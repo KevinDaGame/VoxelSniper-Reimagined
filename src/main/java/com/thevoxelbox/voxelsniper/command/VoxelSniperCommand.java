@@ -43,11 +43,11 @@ public class VoxelSniperCommand extends VoxelCommand {
                         int range = Integer.parseInt(args[1]);
                         if (range < 0) {
                             player.sendMessage("Negative values are not allowed.");
+                        } else {
+                            snipeData.setRange(range);
+                            snipeData.setRanged(true);
+                            snipeData.getVoxelMessage().toggleRange();
                         }
-                        snipeData.setRange(range);
-                        snipeData.setRanged(true);
-                        snipeData.getVoxelMessage().toggleRange();
-
                     } catch (NumberFormatException exception) {
                         player.sendMessage("Can't parse number.");
                     }

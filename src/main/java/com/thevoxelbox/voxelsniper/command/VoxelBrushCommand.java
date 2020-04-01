@@ -33,15 +33,12 @@ public class VoxelBrushCommand extends VoxelCommand {
             return true;
         } else if (args.length > 0) {
             try {
-                int newBrushSize = Integer.parseInt(args[0]);
-                if (!player.hasPermission("voxelsniper.ignorelimitations") && newBrushSize > plugin.getVoxelSniperConfiguration().getLiteSniperMaxBrushSize()) {
-                    player.sendMessage("Size is restricted to " + plugin.getVoxelSniperConfiguration().getLiteSniperMaxBrushSize() + " for you.");
-                    newBrushSize = plugin.getVoxelSniperConfiguration().getLiteSniperMaxBrushSize();
-                }
                 int originalSize = snipeData.getBrushSize();
-                snipeData.setBrushSize(newBrushSize);
+                snipeData.setBrushSize(Integer.parseInt(args[0]));
+
                 SniperBrushSizeChangedEvent event = new SniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
                 Bukkit.getPluginManager().callEvent(event);
+
                 snipeData.getVoxelMessage().size();
                 return true;
             } catch (NumberFormatException ingored) {
