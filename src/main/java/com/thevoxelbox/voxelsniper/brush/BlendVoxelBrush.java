@@ -84,6 +84,9 @@ public class BlendVoxelBrush extends BlendBrushBase {
                     // Make sure that there's no tie in highest material
                     for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
                         if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                            if (e.getKey() == highestMaterial) {
+                                continue;
+                            }
                             tiecheck = false;
                         }
                     }
