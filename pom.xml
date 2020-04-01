@@ -4,7 +4,7 @@
 
     <groupId>com.thevoxelbox</groupId>
     <artifactId>VoxelSniper</artifactId>
-    <version>5.171.15-SNAPSHOT</version>
+    <version>6.0.0</version>
     <packaging>jar</packaging>
 
     <name>VoxelSniper</name>
@@ -12,9 +12,9 @@
     <url>http://www.voxelwiki.com/minecraft/VoxelSniper</url>
 
     <scm>
-        <url>https://github.com/TVPT/VoxelSniper</url>
-        <developerConnection>scm:git:git@github.com:TVPT/VoxelSniper.git</developerConnection>
-        <connection>scm:git:git://github.com/TVPT/VoxelSniper.git</connection>
+        <url>https://github.com/ervinnnc/VoxelSniper</url>
+        <developerConnection>scm:git:git@github.com:ervinnnc/VoxelSniper.git</developerConnection>
+        <connection>scm:git:git://github.com/ervinnnc/VoxelSniper.git</connection>
     </scm>
 
     <properties>
@@ -23,39 +23,7 @@
         <project.build.version>${project.version}</project.build.version>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>jenkins</id>
-            <activation>
-                <property>
-                    <name>env.BUILD_NUMBER</name>
-                </property>
-            </activation>
-            <properties>
-                <project.build.identifier>jnks${env.BUILD_NUMBER}-git${buildNumber}</project.build.identifier>
-                <project.build.version>${project.version}-${project.build.identifier}</project.build.version>
-            </properties>
-        </profile>
-    </profiles>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>tvpt-repo</id>
-            <name>TVPT Snapshot Repository</name>
-            <url>http://vault.voxelmodpack.com/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>tvpt-repo</id>
-            <name>TVPT Release Repository</name>
-            <url>http://vault.voxelmodpack.com/content/repositories/releases</url>
-        </repository>
-    </distributionManagement>
-
     <repositories>
-        <repository>
-            <id>tvpt-repo</id>
-            <url>http://vault.voxelmodpack.com/content/repositories/central/</url>
-        </repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
