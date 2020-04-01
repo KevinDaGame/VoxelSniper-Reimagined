@@ -159,21 +159,21 @@ public class Sniper {
                                 BlockData oldSubstance,
                                  newSubstance;
                                 if (targetBlock != null) {
-                                    oldSubstance = snipeData.getVoxelSubstance();
+                                    oldSubstance = snipeData.getTargetSubstance();
 
-                                    snipeData.setVoxelSubstance(targetBlock.getBlockData());
-                                    newSubstance = snipeData.getVoxelSubstance();
+                                    snipeData.setTargetSubstance(targetBlock.getBlockData());
+                                    newSubstance = snipeData.getTargetSubstance();
                                 } else {
-                                    oldSubstance = snipeData.getVoxelSubstance();
+                                    oldSubstance = snipeData.getTargetSubstance();
 
                                     snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                    newSubstance = snipeData.getVoxelSubstance();
+                                    newSubstance = snipeData.getTargetSubstance();
                                 }
 
-                                SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
+                                SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                                 Bukkit.getPluginManager().callEvent(event);
 
-                                snipeData.getVoxelMessage().voxel();
+                                snipeData.getVoxelMessage().replace();
                             default:
                                 break;
                         }

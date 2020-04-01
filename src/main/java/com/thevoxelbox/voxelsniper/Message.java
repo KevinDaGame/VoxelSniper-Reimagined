@@ -57,14 +57,14 @@ public class Message {
      */
     @SuppressWarnings("deprecation")
     public void voxel() {
-        snipeData.sendMessage(ChatColor.GOLD + "Voxel: " + ChatColor.RED + snipeData.getVoxelMaterial());
+        snipeData.sendMessage(ChatColor.GOLD + "Voxel Material: " + ChatColor.RED + snipeData.getVoxelMaterial());
     }
 
     /**
      * Display data value.
      */
     public void data() {
-        snipeData.sendMessage(ChatColor.BLUE + "Data Variable: " + ChatColor.DARK_RED + snipeData.getVoxelSubstance().getAsString());
+        snipeData.sendMessage(ChatColor.BLUE + "Voxel Data Value: " + ChatColor.DARK_RED + snipeData.getVoxelSubstance().getAsString());
     }
 
     /**
@@ -88,14 +88,14 @@ public class Message {
      */
     @SuppressWarnings("deprecation")
     public void replace() {
-        snipeData.sendMessage(ChatColor.AQUA + "Target Material: " + ChatColor.RED + snipeData.getTargetMaterial());
+        snipeData.sendMessage(ChatColor.AQUA + "Replace Target Material: " + ChatColor.RED + snipeData.getTargetMaterial());
     }
 
     /**
      * Display replace data value.
      */
     public void replaceData() {
-        snipeData.sendMessage(ChatColor.DARK_GRAY + "Target Data Variable: " + ChatColor.DARK_RED + snipeData.getTargetSubstance().getAsString());
+        snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Target Data Value: " + ChatColor.DARK_RED + snipeData.getTargetSubstance().getAsString());
     }
 
     /**

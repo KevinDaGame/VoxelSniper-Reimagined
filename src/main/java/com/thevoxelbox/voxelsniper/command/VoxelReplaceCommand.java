@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 public class VoxelReplaceCommand extends VoxelCommand {
 
     public VoxelReplaceCommand(final VoxelSniper plugin) {
-        super("VoxelTarget", plugin);
-        setIdentifier("vt");
+        super("VoxelReplace", plugin);
+        setIdentifier("vr");
         setPermission("voxelsniper.sniper");
     }
 
