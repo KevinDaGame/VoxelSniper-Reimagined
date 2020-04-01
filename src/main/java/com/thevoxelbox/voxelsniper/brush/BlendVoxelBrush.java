@@ -1,8 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,15 +27,15 @@ public class BlendVoxelBrush extends BlendBrushBase {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         // Array that holds the original materials plus a buffer
-        final int[][][] oldMaterials = new int[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
+        final Material[][][] oldMaterials = new Material[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
         // Array that holds the blended materials
-        final int[][][] newMaterials = new int[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
+        final Material[][][] newMaterials = new Material[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
 
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {
             for (int y = 0; y <= 2 * (brushSize + 1); y++) {
                 for (int z = 0; z <= 2 * (brushSize + 1); z++) {
-                    oldMaterials[x][y][z] = this.getBlockIdAt(this.getTargetBlock().getX() - brushSize - 1 + x, this.getTargetBlock().getY() - brushSize - 1 + y, this.getTargetBlock().getZ() - brushSize - 1 + z);
+                    oldMaterials[x][y][z] = this.getBlockMaterialAt(this.getTargetBlock().getX() - brushSize - 1 + x, this.getTargetBlock().getY() - brushSize - 1 + y, this.getTargetBlock().getZ() - brushSize - 1 + z);
                 }
             }
         }
@@ -51,38 +53,44 @@ public class BlendVoxelBrush extends BlendBrushBase {
         for (int x = 0; x <= brushSizeDoubled; x++) {
             for (int y = 0; y <= brushSizeDoubled; y++) {
                 for (int z = 0; z <= brushSizeDoubled; z++) {
-                    final int[] materialFrequency = new int[BlendBrushBase.getMaxBlockMaterialID() + 1]; // Array that tracks frequency of materials neighboring given block
-                    int modeMatCount = 0;
-                    int modeMatId = 0;
+                    Map<Material, Integer> materialFrequency = new HashMap<>();
+
                     boolean tiecheck = true;
 
                     for (int m = -1; m <= 1; m++) {
                         for (int n = -1; n <= 1; n++) {
                             for (int o = -1; o <= 1; o++) {
                                 if (!(m == 0 && n == 0 && o == 0)) {
-                                    materialFrequency[oldMaterials[x + 1 + m][y + 1 + n][z + 1 + o]]++;
+                                    Material currentMaterial = oldMaterials[x + 1 + m][y + 1 + n][z + 1 + o];
+                                    int currentFrequency = materialFrequency.getOrDefault(currentMaterial, 0) + 1;
+
+                                    materialFrequency.put(currentMaterial, currentFrequency);
                                 }
                             }
                         }
                     }
 
-                    // Find most common neighboring material.
-                    for (int i = 0; i <= BlendBrushBase.getMaxBlockMaterialID(); i++) {
-                        if (materialFrequency[i] > modeMatCount && !(this.excludeAir && i == 0) && !(this.excludeWater && (i == MagicValues.getIdFor(Material.WATER)))) {
-                            modeMatCount = materialFrequency[i];
-                            modeMatId = i;
+                    int highestMaterialCount = 0;
+                    Material highestMaterial = Material.AIR;
+
+                    // Find most common neighbouring material
+                    for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
+                        if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                            highestMaterialCount = e.getValue();
+                            highestMaterial = e.getKey();
                         }
                     }
-                    // Make sure there'world not a tie for most common
-                    for (int i = 0; i < modeMatId; i++) {
-                        if (materialFrequency[i] == modeMatCount && !(this.excludeAir && i == 0) && !(this.excludeWater && (i == MagicValues.getIdFor(Material.WATER)))) {
+
+                    // Make sure that there's no tie in highest material
+                    for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
+                        if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
                             tiecheck = false;
                         }
                     }
 
                     // Record most common neighbor material for this block
                     if (tiecheck) {
-                        newMaterials[x][y][z] = modeMatId;
+                        newMaterials[x][y][z] = highestMaterial;
                     }
                 }
             }
@@ -94,11 +102,11 @@ public class BlendVoxelBrush extends BlendBrushBase {
         for (int x = brushSizeDoubled; x >= 0; x--) {
             for (int y = 0; y <= brushSizeDoubled; y++) {
                 for (int z = brushSizeDoubled; z >= 0; z--) {
-                    if (!(this.excludeAir && newMaterials[x][y][z] == 0) && !(this.excludeWater && (newMaterials[x][y][z] == MagicValues.getIdFor(Material.WATER)))) {
-                        if (this.getBlockIdAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z) != newMaterials[x][y][z]) {
+                    if (!(this.excludeAir && newMaterials[x][y][z] == Material.AIR) && !(this.excludeWater && newMaterials[x][y][z] == Material.WATER)) {
+                        if (this.getBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z) != newMaterials[x][y][z]) {
                             undo.put(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z));
                         }
-                        this.setBlockIdAt(this.getTargetBlock().getZ() - brushSize + z, this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, newMaterials[x][y][z]);
+                        this.setBlockMaterialAt(this.getTargetBlock().getZ() - brushSize + z, this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, newMaterials[x][y][z]);
 
                     }
                 }

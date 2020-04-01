@@ -105,23 +105,30 @@ public class SplatterOverlayBrush extends PerformBrush {
                         // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) {
                             // if inside of the column && if to be splattered
-                            final int check = this.getBlockIdAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
-                            if (check == 0 || check == 8 || check == 9) {
+                            final Material check = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
+                            if (check == Material.AIR || check == Material.WATER) {
                                 // must start at surface... this prevents it filling stuff in if you click in a wall
                                 // and it starts out below surface.
                                 if (!this.allBlocks) {
                                     // if the override parameter has not been activated, go to the switch that filters out manmade stuff.
-                                    switch (this.getBlockIdAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
-                                        case 1:
-                                        case 2:
-                                        case 3:
-                                        case 12:
-                                        case 13:
-                                        case 24:// These cases filter out any manufactured or refined blocks, any trees and leas, etc. that you don't want to mess with.
-                                        case 48:
-                                        case 82:
-                                        case 49:
-                                        case 78:
+                                    switch (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
+
+                                        case STONE:
+                                        case ANDESITE:
+                                        case DIORITE:
+                                        case GRANITE:
+                                        case GRASS:
+                                        case DIRT:
+                                        case COARSE_DIRT:
+                                        case PODZOL:
+                                        case SAND:
+                                        case RED_SAND:
+                                        case GRAVEL:
+                                        case SANDSTONE:
+                                        case MOSSY_COBBLESTONE:
+                                        case CLAY:
+                                        case SNOW:
+                                        case OBSIDIAN:
                                             final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
                                             for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
@@ -220,26 +227,28 @@ public class SplatterOverlayBrush extends PerformBrush {
                 for (int y = this.getTargetBlock().getY(); y > 0; y--) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) { // if inside of the column...&& if to be splattered
-                            if (this.getBlockIdAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != 0) { // if not a floating block (like one of Notch'world pools)
-                                if (this.getBlockIdAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == 0) { // must start at surface... this prevents it filling stuff in if
+                            if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != Material.AIR) { // if not a floating block (like one of Notch'world pools)
+                                if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == Material.AIR) { // must start at surface... this prevents it filling stuff in if
                                     // you click in a wall and it starts out below surface.
                                     if (!this.allBlocks) { // if the override parameter has not been activated, go to the switch that filters out manmade stuff.
 
-                                        switch (this.getBlockIdAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
-                                            case 1:
-                                            case 2:
-                                            case 3:
-                                            case 12:
-                                            case 13:
-                                            case 14: // These cases filter out any manufactured or refined blocks, any trees and leas, etc. that you don't want to
-                                            // mess with.
-                                            case 15:
-                                            case 16:
-                                            case 24:
-                                            case 48:
-                                            case 82:
-                                            case 49:
-                                            case 78:
+                                        switch (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
+                                            case STONE:
+                                            case ANDESITE:
+                                            case DIORITE:
+                                            case GRANITE:
+                                            case GRASS:
+                                            case DIRT:
+                                            case COARSE_DIRT:
+                                            case PODZOL:
+                                            case SAND:
+                                            case RED_SAND:
+                                            case GRAVEL:
+                                            case SANDSTONE:
+                                            case MOSSY_COBBLESTONE:
+                                            case CLAY:
+                                            case SNOW:
+                                            case OBSIDIAN:
                                                 final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                                 for (int d = 1; (d < depth + 1); d++) {
                                                     this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify

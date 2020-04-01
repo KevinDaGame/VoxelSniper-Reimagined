@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -105,7 +106,7 @@ public class FillDownBrush extends PerformBrush {
                 v.sendMessage(ChatColor.AQUA + "Now filling liquids as well as air.");
             } else if (par[i].equalsIgnoreCase("some")) {
                 this.fillLiquid = false;
-                v.setReplaceId(0);
+                v.setTargetSubstance(Material.AIR.createBlockData());
                 v.sendMessage(ChatColor.AQUA + "Now only filling air.");
             } else if (par[i].equalsIgnoreCase("-e")) {
                 this.fromExisting = !this.fromExisting;

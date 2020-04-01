@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -181,7 +180,7 @@ public class MoveBrush extends Brush {
             }
             for (final BlockState blockState : selection.getBlockStates()) {
                 final Block affectedBlock = world.getBlockAt(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
-                affectedBlock.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(blockState.getType()), blockState.getRawData()), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getType()));
+                affectedBlock.setBlockData(blockState.getBlockData(), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getType()));
             }
         }
     }

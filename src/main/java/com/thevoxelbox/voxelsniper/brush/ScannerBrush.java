@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 
@@ -123,14 +122,7 @@ public class ScannerBrush extends Brush {
     @SuppressWarnings("deprecation")
     @Override
     protected final void arrow(final SnipeData v) {
-        this.checkFor = MagicValues.getBlockDataFor(v.getVoxelId()).getMaterial();
-        this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    protected final void powder(final SnipeData v) {
-        this.checkFor = MagicValues.getBlockDataFor(v.getVoxelId()).getMaterial();
+        this.checkFor = v.getVoxelMaterial();
         this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
     }
 

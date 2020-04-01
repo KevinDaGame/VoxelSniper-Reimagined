@@ -35,17 +35,23 @@ public class UnderlayBrush extends PerformBrush {
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
                             if (!this.allBlocks) { // if the override parameter has not been activated, go to the switch that filters out manmade stuff.
-                                switch (this.getBlockIdAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
-                                    case 1:
-                                    case 2:
-                                    case 3:
-                                    case 12:
-                                    case 13:
-                                    case 24:// These cases filter out any manufactured or refined blocks, any trees and leas, etc. that you don't want to mess with.
-                                    case 48:
-                                    case 82:
-                                    case 49:
-                                    case 78:
+                                switch (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
+                                    case STONE:
+                                    case ANDESITE:
+                                    case DIORITE:
+                                    case GRANITE:
+                                    case GRASS:
+                                    case DIRT:
+                                    case COARSE_DIRT:
+                                    case PODZOL:
+                                    case SAND:
+                                    case RED_SAND:
+                                    case GRAVEL:
+                                    case SANDSTONE:
+                                    case MOSSY_COBBLESTONE:
+                                    case CLAY:
+                                    case SNOW:
+                                    case OBSIDIAN:
                                         for (int d = 0; (d < this.depth); d++) {
                                             if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
                                                 this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
@@ -89,21 +95,24 @@ public class UnderlayBrush extends PerformBrush {
 
                             if (!this.allBlocks) { // if the override parameter has not been activated, go to the switch that filters out manmade stuff.
 
-                                switch (this.getBlockIdAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
-                                    case 1:
-                                    case 2:
-                                    case 3:
-                                    case 12:
-                                    case 13:
-                                    case 14: // These cases filter out any manufactured or refined blocks, any trees and leas, etc. that you don't want to mess
-                                    // with.
-                                    case 15:
-                                    case 16:
-                                    case 24:
-                                    case 48:
-                                    case 82:
-                                    case 49:
-                                    case 78:
+                                switch (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
+
+                                    case STONE:
+                                    case ANDESITE:
+                                    case DIORITE:
+                                    case GRANITE:
+                                    case GRASS:
+                                    case DIRT:
+                                    case COARSE_DIRT:
+                                    case PODZOL:
+                                    case SAND:
+                                    case RED_SAND:
+                                    case GRAVEL:
+                                    case SANDSTONE:
+                                    case MOSSY_COBBLESTONE:
+                                    case CLAY:
+                                    case SNOW:
+                                    case OBSIDIAN:
                                         for (int d = -1; (d < this.depth - 1); d++) {
                                             this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                             // parameters

@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import org.bukkit.ChatColor;
@@ -8,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.HashSet;
+import org.bukkit.block.data.BlockData;
 
 /**
  * @author Piotr
@@ -88,23 +88,29 @@ public class PullBrush extends Brush {
      * @return boolean
      */
     private boolean isSurface(final int x, final int y, final int z) {
-        return this.getBlockIdAt(x, y, z) != 0 && ((this.getBlockIdAt(x, y - 1, z) == 0) || (this.getBlockIdAt(x, y + 1, z) == 0) || (this.getBlockIdAt(x + 1, y, z) == 0) || (this.getBlockIdAt(x - 1, y, z) == 0) || (this.getBlockIdAt(x, y, z + 1) == 0) || (this.getBlockIdAt(x, y, z - 1) == 0));
+        return this.getBlockMaterialAt(x, y, z) != Material.AIR
+                && ((this.getBlockMaterialAt(x, y - 1, z) == Material.AIR)
+                || (this.getBlockMaterialAt(x, y + 1, z) == Material.AIR)
+                || (this.getBlockMaterialAt(x + 1, y, z) == Material.AIR)
+                || (this.getBlockMaterialAt(x - 1, y, z) == Material.AIR)
+                || (this.getBlockMaterialAt(x, y, z + 1) == Material.AIR)
+                || (this.getBlockMaterialAt(x, y, z - 1) == Material.AIR));
 
     }
 
     @SuppressWarnings("deprecation")
     private void setBlock(final BlockWrapper block) {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
-        if (this.getBlockIdAt(block.getX(), block.getY() - 1, block.getZ()) == 0) {
-            currentBlock.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
+        if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == Material.AIR) {
+            currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
-                this.setBlockIdAt(block.getZ(), block.getX(), y, 0);
+                this.setBlockMaterialAt(block.getZ(), block.getX(), y, Material.AIR);
             }
         } else {
-            currentBlock.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
+            currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
                 final Block current = this.clampY(block.getX(), y, block.getZ());
-                current.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
+                current.setBlockData(block.getBlockData());
             }
         }
     }
@@ -112,9 +118,9 @@ public class PullBrush extends Brush {
     @SuppressWarnings("deprecation")
     private void setBlockDown(final BlockWrapper block) {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
-        currentBlock.setBlockData(MagicValues.getBlockDataFor(block.getId(), block.getD()));
+        currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
-            this.setBlockIdAt(block.getZ(), block.getX(), y, 0);
+            this.setBlockMaterialAt(block.getZ(), block.getX(), y, Material.AIR);
         }
         // }
     }
@@ -148,7 +154,7 @@ public class PullBrush extends Brush {
         double str;
         final double brushSizeSquared = Math.pow(v.getBrushSize() + 0.5, 2);
 
-        int id;
+        Material material;
 
         // Are we pulling up ?
         if (this.vh > 0) {
@@ -192,9 +198,9 @@ public class PullBrush extends Brush {
                                 }
                                 lastStr = (int) (this.vh * str);
                                 newY = actualY + lastStr;
-                                id = MagicValues.getIdFor(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
+                                material = this.getWorld().getBlockAt(actualX, actualY, actualZ).getType();
                                 for (int i = newY; i < lastY; i++) {
-                                    this.clampY(actualX, i, actualZ).setBlockData(MagicValues.getBlockDataFor(id));
+                                    this.clampY(actualX, i, actualZ).setBlockData(material.createBlockData());
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -221,9 +227,9 @@ public class PullBrush extends Brush {
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                                final int blockId = MagicValues.getIdFor(this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType());
+                                final Material blockMaterial = this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType();
                                 for (int i = blockY; i < lastY; i++) {
-                                    this.clampY(actualX, i, actualZ).setBlockData(MagicValues.getBlockDataFor(blockId));
+                                    this.clampY(actualX, i, actualZ).setBlockData(blockMaterial.createBlockData());
                                 }
                                 lastY = blockY;
                                 y++;
@@ -242,8 +248,7 @@ public class PullBrush extends Brush {
      */
     private final class BlockWrapper {
 
-        private final int id;
-        private final byte d;
+        private final BlockData blockData;
         private final double str;
         private final int x;
         private final int y;
@@ -255,8 +260,7 @@ public class PullBrush extends Brush {
          */
         @SuppressWarnings("deprecation")
         public BlockWrapper(final Block block, final double st) {
-            this.id = MagicValues.getIdFor(block.getType());
-            this.d = block.getData();
+            this.blockData = block.getBlockData();
             this.x = block.getX();
             this.y = block.getY();
             this.z = block.getZ();
@@ -266,15 +270,15 @@ public class PullBrush extends Brush {
         /**
          * @return the d
          */
-        public byte getD() {
-            return this.d;
+        public BlockData getBlockData() {
+            return this.blockData;
         }
 
         /**
          * @return the id
          */
-        public int getId() {
-            return this.id;
+        public Material getMaterial() {
+            return this.blockData.getMaterial();
         }
 
         /**

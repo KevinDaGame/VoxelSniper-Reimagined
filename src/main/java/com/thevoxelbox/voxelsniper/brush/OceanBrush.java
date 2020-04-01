@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -142,9 +141,9 @@ public class OceanBrush extends Brush {
                 // cover the sea floor of required
                 if (this.coverFloor && (newSeaFloorLevel < this.waterLevel)) {
                     Block block = world.getBlockAt(x, newSeaFloorLevel, z);
-                    if (MagicValues.getIdFor(block.getType()) != v.getVoxelId()) {
+                    if (block.getType() != v.getVoxelMaterial()) {
                         undo.put(block);
-                        block.setBlockData(MagicValues.getBlockDataFor(v.getVoxelId()));
+                        block.setBlockData(v.getVoxelMaterial().createBlockData());
                     }
                 }
             }

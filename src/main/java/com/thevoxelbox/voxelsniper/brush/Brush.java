@@ -4,9 +4,11 @@ import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 
 /**
  * Abstract implementation of the {@link IBrush} interface.
@@ -186,8 +188,8 @@ public abstract class Brush implements IBrush {
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
     @SuppressWarnings("deprecation")
-    protected int getBlockIdAt(int x, int y, int z) {
-        return MagicValues.getIdFor(getWorld().getBlockAt(x, y, z).getBlockData());
+    protected Material getBlockMaterialAt(int x, int y, int z) {
+        return getWorld().getBlockAt(x, y, z).getBlockData().getMaterial();
     }
 
     /**
@@ -199,8 +201,8 @@ public abstract class Brush implements IBrush {
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
     @SuppressWarnings("deprecation")
-    protected byte getBlockDataAt(int x, int y, int z) {
-        return this.getWorld().getBlockAt(x, y, z).getData();
+    protected BlockData getBlockDataAt(int x, int y, int z) {
+        return this.getWorld().getBlockAt(x, y, z).getBlockData();
     }
 
     /**
@@ -224,33 +226,31 @@ public abstract class Brush implements IBrush {
      */
     @Deprecated
     protected final void setBlock(BlockWrapper blockWrapper) {
-        this.getWorld().getBlockAt(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setBlockData(MagicValues.getBlockDataFor(blockWrapper.getId()));
+        this.getWorld().getBlockAt(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setBlockData(blockWrapper.getBlockData());
     }
 
     /**
-     * Sets the Id of the block at the passed coordinate.
+     * Sets the Material of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
      * @param z Z coordinate
      * @param x X coordinate
      * @param y Y coordinate
-     * @param id The id the block will be set to
+     * @param material the material to set this block to
      */
-    @SuppressWarnings("deprecation")
-    protected final void setBlockIdAt(int z, int x, int y, int id) {
-        this.getWorld().getBlockAt(x, y, z).setBlockData(MagicValues.getBlockDataFor(id));
+    protected final void setBlockMaterialAt(int z, int x, int y, Material material) {
+        this.getWorld().getBlockAt(x, y, z).setBlockData(material.createBlockData());
     }
 
     /**
-     * Sets the id and data value of the block at the passed coordinate.
+     * Sets the BlockData value of the block at the passed coordinate. Will use the exact BlockData that is passed into the function and NOT the default
+     * BlockData of the Material.
      *
      * @param x X coordinate
      * @param y Y coordinate
      * @param z Z coordinate
-     * @param id The id the block will be set to
-     * @param data The data value the block will be set to
+     * @param blockData The blockData to set this block to
      */
-    @SuppressWarnings("deprecation")
-    protected final void setBlockIdAndDataAt(int x, int y, int z, int id, byte data) {
-        this.getWorld().getBlockAt(x, y, z).setBlockData(MagicValues.getBlockDataFor(id, data), true);
+    protected final void setBlockMaterialAndDataAt(int x, int y, int z, BlockData blockData) {
+        this.getWorld().getBlockAt(x, y, z).setBlockData(blockData, true);
     }
 }

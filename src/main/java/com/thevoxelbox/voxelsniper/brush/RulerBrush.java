@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
 /**
@@ -30,7 +31,7 @@ public class RulerBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        final int voxelMaterialId = v.getVoxelId();
+        final Material voxelMaterial = v.getVoxelMaterial();
         this.coords = this.getTargetBlock().getLocation().toVector();
 
         if (this.xOff == 0 && this.yOff == 0 && this.zOff == 0) {
@@ -40,7 +41,7 @@ public class RulerBrush extends Brush {
             final Undo undo = new Undo();
 
             undo.put(this.clampY(this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, this.getTargetBlock().getZ() + this.zOff));
-            this.setBlockIdAt(this.getTargetBlock().getZ() + this.zOff, this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, voxelMaterialId);
+            this.setBlockMaterialAt(this.getTargetBlock().getZ() + this.zOff, this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, voxelMaterial);
             v.owner().storeUndo(undo);
         }
     }

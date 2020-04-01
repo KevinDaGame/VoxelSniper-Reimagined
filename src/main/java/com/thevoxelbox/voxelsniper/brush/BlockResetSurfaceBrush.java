@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import java.util.ArrayList;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 
@@ -135,8 +134,8 @@ public class BlockResetSurfaceBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void resetBlock(Block block, final byte oldData) {
-        block.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(block.getType()), (byte) ((block.getData() + 1) & 0xf)), true);
-        block.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(block.getType()), oldData), true);
+        // Resets the block state to initial state by creating a new BlockData with default values.
+        block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
     }
 
     @Override

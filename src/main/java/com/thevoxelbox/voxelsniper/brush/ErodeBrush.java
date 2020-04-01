@@ -6,7 +6,6 @@ import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
 import com.martiansoftware.jsap.UnflaggedOption;
 import com.martiansoftware.jsap.stringparsers.EnumeratedStringParser;
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -25,6 +24,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static org.bukkit.Material.LAVA;
+import static org.bukkit.Material.WATER;
+import org.bukkit.block.data.BlockData;
 
 /**
  * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
@@ -94,7 +96,7 @@ public class ErodeBrush extends Brush {
         final Undo undo = new Undo();
         for (final BlockWrapper blockWrapper : blockChangeTracker.getAll()) {
             undo.put(blockWrapper.getBlock());
-            blockWrapper.getBlock().setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(blockWrapper.getMaterial()), blockWrapper.getData()), true);
+            blockWrapper.getBlock().setBlockData(blockWrapper.getBlockData(), true);
         }
 
         v.owner().storeUndo(undo);
@@ -123,7 +125,7 @@ public class ErodeBrush extends Brush {
 
                             if (!(relativeBlock.isEmpty() || relativeBlock.isLiquid())) {
                                 count++;
-                                final BlockWrapper typeBlock = new BlockWrapper(null, relativeBlock.getMaterial(), relativeBlock.getData());
+                                final BlockWrapper typeBlock = new BlockWrapper(null, relativeBlock.getMaterial());
                                 if (blockCount.containsKey(typeBlock)) {
                                     blockCount.put(typeBlock, blockCount.get(typeBlock) + 1);
                                 } else {
@@ -132,7 +134,7 @@ public class ErodeBrush extends Brush {
                             }
                         }
 
-                        BlockWrapper currentMaterial = new BlockWrapper(null, Material.AIR, (byte) 0);
+                        BlockWrapper currentMaterial = new BlockWrapper(null, Material.AIR);
                         int amount = 0;
 
                         for (final BlockWrapper wrapper : blockCount.keySet()) {
@@ -144,7 +146,7 @@ public class ErodeBrush extends Brush {
                         }
 
                         if (count >= erosionPreset.getFillFaces()) {
-                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), currentMaterial.getMaterial(), currentMaterial.getData()), currentIteration);
+                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), currentMaterial.getMaterial()), currentIteration);
                         }
                     }
                 }
@@ -176,7 +178,7 @@ public class ErodeBrush extends Brush {
                         }
 
                         if (count >= erosionPreset.getErosionFaces()) {
-                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), Material.AIR, (byte) 0), currentIteration);
+                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), Material.AIR), currentIteration);
                         }
                     }
                 }
@@ -345,20 +347,17 @@ public class ErodeBrush extends Brush {
     private static final class BlockWrapper {
 
         private final Block block;
-        private final Material material;
-        private final byte data;
+        private final BlockData blockData;
 
         @SuppressWarnings("deprecation")
         public BlockWrapper(final Block block) {
             this.block = block;
-            this.data = block.getData();
-            this.material = block.getType();
+            this.blockData = block.getBlockData();
         }
 
-        public BlockWrapper(final Block block, final Material material, final byte data) {
+        public BlockWrapper(final Block block, final Material material) {
             this.block = block;
-            this.material = material;
-            this.data = data;
+            this.blockData = Material.AIR.createBlockData();
         }
 
         /**
@@ -371,29 +370,29 @@ public class ErodeBrush extends Brush {
         /**
          * @return the data
          */
-        public byte getData() {
-            return this.data;
+        public BlockData getBlockData() {
+            return this.blockData;
         }
 
         /**
          * @return the material
          */
         public Material getMaterial() {
-            return this.material;
+            return this.blockData.getMaterial();
         }
 
         /**
          * @return if the block is Empty.
          */
         public boolean isEmpty() {
-            return this.material == Material.AIR;
+            return this.getMaterial() == Material.AIR;
         }
 
         /**
          * @return if the block is a Liquid.
          */
         public boolean isLiquid() {
-            switch (this.material) {
+            switch (this.getMaterial()) {
                 case WATER:
                 case LAVA:
                     return true;

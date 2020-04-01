@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
@@ -52,19 +51,19 @@ public class ShellSetBrush extends Brush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y, z).getType()) == v.getReplaceId()) {
+                            if (this.getWorld().getBlockAt(x, y, z).getType() == v.getTargetMaterial()) {
                                 continue;
-                            } else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x + 1, y, z).getType()) == v.getReplaceId()) {
+                            } else if (this.getWorld().getBlockAt(x + 1, y, z).getType() == v.getTargetMaterial()) {
                                 continue;
-                            } else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x - 1, y, z).getType()) == v.getReplaceId()) {
+                            } else if (this.getWorld().getBlockAt(x - 1, y, z).getType() == v.getTargetMaterial()) {
                                 continue;
-                            } else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y, z + 1).getType()) == v.getReplaceId()) {
+                            } else if (this.getWorld().getBlockAt(x, y, z + 1).getType() == v.getTargetMaterial()) {
                                 continue;
-                            } else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y, z - 1).getType()) == v.getReplaceId()) {
+                            } else if (this.getWorld().getBlockAt(x, y, z - 1).getType() == v.getTargetMaterial()) {
                                 continue;
-                            } else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y + 1, z).getType()) == v.getReplaceId()) {
+                            } else if (this.getWorld().getBlockAt(x, y + 1, z).getType() == v.getTargetMaterial()) {
                                 continue;
-                            } else if (MagicValues.getIdFor(this.getWorld().getBlockAt(x, y - 1, z).getType()) == v.getReplaceId()) {
+                            } else if (this.getWorld().getBlockAt(x, y - 1, z).getType() == v.getTargetMaterial()) {
                                 continue;
                             } else {
                                 blocks.add(this.getWorld().getBlockAt(x, y, z));
@@ -75,9 +74,9 @@ public class ShellSetBrush extends Brush {
 
                 final Undo undo = new Undo();
                 for (final Block currentBlock : blocks) {
-                    if (MagicValues.getIdFor(currentBlock.getType()) != v.getVoxelId()) {
+                    if (currentBlock.getType() != v.getVoxelMaterial()) {
                         undo.put(currentBlock);
-                        currentBlock.setBlockData(MagicValues.getBlockDataFor(v.getVoxelId()));
+                        currentBlock.setBlockData(v.getVoxelMaterial().createBlockData());
                     }
                 }
                 v.owner().storeUndo(undo);

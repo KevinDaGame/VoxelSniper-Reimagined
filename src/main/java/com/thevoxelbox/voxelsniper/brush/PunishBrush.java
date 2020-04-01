@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
@@ -162,7 +161,7 @@ public class PunishBrush extends PerformBrush {
                                 }
                                 target = location.clone();
                                 target.add(x, y, z);
-                                ((Player) entity).sendBlockChange(target, MagicValues.getBlockDataFor(v.getVoxelId(), v.getData()));
+                                ((Player) entity).sendBlockChange(target, v.getVoxelSubstance());
                             }
                         }
                     }
