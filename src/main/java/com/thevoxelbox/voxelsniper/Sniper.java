@@ -109,8 +109,8 @@ public class Sniper {
                 SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
 
                 switch (action) {
-                    case LEFT_CLICK_BLOCK:
                     case LEFT_CLICK_AIR:
+                    case LEFT_CLICK_BLOCK:
                         if (clickedBlock != null) {
                             targetBlock = clickedBlock;
                         } else {
@@ -119,38 +119,27 @@ public class Sniper {
                         }
 
                         switch (snipeAction) {
-                            case ARROW:
-                                if (targetBlock != null) {
-                                    int originalVoxel = snipeData.getVoxelId();
-                                    snipeData.setVoxelId(MagicValues.getIdFor(targetBlock.getType()));
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalVoxel, snipeData.getData()), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().voxel();
-                                    return true;
-                                } else {
-                                    int originalVoxel = snipeData.getVoxelId();
-                                    snipeData.setVoxelId(0);
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalVoxel, snipeData.getData()), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().voxel();
-                                    return true;
-                                }
                             case GUNPOWDER:
+                            case ARROW:
+                                BlockData oldSubstance,
+                                 newSubstance;
                                 if (targetBlock != null) {
-                                    byte originalData = snipeData.getData();
-                                    snipeData.setData(targetBlock.getData());
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getVoxelId(), originalData), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().data();
-                                    return true;
+                                    oldSubstance = snipeData.getVoxelSubstance();
+
+                                    snipeData.setVoxelSubstance(targetBlock.getBlockData());
+                                    newSubstance = snipeData.getVoxelSubstance();
                                 } else {
-                                    byte originalData = snipeData.getData();
-                                    snipeData.setData((byte) 0);
-                                    SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getVoxelId(), originalData), MagicValues.getBlockDataFor(snipeData.getVoxelId(), snipeData.getData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().data();
-                                    return true;
+                                    oldSubstance = snipeData.getVoxelSubstance();
+
+                                    snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                                    newSubstance = snipeData.getVoxelSubstance();
                                 }
+
+                                SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
+                                Bukkit.getPluginManager().callEvent(event);
+
+                                snipeData.getVoxelMessage().voxel();
+                                return true;
                             default:
                                 break;
                         }
@@ -166,37 +155,25 @@ public class Sniper {
 
                         switch (snipeAction) {
                             case ARROW:
-                                if (targetBlock != null) {
-                                    int originalId = snipeData.getReplaceId();
-                                    snipeData.setReplaceId(MagicValues.getIdFor(targetBlock.getType()));
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalId, snipeData.getReplaceData()), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().replace();
-                                    return true;
-                                } else {
-                                    int originalId = snipeData.getReplaceId();
-                                    snipeData.setReplaceId(0);
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(originalId, snipeData.getReplaceData()), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().replace();
-                                    return true;
-                                }
                             case GUNPOWDER:
+                                BlockData oldSubstance,
+                                 newSubstance;
                                 if (targetBlock != null) {
-                                    byte originalData = snipeData.getReplaceData();
-                                    snipeData.setReplaceData(targetBlock.getData());
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getReplaceId(), originalData), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().replaceData();
-                                    return true;
+                                    oldSubstance = snipeData.getVoxelSubstance();
+
+                                    snipeData.setVoxelSubstance(targetBlock.getBlockData());
+                                    newSubstance = snipeData.getVoxelSubstance();
                                 } else {
-                                    byte originalData = snipeData.getReplaceData();
-                                    snipeData.setReplaceData((byte) 0);
-                                    SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, MagicValues.getBlockDataFor(snipeData.getReplaceId(), originalData), MagicValues.getBlockDataFor(snipeData.getReplaceId(), snipeData.getReplaceData()));
-                                    Bukkit.getPluginManager().callEvent(event);
-                                    snipeData.getVoxelMessage().replaceData();
-                                    return true;
+                                    oldSubstance = snipeData.getVoxelSubstance();
+
+                                    snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                                    newSubstance = snipeData.getVoxelSubstance();
                                 }
+
+                                SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
+                                Bukkit.getPluginManager().callEvent(event);
+
+                                snipeData.getVoxelMessage().voxel();
                             default:
                                 break;
                         }

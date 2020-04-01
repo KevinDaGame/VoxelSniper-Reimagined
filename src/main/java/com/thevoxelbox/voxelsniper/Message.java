@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper;
 
+import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 /**
  *
@@ -53,10 +53,18 @@ public class Message {
     }
 
     /**
+     * Display voxel type.
+     */
+    @SuppressWarnings("deprecation")
+    public void voxel() {
+        snipeData.sendMessage(ChatColor.GOLD + "Voxel: " + ChatColor.RED + snipeData.getVoxelMaterial());
+    }
+
+    /**
      * Display data value.
      */
     public void data() {
-        snipeData.sendMessage(ChatColor.BLUE + "Data Variable: " + ChatColor.DARK_RED + snipeData.getData());
+        snipeData.sendMessage(ChatColor.BLUE + "Data Variable: " + ChatColor.DARK_RED + snipeData.getVoxelSubstance().getAsString());
     }
 
     /**
@@ -76,18 +84,18 @@ public class Message {
     }
 
     /**
-     * Displaye replace material.
+     * Display replace material.
      */
     @SuppressWarnings("deprecation")
     public void replace() {
-        snipeData.sendMessage(ChatColor.AQUA + "Replace Material: " + ChatColor.RED + snipeData.getReplaceId() + ChatColor.GRAY + " (" + MagicValues.getBlockDataFor(snipeData.getReplaceId()).getMaterial() + ")");
+        snipeData.sendMessage(ChatColor.AQUA + "Target Material: " + ChatColor.RED + snipeData.getTargetMaterial());
     }
 
     /**
      * Display replace data value.
      */
     public void replaceData() {
-        snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Data Variable: " + ChatColor.DARK_RED + snipeData.getReplaceData());
+        snipeData.sendMessage(ChatColor.DARK_GRAY + "Target Data Variable: " + ChatColor.DARK_RED + snipeData.getTargetSubstance().getAsString());
     }
 
     /**
@@ -122,14 +130,6 @@ public class Message {
     }
 
     /**
-     * Display voxel type.
-     */
-    @SuppressWarnings("deprecation")
-    public void voxel() {
-        snipeData.sendMessage(ChatColor.GOLD + "Voxel: " + ChatColor.RED + snipeData.getVoxelId() + ChatColor.GRAY + " (" + MagicValues.getBlockDataFor(snipeData.getVoxelId()).getMaterial() + ")");
-    }
-
-    /**
      * Display voxel list.
      */
     public void voxelList() {
@@ -141,14 +141,7 @@ public class Message {
             returnValueBuilder.append("Block Types Selected: ");
             returnValueBuilder.append(ChatColor.AQUA);
 
-            for (int[] valuePair : snipeData.getVoxelList().getList()) {
-                returnValueBuilder.append(valuePair[0]);
-                if (valuePair[1] != -1) {
-                    returnValueBuilder.append(":");
-                    returnValueBuilder.append(valuePair[1]);
-                }
-                returnValueBuilder.append(" ");
-            }
+            returnValueBuilder.append(String.join(",", snipeData.getVoxelList().getList().stream().map(e -> e.getKey().toString()).collect(Collectors.toList())));
 
             snipeData.sendMessage(returnValueBuilder.toString());
         }

@@ -227,60 +227,6 @@ public class RangeBlockHelper {
         return this.getCurBlock();
     }
 
-    /**
-     * Sets current block type id.
-     *
-     * @param type
-     */
-    @SuppressWarnings("deprecation")
-    public final void setCurBlock(final int type) {
-        if (this.getCurBlock() != null) {
-            this.world.getBlockAt(this.targetX, this.targetY, this.targetZ).setBlockData(MagicValues.getBlockDataFor(type));
-        }
-    }
-
-    /**
-     * Sets the type of the block attached to the face at the cursor.
-     *
-     * @param type
-     */
-    @SuppressWarnings("deprecation")
-    public final void setFaceBlock(final int type) {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
-        }
-
-        if (this.getCurBlock() != null) {
-            this.world.getBlockAt(this.targetX, this.targetY, this.targetZ).setBlockData(MagicValues.getBlockDataFor(type));
-        }
-    }
-
-    /**
-     * Sets previous block type id.
-     *
-     * @param type
-     */
-    @SuppressWarnings("deprecation")
-    public final void setLastBlock(final int type) {
-        if (this.getLastBlock() != null) {
-            this.world.getBlockAt(this.lastX, this.lastY, this.lastZ).setBlockData(MagicValues.getBlockDataFor(type));
-        }
-    }
-
-    /**
-     * Sets the type of the block at the cursor.
-     *
-     * @param type
-     */
-    @SuppressWarnings("deprecation")
-    public final void setTargetBlock(final int type) {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
-
-        }
-        if (this.getCurBlock() != null) {
-            this.world.getBlockAt(this.targetX, this.targetY, this.targetZ).setBlockData(MagicValues.getBlockDataFor(type));
-        }
-    }
-
     @SuppressWarnings("deprecation")
     private Block getRange() {
         this.lastX = this.targetX;

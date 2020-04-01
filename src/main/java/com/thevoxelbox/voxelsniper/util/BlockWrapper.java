@@ -1,19 +1,19 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import com.thevoxelbox.voxelsniper.MagicValues;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * @author MikeMatrix
  */
 public class BlockWrapper {
 
-    private int id;
+    private BlockData blockData;
     private int x;
     private int y;
     private int z;
-    private byte data;
     private World world;
 
     /**
@@ -21,26 +21,25 @@ public class BlockWrapper {
      */
     @SuppressWarnings("deprecation")
     public BlockWrapper(final Block block) {
-        this.setId(MagicValues.getIdFor(block.getBlockData()));
+        this.setBlockData(block.getBlockData());
         this.setX(block.getX());
         this.setY(block.getY());
         this.setZ(block.getZ());
-        this.setData(MagicValues.getDataFor(block.getBlockData()));
         this.setWorld(block.getWorld());
     }
 
     /**
      * @return the data
      */
-    public final byte getData() {
-        return this.data;
+    public final BlockData getBlockData() {
+        return this.blockData;
     }
 
     /**
      * @return the id
      */
-    public final int getId() {
-        return this.id;
+    public final Material getMaterial() {
+        return this.blockData.getMaterial();
     }
 
     /**
@@ -72,17 +71,10 @@ public class BlockWrapper {
     }
 
     /**
-     * @param data the data to set
+     * @param blockData the data to set
      */
-    public final void setData(final byte data) {
-        this.data = data;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public final void setId(final int id) {
-        this.id = id;
+    public final void setBlockData(final BlockData blockData) {
+        this.blockData = blockData;
     }
 
     /**
