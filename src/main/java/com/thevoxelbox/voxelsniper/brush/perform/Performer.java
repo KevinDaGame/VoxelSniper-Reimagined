@@ -11,7 +11,7 @@ import com.thevoxelbox.voxelsniper.Message;
  */
 public interface Performer {
 
-    public void parse(String[] args, com.thevoxelbox.voxelsniper.SnipeData v);
+    public void parsePerformer(String triggerHandle, String[] args, com.thevoxelbox.voxelsniper.SnipeData v);
 
     public void showInfo(Message vm);
 }

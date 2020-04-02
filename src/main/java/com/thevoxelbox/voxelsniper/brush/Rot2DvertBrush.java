@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
+// TODO: Dissect this
 /**
  * @author Gavjenks, hack job from the other 2d rotation brush blockPositionY piotr
  */
@@ -170,14 +174,27 @@ public class Rot2DvertBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        try {
-            this.se = Math.toRadians(Double.parseDouble(par[1]));
-            v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
-        } catch (Exception _ex) {
-            v.sendMessage("Exception while parsing parameter: " + par[1]);
-            Bukkit.getLogger().severe(_ex.getMessage());
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "2D Rotation Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [number]  -- Set angle in degrees");
+            return;
         }
+
+        try {
+            this.se = Math.toRadians(Double.parseDouble(params[0]));
+            v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("[number]"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
     }
 
     @Override

@@ -2,7 +2,11 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerE;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -93,8 +97,19 @@ public abstract class Brush implements IBrush {
     public abstract void info(Message vm);
 
     @Override
-    public void parameters(final String[] par, final SnipeData v) {
+    public void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         v.sendMessage(ChatColor.RED + "This brush does not accept additional parameters.");
+    }
+    
+    // TODO: make abstract
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        // Do nothing because not all brushes have subcommands
+    }
+    
+    @Override
+    public void registerArgumentValues(String brushHandle, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        // Do nothing because not all brushes have arguments have values
     }
 
     /**

@@ -1,9 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,37 +43,64 @@ public class Rot3DBrush extends Brush {
     // --> agreed. Do what erode does and store one snapshot with Block pointers and int id of what the block started with, afterwards simply go thru that
     // matrix and compare Block.getId with 'id' if different undo.add( new BlockWrapper ( Block, oldId ) )
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
-            // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Rotate brush Parameters:");
-                v.sendMessage(ChatColor.AQUA + "p[0-359] -- set degrees of pitch rotation (rotation about the Z axis).");
-                v.sendMessage(ChatColor.BLUE + "r[0-359] -- set degrees of roll rotation (rotation about the X axis).");
-                v.sendMessage(ChatColor.LIGHT_PURPLE + "y[0-359] -- set degrees of yaw rotation (Rotation about the Y axis).");
-
-                return;
-            } else if (parameter.startsWith("p")) {
-                this.sePitch = Math.toRadians(Double.parseDouble(parameter.replace("p", "")));
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "3D Rotation Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " pitch [0-359] -- Set pitch rotation (rotation about the Z axis).");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " roll [0-359] -- Set roll rotation (rotation about the X axis).");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).");
+            return;
+        }
+        try {
+            if (params[0].equalsIgnoreCase("pitch")) {
+                this.sePitch = Math.toRadians(Double.parseDouble(params[1]));
                 v.sendMessage(ChatColor.AQUA + "Around Z-axis degrees set to " + this.sePitch);
                 if (this.sePitch < 0 || this.sePitch > 359) {
                     v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
                 }
-            } else if (parameter.startsWith("r")) {
-                this.seRoll = Math.toRadians(Double.parseDouble(parameter.replace("r", "")));
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("roll")) {
+                this.seRoll = Math.toRadians(Double.parseDouble(params[1]));
                 v.sendMessage(ChatColor.AQUA + "Around X-axis degrees set to " + this.seRoll);
                 if (this.seRoll < 0 || this.seRoll > 359) {
                     v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
                 }
-            } else if (parameter.startsWith("y")) {
-                this.seYaw = Math.toRadians(Double.parseDouble(parameter.replace("y", "")));
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("yaw")) {
+                this.seYaw = Math.toRadians(Double.parseDouble(params[1]));
                 v.sendMessage(ChatColor.AQUA + "Around Y-axis degrees set to " + this.seYaw);
                 if (this.seYaw < 0 || this.seYaw > 359) {
                     v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
                 }
+                return;
             }
+        } catch (NumberFormatException e) {
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("pitch", "roll", "yaw"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        // Number variables
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[1-359]"));
+
+        argumentValues.put(prefix + "pitch", arguments);
+        argumentValues.put(prefix + "roll", arguments);
+        argumentValues.put(prefix + "yaw", arguments);
     }
 
     @SuppressWarnings("deprecation")

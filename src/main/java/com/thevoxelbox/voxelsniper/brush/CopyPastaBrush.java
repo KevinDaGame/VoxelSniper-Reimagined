@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -160,27 +163,45 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final com.thevoxelbox.voxelsniper.SnipeData v) {
-        final String parameter = par[1];
-
-        if (parameter.equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "CopyPasta Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b cp air -- toggle include (default) or exclude  air during paste");
-            v.sendMessage(ChatColor.AQUA + "/b cp 0|90|180|270 -- toggle rotation (0 default)");
+    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "CopyPasta Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)");
             return;
         }
 
-        if (parameter.equalsIgnoreCase("air")) {
+        if (params[0].equalsIgnoreCase("air")) {
             this.pasteAir = !this.pasteAir;
 
-            v.sendMessage(ChatColor.GOLD + "Paste air: " + this.pasteAir);
+            v.sendMessage(ChatColor.GOLD + "Air included in paste: " + this.pasteAir);
             return;
         }
 
-        if (parameter.equalsIgnoreCase("90") || parameter.equalsIgnoreCase("180") || parameter.equalsIgnoreCase("270") || parameter.equalsIgnoreCase("0")) {
-            this.pivot = Integer.parseInt(parameter);
-            v.sendMessage(ChatColor.GOLD + "Pivot angle: " + this.pivot);
+        if (params[0].equalsIgnoreCase("rotate")) {
+            if (params[1].equalsIgnoreCase("90") || params[1].equalsIgnoreCase("180") || params[1].equalsIgnoreCase("270") || params[1].equalsIgnoreCase("0")) {
+                this.pivot = Integer.parseInt(params[1]);
+                v.sendMessage(ChatColor.GOLD + "Pivot angle: " + this.pivot + " degrees");
+                return;
+            }
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("rotate", "air"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("0", "90", "180", "270"));
+
+        argumentValues.put(prefix + "rotate", arguments);
     }
 
     @Override

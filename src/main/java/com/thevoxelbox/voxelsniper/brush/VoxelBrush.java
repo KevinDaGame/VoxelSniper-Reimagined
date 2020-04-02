@@ -22,11 +22,11 @@ public class VoxelBrush extends PerformBrush {
         for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
                 for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
-                    this.current.perform(this.clampY(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + z, this.getTargetBlock().getZ() + y));
+                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + z, this.getTargetBlock().getZ() + y));
                 }
             }
         }
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override

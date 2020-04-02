@@ -130,11 +130,12 @@ public class SignOverwriteBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
+    // TODO: Rewrite this
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         boolean textChanged = false;
 
-        for (int i = 0; i < par.length; i++) {
-            String parameter = par[i];
+        for (int i = 0; i < params.length; i++) {
+            String parameter = params[i];
 
             try {
                 if (parameter.equalsIgnoreCase("info")) {
@@ -149,20 +150,20 @@ public class SignOverwriteBrush extends Brush {
                     v.sendMessage(ChatColor.GREEN + "-clear " + ChatColor.BLUE + "-- Clears the line buffer. (Alias: -c)");
                     v.sendMessage(ChatColor.GREEN + "-clearall " + ChatColor.BLUE + "-- Clears the line buffer and sets all lines back to enabled. (Alias: -ca)");
                     v.sendMessage(ChatColor.GREEN + "-multiple [on|off] " + ChatColor.BLUE + "-- Enables or disables ranged mode. (Alias: -m) (see Wiki for more information)");
-                    v.sendMessage(ChatColor.GREEN + "-save (name) " + ChatColor.BLUE + "-- Save you buffer to a file named [name]. (Alias: -s)");
+                    v.sendMessage(ChatColor.GREEN + "-save (name) " + ChatColor.BLUE + "-- Save your buffer to a file named [name]. (Alias: -s)");
                     v.sendMessage(ChatColor.GREEN + "-open (name) " + ChatColor.BLUE + "-- Loads a buffer from a file named [name]. (Alias: -o)");
                 } else if (parameter.startsWith("-1")) {
                     textChanged = true;
-                    i = parseSignLineFromParam(par, SIGN_LINE_1, v, i);
+                    i = parseSignLineFromParam(params, SIGN_LINE_1, v, i);
                 } else if (parameter.startsWith("-2")) {
                     textChanged = true;
-                    i = parseSignLineFromParam(par, SIGN_LINE_2, v, i);
+                    i = parseSignLineFromParam(params, SIGN_LINE_2, v, i);
                 } else if (parameter.startsWith("-3")) {
                     textChanged = true;
-                    i = parseSignLineFromParam(par, SIGN_LINE_3, v, i);
+                    i = parseSignLineFromParam(params, SIGN_LINE_3, v, i);
                 } else if (parameter.startsWith("-4")) {
                     textChanged = true;
-                    i = parseSignLineFromParam(par, SIGN_LINE_4, v, i);
+                    i = parseSignLineFromParam(params, SIGN_LINE_4, v, i);
                 } else if (parameter.equalsIgnoreCase("-clear") || parameter.equalsIgnoreCase("-c")) {
                     clearBuffer();
                     v.sendMessage(ChatColor.BLUE + "Internal text buffer cleard.");
@@ -171,32 +172,32 @@ public class SignOverwriteBrush extends Brush {
                     resetStates();
                     v.sendMessage(ChatColor.BLUE + "Internal text buffer cleard and states back to enabled.");
                 } else if (parameter.equalsIgnoreCase("-multiple") || parameter.equalsIgnoreCase("-m")) {
-                    if ((i + 1) >= par.length) {
+                    if ((i + 1) >= params.length) {
                         v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
                         continue;
                     }
 
-                    rangedMode = (par[++i].equalsIgnoreCase("on") || par[++i].equalsIgnoreCase("yes"));
+                    rangedMode = (params[++i].equalsIgnoreCase("on") || params[++i].equalsIgnoreCase("yes"));
                     v.sendMessage(ChatColor.BLUE + String.format("Ranged mode is %s", ChatColor.GREEN + (rangedMode ? "enabled" : "disabled")));
                     if (this.rangedMode) {
                         v.sendMessage(ChatColor.GREEN + "Brush size set to " + ChatColor.RED + v.getBrushSize());
                         v.sendMessage(ChatColor.AQUA + "Brush height set to " + ChatColor.RED + v.getVoxelHeight());
                     }
                 } else if (parameter.equalsIgnoreCase("-save") || parameter.equalsIgnoreCase("-s")) {
-                    if ((i + 1) >= par.length) {
+                    if ((i + 1) >= params.length) {
                         v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
                         continue;
                     }
 
-                    String fileName = par[++i];
+                    String fileName = params[++i];
                     saveBufferToFile(fileName, v);
                 } else if (parameter.equalsIgnoreCase("-open") || parameter.equalsIgnoreCase("-o")) {
-                    if ((i + 1) >= par.length) {
+                    if ((i + 1) >= params.length) {
                         v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
                         continue;
                     }
 
-                    String fileName = par[++i];
+                    String fileName = params[++i];
                     loadBufferFromFile(fileName, "", v);
                     textChanged = true;
                 }

@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -117,11 +120,11 @@ public class SplatterDiscBrush extends PerformBrush {
             final double xSquared = Math.pow(x - v.getBrushSize() - 1, 2);
             for (int y = 2 * v.getBrushSize(); y >= 0; y--) {
                 if (splat[x][y] == 1 && xSquared + Math.pow(y - v.getBrushSize() - 1, 2) <= rSquared) {
-                    current.perform(targetBlock.getRelative(x - v.getBrushSize(), 0, y - v.getBrushSize()));
+                    currentPerformer.perform(targetBlock.getRelative(x - v.getBrushSize(), 0, y - v.getBrushSize()));
                 }
             }
         }
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -153,44 +156,90 @@ public class SplatterDiscBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Splatter Disc Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " seed [decimal]  -- Set a seed percentage");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [decimal]  -- Set a growth percentage");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " recursion [number]  -- Set a recursion value");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets to default values");
+            return;
+        }
 
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Splatter Disc brush Parameters:");
-                v.sendMessage(ChatColor.AQUA + "/b sd s[int] -- set a seed percentage (1-9999). 100 = 1% Default is 1000");
-                v.sendMessage(ChatColor.AQUA + "/b sd g[int] -- set a growth percentage (1-9999).  Default is 1000");
-                v.sendMessage(ChatColor.AQUA + "/b sd r[int] -- set a recursion (1-10).  Default is 3");
-                return;
-            } else if (parameter.startsWith("s")) {
-                final double temp = Integer.parseInt(parameter.replace("s", ""));
+        if (params[0].equalsIgnoreCase("reset")) {
+            this.seedPercent = SEED_PERCENT_DEFAULT;
+            this.growPercent = GROW_PERCENT_DEFAULT;
+            this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
+            v.sendMessage(ChatColor.GOLD + "Values resetted to default values.");
+            return;
+        }
+
+        try {
+            if (params[0].startsWith("seed")) {
+                final int temp = ((int) Double.parseDouble(params[1]) * 100);
+
                 if (temp >= SEED_PERCENT_MIN && temp <= SEED_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Seed percent set to: " + temp / 100 + "%");
-                    this.seedPercent = (int) temp;
+                    v.sendMessage(ChatColor.AQUA + "Seed percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
+                    this.seedPercent = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Seed percent must be an integer 1-9999!");
+                    v.sendMessage(ChatColor.RED + "Seed percent must be a decimal between 0.01 - 99.99!");
                 }
-            } else if (parameter.startsWith("g")) {
-                final double temp = Integer.parseInt(parameter.replace("g", ""));
+                return;
+            }
+
+            if (params[0].startsWith("growth")) {
+                final int temp = ((int) Double.parseDouble(params[1]) * 100);
+
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + temp / 100 + "%");
+                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
                     this.growPercent = (int) temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be an integer 1-9999!");
+                    v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
                 }
-            } else if (parameter.startsWith("r")) {
-                final int temp = Integer.parseInt(parameter.replace("r", ""));
+                return;
+            }
+
+            if (params[0].startsWith("recursion")) {
+                final int temp = Integer.parseInt(params[1]);
+
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
                     v.sendMessage(ChatColor.AQUA + "Recursions set to: " + temp);
                     this.splatterRecursions = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Recursions must be an integer 1-10!");
+                    v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");
                 }
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
+                return;
             }
+        } catch (NumberFormatException e) {
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("recursion", "growth", "seed", "reset"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        // Number variables
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[number]"));
+
+        argumentValues.put(prefix + "recursion", arguments);
+
+        // Decimal variables
+        arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[decimal]"));
+
+        argumentValues.put(prefix + "seed", arguments);
+        argumentValues.put(prefix + "growth", arguments);
+        
+        super.registerArgumentValues(prefix, argumentValues);
     }
 
     @Override

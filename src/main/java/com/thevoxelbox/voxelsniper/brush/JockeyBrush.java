@@ -1,7 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
+import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -23,6 +25,8 @@ public class JockeyBrush extends Brush {
     private static final int ENTITY_STACK_LIMIT = 50;
     private JockeyType jockeyType = JockeyType.NORMAL_ALL_ENTITIES;
     private Entity jockeyedEntity = null;
+
+    private boolean playerOnly = false;
 
     /**
      *
@@ -76,10 +80,10 @@ public class JockeyBrush extends Brush {
                     closest.setPassenger(player);
                     jockeyedEntity = closest;
                 }
-                v.sendMessage(ChatColor.GREEN + "You are now saddles on entity: " + closest.getEntityId());
+                v.sendMessage(ChatColor.GOLD + "You are now sitting on the most nearby entity!");
             }
         } else {
-            v.sendMessage(ChatColor.RED + "Could not find any entities");
+            v.sendMessage(ChatColor.RED + "Could not find any " + (playerOnly ? "players" : "entities") + " to sit on :(");
         }
     }
 
@@ -103,7 +107,7 @@ public class JockeyBrush extends Brush {
                         stackHeight++;
                     }
                 } else {
-                    v.owner().getPlayer().sendMessage("You broke stack! :O");
+                    v.owner().getPlayer().sendMessage("You broke the stack! :O");
                 }
             } else {
                 return;
@@ -125,7 +129,7 @@ public class JockeyBrush extends Brush {
     protected final void powder(final SnipeData v) {
         if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
             v.owner().getPlayer().eject();
-            v.owner().getPlayer().sendMessage(ChatColor.GOLD + "The guy on top of you has been ejected!");
+            v.owner().getPlayer().sendMessage(ChatColor.GOLD + "The entity on top of you has been ejected!");
         } else {
             if (jockeyedEntity != null) {
                 jockeyedEntity.eject();
@@ -139,63 +143,78 @@ public class JockeyBrush extends Brush {
     @Override
     public final void info(final Message vm) {
         vm.brushName(this.getName());
-        vm.custom("Current jockey mode: " + ChatColor.GREEN + jockeyType.toString());
-        vm.custom(ChatColor.GREEN + "Help: " + ChatColor.AQUA + "http://www.voxelwiki.com/minecraft/Voxelsniper#The_Jockey_Brush");
+        vm.custom("Current Jockey Mode: " + ChatColor.GREEN + jockeyType.toString());
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        boolean inverse = false;
-        boolean playerOnly = false;
-        boolean stack = false;
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Jockey Brush Parameters: ");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [inverse, stack, normal] -- Switch between modes");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " player  -- Toggle target players or all entities (default: players only)");
+            v.sendMessage(ChatColor.BLUE + "Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other ");
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("player")) {
+            this.playerOnly = !this.playerOnly;
+
+            if (playerOnly) {
+                jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_PLAYER_ONLY");
+            } else {
+                jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_ALL_ENTITIES");
+            }
+            v.sendMessage(ChatColor.GREEN + "Now targeting " + (this.playerOnly ? "players only." : "all entities."));
+            return;
+        }
 
         try {
-            for (String parameter : par) {
-                if (parameter.startsWith("-i:")) {
-                    inverse = parameter.endsWith("y");
-                }
-
-                if (parameter.startsWith("-po:")) {
-                    playerOnly = parameter.endsWith("y");
-                }
-                if (parameter.startsWith("-s:")) {
-                    stack = parameter.endsWith("y");
-                }
-
-            }
-
-            if (inverse) {
+            if (params[0].equalsIgnoreCase("inverse")) {
                 if (playerOnly) {
                     jockeyType = JockeyType.INVERSE_PLAYER_ONLY;
                 } else {
                     jockeyType = JockeyType.INVERSE_ALL_ENTITIES;
                 }
-            } else if (stack) {
+                return;
+            }
+            if (params[0].equalsIgnoreCase("stack")) {
                 if (playerOnly) {
                     jockeyType = JockeyType.STACK_PLAYER_ONLY;
                 } else {
                     jockeyType = JockeyType.STACK_ALL_ENTITIES;
                 }
-            } else {
+            }
+            if (params[0].equalsIgnoreCase("normal")) {
                 if (playerOnly) {
                     jockeyType = JockeyType.NORMAL_PLAYER_ONLY;
                 } else {
                     jockeyType = JockeyType.NORMAL_ALL_ENTITIES;
                 }
             }
-
-            v.sendMessage("Current jockey mode: " + ChatColor.GREEN + jockeyType.toString());
-        } catch (Exception exception) {
-            v.sendMessage("Error while parsing your arguments.");
-            exception.printStackTrace();
+            v.sendMessage("Current Jockey Mode: " + ChatColor.GREEN + jockeyType.toString());
+        } catch (ArrayIndexOutOfBoundsException exception) {
         }
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments
+    ) {
+        subcommandArguments.put(1, Lists.newArrayList("inverse", "stack", "normal", "player"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
     }
 
     /**
      * Available types of jockey modes.
      */
     private enum JockeyType {
-        NORMAL_ALL_ENTITIES("Normal (All)"), NORMAL_PLAYER_ONLY("Normal (Player only)"), INVERSE_ALL_ENTITIES("Inverse (All)"), INVERSE_PLAYER_ONLY("Inverse (Player only)"), STACK_ALL_ENTITIES("Stack (All)"), STACK_PLAYER_ONLY("Stack (Player only)");
+        NORMAL_ALL_ENTITIES("Normal (All)"),
+        NORMAL_PLAYER_ONLY("Normal (Player only)"),
+        INVERSE_ALL_ENTITIES("Inverse (All)"),
+        INVERSE_PLAYER_ONLY("Inverse (Player only)"),
+        STACK_ALL_ENTITIES("Stack (All)"),
+        STACK_PLAYER_ONLY("Stack (Player only)");
+
         private String name;
 
         JockeyType(String name) {

@@ -5,6 +5,9 @@ import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -85,21 +88,32 @@ public class TreeSnipeBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Tree snipe brush:");
-                v.sendMessage(ChatColor.AQUA + "/b t treetype");
-                this.printTreeType(v.getVoxelMessage());
-                return;
-            }
-            try {
-                this.treeType = TreeType.valueOf(par[i].toUpperCase());
-                this.printTreeType(v.getVoxelMessage());
-            } catch (final IllegalArgumentException exception) {
-                v.getVoxelMessage().brushMessage("No such tree type.");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[1].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Tree Snipe Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [treeType]  -- Change tree type");
+            return;
         }
+
+        try {
+            this.treeType = TreeType.valueOf(params[0].toUpperCase());
+            this.printTreeType(v.getVoxelMessage());
+        } catch (Exception e) {
+            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tree type does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+        }
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        List<String> arguments = new ArrayList<>();
+
+        for (TreeType t : TreeType.values()) {
+            arguments.add(t.name().toLowerCase());
+        }
+
+        subcommandArguments.put(1, arguments);
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
     }
 
     @Override

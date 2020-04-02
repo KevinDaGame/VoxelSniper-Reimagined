@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -15,7 +18,10 @@ import org.bukkit.block.data.BlockData;
  */
 public class ExtrudeBrush extends Brush {
 
-    private double trueCircle;
+    private static final double SMOOTH_CIRCLE_VALUE = 0.5;
+    private static final double VOXEL_CIRCLE_VALUE = 0.0;
+
+    private boolean smoothCircle = false;
 
     /**
      *
@@ -26,7 +32,7 @@ public class ExtrudeBrush extends Brush {
 
     private void extrudeUpOrDown(final SnipeData v, boolean isUp) {
         final int brushSize = v.getBrushSize();
-        final double brushSizeSquared = Math.pow(brushSize + this.trueCircle, 2);
+        final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         Undo undo = new Undo();
 
         for (int x = -brushSize; x <= brushSize; x++) {
@@ -50,7 +56,7 @@ public class ExtrudeBrush extends Brush {
 
     private void extrudeNorthOrSouth(final SnipeData v, boolean isSouth) {
         final int brushSize = v.getBrushSize();
-        final double brushSizeSquared = Math.pow(brushSize + this.trueCircle, 2);
+        final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         Undo undo = new Undo();
 
         for (int x = -brushSize; x <= brushSize; x++) {
@@ -75,7 +81,7 @@ public class ExtrudeBrush extends Brush {
 
     private void extrudeEastOrWest(final SnipeData v, boolean isEast) {
         final int brushSize = v.getBrushSize();
-        final double brushSizeSquared = Math.pow(brushSize + this.trueCircle, 2);
+        final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         Undo undo = new Undo();
 
         for (int y = -brushSize; y <= brushSize; y++) {
@@ -151,33 +157,33 @@ public class ExtrudeBrush extends Brush {
         vm.height();
         vm.voxelList();
 
-        vm.custom(ChatColor.AQUA + ((this.trueCircle == 0.5) ? "True circle mode ON" : "True circle mode OFF"));
+        if (this.smoothCircle) {
+            vm.custom(ChatColor.GOLD + "Using smooth circles mode");
+        }
     }
 
     @Override
-    public final void parameters(final String[] par, final com.thevoxelbox.voxelsniper.SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
-
-            try {
-                if (parameter.equalsIgnoreCase("info")) {
-                    v.sendMessage(ChatColor.GOLD + "Extrude brush Parameters:");
-                    v.sendMessage(ChatColor.AQUA + "/b ex true -- will use a true circle algorithm instead of the skinnier version with classic sniper nubs. /b ex false will switch back. (false is default)");
-                    return;
-                } else if (parameter.startsWith("true")) {
-                    this.trueCircle = 0.5;
-                    v.sendMessage(ChatColor.AQUA + "True circle mode ON.");
-                } else if (parameter.startsWith("false")) {
-                    this.trueCircle = 0;
-                    v.sendMessage(ChatColor.AQUA + "True circle mode OFF.");
-                } else {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Use the \"info\" parameter to display parameter info.");
-                    return;
-                }
-            } catch (final Exception exception) {
-                v.sendMessage(ChatColor.RED + "Incorrect parameter \"" + parameter + "\"; use the \"info\" parameter.");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Extrude Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
+            return;
         }
+
+        if (params[0].startsWith("smooth")) {
+            this.smoothCircle = !this.smoothCircle;
+            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("smooth"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
     }
 
     @Override

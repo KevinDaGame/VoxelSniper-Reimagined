@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper;
 
 import com.google.common.base.Preconditions;
 import com.thevoxelbox.voxelsniper.brush.*;
+import com.thevoxelbox.voxelsniper.command.VoxelCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Bukkit extension point.
@@ -60,22 +62,6 @@ public class VoxelSniper extends JavaPlugin {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
-        if (sender instanceof Player) {
-            String[] arguments = args;
-
-            if (arguments == null) {
-                arguments = new String[0];
-            }
-
-            return voxelSniperListener.onCommand((Player) sender, arguments, command.getName());
-        }
-
-        getLogger().info("Only Players can execute commands.");
-        return true;
-    }
-
-    @Override
     public void onEnable() {
         VoxelSniper.instance = this;
 
@@ -87,6 +73,9 @@ public class VoxelSniper extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
         getLogger().info("Registered Sniper Listener.");
+        
+        VoxelCommandManager.registerCommands();
+        VoxelCommandManager.registerBrushSubcommands();
     }
 
     /**

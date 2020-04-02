@@ -39,13 +39,14 @@ public abstract class BlendBrushBase extends Brush {
     }
 
     @Override
-    public void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; ++i) {
-            if (par[i].equalsIgnoreCase("water")) {
-                this.excludeWater = !this.excludeWater;
-                v.sendMessage(ChatColor.AQUA + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
-            }
+    public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("water")) {
+            this.excludeWater = !this.excludeWater;
+            v.sendMessage(ChatColor.AQUA + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
+            return;
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
     }
 
     /**

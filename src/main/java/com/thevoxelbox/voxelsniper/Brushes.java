@@ -4,18 +4,25 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.thevoxelbox.voxelsniper.brush.Brush;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Brush registration manager.
  */
 public class Brushes {
 
-    private Multimap<Class<? extends IBrush>, String> brushes = HashMultimap.create();
+    private final Multimap<Class<? extends IBrush>, String> brushes = HashMultimap.create();
+    private final List<String> brushHandles = new ArrayList<>();
 
     /**
      * Register a brush for VoxelSniper to be able to use.
@@ -27,9 +34,10 @@ public class Brushes {
         Preconditions.checkNotNull(clazz, "Cannot register null as a class.");
         for (String handle : handles) {
             brushes.put(clazz, handle.toLowerCase());
+            brushHandles.add(handle.toLowerCase());
         }
     }
-
+    
     /**
      * Retrieve Brush class via handle Lookup.
      *
@@ -78,5 +86,9 @@ public class Brushes {
      */
     public Multimap<Class<? extends IBrush>, String> getRegisteredBrushesMultimap() {
         return ImmutableMultimap.copyOf(brushes);
+    }
+
+    public List<String> getBrushHandles() {
+        return brushHandles;
     }
 }

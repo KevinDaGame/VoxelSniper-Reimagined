@@ -1,7 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 
@@ -111,33 +114,53 @@ public class CloneStampBrush extends StampBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final com.thevoxelbox.voxelsniper.SnipeData v) {
-        final String parameter = par[1];
-
-        if (parameter.equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Clone / Stamp Cylinder brush parameters");
-            v.sendMessage(ChatColor.GREEN + "cs f -- Activates Fill mode");
-            v.sendMessage(ChatColor.GREEN + "cs a -- Activates No-Air mode");
-            v.sendMessage(ChatColor.GREEN + "cs d -- Activates Default mode");
+    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Clone / Stamp Cylinder Brush Parameters: ");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " fill  -- Change to Fill mode");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Change to No-Air mode");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Change to Default mode");
+            return;
         }
-        if (parameter.equalsIgnoreCase("a")) {
+
+        if (params[0].equalsIgnoreCase("air")) {
             this.setStamp(StampType.NO_AIR);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "No-Air stamp brush");
-        } else if (parameter.equalsIgnoreCase("f")) {
+            v.sendMessage(ChatColor.AQUA + "Stamp Mode: No-Air");
+            return;
+        }
+        
+        if (params[0].equalsIgnoreCase("fill")) {
             this.setStamp(StampType.FILL);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "Fill stamp brush");
-        } else if (parameter.equalsIgnoreCase("d")) {
+            v.sendMessage(ChatColor.AQUA + "Stamp Mode: Fill");
+            return;
+        } 
+        
+        if (params[0].equalsIgnoreCase("default")) {
             this.setStamp(StampType.DEFAULT);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "Default stamp brush");
-        } else if (parameter.startsWith("c")) {
-            v.setcCen(Integer.parseInt(parameter.replace("c", "")));
+            v.sendMessage(ChatColor.AQUA + "StampMode: Default");
+            return;
+        } 
+        
+        /** TODO: Implement
+        if (params[0].startsWith("centre")) {
+            v.setcCen(Integer.parseInt(params[0].replace("c", "")));
             v.sendMessage(ChatColor.BLUE + "Center set to " + v.getcCen());
-        }
+            return;
+        }*/
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
     }
 
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("air", "fill", "default"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+    
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.clonestamp";

@@ -1,11 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -26,78 +29,77 @@ public class HeatRayBrush extends Brush {
     private static final double REQUIRED_FIRE_DENSITY = -0.25;
     private static final double REQUIRED_AIR_DENSITY = 0;
 
-    private static final ArrayList<Material> FLAMABLE_BLOCKS = new ArrayList<Material>();
+    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<Material>();
 
     private int octaves = 5;
+    private double amplitude = 0.3;
     private double frequency = 1;
 
-    private double amplitude = 0.3;
-
     static {
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_SAPLING);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_SAPLING);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_SAPLING);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_SAPLING);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_SAPLING);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_SAPLING);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_LEAVES);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_LEAVES);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_LEAVES);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_LEAVES);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_LEAVES);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_LEAVES);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_LOG);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_LOG);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_LOG);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_LOG);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_LOG);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_LOG);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_WOOD);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_WOOD);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_WOOD);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_WOOD);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_WOOD);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPRUCE_WOOD);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SPONGE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.COBWEB);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.TALL_GRASS);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DEAD_BUSH);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WHITE_WOOL);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DANDELION);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.POPPY);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BLUE_ORCHID);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ALLIUM);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.AZURE_BLUET);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.RED_TULIP);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ORANGE_TULIP);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WHITE_TULIP);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.PINK_TULIP);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OXEYE_DAISY);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.TORCH);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.FIRE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_STAIRS);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.WHEAT);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ACACIA_WALL_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.BIRCH_WALL_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.DARK_OAK_WALL_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.JUNGLE_WALL_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_WALL_SIGN);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_DOOR);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.LADDER);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_PRESSURE_PLATE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SNOW);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.ICE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.SUGAR_CANE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_FENCE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_TRAPDOOR);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.VINE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.OAK_FENCE_GATE);
-        HeatRayBrush.FLAMABLE_BLOCKS.add(Material.LILY_PAD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPONGE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.COBWEB);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.TALL_GRASS);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DEAD_BUSH);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHITE_WOOL);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DANDELION);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.POPPY);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BLUE_ORCHID);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ALLIUM);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.AZURE_BLUET);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.RED_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ORANGE_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHITE_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.PINK_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OXEYE_DAISY);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.TORCH);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.FIRE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_STAIRS);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHEAT);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_DOOR);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.LADDER);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_PRESSURE_PLATE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SNOW);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ICE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SUGAR_CANE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_FENCE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_TRAPDOOR);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.VINE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_FENCE_GATE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.LILY_PAD);
     }
 
     /**
@@ -139,7 +141,7 @@ public class HeatRayBrush extends Brush {
                             continue;
                         }
 
-                        if (HeatRayBrush.FLAMABLE_BLOCKS.contains(currentBlock.getType())) {
+                        if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getType())) {
                             undo.put(currentBlock);
                             currentBlock.setType(Material.FIRE);
                             continue;
@@ -202,27 +204,63 @@ public class HeatRayBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i].toLowerCase();
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
-                v.sendMessage(ChatColor.AQUA + "/b hr oct[int] -- Octaves parameter for the noise generator.");
-                v.sendMessage(ChatColor.AQUA + "/b hr amp[float] -- Amplitude parameter for the noise generator.");
-                v.sendMessage(ChatColor.AQUA + "/b hr freq[float] -- Frequency parameter for the noise generator.");
-            }
-            if (parameter.startsWith("oct")) {
-                this.octaves = Integer.valueOf(parameter.replace("oct", ""));
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Octaves: " + this.octaves);
-            } else if (parameter.startsWith("amp")) {
-                this.amplitude = Double.valueOf(parameter.replace("amp", ""));
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
-            } else if (parameter.startsWith("freq")) {
-                this.frequency = Double.valueOf(parameter.replace("freq", ""));
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
-            }
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " octave [number]  -- Octaves for the noise generator.");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " amplitude [number]  -- Amplitude for the noise generator.");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " frequency [number]  -- Frequency for the noise generator.");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Reset to default values.");
+            return;
         }
+
+        if (params[0].equalsIgnoreCase("default")) {
+            this.octaves = 5;
+            this.amplitude = 0.3;
+            this.frequency = 1;
+            v.sendMessage(ChatColor.GOLD + "Values were set to default values.");
+            return;
+        }
+
+        try {
+            if (params[0].equalsIgnoreCase("octave")) {
+                this.octaves = Integer.valueOf(params[1]);
+                v.getVoxelMessage().custom(ChatColor.GREEN + "Octave: " + this.octaves);
+                return;
+            }
+            if (params[0].equalsIgnoreCase("amplitude")) {
+                this.amplitude = Double.valueOf(params[1]);
+                v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("frequency")) {
+                this.frequency = Double.valueOf(params[1]);
+                v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+                return;
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("octave", "amplitude", "frequency", "default"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[number]"));
+
+        argumentValues.put(prefix + "octave", arguments);
+        argumentValues.put(prefix + "amplitude", arguments);
+        argumentValues.put(prefix + "frequency", arguments);
     }
 
     @Override

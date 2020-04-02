@@ -1,7 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -134,20 +137,38 @@ public class ScannerBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Scanner brush Parameters:");
-                v.sendMessage(ChatColor.AQUA + "/b sc d# -- will set the search depth to #. Clamps to 1 - 64.");
-                return;
-            }
-            if (par[i].startsWith("d")) {
-                this.depth = this.clamp(Integer.parseInt(par[i].substring(1)), DEPTH_MIN, DEPTH_MAX);
-                v.sendMessage(ChatColor.AQUA + "Scanner depth set to " + this.depth);
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Scanner brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number] -- will set the search depth to #. Clamps to 1 - 64.");
+            return;
         }
+
+        try {
+            if (params[0].startsWith("depth")) {
+                this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
+                v.sendMessage(ChatColor.AQUA + "Scanner depth set to " + this.depth);
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("depth"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        // Number variables
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[number]"));
+
+        argumentValues.put(prefix + "depth", arguments);
     }
 
     @Override

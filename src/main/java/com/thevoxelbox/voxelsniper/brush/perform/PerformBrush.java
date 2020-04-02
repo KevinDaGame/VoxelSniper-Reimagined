@@ -4,69 +4,85 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
+import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.Brush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import org.bukkit.ChatColor;
 
 /**
  * @author Voxel
  */
 public abstract class PerformBrush extends Brush implements Performer {
 
-    protected vPerformer current = new pMaterial();
+    protected vPerformer currentPerformer = new pMaterial();
 
     public vPerformer getCurrentPerformer() {
-        return current;
+        return currentPerformer;
+    }
+    
+    public void sendPerformerMessage(String triggerHandle, SnipeData v) {
+        v.sendMessage(ChatColor.DARK_AQUA + "You can use " + ChatColor.YELLOW + "'/b " + triggerHandle + " p [performer]'" + ChatColor.DARK_AQUA + " to change performers now.");
     }
 
     @Override
-    public void parse(String[] args, com.thevoxelbox.voxelsniper.SnipeData v) {
-        String handle = args[0];
-        if (PerformerE.has(handle)) {
-            vPerformer p = PerformerE.getPerformer(handle);
-            if (p != null) {
-                current = p;
+    public final void parsePerformer(String triggerHandle, String[] args, SnipeData v) {
+        if (args.length > 1 && args[0].equalsIgnoreCase("p")) {
+            vPerformer newPerfomer = PerformerE.getPerformer(args[1]);
+            if (newPerfomer == null) {
+                parseParameters(triggerHandle, args, v);
+            } else {
+                currentPerformer = newPerfomer;
+
                 SniperBrushChangedEvent event = new SniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
                 Bukkit.getPluginManager().callEvent(event);
+
                 info(v.getVoxelMessage());
-                current.info(v.getVoxelMessage());
-                if (args.length > 1) {
-                    String[] additionalArguments = Arrays.copyOfRange(args, 1, args.length);
-                    parameters(hackTheArray(additionalArguments), v);
-                }
-            } else {
-                parameters(hackTheArray(args), v);
+                currentPerformer.info(v.getVoxelMessage());
             }
         } else {
-            parameters(hackTheArray(args), v);
+            parseParameters(triggerHandle, args, v);
         }
     }
 
-    /**
-     * Padds an empty String to the front of the array.
-     *
-     * @param args Array to pad empty string in front of
-     * @return padded array
-     */
-    private String[] hackTheArray(String[] args) {
-        String[] returnValue = new String[args.length + 1];
-        for (int i = 0, argsLength = args.length; i < argsLength; i++) {
-            String arg = args[i];
-            returnValue[i + 1] = arg;
-        }
-        return returnValue;
+    @Override
+    public void parseParameters(String triggerHandle, String[] params, SnipeData v) {
+        super.parseParameters(triggerHandle, params, v);
+
+        sendPerformerMessage(triggerHandle, v);
     }
 
-    public void initP(com.thevoxelbox.voxelsniper.SnipeData v) {
-        current.init(v);
-        current.setUndo();
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        List<String> arguments = subcommandArguments.getOrDefault(1, new ArrayList<>());
+        arguments.add("p");
+
+        subcommandArguments.putIfAbsent(1, arguments);
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {        // Number variables
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList(PerformerE.getPerformerHandles()));
+
+        argumentValues.put(prefix + "p", arguments);
+    }
+
+    public void initP(SnipeData v) {
+        currentPerformer.init(v);
+        currentPerformer.setUndo();
     }
 
     @Override
     public void showInfo(Message vm) {
-        current.info(vm);
+        currentPerformer.info(vm);
     }
+
 }

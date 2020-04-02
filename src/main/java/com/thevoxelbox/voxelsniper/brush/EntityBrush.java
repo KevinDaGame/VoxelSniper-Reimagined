@@ -2,8 +2,12 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
 
 /**
@@ -45,32 +49,38 @@ public class EntityBrush extends Brush {
     @SuppressWarnings("deprecation")
     @Override
     public final void info(final Message vm) {
-        vm.brushMessage(ChatColor.LIGHT_PURPLE + "Entity brush" + " (" + this.entityType.getName() + ")");
+        vm.brushMessage(ChatColor.LIGHT_PURPLE + "Entity Brush" + " (" + this.entityType.getName() + ")");
         vm.size();
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        if (par[1].equalsIgnoreCase("info")) {
-            String names = "";
-
-            v.sendMessage(ChatColor.BLUE + "The available entity types are as follows:");
-            for (final EntityType currentEntity : EntityType.values()) {
-
-                names += ChatColor.AQUA + " | " + ChatColor.DARK_GREEN + currentEntity.getName();
-            }
-            names += ChatColor.AQUA + " |";
-            v.sendMessage(names);
-        } else {
-            final EntityType currentEntity = EntityType.fromName(par[1]);
-            if (currentEntity != null) {
-                this.entityType = currentEntity;
-                v.sendMessage(ChatColor.GREEN + "Entity type set to " + this.entityType.getName());
-            } else {
-                v.sendMessage(ChatColor.RED + "This is not a valid entity!");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [entityType] -- Change brush to the specified entity type");
+            return;
         }
+
+        try {
+            this.entityType = EntityType.valueOf(params[0]);
+            v.sendMessage(ChatColor.GOLD + "Entity type: " + ChatColor.DARK_GREEN + this.entityType.name());
+        } catch (IllegalArgumentException e) {
+            v.sendMessage(ChatColor.RED + "That entity type does not exist.");
+        }
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        List<String> entities = new ArrayList<>();
+
+        for (EntityType entity : EntityType.values()) {
+            entities.add(entity.name());
+        }
+
+        subcommandArguments.put(1, entities);
+
+        super.registerSubcommandArguments(subcommandArguments);
     }
 
     @Override

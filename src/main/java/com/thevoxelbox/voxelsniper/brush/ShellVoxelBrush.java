@@ -118,15 +118,6 @@ public class ShellVoxelBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        if (par[1].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Shell Voxel Parameters:");
-        } else {
-            v.sendMessage(ChatColor.RED + "Invalid parameter - see the info message for help.");
-        }
-    }
-
-    @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.shellvoxel";
     }

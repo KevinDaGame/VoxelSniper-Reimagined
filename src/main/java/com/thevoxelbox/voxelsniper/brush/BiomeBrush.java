@@ -1,7 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -13,11 +17,8 @@ public class BiomeBrush extends Brush {
 
     private Biome selectedBiome = Biome.PLAINS;
 
-    /**
-     *
-     */
     public BiomeBrush() {
-        this.setName("Biome (/b biome [Biome Name])");
+        this.setName("Biome");
     }
 
     private void biome(final SnipeData v) {
@@ -67,36 +68,32 @@ public class BiomeBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] args, final SnipeData v) {
-        if (args[1].equalsIgnoreCase("info")) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Biome Brush Parameters:");
-            String availableBiomes = "";
-
-            for (final Biome biome : Biome.values()) {
-                if (availableBiomes.isEmpty()) {
-                    availableBiomes = ChatColor.DARK_GREEN + biome.name();
-                    continue;
-                }
-
-                availableBiomes += ChatColor.RED + ", " + ChatColor.DARK_GREEN + biome.name();
-
-            }
-            v.sendMessage(ChatColor.DARK_BLUE + "Available biomes: " + availableBiomes);
-        } else {
-            // allows biome names with spaces in their name
-            String biomeName = args[1];
-            for (int i = 2; i < args.length; i++) {
-                biomeName += " " + args[i];
-            }
-
-            for (final Biome biome : Biome.values()) {
-                if (biome.name().equalsIgnoreCase(biomeName)) {
-                    this.selectedBiome = biome;
-                    break;
-                }
-            }
-            v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [biomeType] -- Change brush to the specified biome");
+            return;
         }
+
+        try {
+            this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
+            v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+        } catch (IllegalArgumentException e) {
+            v.sendMessage(ChatColor.RED + "That biome does not exist.");
+        }
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        List<String> biomes = new ArrayList<>();
+
+        for (Biome biome : Biome.values()) {
+            biomes.add(biome.name());
+        }
+
+        subcommandArguments.put(1, biomes);
+
+        super.registerSubcommandArguments(subcommandArguments);
     }
 
     @Override

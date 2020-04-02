@@ -1,10 +1,13 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import java.util.Random;
 
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -49,17 +52,17 @@ public class JaggedLineBrush extends PerformBrush {
         final double length = this.targetCoords.distance(this.originCoords);
 
         if (length == 0) {
-            this.current.perform(this.targetCoords.toLocation(this.getWorld()).getBlock());
+            this.currentPerformer.perform(this.targetCoords.toLocation(this.getWorld()).getBlock());
         } else {
             for (final BlockIterator iterator = new BlockIterator(this.getWorld(), originClone, direction, 0, NumberConversions.round(length)); iterator.hasNext();) {
                 final Block block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
-                    this.current.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
+                    this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
                 }
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -90,36 +93,58 @@ public class JaggedLineBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (final String parameter : par) {
-            try {
-                if (parameter.equalsIgnoreCase("info")) {
-                    v.sendMessage(ChatColor.GOLD + "Jagged Line Brush instructions: Right click first point with the arrow. Right click with powder to draw a jagged line to set the second point.");
-                    v.sendMessage(ChatColor.AQUA + "/b j r# - sets the number of recursions (default 3, must be 1-10)");
-                    v.sendMessage(ChatColor.AQUA + "/b j s# - sets the spread (default 3, must be 1-10)");
-                    return;
-                }
-                if (parameter.startsWith("r")) {
-                    final int temp = Integer.parseInt(parameter.substring(1));
-                    if (temp >= RECURSION_MIN && temp <= RECURSION_MAX) {
-                        this.recursion = temp;
-                        v.sendMessage(ChatColor.GREEN + "Recursion set to: " + this.recursion);
-                    } else {
-                        v.sendMessage(ChatColor.RED + "ERROR: Recursion must be " + RECURSION_MIN + "-" + RECURSION_MAX);
-                    }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
-                    return;
-                } else if (parameter.startsWith("s")) {
-                    final int temp = Integer.parseInt(parameter.substring(1));
-                    this.spread = temp;
-                    v.sendMessage(ChatColor.GREEN + "Spread set to: " + this.spread);
-                }
-            } catch (Exception exception) {
-                v.sendMessage(ChatColor.RED + String.format("Exception while parsing parameter: %s", parameter));
-                exception.printStackTrace();
-            }
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Jagged Line Brush Parameters: ");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " recursion [number] - sets the number of recursions (default 3, must be 1-10)");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " spread [number] - sets the spread (default 3, must be 1-10)");
+            v.sendMessage(ChatColor.BLUE + "Instructions: Right click first point with the arrow. Right click with powder to draw a jagged line to set the second point.");
+            return;
         }
 
+        try {
+            if (params[0].equalsIgnoreCase("recursion")) {
+                int newRecursion = Integer.parseInt(params[1]);
+                if (newRecursion >= RECURSION_MIN && newRecursion <= RECURSION_MAX) {
+                    this.recursion = newRecursion;
+                    v.sendMessage(ChatColor.GREEN + "Recursion set to: " + this.recursion);
+                } else {
+                    v.sendMessage(ChatColor.RED + "Recursion must be between " + RECURSION_MIN + " - " + RECURSION_MAX);
+                }
+
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("spread")) {
+                final int newSpread = Integer.parseInt(params[1]);
+                this.spread = newSpread;
+                v.sendMessage(ChatColor.GREEN + "Spread set to: " + this.spread);
+                return;
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("recursion", "spread"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[number]"));
+
+        argumentValues.put(prefix + "recursion", arguments);
+        argumentValues.put(prefix + "spread", arguments);
+        
+        super.registerArgumentValues(prefix, argumentValues);
     }
 
     @Override

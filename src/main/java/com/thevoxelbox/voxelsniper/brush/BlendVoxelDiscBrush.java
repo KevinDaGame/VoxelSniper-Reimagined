@@ -1,8 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.Undo;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -108,14 +110,31 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        if (par[1].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blend Voxel Disc Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b bvd water -- toggle include or exclude (default) water");
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Blend Ball Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water -- toggle include water (default: exclude)");
             return;
         }
 
-        super.parameters(par, v);
+        super.parseParameters(triggerHandle, params, v);
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("water"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+
+        arguments.put(1, Lists.newArrayList("true", "false"));
+        argumentValues.put(prefix + "water", arguments);
+
+        super.registerArgumentValues(prefix, argumentValues);
     }
 
     @Override

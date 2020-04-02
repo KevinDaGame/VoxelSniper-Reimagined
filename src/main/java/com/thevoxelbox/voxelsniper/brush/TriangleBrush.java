@@ -146,7 +146,7 @@ public class TriangleBrush extends PerformBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.current.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -197,7 +197,7 @@ public class TriangleBrush extends PerformBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.current.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -247,12 +247,12 @@ public class TriangleBrush extends PerformBrush {
 
                     // VoxelSniper.log.info("Bary: "+barycentric+", hb: "+heronbig+", h1: "+heronone+", h2: "+herontwo+", h3: "+heronthree);
                     if (barycentric <= 1.1) {
-                        this.current.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
                     }
                 }
             } // END Z DEPENDENT
 
-            v.owner().storeUndo(this.current.getUndo());
+            v.owner().storeUndo(this.currentPerformer.getUndo());
 
         }
 
@@ -287,10 +287,14 @@ public class TriangleBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        if (par[1].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Triangle Brush instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.");
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.");
+            return;
         }
+        
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
     }
 
     @Override

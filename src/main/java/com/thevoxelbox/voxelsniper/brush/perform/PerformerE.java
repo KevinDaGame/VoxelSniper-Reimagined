@@ -5,6 +5,7 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -114,12 +115,20 @@ public enum PerformerE {
         if (performers.containsKey(s)) {
             return performers.get(s);
         } else {
-            return performers.get(long_names.get(s));
+            if (long_names.containsKey(s)) {
+                return performers.get(long_names.get(s));
+            }
+            
+            return null;
         }
     }
 
     public static boolean has(String s) {
         return performers.containsKey(s);
+    }
+
+    public static Collection<String> getPerformerHandles() {
+        return performers.keySet();
     }
 
     static {

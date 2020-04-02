@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,7 +15,11 @@ import org.bukkit.block.Block;
  */
 public class FillDownBrush extends PerformBrush {
 
-    private double trueCircle = 0;
+    private static final double SMOOTH_CIRCLE_VALUE = 0.5;
+    private static final double VOXEL_CIRCLE_VALUE = 0.0;
+
+    private boolean smoothCircle = false;
+
     private boolean fillLiquid = true;
     private boolean fromExisting = false;
 
@@ -25,7 +32,7 @@ public class FillDownBrush extends PerformBrush {
 
     private void fillDown(final SnipeData v, final Block b) {
         final int brushSize = v.getBrushSize();
-        final double brushSizeSquared = Math.pow(brushSize + this.trueCircle, 2);
+        final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         final Block targetBlock = this.getTargetBlock();
         for (int x = -brushSize; x <= brushSize; x++) {
             final double currentXSquared = Math.pow(x, 2);
@@ -56,7 +63,7 @@ public class FillDownBrush extends PerformBrush {
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
                         if (currentBlock.isEmpty() || (fillLiquid && currentBlock.isLiquid())) {
-                            this.current.perform(currentBlock);
+                            this.currentPerformer.perform(currentBlock);
                         } else {
                             break;
                         }
@@ -65,7 +72,7 @@ public class FillDownBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -85,36 +92,42 @@ public class FillDownBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Fill Down Parameters:");
-                v.sendMessage(ChatColor.AQUA + "/b fd true -- will use a true circle algorithm.");
-                v.sendMessage(ChatColor.AQUA + "/b fd false -- will switch back. (Default)");
-                v.sendMessage(ChatColor.AQUA + "/b fd some -- Fills only into air.");
-                v.sendMessage(ChatColor.AQUA + "/b fd all -- Fills into liquids as well. (Default)");
-                v.sendMessage(ChatColor.AQUA + "/b fd -e -- Fills into only existing blocks. (Toggle)");
-                return;
-            } else if (par[i].equalsIgnoreCase("true")) {
-                this.trueCircle = 0.5;
-                v.sendMessage(ChatColor.AQUA + "True circle mode ON.");
-            } else if (par[i].equalsIgnoreCase("false")) {
-                this.trueCircle = 0;
-                v.sendMessage(ChatColor.AQUA + "True circle mode OFF.");
-            } else if (par[i].equalsIgnoreCase("all")) {
-                this.fillLiquid = true;
-                v.sendMessage(ChatColor.AQUA + "Now filling liquids as well as air.");
-            } else if (par[i].equalsIgnoreCase("some")) {
-                this.fillLiquid = false;
-                v.setTargetSubstance(Material.AIR.createBlockData());
-                v.sendMessage(ChatColor.AQUA + "Now only filling air.");
-            } else if (par[i].equalsIgnoreCase("-e")) {
-                this.fromExisting = !this.fromExisting;
-                v.sendMessage(ChatColor.AQUA + "Now filling down from " + ((this.fromExisting) ? "existing" : "all") + " blocks.");
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Fill Down Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle use smooth circles (default: false)");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " liquid  -- Toggle filling liquids (default: true)");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " existing  -- Toggle filling existing blocks or all blocks. (Toggle)");
+            return;
         }
+
+        if (params[0].equalsIgnoreCase("liquid")) {
+            this.fillLiquid = !this.fillLiquid;
+            v.sendMessage(ChatColor.AQUA + "Now filling " + ((this.fillLiquid) ? "liquid and air" : "air only") + ".");
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("existing")) {
+            this.fromExisting = !this.fromExisting;
+            v.sendMessage(ChatColor.AQUA + "Now filling down from " + ((this.fromExisting) ? "existing" : "all") + " blocks.");
+            return;
+        }
+
+        if (params[0].startsWith("smooth")) {
+            this.smoothCircle = !this.smoothCircle;
+            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("smooth", "liquid", "existing"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.Message;
 import com.thevoxelbox.voxelsniper.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -54,7 +57,7 @@ public class UnderlayBrush extends PerformBrush {
                                     case OBSIDIAN:
                                         for (int d = 0; (d < this.depth); d++) {
                                             if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
-                                                this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                                this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                                 // parameters
                                                 memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                             }
@@ -67,7 +70,7 @@ public class UnderlayBrush extends PerformBrush {
                             } else {
                                 for (int d = 0; (d < this.depth); d++) {
                                     if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
-                                        this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                         // parameters
                                         memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                     }
@@ -80,7 +83,7 @@ public class UnderlayBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void underlay2(final SnipeData v) {
@@ -114,7 +117,7 @@ public class UnderlayBrush extends PerformBrush {
                                     case SNOW:
                                     case OBSIDIAN:
                                         for (int d = -1; (d < this.depth - 1); d++) {
-                                            this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                             // parameters
                                             memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }
@@ -124,7 +127,7 @@ public class UnderlayBrush extends PerformBrush {
                                 }
                             } else {
                                 for (int d = -1; (d < this.depth - 1); d++) {
-                                    this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                     // parameters
                                     memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                 }
@@ -135,7 +138,7 @@ public class UnderlayBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -155,30 +158,53 @@ public class UnderlayBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.owner().getPlayer().sendMessage(ChatColor.GOLD + "Reverse Overlay brush parameters:");
-                v.owner().getPlayer().sendMessage(ChatColor.AQUA + "d[number] (ex: d3) The number of blocks thick to change.");
-                v.owner().getPlayer().sendMessage(ChatColor.BLUE + "all (ex: /b reover all) Sets the brush to affect ALL materials");
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Underlay (Reverse Overlay) Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " mode  -- Toggle between overlaying natural blocks or all blocks.");
+            return;
+        }
+
+        if (params[0].startsWith("depth")) {
+            try {
+                this.depth = Integer.parseInt(params[1]);
+
                 if (this.depth < 1) {
                     this.depth = 1;
                 }
+
+                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
                 return;
-            }
-            if (par[i].startsWith("d")) {
-                this.depth = Integer.parseInt(par[i].replace("d", ""));
-                v.owner().getPlayer().sendMessage(ChatColor.AQUA + "Depth set to " + this.depth);
-            } else if (par[i].startsWith("all")) {
-                this.allBlocks = true;
-                v.owner().getPlayer().sendMessage(ChatColor.BLUE + "Will underlay over any block." + this.depth);
-            } else if (par[i].startsWith("some")) {
-                this.allBlocks = false;
-                v.owner().getPlayer().sendMessage(ChatColor.BLUE + "Will underlay only natural block types." + this.depth);
-            } else {
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
+            } catch (NumberFormatException e) {
             }
         }
+
+        if (params[0].startsWith("mode")) {
+            this.allBlocks = !this.allBlocks;
+            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all blocks" : "natural blocks") + ", " + this.depth + " blocks deep.");
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+        subcommandArguments.put(1, Lists.newArrayList("depth", "mode"));
+
+        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    }
+
+    @Override
+    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+        HashMap<Integer, List<String>> arguments = new HashMap<>();
+        arguments.put(1, Lists.newArrayList("[number]"));
+
+        argumentValues.put(prefix + "depth", arguments);
+        
+        super.registerArgumentValues(prefix, argumentValues);
     }
 
     @Override
