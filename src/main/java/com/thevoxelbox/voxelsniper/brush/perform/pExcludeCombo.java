@@ -4,7 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.Message;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import static jdk.nashorn.internal.runtime.Debug.id;
 
@@ -24,7 +24,7 @@ public class pExcludeCombo extends vPerformer {
     }
 
     @Override
-    public void info(Message vm) {
+    public void info(VoxelMessage vm) {
         vm.performerName(name);
         vm.voxelList();
         vm.voxel();
@@ -32,7 +32,7 @@ public class pExcludeCombo extends vPerformer {
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
+    public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         voxelSubstance = v.getVoxelSubstance();
         excludeList = v.getVoxelList();

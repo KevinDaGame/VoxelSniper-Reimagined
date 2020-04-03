@@ -3,8 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import java.util.Random;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import java.util.HashMap;
 import java.util.List;
@@ -212,7 +212,7 @@ public class BlobBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         this.checkValidGrowPercent(null);
 
         vm.brushName(this.getName());

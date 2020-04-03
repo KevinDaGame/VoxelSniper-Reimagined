@@ -4,7 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.Message;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
 import org.bukkit.Material;
 
 import org.bukkit.block.Block;
@@ -21,13 +21,13 @@ public class pMaterialNoPhysics extends vPerformer {
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
+    public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         voxelMaterial = v.getVoxelMaterial();
     }
 
     @Override
-    public void info(Message vm) {
+    public void info(VoxelMessage vm) {
         vm.performerName(name);
         vm.voxel();
     }

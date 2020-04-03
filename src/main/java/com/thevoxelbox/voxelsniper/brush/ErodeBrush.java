@@ -1,9 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.base.Objects;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
@@ -157,7 +157,7 @@ public class ErodeBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.custom(ChatColor.GOLD + "Active brush preset is " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");

@@ -1,5 +1,6 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.snipe;
 
+import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ClassToInstanceMap;
@@ -7,10 +8,11 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.MutableClassToInstanceMap;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
-import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import org.bukkit.Bukkit;
@@ -27,6 +29,7 @@ import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
+import com.thevoxelbox.voxelsniper.brush.perform.IPerformer;
 
 /**
  *
@@ -114,7 +117,7 @@ public class Sniper {
                         if (clickedBlock != null) {
                             targetBlock = clickedBlock;
                         } else {
-                            RangeBlockHelper rangeBlockHelper = snipeData.isRanged() ? new RangeBlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new RangeBlockHelper(getPlayer(), getPlayer().getWorld());
+                            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
                             targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
                         }
 
@@ -149,7 +152,7 @@ public class Sniper {
                         if (clickedBlock != null) {
                             targetBlock = clickedBlock;
                         } else {
-                            RangeBlockHelper rangeBlockHelper = snipeData.isRanged() ? new RangeBlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new RangeBlockHelper(getPlayer(), getPlayer().getWorld());
+                            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
                             targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
                         }
 
@@ -202,7 +205,7 @@ public class Sniper {
                         return true;
                     }
                 } else {
-                    RangeBlockHelper rangeBlockHelper = snipeData.isRanged() ? new RangeBlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new RangeBlockHelper(getPlayer(), getPlayer().getWorld());
+                    BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
                     targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
                     lastBlock = rangeBlockHelper.getLastBlock();
 
@@ -297,12 +300,12 @@ public class Sniper {
         }
     }
 
-    public void undo() {
-        undo(1);
+    public int undo() {
+        return undo(1);
     }
 
-    public void undo(int amount) {
-        int sum = 0;
+    public int undo(int amount) {
+        int changedBlocks = 0;
         if (this.undoList.isEmpty()) {
             getPlayer().sendMessage(ChatColor.GREEN + "There's nothing to undo.");
         } else {
@@ -310,13 +313,15 @@ public class Sniper {
                 Undo undo = this.undoList.pop();
                 if (undo != null) {
                     undo.undo();
-                    sum += undo.getSize();
-                } else {
+                    changedBlocks += undo.getSize();
+                } else { // TODO: Check if this logic makes sense
                     break;
                 }
             }
-            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful:  " + ChatColor.RED + sum + ChatColor.GREEN + " blocks have been replaced.");
+
+            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful:  " + ChatColor.RED + changedBlocks + ChatColor.GREEN + " blocks have been replaced.");
         }
+        return changedBlocks;
     }
 
     public void reset(String toolId) {
@@ -343,8 +348,8 @@ public class Sniper {
             return;
         }
         brush.info(sniperTool.getMessageHelper());
-        if (brush instanceof Performer) {
-            ((Performer) brush).showInfo(sniperTool.getMessageHelper());
+        if (brush instanceof IPerformer) {
+            ((IPerformer) brush).showInfo(sniperTool.getMessageHelper());
         }
     }
 
@@ -359,7 +364,7 @@ public class Sniper {
         private Class<? extends IBrush> currentBrush;
         private Class<? extends IBrush> previousBrush;
         private SnipeData snipeData;
-        private Message messageHelper;
+        private VoxelMessage messageHelper;
 
         private SniperTool(Sniper owner) {
             this(SnipeBrush.class, new SnipeData(owner));
@@ -367,7 +372,7 @@ public class Sniper {
 
         private SniperTool(Class<? extends IBrush> currentBrush, SnipeData snipeData) {
             this.snipeData = snipeData;
-            messageHelper = new Message(snipeData);
+            messageHelper = new VoxelMessage(snipeData);
             snipeData.setVoxelMessage(messageHelper);
 
             IBrush newBrushInstance = instanciateBrush(currentBrush);
@@ -405,7 +410,7 @@ public class Sniper {
             return snipeData;
         }
 
-        public Message getMessageHelper() {
+        public VoxelMessage getMessageHelper() {
             return messageHelper;
         }
 

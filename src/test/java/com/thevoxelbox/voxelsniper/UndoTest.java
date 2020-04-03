@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper;
 
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

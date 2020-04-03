@@ -1,9 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.base.Objects;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class TreeSnipeBrush extends Brush {
         return 0;
     }
 
-    private void printTreeType(final Message vm) {
+    private void printTreeType(final VoxelMessage vm) {
         String printout = "";
 
         boolean delimiterHelper = true;
@@ -82,7 +82,7 @@ public class TreeSnipeBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         this.printTreeType(vm);
     }

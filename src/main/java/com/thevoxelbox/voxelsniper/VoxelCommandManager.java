@@ -1,9 +1,12 @@
-package com.thevoxelbox.voxelsniper.command;
+package com.thevoxelbox.voxelsniper;
 
-import com.thevoxelbox.voxelsniper.Brushes;
-import com.thevoxelbox.voxelsniper.SniperManager;
+import com.thevoxelbox.voxelsniper.VoxelBrushManager;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
+import com.thevoxelbox.voxelsniper.command.VoxelBrushCommand;
+import com.thevoxelbox.voxelsniper.command.VoxelCommand;
+import com.thevoxelbox.voxelsniper.command.VoxelUndoCommand;
+import com.thevoxelbox.voxelsniper.command.VoxelVoxelCommand;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.logging.Logger;
  *
  * @author ervinnnc
  */
+// TODO: Change to singleton instance
 public class VoxelCommandManager {
 
     private static final List<VoxelCommand> commands = new ArrayList<>();
@@ -26,6 +30,8 @@ public class VoxelCommandManager {
         argumentsMap.clear();
 
         commands.add(new VoxelBrushCommand());
+        commands.add(new VoxelUndoCommand());
+        commands.add(new VoxelVoxelCommand());
 
         for (VoxelCommand command : commands) {
             VoxelSniper.getInstance().getCommand(command.getIdentifier()).setExecutor(command);
@@ -54,14 +60,6 @@ public class VoxelCommandManager {
         }
     }
 
-    public static Brushes getBrushManager() {
-        return VoxelSniper.getInstance().getBrushManager();
-    }
-
-    public static SniperManager getSniperManager() {
-        return VoxelSniper.getInstance().getSniperManager();
-    }
-
     public static List<String> getCommandArgumentsList(String commandName, int argumentNumber) {
         // If not defined, return an empty list.
         if (!argumentsMap.containsKey(commandName)) {
@@ -70,6 +68,14 @@ public class VoxelCommandManager {
 
         List<String> arguments = argumentsMap.get(commandName).getOrDefault(argumentNumber, new ArrayList<>());
         return arguments;
+    }
+
+    public static VoxelBrushManager getBrushManager() {
+        return VoxelSniper.getInstance().getBrushManager();
+    }
+
+    public static VoxelProfileManager getSniperManager() {
+        return VoxelSniper.getInstance().getSniperManager();
     }
 
 }

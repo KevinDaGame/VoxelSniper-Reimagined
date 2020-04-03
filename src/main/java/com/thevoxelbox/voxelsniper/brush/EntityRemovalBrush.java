@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
@@ -103,7 +103,7 @@ public class EntityRemovalBrush extends Brush {
     }
 
     @Override
-    public void info(Message vm) {
+    public void info(VoxelMessage vm) {
         vm.brushName(getName());
         vm.custom(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
         vm.size();

@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeAction;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.block.Block;
@@ -16,7 +16,7 @@ public interface IBrush {
     /**
      * @param vm Message object
      */
-    void info(Message vm);
+    void info(VoxelMessage vm);
 
     /**
      * Handles parameters passed to brushes.

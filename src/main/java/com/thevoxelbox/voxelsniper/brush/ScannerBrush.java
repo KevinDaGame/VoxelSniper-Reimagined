@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.HashMap;
 import java.util.List;
 
@@ -130,7 +130,7 @@ public class ScannerBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.GREEN + "Scanner depth set to " + this.depth);
         vm.custom(ChatColor.GREEN + "Scanner scans for " + this.checkFor + " (change with /v #)");

@@ -7,8 +7,8 @@ import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,7 +80,7 @@ public class CometBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.voxel();
         vm.custom("Your balls are " + ChatColor.DARK_RED + (useBigBalls ? "BIG" : "small"));

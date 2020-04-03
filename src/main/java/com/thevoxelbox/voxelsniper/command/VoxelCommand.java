@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 public abstract class VoxelCommand implements TabExecutor {
 
@@ -39,7 +41,22 @@ public abstract class VoxelCommand implements TabExecutor {
 
     @Override
     public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return doSuggestion((Player) sender, args);
+        // Return partial matches that match *any part* of the string.
+        if (this instanceof VoxelVoxelCommand) {
+            String namespace = "minecraft:";
+            args[0] = args[0].toLowerCase();
+            
+            if (!args[0].startsWith(namespace)) {
+                if (args[0].startsWith("mi") && !args[0].equals(namespace)) {
+                    return Lists.newArrayList(namespace);
+                }
+
+                args[0] = namespace + args[0];
+            }
+        }
+
+        // Return partial matches that only match the *beginning* of the string.
+        return StringUtil.copyPartialMatches(args[args.length - 1], doSuggestion((Player) sender, args), new ArrayList<>());
     }
 
     public abstract List<String> doSuggestion(Player player, String[] args);
@@ -92,7 +109,8 @@ public abstract class VoxelCommand implements TabExecutor {
         return returnValue;
     }
 
-    public abstract void registerTabCompletion(HashMap<Integer, List<String>> argumentListMap);
+    public void registerTabCompletion(HashMap<Integer, List<String>> argumentListMap) {
+    }
 
     public final List<String> getTabCompletion(int argumentNumber) {
         return getTabCompletion(this.getIdentifier(), argumentNumber);

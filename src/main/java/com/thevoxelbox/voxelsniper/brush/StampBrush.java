@@ -2,9 +2,9 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import java.util.HashSet;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -284,7 +284,7 @@ public class StampBrush extends Brush {
     }
 
     @Override
-    public void info(final Message vm) {
+    public void info(final VoxelMessage vm) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -137,7 +137,7 @@ public class SplineBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
 
         if (this.set) {
@@ -150,7 +150,7 @@ public class SplineBrush extends PerformBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.SnipeData v) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
             v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " ss  -- Enable endpoint selection mode for desired curve");

@@ -4,8 +4,8 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -18,9 +18,9 @@ public abstract class vPerformer {
     protected Undo h;
     protected World w;
 
-    public abstract void info(Message vm);
+    public abstract void info(VoxelMessage vm);
 
-    public abstract void init(com.thevoxelbox.voxelsniper.SnipeData v);
+    public abstract void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v);
 
     public void setUndo() {
         h = new Undo();

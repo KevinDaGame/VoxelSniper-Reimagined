@@ -1,5 +1,6 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.snipe;
 
+import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 
 import org.bukkit.Material;
@@ -20,7 +21,7 @@ public class SnipeData {
 
     // Sniper varaibles
     private final Sniper owner;
-    private Message voxelMessage;
+    private VoxelMessage voxelMessage;
 
     private int range = 0;
     private boolean ranged = false;
@@ -41,11 +42,11 @@ public class SnipeData {
         this.owner = vs;
     }
 
-    public Message getVoxelMessage() {
+    public VoxelMessage getVoxelMessage() {
         return voxelMessage;
     }
 
-    public void setVoxelMessage(Message voxelMessage) {
+    public void setVoxelMessage(VoxelMessage voxelMessage) {
         this.voxelMessage = voxelMessage;
     }
 

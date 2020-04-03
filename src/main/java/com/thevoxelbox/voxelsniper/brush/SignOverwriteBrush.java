@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
@@ -373,7 +373,7 @@ public class SignOverwriteBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName("Sign Overwrite Brush");
 
         vm.custom(ChatColor.BLUE + "Buffer text: ");

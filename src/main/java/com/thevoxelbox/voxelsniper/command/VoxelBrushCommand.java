@@ -1,10 +1,10 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Sniper;
+import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformerE;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.util.StringUtil;
+import com.thevoxelbox.voxelsniper.brush.perform.IPerformer;
 
 public class VoxelBrushCommand extends VoxelCommand {
     
@@ -81,8 +82,8 @@ public class VoxelBrushCommand extends VoxelCommand {
                     String[] additionalParameters = Arrays.copyOfRange(args, 1, args.length);
                     
                     // Parse performer if the brush is a performer
-                    if (newBrush instanceof Performer) {
-                        ((Performer) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
+                    if (newBrush instanceof IPerformer) {
+                        ((IPerformer) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
                         return true;
                     } else {
                         newBrush.parseParameters(args[0], additionalParameters, snipeData);
@@ -102,15 +103,15 @@ public class VoxelBrushCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(Player player, String[] args) {
         if (args.length == 1) {
-            return StringUtil.copyPartialMatches(args[0], getTabCompletion(args.length), new ArrayList<>());
+            return getTabCompletion(args.length);
         }
         
         if (args.length == 2) {
-            return StringUtil.copyPartialMatches(args[1], getTabCompletion(VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX + args[0], 1), new ArrayList<>());
+            return getTabCompletion(VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX + args[0], 1);
         }
         
         if (args.length > 2) {
-            return StringUtil.copyPartialMatches(args[2], getTabCompletion(VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX + args[0] + args[1], args.length - 2), new ArrayList<>());
+            return getTabCompletion(VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX + args[0] + args[1], args.length - 2);
         }
             
         return new ArrayList<>();

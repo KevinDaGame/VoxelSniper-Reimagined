@@ -1,9 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import java.util.HashMap;
 import java.util.List;
 
@@ -110,7 +110,7 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    protected final void arrow(final com.thevoxelbox.voxelsniper.SnipeData v) {
+    protected final void arrow(final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         switch (this.points) {
             case 0:
                 this.firstPoint[0] = this.getTargetBlock().getX();
@@ -138,7 +138,7 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    protected final void powder(final com.thevoxelbox.voxelsniper.SnipeData v) {
+    protected final void powder(final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (this.points == 2) {
             if (this.numBlocks == 0) {
                 this.doCopy(v);
@@ -156,14 +156,14 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.GOLD + "Paste air: " + this.pasteAir);
         vm.custom(ChatColor.GOLD + "Pivot angle: " + this.pivot);
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.SnipeData v) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "CopyPasta Brush Parameters:");
             v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)");

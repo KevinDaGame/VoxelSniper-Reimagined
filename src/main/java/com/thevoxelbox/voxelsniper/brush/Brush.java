@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformerE;
+import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +97,7 @@ public abstract class Brush implements IBrush {
     }
 
     @Override
-    public abstract void info(Message vm);
+    public abstract void info(VoxelMessage vm);
 
     @Override
     public void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
@@ -133,12 +136,12 @@ public abstract class Brush implements IBrush {
             }
             return true;
         } else {
-            RangeBlockHelper rangeBlockHelper;
+            BlockHelper rangeBlockHelper;
             if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isRanged()) {
-                rangeBlockHelper = new RangeBlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld(), (double) v.owner().getSnipeData(v.owner().getCurrentToolId()).getRange());
+                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld(), (double) v.owner().getSnipeData(v.owner().getCurrentToolId()).getRange());
                 this.setTargetBlock(rangeBlockHelper.getRangeBlock());
             } else {
-                rangeBlockHelper = new RangeBlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld());
+                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld());
                 this.setTargetBlock(rangeBlockHelper.getTargetBlock());
             }
             if (this.getTargetBlock() != null) {

@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -62,7 +62,7 @@ public class FlatOceanBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.RED + "THIS BRUSH DOES NOT UNDO.");
         vm.custom(ChatColor.GREEN + "Water level set to " + this.waterLevel);

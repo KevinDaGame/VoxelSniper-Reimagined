@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +75,7 @@ public class EllipsoidBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.AQUA + "X radius set to: " + ChatColor.DARK_AQUA + this.xRad);
         vm.custom(ChatColor.AQUA + "Y radius set to: " + ChatColor.DARK_AQUA + this.yRad);
@@ -83,7 +83,7 @@ public class EllipsoidBrush extends PerformBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.SnipeData v) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
             v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set X radius");

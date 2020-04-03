@@ -1,12 +1,13 @@
 package com.thevoxelbox.voxelsniper;
 
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 
 /**
  *
  */
-public class Message {
+public class VoxelMessage {
 
     private static final int BRUSH_SIZE_WARNING_THRESHOLD = 20;
     private final SnipeData snipeData;
@@ -14,7 +15,7 @@ public class Message {
     /**
      * @param snipeData
      */
-    public Message(SnipeData snipeData) {
+    public VoxelMessage(SnipeData snipeData) {
         this.snipeData = snipeData;
     }
 

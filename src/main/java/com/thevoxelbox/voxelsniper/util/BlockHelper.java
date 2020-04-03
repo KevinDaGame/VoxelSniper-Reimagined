@@ -1,21 +1,29 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.util;
 
+import java.util.Set;
+import org.bukkit.Art;
+import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 /**
  * @author Voxel
  */
-public class RangeBlockHelper {
+public class BlockHelper {
 
     private static final int MAXIMUM_WORLD_HEIGHT = 255;
     private static final double DEFAULT_PLAYER_VIEW_HEIGHT = 1.65;
     private static final double DEFAULT_LOCATION_VIEW_HEIGHT = 0;
     private static final double DEFAULT_STEP = 0.2;
     private static final int DEFAULT_RANGE = 250;
+
     private Location playerLoc;
     private double rotX, rotY, viewHeight, rotXSin, rotXCos, rotYSin, rotYCos;
     private double length, hLength, step;
@@ -31,8 +39,8 @@ public class RangeBlockHelper {
      *
      * @param location
      */
-    public RangeBlockHelper(final Location location) {
-        this.init(location, RangeBlockHelper.DEFAULT_RANGE, RangeBlockHelper.DEFAULT_STEP, RangeBlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
+    public BlockHelper(final Location location) {
+        this.init(location, BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
     }
 
     /**
@@ -42,9 +50,9 @@ public class RangeBlockHelper {
      * @param range
      * @param step
      */
-    public RangeBlockHelper(final Location location, final int range, final double step) {
+    public BlockHelper(final Location location, final int range, final double step) {
         this.world = location.getWorld();
-        this.init(location, range, step, RangeBlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
+        this.init(location, range, step, BlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
     }
 
     /**
@@ -54,8 +62,8 @@ public class RangeBlockHelper {
      * @param range
      * @param step
      */
-    public RangeBlockHelper(final Player player, final int range, final double step) {
-        this.init(player.getLocation(), range, step, RangeBlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
+    public BlockHelper(final Player player, final int range, final double step) {
+        this.init(player.getLocation(), range, step, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
     }
 
     /**
@@ -64,9 +72,9 @@ public class RangeBlockHelper {
      * @param player
      * @param world
      */
-    public RangeBlockHelper(final Player player, final World world) {
+    public BlockHelper(final Player player, final World world) {
         this.world = world;
-        this.init(player.getLocation(), RangeBlockHelper.DEFAULT_RANGE, RangeBlockHelper.DEFAULT_STEP, RangeBlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
+        this.init(player.getLocation(), BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
         // values
     }
 
@@ -75,9 +83,9 @@ public class RangeBlockHelper {
      * @param world
      * @param range
      */
-    public RangeBlockHelper(final Player player, final World world, final double range) {
+    public BlockHelper(final Player player, final World world, final double range) {
         this.world = world;
-        this.init(player.getLocation(), range, RangeBlockHelper.DEFAULT_STEP, RangeBlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
+        this.init(player.getLocation(), range, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
         this.fromOffworld();
     }
 
@@ -85,8 +93,8 @@ public class RangeBlockHelper {
      *
      */
     public final void fromOffworld() {
-        if (this.targetY > RangeBlockHelper.MAXIMUM_WORLD_HEIGHT) {
-            while (this.targetY > RangeBlockHelper.MAXIMUM_WORLD_HEIGHT && this.length <= this.range) {
+        if (this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT) {
+            while (this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT && this.length <= this.range) {
                 this.lastX = this.targetX;
                 this.lastY = this.targetY;
                 this.lastZ = this.targetZ;
@@ -134,7 +142,7 @@ public class RangeBlockHelper {
      * @return Block
      */
     public final Block getCurBlock() {
-        if (this.length > this.range || this.targetY > RangeBlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
+        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
             return null;
         } else {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
@@ -164,7 +172,7 @@ public class RangeBlockHelper {
      * @return Block
      */
     public final Block getLastBlock() {
-        if (this.lastY > RangeBlockHelper.MAXIMUM_WORLD_HEIGHT || this.lastY < 0) {
+        if (this.lastY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.lastY < 0) {
             return null;
         }
         return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
@@ -194,7 +202,7 @@ public class RangeBlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.length > this.range || this.targetY > RangeBlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
+        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
             return null;
         }
 
@@ -251,7 +259,7 @@ public class RangeBlockHelper {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
         }
 
-        if (this.length > this.range || this.targetY > RangeBlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
+        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
             return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
         } else {
             return this.getRange();
@@ -280,5 +288,55 @@ public class RangeBlockHelper {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
         this.lastZ = this.targetZ;
+    }
+    
+    
+    /**
+     * The paint method used to scroll or set a painting to a specific type.
+     *
+     * @param p The player executing the method
+     * @param auto Scroll automatically? If false will use 'choice' to try and set the painting
+     * @param back Scroll in reverse?
+     * @param choice Chosen index to set the painting to
+     */
+    @SuppressWarnings(value = "deprecation")
+    public static void paint(final Player p, final boolean auto, final boolean back, final int choice) {
+        Location targetLocation = p.getTargetBlock((Set<Material>) null, 4).getLocation();
+        Chunk paintingChunk = p.getTargetBlock((Set<Material>) null, 4).getLocation().getChunk();
+        Double bestDistanceMatch = 50.0;
+        Painting bestMatch = null;
+        for (Entity entity : paintingChunk.getEntities()) {
+            if (entity.getType() == EntityType.PAINTING) {
+                Double distance = targetLocation.distanceSquared(entity.getLocation());
+                if (distance <= 4 && distance < bestDistanceMatch) {
+                    bestDistanceMatch = distance;
+                    bestMatch = (Painting) entity;
+                }
+            }
+        }
+        if (bestMatch != null) {
+            if (auto) {
+                try {
+                    final int i = bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length % Art.values().length;
+                    Art art = Art.getById(i);
+                    if (art == null) {
+                        p.sendMessage(ChatColor.RED + "This is the final painting, try scrolling to the other direction.");
+                        return;
+                    }
+                    bestMatch.setArt(art);
+                    p.sendMessage(ChatColor.GREEN + "Painting set to ID: " + (i));
+                } catch (final Exception e) {
+                    p.sendMessage(ChatColor.RED + "Oops. Something went wrong.");
+                }
+            } else {
+                try {
+                    Art art = Art.getById(choice);
+                    bestMatch.setArt(art);
+                    p.sendMessage(ChatColor.GREEN + "Painting set to ID: " + choice);
+                } catch (final Exception exception) {
+                    p.sendMessage(ChatColor.RED + "Your input was invalid somewhere.");
+                }
+            }
+        }
     }
 }

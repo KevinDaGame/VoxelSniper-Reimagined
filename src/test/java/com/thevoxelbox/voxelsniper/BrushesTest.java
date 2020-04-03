@@ -16,12 +16,12 @@ import java.util.Set;
  */
 public class BrushesTest
 {
-    private Brushes brushes;
+    private VoxelBrushManager brushes;
 
     @Before
     public void setUp() throws Exception
     {
-        brushes = new Brushes();
+        brushes = new VoxelBrushManager();
     }
 
     @Test

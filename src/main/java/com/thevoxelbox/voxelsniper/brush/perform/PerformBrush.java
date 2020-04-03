@@ -5,8 +5,8 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.Brush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import org.bukkit.ChatColor;
 /**
  * @author Voxel
  */
-public abstract class PerformBrush extends Brush implements Performer {
+public abstract class PerformBrush extends Brush implements IPerformer {
 
     protected vPerformer currentPerformer = new pMaterial();
 
@@ -35,7 +35,7 @@ public abstract class PerformBrush extends Brush implements Performer {
     @Override
     public final void parsePerformer(String triggerHandle, String[] args, SnipeData v) {
         if (args.length > 1 && args[0].equalsIgnoreCase("p")) {
-            vPerformer newPerfomer = PerformerE.getPerformer(args[1]);
+            vPerformer newPerfomer = Performer.getPerformer(args[1]);
             if (newPerfomer == null) {
                 parseParameters(triggerHandle, args, v);
             } else {
@@ -70,7 +70,7 @@ public abstract class PerformBrush extends Brush implements Performer {
     @Override
     public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {        // Number variables
         HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList(PerformerE.getPerformerHandles()));
+        arguments.put(1, Lists.newArrayList(Performer.getPerformerHandles()));
 
         argumentValues.put(prefix + "p", arguments);
     }
@@ -81,7 +81,7 @@ public abstract class PerformBrush extends Brush implements Performer {
     }
 
     @Override
-    public void showInfo(Message vm) {
+    public void showInfo(VoxelMessage vm) {
         currentPerformer.info(vm);
     }
 

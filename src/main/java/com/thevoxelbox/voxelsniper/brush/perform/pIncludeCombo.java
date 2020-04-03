@@ -4,7 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.Message;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 
 import org.bukkit.block.Block;
@@ -23,7 +23,7 @@ public class pIncludeCombo extends vPerformer {
     }
 
     @Override
-    public void info(Message vm) {
+    public void info(VoxelMessage vm) {
         vm.performerName(name);
         vm.voxelList();
         vm.voxel();
@@ -31,7 +31,7 @@ public class pIncludeCombo extends vPerformer {
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
+    public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         includeList = v.getVoxelList();
         voxelSubstance = v.getVoxelSubstance();

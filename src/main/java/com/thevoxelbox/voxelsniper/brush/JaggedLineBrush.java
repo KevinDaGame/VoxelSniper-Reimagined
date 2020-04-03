@@ -3,8 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import java.util.Random;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +86,7 @@ public class JaggedLineBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.GRAY + String.format("Recursion set to: %d", this.recursion));
         vm.custom(ChatColor.GRAY + String.format("Spread set to: %d", this.spread));
