@@ -120,7 +120,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                                         case ANDESITE:
                                         case DIORITE:
                                         case GRANITE:
-                                        case GRASS:
+                                        case GRASS_BLOCK:
                                         case DIRT:
                                         case COARSE_DIRT:
                                         case PODZOL:
@@ -240,7 +240,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                                             case ANDESITE:
                                             case DIORITE:
                                             case GRANITE:
-                                            case GRASS:
+                                            case GRASS_BLOCK:
                                             case DIRT:
                                             case COARSE_DIRT:
                                             case PODZOL:
