@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -11,7 +11,7 @@ import org.bukkit.block.Block;
  *
  * @author Voxel
  */
-public class SetBrush extends PerformBrush {
+public class SetBrush extends PerformerBrush {
 
     private static final int SELECTION_SIZE_MAX = 5000000;
     private Block block = null;
@@ -46,7 +46,7 @@ public class SetBrush extends PerformBrush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            this.current.perform(this.clampY(x, y, z));
+                            this.currentPerformer.perform(this.clampY(x, y, z));
                         }
                     }
                 }
@@ -62,7 +62,7 @@ public class SetBrush extends PerformBrush {
         if (this.set(this.getTargetBlock(), v)) {
             v.sendMessage(ChatColor.GRAY + "Point one");
         } else {
-            v.owner().storeUndo(this.current.getUndo());
+            v.owner().storeUndo(this.currentPerformer.getUndo());
         }
     }
 
@@ -71,19 +71,14 @@ public class SetBrush extends PerformBrush {
         if (this.set(this.getLastBlock(), v)) {
             v.sendMessage(ChatColor.GRAY + "Point one");
         } else {
-            v.owner().storeUndo(this.current.getUndo());
+            v.owner().storeUndo(this.currentPerformer.getUndo());
         }
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         this.block = null;
         vm.brushName(this.getName());
-    }
-
-    @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        super.parameters(par, v);
     }
 
     @Override

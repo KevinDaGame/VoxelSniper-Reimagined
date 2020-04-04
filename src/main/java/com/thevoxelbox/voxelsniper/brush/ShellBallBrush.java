@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -57,22 +57,22 @@ public class ShellBallBrush extends Brush {
                 for (int z = 0; z <= brushSizeDoubled; z++) {
                     temp = 0;
 
-                    if (oldMaterials[x + 1 + 1][y + 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 + 1][y + 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1 - 1][y + 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 - 1][y + 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1 + 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1 + 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1 - 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1 - 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1][z + 1 + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1][z + 1 + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1][z + 1 - 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1][z + 1 - 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
 
@@ -120,7 +120,7 @@ public class ShellBallBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();

@@ -1,12 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeAction;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import org.bukkit.Material;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.event.block.Action;
 
 /**
  * Brush Interface.
@@ -17,15 +16,16 @@ public interface IBrush {
     /**
      * @param vm Message object
      */
-    void info(Message vm);
+    void info(VoxelMessage vm);
 
     /**
      * Handles parameters passed to brushes.
      *
-     * @param par Array of string containing parameters
+     * @param triggerHandle the handle that triggered this brush
+     * @param params Array of string containing parameters
      * @param v Snipe Data
      */
-    void parameters(String[] par, SnipeData v);
+    void parseParameters(String triggerHandle, String[] params, SnipeData v);
 
     boolean perform(SnipeAction action, SnipeData data, Block targetBlock, Block lastBlock);
 
@@ -48,4 +48,20 @@ public interface IBrush {
      * @return Permission node required to use this brush
      */
     String getPermissionNode();
+
+    /**
+     * Registers the additional arguments for the tab completion
+     *
+     * @param brushHandle
+     * @return
+     */
+    HashMap<String, List<String>> registerArguments(String brushHandle);
+
+    /**
+     * Registers the additional arguments for the tab completion
+     *
+     * @param brushHandle
+     * @return
+     */
+    HashMap<String, List<String>> registerArgumentValues(String prefix);
 }

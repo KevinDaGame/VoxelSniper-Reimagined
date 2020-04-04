@@ -1,12 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * FOR ANY BRUSH THAT USES A SPLINE, EXTEND THAT BRUSH FROM THIS BRUSH!!! That way, the spline calculations are already there. Also, the UI for the splines will
@@ -14,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author psanker
  */
-public class SplineBrush extends PerformBrush {
+public class SplineBrush extends PerformerBrush {
 
     private final ArrayList<Block> endPts = new ArrayList<Block>();
     private final ArrayList<Block> ctrlPts = new ArrayList<Block>();
@@ -101,10 +104,10 @@ public class SplineBrush extends PerformBrush {
         }
 
         for (final Point point : this.spline) {
-            this.current.perform(this.clampY(point.getX(), point.getY(), point.getZ()));
+            this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ()));
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -134,7 +137,7 @@ public class SplineBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
 
         if (this.set) {
@@ -147,44 +150,63 @@ public class SplineBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final com.thevoxelbox.voxelsniper.SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Spline brush parameters");
-                v.sendMessage(ChatColor.AQUA + "ss: Enable endpoint selection mode for desired curve");
-                v.sendMessage(ChatColor.AQUA + "sc: Enable control point selection mode for desired curve");
-                v.sendMessage(ChatColor.AQUA + "clear: Clear out the curve selection");
-                v.sendMessage(ChatColor.AQUA + "ren: Render curve from control points");
-                return;
-            }
-            if (par[i].equalsIgnoreCase("sc")) {
-                if (!this.ctrl) {
-                    this.set = false;
-                    this.ctrl = true;
-                    v.sendMessage(ChatColor.GRAY + "Control point selection mode ENABLED.");
-                } else {
-                    this.ctrl = false;
-                    v.sendMessage(ChatColor.AQUA + "Control point selection mode disabled.");
-                }
-            } else if (par[i].equalsIgnoreCase("ss")) {
-                if (!this.set) {
-                    this.set = true;
-                    this.ctrl = false;
-                    v.sendMessage(ChatColor.GRAY + "Endpoint selection mode ENABLED.");
-                } else {
-                    this.set = false;
-                    v.sendMessage(ChatColor.AQUA + "Endpoint selection mode disabled.");
-                }
-            } else if (par[i].equalsIgnoreCase("clear")) {
-                this.clear(v);
-            } else if (par[i].equalsIgnoreCase("ren")) {
-                if (this.spline(new Point(this.endPts.get(0)), new Point(this.endPts.get(1)), new Point(this.ctrlPts.get(0)), new Point(this.ctrlPts.get(1)), v)) {
-                    this.render(v);
-                }
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " ss  -- Enable endpoint selection mode for desired curve");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " sc  -- Enable control point selection mode for desired curve");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear out the curve selection");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " render  -- Render curve from control points");
+            return;
         }
+
+        if (params[0].equalsIgnoreCase("sc")) {
+            if (!this.ctrl) {
+                this.set = false;
+                this.ctrl = true;
+                v.sendMessage(ChatColor.GRAY + "Control point selection mode ENABLED.");
+            } else {
+                this.ctrl = false;
+                v.sendMessage(ChatColor.AQUA + "Control point selection mode disabled.");
+            }
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("ss")) {
+            if (!this.set) {
+                this.set = true;
+                this.ctrl = false;
+                v.sendMessage(ChatColor.GRAY + "Endpoint selection mode ENABLED.");
+            } else {
+                this.set = false;
+                v.sendMessage(ChatColor.AQUA + "Endpoint selection mode disabled.");
+            }
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("clear")) {
+            this.clear(v);
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("render")) {
+            if (this.spline(new Point(this.endPts.get(0)), new Point(this.endPts.get(1)), new Point(this.ctrlPts.get(0)), new Point(this.ctrlPts.get(1)), v)) {
+                this.render(v);
+            }
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("clear", "sc", "ss", "render"));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     // Vector class for splines

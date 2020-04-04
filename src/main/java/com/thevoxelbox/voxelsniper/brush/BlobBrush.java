@@ -1,10 +1,13 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import java.util.Random;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 
@@ -13,7 +16,7 @@ import org.bukkit.ChatColor;
  *
  * @author Giltwist
  */
-public class BlobBrush extends PerformBrush {
+public class BlobBrush extends PerformerBrush {
 
     private static final int GROW_PERCENT_DEFAULT = 1000;
     private static final int GROW_PERCENT_MIN = 1;
@@ -22,9 +25,6 @@ public class BlobBrush extends PerformBrush {
     private Random randomGenerator = new Random();
     private int growPercent = GROW_PERCENT_DEFAULT; // chance block on recursion pass is made active
 
-    /**
-     *
-     */
     public BlobBrush() {
         this.setName("Blob");
     }
@@ -114,13 +114,13 @@ public class BlobBrush extends PerformBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        this.current.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void growBlob(final SnipeData v) {
@@ -192,13 +192,13 @@ public class BlobBrush extends PerformBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        this.current.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -212,7 +212,7 @@ public class BlobBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         this.checkValidGrowPercent(null);
 
         vm.brushName(this.getName());
@@ -221,27 +221,56 @@ public class BlobBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Blob Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " to " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)));
+            return;
+        }
 
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Blob brush Parameters:");
-                v.sendMessage(ChatColor.AQUA + "/b blob g[int] -- set a growth percentage (" + GROW_PERCENT_MIN + "-" + GROW_PERCENT_MAX + ").  Default is " + GROW_PERCENT_DEFAULT);
-                return;
-            }
-            if (parameter.startsWith("g")) {
-                final int temp = Integer.parseInt(parameter.replace("g", ""));
-                if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + (float) temp / 100 + "%");
-                    this.growPercent = temp;
-                } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be an integer " + GROW_PERCENT_MIN + "-" + GROW_PERCENT_MAX + "!");
+        if (params[0].startsWith("growth")) {
+            try {
+                if (params.length == 1) {
+                    this.growPercent = GROW_PERCENT_DEFAULT;
+                    v.sendMessage(ChatColor.AQUA + "Growth percent set to default value: " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)) + "%");
+                    return;
                 }
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
+
+                float growthValue = Float.parseFloat(params[1]);
+                if ((int) (growthValue * 100) >= GROW_PERCENT_MIN && (int) (growthValue * 100) <= GROW_PERCENT_MAX) {
+                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", growthValue) + "%");
+                    this.growPercent = (int) growthValue * 100;
+                    System.out.println(growthValue * 100);
+                } else {
+                    v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
+                }
+                return;
+            } catch (NumberFormatException e) {
             }
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("growth"));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        
+        argumentValues.put("growth", Lists.newArrayList("[number]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

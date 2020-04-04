@@ -1,8 +1,13 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -12,7 +17,7 @@ import org.bukkit.util.Vector;
  *
  * @author Giltwist
  */
-public class ThreePointCircleBrush extends PerformBrush {
+public class ThreePointCircleBrush extends PerformerBrush {
 
     private Vector coordsOne;
     private Vector coordsTwo;
@@ -119,7 +124,7 @@ public class ThreePointCircleBrush extends PerformBrush {
 
                     // Check if point is within sphere and on plane (some tolerance given)
                     if (tempDistance <= radius && (Math.abs(cornerConstant - planeConstant) < this.tolerance.getValue() || Math.abs(centerConstant - planeConstant) < this.tolerance.getValue())) {
-                        this.current.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
+                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
                     }
 
                 }
@@ -127,7 +132,7 @@ public class ThreePointCircleBrush extends PerformBrush {
         }
 
         v.sendMessage(ChatColor.GREEN + "Done.");
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
 
         // Reset Brush
         this.coordsOne = null;
@@ -137,7 +142,7 @@ public class ThreePointCircleBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         switch (this.tolerance) {
             case ACCURATE:
@@ -157,30 +162,31 @@ public class ThreePointCircleBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        if (par[1].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.YELLOW + "3-Point Circle Brush instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
-            String toleranceOptions = "";
-            for (final Tolerance tolerance : Tolerance.values()) {
-                if (!toleranceOptions.isEmpty()) {
-                    toleranceOptions += "|";
-                }
-                toleranceOptions += tolerance.name().toLowerCase();
-            }
-            v.sendMessage(ChatColor.GOLD + "/b tpc " + toleranceOptions + " -- Toggle the calculations to emphasize accuracy or smoothness");
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[1].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [mode]  -- Change mode to prioritize accuracy or smoothness");
+            v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
             return;
         }
 
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i].toUpperCase();
-            try {
-                this.tolerance = Tolerance.valueOf(parameter);
-                v.sendMessage(ChatColor.AQUA + "Brush set to " + this.tolerance.name().toLowerCase() + " tolerance.");
-                return;
-            } catch (final IllegalArgumentException exception) {
-                v.getVoxelMessage().brushMessage("No such tolerance.");
-            }
+        try {
+            this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
+            v.sendMessage(ChatColor.GOLD + "Brush tolerance set to " + ChatColor.YELLOW + this.tolerance.name().toLowerCase() + ChatColor.GOLD + ".");
+        } catch (Exception e) {
+            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            sendPerformerMessage(triggerHandle, v);
         }
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     /**

@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -10,7 +13,7 @@ import org.bukkit.block.Block;
 /**
  * @author MikeMatrix
  */
-public class CheckerVoxelDiscBrush extends PerformBrush {
+public class CheckerVoxelDiscBrush extends PerformerBrush {
 
     private boolean useWorldCoordinates = true;
 
@@ -30,11 +33,11 @@ public class CheckerVoxelDiscBrush extends PerformBrush {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 final int sum = this.useWorldCoordinates ? target.getX() + x + target.getZ() + y : x + y;
                 if (sum % 2 != 0) {
-                    this.current.perform(this.clampY(target.getX() + x, target.getY(), target.getZ() + y));
+                    this.currentPerformer.perform(this.clampY(target.getX() + x, target.getY(), target.getZ() + y));
                 }
             }
         }
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -48,33 +51,37 @@ public class CheckerVoxelDiscBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int x = 1; x < par.length; x++) {
-            final String parameter = par[x].toLowerCase();
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
-            if (parameter.equals("info")) {
-                v.sendMessage(ChatColor.GOLD + this.getName() + " Parameters:");
-                v.sendMessage(ChatColor.AQUA + "true  -- Enables using World Coordinates.");
-                v.sendMessage(ChatColor.AQUA + "false -- Disables using World Coordinates.");
-                return;
-            }
-            if (parameter.startsWith("true")) {
-                this.useWorldCoordinates = true;
-                v.sendMessage(ChatColor.AQUA + "Enabled using World Coordinates.");
-            } else if (parameter.startsWith("false")) {
-                this.useWorldCoordinates = false;
-                v.sendMessage(ChatColor.AQUA + "Disabled using World Coordinates.");
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
-                break;
-            }
+        if (params[0].equals("info")) {
+            v.sendMessage(ChatColor.GOLD + "Checker Voxel Disc Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " worldcoords -- Toggle to use World Coordinates or not (default: true)");
+            return;
         }
+
+        if (params[0].startsWith("worldcoords")) {
+            this.useWorldCoordinates = !this.useWorldCoordinates;
+            v.sendMessage(ChatColor.AQUA + "Using world coordinates: " + this.useWorldCoordinates);
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("worldcoords"));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Material;
 import org.bukkit.World;

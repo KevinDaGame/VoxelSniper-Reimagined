@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -11,7 +14,7 @@ import org.bukkit.Material;
  *
  * @author Gavjenks
  */
-public class OverlayBrush extends PerformBrush {
+public class OverlayBrush extends PerformerBrush {
 
     private static final int DEFAULT_DEPTH = 3;
     private int depth = DEFAULT_DEPTH;
@@ -42,7 +45,7 @@ public class OverlayBrush extends PerformBrush {
                                 for (int currentDepth = y; y - currentDepth < depth; currentDepth--) {
                                     final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
                                     if (isOverrideableMaterial(currentBlock)) {
-                                        this.current.perform(this.clampY(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z));
+                                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z));
                                     }
                                 }
                                 break;
@@ -53,7 +56,7 @@ public class OverlayBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @SuppressWarnings("deprecation")
@@ -125,7 +128,7 @@ public class OverlayBrush extends PerformBrush {
                                             case SNOW:
                                             case OBSIDIAN:
                                                 for (int d = 1; (d < this.depth + 1); d++) {
-                                                    this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
+                                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
                                                     // in parameters
                                                     memory[x + brushSize][z + brushSize] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                                 }
@@ -137,7 +140,7 @@ public class OverlayBrush extends PerformBrush {
                                         }
                                     } else {
                                         for (int d = 1; (d < this.depth + 1); d++) {
-                                            this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                             // parameters
                                             memory[x + brushSize][z + brushSize] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }
@@ -152,7 +155,7 @@ public class OverlayBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -166,44 +169,61 @@ public class OverlayBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Overlay Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " mode  -- Toggle between overlaying natural blocks or all blocks.");
+            return;
+        }
 
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Overlay brush parameters:");
-                v.sendMessage(ChatColor.AQUA + "d[number] (ex:  d3) How many blocks deep you want to replace from the surface.");
-                v.sendMessage(ChatColor.BLUE + "all (ex:  /b over all) Sets the brush to overlay over ALL materials, not just natural surface ones (will no longer ignore trees and buildings).  The parameter /some will set it back to default.");
-                return;
-            }
-            if (parameter.startsWith("d")) {
-                try {
-                    this.depth = Integer.parseInt(parameter.replace("d", ""));
+        if (params[0].startsWith("depth")) {
+            try {
+                this.depth = Integer.parseInt(params[1]);
 
-                    if (this.depth < 1) {
-                        this.depth = 1;
-                    }
-
-                    v.sendMessage(ChatColor.AQUA + "Depth set to " + this.depth);
-                } catch (NumberFormatException e) {
-                    v.sendMessage(ChatColor.RED + "Depth isn't a number.");
+                if (this.depth < 1) {
+                    this.depth = 1;
                 }
-            } else if (parameter.startsWith("all")) {
-                this.allBlocks = true;
-                v.sendMessage(ChatColor.BLUE + "Will overlay over any block." + this.depth);
-            } else if (parameter.startsWith("some")) {
-                this.allBlocks = false;
-                v.sendMessage(ChatColor.BLUE + "Will overlay only natural block types." + this.depth);
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
+
+                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                return;
+            } catch (NumberFormatException e) {
             }
         }
+
+        if (params[0].startsWith("mode")) {
+            this.allBlocks = !this.allBlocks;
+            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all blocks" : "natural blocks") + ", " + this.depth + " blocks deep.");
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("depth", "mode"));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("depth", Lists.newArrayList("[number]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

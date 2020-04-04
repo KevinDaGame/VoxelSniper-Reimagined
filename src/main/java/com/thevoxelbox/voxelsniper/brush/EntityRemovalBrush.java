@@ -1,32 +1,55 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
+import org.bukkit.entity.EntityType;
 
 /**
  *
  */
 public class EntityRemovalBrush extends Brush {
 
-    private final List<String> exemptions = new ArrayList<String>(3);
+    private final List<EntityType> exclusionList = new ArrayList<>();
 
     /**
      *
      */
     public EntityRemovalBrush() {
-        this.setName("Entity Removal");
+        this.setName("Entity Removal Brush");
+        defaultValues();
+    }
 
-        exemptions.add("org.bukkit.entity.Player");
-        exemptions.add("org.bukkit.entity.Hanging");
-        exemptions.add("org.bukkit.entity.NPC");
+    private void defaultValues() {
+        exclusionList.clear();
+
+        exclusionList.add(EntityType.ARMOR_STAND);
+        exclusionList.add(EntityType.BOAT);
+        exclusionList.add(EntityType.DROPPED_ITEM);
+        exclusionList.add(EntityType.ITEM_FRAME);
+        exclusionList.add(EntityType.LEASH_HITCH);
+        exclusionList.add(EntityType.MINECART);
+        exclusionList.add(EntityType.MINECART_CHEST);
+        exclusionList.add(EntityType.MINECART_COMMAND);
+        exclusionList.add(EntityType.MINECART_FURNACE);
+        exclusionList.add(EntityType.MINECART_HOPPER);
+        exclusionList.add(EntityType.MINECART_MOB_SPAWNER);
+        exclusionList.add(EntityType.MINECART_TNT);
+        exclusionList.add(EntityType.PAINTING);
+        exclusionList.add(EntityType.PLAYER);
+        exclusionList.add(EntityType.VILLAGER);
+        exclusionList.add(EntityType.WANDERING_TRADER);
+
     }
 
     private void radialRemoval(SnipeData v) {
@@ -58,7 +81,7 @@ public class EntityRemovalBrush extends Brush {
         int entityCount = 0;
 
         for (Entity entity : chunk.getEntities()) {
-            if (isClassInExemptionList(entity.getClass())) {
+            if (exclusionList.contains(entity.getType())) {
                 continue;
             }
 
@@ -67,33 +90,6 @@ public class EntityRemovalBrush extends Brush {
         }
 
         return entityCount;
-    }
-
-    private boolean isClassInExemptionList(Class<? extends Entity> entityClass) throws PatternSyntaxException {
-        // Create a list of superclasses and interfaces implemented by the current entity type
-        final List<String> entityClassHierarchy = new ArrayList<String>();
-
-        Class<?> currentClass = entityClass;
-        while (currentClass != null && !currentClass.equals(Object.class)) {
-            entityClassHierarchy.add(currentClass.getCanonicalName());
-
-            for (final Class<?> intrf : currentClass.getInterfaces()) {
-                entityClassHierarchy.add(intrf.getCanonicalName());
-            }
-
-            currentClass = currentClass.getSuperclass();
-        }
-
-        for (final String exemptionPattern : exemptions) {
-            for (final String typeName : entityClassHierarchy) {
-                if (typeName.matches(exemptionPattern)) {
-                    return true;
-                }
-
-            }
-        }
-
-        return false;
     }
 
     @Override
@@ -107,47 +103,88 @@ public class EntityRemovalBrush extends Brush {
     }
 
     @Override
-    public void info(Message vm) {
+    public void info(VoxelMessage vm) {
         vm.brushName(getName());
-
-        final StringBuilder exemptionsList = new StringBuilder(ChatColor.GREEN + "Exemptions: " + ChatColor.LIGHT_PURPLE);
-        for (Iterator it = exemptions.iterator(); it.hasNext();) {
-            exemptionsList.append(it.next());
-            if (it.hasNext()) {
-                exemptionsList.append(", ");
-            }
-        }
-        vm.custom(exemptionsList.toString());
-
+        vm.custom(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
         vm.size();
     }
 
     @Override
-    public void parameters(final String[] par, final SnipeData v) {
-        for (final String currentParam : par) {
-            if (currentParam.startsWith("+") || currentParam.startsWith("-")) {
-                final boolean isAddOperation = currentParam.startsWith("+");
+    public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " + [entityType]  -- Add entity to exception list");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " - [entityType]  -- Remove entity from exception list");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets exception list to defaults");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear exception list");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " list  -- Shows entities in exception list");
+            return;
+        }
 
-                // +#/-# will suppress auto-prefixing
-                final String exemptionPattern = currentParam.startsWith("+#") || currentParam.startsWith("-#")
-                        ? currentParam.substring(2)
-                        : (currentParam.contains(".") ? currentParam.substring(1) : ".*." + currentParam.substring(1));
+        if (params[0].equalsIgnoreCase("reset")) {
+            defaultValues();
+            v.sendMessage(ChatColor.GOLD + "Reset exclusions list to default values.");
+            return;
+        }
 
-                if (isAddOperation) {
-                    exemptions.add(exemptionPattern);
-                    v.sendMessage(String.format("Added %s to entity exemptions list.", exemptionPattern));
+        if (params[0].equalsIgnoreCase("clear")) {
+            exclusionList.clear();
+            v.sendMessage(ChatColor.GOLD + "Cleared the exclusions list." + ChatColor.RED + " WARNING! " + ChatColor.DARK_RED + "All" + ChatColor.RED + " entities can now be removed by the brush. BE CAREFUL!");
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("list")) {
+            v.sendMessage(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("+") || params[0].equalsIgnoreCase("-")) {
+            try {
+                EntityType entity = EntityType.valueOf(params[1]);
+
+                if (params[0].equals("+")) {
+                    exclusionList.add(entity);
+                    v.sendMessage(ChatColor.GOLD + "Added " + entity.name() + " to exclusion list.");
                 } else {
-                    exemptions.remove(exemptionPattern);
-                    v.sendMessage(String.format("Removed %s from entity exemptions list.", exemptionPattern));
+                    if (exclusionList.contains(entity)) {
+                        exclusionList.remove(entity);
+                        v.sendMessage(ChatColor.GOLD + "Removed " + entity.name() + " from exclusion list.");
+                    } else {
+                        v.sendMessage(ChatColor.GOLD + entity.name() + " wasn't in exclusion list. Nothing happened.");
+                    }
                 }
-            }
 
-            if (currentParam.equalsIgnoreCase("list-exemptions") || currentParam.equalsIgnoreCase("lex")) {
-                for (final String exemption : exemptions) {
-                    v.sendMessage(ChatColor.LIGHT_PURPLE + exemption);
-                }
+                return;
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             }
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("+", "-", "reset", "clear", "list"));
+
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        List<String> entities = new ArrayList<>();
+
+        for (EntityType entity : EntityType.values()) {
+            entities.add(entity.name());
+        }
+
+        
+        argumentValues.put("+", entities);
+        argumentValues.put("-", entities);
+        return argumentValues;
     }
 
     @Override

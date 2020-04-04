@@ -14,26 +14,23 @@ import java.util.Set;
 /**
  *
  */
-public class BrushesTest
-{
-    private Brushes brushes;
+public class BrushesTest {
+
+    private VoxelBrushManager brushes;
 
     @Before
-    public void setUp() throws Exception
-    {
-        brushes = new Brushes();
+    public void setUp() throws Exception {
+        brushes = new VoxelBrushManager();
     }
 
     @Test
-    public void testRegisterSniperBrush() throws Exception
-    {
+    public void testRegisterSniperBrush() throws Exception {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
     }
 
     @Test
-    public void testGetBrushForHandle() throws Exception
-    {
+    public void testGetBrushForHandle() throws Exception {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Assert.assertEquals(brush.getClass(), brushes.getBrushForHandle("mockhandle"));
@@ -42,8 +39,7 @@ public class BrushesTest
     }
 
     @Test
-    public void testRegisteredSniperBrushes() throws Exception
-    {
+    public void testRegisteredSniperBrushes() throws Exception {
         Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
@@ -51,8 +47,7 @@ public class BrushesTest
     }
 
     @Test
-    public void testRegisteredSniperBrushHandles() throws Exception
-    {
+    public void testRegisteredSniperBrushHandles() throws Exception {
         Assert.assertEquals(0, brushes.registeredSniperBrushHandles());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
@@ -60,8 +55,7 @@ public class BrushesTest
     }
 
     @Test
-    public void testGetSniperBrushHandles() throws Exception
-    {
+    public void testGetSniperBrushHandles() throws Exception {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brush.getClass());
@@ -71,11 +65,10 @@ public class BrushesTest
     }
 
     @Test
-    public void testGetRegisteredBrushesMultimap() throws Exception
-    {
+    public void testGetRegisteredBrushesMultimap() throws Exception {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Multimap<Class<? extends IBrush>,String> registeredBrushesMultimap = brushes.getRegisteredBrushesMultimap();
+        Multimap<Class<? extends IBrush>, String> registeredBrushesMultimap = brushes.getRegisteredBrushesMultimap();
         Assert.assertTrue(registeredBrushesMultimap.containsKey(brush.getClass()));
         Assert.assertFalse(registeredBrushesMultimap.containsKey(IBrush.class));
         Assert.assertTrue(registeredBrushesMultimap.containsEntry(brush.getClass(), "mockhandle"));

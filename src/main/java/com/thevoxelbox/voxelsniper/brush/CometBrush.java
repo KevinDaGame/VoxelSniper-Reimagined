@@ -1,13 +1,16 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Gavjenks Heavily revamped from ruler brush blockPositionY
@@ -38,31 +41,34 @@ public class CometBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 0; i < par.length; ++i) {
-            String parameter = par[i];
-
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage("Parameters:");
-                v.sendMessage("balls [big|small]  -- Sets your ball size.");
-            }
-            if (parameter.equalsIgnoreCase("balls")) {
-                if (i + 1 >= par.length) {
-                    v.sendMessage("The balls parameter expects a ball size after it.");
-                }
-
-                String newBallSize = par[++i];
-                if (newBallSize.equalsIgnoreCase("big")) {
-                    useBigBalls = true;
-                    v.sendMessage("Your balls are " + ChatColor.DARK_RED + ("BIG"));
-                } else if (newBallSize.equalsIgnoreCase("small")) {
-                    useBigBalls = false;
-                    v.sendMessage("Your balls are " + ChatColor.DARK_RED + ("small"));
-                } else {
-                    v.sendMessage("Unknown ball size.");
-                }
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Comet Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [big|small]  -- Sets your ball size");
         }
+
+        if (params[0].equalsIgnoreCase("big")) {
+            useBigBalls = true;
+            v.sendMessage("Your balls are " + ChatColor.DARK_RED + ("BIG"));
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("small")) {
+            useBigBalls = false;
+            v.sendMessage("Your balls are " + ChatColor.DARK_RED + ("small"));
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("big", "small"));
+
+        return arguments;
     }
 
     @Override
@@ -76,7 +82,7 @@ public class CometBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.voxel();
         vm.custom("Your balls are " + ChatColor.DARK_RED + (useBigBalls ? "BIG" : "small"));

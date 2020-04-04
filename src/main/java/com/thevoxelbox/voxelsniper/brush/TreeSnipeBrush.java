@@ -1,10 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.base.Objects;
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -51,7 +56,7 @@ public class TreeSnipeBrush extends Brush {
         return 0;
     }
 
-    private void printTreeType(final Message vm) {
+    private void printTreeType(final VoxelMessage vm) {
         String printout = "";
 
         boolean delimiterHelper = true;
@@ -79,27 +84,34 @@ public class TreeSnipeBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         this.printTreeType(vm);
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Tree snipe brush:");
-                v.sendMessage(ChatColor.AQUA + "/b t treetype");
-                this.printTreeType(v.getVoxelMessage());
-                return;
-            }
-            try {
-                this.treeType = TreeType.valueOf(par[i].toUpperCase());
-                this.printTreeType(v.getVoxelMessage());
-            } catch (final IllegalArgumentException exception) {
-                v.getVoxelMessage().brushMessage("No such tree type.");
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[1].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Tree Snipe Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [treeType]  -- Change tree type");
+            return;
         }
+
+        try {
+            this.treeType = TreeType.valueOf(params[0].toUpperCase());
+            this.printTreeType(v.getVoxelMessage());
+        } catch (Exception e) {
+            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tree type does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+        }
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
+
+        return arguments;
     }
 
     @Override

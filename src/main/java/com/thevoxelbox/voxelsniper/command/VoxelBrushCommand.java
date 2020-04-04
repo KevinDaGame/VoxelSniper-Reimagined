@@ -1,37 +1,68 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Sniper;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.VoxelBrushManager;
+import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
+import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
-import com.thevoxelbox.voxelsniper.brush.perform.Performer;
-import com.thevoxelbox.voxelsniper.api.command.VoxelCommand;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.List;
+import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
+import org.bukkit.ChatColor;
 
 public class VoxelBrushCommand extends VoxelCommand {
 
-    public VoxelBrushCommand(final VoxelSniper plugin) {
-        super("VoxelBrush", plugin);
+    public VoxelBrushCommand() {
+        super("VoxelBrush");
         setIdentifier("b");
         setPermission("voxelsniper.sniper");
     }
 
     @Override
-    public boolean onCommand(Player player, String[] args) {
-        Sniper sniper = plugin.getSniperManager().getSniperForPlayer(player);
+    public List<String> registerTabCompletion() {
+        List<String> brushes = new ArrayList<>(VoxelBrushManager.getInstance().getBrushHandles());
+        brushes.add("<brushSize>");
+
+        return brushes;
+    }
+
+    @Override
+    public boolean doCommand(Player player, String[] args) {
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         String currentToolId = sniper.getCurrentToolId();
         SnipeData snipeData = sniper.getSnipeData(currentToolId);
 
-        if (args == null || args.length == 0) {
-            sniper.previousBrush(currentToolId);
+        // Default command
+        // Command: /b, /b help, /b info
+        if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
+            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushHandle] [arguments...]");
+            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle, with the specified arguments.");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " p [performerHandle]");
+            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle and the specified performer.");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushSize]");
+            player.sendMessage(ChatColor.YELLOW + "    Sets the brush size of the active brush.");
+            return true;
+        }
+
+        // No arguments -> show brush settings
+        if (args.length == 0) {
+            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
             sniper.displayInfo();
             return true;
-        } else if (args.length > 0) {
+        }
+
+        // Command: /b <number> -- Change brush size
+        if (args.length > 0) {
             try {
                 int originalSize = snipeData.getBrushSize();
                 snipeData.setBrushSize(Integer.parseInt(args[0]));
@@ -41,34 +72,63 @@ public class VoxelBrushCommand extends VoxelCommand {
 
                 snipeData.getVoxelMessage().size();
                 return true;
-            } catch (NumberFormatException ingored) {
+            } catch (NumberFormatException exception) {
+            }
+        }
+
+        if (args.length > 0) {
+            // Command: /b list -- list all brushes
+            if (args[0].equals("list")) {
+                // TODO: LIST BRUSHES
+                return true;
             }
 
-            Class<? extends IBrush> brush = plugin.getBrushManager().getBrushForHandle(args[0]);
-            if (brush != null) {
-                IBrush orignalBrush = sniper.getBrush(currentToolId);
-                sniper.setBrush(currentToolId, brush);
+            // Command: /b <brush> -- change brush to <brush>
+            Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
 
+            if (brush == null) {
+                player.sendMessage("No brush exists with the brush handle '" + args[0] + "'.");
+            } else {
+                IBrush oldBrush = sniper.getBrush(currentToolId);
+                IBrush newBrush = sniper.setBrush(currentToolId, brush);
+
+                // Command: /b <brush> <...> -- Handles additional variables
                 if (args.length > 1) {
-                    IBrush currentBrush = sniper.getBrush(currentToolId);
-                    if (currentBrush instanceof Performer) {
-                        String[] parameters = Arrays.copyOfRange(args, 1, args.length);
-                        ((Performer) currentBrush).parse(parameters, snipeData);
+                    String[] additionalParameters = Arrays.copyOfRange(args, 1, args.length);
+
+                    // Parse performer if the brush is a performer
+                    if (newBrush instanceof IPerformerBrush) {
+                        ((IPerformerBrush) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
                         return true;
                     } else {
-                        String[] parameters = hackTheArray(Arrays.copyOfRange(args, 1, args.length));
-                        currentBrush.parameters(parameters, snipeData);
+                        newBrush.parseParameters(args[0], additionalParameters, snipeData);
                         return true;
                     }
                 }
-                SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, orignalBrush, sniper.getBrush(currentToolId));
+                SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
                 sniper.displayInfo();
-                return true;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<String> doSuggestion(Player player, String[] args) {
+        if (args.length == 1) {
+            return getTabCompletion(args.length);
+        }
+
+        if (args.length >= 2) {
+            if (args.length % 2 == 0) {
+                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0], 1);
             } else {
-                player.sendMessage("Couldn't find Brush for brush handle \"" + args[0] + "\"");
-                return true;
+                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0] + BRUSH_SUBCOMMAND_SUFFIX + args[args.length - 2], 1);
             }
         }
-        return false;
+
+        return new ArrayList<>();
     }
 }

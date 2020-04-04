@@ -4,7 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.Message;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
 import org.bukkit.Material;
 
 import org.bukkit.block.Block;
@@ -23,14 +23,14 @@ public class pComboMat extends vPerformer {
     }
 
     @Override
-    public void init(com.thevoxelbox.voxelsniper.SnipeData v) {
+    public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         voxelSubstance = v.getVoxelSubstance();
-        targetMaterial = v.getTargetMaterial();
+        targetMaterial = v.getReplaceMaterial();
     }
 
     @Override
-    public void info(Message vm) {
+    public void info(VoxelMessage vm) {
         vm.performerName(name);
         vm.voxel();
         vm.replace();

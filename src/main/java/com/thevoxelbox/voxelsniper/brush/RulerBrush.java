@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -65,40 +65,20 @@ public class RulerBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.voxel();
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
-
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Ruler Brush instructions: Right click first point with the arrow. Right click with powder for distances from that block (can repeat without getting a new first block.) For placing blocks, use arrow and input the desired coordinates with parameters.");
-                v.sendMessage(ChatColor.LIGHT_PURPLE + "/b r x[x value] y[y value] z[z value] -- Will place blocks one at a time of the type you have set with /v at the location you click + this many units away.  If you don't include a value, it will be zero.  Don't include ANY values, and the brush will just measure distance.");
-                v.sendMessage(ChatColor.BLUE + "/b r ruler -- will reset the tool to just measure distances, not layout blocks.");
-
-                return;
-            } else if (parameter.startsWith("x")) {
-                this.xOff = Integer.parseInt(parameter.replace("x", ""));
-                v.sendMessage(ChatColor.AQUA + "X offset set to " + this.xOff);
-            } else if (parameter.startsWith("y")) {
-                this.yOff = Integer.parseInt(parameter.replace("y", ""));
-                v.sendMessage(ChatColor.AQUA + "Y offset set to " + this.yOff);
-            } else if (parameter.startsWith("z")) {
-                this.zOff = Integer.parseInt(parameter.replace("z", ""));
-                v.sendMessage(ChatColor.AQUA + "Z offset set to " + this.zOff);
-            } else if (parameter.startsWith("ruler")) {
-                this.zOff = 0;
-                this.yOff = 0;
-                this.xOff = 0;
-                v.sendMessage(ChatColor.BLUE + "Ruler mode.");
-            } else {
-                v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
-            }
+    // TODO: Implement block placing
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.BLUE + "Instructions: Right click first point with the arrow. Right click with powder for distances from that block (can repeat without getting a new first block.)");
+            return;
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
     }
 
     @Override

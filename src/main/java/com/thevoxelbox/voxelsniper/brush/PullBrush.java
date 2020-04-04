@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,6 +12,7 @@ import org.bukkit.block.data.BlockData;
 /**
  * @author Piotr
  */
+// TODO: Figure out what this does
 public class PullBrush extends Brush {
 
     private final HashSet<BlockWrapper> surface = new HashSet<BlockWrapper>();
@@ -27,7 +28,7 @@ public class PullBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.height();
@@ -36,10 +37,10 @@ public class PullBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         try {
-            final double pinch = Double.parseDouble(par[1]);
-            final double bubble = Double.parseDouble(par[2]);
+            final double pinch = Double.parseDouble(params[1]);
+            final double bubble = Double.parseDouble(params[2]);
             this.c1 = 1 - pinch;
             this.c2 = bubble;
         } catch (final Exception exception) {

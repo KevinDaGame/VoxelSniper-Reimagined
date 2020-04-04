@@ -1,8 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +12,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -222,41 +225,73 @@ public class MoveBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.BLUE + "Move selection blockPositionY " + ChatColor.GOLD + "x:" + this.moveDirections[0] + " y:" + this.moveDirections[1] + " z:" + this.moveDirections[2]);
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            if (par[i].equalsIgnoreCase("info")) {
-                v.getVoxelMessage().custom(ChatColor.GOLD + this.getName() + " Parameters:");
-                v.getVoxelMessage().custom(ChatColor.AQUA + "/b mv x[int] -- set the x direction (positive => east)");
-                v.getVoxelMessage().custom(ChatColor.AQUA + "/b mv y[int] -- set the y direction (positive => up)");
-                v.getVoxelMessage().custom(ChatColor.AQUA + "/b mv z[int] -- set the z direction (positive => south)");
-                v.getVoxelMessage().custom(ChatColor.AQUA + "/b mv reset -- reset the brush (x:0 y:0 z:0)");
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Use arrow and gunpowder to define two points.");
-            }
-            if (par[i].equalsIgnoreCase("reset")) {
-                this.moveDirections[0] = 0;
-                this.moveDirections[1] = 0;
-                this.moveDirections[2] = 0;
-                v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
-            }
-            if (par[i].toLowerCase().startsWith("x")) {
-                this.moveDirections[0] = Integer.valueOf(par[i].substring(1));
-                v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
-            } else if (par[i].toLowerCase().startsWith("y")) {
-                this.moveDirections[1] = Integer.valueOf(par[i].substring(1));
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
-            } else if (par[i].toLowerCase().startsWith("z")) {
-                this.moveDirections[2] = Integer.valueOf(par[i].substring(1));
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.getVoxelMessage().custom(ChatColor.GOLD + "Move Brush Parameters:");
+            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set the x direction (positive => east)");
+            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set the y direction (positive => up)");
+            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " z [number]  -- Set the z direction (positive => south)");
+            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Reset brush to default values");
+            v.getVoxelMessage().custom(ChatColor.BLUE + "Instructions: Use arrow and gunpowder to define two points.");
+            return;
         }
+
+        if (params[0].equalsIgnoreCase("reset")) {
+            this.moveDirections[0] = 0;
+            this.moveDirections[1] = 0;
+            this.moveDirections[2] = 0;
+            v.getVoxelMessage().custom(ChatColor.AQUA + "X, Y, Z direction set to 0. No movement will occur.");
+            return;
+        }
+
+        try {
+            if (params[0].equalsIgnoreCase("x")) {
+                this.moveDirections[0] = Integer.valueOf(params[1]);
+                v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("y")) {
+                this.moveDirections[1] = Integer.valueOf(params[1]);
+                v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("z")) {
+                this.moveDirections[2] = Integer.valueOf(params[1]);
+                v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
+                return;
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("reset", "x", "y", "z"));
+
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        argumentValues.put("x", Lists.newArrayList("[number]"));
+        argumentValues.put("y", Lists.newArrayList("[number]"));
+        argumentValues.put("z", Lists.newArrayList("[number]"));
+        
+        return argumentValues;
     }
 
     /**

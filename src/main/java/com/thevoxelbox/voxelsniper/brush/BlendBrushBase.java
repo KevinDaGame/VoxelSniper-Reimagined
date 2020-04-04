@@ -1,7 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import static com.thevoxelbox.voxelsniper.brush.Brush.BRUSH_ARGUMENT_PREFIX;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 
 /**
@@ -31,7 +35,7 @@ public abstract class BlendBrushBase extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();
@@ -39,13 +43,33 @@ public abstract class BlendBrushBase extends Brush {
     }
 
     @Override
-    public void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; ++i) {
-            if (par[i].equalsIgnoreCase("water")) {
-                this.excludeWater = !this.excludeWater;
-                v.sendMessage(ChatColor.AQUA + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
-            }
+    public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("water")) {
+            this.excludeWater = !this.excludeWater;
+            v.sendMessage(ChatColor.AQUA + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
+            return;
         }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water"));
+
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        
+        argumentValues.put("water", Lists.newArrayList("true", "false"));
+
+        return argumentValues;
     }
 
     /**

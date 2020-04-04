@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -55,22 +55,22 @@ public class ShellVoxelBrush extends Brush {
                 for (int y = 0; y <= brushSizeSquared; y++) {
                     temp = 0;
 
-                    if (oldMaterials[x + 1 + 1][z + 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 + 1][z + 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1 - 1][z + 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 - 1][z + 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1 + 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1 + 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1 - 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1 - 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1][y + 1 + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1][y + 1 + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1][y + 1 - 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1][y + 1 - 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
 
@@ -110,20 +110,11 @@ public class ShellVoxelBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();
         vm.replace();
-    }
-
-    @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        if (par[1].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Shell Voxel Parameters:");
-        } else {
-            v.sendMessage(ChatColor.RED + "Invalid parameter - see the info message for help.");
-        }
     }
 
     @Override

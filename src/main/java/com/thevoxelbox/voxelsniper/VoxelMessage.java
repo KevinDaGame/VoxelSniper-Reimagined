@@ -1,12 +1,15 @@
 package com.thevoxelbox.voxelsniper;
 
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 
 /**
- *
+ *  Messaging handler for various Voxel functions.
+ *  // TODO: Rewrite messaging to builder functions.
+ *  // TODO: Standardize message colors.
  */
-public class Message {
+public class VoxelMessage {
 
     private static final int BRUSH_SIZE_WARNING_THRESHOLD = 20;
     private final SnipeData snipeData;
@@ -14,7 +17,7 @@ public class Message {
     /**
      * @param snipeData
      */
-    public Message(SnipeData snipeData) {
+    public VoxelMessage(SnipeData snipeData) {
         this.snipeData = snipeData;
     }
 
@@ -88,14 +91,14 @@ public class Message {
      */
     @SuppressWarnings("deprecation")
     public void replace() {
-        snipeData.sendMessage(ChatColor.AQUA + "Replace Target Material: " + ChatColor.RED + snipeData.getTargetMaterial());
+        snipeData.sendMessage(ChatColor.AQUA + "Replace Target Material: " + ChatColor.RED + snipeData.getReplaceMaterial());
     }
 
     /**
      * Display replace data value.
      */
     public void replaceData() {
-        snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Target Data Value: " + ChatColor.DARK_RED + snipeData.getTargetSubstance().getAsString());
+        snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Target Data Value: " + ChatColor.DARK_RED + snipeData.getReplaceSubstance().getAsString());
     }
 
     /**

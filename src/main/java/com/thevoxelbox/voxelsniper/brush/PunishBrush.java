@@ -1,8 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import static com.thevoxelbox.voxelsniper.brush.Brush.BRUSH_ARGUMENT_PREFIX;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.Arrays;
+import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,6 +19,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Punish_Brush
@@ -23,7 +28,7 @@ import java.util.Random;
  * @author Deamon
  * @author MikeMatrix
  */
-public class PunishBrush extends PerformBrush {
+public class PunishBrush extends Brush {
 
     private static final int MAXIMAL_RANDOM_TELEPORTATION_RANGE = 400;
     private static final int TICKS_PER_SECOND = 20;
@@ -246,7 +251,7 @@ public class PunishBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.GREEN + "Punishment: " + this.punishment.toString());
         vm.size();
@@ -254,56 +259,79 @@ public class PunishBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i].toLowerCase();
-
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GOLD + "Punish Brush Options:");
-                v.sendMessage(ChatColor.AQUA + "Punishments can be set via /b p [punishment]");
-                v.sendMessage(ChatColor.AQUA + "Punishment level can be set with /vc [level]");
-                v.sendMessage(ChatColor.AQUA + "Punishment duration in seconds can be set with /vh [duration]");
-                v.sendMessage(ChatColor.AQUA + "Parameter -toggleHypnoLandscape will make Hypno punishment only affect landscape.");
-                v.sendMessage(ChatColor.AQUA + "Parameter -toggleSM [playername] will make punishbrush only affect that player.");
-                v.sendMessage(ChatColor.AQUA + "Parameter -toggleSelf will toggle whether you get hit as well.");
-                v.sendMessage(ChatColor.AQUA + "Available Punishment Options:");
-                final StringBuilder punishmentOptions = new StringBuilder();
-                for (final Punishment punishment : Punishment.values()) {
-                    if (punishmentOptions.length() != 0) {
-                        punishmentOptions.append(" | ");
-                    }
-                    punishmentOptions.append(punishment.name());
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Punish Brush Options:");
+            v.sendMessage(ChatColor.BLUE + "Punishment level can be set with /vc [level]");
+            v.sendMessage(ChatColor.BLUE + "Punishment duration in seconds can be set with /vh [duration]");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [punishment]  -- Sets the punishment");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -hypno  -- Toggle whether Hypno will affect landscape only");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -player [playername]  -- Target specific player, clear with empty playername");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -self  -- Toggle whether you will be affected");
+            v.sendMessage(ChatColor.AQUA + "Available Punishment Options:");
+            final StringBuilder punishmentOptions = new StringBuilder();
+            for (final Punishment punishment : Punishment.values()) {
+                if (punishmentOptions.length() != 0) {
+                    punishmentOptions.append(" | ");
                 }
-                v.sendMessage(ChatColor.GOLD + punishmentOptions.toString());
-                return;
-            } else if (parameter.equalsIgnoreCase("-toggleSM")) {
-                this.specificPlayer = !this.specificPlayer;
-                if (this.specificPlayer) {
-                    try {
-                        this.punishPlayerName = par[++i];
-                    } catch (final IndexOutOfBoundsException exception) {
-                        v.sendMessage(ChatColor.AQUA + "You have to specify a player name after -toggleSM if you want to turn the specific player feature on.");
-                    }
-                }
-            } else if (parameter.equalsIgnoreCase("-toggleSelf")) {
-                this.hitsSelf = !this.hitsSelf;
-                if (hitsSelf) {
-                    v.sendMessage(ChatColor.AQUA + "Your punishments will now affect you too!");
-                } else {
-                    v.sendMessage(ChatColor.AQUA + "Your punishments will no longer affect you!");
-                }
-            } else if (parameter.equalsIgnoreCase("-toggleHypnoLandscape")) {
-                this.hypnoAffectLandscape = !this.hypnoAffectLandscape;
-            } else {
-                try {
-                    this.punishment = Punishment.valueOf(parameter.toUpperCase());
-                    v.sendMessage(ChatColor.AQUA + this.punishment.name().toLowerCase() + " punishment selected.");
-                } catch (final IllegalArgumentException exception) {
-                    v.sendMessage(ChatColor.AQUA + "No such Punishment.");
-                }
+                punishmentOptions.append(punishment.name());
             }
+            v.sendMessage(ChatColor.GOLD + punishmentOptions.toString());
+            return;
         }
 
+        if (params[0].equalsIgnoreCase("-player")) {
+            if (params.length == 1) {
+                this.specificPlayer = false;
+                v.sendMessage("No longer targeting a specific player.");
+            } else {
+                this.specificPlayer = true;
+                this.punishPlayerName = params[1];
+                v.sendMessage("Now targeting a specific player: " + params[1]);
+            }
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("-self")) {
+            this.hitsSelf = !this.hitsSelf;
+            v.sendMessage("Punishments will now " + (this.hitsSelf ? "affect you." : "not affect you."));
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("-hypno")) {
+            this.hypnoAffectLandscape = !this.hypnoAffectLandscape;
+            v.sendMessage("Hypno will now " + (this.hypnoAffectLandscape ? "affect landscape only" : "give the full experience"));
+            return;
+        }
+
+        try {
+            this.punishment = Punishment.valueOf(params[0].toUpperCase());
+            v.sendMessage(ChatColor.YELLOW + this.punishment.name() + ChatColor.GOLD + " punishment selected.");
+        } catch (final IllegalArgumentException exception) {
+            v.sendMessage(ChatColor.GOLD + "That punishment does not exist! Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+        }
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        List<String> punishArguments = Arrays.stream(Punishment.values()).map(e -> e.name()).collect(Collectors.toList());
+        punishArguments.addAll(Lists.newArrayList("-hypno", "-self", "-player"));
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, punishArguments);
+
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        // Number variables
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("player", Lists.newArrayList("[playerName]"));
+        
+        return argumentValues;
     }
 
     /**

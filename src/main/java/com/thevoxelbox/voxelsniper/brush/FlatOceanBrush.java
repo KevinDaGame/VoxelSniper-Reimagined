@@ -1,7 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -59,42 +62,72 @@ public class FlatOceanBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.RED + "THIS BRUSH DOES NOT UNDO");
+        vm.custom(ChatColor.RED + "THIS BRUSH DOES NOT UNDO.");
         vm.custom(ChatColor.GREEN + "Water level set to " + this.waterLevel);
         vm.custom(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
-
-            if (parameter.equalsIgnoreCase("info")) {
-                v.sendMessage(ChatColor.GREEN + "yo[number] to set the Level to which the water will rise.");
-                v.sendMessage(ChatColor.GREEN + "yl[number] to set the Level to which the ocean floor will rise.");
-            }
-            if (parameter.startsWith("yo")) {
-                int newWaterLevel = Integer.parseInt(parameter.replace("yo", ""));
-                if (newWaterLevel < this.floorLevel) {
-                    newWaterLevel = this.floorLevel + 1;
-                }
-                this.waterLevel = newWaterLevel;
-                v.sendMessage(ChatColor.GREEN + "Water Level set to " + this.waterLevel);
-            } else if (parameter.startsWith("yl")) {
-                int newFloorLevel = Integer.parseInt(parameter.replace("yl", ""));
-                if (newFloorLevel > this.waterLevel) {
-                    newFloorLevel = this.waterLevel - 1;
-                    if (newFloorLevel == 0) {
-                        newFloorLevel = 1;
-                        this.waterLevel = 2;
-                    }
-                }
-                this.floorLevel = newFloorLevel;
-                v.sendMessage(ChatColor.GREEN + "Ocean floor Level set to " + this.floorLevel);
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Set the y-level the water will rise to. (default: 29)");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)");
+            v.sendMessage(ChatColor.RED + "BEWARE! THIS BRUSH DOES NOT UNDO.");
+            return;
         }
+
+        if (params[0].equalsIgnoreCase("water")) {
+            int newWaterLevel = Integer.parseInt(params[1]);
+
+            if (newWaterLevel < this.floorLevel) {
+                newWaterLevel = this.floorLevel + 1;
+            }
+
+            this.waterLevel = newWaterLevel;
+            v.sendMessage(ChatColor.GREEN + "Water level set to " + this.waterLevel);
+            return;
+        }
+
+        if (params[0].equalsIgnoreCase("yl")) {
+            int newFloorLevel = Integer.parseInt(params[1]);
+
+            if (newFloorLevel > this.waterLevel) {
+                newFloorLevel = this.waterLevel - 1;
+                if (newFloorLevel == 0) {
+                    newFloorLevel = 1;
+                    this.waterLevel = 2;
+                }
+            }
+
+            this.floorLevel = newFloorLevel;
+            v.sendMessage(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+            return;
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water", "floor"));
+        
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("water", Lists.newArrayList("[number]"));
+        argumentValues.put("floor", Lists.newArrayList("[number]"));
+        
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

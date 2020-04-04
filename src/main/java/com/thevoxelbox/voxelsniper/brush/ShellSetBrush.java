@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -51,19 +51,19 @@ public class ShellSetBrush extends Brush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            if (this.getWorld().getBlockAt(x, y, z).getType() == v.getTargetMaterial()) {
+                            if (this.getWorld().getBlockAt(x, y, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x + 1, y, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x + 1, y, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x - 1, y, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x - 1, y, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y, z + 1).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y, z + 1).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y, z - 1).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y, z - 1).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y + 1, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y + 1, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y - 1, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y - 1, z).getType() == v.getReplaceMaterial()) {
                                 continue;
                             } else {
                                 blocks.add(this.getWorld().getBlockAt(x, y, z));
@@ -103,7 +103,7 @@ public class ShellSetBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();

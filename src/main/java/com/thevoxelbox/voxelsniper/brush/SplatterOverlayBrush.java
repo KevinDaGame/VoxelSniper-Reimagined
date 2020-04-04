@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -13,7 +16,7 @@ import java.util.Random;
  *
  * @author Gavjenks Splatterized blockPositionY Giltwist
  */
-public class SplatterOverlayBrush extends PerformBrush {
+public class SplatterOverlayBrush extends PerformerBrush {
 
     private static final int GROW_PERCENT_MIN = 1;
     private static final int GROW_PERCENT_DEFAULT = 1000;
@@ -129,12 +132,12 @@ public class SplatterOverlayBrush extends PerformBrush {
                                         case CLAY:
                                         case SNOW:
                                         case OBSIDIAN:
-                                            final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
+                                            final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
                                             for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
                                                 if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
                                                     // fills down as many layers as you specify in parameters
-                                                    this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
+                                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
                                                     // stop it from checking any other blocks in this vertical 1x1 column.
                                                     memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1;
                                                 }
@@ -144,11 +147,11 @@ public class SplatterOverlayBrush extends PerformBrush {
                                             break;
                                     }
                                 } else {
-                                    final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
+                                    final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
                                         if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
                                             // fills down as many layers as you specify in parameters
-                                            this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
                                             // stop it from checking any other blocks in this vertical 1x1 column.
                                             memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1;
                                         }
@@ -161,7 +164,7 @@ public class SplatterOverlayBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void soverlayTwo(final SnipeData v) {
@@ -249,9 +252,9 @@ public class SplatterOverlayBrush extends PerformBrush {
                                             case CLAY:
                                             case SNOW:
                                             case OBSIDIAN:
-                                                final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
+                                                final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                                 for (int d = 1; (d < depth + 1); d++) {
-                                                    this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
+                                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
                                                     // in parameters
                                                     memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                                 }
@@ -260,9 +263,9 @@ public class SplatterOverlayBrush extends PerformBrush {
                                                 break;
                                         }
                                     } else {
-                                        final int depth = randomizeHeight ? generator.nextInt(this.depth) : this.depth;
+                                        final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
-                                            this.current.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                             // parameters
                                             memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }
@@ -275,7 +278,7 @@ public class SplatterOverlayBrush extends PerformBrush {
             }
         }
 
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -289,7 +292,7 @@ public class SplatterOverlayBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         if (this.seedPercent < SEED_PERCENT_MIN || this.seedPercent > SEED_PERCENT_MAX) {
             this.seedPercent = SEED_PERCENT_DEFAULT;
         }
@@ -308,72 +311,111 @@ public class SplatterOverlayBrush extends PerformBrush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 1; i < par.length; i++) {
-            final String parameter = par[i];
-            try {
-                if (parameter.equalsIgnoreCase("info")) {
-                    v.sendMessage(ChatColor.GOLD + "Splatter Overlay brush parameters:");
-                    v.sendMessage(ChatColor.AQUA + "d[number] (ex:  d3) How many blocks deep you want to replace from the surface.");
-                    v.sendMessage(ChatColor.BLUE + "all (ex:  /b over all) Sets the brush to overlay over ALL materials, not just natural surface ones (will no longer ignore trees and buildings).  The parameter /some will set it back to default.");
-                    v.sendMessage(ChatColor.AQUA + "/b sover s[int] -- set a seed percentage (1-9999). 100 = 1% Default is 1000");
-                    v.sendMessage(ChatColor.AQUA + "/b sover g[int] -- set a growth percentage (1-9999).  Default is 1000");
-                    v.sendMessage(ChatColor.AQUA + "/b sover r[int] -- set a recursion (1-10).  Default is 3");
-                    return;
-                } else if (parameter.startsWith("d")) {
-                    this.depth = Integer.parseInt(parameter.replace("d", ""));
-                    v.sendMessage(ChatColor.AQUA + "Depth set to " + this.depth);
-                    if (this.depth < 1) {
-                        this.depth = 1;
-                    }
-                } else if (parameter.startsWith("all")) {
-                    this.allBlocks = true;
-                    v.sendMessage(ChatColor.BLUE + "Will overlay over any block." + this.depth);
-                } else if (parameter.startsWith("some")) {
-                    this.allBlocks = false;
-                    v.sendMessage(ChatColor.BLUE + "Will overlay only natural block types." + this.depth);
-                } else if (par[i].startsWith("s")) {
-                    final double temp = Integer.parseInt(parameter.replace("s", ""));
-                    if (temp >= SEED_PERCENT_MIN && temp <= SEED_PERCENT_MAX) {
-                        v.sendMessage(ChatColor.AQUA + "Seed percent set to: " + temp / 100 + "%");
-                        this.seedPercent = (int) temp;
-                    } else {
-                        v.sendMessage(ChatColor.RED + "Seed percent must be an integer 1-9999!");
-                    }
-                } else if (parameter.startsWith("g")) {
-                    final double temp = Integer.parseInt(parameter.replace("g", ""));
-                    if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
-                        v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + temp / 100 + "%");
-                        this.growPercent = (int) temp;
-                    } else {
-                        v.sendMessage(ChatColor.RED + "Growth percent must be an integer 1-9999!");
-                    }
-                } else if (parameter.startsWith("randh")) {
-                    randomizeHeight = !randomizeHeight;
-                    v.sendMessage(ChatColor.RED + "RandomizeHeight set to: " + randomizeHeight);
-                } else if (parameter.startsWith("r")) {
-                    final int temp = Integer.parseInt(parameter.replace("r", ""));
-                    if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                        v.sendMessage(ChatColor.AQUA + "Recursions set to: " + temp);
-                        this.splatterRecursions = temp;
-                    } else {
-                        v.sendMessage(ChatColor.RED + "Recursions must be an integer 1-10!");
-                    }
-                } else if (parameter.startsWith("yoff")) {
-                    final int temp = Integer.parseInt(parameter.replace("yoff", ""));
-                    if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                        v.sendMessage(ChatColor.AQUA + "Y-Offset set to: " + temp);
-                        this.yOffset = temp;
-                    } else {
-                        v.sendMessage(ChatColor.RED + "Recursions must be an integer 1-10!");
-                    }
-                } else {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! use the info parameter to display parameter info.");
-                }
-            } catch (Exception exception) {
-                v.sendMessage(String.format("An error occured while processing parameter %s.", parameter));
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Splatter Overlay Brush Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " mode  -- Toggle between overlaying natural blocks or all blocks.");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " seed [decimal]  -- Set a seed percentage");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [decimal]  -- Set a growth percentage");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " recursion [number]  -- Set a recursion value");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets to default values");
+            return;
         }
+
+        if (params[0].equalsIgnoreCase("reset")) {
+            this.seedPercent = SEED_PERCENT_DEFAULT;
+            this.growPercent = GROW_PERCENT_DEFAULT;
+            this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
+            this.depth = 3;
+            this.allBlocks = false;
+            v.sendMessage(ChatColor.GOLD + "Values resetted to default values.");
+            return;
+        }
+
+        if (params[0].startsWith("mode")) {
+            this.allBlocks = !this.allBlocks;
+            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all blocks" : "natural blocks") + ", " + this.depth + " blocks deep.");
+            return;
+        }
+
+        try {
+            if (params[0].startsWith("depth")) {
+                this.depth = Integer.parseInt(params[1]);
+
+                if (this.depth < 1) {
+                    this.depth = 1;
+                }
+
+                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                return;
+            }
+
+            if (params[0].startsWith("seed")) {
+                final int temp = ((int) Double.parseDouble(params[1]) * 100);
+
+                if (temp >= SEED_PERCENT_MIN && temp <= SEED_PERCENT_MAX) {
+                    v.sendMessage(ChatColor.AQUA + "Seed percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
+                    this.seedPercent = temp;
+                } else {
+                    v.sendMessage(ChatColor.RED + "Seed percent must be a decimal between 0.01 - 99.99!");
+                }
+                return;
+            }
+
+            if (params[0].startsWith("growth")) {
+                final int temp = ((int) Double.parseDouble(params[1]) * 100);
+
+                if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
+                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
+                    this.growPercent = (int) temp;
+                } else {
+                    v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
+                }
+                return;
+            }
+
+            if (params[0].startsWith("recursion")) {
+                final int temp = Integer.parseInt(params[1]);
+
+                if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
+                    v.sendMessage(ChatColor.AQUA + "Recursions set to: " + temp);
+                    this.splatterRecursions = temp;
+                } else {
+                    v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");
+                }
+                return;
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        sendPerformerMessage(triggerHandle, v);
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("recursion", "growth", "seed", "reset", "depth", "mode"));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        // Number variables
+        argumentValues.put("recursion", Lists.newArrayList("[number]"));
+        argumentValues.put("depth", Lists.newArrayList("[number]"));
+
+        // Decimal variables
+        argumentValues.put("seed", Lists.newArrayList("[decimal]"));
+        argumentValues.put("growth", Lists.newArrayList("[decimal]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

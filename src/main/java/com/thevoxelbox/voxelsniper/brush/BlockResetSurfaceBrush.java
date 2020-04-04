@@ -2,8 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import java.util.ArrayList;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -149,7 +149,7 @@ public class BlockResetSurfaceBrush extends Brush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
     }
 

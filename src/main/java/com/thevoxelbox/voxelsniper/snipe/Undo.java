@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;

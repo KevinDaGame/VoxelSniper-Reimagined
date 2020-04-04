@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import org.bukkit.block.Block;
 
 /**
@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
  *
  * @author Voxel
  */
-public class VoxelDiscBrush extends PerformBrush {
+public class VoxelDiscBrush extends PerformerBrush {
 
     /**
      *
@@ -22,10 +22,10 @@ public class VoxelDiscBrush extends PerformBrush {
     private void disc(final SnipeData v, Block targetBlock) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
-                current.perform(targetBlock.getRelative(x, 0, z));
+                currentPerformer.perform(targetBlock.getRelative(x, 0, z));
             }
         }
-        v.owner().storeUndo(this.current.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class VoxelDiscBrush extends PerformBrush {
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
     }

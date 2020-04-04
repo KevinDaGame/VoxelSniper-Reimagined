@@ -6,14 +6,12 @@ import org.mockito.Mockito;
 /**
  *
  */
-public class SniperManagerTest
-{
-    private SniperManager sniperManager;
+public class SniperManagerTest {
+
+    private VoxelProfileManager sniperManager;
 
     @Before
-    public void setUp() throws Exception
-    {
-        sniperManager = new SniperManager(Mockito.mock(VoxelSniper.class));
+    public void setUp() throws Exception {
+        sniperManager = new VoxelProfileManager();
     }
-
 }

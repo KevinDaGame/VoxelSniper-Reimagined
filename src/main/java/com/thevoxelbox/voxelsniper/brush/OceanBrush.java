@@ -1,8 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.Undo;
+import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
+import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -16,6 +18,7 @@ import java.util.List;
  *
  * @author Voxel
  */
+// TODO: FIX (not working?)
 public class OceanBrush extends Brush {
 
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
@@ -163,51 +166,65 @@ public class OceanBrush extends Brush {
     }
 
     @Override
-    public final void parameters(final String[] par, final SnipeData v) {
-        for (int i = 0; i < par.length; i++) {
-            final String parameter = par[i];
-
-            try {
-                if (parameter.equalsIgnoreCase("info")) {
-                    v.sendMessage(ChatColor.BLUE + "Parameters:");
-                    v.sendMessage(ChatColor.GREEN + "-wlevel #  " + ChatColor.BLUE + "--  Sets the water level (e.g. -wlevel 64)");
-                    v.sendMessage(ChatColor.GREEN + "-cfloor [y|n]  " + ChatColor.BLUE + "--  Enables or disables sea floor cover (e.g. -cfloor y) (Cover material will be your voxel material)");
-                } else if (parameter.equalsIgnoreCase("-wlevel")) {
-                    if ((i + 1) >= par.length) {
-                        v.sendMessage(ChatColor.RED + "Missing parameter. Correct syntax: -wlevel [#] (e.g. -wlevel 64)");
-                        continue;
-                    }
-
-                    int temp = Integer.parseInt(par[++i]);
-
-                    if (temp <= WATER_LEVEL_MIN) {
-                        v.sendMessage(ChatColor.RED + "Error: Your specified water level was below 12.");
-                        continue;
-                    }
-
-                    this.waterLevel = temp - 1;
-                    v.sendMessage(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1)); // +1 since we are working with 0-based array indices
-                } else if (parameter.equalsIgnoreCase("-cfloor") || parameter.equalsIgnoreCase("-coverfloor")) {
-                    if ((i + 1) >= par.length) {
-                        v.sendMessage(ChatColor.RED + "Missing parameter. Correct syntax: -cfloor [y|n] (e.g. -cfloor y)");
-                        continue;
-                    }
-
-                    this.coverFloor = par[++i].equalsIgnoreCase("y");
-                    v.sendMessage(ChatColor.BLUE + String.format("Floor cover %s.", ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled")));
-                }
-            } catch (Exception exception) {
-                v.sendMessage(ChatColor.RED + String.format("Error while parsing parameter: %s", parameter));
-                exception.printStackTrace();
-            }
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(ChatColor.GOLD + "Parameters:");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Sets the water level");
+            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)");
+            return;
         }
+        try {
+            if (params[0].equalsIgnoreCase("water")) {
+                int temp = Integer.parseInt(params[1]);
+
+                if (temp <= WATER_LEVEL_MIN) {
+                    v.sendMessage(ChatColor.RED + "The water level must be at least 12.");
+                    return;
+                }
+
+                this.waterLevel = temp - 1;
+                v.sendMessage(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1));
+                return;
+            }
+
+            if (params[0].equalsIgnoreCase("floor")) {
+                this.coverFloor = Boolean.parseBoolean(params[1]);
+                v.sendMessage(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
+                return;
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
     }
 
     @Override
-    public final void info(final Message vm) {
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water", "floor"));
+
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        // Floor values
+        argumentValues.put("floor", Lists.newArrayList("true", "false"));
+
+        // Number values
+        argumentValues.put("water", Lists.newArrayList("[number]"));
+
+        return argumentValues;
+    }
+
+    @Override
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1)); // +1 since we are working with 0-based array indices
-        vm.custom(ChatColor.BLUE + String.format("Floor cover %s.", ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled")));
+        vm.custom(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
     }
 
     @Override

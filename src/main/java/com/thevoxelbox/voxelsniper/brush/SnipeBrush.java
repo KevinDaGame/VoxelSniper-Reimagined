@@ -1,15 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.Message;
-import com.thevoxelbox.voxelsniper.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Snipe_Brush
  *
  * @author Voxel
  */
-public class SnipeBrush extends PerformBrush {
+public class SnipeBrush extends PerformerBrush {
 
     /**
      *
@@ -20,18 +20,18 @@ public class SnipeBrush extends PerformBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.current.perform(this.getTargetBlock());
-        v.owner().storeUndo(this.current.getUndo());
+        this.currentPerformer.perform(this.getTargetBlock());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.current.perform(this.getLastBlock());
-        v.owner().storeUndo(this.current.getUndo());
+        this.currentPerformer.perform(this.getLastBlock());
+        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
-    public final void info(final Message vm) {
+    public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
     }
 
