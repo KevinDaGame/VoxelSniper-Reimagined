@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.MaterialTranslator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,10 @@ public class VoxelReplaceCommand extends VoxelCommand {
 
         // Command: /vr [material]       <- Sets the defined material as voxel substance.
         Material material = Material.matchMaterial(args[0]); // TODO: Match old ID numbers to materials
+        
+        if (material == null) {
+            material = MaterialTranslator.resolveMaterial(args[0]);
+        }
 
         if (material != null && material.isBlock()) {
             snipeData.setVoxelSubstance(material.createBlockData());
