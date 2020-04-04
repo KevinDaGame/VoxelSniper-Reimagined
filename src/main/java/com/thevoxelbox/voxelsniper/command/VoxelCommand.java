@@ -1,8 +1,9 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelCommandManager;
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -17,6 +18,10 @@ public abstract class VoxelCommand implements TabExecutor {
     private String description = "";
     private String permission = "";
     private String identifier = "";
+    private final List<String> otherIdentifiers = new ArrayList<>();
+
+    private String activeIdentifier = "";
+    private String activeAlias = "";
 
     public VoxelCommand(String name) {
         this.name = name;
@@ -24,6 +29,9 @@ public abstract class VoxelCommand implements TabExecutor {
 
     @Override
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        this.activeIdentifier = command.getLabel(); // This is the root command.
+        this.activeAlias = label;   // This is the alias that was executed.
+
         if (!(sender instanceof Player)) {
             sender.sendMessage("Only players can execute commands!");
             return true;
@@ -41,22 +49,12 @@ public abstract class VoxelCommand implements TabExecutor {
 
     @Override
     public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        // Return partial matches that match *any part* of the string.
-        if (this instanceof VoxelVoxelCommand) {
-            String namespace = "minecraft:";
-            args[0] = args[0].toLowerCase();
-            
-            if (!args[0].startsWith(namespace)) {
-                if (args[0].startsWith("mi") && !args[0].equals(namespace)) {
-                    return Lists.newArrayList(namespace);
-                }
-
-                args[0] = namespace + args[0];
-            }
-        }
-
+        this.activeIdentifier = command.getLabel(); // This is the root command.
+        this.activeAlias = alias;   // This is the alias that was executed.
+        
         // Return partial matches that only match the *beginning* of the string.
-        return StringUtil.copyPartialMatches(args[args.length - 1], doSuggestion((Player) sender, args), new ArrayList<>());
+        List<String> suggestions = doSuggestion((Player) sender, args); // MUST SPLIT DECLARATION AND ASSIGNMENT, OTHERWISE PARTIAL MATCHING WON'T WORK
+        return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
     }
 
     public abstract List<String> doSuggestion(Player player, String[] args);
@@ -93,6 +91,22 @@ public abstract class VoxelCommand implements TabExecutor {
         return this.identifier.isEmpty() || this.identifier.equalsIgnoreCase(offered);
     }
 
+    public final List<String> getOtherIdentifiers() {
+        return Collections.unmodifiableList(otherIdentifiers);
+    }
+
+    public final void addOtherIdentifiers(String... identifiers) {
+        otherIdentifiers.addAll(Arrays.asList(identifiers));
+    }
+
+    public final String getActiveIdentifier() {
+        return this.activeIdentifier;
+    }
+
+    public final String getActiveAlias() {
+        return this.activeAlias;
+    }
+
     /**
      * Padds an empty String to the front of the array.
      *
@@ -109,7 +123,8 @@ public abstract class VoxelCommand implements TabExecutor {
         return returnValue;
     }
 
-    public void registerTabCompletion(HashMap<Integer, List<String>> argumentListMap) {
+    public List<String> registerTabCompletion() {
+        return new ArrayList<>();
     }
 
     public final List<String> getTabCompletion(int argumentNumber) {
@@ -118,6 +133,10 @@ public abstract class VoxelCommand implements TabExecutor {
 
     public final List<String> getTabCompletion(String identifier, int argumentNumber) {
         System.out.println("Solving for " + identifier);
-        return VoxelCommandManager.getCommandArgumentsList(identifier, argumentNumber);
+        return this.getCommandManager().getCommandArgumentsList(identifier, argumentNumber);
+    }
+
+    public final VoxelCommandManager getCommandManager() {
+        return VoxelCommandManager.getInstance();
     }
 }

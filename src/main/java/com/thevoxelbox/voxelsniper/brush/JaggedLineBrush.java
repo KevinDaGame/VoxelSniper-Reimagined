@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import org.bukkit.util.Vector;
  * @author Giltwist
  * @author Monofraps
  */
-public class JaggedLineBrush extends PerformBrush {
+public class JaggedLineBrush extends PerformerBrush {
 
     private static final Vector HALF_BLOCK_OFFSET = new Vector(0.5, 0.5, 0.5);
     private static int timesUsed = 0;
@@ -130,21 +130,23 @@ public class JaggedLineBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("recursion", "spread"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("recursion", "spread"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
-
-        argumentValues.put(prefix + "recursion", arguments);
-        argumentValues.put(prefix + "spread", arguments);
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
         
-        super.registerArgumentValues(prefix, argumentValues);
+        argumentValues.put("recursion", Lists.newArrayList("[number]"));
+        argumentValues.put("spread", Lists.newArrayList("[number]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

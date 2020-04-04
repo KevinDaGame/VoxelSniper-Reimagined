@@ -186,13 +186,14 @@ public class Rot2DBrush extends Brush {
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
     }
-    
-    
-    @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("[number]"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("[number]"));
+
+        return arguments;
     }
 
     @Override

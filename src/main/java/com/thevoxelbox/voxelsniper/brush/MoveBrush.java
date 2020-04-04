@@ -275,20 +275,23 @@ public class MoveBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("reset", "x", "y", "z"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("reset", "x", "y", "z"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put(prefix + "x", arguments);
-        argumentValues.put(prefix + "y", arguments);
-        argumentValues.put(prefix + "z", arguments);
+        argumentValues.put("x", Lists.newArrayList("[number]"));
+        argumentValues.put("y", Lists.newArrayList("[number]"));
+        argumentValues.put("z", Lists.newArrayList("[number]"));
+        
+        return argumentValues;
     }
 
     /**

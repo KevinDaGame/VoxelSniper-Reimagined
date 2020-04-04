@@ -2,8 +2,10 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
+import static com.thevoxelbox.voxelsniper.brush.Brush.BRUSH_ARGUMENT_PREFIX;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.Arrays;
 import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,6 +19,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Punish_Brush
@@ -310,24 +313,27 @@ public class PunishBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        List<String> arguments = Lists.newArrayList("hypno", "player", "self");
-        for(Punishment p : Punishment.values()) {
-            arguments.add(p.name());
-        }
-        subcommandArguments.put(1, arguments);
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        List<String> punishArguments = Arrays.stream(Punishment.values()).map(e -> e.name()).collect(Collectors.toList());
+        punishArguments.addAll(Lists.newArrayList("-hypno", "-self", "-player"));
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, punishArguments);
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
         // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[playerName]"));
-
-        argumentValues.put(prefix + "player", arguments);
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("player", Lists.newArrayList("[playerName]"));
+        
+        return argumentValues;
     }
+
     /**
      * @author Monofraps
      */

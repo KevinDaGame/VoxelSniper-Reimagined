@@ -57,22 +57,22 @@ public class ShellBallBrush extends Brush {
                 for (int z = 0; z <= brushSizeDoubled; z++) {
                     temp = 0;
 
-                    if (oldMaterials[x + 1 + 1][y + 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 + 1][y + 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1 - 1][y + 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 - 1][y + 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1 + 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1 + 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1 - 1][z + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1 - 1][z + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1][z + 1 + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1][z + 1 + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1][z + 1 - 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][y + 1][z + 1 - 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
 

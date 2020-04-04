@@ -20,32 +20,40 @@ import org.bukkit.ChatColor;
 /**
  * @author Voxel
  */
-public abstract class PerformBrush extends Brush implements IPerformer {
+public abstract class PerformerBrush extends Brush implements IPerformerBrush {
 
     protected vPerformer currentPerformer = new pMaterial();
 
     public vPerformer getCurrentPerformer() {
         return currentPerformer;
     }
-    
+
     public void sendPerformerMessage(String triggerHandle, SnipeData v) {
         v.sendMessage(ChatColor.DARK_AQUA + "You can use " + ChatColor.YELLOW + "'/b " + triggerHandle + " p [performer]'" + ChatColor.DARK_AQUA + " to change performers now.");
     }
 
     @Override
+    public final boolean parsePerformer(String performerHandle, SnipeData v) {
+        vPerformer newPerfomer = Performer.getPerformer(performerHandle);
+        if (newPerfomer == null) {
+            return false;
+        } else {
+            currentPerformer = newPerfomer;
+
+            SniperBrushChangedEvent event = new SniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
+            Bukkit.getPluginManager().callEvent(event);
+
+            info(v.getVoxelMessage());
+            currentPerformer.info(v.getVoxelMessage());
+            return true;
+        }
+    }
+
+    @Override
     public final void parsePerformer(String triggerHandle, String[] args, SnipeData v) {
         if (args.length > 1 && args[0].equalsIgnoreCase("p")) {
-            vPerformer newPerfomer = Performer.getPerformer(args[1]);
-            if (newPerfomer == null) {
+            if (parsePerformer(args[1], v) == false) {
                 parseParameters(triggerHandle, args, v);
-            } else {
-                currentPerformer = newPerfomer;
-
-                SniperBrushChangedEvent event = new SniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
-                Bukkit.getPluginManager().callEvent(event);
-
-                info(v.getVoxelMessage());
-                currentPerformer.info(v.getVoxelMessage());
             }
         } else {
             parseParameters(triggerHandle, args, v);
@@ -60,19 +68,21 @@ public abstract class PerformBrush extends Brush implements IPerformer {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        List<String> arguments = subcommandArguments.getOrDefault(1, new ArrayList<>());
-        arguments.add("p");
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
 
-        subcommandArguments.putIfAbsent(1, arguments);
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("p"));
+
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {        // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList(Performer.getPerformerHandles()));
+    public HashMap<String, List<String>> registerArgumentValues(String prefix) {        // Number variables
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put(prefix + "p", arguments);
+        argumentValues.put("p", Lists.newArrayList(Performer.getPerformerHandles()));
+
+        return argumentValues;
     }
 
     public void initP(SnipeData v) {

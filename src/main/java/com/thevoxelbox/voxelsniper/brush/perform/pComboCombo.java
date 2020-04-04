@@ -25,7 +25,7 @@ public class pComboCombo extends vPerformer {
     public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         voxelSubstance = v.getVoxelSubstance();
-        targetSubstance = v.getTargetSubstance();
+        targetSubstance = v.getReplaceSubstance();
     }
 
     @Override

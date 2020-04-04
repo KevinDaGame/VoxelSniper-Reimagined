@@ -48,17 +48,20 @@ public interface IBrush {
      * @return Permission node required to use this brush
      */
     String getPermissionNode();
-    
+
     /**
      * Registers the additional arguments for the tab completion
-     * @param subcommandArguments the hashmap to store the subcommand arguments for this brush
+     *
+     * @param brushHandle
+     * @return
      */
-    void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments);
-    
+    HashMap<String, List<String>> registerArguments(String brushHandle);
+
     /**
      * Registers the additional arguments for the tab completion
-     * @param prefix the prefix that the nested argument belongs to
-     * @param argumentValues the hashmap to store nested arguments
+     *
+     * @param brushHandle
+     * @return
      */
-    void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues);
+    HashMap<String, List<String>> registerArgumentValues(String prefix);
 }

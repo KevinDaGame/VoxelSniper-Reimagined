@@ -71,16 +71,17 @@ public class EntityBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
         List<String> entities = new ArrayList<>();
 
         for (EntityType entity : EntityType.values()) {
             entities.add(entity.name());
         }
 
-        subcommandArguments.put(1, entities);
-
-        super.registerSubcommandArguments(subcommandArguments);
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, entities);
+        
+        return arguments;
     }
 
     @Override

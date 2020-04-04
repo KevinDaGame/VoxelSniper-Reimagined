@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import org.bukkit.ChatColor;
 
 /**
@@ -10,7 +10,7 @@ import org.bukkit.ChatColor;
  *
  * @author Giltwist
  */
-public class TriangleBrush extends PerformBrush {
+public class TriangleBrush extends PerformerBrush {
 
     private double[] coordsOne = new double[3]; // Three corners
     private double[] coordsTwo = new double[3];
@@ -292,7 +292,7 @@ public class TriangleBrush extends PerformBrush {
             v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.");
             return;
         }
-        
+
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
         sendPerformerMessage(triggerHandle, v);
     }

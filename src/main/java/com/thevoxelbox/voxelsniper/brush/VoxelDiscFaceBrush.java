@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -11,7 +11,7 @@ import org.bukkit.block.BlockFace;
  *
  * @author Voxel
  */
-public class VoxelDiscFaceBrush extends PerformBrush {
+public class VoxelDiscFaceBrush extends PerformerBrush {
 
     /**
      *

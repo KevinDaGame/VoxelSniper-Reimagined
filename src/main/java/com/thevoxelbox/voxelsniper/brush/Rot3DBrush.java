@@ -86,21 +86,24 @@ public class Rot3DBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("pitch", "roll", "yaw"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("pitch", "roll", "yaw"));
+
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
         // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[1-359]"));
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("pitch", Lists.newArrayList("[1-359]"));
+        argumentValues.put("roll", Lists.newArrayList("[1-359]"));
+        argumentValues.put("yaw", Lists.newArrayList("[1-359]"));
 
-        argumentValues.put(prefix + "pitch", arguments);
-        argumentValues.put(prefix + "roll", arguments);
-        argumentValues.put(prefix + "yaw", arguments);
+        return argumentValues;
     }
 
     @SuppressWarnings("deprecation")

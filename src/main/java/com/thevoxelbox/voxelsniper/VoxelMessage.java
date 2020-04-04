@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 
 /**
- *
+ *  Messaging handler for various Voxel functions.
+ *  // TODO: Rewrite messaging to builder functions.
+ *  // TODO: Standardize message colors.
  */
 public class VoxelMessage {
 
@@ -89,14 +91,14 @@ public class VoxelMessage {
      */
     @SuppressWarnings("deprecation")
     public void replace() {
-        snipeData.sendMessage(ChatColor.AQUA + "Replace Target Material: " + ChatColor.RED + snipeData.getTargetMaterial());
+        snipeData.sendMessage(ChatColor.AQUA + "Replace Target Material: " + ChatColor.RED + snipeData.getReplaceMaterial());
     }
 
     /**
      * Display replace data value.
      */
     public void replaceData() {
-        snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Target Data Value: " + ChatColor.DARK_RED + snipeData.getTargetSubstance().getAsString());
+        snipeData.sendMessage(ChatColor.DARK_GRAY + "Replace Target Data Value: " + ChatColor.DARK_RED + snipeData.getReplaceSubstance().getAsString());
     }
 
     /**

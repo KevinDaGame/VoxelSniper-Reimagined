@@ -190,18 +190,22 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("rotate", "air"));
-
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("rotate", "air"));
+        
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("0", "90", "180", "270"));
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put(prefix + "rotate", arguments);
+        
+        argumentValues.put("rotate", Lists.newArrayList("0", "90", "180", "270"));
+
+        return argumentValues;
     }
 
     @Override

@@ -660,56 +660,47 @@ public class GenerateTreeBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
                 "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
         // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
-
-        argumentValues.put(prefix + "thickness", arguments);
-        argumentValues.put(prefix + "startHeight", arguments);
-        argumentValues.put(prefix + "slope", arguments);
-        argumentValues.put(prefix + "branchLength", arguments);
-        argumentValues.put(prefix + "rootLength", arguments);
-        argumentValues.put(prefix + "rootMin", arguments);
-        argumentValues.put(prefix + "rootMax", arguments);
-        argumentValues.put(prefix + "heightMin", arguments);
-        argumentValues.put(prefix + "heightMax", arguments);
-        argumentValues.put(prefix + "leavesMin", arguments);
-        argumentValues.put(prefix + "leavesMax", arguments);
+        argumentValues.put("thickness", Lists.newArrayList("[number]"));
+        argumentValues.put("startHeight", Lists.newArrayList("[number]"));
+        argumentValues.put("slope", Lists.newArrayList("[number]"));
+        argumentValues.put("branchLength", Lists.newArrayList("[number]"));
+        argumentValues.put("rootLength", Lists.newArrayList("[number]"));
+        argumentValues.put("rootMin", Lists.newArrayList("[number]"));
+        argumentValues.put("rootMax", Lists.newArrayList("[number]"));
+        argumentValues.put("heightMin", Lists.newArrayList("[number]"));
+        argumentValues.put("heightMax", Lists.newArrayList("[number]"));
+        argumentValues.put("leavesMin", Lists.newArrayList("[number]"));
+        argumentValues.put("leavesMax", Lists.newArrayList("[number]"));
 
         // Info variables
-        arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("1", "2"));
-
-        argumentValues.put(prefix + "info", arguments);
+        argumentValues.put("info", Lists.newArrayList("1", "2"));
 
         // True/false variable
-        arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("true", "false"));
-
-        argumentValues.put(prefix + "rootFloat", arguments);
+        argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList(Material.OAK_LOG.name(), Material.ACACIA_LOG.name(), Material.SPRUCE_LOG.name(), Material.JUNGLE_LOG.name(),
+        argumentValues.put("wood", Lists.newArrayList(Material.OAK_LOG.name(), Material.ACACIA_LOG.name(), Material.SPRUCE_LOG.name(), Material.JUNGLE_LOG.name(),
                 Material.DARK_OAK_LOG.name(), Material.BIRCH_LOG.name()));
 
-        argumentValues.put(prefix + "wood", arguments);
-        
         // Leaves material variables
-        arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList(Material.OAK_LEAVES.name(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
+        argumentValues.put("leaves", Lists.newArrayList(Material.OAK_LEAVES.name(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
                 Material.DARK_OAK_LEAVES.name(), Material.BIRCH_LEAVES.name()));
 
-        argumentValues.put(prefix + "leaves", arguments);
+        return argumentValues;
     }
 
     @Override

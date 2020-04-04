@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author Voxel
  */
-public class SplatterVoxelBrush extends PerformBrush {
+public class SplatterVoxelBrush extends PerformerBrush {
 
     private static final int GROW_PERCENT_MIN = 1;
     private static final int GROW_PERCENT_DEFAULT = 1000;
@@ -231,28 +231,27 @@ public class SplatterVoxelBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("recursion", "growth", "seed", "reset"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("recursion", "growth", "seed", "reset"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put(prefix + "recursion", arguments);
+        // Number variables
+        argumentValues.put("recursion", Lists.newArrayList("[number]"));
 
         // Decimal variables
-        arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[decimal]"));
+        argumentValues.put("seed", Lists.newArrayList("[decimal]"));
+        argumentValues.put("growth", Lists.newArrayList("[decimal]"));
 
-        argumentValues.put(prefix + "seed", arguments);
-        argumentValues.put(prefix + "growth", arguments);
-        
-        super.registerArgumentValues(prefix, argumentValues);
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

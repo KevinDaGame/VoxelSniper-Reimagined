@@ -26,7 +26,7 @@ public class pMatComboNoPhysics extends vPerformer {
     public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         voxelMaterial = v.getVoxelMaterial();
-        targetSubstance = v.getTargetSubstance();
+        targetSubstance = v.getReplaceSubstance();
     }
 
     @Override

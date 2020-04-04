@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import static org.bukkit.Material.LAVA;
 import static org.bukkit.Material.WATER;
 import org.bukkit.block.data.BlockData;
@@ -183,16 +184,12 @@ public class ErodeBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        List<String> arguments = new ArrayList<>();
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
 
-        for (Preset preset : Preset.values()) {
-            arguments.add(preset.name().toLowerCase());
-        }
-
-        subcommandArguments.put(1, arguments);
-
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
+        
+        return arguments;
     }
 
     /**

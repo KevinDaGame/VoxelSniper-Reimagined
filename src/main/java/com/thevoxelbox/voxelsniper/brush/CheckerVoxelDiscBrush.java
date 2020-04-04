@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.bukkit.block.Block;
 /**
  * @author MikeMatrix
  */
-public class CheckerVoxelDiscBrush extends PerformBrush {
+public class CheckerVoxelDiscBrush extends PerformerBrush {
 
     private boolean useWorldCoordinates = true;
 
@@ -64,7 +64,7 @@ public class CheckerVoxelDiscBrush extends PerformBrush {
             v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " worldcoords -- Toggle to use World Coordinates or not (default: true)");
             return;
         }
-        
+
         if (params[0].startsWith("worldcoords")) {
             this.useWorldCoordinates = !this.useWorldCoordinates;
             v.sendMessage(ChatColor.AQUA + "Using world coordinates: " + this.useWorldCoordinates);
@@ -76,10 +76,12 @@ public class CheckerVoxelDiscBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("worldcoords"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("worldcoords"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override

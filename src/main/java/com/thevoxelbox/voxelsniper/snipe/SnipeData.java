@@ -31,7 +31,7 @@ public class SnipeData {
 
     // Voxel and ReplaceTarget Materials & BlockData
     private BlockData voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
-    private BlockData targetSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
+    private BlockData replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
 
     // Others
     private int cCen = SnipeData.DEFAULT_CYLINDER_CENTER;
@@ -86,16 +86,16 @@ public class SnipeData {
         this.voxelSubstance = voxelSubstance;
     }
 
-    public BlockData getTargetSubstance() {
-        return targetSubstance;
+    public BlockData getReplaceSubstance() {
+        return replaceSubstance;
     }
 
-    public Material getTargetMaterial() {
-        return targetSubstance.getMaterial();
+    public Material getReplaceMaterial() {
+        return replaceSubstance.getMaterial();
     }
 
-    public void setTargetSubstance(BlockData targetSubstance) {
-        this.targetSubstance = targetSubstance;
+    public void setReplaceSubstance(BlockData targetSubstance) {
+        this.replaceSubstance = targetSubstance;
     }
 
     public int getcCen() {
@@ -139,7 +139,7 @@ public class SnipeData {
      */
     public final void reset() {
         this.voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
-        this.targetSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
+        this.replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
 
         this.brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 

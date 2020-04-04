@@ -51,19 +51,19 @@ public class ShellSetBrush extends Brush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            if (this.getWorld().getBlockAt(x, y, z).getType() == v.getTargetMaterial()) {
+                            if (this.getWorld().getBlockAt(x, y, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x + 1, y, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x + 1, y, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x - 1, y, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x - 1, y, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y, z + 1).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y, z + 1).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y, z - 1).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y, z - 1).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y + 1, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y + 1, z).getType() == v.getReplaceMaterial()) {
                                 continue;
-                            } else if (this.getWorld().getBlockAt(x, y - 1, z).getType() == v.getTargetMaterial()) {
+                            } else if (this.getWorld().getBlockAt(x, y - 1, z).getType() == v.getReplaceMaterial()) {
                                 continue;
                             } else {
                                 blocks.add(this.getWorld().getBlockAt(x, y, z));

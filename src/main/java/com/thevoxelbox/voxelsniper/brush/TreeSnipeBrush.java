@@ -6,8 +6,10 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -104,16 +106,12 @@ public class TreeSnipeBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        List<String> arguments = new ArrayList<>();
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
 
-        for (TreeType t : TreeType.values()) {
-            arguments.add(t.name().toLowerCase());
-        }
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
 
-        subcommandArguments.put(1, arguments);
-
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
 
     @Override

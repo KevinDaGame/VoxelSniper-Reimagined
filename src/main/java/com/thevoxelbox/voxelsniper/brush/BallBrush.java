@@ -1,9 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelCommandManager;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +17,11 @@ import org.bukkit.block.Block;
  *
  * @author Piotr
  */
-public class BallBrush extends PerformBrush {
+public class BallBrush extends PerformerBrush {
 
     public static final double SMOOTH_SPHERE_VALUE = 0.5;
     public static final int VOXEL_SPHERE_VALUE = 0;
-    
+
     private boolean smoothSphere = false;
 
     /**
@@ -108,7 +109,7 @@ public class BallBrush extends PerformBrush {
             v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)");
             return;
         }
-        
+
         if (params[0].equalsIgnoreCase("smooth")) {
             this.smoothSphere = !this.smoothSphere;
             v.sendMessage(ChatColor.AQUA + "Smooth sphere algorithm: " + this.smoothSphere);
@@ -120,10 +121,12 @@ public class BallBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("smooth"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("smooth"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class VoxelSniperListener implements Listener {
         }
 
         try {
-            Sniper sniper = plugin.getSniperManager().getSniperForPlayer(player);
+            Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
             if (sniper.isEnabled() && sniper.snipe(event.getAction(), event.getMaterial(), event.getClickedBlock(), event.getBlockFace())) {
                 event.setCancelled(true);
             }
@@ -49,7 +49,7 @@ public class VoxelSniperListener implements Listener {
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Sniper sniper = plugin.getSniperManager().getSniperForPlayer(player);
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
             sniper.displayInfo();

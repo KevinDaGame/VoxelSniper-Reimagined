@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -14,7 +14,7 @@ import org.bukkit.block.Block;
  *
  * @author Voxel
  */
-public class RingBrush extends PerformBrush {
+public class RingBrush extends PerformerBrush {
 
     private static final double SMOOTH_CIRCLE_VALUE = 0.5;
     private static final double VOXEL_CIRCLE_VALUE = 0.0;
@@ -98,21 +98,23 @@ public class RingBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("smooth", "inner"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("smooth", "inner"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
         // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[decimal]"));
-
-        argumentValues.put(prefix + "inner", arguments);
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
         
-        super.registerArgumentValues(prefix, argumentValues);
+        argumentValues.put("inner", Lists.newArrayList("[decimal]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

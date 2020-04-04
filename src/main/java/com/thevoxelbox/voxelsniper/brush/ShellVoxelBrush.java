@@ -55,22 +55,22 @@ public class ShellVoxelBrush extends Brush {
                 for (int y = 0; y <= brushSizeSquared; y++) {
                     temp = 0;
 
-                    if (oldMaterials[x + 1 + 1][z + 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 + 1][z + 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1 - 1][z + 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1 - 1][z + 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1 + 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1 + 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1 - 1][y + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1 - 1][y + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1][y + 1 + 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1][y + 1 + 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][z + 1][y + 1 - 1] == v.getTargetMaterial()) {
+                    if (oldMaterials[x + 1][z + 1][y + 1 - 1] == v.getReplaceMaterial()) {
                         temp++;
                     }
 

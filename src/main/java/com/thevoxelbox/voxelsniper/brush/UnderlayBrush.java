@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -14,7 +14,7 @@ import org.bukkit.Material;
  *
  * @author jmck95 Credit to GavJenks for framework and 95 of code. Big Thank you to GavJenks
  */
-public class UnderlayBrush extends PerformBrush {
+public class UnderlayBrush extends PerformerBrush {
 
     private static final int DEFAULT_DEPTH = 3;
     private int depth = DEFAULT_DEPTH;
@@ -191,20 +191,22 @@ public class UnderlayBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("depth", "mode"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("depth", "mode"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
-
-        argumentValues.put(prefix + "depth", arguments);
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
         
-        super.registerArgumentValues(prefix, argumentValues);
+        argumentValues.put("depth", Lists.newArrayList("[number]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

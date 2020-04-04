@@ -120,10 +120,12 @@ public class DrainBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("shape"));
-
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("shape"));
+        
+        return arguments;
     }
 
     @Override

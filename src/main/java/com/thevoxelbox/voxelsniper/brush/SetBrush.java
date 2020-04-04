@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -11,7 +11,7 @@ import org.bukkit.block.Block;
  *
  * @author Voxel
  */
-public class SetBrush extends PerformBrush {
+public class SetBrush extends PerformerBrush {
 
     private static final int SELECTION_SIZE_MAX = 5000000;
     private Block block = null;

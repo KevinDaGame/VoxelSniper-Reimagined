@@ -129,38 +129,37 @@ public class CloneStampBrush extends StampBrush {
             v.sendMessage(ChatColor.AQUA + "Stamp Mode: No-Air");
             return;
         }
-        
+
         if (params[0].equalsIgnoreCase("fill")) {
             this.setStamp(StampType.FILL);
             this.reSort();
             v.sendMessage(ChatColor.AQUA + "Stamp Mode: Fill");
             return;
-        } 
-        
+        }
+
         if (params[0].equalsIgnoreCase("default")) {
             this.setStamp(StampType.DEFAULT);
             this.reSort();
             v.sendMessage(ChatColor.AQUA + "StampMode: Default");
             return;
-        } 
-        
-        /** TODO: Implement
-        if (params[0].startsWith("centre")) {
-            v.setcCen(Integer.parseInt(params[0].replace("c", "")));
-            v.sendMessage(ChatColor.BLUE + "Center set to " + v.getcCen());
-            return;
-        }*/
+        }
 
+        /**
+         * TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
+         * set to " + v.getcCen()); return; }
+         */
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("air", "fill", "default"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("air", "fill", "default"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
-    
+
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.clonestamp";

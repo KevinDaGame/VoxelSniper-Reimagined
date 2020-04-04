@@ -156,19 +156,22 @@ public class ScannerBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("depth"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("depth"));
+
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
         // Number variables
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
-
-        argumentValues.put(prefix + "depth", arguments);
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("depth", Lists.newArrayList("[number]"));
+        
+        return argumentValues;
     }
 
     @Override

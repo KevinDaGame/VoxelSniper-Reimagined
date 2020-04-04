@@ -1,10 +1,13 @@
 package com.thevoxelbox.voxelsniper.command;
 
+import com.thevoxelbox.voxelsniper.VoxelBrushManager;
 import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
+import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
-import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import java.util.ArrayList;
@@ -12,36 +15,48 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import org.bukkit.util.StringUtil;
-import com.thevoxelbox.voxelsniper.brush.perform.IPerformer;
+import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
+import org.bukkit.ChatColor;
 
 public class VoxelBrushCommand extends VoxelCommand {
-    
+
     public VoxelBrushCommand() {
         super("VoxelBrush");
         setIdentifier("b");
         setPermission("voxelsniper.sniper");
     }
-    
+
     @Override
-    public void registerTabCompletion(HashMap<Integer, List<String>> argumentListMap) {
-        List<String> brushArguments = new ArrayList<>(VoxelCommandManager.getBrushManager().getBrushHandles());
-        brushArguments.add("<brushSize>");
-        
-        argumentListMap.put(1, brushArguments);
+    public List<String> registerTabCompletion() {
+        List<String> brushes = new ArrayList<>(VoxelBrushManager.getInstance().getBrushHandles());
+        brushes.add("<brushSize>");
+
+        return brushes;
     }
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelCommandManager.getSniperManager().getSniperForPlayer(player);
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         String currentToolId = sniper.getCurrentToolId();
         SnipeData snipeData = sniper.getSnipeData(currentToolId);
 
-        // No arguments -> get previous brush
-        if (args == null || args.length == 0) {
-            sniper.previousBrush(currentToolId);
+        // Default command
+        // Command: /b, /b help, /b info
+        if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
+            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushHandle] [arguments...]");
+            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle, with the specified arguments.");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " p [performerHandle]");
+            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle and the specified performer.");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushSize]");
+            player.sendMessage(ChatColor.YELLOW + "    Sets the brush size of the active brush.");
+            return true;
+        }
+
+        // No arguments -> show brush settings
+        if (args.length == 0) {
+            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
             sniper.displayInfo();
             return true;
         }
@@ -69,7 +84,7 @@ public class VoxelBrushCommand extends VoxelCommand {
             }
 
             // Command: /b <brush> -- change brush to <brush>
-            Class<? extends IBrush> brush = VoxelCommandManager.getBrushManager().getBrushForHandle(args[0]);
+            Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
 
             if (brush == null) {
                 player.sendMessage("No brush exists with the brush handle '" + args[0] + "'.");
@@ -77,13 +92,13 @@ public class VoxelBrushCommand extends VoxelCommand {
                 IBrush oldBrush = sniper.getBrush(currentToolId);
                 IBrush newBrush = sniper.setBrush(currentToolId, brush);
 
-                // Command: /b <brush> <performer> <...> -- Handles performer and additional variables
+                // Command: /b <brush> <...> -- Handles additional variables
                 if (args.length > 1) {
                     String[] additionalParameters = Arrays.copyOfRange(args, 1, args.length);
-                    
+
                     // Parse performer if the brush is a performer
-                    if (newBrush instanceof IPerformer) {
-                        ((IPerformer) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
+                    if (newBrush instanceof IPerformerBrush) {
+                        ((IPerformerBrush) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
                         return true;
                     } else {
                         newBrush.parseParameters(args[0], additionalParameters, snipeData);
@@ -105,15 +120,15 @@ public class VoxelBrushCommand extends VoxelCommand {
         if (args.length == 1) {
             return getTabCompletion(args.length);
         }
-        
-        if (args.length == 2) {
-            return getTabCompletion(VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX + args[0], 1);
+
+        if (args.length >= 2) {
+            if (args.length % 2 == 0) {
+                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0], 1);
+            } else {
+                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0] + BRUSH_SUBCOMMAND_SUFFIX + args[args.length - 2], 1);
+            }
         }
-        
-        if (args.length > 2) {
-            return getTabCompletion(VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX + args[0] + args[1], args.length - 2);
-        }
-            
+
         return new ArrayList<>();
     }
 }

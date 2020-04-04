@@ -1,13 +1,12 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import com.thevoxelbox.voxelsniper.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
@@ -15,11 +14,11 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class VoxelVoxelCommand extends VoxelCommand {
+public class VoxelReplaceCommand extends VoxelCommand {
 
-    public VoxelVoxelCommand() {
-        super("VoxelVoxel");
-        setIdentifier("v");
+    public VoxelReplaceCommand() {
+        super("VoxelReplace");
+        setIdentifier("vr");
         setPermission("voxelsniper.sniper");
     }
 
@@ -38,33 +37,33 @@ public class VoxelVoxelCommand extends VoxelCommand {
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
             player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
             player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the block you are looking at as the active voxel material.");
+            player.sendMessage(ChatColor.YELLOW + "    Sets the block you are looking at as the active replace material.");
             player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [material]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the specified block as the active voxel material.");
+            player.sendMessage(ChatColor.YELLOW + "    Sets the specified block as the active replace material.");
             return true;
         }
 
-        // Command: /v          <- Sets the block user is looking at as voxel substance.
+        // Command: /vr          <- Sets the block user is looking at as voxel substance.
         if (args.length == 0) {
             Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to set voxel substance. No changes were made.");
+                player.sendMessage(ChatColor.GOLD + "Nothing to imitate replace material. No changes were made.");
             }
             return true;
         }
 
-        // Command: /v [material]       <- Sets the defined material as voxel substance.
-        Material material = Material.matchMaterial(args[0]);
+        // Command: /vr [material]       <- Sets the defined material as voxel substance.
+        Material material = Material.matchMaterial(args[0]); // TODO: Match old ID numbers to materials
 
         if (material != null && material.isBlock()) {
             snipeData.setVoxelSubstance(material.createBlockData());
             snipeData.getVoxelMessage().voxel();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Material ID.");
+            player.sendMessage(ChatColor.RED + "You have entered an invalid Item ID.");
             return true;
         }
     }
@@ -81,7 +80,6 @@ public class VoxelVoxelCommand extends VoxelCommand {
                 }
 
                 args[0] = "minecraft:" + args[0];
-                System.out.println("'" + args[0] + "'");
             }
 
             return getTabCompletion(1);

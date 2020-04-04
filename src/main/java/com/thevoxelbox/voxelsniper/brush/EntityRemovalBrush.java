@@ -163,15 +163,17 @@ public class EntityRemovalBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("+", "-", "reset", "clear", "list"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("+", "-", "reset", "clear", "list"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         List<String> entities = new ArrayList<>();
 
@@ -179,10 +181,10 @@ public class EntityRemovalBrush extends Brush {
             entities.add(entity.name());
         }
 
-        arguments.put(1, entities);
-
-        argumentValues.put(prefix + "+", arguments);
-        argumentValues.put(prefix + "-", arguments);
+        
+        argumentValues.put("+", entities);
+        argumentValues.put("-", entities);
+        return argumentValues;
     }
 
     @Override

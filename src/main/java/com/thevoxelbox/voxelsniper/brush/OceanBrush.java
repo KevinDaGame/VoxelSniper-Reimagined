@@ -199,27 +199,25 @@ public class OceanBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("water", "floor"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water", "floor"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        // Floor true/false
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        arguments.put(1, Lists.newArrayList("true", "false"));
-        argumentValues.put(prefix + "floor", arguments);
-        
+        // Floor values
+        argumentValues.put("floor", Lists.newArrayList("true", "false"));
+
         // Number values
-        arguments = new HashMap<>();
+        argumentValues.put("water", Lists.newArrayList("[number]"));
 
-        arguments.put(1, Lists.newArrayList("[number]"));
-        argumentValues.put(prefix + "water", arguments);
-
-        super.registerArgumentValues(prefix, argumentValues);
+        return argumentValues;
     }
 
     @Override

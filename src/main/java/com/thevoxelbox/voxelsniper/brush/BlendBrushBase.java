@@ -1,7 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
+import static com.thevoxelbox.voxelsniper.brush.Brush.BRUSH_ARGUMENT_PREFIX;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.ChatColor;
 
 /**
@@ -47,6 +51,25 @@ public abstract class BlendBrushBase extends Brush {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water"));
+
+        return arguments;
+    }
+
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
+        
+        argumentValues.put("water", Lists.newArrayList("true", "false"));
+
+        return argumentValues;
     }
 
     /**

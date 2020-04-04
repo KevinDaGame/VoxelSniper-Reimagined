@@ -25,7 +25,7 @@ public class pMatMat extends vPerformer {
     public void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         w = v.getWorld();
         voxelMaterial = v.getVoxelMaterial();
-        targetMaterial = v.getTargetMaterial();
+        targetMaterial = v.getReplaceMaterial();
     }
 
     @Override

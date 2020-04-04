@@ -2,14 +2,14 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Voxel_Brush
  *
  * @author Piotr
  */
-public class VoxelBrush extends PerformBrush {
+public class VoxelBrush extends PerformerBrush {
 
     /**
      *

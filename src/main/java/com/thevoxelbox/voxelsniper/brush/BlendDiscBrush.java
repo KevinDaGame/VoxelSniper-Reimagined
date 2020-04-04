@@ -124,23 +124,6 @@ public class BlendDiscBrush extends BlendBrushBase {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("water"));
-
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
-    }
-
-    @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-
-        arguments.put(1, Lists.newArrayList("true", "false"));
-        argumentValues.put(prefix + "water", arguments);
-
-        super.registerArgumentValues(prefix, argumentValues);
-    }
-
-    @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.blenddisc";
     }

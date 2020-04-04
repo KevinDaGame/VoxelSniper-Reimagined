@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import org.bukkit.ChatColor;
  *
  * @author Giltwist
  */
-public class BlobBrush extends PerformBrush {
+public class BlobBrush extends PerformerBrush {
 
     private static final int GROW_PERCENT_DEFAULT = 1000;
     private static final int GROW_PERCENT_MIN = 1;
@@ -254,20 +254,23 @@ public class BlobBrush extends PerformBrush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("growth"));
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("growth"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        arguments.put(1, Lists.newArrayList("[number]"));
-        argumentValues.put(prefix + "growth", arguments);
+        
+        argumentValues.put("growth", Lists.newArrayList("[number]"));
 
-        super.registerArgumentValues(prefix, argumentValues);
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

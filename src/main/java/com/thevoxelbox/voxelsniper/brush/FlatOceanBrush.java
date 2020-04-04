@@ -111,19 +111,23 @@ public class FlatOceanBrush extends Brush {
     }
 
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("water", "floor"));
-
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water", "floor"));
+        
+        return arguments;
     }
 
     @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
-
-        argumentValues.put(prefix + "water", arguments);
-        argumentValues.put(prefix + "floor", arguments);
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+        
+        argumentValues.put("water", Lists.newArrayList("[number]"));
+        argumentValues.put("floor", Lists.newArrayList("[number]"));
+        
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -12,7 +12,7 @@ import org.bukkit.block.Block;
 /**
  * @author Kavutop
  */
-public class CylinderBrush extends PerformBrush {
+public class CylinderBrush extends PerformerBrush {
 
     private static final double SMOOTH_CIRCLE_VALUE = 0.5;
     private static final double VOXEL_CIRCLE_VALUE = 0.0;
@@ -123,23 +123,27 @@ public class CylinderBrush extends PerformBrush {
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
         sendPerformerMessage(triggerHandle, v);
     }
-    
-    @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        subcommandArguments.put(1, Lists.newArrayList("shift", "height", "smooth"));
 
-        super.registerSubcommandArguments(subcommandArguments); // super must always execute last!
+    @Override
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        HashMap<String, List<String>> arguments = new HashMap<>();
+        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("shift", "height", "smooth"));
+
+        arguments.putAll(super.registerArguments(brushHandle));
+        return arguments;
     }
-    
-    @Override
-    public void registerArgumentValues(String prefix, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
-        HashMap<Integer, List<String>> arguments = new HashMap<>();
-        arguments.put(1, Lists.newArrayList("[number]"));
 
-        argumentValues.put(prefix + "shift", arguments);
-        argumentValues.put(prefix + "height", arguments);
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+        HashMap<String, List<String>> argumentValues = new HashMap<>();
+
         
-        super.registerArgumentValues(prefix, argumentValues);
+        argumentValues.put("shift", Lists.newArrayList("[number]"));
+        
+        argumentValues.put("height", Lists.newArrayList("[number]"));
+
+        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        return argumentValues;
     }
 
     @Override

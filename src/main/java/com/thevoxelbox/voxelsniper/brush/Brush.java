@@ -4,7 +4,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.*;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import org.bukkit.block.data.BlockData;
  * Abstract implementation of the {@link IBrush} interface.
  */
 public abstract class Brush implements IBrush {
+
+    protected static final String BRUSH_ARGUMENT_PREFIX = VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
 
     protected static final int CHUNK_SIZE = 16;
     /**
@@ -55,8 +57,8 @@ public abstract class Brush implements IBrush {
 
     private boolean preparePerform(final SnipeData v, final Block clickedBlock, final BlockFace clickedFace) {
         if (this.getTarget(v, clickedBlock, clickedFace)) {
-            if (this instanceof PerformBrush) {
-                ((PerformBrush) this).initP(v);
+            if (this instanceof PerformerBrush) {
+                ((PerformerBrush) this).initP(v);
             }
             return true;
         }
@@ -103,16 +105,18 @@ public abstract class Brush implements IBrush {
     public void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         v.sendMessage(ChatColor.RED + "This brush does not accept additional parameters.");
     }
-    
+
     // TODO: make abstract
     @Override
-    public void registerSubcommandArguments(HashMap<Integer, List<String>> subcommandArguments) {
-        // Do nothing because not all brushes have subcommands
+    public HashMap<String, List<String>> registerArguments(String brushHandle) {
+        // Return empty hashmap if not overridden; i.e. no arguments to add.
+        return new HashMap<>();
     }
-    
+
     @Override
-    public void registerArgumentValues(String brushHandle, HashMap<String, HashMap<Integer, List<String>>> argumentValues) {
+    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
         // Do nothing because not all brushes have arguments have values
+        return new HashMap<>();
     }
 
     /**
