@@ -315,7 +315,7 @@ public class Sniper {
                     break;
                 }
             }
-            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful:  " + ChatColor.RED + sum + ChatColor.GREEN + " blocks have been replaced.");
+            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful: " + ChatColor.RED + sum + ChatColor.GREEN + " blocks have been replaced.");
         }
     }
 
