@@ -660,17 +660,17 @@ public class GenerateTreeBrush extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
+        arguments.addAll(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
                 "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
 
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+    public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
         
         // Number variables

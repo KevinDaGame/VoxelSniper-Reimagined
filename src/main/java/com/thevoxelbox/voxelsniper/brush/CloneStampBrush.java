@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -152,10 +152,10 @@ public class CloneStampBrush extends StampBrush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("air", "fill", "default"));
+        arguments.addAll(Lists.newArrayList("air", "fill", "default"));
 
         return arguments;
     }

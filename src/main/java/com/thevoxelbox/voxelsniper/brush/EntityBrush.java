@@ -71,15 +71,15 @@ public class EntityBrush extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         List<String> entities = new ArrayList<>();
 
         for (EntityType entity : EntityType.values()) {
             entities.add(entity.name());
         }
 
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, entities);
+        arguments.addAll(entities);
         
         return arguments;
     }

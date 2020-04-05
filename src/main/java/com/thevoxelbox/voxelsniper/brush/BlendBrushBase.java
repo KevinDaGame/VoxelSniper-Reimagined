@@ -2,8 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import static com.thevoxelbox.voxelsniper.brush.Brush.BRUSH_ARGUMENT_PREFIX;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -54,16 +54,16 @@ public abstract class BlendBrushBase extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("water"));
+        arguments.addAll(Lists.newArrayList("water"));
 
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+    public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         

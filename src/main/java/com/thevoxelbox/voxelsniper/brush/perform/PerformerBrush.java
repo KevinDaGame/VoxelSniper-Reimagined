@@ -68,16 +68,16 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
 
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("p"));
+        arguments.addAll(Lists.newArrayList("p"));
 
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String prefix) {        // Number variables
+    public HashMap<String, List<String>> registerArgumentValues() {        // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         argumentValues.put("p", Lists.newArrayList(Performer.getPerformerHandles()));

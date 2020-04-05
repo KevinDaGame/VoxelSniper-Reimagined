@@ -247,16 +247,16 @@ public class HeatRayBrush extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
 
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("octave", "amplitude", "frequency", "default"));
+        arguments.addAll(Lists.newArrayList("octave", "amplitude", "frequency", "default"));
 
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+    public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
         
         argumentValues.put("octave", Lists.newArrayList("[number]"));

@@ -93,16 +93,14 @@ public class VoxelCommandManager {
                 // Initialize brush to retrieve subcommand map
                 IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).newInstance();
 
-                brush.registerArguments(brushHandle).forEach((identifier, arguments) -> {
-                    if (argumentsMap.containsKey(identifier)) {
-                        VoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{identifier, brushHandle});
-                        return;
-                    }
+                if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle)) {
+                    VoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
+                    return;
+                }
 
-                    argumentsMap.put(identifier, arguments);
-                });
+                argumentsMap.put(BRUSH_SUBCOMMAND_PREFIX + brushHandle, brush.registerArguments());
 
-                brush.registerArgumentValues(brushHandle).forEach((identifier, arguments) -> {
+                brush.registerArgumentValues().forEach((identifier, arguments) -> {
                     if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier)) {
                         VoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
                         return;

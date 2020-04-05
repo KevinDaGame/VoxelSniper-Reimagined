@@ -2,8 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
@@ -84,10 +84,10 @@ public class BiomeBrush extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
+        arguments.addAll(Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
         
         return arguments;
     }

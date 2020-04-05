@@ -55,7 +55,7 @@ public interface IBrush {
      * @param brushHandle
      * @return
      */
-    HashMap<String, List<String>> registerArguments(String brushHandle);
+    List<String> registerArguments();
 
     /**
      * Registers the additional arguments for the tab completion
@@ -63,5 +63,5 @@ public interface IBrush {
      * @param brushHandle
      * @return
      */
-    HashMap<String, List<String>> registerArgumentValues(String prefix);
+    HashMap<String, List<String>> registerArgumentValues();
 }

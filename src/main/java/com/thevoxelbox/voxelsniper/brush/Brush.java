@@ -108,14 +108,14 @@ public abstract class Brush implements IBrush {
 
     // TODO: make abstract
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        // Return empty hashmap if not overridden; i.e. no arguments to add.
-        return new HashMap<>();
+    public List<String> registerArguments() {
+        // Return empty list if not overridden; i.e. no arguments to add.
+        return new ArrayList<>();
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
-        // Do nothing because not all brushes have arguments have values
+    public HashMap<String, List<String>> registerArgumentValues() {
+        // Do nothing because not all brushes have arguments that have values
         return new HashMap<>();
     }
 

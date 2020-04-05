@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,16 +87,16 @@ public class Rot3DBrush extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
 
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("pitch", "roll", "yaw"));
+        arguments.addAll(Lists.newArrayList("pitch", "roll", "yaw"));
 
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+    public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
         

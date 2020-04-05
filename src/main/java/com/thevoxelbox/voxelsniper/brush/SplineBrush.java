@@ -201,11 +201,11 @@ public class SplineBrush extends PerformerBrush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("clear", "sc", "ss", "render"));
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
+        arguments.addAll(Lists.newArrayList("clear", "sc", "ss", "render"));
 
-        arguments.putAll(super.registerArguments(brushHandle));
+        arguments.addAll(super.registerArguments());
         return arguments;
     }
 

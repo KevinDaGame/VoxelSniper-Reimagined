@@ -180,12 +180,12 @@ public class ThreePointCircleBrush extends PerformerBrush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
+        arguments.addAll(Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
 
-        arguments.putAll(super.registerArguments(brushHandle));
+        arguments.addAll(super.registerArguments());
         return arguments;
     }
 

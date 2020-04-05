@@ -2,9 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import static com.thevoxelbox.voxelsniper.brush.Brush.BRUSH_ARGUMENT_PREFIX;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import org.bukkit.Bukkit;
@@ -313,19 +312,19 @@ public class PunishBrush extends Brush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
         
         List<String> punishArguments = Arrays.stream(Punishment.values()).map(e -> e.name()).collect(Collectors.toList());
         punishArguments.addAll(Lists.newArrayList("-hypno", "-self", "-player"));
         
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, punishArguments);
+        arguments.addAll(punishArguments);
 
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+    public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
         

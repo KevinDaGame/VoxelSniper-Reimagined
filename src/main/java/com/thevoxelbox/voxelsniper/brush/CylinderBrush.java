@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -125,16 +126,16 @@ public class CylinderBrush extends PerformerBrush {
     }
 
     @Override
-    public HashMap<String, List<String>> registerArguments(String brushHandle) {
-        HashMap<String, List<String>> arguments = new HashMap<>();
-        arguments.put(BRUSH_ARGUMENT_PREFIX + brushHandle, Lists.newArrayList("shift", "height", "smooth"));
+    public List<String> registerArguments() {
+        List<String> arguments = new ArrayList<>();
+        arguments.addAll(Lists.newArrayList("shift", "height", "smooth"));
 
-        arguments.putAll(super.registerArguments(brushHandle));
+        arguments.addAll(super.registerArguments());
         return arguments;
     }
 
     @Override
-    public HashMap<String, List<String>> registerArgumentValues(String brushHandle) {
+    public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         
@@ -142,7 +143,7 @@ public class CylinderBrush extends PerformerBrush {
         
         argumentValues.put("height", Lists.newArrayList("[number]"));
 
-        argumentValues.putAll(super.registerArgumentValues(brushHandle));
+        argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
     }
 
