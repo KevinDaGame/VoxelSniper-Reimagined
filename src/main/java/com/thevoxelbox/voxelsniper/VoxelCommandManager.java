@@ -8,6 +8,7 @@ import com.thevoxelbox.voxelsniper.command.VoxelDefaultCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelInkCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelInkReplaceCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelPerformerCommand;
+import com.thevoxelbox.voxelsniper.command.VoxelReplaceCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelSniperCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelUndoCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelVariablesCommand;
@@ -53,6 +54,7 @@ public class VoxelCommandManager {
         commandManager.registerCommand(new VoxelInkCommand());
         commandManager.registerCommand(new VoxelInkReplaceCommand());
         commandManager.registerCommand(new VoxelPerformerCommand());
+        commandManager.registerCommand(new VoxelReplaceCommand());
         commandManager.registerCommand(new VoxelSniperCommand());
         commandManager.registerCommand(new VoxelUndoCommand());
         commandManager.registerCommand(new VoxelVariablesCommand());

@@ -48,8 +48,8 @@ public class VoxelReplaceCommand extends VoxelCommand {
         if (args.length == 0) {
             Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
-                snipeData.setVoxelSubstance(selectedBlock.getBlockData());
-                snipeData.getVoxelMessage().voxel();
+                snipeData.setReplaceSubstance(selectedBlock.getBlockData());
+                snipeData.getVoxelMessage().replace();
             } else {
                 player.sendMessage(ChatColor.GOLD + "Nothing to imitate replace material. No changes were made.");
             }
@@ -64,8 +64,8 @@ public class VoxelReplaceCommand extends VoxelCommand {
         }
 
         if (material != null && material.isBlock()) {
-            snipeData.setVoxelSubstance(material.createBlockData());
-            snipeData.getVoxelMessage().voxel();
+            snipeData.setReplaceSubstance(material.createBlockData());
+            snipeData.getVoxelMessage().replace();
             return true;
         } else {
             player.sendMessage(ChatColor.RED + "You have entered an invalid Item ID.");
