@@ -241,7 +241,6 @@ public class BlobBrush extends PerformerBrush {
                 if ((int) (growthValue * 100) >= GROW_PERCENT_MIN && (int) (growthValue * 100) <= GROW_PERCENT_MAX) {
                     v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", growthValue) + "%");
                     this.growPercent = (int) growthValue * 100;
-                    System.out.println(growthValue * 100);
                 } else {
                     v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
                 }

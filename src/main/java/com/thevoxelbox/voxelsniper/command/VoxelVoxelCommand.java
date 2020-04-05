@@ -86,7 +86,6 @@ public class VoxelVoxelCommand extends VoxelCommand {
                 }
 
                 args[0] = "minecraft:" + args[0];
-                System.out.println("'" + args[0] + "'");
             }
 
             return getTabCompletion(1);

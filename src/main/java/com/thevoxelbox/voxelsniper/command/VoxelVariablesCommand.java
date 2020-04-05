@@ -185,16 +185,13 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
     @Override
     public List<String> doSuggestion(Player player, String[] args) {
-        System.out.println(getActiveAlias());
         if (getActiveAlias().equalsIgnoreCase("vc") || getActiveAlias().equals("vh")) {
-            System.out.println("yes");
             if (args.length == 1) {
                 return Lists.newArrayList("[number]");
             }
         }
 
         if (getActiveAlias().equalsIgnoreCase("vl")) {
-            System.out.println(args[0]);
             // Preprocess the string for partial matching, strip the '-' if there's one
             args[0] = args[0].toLowerCase().replace("-", "");
 

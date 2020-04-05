@@ -63,7 +63,6 @@ public class VoxelInkCommand extends VoxelCommand {
                 snipeData.setVoxelSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().data();
             } catch (IllegalArgumentException e) {
-                System.out.println(e.toString());
                 player.sendMessage(ChatColor.RED + "The data value(s) cannot be imitated to the active voxel material.");
             }
             

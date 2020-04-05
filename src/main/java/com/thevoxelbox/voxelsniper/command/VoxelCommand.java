@@ -107,22 +107,6 @@ public abstract class VoxelCommand implements TabExecutor {
         return this.activeAlias;
     }
 
-    /**
-     * Padds an empty String to the front of the array.
-     *
-     * @param args Array to pad empty string in front of
-     * @return padded array
-     */
-    protected String[] hackTheArray(String[] args) {
-        String[] returnValue = new String[args.length + 1];
-        returnValue[0] = "";
-        for (int i = 0, argsLength = args.length; i < argsLength; i++) {
-            String arg = args[i];
-            returnValue[i + 1] = arg;
-        }
-        return returnValue;
-    }
-
     public List<String> registerTabCompletion() {
         return new ArrayList<>();
     }
@@ -132,7 +116,6 @@ public abstract class VoxelCommand implements TabExecutor {
     }
 
     public final List<String> getTabCompletion(String identifier, int argumentNumber) {
-        System.out.println("Solving for " + identifier);
         return this.getCommandManager().getCommandArgumentsList(identifier, argumentNumber);
     }
 
