@@ -76,15 +76,20 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         // TODO: Very hacky parsing, find a more elegant solution.
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
-        
-        List<String> possibleDataValues = new ArrayList<>();
-        
-        String values = snipeData.getReplaceSubstance().getAsString().split("\\[")[1].replace("]", "");
-        
-        for (String value : values.split(",")) {
-            possibleDataValues.add(value.split("=")[0]);
+
+        String[] a = snipeData.getReplaceSubstance().getAsString().split("\\[");
+
+        if (a.length == 2) {
+            List<String> possibleDataValues = new ArrayList<>();
+            
+            String values = a[1].replace("]", "");
+
+            for (String value : values.split(",")) {
+                possibleDataValues.add(value.split("=")[0]);
+            }
+            return possibleDataValues;
         }
-        
-        return possibleDataValues;
+
+        return new ArrayList<>();
     }
 }

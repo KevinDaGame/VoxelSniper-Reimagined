@@ -65,7 +65,7 @@ public class VoxelInkCommand extends VoxelCommand {
             } catch (IllegalArgumentException e) {
                 player.sendMessage(ChatColor.RED + "The data value(s) cannot be imitated to the active voxel material.");
             }
-            
+
             return true;
         }
 
@@ -78,14 +78,19 @@ public class VoxelInkCommand extends VoxelCommand {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
-        List<String> possibleDataValues = new ArrayList<>();
+        String[] a = snipeData.getVoxelSubstance().getAsString().split("\\[");
 
-        String values = snipeData.getVoxelSubstance().getAsString().split("\\[")[1].replace("]", "");
+        if (a.length == 2) {
+            List<String> possibleDataValues = new ArrayList<>();
+            
+            String values = a[1].replace("]", "");
 
-        for (String value : values.split(",")) {
-            possibleDataValues.add(value.split("=")[0]);
+            for (String value : values.split(",")) {
+                possibleDataValues.add(value.split("=")[0]);
+            }
+            return possibleDataValues;
         }
 
-        return possibleDataValues;
+        return new ArrayList<>();
     }
 }
