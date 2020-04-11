@@ -87,10 +87,15 @@ public class VoxelBrushCommand extends VoxelCommand {
             Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
 
             if (brush == null) {
-                player.sendMessage("No brush exists with the brush handle '" + args[0] + "'.");
+                player.sendMessage(ChatColor.RED + "No brush exists with the brush handle '" + args[0] + "'.");
             } else {
                 IBrush oldBrush = sniper.getBrush(currentToolId);
                 IBrush newBrush = sniper.setBrush(currentToolId, brush);
+
+                if (newBrush == null) {
+                    player.sendMessage(ChatColor.RED + "You do not have the required permissions to use that brush.");
+                    return true;
+                }
 
                 // Command: /b <brush> <...> -- Handles additional variables
                 if (args.length > 1) {
