@@ -163,7 +163,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
-        if (params[1].equalsIgnoreCase("info")) {
+        if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
             v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [mode]  -- Change mode to prioritize accuracy or smoothness");
             v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
