@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.util.VoxelList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,9 @@ public class SplatterOverlayBrush extends PerformerBrush {
     private boolean randomizeHeight = false;
     private Random generator = new Random();
     private int depth = 3;
+
     private boolean allBlocks = false;
+    private boolean useVoxelList = false;
 
     /**
      *
@@ -113,42 +116,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                             if (check == Material.AIR || check == Material.WATER) {
                                 // must start at surface... this prevents it filling stuff in if you click in a wall
                                 // and it starts out below surface.
-                                if (!this.allBlocks) {
-                                    // if the override parameter has not been activated, go to the switch that filters out manmade stuff.
-                                    switch (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
-
-                                        case STONE:
-                                        case ANDESITE:
-                                        case DIORITE:
-                                        case GRANITE:
-                                        case GRASS_BLOCK:
-                                        case DIRT:
-                                        case COARSE_DIRT:
-                                        case PODZOL:
-                                        case SAND:
-                                        case RED_SAND:
-                                        case GRAVEL:
-                                        case SANDSTONE:
-                                        case MOSSY_COBBLESTONE:
-                                        case CLAY:
-                                        case SNOW:
-                                        case OBSIDIAN:
-                                            final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
-
-                                            for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
-                                                if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
-                                                    // fills down as many layers as you specify in parameters
-                                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
-                                                    // stop it from checking any other blocks in this vertical 1x1 column.
-                                                    memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1;
-                                                }
-                                            }
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                } else {
+                                final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                     final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
+
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
                                         if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
                                             // fills down as many layers as you specify in parameters
@@ -233,41 +204,12 @@ public class SplatterOverlayBrush extends PerformerBrush {
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) { // if inside of the column...&& if to be splattered
                             if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != Material.AIR) { // if not a floating block (like one of Notch'world pools)
                                 if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == Material.AIR) { // must start at surface... this prevents it filling stuff in if
-                                    // you click in a wall and it starts out below surface.
-                                    if (!this.allBlocks) { // if the override parameter has not been activated, go to the switch that filters out manmade stuff.
-
-                                        switch (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z)) {
-                                            case STONE:
-                                            case ANDESITE:
-                                            case DIORITE:
-                                            case GRANITE:
-                                            case GRASS_BLOCK:
-                                            case DIRT:
-                                            case COARSE_DIRT:
-                                            case PODZOL:
-                                            case SAND:
-                                            case RED_SAND:
-                                            case GRAVEL:
-                                            case SANDSTONE:
-                                            case MOSSY_COBBLESTONE:
-                                            case CLAY:
-                                            case SNOW:
-                                            case OBSIDIAN:
-                                                final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
-                                                for (int d = 1; (d < depth + 1); d++) {
-                                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
-                                                    // in parameters
-                                                    memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    } else {
+                                    final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                    if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
-                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
-                                            // parameters
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
+                                            // in parameters
                                             memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }
                                     }
@@ -280,6 +222,43 @@ public class SplatterOverlayBrush extends PerformerBrush {
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
+    }
+
+    private boolean isIgnoredBlock(Material material) {
+        return material == Material.WATER || material.isTransparent() || material == Material.CACTUS;
+    }
+
+    private boolean isOverrideableMaterial(VoxelList list, Material material) {
+        if (this.useVoxelList) {
+            return list.contains(material);
+        }
+
+        if (allBlocks && !(material == Material.AIR)) {
+            return true;
+        }
+
+        switch (material) {
+            case STONE:
+            case ANDESITE:
+            case DIORITE:
+            case GRANITE:
+            case GRASS_BLOCK:
+            case DIRT:
+            case COARSE_DIRT:
+            case PODZOL:
+            case SAND:
+            case RED_SAND:
+            case GRAVEL:
+            case SANDSTONE:
+            case MOSSY_COBBLESTONE:
+            case CLAY:
+            case SNOW:
+            case OBSIDIAN:
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -335,8 +314,17 @@ public class SplatterOverlayBrush extends PerformerBrush {
         }
 
         if (params[0].startsWith("mode")) {
-            this.allBlocks = !this.allBlocks;
-            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all blocks" : "natural blocks") + ", " + this.depth + " blocks deep.");
+            if (!this.allBlocks && !this.useVoxelList) {
+                this.allBlocks = true;
+                this.useVoxelList = false;
+            } else if (this.allBlocks && !this.useVoxelList) {
+                this.allBlocks = false;
+                this.useVoxelList = true;
+            } else if (!this.allBlocks && this.useVoxelList) {
+                this.allBlocks = false;
+                this.useVoxelList = false;
+            }
+            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.");
             return;
         }
 

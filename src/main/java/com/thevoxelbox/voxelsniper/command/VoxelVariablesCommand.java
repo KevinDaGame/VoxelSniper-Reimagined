@@ -37,26 +37,15 @@ public class VoxelVariablesCommand extends VoxelCommand {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
-        // Default command
-        // Command: /vir info, /vir help
-        if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " height <number>");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the voxel height parameter of the brush to the specified number.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " center <number>");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the voxel center parameter of the brush to the specified number.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list");
-            player.sendMessage(ChatColor.YELLOW + "    Shows you how to use voxel list.");
-            return true;
-        }
-
         if (getActiveAlias().equalsIgnoreCase("vc")) {
             try {
                 snipeData.setcCen(Integer.parseInt(args[0]));
                 snipeData.getVoxelMessage().center();
                 return true;
             } catch (NumberFormatException exception) {
-                return false;
+                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <number>");
+                player.sendMessage(ChatColor.YELLOW + "    Changes the voxel center parameter of the brush to the specified number.");
+                return true;
             }
         }
 
@@ -66,25 +55,29 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 snipeData.getVoxelMessage().height();
                 return true;
             } catch (NumberFormatException exception) {
+                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " height <number>");
+                player.sendMessage(ChatColor.YELLOW + "    Changes the voxel height parameter of the brush to the specified number.");
                 return false;
             }
         }
 
         if (getActiveAlias().equalsIgnoreCase("vl")) {
-            if (args.length == 1) {
-                player.sendMessage(ChatColor.DARK_AQUA + "Using Voxel List:");
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <material>[-]...");
-                player.sendMessage(ChatColor.YELLOW + "    Adds or removes the specified material into the voxel list.");
-                player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list acacia_log stone- grass_block");
-                player.sendMessage(ChatColor.AQUA + "      Adds acacia_log, removes stone, adds grass_block; in order");
-                player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list dirt- grass_block");
-                player.sendMessage(ChatColor.AQUA + "      Removes dirt, adds grass_block; in order");
-                return true;
-            }
-
-            if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
+            if (args.length == 0 && args[0].equalsIgnoreCase("clear")) {
                 snipeData.getVoxelList().clear();
                 snipeData.getVoxelMessage().voxelList();
+                return true;
+            }
+            
+            if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("help")))) {
+                player.sendMessage(ChatColor.DARK_AQUA + "Using Voxel List:");
+                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " clear");
+                player.sendMessage(ChatColor.YELLOW + "    Clears the contents of the VoxelList.");
+                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <material>[-]...");
+                player.sendMessage(ChatColor.YELLOW + "    Adds or removes the specified material into the voxel list.");
+                player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list dirt stone- wheat");
+                player.sendMessage(ChatColor.AQUA + "      Adds dirt, removes stone, adds wheat; in order");
+                player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list dirt- grass_block");
+                player.sendMessage(ChatColor.AQUA + "      Removes dirt, adds grass_block; in order");
                 return true;
             }
 
@@ -111,6 +104,19 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- ");
                 player.sendMessage(ChatColor.GOLD + "    " + invalidMaterials.stream().collect(Collectors.joining(", ")));
             }
+            return true;
+        }
+
+        // Default command
+        // Command: /vir info, /vir help
+        if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
+            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " height <number>");
+            player.sendMessage(ChatColor.YELLOW + "    Changes the voxel height parameter of the brush to the specified number.");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " center <number>");
+            player.sendMessage(ChatColor.YELLOW + "    Changes the voxel center parameter of the brush to the specified number.");
+            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list");
+            player.sendMessage(ChatColor.YELLOW + "    Shows you how to use voxel list.");
             return true;
         }
 
