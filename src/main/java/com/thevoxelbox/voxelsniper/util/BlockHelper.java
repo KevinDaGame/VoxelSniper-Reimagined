@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 public class BlockHelper {
 
     private static final int MAXIMUM_WORLD_HEIGHT = 255;
+    private static final int MINIMUM_WORLD_HEIGHT = ;
     private static final double DEFAULT_PLAYER_VIEW_HEIGHT = 1.65;
     private static final double DEFAULT_LOCATION_VIEW_HEIGHT = 0;
     private static final double DEFAULT_STEP = 0.2;
@@ -113,8 +114,8 @@ public class BlockHelper {
 
                 } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
             }
-        } else if (this.targetY < 0) {
-            while (this.targetY < 0 && this.length <= this.range) {
+        } else if (this.targetY < MINIMUM_WORLD_HEIGHT) {
+            while (this.targetY < MINIMUM_WORLD_HEIGHT && this.length <= this.range) {
                 this.lastX = this.targetX;
                 this.lastY = this.targetY;
                 this.lastZ = this.targetZ;
@@ -142,7 +143,7 @@ public class BlockHelper {
      * @return Block
      */
     public final Block getCurBlock() {
-        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
+        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < MINIMUM_WORLD_HEIGHT) {
             return null;
         } else {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
@@ -172,7 +173,7 @@ public class BlockHelper {
      * @return Block
      */
     public final Block getLastBlock() {
-        if (this.lastY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.lastY < 0) {
+        if (this.lastY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.lastY < MINIMUM_WORLD_HEIGHT) {
             return null;
         }
         return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
@@ -202,7 +203,7 @@ public class BlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
+        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < MINIMUM_WORLD_HEIGHT) {
             return null;
         }
 
@@ -259,7 +260,7 @@ public class BlockHelper {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
         }
 
-        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < 0) {
+        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < MINIMUM_WORLD_HEIGHT) {
             return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
         } else {
             return this.getRange();

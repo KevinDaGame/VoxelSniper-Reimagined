@@ -6,7 +6,6 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
-import static jdk.nashorn.internal.runtime.Debug.id;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;

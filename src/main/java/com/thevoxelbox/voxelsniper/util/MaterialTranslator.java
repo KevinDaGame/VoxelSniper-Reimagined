@@ -394,7 +394,13 @@ public class MaterialTranslator {
         legacyMaterialIds.put("205", Material.PURPUR_SLAB);
         legacyMaterialIds.put("206", Material.END_STONE_BRICKS);
         legacyMaterialIds.put("207", Material.BEETROOTS);
-        legacyMaterialIds.put("208", Material.GRASS_PATH);
+        try {
+            // 1.17+
+            legacyMaterialIds.put("208", Material.DIRT_PATH);
+        } catch(Throwable t) {
+            // older versions
+            legacyMaterialIds.put("208", Material.valueOf("GRASS_PATH"));
+        }
         legacyMaterialIds.put("209", Material.END_GATEWAY);
         legacyMaterialIds.put("210", Material.COMMAND_BLOCK); // TODO set repeating
         legacyMaterialIds.put("211", Material.COMMAND_BLOCK); // TODO set chain
