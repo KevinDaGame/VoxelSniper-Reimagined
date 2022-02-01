@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 public class BlockHelper {
 
     private static final int MAXIMUM_WORLD_HEIGHT = 255;
-    private static final int MINIMUM_WORLD_HEIGHT = ;
+    private static final int MINIMUM_WORLD_HEIGHT = -64;
     private static final double DEFAULT_PLAYER_VIEW_HEIGHT = 1.65;
     private static final double DEFAULT_LOCATION_VIEW_HEIGHT = 0;
     private static final double DEFAULT_STEP = 0.2;
