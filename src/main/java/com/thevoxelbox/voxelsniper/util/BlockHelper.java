@@ -18,8 +18,6 @@ import org.bukkit.entity.Player;
  */
 public class BlockHelper {
 
-    private static final int MAXIMUM_WORLD_HEIGHT = 255;
-    private static final int MINIMUM_WORLD_HEIGHT = -64;
     private static final double DEFAULT_PLAYER_VIEW_HEIGHT = 1.65;
     private static final double DEFAULT_LOCATION_VIEW_HEIGHT = 0;
     private static final double DEFAULT_STEP = 0.2;
@@ -34,6 +32,8 @@ public class BlockHelper {
     private int lastX, lastY, lastZ;
     private int targetX, targetY, targetZ;
     private World world;
+    private int maxWorldHeight;
+    private int minWorldHeight;
 
     /**
      * Constructor requiring location, uses default values.
@@ -94,8 +94,8 @@ public class BlockHelper {
      *
      */
     public final void fromOffworld() {
-        if (this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT) {
-            while (this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT && this.length <= this.range) {
+        if (this.targetY > maxWorldHeight) {
+            while (this.targetY > maxWorldHeight && this.length <= this.range) {
                 this.lastX = this.targetX;
                 this.lastY = this.targetY;
                 this.lastZ = this.targetZ;
@@ -114,8 +114,8 @@ public class BlockHelper {
 
                 } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
             }
-        } else if (this.targetY < MINIMUM_WORLD_HEIGHT) {
-            while (this.targetY < MINIMUM_WORLD_HEIGHT && this.length <= this.range) {
+        } else if (this.targetY < minWorldHeight) {
+            while (this.targetY < minWorldHeight && this.length <= this.range) {
                 this.lastX = this.targetX;
                 this.lastY = this.targetY;
                 this.lastZ = this.targetZ;
@@ -143,7 +143,7 @@ public class BlockHelper {
      * @return Block
      */
     public final Block getCurBlock() {
-        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < MINIMUM_WORLD_HEIGHT) {
+        if (this.length > this.range || this.targetY > maxWorldHeight || this.targetY < minWorldHeight) {
             return null;
         } else {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
@@ -173,7 +173,7 @@ public class BlockHelper {
      * @return Block
      */
     public final Block getLastBlock() {
-        if (this.lastY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.lastY < MINIMUM_WORLD_HEIGHT) {
+        if (this.lastY > maxWorldHeight || this.lastY < minWorldHeight) {
             return null;
         }
         return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
@@ -203,7 +203,7 @@ public class BlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < MINIMUM_WORLD_HEIGHT) {
+        if (this.length > this.range || this.targetY > maxWorldHeight || this.targetY < minWorldHeight) {
             return null;
         }
 
@@ -260,7 +260,7 @@ public class BlockHelper {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
         }
 
-        if (this.length > this.range || this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT || this.targetY < MINIMUM_WORLD_HEIGHT) {
+        if (this.length > this.range || this.targetY > maxWorldHeight || this.targetY < minWorldHeight) {
             return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
         } else {
             return this.getRange();
@@ -268,6 +268,8 @@ public class BlockHelper {
     }
 
     private void init(final Location location, final double range, final double step, final double viewHeight) {
+        this.maxWorldHeight = world.getMaxHeight();
+        this.minWorldHeight = world.getMinHeight();
         this.playerLoc = location;
         this.viewHeight = viewHeight;
         this.playerX = this.playerLoc.getX();
