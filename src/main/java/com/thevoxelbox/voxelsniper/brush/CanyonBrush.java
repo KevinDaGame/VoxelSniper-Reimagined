@@ -19,7 +19,7 @@ import org.bukkit.block.Block;
  */
 public class CanyonBrush extends Brush {
 
-    private static final int SHIFT_LEVEL_MIN = 10;
+    private static final int SHIFT_LEVEL_MIN = -64+10;
     private static final int SHIFT_LEVEL_MAX = 60;
     private int yLevel = 10;
 
@@ -53,11 +53,11 @@ public class CanyonBrush extends Brush {
                     currentYLevel++;
                 }
 
-                final Block block = chunk.getBlock(x, 0, z);
+                final Block block = chunk.getBlock(x, this.getWorld().getMinHeight(), z);
                 undo.put(block);
                 block.setType(Material.BEDROCK);
 
-                for (int y = 1; y < SHIFT_LEVEL_MIN; y++) {
+                for (int y = this.getWorld().getMinHeight()+1; y < this.getWorld().getMinHeight()+SHIFT_LEVEL_MIN; y++) {
                     final Block currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
                     currentBlock.setType(Material.STONE);

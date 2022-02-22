@@ -28,7 +28,7 @@ public class GenerateTreeBrush extends Brush {
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
     private Material leavesMaterial = Material.OAK_LEAVES;
-    private Material woodMaterial = Material.OAK_LOG;
+    private Material woodMaterial = Material.OAK_WOOD;
     private boolean rootFloat = false;
     private int startHeight = 0;
     private int rootLength = 9;
@@ -527,10 +527,10 @@ public class GenerateTreeBrush extends Brush {
             if (params[0].equalsIgnoreCase("wood")) {
                 Material material = Material.valueOf(params[1]);
 
-                if (material == Material.OAK_LOG || material == Material.ACACIA_LOG || material == Material.SPRUCE_LOG
-                        || material == Material.JUNGLE_LOG || material == Material.DARK_OAK_LOG || material == Material.BIRCH_LOG) {
-                    this.leavesMaterial = material;
-                    v.sendMessage(ChatColor.BLUE + "Wood log material set to " + this.leavesMaterial.name());
+                if (material == Material.OAK_WOOD || material == Material.ACACIA_WOOD || material == Material.SPRUCE_WOOD
+                        || material == Material.JUNGLE_WOOD || material == Material.DARK_OAK_WOOD || material == Material.BIRCH_WOOD) {
+                    this.woodMaterial = material;
+                    v.sendMessage(ChatColor.BLUE + "Wood log material set to " + this.woodMaterial.name());
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -639,7 +639,7 @@ public class GenerateTreeBrush extends Brush {
 
         if (params[0].equalsIgnoreCase("default")) { // Default settings.
             this.leavesMaterial = Material.OAK_LEAVES;
-            this.woodMaterial = Material.OAK_LOG;
+            this.woodMaterial = Material.OAK_WOOD;
             this.rootFloat = false;
             this.startHeight = 0;
             this.rootLength = 9;
@@ -693,8 +693,8 @@ public class GenerateTreeBrush extends Brush {
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(Material.OAK_LOG.name(), Material.ACACIA_LOG.name(), Material.SPRUCE_LOG.name(), Material.JUNGLE_LOG.name(),
-                Material.DARK_OAK_LOG.name(), Material.BIRCH_LOG.name()));
+        argumentValues.put("wood", Lists.newArrayList(Material.OAK_WOOD.name(), Material.ACACIA_WOOD.name(), Material.SPRUCE_WOOD.name(), Material.JUNGLE_WOOD.name(),
+                Material.DARK_OAK_WOOD.name(), Material.BIRCH_WOOD.name()));
 
         // Leaves material variables
         argumentValues.put("leaves", Lists.newArrayList(Material.OAK_LEAVES.name(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
