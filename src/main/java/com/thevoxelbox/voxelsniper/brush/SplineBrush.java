@@ -104,7 +104,7 @@ public class SplineBrush extends PerformerBrush {
         }
 
         for (final Point point : this.spline) {
-            this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ()));
+            this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ(), v.getWorld().getMinHeight()));
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());

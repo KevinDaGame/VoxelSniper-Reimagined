@@ -88,7 +88,7 @@ public class ShellVoxelBrush extends Brush {
             for (int y = 0; y <= brushSizeSquared; y++) {
                 for (int z = brushSizeSquared; z >= 0; z--) {
                     if (this.getBlockMaterialAt(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z) != newMaterials[x][y][z]) {
-                        undo.put(this.clampY(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z));
+                        undo.put(this.clampY(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z, v.getWorld().getMinHeight()));
                     }
                     this.setBlockMaterialAt(blockPositionZ - brushSize + z, blockPositionX - brushSize + x, blockPositionY - brushSize + y, newMaterials[x][y][z]);
                 }

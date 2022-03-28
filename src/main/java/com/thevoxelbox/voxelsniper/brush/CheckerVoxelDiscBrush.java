@@ -33,7 +33,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 final int sum = this.useWorldCoordinates ? target.getX() + x + target.getZ() + y : x + y;
                 if (sum % 2 != 0) {
-                    this.currentPerformer.perform(this.clampY(target.getX() + x, target.getY(), target.getZ() + y));
+                    this.currentPerformer.perform(this.clampY(target.getX() + x, target.getY(), target.getZ() + y, v.getWorld().getMinHeight()));
                 }
             }
         }

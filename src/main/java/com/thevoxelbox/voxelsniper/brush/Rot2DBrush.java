@@ -48,7 +48,7 @@ public class Rot2DBrush extends Brush {
                 sy = this.getTargetBlock().getY() - this.bSize;
                 if (xSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
                     for (int z = 0; z < this.snap.length; z++) {
-                        final Block block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                        final Block block = this.clampY(sx, sy, sz, -64); // why is this not sx + x, sy + y sz + z?
                         this.snap[x][z][y] = new BlockWrapper(block);
                         block.setType(Material.AIR);
                         sy++;

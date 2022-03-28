@@ -124,7 +124,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
                     // Check if point is within sphere and on plane (some tolerance given)
                     if (tempDistance <= radius && (Math.abs(cornerConstant - planeConstant) < this.tolerance.getValue() || Math.abs(centerConstant - planeConstant) < this.tolerance.getValue())) {
-                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
+                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z , v.getWorld().getMinHeight()));
                     }
 
                 }

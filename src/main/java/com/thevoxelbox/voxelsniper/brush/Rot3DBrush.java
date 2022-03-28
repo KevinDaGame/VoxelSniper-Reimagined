@@ -128,7 +128,7 @@ public class Rot3DBrush extends Brush {
 
                 for (int y = 0; y < this.snap.length; y++) {
                     if (xSquared + zSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
-                        final Block block = this.clampY(sx, sz, sz);
+                        final Block block = this.clampY(sx, sz, sz, -64);
                         this.snap[x][y][z] = new BlockWrapper(block);
                         block.setType(Material.AIR);
                         sz++;
@@ -174,7 +174,7 @@ public class Rot3DBrush extends Brush {
                 for (int y = 0; y < this.snap.length; y++) {
                     final int yy = y - this.bSize;
                     if (xSquared + zSquared + Math.pow(yy, 2) <= brushSizeSquared) {
-                        undo.put(this.clampY(this.getTargetBlock().getX() + xx, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + zz)); // just store
+                        undo.put(this.clampY(this.getTargetBlock().getX() + xx, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + zz, v.getWorld().getMinHeight())); // just store
                         // whole sphere in undo, too complicated otherwise, since this brush both adds and remos things unpredictably.
 
                         final double newxyX = (newxzX * cosPitch) - (yy * sinPitch);

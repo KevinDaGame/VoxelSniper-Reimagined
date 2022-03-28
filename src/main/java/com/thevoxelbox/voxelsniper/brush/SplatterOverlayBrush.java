@@ -121,9 +121,9 @@ public class SplatterOverlayBrush extends PerformerBrush {
                                     final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
-                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
+                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z, - 64).getType() != Material.AIR) {
                                             // fills down as many layers as you specify in parameters
-                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z, - 64));
                                             // stop it from checking any other blocks in this vertical 1x1 column.
                                             memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1;
                                         }
@@ -208,7 +208,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
-                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z, - 64)); // fills down as many layers as you specify
                                             // in parameters
                                             memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }

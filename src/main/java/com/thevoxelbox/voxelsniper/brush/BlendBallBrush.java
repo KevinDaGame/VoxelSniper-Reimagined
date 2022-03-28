@@ -115,7 +115,7 @@ public class BlendBallBrush extends BlendBrushBase {
                     if (xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
                         if (!(this.excludeAir && newMaterials[x][y][z] == Material.AIR) && !(this.excludeWater && (newMaterials[x][y][z] == Material.WATER))) {
                             if (this.getBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z) != newMaterials[x][y][z]) {
-                                undo.put(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z));
+                                undo.put(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z, v.getWorld().getMinHeight()));
                             }
                             this.setBlockMaterialAt(this.getTargetBlock().getZ() - brushSize + z, this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, newMaterials[x][y][z]);
                         }

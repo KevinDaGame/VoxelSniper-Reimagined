@@ -92,7 +92,7 @@ public class OceanBrush extends Brush {
 
     private int getHeight(final int bx, final int bz) {
         for (int y = this.getWorld().getHighestBlockYAt(bx, bz); y > 0; y--) {
-            final Material material = this.clampY(bx, y, bz).getType();
+            final Material material = this.clampY(bx, y, bz, -64).getType();
             if (!EXCLUDED_MATERIALS.contains(material)) {
                 return y;
             }

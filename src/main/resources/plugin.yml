@@ -3,7 +3,7 @@ main: com.thevoxelbox.voxelsniper.VoxelSniper
 version: ${project.build.version}
 api-version: 1.15
 website: ${project.url}
-authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage]
+authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev]
 description: ${project.description}
 softdepend: [VoxelModPackPlugin]
 commands:

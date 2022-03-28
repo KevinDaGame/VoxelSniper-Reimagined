@@ -8,6 +8,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -21,6 +22,7 @@ public class StampBrush extends Brush {
      */
     protected class BlockWrapper {
 
+        private final World world;
         public BlockData blockData;
         public int x;
         public int y;
@@ -33,11 +35,12 @@ public class StampBrush extends Brush {
          * @param blz
          */
         @SuppressWarnings("deprecation")
-        public BlockWrapper(final Block b, final int blx, final int bly, final int blz) {
+        public BlockWrapper(final Block b, final int blx, final int bly, final int blz, final World world) {
             this.blockData = b.getBlockData();
             this.x = blx;
             this.y = bly;
             this.z = blz;
+            this.world = world;
         }
     }
 
@@ -105,7 +108,7 @@ public class StampBrush extends Brush {
      */
     @SuppressWarnings("deprecation")
     protected final void setBlock(final BlockWrapper cb) {
-        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
+        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z, cb.world.getMinHeight());
         this.undo.put(block);
         block.setBlockData(cb.blockData);
     }
@@ -115,7 +118,7 @@ public class StampBrush extends Brush {
      */
     @SuppressWarnings("deprecation")
     protected final void setBlockFill(final BlockWrapper cb) {
-        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
+        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z, cb.world.getMinHeight());
         if (block.getType() == Material.AIR) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);

@@ -58,10 +58,10 @@ public class CylinderBrush extends PerformerBrush {
 
                 for (int z = brushSize; z >= 0; z--) {
                     if ((xSquared + Math.pow(z, 2)) <= bSquared) {
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, y, targetBlock.getZ() + z));
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, y, targetBlock.getZ() - z));
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() - x, y, targetBlock.getZ() + z));
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() - x, y, targetBlock.getZ() - z));
+                        this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, y, targetBlock.getZ() + z, v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, y, targetBlock.getZ() - z, v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY(targetBlock.getX() - x, y, targetBlock.getZ() + z, v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY(targetBlock.getX() - x, y, targetBlock.getZ() - z, v.getWorld().getMinHeight()));
                     }
                 }
             }
