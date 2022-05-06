@@ -35,15 +35,15 @@ public class CylinderBrush extends PerformerBrush {
         if (yEndPoint < yStartingPoint) {
             yEndPoint = yStartingPoint;
         }
-        if (yStartingPoint < 0) {
-            yStartingPoint = 0;
+        if (yStartingPoint < this.getWorld().getMinHeight()) {
+            yStartingPoint = this.getWorld().getMinHeight();
             v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
         } else if (yStartingPoint > this.getWorld().getMaxHeight() - 1) {
             yStartingPoint = this.getWorld().getMaxHeight() - 1;
             v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
         }
-        if (yEndPoint < 0) {
-            yEndPoint = 0;
+        if (yEndPoint < this.getWorld().getMaxHeight()) {
+            yEndPoint = this.getWorld().getMaxHeight();
             v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
         } else if (yEndPoint > this.getWorld().getMaxHeight() - 1) {
             yEndPoint = this.getWorld().getMaxHeight() - 1;
