@@ -33,7 +33,7 @@ public class DrainBrush extends Brush {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + this.trueCircle, 2);
         final Undo undo = new Undo();
-
+        //TODO should y be clamped to 0?
         if (this.disc) {
             for (int x = brushSize; x >= 0; x--) {
                 final double xSquared = Math.pow(x, 2);
