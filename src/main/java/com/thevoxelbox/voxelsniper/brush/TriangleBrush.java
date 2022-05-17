@@ -146,7 +146,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2], v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -197,7 +197,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2], v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -247,7 +247,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     // VoxelSniper.log.info("Bary: "+barycentric+", hb: "+heronbig+", h1: "+heronone+", h2: "+herontwo+", h3: "+heronthree);
                     if (barycentric <= 1.1) {
-                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2], v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
                     }
                 }
             } // END Z DEPENDENT

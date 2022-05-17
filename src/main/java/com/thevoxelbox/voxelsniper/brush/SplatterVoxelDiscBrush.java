@@ -116,7 +116,7 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
         for (int x = 2 * v.getBrushSize(); x >= 0; x--) {
             for (int y = 2 * v.getBrushSize(); y >= 0; y--) {
                 if (splat[x][y] == 1) {
-                    this.currentPerformer.perform(this.clampY(targetBlock.getX() - v.getBrushSize() + x, targetBlock.getY(), targetBlock.getZ() - v.getBrushSize() + y, v.getWorld().getMinHeight()));
+                    this.currentPerformer.perform(this.clampY(targetBlock.getX() - v.getBrushSize() + x, targetBlock.getY(), targetBlock.getZ() - v.getBrushSize() + y));
                 }
             }
         }

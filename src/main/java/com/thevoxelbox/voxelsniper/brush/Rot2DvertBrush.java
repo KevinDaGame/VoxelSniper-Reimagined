@@ -50,7 +50,7 @@ public class Rot2DvertBrush extends Brush {
                 sy = this.getTargetBlock().getY() - this.bSize;
 
                 for (int y = 0; y < this.snap.length; y++) {
-                    final Block block = this.clampY(sx, sy, sz, -64); // why is this not sx + x, sy + y sz + z?
+                    final Block block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                     this.snap[x][y][z] = new BlockWrapper(block);
                     block.setType(Material.AIR);
                     sy++;

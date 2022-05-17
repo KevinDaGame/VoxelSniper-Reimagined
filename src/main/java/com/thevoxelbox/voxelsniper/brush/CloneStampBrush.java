@@ -61,21 +61,21 @@ public class CloneStampBrush extends StampBrush {
         final double bSquared = Math.pow(brushSize, 2);
 
         for (int z = yStartingPoint; z < yEndPoint; z++) {
-            this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ(), v.getWorld().getMinHeight()), 0, z - yStartingPoint, 0, v.getWorld()));
+            this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ()), 0, z - yStartingPoint, 0, v.getWorld()));
             for (int y = 1; y <= brushSize; y++) {
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ() + y, v.getWorld().getMinHeight()), 0, z - yStartingPoint, y, v.getWorld()));
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ() - y, v.getWorld().getMinHeight()), 0, z - yStartingPoint, -y, v.getWorld()));
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + y, z, this.getTargetBlock().getZ(), v.getWorld().getMinHeight()), y, z - yStartingPoint, 0, v.getWorld()));
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - y, z, this.getTargetBlock().getZ(), v.getWorld().getMinHeight()), -y, z - yStartingPoint, 0, v.getWorld()));
+                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ() + y), 0, z - yStartingPoint, y, v.getWorld()));
+                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ() - y), 0, z - yStartingPoint, -y, v.getWorld()));
+                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + y, z, this.getTargetBlock().getZ()), y, z - yStartingPoint, 0, v.getWorld()));
+                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - y, z, this.getTargetBlock().getZ()), -y, z - yStartingPoint, 0, v.getWorld()));
             }
             for (int x = 1; x <= brushSize; x++) {
                 final double xSquared = Math.pow(x, 2);
                 for (int y = 1; y <= brushSize; y++) {
                     if ((xSquared + Math.pow(y, 2)) <= bSquared) {
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + x, z, this.getTargetBlock().getZ() + y, v.getWorld().getMinHeight()), x, z - yStartingPoint, y, v.getWorld()));
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + x, z, this.getTargetBlock().getZ() - y, v.getWorld().getMinHeight()), x, z - yStartingPoint, -y, v.getWorld()));
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - x, z, this.getTargetBlock().getZ() + y, v.getWorld().getMinHeight()), -x, z - yStartingPoint, y, v.getWorld()));
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - x, z, this.getTargetBlock().getZ() - y, v.getWorld().getMinHeight()), -x, z - yStartingPoint, -y, v.getWorld()));
+                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + x, z, this.getTargetBlock().getZ() + y), x, z - yStartingPoint, y, v.getWorld()));
+                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + x, z, this.getTargetBlock().getZ() - y), x, z - yStartingPoint, -y, v.getWorld()));
+                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - x, z, this.getTargetBlock().getZ() + y), -x, z - yStartingPoint, y, v.getWorld()));
+                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - x, z, this.getTargetBlock().getZ() - y), -x, z - yStartingPoint, -y, v.getWorld()));
                     }
                 }
             }

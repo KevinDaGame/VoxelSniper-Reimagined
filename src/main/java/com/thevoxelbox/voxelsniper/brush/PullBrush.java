@@ -74,7 +74,7 @@ public class PullBrush extends Brush {
                     final double volume = (xSquared + Math.pow(y, 2) + zSquared);
                     if (volume <= bSquared) {
                         if (this.isSurface(actualX, this.getTargetBlock().getY() + y, actualZ)) {
-                            this.surface.add(new BlockWrapper(this.clampY(actualX, this.getTargetBlock().getY() + y, actualZ, v.getWorld().getMinHeight()), this.getStr(((volume / bSquared)))));
+                            this.surface.add(new BlockWrapper(this.clampY(actualX, this.getTargetBlock().getY() + y, actualZ), this.getStr(((volume / bSquared)))));
                         }
                     }
                 }
@@ -101,7 +101,7 @@ public class PullBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void setBlock(final BlockWrapper block) {
-        final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ() , - 64);
+        final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == Material.AIR) {
             currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
@@ -110,7 +110,7 @@ public class PullBrush extends Brush {
         } else {
             currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
-                final Block current = this.clampY(block.getX(), y, block.getZ(), - 64);
+                final Block current = this.clampY(block.getX(), y, block.getZ());
                 current.setBlockData(block.getBlockData());
             }
         }
@@ -118,7 +118,7 @@ public class PullBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void setBlockDown(final BlockWrapper block) {
-        final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ(), - 64);
+        final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
             this.setBlockMaterialAt(block.getZ(), block.getX(), y, Material.AIR);
@@ -187,7 +187,7 @@ public class PullBrush extends Brush {
                             lastStr = (int) (this.vh * str);
                             lastY = actualY + lastStr;
 
-                            this.clampY(actualX, lastY, actualZ, v.getWorld().getMinHeight()).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
+                            this.clampY(actualX, lastY, actualZ).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
 
                             if (str == 1) {
                                 str = 0.8;
@@ -201,7 +201,7 @@ public class PullBrush extends Brush {
                                 newY = actualY + lastStr;
                                 material = this.getWorld().getBlockAt(actualX, actualY, actualZ).getType();
                                 for (int i = newY; i < lastY; i++) {
-                                    this.clampY(actualX, i, actualZ, v.getWorld().getMinHeight()).setBlockData(material.createBlockData());
+                                    this.clampY(actualX, i, actualZ).setBlockData(material.createBlockData());
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -223,14 +223,14 @@ public class PullBrush extends Brush {
                         if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != Material.AIR) {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                            this.clampY(actualX, lastY, actualZ, v.getWorld().getMinHeight()).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
+                            this.clampY(actualX, lastY, actualZ).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (this.vh * this.getStr(volume / brushSizeSquared));
                                 final Material blockMaterial = this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType();
                                 for (int i = blockY; i < lastY; i++) {
-                                    this.clampY(actualX, i, actualZ, v.getWorld().getMinHeight()).setBlockData(blockMaterial.createBlockData());
+                                    this.clampY(actualX, i, actualZ).setBlockData(blockMaterial.createBlockData());
                                 }
                                 lastY = blockY;
                                 y++;

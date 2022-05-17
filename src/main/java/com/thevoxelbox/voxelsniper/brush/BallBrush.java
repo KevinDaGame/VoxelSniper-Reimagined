@@ -41,41 +41,41 @@ public class BallBrush extends PerformerBrush {
         for (int z = 1; z <= brushSize; z++) {
             final double zSquared = Math.pow(z, 2);
 
-            this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY, blockPositionZ, v.getWorld().getMinHeight()));
-            this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY, blockPositionZ, v.getWorld().getMinHeight()));
-            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY + z, blockPositionZ, v.getWorld().getMinHeight()));
-            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY - z, blockPositionZ, v.getWorld().getMinHeight()));
-            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY, blockPositionZ + z, v.getWorld().getMinHeight()));
-            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY, blockPositionZ - z, v.getWorld().getMinHeight()));
+            this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY, blockPositionZ));
+            this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY, blockPositionZ));
+            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY + z, blockPositionZ));
+            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY - z, blockPositionZ));
+            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY, blockPositionZ + z));
+            this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY, blockPositionZ - z));
 
             for (int x = 1; x <= brushSize; x++) {
                 final double xSquared = Math.pow(x, 2);
 
                 if (zSquared + xSquared <= brushSizeSquared) {
-                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY, blockPositionZ + x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY, blockPositionZ - x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY, blockPositionZ + x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY, blockPositionZ - x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY + x, blockPositionZ, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY - x, blockPositionZ, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY + x, blockPositionZ, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY - x, blockPositionZ, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY + z, blockPositionZ + x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY + z, blockPositionZ - x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY - z, blockPositionZ + x, v.getWorld().getMinHeight()));
-                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY - z, blockPositionZ - x, v.getWorld().getMinHeight()));
+                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY, blockPositionZ + x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY, blockPositionZ - x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY, blockPositionZ + x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY, blockPositionZ - x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY + x, blockPositionZ));
+                    this.currentPerformer.perform(this.clampY(blockPositionX + z, blockPositionY - x, blockPositionZ));
+                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY + x, blockPositionZ));
+                    this.currentPerformer.perform(this.clampY(blockPositionX - z, blockPositionY - x, blockPositionZ));
+                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY + z, blockPositionZ + x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY + z, blockPositionZ - x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY - z, blockPositionZ + x));
+                    this.currentPerformer.perform(this.clampY(blockPositionX, blockPositionY - z, blockPositionZ - x));
                 }
 
                 for (int y = 1; y <= brushSize; y++) {
                     if ((xSquared + Math.pow(y, 2) + zSquared) <= brushSizeSquared) {
-                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY + y, blockPositionZ + z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY + y, blockPositionZ - z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY + y, blockPositionZ + z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY + y, blockPositionZ - z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY - y, blockPositionZ + z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY - y, blockPositionZ - z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY - y, blockPositionZ + z, v.getWorld().getMinHeight()));
-                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY - y, blockPositionZ - z, v.getWorld().getMinHeight()));
+                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY + y, blockPositionZ + z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY + y, blockPositionZ - z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY + y, blockPositionZ + z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY + y, blockPositionZ - z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY - y, blockPositionZ + z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX + x, blockPositionY - y, blockPositionZ - z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY - y, blockPositionZ + z));
+                        this.currentPerformer.perform(this.clampY(blockPositionX - x, blockPositionY - y, blockPositionZ - z));
                     }
                 }
             }

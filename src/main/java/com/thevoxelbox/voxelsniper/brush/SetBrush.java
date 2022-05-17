@@ -46,7 +46,7 @@ public class SetBrush extends PerformerBrush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            this.currentPerformer.perform(this.clampY(x, y, z, v.getWorld().getMinHeight()));
+                            this.currentPerformer.perform(this.clampY(x, y, z));
                         }
                     }
                 }

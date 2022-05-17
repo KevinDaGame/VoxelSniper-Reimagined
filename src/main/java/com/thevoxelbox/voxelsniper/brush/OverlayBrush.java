@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Overlay_.2F_Topsoil_Brush
@@ -47,7 +46,7 @@ public class OverlayBrush extends PerformerBrush {
                                 for (int currentDepth = y; y - currentDepth < depth; currentDepth--) {
                                     final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
                                     if (isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
-                                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z, v.getWorld().getMinHeight()));
+                                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z));
                                     }
                                 }
                                 break;
@@ -78,7 +77,7 @@ public class OverlayBrush extends PerformerBrush {
                                     final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         for (int d = 1; (d < this.depth + 1); d++) {
-                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z, v.getWorld().getMinHeight())); // fills down as many layers as you specify
+                                            this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
                                             // in parameters
                                             memory[x + brushSize][z + brushSize] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }

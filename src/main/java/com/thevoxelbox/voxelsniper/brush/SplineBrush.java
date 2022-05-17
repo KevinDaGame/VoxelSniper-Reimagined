@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -104,7 +103,7 @@ public class SplineBrush extends PerformerBrush {
         }
 
         for (final Point point : this.spline) {
-            this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ(), v.getWorld().getMinHeight()));
+            this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ()));
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());

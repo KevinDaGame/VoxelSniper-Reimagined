@@ -22,13 +22,13 @@ public class VoltMeterBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void data(final SnipeData v) {
-        final Block block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ(), v.getWorld().getMinHeight());
+        final Block block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
         final byte data = block.getData();
         v.sendMessage(ChatColor.AQUA + "Blocks until repeater needed: " + data);
     }
 
     private void volt(final SnipeData v) {
-        final Block block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ(), v.getWorld().getMinHeight());
+        final Block block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
         final boolean indirect = block.isBlockIndirectlyPowered();
         final boolean direct = block.isBlockPowered();
         v.sendMessage(ChatColor.AQUA + "Direct Power? " + direct + " Indirect Power? " + indirect);

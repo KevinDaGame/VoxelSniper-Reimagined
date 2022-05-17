@@ -74,22 +74,14 @@ public class StampBrush extends Brush {
         this.sorted = false;
     }
 
-    /**
-     * @param id
-     *
-     * @return
-     */
+
     protected final boolean falling(final Material material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
         return false;
     }
 
-    /**
-     * @param id
-     *
-     * @return
-     */
+
     protected final boolean fallsOff(final Material material) {
         switch (material) {
             // TODO: Translate this
@@ -108,7 +100,7 @@ public class StampBrush extends Brush {
      */
     @SuppressWarnings("deprecation")
     protected final void setBlock(final BlockWrapper cb) {
-        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z, cb.world.getMinHeight());
+        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
         block.setBlockData(cb.blockData);
     }
@@ -118,7 +110,7 @@ public class StampBrush extends Brush {
      */
     @SuppressWarnings("deprecation")
     protected final void setBlockFill(final BlockWrapper cb) {
-        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z, cb.world.getMinHeight());
+        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         if (block.getType() == Material.AIR) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);
