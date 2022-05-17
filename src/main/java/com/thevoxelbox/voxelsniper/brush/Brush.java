@@ -45,8 +45,8 @@ public abstract class Brush implements IBrush {
      */
     public final Block clampY(final int x, final int y, final int z) {
         int clampedY = y;
-        if (clampedY < this.getWorld().getMaxHeight()) {
-            clampedY = this.getWorld().getMaxHeight();
+        if (clampedY < this.getWorld().getMinHeight() {
+            clampedY = this.getWorld().getMinHeight();
         } else if (clampedY > this.getWorld().getMaxHeight()) {
             clampedY = this.getWorld().getMaxHeight();
         }
