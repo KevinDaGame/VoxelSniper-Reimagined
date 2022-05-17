@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +47,7 @@ public abstract class Brush implements IBrush {
         int clampedY = y;
         if (clampedY < this.getWorld().getMinHeight()) {
             clampedY = this.getWorld().getMinHeight();
+
         } else if (clampedY > this.getWorld().getMaxHeight()) {
             clampedY = this.getWorld().getMaxHeight();
         }
