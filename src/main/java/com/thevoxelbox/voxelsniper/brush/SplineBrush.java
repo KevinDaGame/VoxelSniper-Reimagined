@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

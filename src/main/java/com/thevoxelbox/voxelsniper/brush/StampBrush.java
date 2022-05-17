@@ -8,6 +8,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -21,6 +22,7 @@ public class StampBrush extends Brush {
      */
     protected class BlockWrapper {
 
+        private final World world;
         public BlockData blockData;
         public int x;
         public int y;
@@ -33,11 +35,12 @@ public class StampBrush extends Brush {
          * @param blz
          */
         @SuppressWarnings("deprecation")
-        public BlockWrapper(final Block b, final int blx, final int bly, final int blz) {
+        public BlockWrapper(final Block b, final int blx, final int bly, final int blz, final World world) {
             this.blockData = b.getBlockData();
             this.x = blx;
             this.y = bly;
             this.z = blz;
+            this.world = world;
         }
     }
 
@@ -71,22 +74,14 @@ public class StampBrush extends Brush {
         this.sorted = false;
     }
 
-    /**
-     * @param id
-     *
-     * @return
-     */
+
     protected final boolean falling(final Material material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
         return false;
     }
 
-    /**
-     * @param id
-     *
-     * @return
-     */
+
     protected final boolean fallsOff(final Material material) {
         switch (material) {
             // TODO: Translate this
