@@ -7,13 +7,13 @@ I'm thinking of renaming the project to prevent confusion with the already exist
 
 Minecraft Version
 ------------------
-VoxelSniper was built against the Bukkit 1.15.2 API.
+VoxelSniper was built against the Bukkit 1.18.1 API.
 
- - Minecraft 1.15.2 [Tested on SpigotMC, release 6.0.0]
+ - Minecraft 1.18
 
 Compilation
 -----------
-Pre-compiled JARs are available in releases. Latest release is `6.0.0`.
+Pre-compiled JARs are available in releases..
 
 We use Maven to handle dependencies.
 
