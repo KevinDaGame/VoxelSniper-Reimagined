@@ -39,7 +39,7 @@ public class OverlayBrush extends PerformerBrush {
                 final Material material = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + 1, this.getTargetBlock().getZ() + z);
                 if (isIgnoredBlock(material)) {
                     if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) {
-                        for (int y = this.getTargetBlock().getY(); y > v.getWorld().getMinHeight(); y--) {
+                        for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) {
                             // check for surface
                             final Material layerBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (!isIgnoredBlock(layerBlock)) {
@@ -68,7 +68,7 @@ public class OverlayBrush extends PerformerBrush {
         for (int z = brushSize; z >= -brushSize; z--) {
             for (int x = brushSize; x >= -brushSize; x--) {
                 boolean surfaceFound = false;
-                for (int y = this.getTargetBlock().getY(); y > v.getWorld().getMinHeight() && !surfaceFound; y--) { // start scanning from the height you clicked at
+                for (int y = this.getTargetBlock().getY(); y > this.getMinHeight() && !surfaceFound; y--) { // start scanning from the height you clicked at
                     if (memory[x + brushSize][z + brushSize] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
                             if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != Material.AIR) { // if not a floating block (like one of Notch'world pools)

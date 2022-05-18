@@ -107,7 +107,7 @@ public class ScannerBrush extends Brush {
             case DOWN:
                 // Scan up
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if ((this.getTargetBlock().getY() + i) >= v.getWorld().getMaxHeight()) {
+                    if ((this.getTargetBlock().getY() + i) >= this.getMaxHeight()) {
                         break;
                     }
                     if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
