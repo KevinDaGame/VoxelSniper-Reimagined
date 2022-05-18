@@ -15,7 +15,7 @@ VoxelSniper was built against the Bukkit 1.18.1 API.
 
 Compilation
 -----------
-Pre-compiled JARs are available in releases..
+Pre-compiled JARs will be available in releases..
 
 We use Maven to handle dependencies.
 
