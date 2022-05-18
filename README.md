@@ -7,7 +7,7 @@ I'm thinking of renaming the project to prevent confusion with the already exist
 
 Minecraft Version
 ------------------
-VoxelSniper was built against the Bukkit 1.18.1 API.
+VoxelSniper is being built against the Bukkit 1.18.1 API.
 
 ***We will not support anything below 1.16.5***
 
