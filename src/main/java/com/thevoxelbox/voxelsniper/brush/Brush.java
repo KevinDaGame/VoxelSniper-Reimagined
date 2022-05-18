@@ -44,13 +44,7 @@ public abstract class Brush implements IBrush {
      * @return {@link Block}
      */
     public final Block clampY(final int x, final int y, final int z) {
-        int clampedY = y;
-        if (clampedY < this.getWorld().getMinHeight() {
-            clampedY = this.getWorld().getMinHeight();
-        } else if (clampedY > this.getWorld().getMaxHeight()) {
-            clampedY = this.getWorld().getMaxHeight();
-        }
-
+        int clampedY = this.clampWorldHeight(y);
         return this.getWorld().getBlockAt(x, clampedY, z);
     }
 
@@ -198,6 +192,18 @@ public abstract class Brush implements IBrush {
      */
     protected final World getWorld() {
         return targetBlock.getWorld();
+    }
+
+    protected final int getMinHeight() {
+        return getWorld().getMinHeight();
+    }
+
+    protected final int getMaxHeight() {
+        return getWorld().getMaxHeight();
+    }
+
+    protected final int clampWorldHeight(int height) {
+        return Math.max(getMinHeight(), Math.min(getMaxHeight(), height));
     }
 
     /**
