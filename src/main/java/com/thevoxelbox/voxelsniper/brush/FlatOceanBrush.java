@@ -31,7 +31,8 @@ public class FlatOceanBrush extends Brush {
     private void flatOcean(final Chunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
-                for (int y = 0; y < chunk.getWorld().getMaxHeight(); y++) {
+                // chunk.getWorld() == getWorld()
+                for (int y = 0; y < getMaxHeight(); y++) {
                     if (y <= this.floorLevel) {
                         chunk.getBlock(x, y, z).setType(Material.DIRT);
                     } else if (y <= this.waterLevel) {
