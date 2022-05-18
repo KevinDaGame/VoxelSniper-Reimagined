@@ -9,6 +9,8 @@ Minecraft Version
 ------------------
 VoxelSniper was built against the Bukkit 1.18.1 API.
 
+***We will not support anything below 1.16.5***
+
  - Minecraft 1.18
 
 Compilation
