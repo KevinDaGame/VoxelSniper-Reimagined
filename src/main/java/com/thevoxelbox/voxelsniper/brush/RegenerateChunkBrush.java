@@ -25,7 +25,7 @@ public class RegenerateChunkBrush extends Brush {
 
         for (int z = CHUNK_SIZE; z >= 0; z--) {
             for (int x = CHUNK_SIZE; x >= 0; x--) {
-                for (int y = this.getWorld().getMaxHeight(); y >= 0; y--) {
+                for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
                     undo.put(chunk.getBlock(x, y, z));
                 }
             }

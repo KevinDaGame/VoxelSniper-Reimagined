@@ -41,7 +41,7 @@ public class CanyonBrush extends Brush {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 int currentYLevel = this.yLevel;
 
-                for (int y = 63; y < this.getWorld().getMaxHeight(); y++) {
+                for (int y = 63; y < this.getMaxHeight(); y++) {
                     final Block block = chunk.getBlock(x, y, z);
                     final Block currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
 

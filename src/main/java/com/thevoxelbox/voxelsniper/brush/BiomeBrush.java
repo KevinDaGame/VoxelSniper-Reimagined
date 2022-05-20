@@ -85,10 +85,9 @@ public class BiomeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
-        
+
+        List<String> arguments = new ArrayList<>(Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
+
         return arguments;
     }
 
