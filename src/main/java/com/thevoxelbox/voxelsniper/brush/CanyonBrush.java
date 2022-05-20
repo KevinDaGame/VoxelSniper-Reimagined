@@ -54,11 +54,11 @@ public class CanyonBrush extends Brush {
                     currentYLevel++;
                 }
 
-                final Block block = chunk.getBlock(x, this.getWorld().getMinHeight(), z);
+                final Block block = chunk.getBlock(x, this.getMinHeight(), z);
                 undo.put(block);
                 block.setType(Material.BEDROCK);
 
-                for (int y = this.getWorld().getMinHeight()+1; y < this.getWorld().getMinHeight()+SHIFT_LEVEL_MIN; y++) {
+                for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
                     final Block currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
                     currentBlock.setType(Material.STONE);
