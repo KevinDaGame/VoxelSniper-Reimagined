@@ -215,18 +215,18 @@ public class ErodeBrush extends Brush {
          * @return
          */
         public static String getValuesString(String seperator) {
-            String valuesString = "";
+            StringBuilder valuesString = new StringBuilder();
 
             boolean delimiterHelper = true;
             for (final Preset preset : Preset.values()) {
                 if (delimiterHelper) {
                     delimiterHelper = false;
                 } else {
-                    valuesString += seperator;
+                    valuesString.append(seperator);
                 }
-                valuesString += preset.name();
+                valuesString.append(preset.name());
             }
-            return valuesString;
+            return valuesString.toString();
         }
 
         public ErosionPreset getPreset() {

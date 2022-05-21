@@ -133,7 +133,7 @@ public class BrushesTest {
         System.out.println("======================================================================");
 
         Collection<String> performerHandles = Performer.getPerformerHandles();
-        String[] performerHandlesArray = performerHandles.toArray(new String[performerHandles.size()]);
+        String[] performerHandlesArray = performerHandles.toArray(new String[0]);
 
         for (String brushHandle : brushes.getBrushHandles()) {
             Class<? extends IBrush> clazz = brushes.getBrushForHandle(brushHandle);

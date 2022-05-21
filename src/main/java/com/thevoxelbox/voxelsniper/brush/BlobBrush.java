@@ -97,9 +97,7 @@ public class BlobBrush extends PerformerBrush {
             // integrate tempsplat back into splat at end of iteration
             for (int x = brushSizeDoubled; x >= 0; x--) {
                 for (int y = brushSizeDoubled; y >= 0; y--) {
-                    for (int z = brushSizeDoubled; z >= 0; z--) {
-                        splat[x][y][z] = tempSplat[x][y][z];
-                    }
+                    System.arraycopy(tempSplat[x][y], 0, splat[x][y], 0, brushSizeDoubled + 1);
                 }
             }
         }
@@ -175,9 +173,7 @@ public class BlobBrush extends PerformerBrush {
             // integrate tempsplat back into splat at end of iteration
             for (int x = brushSizeDoubled; x >= 0; x--) {
                 for (int y = brushSizeDoubled; y >= 0; y--) {
-                    for (int z = brushSizeDoubled; z >= 0; z--) {
-                        splat[x][y][z] = tempSplat[x][y][z];
-                    }
+                    System.arraycopy(tempSplat[x][y], 0, splat[x][y], 0, brushSizeDoubled + 1);
                 }
             }
         }

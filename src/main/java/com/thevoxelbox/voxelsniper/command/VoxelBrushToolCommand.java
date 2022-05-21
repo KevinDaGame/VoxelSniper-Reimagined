@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

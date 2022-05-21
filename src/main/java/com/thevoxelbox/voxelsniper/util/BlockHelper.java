@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import java.util.Set;
 import org.bukkit.Art;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;

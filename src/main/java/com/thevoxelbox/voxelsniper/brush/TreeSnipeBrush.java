@@ -57,19 +57,19 @@ public class TreeSnipeBrush extends Brush {
     }
 
     private void printTreeType(final VoxelMessage vm) {
-        String printout = "";
+        StringBuilder printout = new StringBuilder();
 
         boolean delimiterHelper = true;
         for (final TreeType treeType : TreeType.values()) {
             if (delimiterHelper) {
                 delimiterHelper = false;
             } else {
-                printout += ", ";
+                printout.append(", ");
             }
-            printout += ((treeType.equals(this.treeType)) ? ChatColor.GRAY + treeType.name().toLowerCase() : ChatColor.DARK_GRAY + treeType.name().toLowerCase()) + ChatColor.WHITE;
+            printout.append((treeType.equals(this.treeType)) ? ChatColor.GRAY + treeType.name().toLowerCase() : ChatColor.DARK_GRAY + treeType.name().toLowerCase()).append(ChatColor.WHITE);
         }
 
-        vm.custom(printout);
+        vm.custom(printout.toString());
     }
 
     @Override

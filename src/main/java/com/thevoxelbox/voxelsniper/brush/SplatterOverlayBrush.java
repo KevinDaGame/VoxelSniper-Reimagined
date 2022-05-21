@@ -93,9 +93,8 @@ public class SplatterOverlayBrush extends PerformerBrush {
             }
             // integrate tempsplat back into splat at end of iteration
             for (int x = 2 * v.getBrushSize(); x >= 0; x--) {
-                for (int y = 2 * v.getBrushSize(); y >= 0; y--) {
-                    splat[x][y] = tempSplat[x][y];
-                }
+                if (2 * v.getBrushSize() + 1 >= 0)
+                    System.arraycopy(tempSplat[x], 0, splat[x], 0, 2 * v.getBrushSize() + 1);
             }
         }
         this.growPercent = gref;
@@ -186,9 +185,8 @@ public class SplatterOverlayBrush extends PerformerBrush {
             }
             // integrate tempsplat back into splat at end of iteration
             for (int x = 2 * v.getBrushSize(); x >= 0; x--) {
-                for (int y = 2 * v.getBrushSize(); y >= 0; y--) {
-                    splat[x][y] = tempsplat[x][y];
-                }
+                if (2 * v.getBrushSize() + 1 >= 0)
+                    System.arraycopy(tempsplat[x], 0, splat[x], 0, 2 * v.getBrushSize() + 1);
             }
         }
         this.growPercent = gref;

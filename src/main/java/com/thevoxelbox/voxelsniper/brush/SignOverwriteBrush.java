@@ -244,7 +244,7 @@ public class SignOverwriteBrush extends Brush {
             return i;
         }
 
-        String newText = "";
+        StringBuilder newText = new StringBuilder();
 
         // go through the array until the next top level parameter is found
         for (i++; i < params.length; i++) {
@@ -254,16 +254,16 @@ public class SignOverwriteBrush extends Brush {
                 i--;
                 break;
             } else {
-                newText += currentParameter + " ";
+                newText.append(currentParameter).append(" ");
             }
         }
 
-        newText = ChatColor.translateAlternateColorCodes('&', newText);
+        newText = new StringBuilder(ChatColor.translateAlternateColorCodes('&', newText.toString()));
 
         // remove last space or return if the string is empty and the user just wanted to set the status
-        if (!newText.isEmpty() && newText.endsWith(" ")) {
-            newText = newText.substring(0, newText.length() - 1);
-        } else if (newText.isEmpty()) {
+        if ((newText.length() > 0) && newText.toString().endsWith(" ")) {
+            newText = new StringBuilder(newText.substring(0, newText.length() - 1));
+        } else if (newText.length() == 0) {
             if (statusSet) {
                 return i;
             }
@@ -273,10 +273,10 @@ public class SignOverwriteBrush extends Brush {
         // check the line length and cut the text if needed
         if (newText.length() > MAX_SIGN_LINE_LENGTH) {
             v.sendMessage(ChatColor.RED + "Warning: Text on line " + lineNumber + " exceeds the maximum line length of " + MAX_SIGN_LINE_LENGTH + " characters. Your text will be cut.");
-            newText = newText.substring(0, MAX_SIGN_LINE_LENGTH);
+            newText = new StringBuilder(newText.substring(0, MAX_SIGN_LINE_LENGTH));
         }
 
-        this.signTextLines[lineIndex] = newText;
+        this.signTextLines[lineIndex] = newText.toString();
         return i;
     }
 

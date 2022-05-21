@@ -42,9 +42,7 @@ public class BlendVoxelBrush extends BlendBrushBase {
         // Log current materials into newmats
         for (int x = 0; x <= brushSizeDoubled; x++) {
             for (int y = 0; y <= brushSizeDoubled; y++) {
-                for (int z = 0; z <= brushSizeDoubled; z++) {
-                    newMaterials[x][y][z] = oldMaterials[x + 1][y + 1][z + 1];
-                }
+                System.arraycopy(oldMaterials[x + 1][y + 1], 1, newMaterials[x][y], 0, brushSizeDoubled + 1);
             }
         }
 
