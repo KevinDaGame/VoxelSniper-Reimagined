@@ -81,7 +81,7 @@ public class CanyonBrush extends Brush {
 
         Chunk targetChunk = getTargetBlock().getChunk();
         for (int x = targetChunk.getX() - 1; x <= targetChunk.getX() + 1; x++) {
-            for (int z = targetChunk.getX() - 1; z <= targetChunk.getX() + 1; z++) {
+            for (int z = targetChunk.getZ() - 1; z <= targetChunk.getZ() + 1; z++) {
                 canyon(getWorld().getChunkAt(x, z), undo);
             }
         }

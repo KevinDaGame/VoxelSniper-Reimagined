@@ -192,7 +192,7 @@ public class StampBrush extends Brush {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
-                } else if (block.blockData.getMaterial() == Material.AIR) {
+                } else {
                     this.solid.add(block);
                     this.setBlockFill(block);
                 }
