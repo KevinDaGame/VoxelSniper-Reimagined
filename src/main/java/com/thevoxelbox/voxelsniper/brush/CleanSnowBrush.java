@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Clean_Snow_Brush
@@ -34,17 +35,17 @@ public class CleanSnowBrush extends Brush {
         final double brushSizeSquared = Math.pow(brushSize + (this.smoothSphere ? SMOOTH_SPHERE_VALUE : VOXEL_SPHERE_VALUE), 2);
         final Undo undo = new Undo();
 
-        for (int y = (brushSize + 1) * 2; y >= 0; y--) {
-            final double ySquared = Math.pow(y - brushSize, 2);
+        for (int x = (brushSize + 1) * 2; x >= 0; x--) {
+            final double xSquared = Math.pow(x - brushSize, 2);
+            for (int z = (brushSize + 1) * 2; z >= 0; z--) {
+                final double zSquared = Math.pow(z - brushSize, 2);
 
-            for (int x = (brushSize + 1) * 2; x >= 0; x--) {
-                final double xSquared = Math.pow(x - brushSize, 2);
-
-                for (int z = (brushSize + 1) * 2; z >= 0; z--) {
-                    if ((xSquared + Math.pow(z - brushSize, 2) + ySquared) <= brushSizeSquared) {
-                        if ((this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + z - brushSize, this.getTargetBlock().getZ() + y - brushSize).getType() == Material.SNOW) && ((this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + z - brushSize - 1, this.getTargetBlock().getZ() + y - brushSize).getType() == Material.SNOW) || (this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + z - brushSize - 1, this.getTargetBlock().getZ() + y - brushSize).getType() == Material.AIR))) {
-                            undo.put(this.clampY(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + z, this.getTargetBlock().getZ() + y));
-                            this.setBlockMaterialAt(this.getTargetBlock().getZ() + y - brushSize, this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + z - brushSize, Material.AIR);
+                for (int y = (brushSize + 1) * 2; y >= 0; y--) {
+                    if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
+                        Block b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
+                        Block blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
+                        if ((b.getType() == Material.SNOW) && ((blockDown.getType() == Material.SNOW) || (blockDown.getType() == Material.AIR))) {
+                            setBlockType(b, Material.AIR, undo);
                         }
 
                     }

@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.*;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
@@ -279,5 +280,40 @@ public abstract class Brush implements IBrush {
      */
     protected final void setBlockMaterialAndDataAt(int x, int y, int z, BlockData blockData) {
         this.getWorld().getBlockAt(x, y, z).setBlockData(blockData, true);
+    }
+
+    /**
+     * Sets the type of the passed block, and appends the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
+     *
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param z Z coordinate
+     * @param material the material to set this block to
+     * @param undo The Undo container to store the change
+     */
+    protected final void setBlockMaterialAt(int x, int y, int z, Material material, Undo undo) {
+        Block b = this.clampY(x, y, z);
+        if (b.getType() != material) {
+            undo.put(b);
+        }
+        b.setType(material);
+    }
+
+    /**
+     * Sets the type of the passed block, and adds the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
+     *
+     * @param b The block to change
+     * @param material the material to set this block to
+     * @param undo The Undo container to store the change
+     */
+    protected final void setBlockType(Block b, Material material, Undo undo) {
+        int clampedY = this.clampWorldHeight(b.getY());
+        if (clampedY != b.getY()) {
+            b = getWorld().getBlockAt(b.getX(), clampedY, b.getX());
+        }
+        if (b.getType() != material) {
+            undo.put(b);
+        }
+        b.setType(material);
     }
 }
