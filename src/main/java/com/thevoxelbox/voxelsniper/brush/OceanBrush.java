@@ -193,7 +193,7 @@ public class OceanBrush extends Brush {
                 v.sendMessage(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

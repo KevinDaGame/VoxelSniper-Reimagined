@@ -90,7 +90,7 @@ public class RingBrush extends PerformerBrush {
                 v.sendMessage(ChatColor.AQUA + "The inner radius has been set to " + ChatColor.RED + this.innerSize + ChatColor.AQUA + ".");
                 return;
             }
-        } catch (final NumberFormatException e) {
+        } catch (final NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

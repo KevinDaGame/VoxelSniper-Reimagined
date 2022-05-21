@@ -48,7 +48,7 @@ public class VoxelUndoCommand extends VoxelCommand {
             try {
                 sniper.undo(Integer.parseInt(args[0]));
                 return true;
-            } catch (NumberFormatException exception) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

@@ -241,7 +241,7 @@ public class BlobBrush extends PerformerBrush {
                     v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
                 }
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

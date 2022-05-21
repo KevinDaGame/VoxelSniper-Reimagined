@@ -110,7 +110,7 @@ public class EllipsoidBrush extends PerformerBrush {
                 v.sendMessage(ChatColor.AQUA + "Z radius set to: " + this.zRad);
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

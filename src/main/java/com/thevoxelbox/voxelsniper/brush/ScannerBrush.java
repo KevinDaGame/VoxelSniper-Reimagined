@@ -145,7 +145,7 @@ public class ScannerBrush extends Brush {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
                 v.sendMessage(ChatColor.AQUA + "Scanner depth set to " + this.depth);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

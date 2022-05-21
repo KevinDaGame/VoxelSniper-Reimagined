@@ -155,7 +155,7 @@ public class UnderlayBrush extends PerformerBrush {
 
                 v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

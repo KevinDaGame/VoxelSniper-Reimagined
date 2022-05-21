@@ -180,7 +180,7 @@ public class Rot2DBrush extends Brush {
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
             v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

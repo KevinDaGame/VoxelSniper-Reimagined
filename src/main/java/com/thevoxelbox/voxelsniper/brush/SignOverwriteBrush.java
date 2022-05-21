@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
@@ -357,18 +358,14 @@ public class SignOverwriteBrush extends Brush {
      * Clears the internal text buffer. (Sets it to empty strings)
      */
     private void clearBuffer() {
-        for (int i = 0; i < this.signTextLines.length; i++) {
-            this.signTextLines[i] = "";
-        }
+        Arrays.fill(this.signTextLines, "");
     }
 
     /**
      * Resets line enabled states to enabled.
      */
     private void resetStates() {
-        for (int i = 0; i < this.signLinesEnabled.length; i++) {
-            this.signLinesEnabled[i] = true;
-        }
+        Arrays.fill(this.signLinesEnabled, true);
     }
 
     @Override

@@ -268,7 +268,7 @@ public class MoveBrush extends Brush {
                 v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

@@ -108,7 +108,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.setVoxelHeight(Integer.parseInt(params[1]));
                 v.getVoxelMessage().height();
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 
@@ -117,7 +117,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.setcCen(Integer.parseInt(params[1]));
                 v.sendMessage(ChatColor.AQUA + "Cylinder will shift by " + v.getcCen() + " blocks on y-axis");
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 

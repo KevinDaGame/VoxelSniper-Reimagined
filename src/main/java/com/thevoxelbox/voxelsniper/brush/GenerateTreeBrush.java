@@ -633,7 +633,7 @@ public class GenerateTreeBrush extends Brush {
                 v.sendMessage(ChatColor.BLUE + "Leaf thickness set to " + this.nodeMin);
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
 
         }
 

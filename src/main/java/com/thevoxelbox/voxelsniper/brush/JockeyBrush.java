@@ -192,7 +192,7 @@ public class JockeyBrush extends Brush {
                 }
             }
             v.sendMessage("Current Jockey Mode: " + ChatColor.GREEN + jockeyType.toString());
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
     }
 

@@ -242,7 +242,7 @@ public class EllipseBrush extends PerformerBrush {
                 v.sendMessage(ChatColor.AQUA + "Render step number set to: " + this.steps);
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
