@@ -105,7 +105,7 @@ public class PullBrush extends Brush {
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == Material.AIR) {
             currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
-                this.setBlockMaterialAt(block.getZ(), block.getX(), y, Material.AIR);
+                this.setBlockMaterialAt(block.getX(), y, block.getZ(), Material.AIR);
             }
         } else {
             currentBlock.setBlockData(block.getBlockData());
@@ -121,7 +121,7 @@ public class PullBrush extends Brush {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
-            this.setBlockMaterialAt(block.getZ(), block.getX(), y, Material.AIR);
+            this.setBlockMaterialAt(block.getX(), y, block.getZ(), Material.AIR);
         }
         // }
     }
