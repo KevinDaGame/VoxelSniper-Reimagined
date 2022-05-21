@@ -217,7 +217,7 @@ public abstract class Brush implements IBrush {
      */
     @SuppressWarnings("deprecation")
     protected Material getBlockMaterialAt(int x, int y, int z) {
-        return getWorld().getBlockAt(x, y, z).getBlockData().getMaterial();
+        return clampY(x, y, z).getBlockData().getMaterial();
     }
 
     /**
@@ -230,7 +230,7 @@ public abstract class Brush implements IBrush {
      */
     @SuppressWarnings("deprecation")
     protected BlockData getBlockDataAt(int x, int y, int z) {
-        return this.getWorld().getBlockAt(x, y, z).getBlockData();
+        return this.clampY(x, y, z).getBlockData();
     }
 
     /**
@@ -254,7 +254,7 @@ public abstract class Brush implements IBrush {
      */
     @Deprecated
     protected final void setBlock(BlockWrapper blockWrapper) {
-        this.getWorld().getBlockAt(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setBlockData(blockWrapper.getBlockData());
+        this.clampY(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setBlockData(blockWrapper.getBlockData());
     }
 
     /**
@@ -266,7 +266,7 @@ public abstract class Brush implements IBrush {
      * @param material the material to set this block to
      */
     protected final void setBlockMaterialAt(int x, int y, int z, Material material) {
-        this.getWorld().getBlockAt(x, y, z).setBlockData(material.createBlockData());
+        this.clampY(x, y, z).setBlockData(material.createBlockData());
     }
 
     /**
@@ -279,7 +279,7 @@ public abstract class Brush implements IBrush {
      * @param blockData The blockData to set this block to
      */
     protected final void setBlockMaterialAndDataAt(int x, int y, int z, BlockData blockData) {
-        this.getWorld().getBlockAt(x, y, z).setBlockData(blockData, true);
+        this.clampY(x, y, z).setBlockData(blockData, true);
     }
 
     /**
