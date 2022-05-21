@@ -94,18 +94,11 @@ public enum Performer {
             try {
                 p = pclass.getConstructor().newInstance();
                 return p;
-            } catch (InstantiationException ex) {
-                Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvocationTargetException ex) {
+            } catch (InstantiationException | InvocationTargetException | IllegalArgumentException |
+                     IllegalAccessException ex) {
                 Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
+        } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -132,8 +125,8 @@ public enum Performer {
     }
 
     static {
-        performers = new TreeMap<String, vPerformer>();
-        long_names = new TreeMap<String, String>();
+        performers = new TreeMap<>();
+        long_names = new TreeMap<>();
 
         for (Performer pe : values()) {
             performers.put(pe.short_name, pe.getPerformer());

@@ -28,7 +28,7 @@ public class Sniper {
     private VoxelSniper plugin;
     private final UUID player;
     private boolean enabled = true;
-    private LinkedList<Undo> undoList = new LinkedList<Undo>();
+    private LinkedList<Undo> undoList = new LinkedList<>();
     private Map<String, SnipeTool> tools = Maps.newHashMap();
 
     public Sniper(VoxelSniper plugin, Player player) {
@@ -41,6 +41,7 @@ public class Sniper {
     }
 
     public String getCurrentToolId() {
+        //TODO this isn't quite right
         return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand().getType() : null);
     }
 
@@ -119,13 +120,12 @@ public class Sniper {
                                     oldSubstance = snipeData.getVoxelSubstance();
 
                                     snipeData.setVoxelSubstance(targetBlock.getBlockData());
-                                    newSubstance = snipeData.getVoxelSubstance();
                                 } else {
                                     oldSubstance = snipeData.getVoxelSubstance();
 
                                     snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                    newSubstance = snipeData.getVoxelSubstance();
                                 }
+                                newSubstance = snipeData.getVoxelSubstance();
 
                                 SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                                 Bukkit.getPluginManager().callEvent(event);
@@ -154,13 +154,12 @@ public class Sniper {
                                     oldSubstance = snipeData.getReplaceSubstance();
 
                                     snipeData.setReplaceSubstance(targetBlock.getBlockData());
-                                    newSubstance = snipeData.getReplaceSubstance();
                                 } else {
                                     oldSubstance = snipeData.getReplaceSubstance();
 
                                     snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                    newSubstance = snipeData.getReplaceSubstance();
                                 }
+                                newSubstance = snipeData.getReplaceSubstance();
 
                                 SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                                 Bukkit.getPluginManager().callEvent(event);

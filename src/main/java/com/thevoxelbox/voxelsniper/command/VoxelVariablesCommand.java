@@ -4,15 +4,13 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import com.thevoxelbox.voxelsniper.util.BlockHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -102,7 +100,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
             if (!invalidMaterials.isEmpty()) {
                 player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- ");
-                player.sendMessage(ChatColor.GOLD + "    " + invalidMaterials.stream().collect(Collectors.joining(", ")));
+                player.sendMessage(ChatColor.GOLD + "    " + String.join(", ", invalidMaterials));
             }
             return true;
         }
@@ -180,7 +178,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
                 if (!invalidMaterials.isEmpty()) {
                     player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- ");
-                    player.sendMessage(ChatColor.GOLD + "    " + invalidMaterials.stream().collect(Collectors.joining(", ")));
+                    player.sendMessage(ChatColor.GOLD + "    " + String.join(", ", invalidMaterials));
                 }
                 return true;
             }

@@ -114,9 +114,8 @@ public class FlatOceanBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("water", "floor"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("water", "floor"));
         
         return arguments;
     }

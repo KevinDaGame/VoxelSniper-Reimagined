@@ -313,12 +313,11 @@ public class PunishBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
+
         List<String> punishArguments = Arrays.stream(Punishment.values()).map(e -> e.name()).collect(Collectors.toList());
         punishArguments.addAll(Lists.newArrayList("-hypno", "-self", "-player"));
-        
-        arguments.addAll(punishArguments);
+
+        List<String> arguments = new ArrayList<>(punishArguments);
 
         return arguments;
     }

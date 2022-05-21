@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class SplineBrush extends PerformerBrush {
 
-    private final ArrayList<Block> endPts = new ArrayList<Block>();
-    private final ArrayList<Block> ctrlPts = new ArrayList<Block>();
-    protected ArrayList<Point> spline = new ArrayList<Point>();
+    private final ArrayList<Block> endPts = new ArrayList<>();
+    private final ArrayList<Block> ctrlPts = new ArrayList<>();
+    protected ArrayList<Point> spline = new ArrayList<>();
     protected boolean set;
     protected boolean ctrl;
     protected String[] sparams = {"ss", "sc", "clear"};

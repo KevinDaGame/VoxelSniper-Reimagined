@@ -30,7 +30,6 @@ public class Rot2DBrush extends Brush {
         this.setName("2D Rotation");
     }
 
-    @SuppressWarnings("deprecation")
     private void getMatrix() {
         this.brushSize = (this.bSize * 2) + 1;
 
@@ -189,9 +188,8 @@ public class Rot2DBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("[number]"));
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("[number]"));
 
         return arguments;
     }

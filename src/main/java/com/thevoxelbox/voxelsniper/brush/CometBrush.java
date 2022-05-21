@@ -64,9 +64,8 @@ public class CometBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("big", "small"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("big", "small"));
 
         return arguments;
     }

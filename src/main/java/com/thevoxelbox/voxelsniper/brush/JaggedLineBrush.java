@@ -25,14 +25,14 @@ import org.bukkit.util.Vector;
 public class JaggedLineBrush extends PerformerBrush {
 
     private static final Vector HALF_BLOCK_OFFSET = new Vector(0.5, 0.5, 0.5);
-    private static int timesUsed = 0;
+    private static final int timesUsed = 0;
 
     private static final int RECURSION_MIN = 1;
     private static final int RECURSION_DEFAULT = 3;
     private static final int RECURSION_MAX = 10;
     private static final int SPREAD_DEFAULT = 3;
 
-    private Random random = new Random();
+    private final Random random = new Random();
     private Vector originCoords = null;
     private Vector targetCoords = new Vector();
     private int recursion = RECURSION_DEFAULT;
@@ -118,8 +118,7 @@ public class JaggedLineBrush extends PerformerBrush {
             }
 
             if (params[0].equalsIgnoreCase("spread")) {
-                final int newSpread = Integer.parseInt(params[1]);
-                this.spread = newSpread;
+                this.spread = Integer.parseInt(params[1]);
                 v.sendMessage(ChatColor.GREEN + "Spread set to: " + this.spread);
                 return;
             }

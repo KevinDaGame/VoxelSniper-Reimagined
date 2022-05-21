@@ -122,9 +122,9 @@ public class Undo {
      * Default constructor of a Undo container.
      */
     public Undo() {
-        all = new LinkedList<BlockState>();
-        falloff = new LinkedList<BlockState>();
-        dropdown = new LinkedList<BlockState>();
+        all = new LinkedList<>();
+        falloff = new LinkedList<>();
+        dropdown = new LinkedList<>();
     }
 
     /**

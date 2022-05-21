@@ -37,7 +37,6 @@ public class pComboMat extends vPerformer {
         vm.data();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (b.getType() == targetMaterial) {

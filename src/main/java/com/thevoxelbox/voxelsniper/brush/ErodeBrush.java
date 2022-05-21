@@ -120,7 +120,7 @@ public class ErodeBrush extends Brush {
 
                         int count = 0;
 
-                        final Map<BlockWrapper, Integer> blockCount = new HashMap<BlockWrapper, Integer>();
+                        final Map<BlockWrapper, Integer> blockCount = new HashMap<>();
 
                         for (final Vector vector : ErodeBrush.FACES_TO_CHECK) {
                             final Vector relativePosition = currentPosition.clone().add(vector);
@@ -185,9 +185,8 @@ public class ErodeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
+        List<String> arguments = new ArrayList<>(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
         
         return arguments;
     }
@@ -203,7 +202,7 @@ public class ErodeBrush extends Brush {
         LIFT(new ErosionPreset(6, 0, 1, 1)),
         FLOATCLEAN(new ErosionPreset(6, 1, 6, 1));
 
-        private ErosionPreset preset;
+        private final ErosionPreset preset;
 
         Preset(final ErosionPreset preset) {
             this.preset = preset;
@@ -246,8 +245,8 @@ public class ErodeBrush extends Brush {
         private int nextIterationId = 0;
 
         public BlockChangeTracker(final World world) {
-            this.blockChanges = new HashMap<Integer, Map<Vector, BlockWrapper>>();
-            this.flatChanges = new HashMap<Vector, BlockWrapper>();
+            this.blockChanges = new HashMap<>();
+            this.flatChanges = new HashMap<>();
             this.world = world;
         }
 
@@ -276,7 +275,7 @@ public class ErodeBrush extends Brush {
 
         public void put(final Vector position, final BlockWrapper changedBlock, final int iteration) {
             if (!this.blockChanges.containsKey(iteration)) {
-                this.blockChanges.put(iteration, new HashMap<Vector, BlockWrapper>());
+                this.blockChanges.put(iteration, new HashMap<>());
             }
 
             this.blockChanges.get(iteration).put(position, changedBlock);

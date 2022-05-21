@@ -67,7 +67,6 @@ public class SignOverwriteBrush extends Brush {
             setSignText((Sign) this.getTargetBlock().getState());
         } else {
             v.sendMessage(ChatColor.RED + "Target block is not a sign.");
-            return;
         }
     }
 
@@ -307,7 +306,7 @@ public class SignOverwriteBrush extends Brush {
             BufferedWriter outStream = new BufferedWriter(outFile);
 
             for (int i = 0; i < this.signTextLines.length; i++) {
-                outStream.write(String.valueOf(this.signLinesEnabled[i]) + "\n");
+                outStream.write(this.signLinesEnabled[i] + "\n");
                 outStream.write(this.signTextLines[i] + "\n");
             }
 
@@ -340,7 +339,7 @@ public class SignOverwriteBrush extends Brush {
             BufferedReader inStream = new BufferedReader(inFile);
 
             for (int i = 0; i < this.signTextLines.length; i++) {
-                this.signLinesEnabled[i] = Boolean.valueOf(inStream.readLine());
+                this.signLinesEnabled[i] = Boolean.parseBoolean(inStream.readLine());
                 this.signTextLines[i] = inStream.readLine();
             }
 

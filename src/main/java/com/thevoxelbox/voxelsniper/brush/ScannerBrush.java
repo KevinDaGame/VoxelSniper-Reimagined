@@ -33,11 +33,7 @@ public class ScannerBrush extends Brush {
     private int clamp(final int value, final int min, final int max) {
         if (value < min) {
             return min;
-        } else if (value > max) {
-            return max;
-        } else {
-            return value;
-        }
+        } else return Math.min(value, max);
     }
 
     private void scan(final SnipeData v, final BlockFace bf) {
@@ -123,7 +119,6 @@ public class ScannerBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void arrow(final SnipeData v) {
         this.checkFor = v.getVoxelMaterial();
@@ -158,9 +153,8 @@ public class ScannerBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("depth"));
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("depth"));
 
         return arguments;
     }

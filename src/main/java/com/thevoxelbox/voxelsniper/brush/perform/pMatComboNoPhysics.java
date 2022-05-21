@@ -37,7 +37,6 @@ public class pMatComboNoPhysics extends vPerformer {
         vm.replaceData();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (b.getBlockData().matches(targetSubstance)) {

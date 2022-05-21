@@ -80,7 +80,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.bukkit.plugin.Plugin;
 
 /**
  * Brush registration manager.
@@ -239,7 +238,7 @@ public class VoxelBrushManager {
      * @return All Sniper registered handles for the brush.
      */
     public Set<String> getSniperBrushHandles(Class<? extends IBrush> clazz) {
-        return new HashSet<String>(brushes.get(clazz));
+        return new HashSet<>(brushes.get(clazz));
     }
 
     /**

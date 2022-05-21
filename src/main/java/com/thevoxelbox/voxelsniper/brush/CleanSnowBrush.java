@@ -90,9 +90,8 @@ public class CleanSnowBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("smooth"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("smooth"));
 
         return arguments;
     }

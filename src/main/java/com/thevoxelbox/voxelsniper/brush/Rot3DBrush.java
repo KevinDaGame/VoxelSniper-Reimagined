@@ -88,9 +88,8 @@ public class Rot3DBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("pitch", "roll", "yaw"));
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("pitch", "roll", "yaw"));
 
         return arguments;
     }
@@ -107,7 +106,6 @@ public class Rot3DBrush extends Brush {
         return argumentValues;
     }
 
-    @SuppressWarnings("deprecation")
     private void getMatrix() { // only need to do once. But y needs to change + sphere
         final double brushSizeSquared = Math.pow(this.bSize + 0.5, 2);
         this.brushSize = (this.bSize * 2) + 1;

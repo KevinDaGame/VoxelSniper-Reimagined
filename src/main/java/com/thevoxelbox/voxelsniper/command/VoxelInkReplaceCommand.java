@@ -57,7 +57,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         // Command: /vir [data]
         if (args.length >= 1) {
             try {
-                BlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + Arrays.stream(args).collect(Collectors.joining(",")) + "]");
+                BlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + String.join(",", args) + "]");
                 BlockData activeData = snipeData.getReplaceSubstance();
 
                 snipeData.setReplaceSubstance(activeData.merge(newData));

@@ -63,7 +63,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return true;
                 }
 
-                String toolLabel = Arrays.stream(Arrays.copyOfRange(args, 2, args.length)).collect(Collectors.joining(" "));
+                String toolLabel = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
                 if (sniper.setTool(toolLabel, action, itemInHand)) {
                     player.sendMessage(ChatColor.GOLD + itemInHand.name() + " has been assigned to '" + toolLabel + "' as action " + action.name() + ".");
@@ -71,11 +71,10 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     player.sendMessage(ChatColor.RED + "Couldn't assign action to that tool.");
                 }
 
-                return true;
             } else {
                 player.sendMessage(ChatColor.DARK_AQUA + "Please assign your own label to the tool to identify it.");
-                return true;
             }
+            return true;
         }
 
         

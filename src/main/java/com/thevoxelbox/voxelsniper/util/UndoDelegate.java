@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import org.bukkit.BlockChangeDelegate;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -38,7 +37,6 @@ public class UndoDelegate implements BlockChangeDelegate {
         return this.targetWorld.getBlockAt(x, y, z).getBlockData();
     }
 
-    @SuppressWarnings("deprecation")
     public boolean setBlock(Block b) {
         this.currentUndo.put(this.targetWorld.getBlockAt(b.getLocation()));
         this.targetWorld.getBlockAt(b.getLocation()).setBlockData(b.getBlockData(), true);

@@ -19,7 +19,7 @@ public class EllipsoidBrush extends PerformerBrush {
     private double xRad;
     private double yRad;
     private double zRad;
-    private boolean istrue = false;
+    private final boolean istrue = false;
 
     /**
      *

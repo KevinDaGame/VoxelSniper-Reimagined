@@ -36,7 +36,6 @@ public class pIncludeMat extends vPerformer {
         includeList = v.getVoxelList();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (includeList.contains(b.getType())) {

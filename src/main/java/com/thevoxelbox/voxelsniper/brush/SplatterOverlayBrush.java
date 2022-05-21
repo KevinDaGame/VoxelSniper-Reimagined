@@ -47,7 +47,6 @@ public class SplatterOverlayBrush extends PerformerBrush {
         this.setName("Splatter Overlay");
     }
 
-    @SuppressWarnings("deprecation")
     private void sOverlay(final SnipeData v) {
 
         // Splatter Time
@@ -357,7 +356,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
 
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
                     v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
-                    this.growPercent = (int) temp;
+                    this.growPercent = temp;
                 } else {
                     v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
                 }

@@ -26,7 +26,7 @@ import org.bukkit.block.Block;
  */
 public class BlockResetSurfaceBrush extends Brush {
 
-    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<Material>();
+    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<>();
 
     static {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
@@ -132,7 +132,6 @@ public class BlockResetSurfaceBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void resetBlock(Block block, final byte oldData) {
         // Resets the block state to initial state by creating a new BlockData with default values.
         block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);

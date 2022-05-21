@@ -75,9 +75,9 @@ public class JockeyBrush extends Brush {
 
             if (!playerTeleportEvent.isCancelled()) {
                 if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
-                    player.setPassenger(closest);
+                    player.addPassenger(closest);
                 } else {
-                    closest.setPassenger(player);
+                    closest.addPassenger(player);
                     jockeyedEntity = closest;
                 }
                 v.sendMessage(ChatColor.GOLD + "You are now sitting on the most nearby entity!");
@@ -97,12 +97,12 @@ public class JockeyBrush extends Brush {
         for (Entity entity : nearbyEntities) {
             if (!(stackHeight >= ENTITY_STACK_LIMIT)) {
                 if (jockeyType == JockeyType.STACK_ALL_ENTITIES) {
-                    lastEntity.setPassenger(entity);
+                    lastEntity.addPassenger(entity);
                     lastEntity = entity;
                     stackHeight++;
                 } else if (jockeyType == JockeyType.STACK_PLAYER_ONLY) {
                     if (entity instanceof Player) {
-                        lastEntity.setPassenger(entity);
+                        lastEntity.addPassenger(entity);
                         lastEntity = entity;
                         stackHeight++;
                     }
@@ -198,9 +198,8 @@ public class JockeyBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("inverse", "stack", "normal", "player"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal", "player"));
 
         return arguments;
     }

@@ -25,7 +25,7 @@ public class OceanBrush extends Brush {
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
     private static final int WATER_LEVEL_MIN = 12;
     private static final int LOW_CUT_LEVEL = 12;
-    private static final List<Material> EXCLUDED_MATERIALS = new LinkedList<Material>();
+    private static final List<Material> EXCLUDED_MATERIALS = new LinkedList<>();
 
     static {
         EXCLUDED_MATERIALS.add(Material.AIR);
@@ -117,7 +117,7 @@ public class OceanBrush extends Brush {
             for (int z = minZ; z <= maxZ; z++) {
                 final int currentHeight = getHeight(x, z);
                 final int wLevelDiff = currentHeight - (this.waterLevel - 1);
-                final int newSeaFloorLevel = ((this.waterLevel - wLevelDiff) >= LOW_CUT_LEVEL) ? this.waterLevel - wLevelDiff : LOW_CUT_LEVEL;
+                final int newSeaFloorLevel = Math.max((this.waterLevel - wLevelDiff), LOW_CUT_LEVEL);
 
                 final int highestY = this.getWorld().getHighestBlockYAt(x, z);
 
@@ -201,9 +201,8 @@ public class OceanBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("water", "floor"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("water", "floor"));
 
         return arguments;
     }

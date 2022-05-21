@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelBrushManager;
-import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+
 import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
 import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
@@ -104,11 +104,10 @@ public class VoxelBrushCommand extends VoxelCommand {
                     // Parse performer if the brush is a performer
                     if (newBrush instanceof IPerformerBrush) {
                         ((IPerformerBrush) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
-                        return true;
                     } else {
                         newBrush.parseParameters(args[0], additionalParameters, snipeData);
-                        return true;
                     }
+                    return true;
                 }
                 SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
                 sniper.displayInfo();

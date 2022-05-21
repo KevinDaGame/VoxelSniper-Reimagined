@@ -29,7 +29,7 @@ public class HeatRayBrush extends Brush {
     private static final double REQUIRED_FIRE_DENSITY = -0.25;
     private static final double REQUIRED_AIR_DENSITY = 0;
 
-    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<Material>();
+    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<>();
 
     private int octaves = 5;
     private double amplitude = 0.3;
@@ -225,18 +225,18 @@ public class HeatRayBrush extends Brush {
 
         try {
             if (params[0].equalsIgnoreCase("octave")) {
-                this.octaves = Integer.valueOf(params[1]);
+                this.octaves = Integer.parseInt(params[1]);
                 v.getVoxelMessage().custom(ChatColor.GREEN + "Octave: " + this.octaves);
                 return;
             }
             if (params[0].equalsIgnoreCase("amplitude")) {
-                this.amplitude = Double.valueOf(params[1]);
+                this.amplitude = Double.parseDouble(params[1]);
                 v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
                 return;
             }
 
             if (params[0].equalsIgnoreCase("frequency")) {
-                this.frequency = Double.valueOf(params[1]);
+                this.frequency = Double.parseDouble(params[1]);
                 v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
                 return;
             }
@@ -248,9 +248,8 @@ public class HeatRayBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("octave", "amplitude", "frequency", "default"));
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("octave", "amplitude", "frequency", "default"));
 
         return arguments;
     }

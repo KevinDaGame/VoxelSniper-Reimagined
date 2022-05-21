@@ -11,7 +11,6 @@ import org.bukkit.ChatColor;
 /**
  * @author Monofraps
  */
-@SuppressWarnings("deprecation")
 public abstract class BlendBrushBase extends Brush {
 
     protected boolean excludeAir = true;
@@ -55,9 +54,8 @@ public abstract class BlendBrushBase extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("water"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("water"));
 
         return arguments;
     }

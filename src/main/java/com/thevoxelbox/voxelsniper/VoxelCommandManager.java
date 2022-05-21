@@ -73,9 +73,7 @@ public class VoxelCommandManager {
         argumentsMap.put(command.getIdentifier(), command.registerTabCompletion());
 
         bukkitCommand.setExecutor(command);
-        bukkitCommand.getAliases().stream().forEach(e -> {
-            argumentsMap.put(e, command.registerTabCompletion());
-        });
+        bukkitCommand.forEach(e -> argumentsMap.put(e, command.registerTabCompletion()));
 
         // Initializes command alternates that use the same executors
         command.getOtherIdentifiers().forEach((otherIdentifier) -> {
@@ -83,9 +81,7 @@ public class VoxelCommandManager {
             argumentsMap.put(otherIdentifier, command.registerTabCompletion());
 
             bukkitCommandAlt.setExecutor(command);
-            bukkitCommandAlt.getAliases().stream().forEach(e -> {
-                argumentsMap.put(e, command.registerTabCompletion());
-            });
+            bukkitCommandAlt.forEach(e -> argumentsMap.put(e, command.registerTabCompletion()));
         });
     }
 
@@ -122,7 +118,6 @@ public class VoxelCommandManager {
             return new ArrayList<>();
         }
 
-        List<String> arguments = argumentsMap.getOrDefault(commandName, new ArrayList<>());
-        return arguments;
+        return argumentsMap.getOrDefault(commandName, new ArrayList<>());
     }
 }

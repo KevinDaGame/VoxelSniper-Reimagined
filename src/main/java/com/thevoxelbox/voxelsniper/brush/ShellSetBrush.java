@@ -25,7 +25,6 @@ public class ShellSetBrush extends Brush {
         this.setName("Shell Set");
     }
 
-    @SuppressWarnings("deprecation")
     private boolean set(final Block bl, final SnipeData v) {
         if (this.block == null) {
             this.block = bl;
@@ -37,34 +36,28 @@ public class ShellSetBrush extends Brush {
                 return true;
             }
 
-            final int lowX = (this.block.getX() <= bl.getX()) ? this.block.getX() : bl.getX();
-            final int lowY = (this.block.getY() <= bl.getY()) ? this.block.getY() : bl.getY();
-            final int lowZ = (this.block.getZ() <= bl.getZ()) ? this.block.getZ() : bl.getZ();
-            final int highX = (this.block.getX() >= bl.getX()) ? this.block.getX() : bl.getX();
-            final int highY = (this.block.getY() >= bl.getY()) ? this.block.getY() : bl.getY();
-            final int highZ = (this.block.getZ() >= bl.getZ()) ? this.block.getZ() : bl.getZ();
+            final int lowX = Math.min(this.block.getX(), bl.getX());
+            final int lowY = Math.min(this.block.getY(), bl.getY());
+            final int lowZ = Math.min(this.block.getZ(), bl.getZ());
+            final int highX = Math.max(this.block.getX(), bl.getX());
+            final int highY = Math.max(this.block.getY(), bl.getY());
+            final int highZ = Math.max(this.block.getZ(), bl.getZ());
 
-            if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > MAX_SIZE) {
+            int i = Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY);
+            if (i > MAX_SIZE) {
                 v.sendMessage(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
             } else {
-                final ArrayList<Block> blocks = new ArrayList<Block>(((Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY)) / 2));
+                final ArrayList<Block> blocks = new ArrayList<>((i / 2));
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
                             if (this.getWorld().getBlockAt(x, y, z).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else if (this.getWorld().getBlockAt(x + 1, y, z).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else if (this.getWorld().getBlockAt(x - 1, y, z).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else if (this.getWorld().getBlockAt(x, y, z + 1).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else if (this.getWorld().getBlockAt(x, y, z - 1).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else if (this.getWorld().getBlockAt(x, y + 1, z).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else if (this.getWorld().getBlockAt(x, y - 1, z).getType() == v.getReplaceMaterial()) {
-                                continue;
                             } else {
                                 blocks.add(this.getWorld().getBlockAt(x, y, z));
                             }

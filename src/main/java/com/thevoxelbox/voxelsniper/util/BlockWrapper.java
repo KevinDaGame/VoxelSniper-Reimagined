@@ -19,7 +19,6 @@ public class BlockWrapper {
     /**
      * @param block
      */
-    @SuppressWarnings("deprecation")
     public BlockWrapper(final Block block) {
         this.setBlockData(block.getBlockData());
         this.setX(block.getX());

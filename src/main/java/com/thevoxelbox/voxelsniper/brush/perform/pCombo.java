@@ -33,7 +33,6 @@ public class pCombo extends vPerformer {
         voxelSubstance = v.getVoxelSubstance();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         h.put(b);

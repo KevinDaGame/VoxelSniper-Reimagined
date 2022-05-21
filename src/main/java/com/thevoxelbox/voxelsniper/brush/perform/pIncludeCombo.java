@@ -37,7 +37,6 @@ public class pIncludeCombo extends vPerformer {
         voxelSubstance = v.getVoxelSubstance();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (includeList.contains(b.getType())) {

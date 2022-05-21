@@ -57,7 +57,7 @@ public class VoxelInkCommand extends VoxelCommand {
         // Command: /vi [material]      <- Sets the defined material as voxel substance.
         if (args.length >= 1) {
             try {
-                BlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + Arrays.stream(args).collect(Collectors.joining(",")) + "]");
+                BlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
                 BlockData activeData = snipeData.getVoxelSubstance();
 
                 snipeData.setVoxelSubstance(activeData.merge(newData));

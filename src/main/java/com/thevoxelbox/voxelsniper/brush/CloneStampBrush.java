@@ -153,9 +153,8 @@ public class CloneStampBrush extends StampBrush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("air", "fill", "default"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("air", "fill", "default"));
 
         return arguments;
     }

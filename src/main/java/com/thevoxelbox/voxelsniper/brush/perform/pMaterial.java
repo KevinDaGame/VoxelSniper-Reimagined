@@ -32,7 +32,6 @@ public class pMaterial extends vPerformer {
         vm.voxel();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (b.getType() != voxelMaterial) {

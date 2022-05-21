@@ -20,14 +20,12 @@ public class UndoTest
     private Undo undo;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() {
         undo = new Undo();
     }
 
     @Test
-    public void testGetSize() throws Exception
-    {
+    public void testGetSize() {
         World world = Mockito.mock(World.class);
         for (int i = 0; i < 5; i++)
         {
@@ -60,8 +58,7 @@ public class UndoTest
     }
 
     @Test
-    public void testPut() throws Exception
-    {
+    public void testPut() {
         World world = Mockito.mock(World.class);
         Block block = Mockito.mock(Block.class);
         BlockState blockState = Mockito.mock(BlockState.class);
@@ -77,8 +74,7 @@ public class UndoTest
     }
 
     @Test
-    public void testUndo() throws Exception
-    {
+    public void testUndo() {
         World world = Mockito.mock(World.class);
 
         Block normalBlock = Mockito.mock(Block.class);

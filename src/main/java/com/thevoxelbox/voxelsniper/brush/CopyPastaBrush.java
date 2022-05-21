@@ -192,9 +192,8 @@ public class CopyPastaBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("rotate", "air"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("rotate", "air"));
         
         return arguments;
     }

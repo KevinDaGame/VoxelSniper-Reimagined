@@ -7,7 +7,6 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
@@ -108,9 +107,8 @@ public class TreeSnipeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
+        List<String> arguments = new ArrayList<>(Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
 
         return arguments;
     }

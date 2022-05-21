@@ -58,7 +58,6 @@ public class VoxelMessage {
     /**
      * Display voxel type.
      */
-    @SuppressWarnings("deprecation")
     public void voxel() {
         snipeData.sendMessage(ChatColor.GOLD + "Voxel Material: " + ChatColor.RED + snipeData.getVoxelMaterial());
     }
@@ -89,7 +88,6 @@ public class VoxelMessage {
     /**
      * Display replace material.
      */
-    @SuppressWarnings("deprecation")
     public void replace() {
         snipeData.sendMessage(ChatColor.AQUA + "Replace Target Material: " + ChatColor.RED + snipeData.getReplaceMaterial());
     }
@@ -139,14 +137,13 @@ public class VoxelMessage {
         if (snipeData.getVoxelList().isEmpty()) {
             snipeData.sendMessage(ChatColor.DARK_GREEN + "No blocks selected!");
         } else {
-            StringBuilder returnValueBuilder = new StringBuilder();
-            returnValueBuilder.append(ChatColor.DARK_GREEN);
-            returnValueBuilder.append("Block Types Selected: ");
-            returnValueBuilder.append(ChatColor.AQUA);
 
-            returnValueBuilder.append(String.join(",", snipeData.getVoxelList().getList().stream().map(e -> e.getKey().toString()).collect(Collectors.toList())));
+            String returnValueBuilder = ChatColor.DARK_GREEN +
+                    "Block Types Selected: " +
+                    ChatColor.AQUA +
+                    snipeData.getVoxelList().getList().stream().map(e -> e.getKey().toString()).collect(Collectors.joining(","));
 
-            snipeData.sendMessage(returnValueBuilder.toString());
+            snipeData.sendMessage(returnValueBuilder);
         }
     }
 }

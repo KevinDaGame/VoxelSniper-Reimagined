@@ -9,7 +9,6 @@ import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
@@ -164,9 +163,8 @@ public class EntityRemovalBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("+", "-", "reset", "clear", "list"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("+", "-", "reset", "clear", "list"));
 
         return arguments;
     }

@@ -21,7 +21,6 @@ public class BlendVoxelBrush extends BlendBrushBase {
         this.setName("Blend Voxel");
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void blend(final SnipeData v) {
         final int brushSize = v.getBrushSize();

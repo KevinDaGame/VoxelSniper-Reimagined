@@ -86,8 +86,7 @@ public class RingBrush extends PerformerBrush {
 
         try {
             if (params[0].startsWith("inner")) {
-                final double d = Double.parseDouble(params[1]);
-                this.innerSize = d;
+                this.innerSize = Double.parseDouble(params[1]);
                 v.sendMessage(ChatColor.AQUA + "The inner radius has been set to " + ChatColor.RED + this.innerSize + ChatColor.AQUA + ".");
                 return;
             }

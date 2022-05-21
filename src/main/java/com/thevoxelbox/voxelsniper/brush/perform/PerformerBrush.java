@@ -12,7 +12,6 @@ import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import java.util.ArrayList;
 import org.bukkit.Bukkit;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -52,7 +51,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
     @Override
     public final void parsePerformer(String triggerHandle, String[] args, SnipeData v) {
         if (args.length > 1 && args[0].equalsIgnoreCase("p")) {
-            if (parsePerformer(args[1], v) == false) {
+            if (!parsePerformer(args[1], v)) {
                 parseParameters(triggerHandle, args, v);
             }
         } else {
@@ -69,9 +68,8 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("p"));
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("p"));
 
         return arguments;
     }

@@ -106,9 +106,7 @@ public class SnipeTool {
     IBrush instanciateBrush(Class<? extends IBrush> brush) {
         try {
             return brush.newInstance();
-        } catch (InstantiationException e) {
-            return null;
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
     }

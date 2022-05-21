@@ -18,7 +18,7 @@ import org.bukkit.Material;
  */
 public class DrainBrush extends Brush {
 
-    private double trueCircle = 0.5;
+    private final double trueCircle = 0.5;
     private boolean disc = false;
 
     /**
@@ -121,9 +121,8 @@ public class DrainBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("shape"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("shape"));
         
         return arguments;
     }

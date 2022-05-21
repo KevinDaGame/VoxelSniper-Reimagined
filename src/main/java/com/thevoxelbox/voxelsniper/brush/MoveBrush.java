@@ -28,7 +28,7 @@ public class MoveBrush extends Brush {
     /**
      * Breakable Blocks to determine if no-physics should be used.
      */
-    private static final Set<Material> BREAKABLE_MATERIALS = new TreeSet<Material>();
+    private static final Set<Material> BREAKABLE_MATERIALS = new TreeSet<>();
 
     static {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_SAPLING);
@@ -151,7 +151,7 @@ public class MoveBrush extends Brush {
             final World world = selection.getBlockStates().get(0).getWorld();
 
             final Undo undo = new Undo();
-            final HashSet<Block> undoSet = new HashSet<Block>();
+            final HashSet<Block> undoSet = new HashSet<>();
 
             final Selection newSelection = new Selection();
             final Location movedLocation1 = selection.getLocation1();
@@ -252,19 +252,19 @@ public class MoveBrush extends Brush {
 
         try {
             if (params[0].equalsIgnoreCase("x")) {
-                this.moveDirections[0] = Integer.valueOf(params[1]);
+                this.moveDirections[0] = Integer.parseInt(params[1]);
                 v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
                 return;
             }
 
             if (params[0].equalsIgnoreCase("y")) {
-                this.moveDirections[1] = Integer.valueOf(params[1]);
+                this.moveDirections[1] = Integer.parseInt(params[1]);
                 v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
                 return;
             }
 
             if (params[0].equalsIgnoreCase("z")) {
-                this.moveDirections[2] = Integer.valueOf(params[1]);
+                this.moveDirections[2] = Integer.parseInt(params[1]);
                 v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
                 return;
             }
@@ -276,9 +276,8 @@ public class MoveBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("reset", "x", "y", "z"));
+
+        List<String> arguments = new ArrayList<>(Lists.newArrayList("reset", "x", "y", "z"));
 
         return arguments;
     }
@@ -308,7 +307,7 @@ public class MoveBrush extends Brush {
         /**
          * Calculated BlockStates of the selection.
          */
-        private final ArrayList<BlockState> blockStates = new ArrayList<BlockState>();
+        private final ArrayList<BlockState> blockStates = new ArrayList<>();
         /**
          *
          */
@@ -327,12 +326,12 @@ public class MoveBrush extends Brush {
         public boolean calculateRegion() throws Exception {
             if (this.location1 != null && this.location2 != null) {
                 if (this.location1.getWorld().equals(this.location2.getWorld())) {
-                    final int lowX = ((this.location1.getBlockX() <= this.location2.getBlockX()) ? this.location1.getBlockX() : this.location2.getBlockX());
-                    final int lowY = (this.location1.getBlockY() <= this.location2.getBlockY()) ? this.location1.getBlockY() : this.location2.getBlockY();
-                    final int lowZ = (this.location1.getBlockZ() <= this.location2.getBlockZ()) ? this.location1.getBlockZ() : this.location2.getBlockZ();
-                    final int highX = (this.location1.getBlockX() >= this.location2.getBlockX()) ? this.location1.getBlockX() : this.location2.getBlockX();
-                    final int highY = (this.location1.getBlockY() >= this.location2.getBlockY()) ? this.location1.getBlockY() : this.location2.getBlockY();
-                    final int highZ = (this.location1.getBlockZ() >= this.location2.getBlockZ()) ? this.location1.getBlockZ() : this.location2.getBlockZ();
+                    final int lowX = (Math.min(this.location1.getBlockX(), this.location2.getBlockX()));
+                    final int lowY = Math.min(this.location1.getBlockY(), this.location2.getBlockY());
+                    final int lowZ = Math.min(this.location1.getBlockZ(), this.location2.getBlockZ());
+                    final int highX = Math.max(this.location1.getBlockX(), this.location2.getBlockX());
+                    final int highY = Math.max(this.location1.getBlockY(), this.location2.getBlockY());
+                    final int highZ = Math.max(this.location1.getBlockZ(), this.location2.getBlockZ());
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
                         throw new Exception(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
                     }

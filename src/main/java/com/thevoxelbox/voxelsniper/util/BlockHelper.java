@@ -155,7 +155,6 @@ public class BlockHelper {
      *
      * @return Block
      */
-    @SuppressWarnings("deprecation")
     public final Block getFaceBlock() {
         while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
         }
@@ -227,7 +226,6 @@ public class BlockHelper {
      *
      * @return Block
      */
-    @SuppressWarnings("deprecation")
     public final Block getTargetBlock() {
         this.fromOffworld();
         while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
@@ -236,7 +234,6 @@ public class BlockHelper {
         return this.getCurBlock();
     }
 
-    @SuppressWarnings("deprecation")
     private Block getRange() {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
@@ -304,13 +301,13 @@ public class BlockHelper {
      */
     @SuppressWarnings(value = "deprecation")
     public static void paint(final Player p, final boolean auto, final boolean back, final int choice) {
-        Location targetLocation = p.getTargetBlock((Set<Material>) null, 4).getLocation();
-        Chunk paintingChunk = p.getTargetBlock((Set<Material>) null, 4).getLocation().getChunk();
-        Double bestDistanceMatch = 50.0;
+        Location targetLocation = p.getTargetBlock(null, 4).getLocation();
+        Chunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
+        double bestDistanceMatch = 50.0;
         Painting bestMatch = null;
         for (Entity entity : paintingChunk.getEntities()) {
             if (entity.getType() == EntityType.PAINTING) {
-                Double distance = targetLocation.distanceSquared(entity.getLocation());
+                double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;
                     bestMatch = (Painting) entity;
@@ -320,7 +317,7 @@ public class BlockHelper {
         if (bestMatch != null) {
             if (auto) {
                 try {
-                    final int i = bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length % Art.values().length;
+                    final int i = bestMatch.getArt().getId() + (back ? -1 : 1);
                     Art art = Art.getById(i);
                     if (art == null) {
                         p.sendMessage(ChatColor.RED + "This is the final painting, try scrolling to the other direction.");
