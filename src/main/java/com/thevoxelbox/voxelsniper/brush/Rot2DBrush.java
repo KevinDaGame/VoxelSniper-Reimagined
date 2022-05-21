@@ -17,7 +17,7 @@ import org.bukkit.block.data.BlockData;
  */
 public class Rot2DBrush extends Brush {
 
-    private int mode = 0;
+    private final int mode = 0;
     private int bSize;
     private int brushSize;
     private BlockWrapper[][][] snap;

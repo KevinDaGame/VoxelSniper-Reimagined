@@ -195,7 +195,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
      */
     private enum Tolerance {
         DEFAULT(1000), ACCURATE(10), SMOOTH(2000);
-        private int value;
+        private final int value;
 
         Tolerance(final int value) {
             this.value = value;

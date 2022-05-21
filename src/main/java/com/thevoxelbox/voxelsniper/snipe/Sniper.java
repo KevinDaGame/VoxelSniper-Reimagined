@@ -25,11 +25,11 @@ import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
  */
 public class Sniper {
 
-    private VoxelSniper plugin;
+    private final VoxelSniper plugin;
     private final UUID player;
     private boolean enabled = true;
-    private LinkedList<Undo> undoList = new LinkedList<>();
-    private Map<String, SnipeTool> tools = Maps.newHashMap();
+    private final LinkedList<Undo> undoList = new LinkedList<>();
+    private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
     public Sniper(VoxelSniper plugin, Player player) {
         this.plugin = plugin;

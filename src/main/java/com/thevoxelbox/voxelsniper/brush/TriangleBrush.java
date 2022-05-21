@@ -12,15 +12,15 @@ import org.bukkit.ChatColor;
  */
 public class TriangleBrush extends PerformerBrush {
 
-    private double[] coordsOne = new double[3]; // Three corners
-    private double[] coordsTwo = new double[3];
-    private double[] coordsThree = new double[3];
+    private final double[] coordsOne = new double[3]; // Three corners
+    private final double[] coordsTwo = new double[3];
+    private final double[] coordsThree = new double[3];
     private int cornernumber = 1;
-    private double[] currentCoords = new double[3]; // For loop tracking
-    private double[] vectorOne = new double[3]; // Point 1 to 2
-    private double[] vectorTwo = new double[3]; // Point 1 to 3
-    private double[] vectorThree = new double[3]; // Point 2 to 3, for area calculations
-    private double[] normalVector = new double[3];
+    private final double[] currentCoords = new double[3]; // For loop tracking
+    private final double[] vectorOne = new double[3]; // Point 1 to 2
+    private final double[] vectorTwo = new double[3]; // Point 1 to 3
+    private final double[] vectorThree = new double[3]; // Point 2 to 3, for area calculations
+    private final double[] normalVector = new double[3];
 
     /**
      *

@@ -28,8 +28,8 @@ public class SignOverwriteBrush extends Brush {
     private static final int SIGN_LINE_2 = 2;
     private static final int SIGN_LINE_3 = 3;
     private static final int SIGN_LINE_4 = 4;
-    private String[] signTextLines = new String[NUM_SIGN_LINES];
-    private boolean[] signLinesEnabled = new boolean[NUM_SIGN_LINES];
+    private final String[] signTextLines = new String[NUM_SIGN_LINES];
+    private final boolean[] signLinesEnabled = new boolean[NUM_SIGN_LINES];
     private boolean rangedMode = false;
 
     /**

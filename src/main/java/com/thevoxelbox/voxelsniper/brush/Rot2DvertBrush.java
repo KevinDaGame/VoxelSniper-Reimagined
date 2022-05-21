@@ -20,7 +20,7 @@ import org.bukkit.block.data.BlockData;
 // original 2d horizontal brush if you wish to make anything similar to this, and start there. I didn't bother renaming everything.
 public class Rot2DvertBrush extends Brush {
 
-    private int mode = 0;
+    private final int mode = 0;
     private int bSize;
     private int brushSize;
     private BlockWrapper[][][] snap;

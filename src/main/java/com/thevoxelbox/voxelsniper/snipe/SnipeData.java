@@ -25,7 +25,7 @@ public class SnipeData {
 
     private int range = 0;
     private boolean ranged = false;
-    private boolean lightning = false;
+    private final boolean lightning = false;
 
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 

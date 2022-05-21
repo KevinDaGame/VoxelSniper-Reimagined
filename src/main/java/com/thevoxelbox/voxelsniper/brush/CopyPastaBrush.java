@@ -27,13 +27,13 @@ public class CopyPastaBrush extends Brush {
     private int numBlocks = 0;
     private int[] firstPoint = new int[3];
     private int[] secondPoint = new int[3];
-    private int[] pastePoint = new int[3];
-    private int[] minPoint = new int[3];
-    private int[] offsetPoint = new int[3];
+    private final int[] pastePoint = new int[3];
+    private final int[] minPoint = new int[3];
+    private final int[] offsetPoint = new int[3];
 
     private BlockData[] substanceArray;
 
-    private int[] arraySize = new int[3];
+    private final int[] arraySize = new int[3];
     private int pivot = 0; // ccw degrees    
 
     /**

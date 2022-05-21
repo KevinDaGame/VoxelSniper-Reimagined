@@ -74,15 +74,15 @@ public enum Performer {
     //COMBO_INK_NOPHYS_UPDATE(  pComboInkNoPhysUpdate.class,    "ciup",         "combo-ink-update-nophys"), //              place combo, replace ink, graphical update, no physics
     //COMBO_COMBO_UPDATE(       pComboComboUpdate.class,        "ccu",          "combo-combo-update"),      //              place combo, replace combo, graphical update
     //COMBO_COMBO_NOPHYS_UPDATE(pComboComboNoPhysUpdate.class,  "ccup",         "combo-combo-update-nophys"),//             place combo, replace combo, graphical update, no physics
-    private static Map<String, vPerformer> performers;
-    private static Map<String, String> long_names;
-    private Class<? extends vPerformer> pclass;
-    private String short_name;
-    private String long_name;
+    private static final Map<String, vPerformer> performers;
+    private static final Map<String, String> long_names;
+    private final Class<? extends vPerformer> pclass;
+    private final String short_name;
+    private final String long_name;
     public static String performer_list_short = "";
     public static String performer_list_long = "";
 
-    private Performer(Class<? extends vPerformer> c, String s, String l) {
+    Performer(Class<? extends vPerformer> c, String s, String l) {
         pclass = c;
         short_name = s;
         long_name = l;

@@ -31,7 +31,7 @@ public class SplatterBallBrush extends PerformerBrush {
     private int seedPercent; // Chance block on first pass is made active
     private int growPercent; // chance block on recursion pass is made active
     private int splatterRecursions; // How many times you grow the seeds
-    private Random generator = new Random();
+    private final Random generator = new Random();
 
     /**
      *

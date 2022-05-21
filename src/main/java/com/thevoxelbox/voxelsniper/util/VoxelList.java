@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class VoxelList {
 
-    private List<Material> materials = new ArrayList<>();
+    private final List<Material> materials = new ArrayList<>();
 
     public void add(Material material) {
         if (!materials.contains(material)) {

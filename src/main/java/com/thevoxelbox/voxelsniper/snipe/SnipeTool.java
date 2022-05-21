@@ -21,7 +21,7 @@ public class SnipeTool {
     VoxelMessage messageHelper;
     ClassToInstanceMap<IBrush> brushes = MutableClassToInstanceMap.create();
     private Class<? extends IBrush> previousBrush;
-    private BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
+    private final BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
     SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {

@@ -215,7 +215,7 @@ public class JockeyBrush extends Brush {
         STACK_ALL_ENTITIES("Stack (All)"),
         STACK_PLAYER_ONLY("Stack (Player only)");
 
-        private String name;
+        private final String name;
 
         JockeyType(String name) {
             this.name = name;

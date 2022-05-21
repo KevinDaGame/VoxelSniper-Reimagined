@@ -32,9 +32,9 @@ public class SplatterOverlayBrush extends PerformerBrush {
     private int seedPercent; // Chance block on first pass is made active
     private int growPercent; // chance block on recursion pass is made active
     private int splatterRecursions; // How many times you grow the seeds
-    private int yOffset = 0;
-    private boolean randomizeHeight = false;
-    private Random generator = new Random();
+    private final int yOffset = 0;
+    private final boolean randomizeHeight = false;
+    private final Random generator = new Random();
     private int depth = 3;
 
     private boolean allBlocks = false;
