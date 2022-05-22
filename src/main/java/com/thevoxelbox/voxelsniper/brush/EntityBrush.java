@@ -76,7 +76,7 @@ public class EntityBrush extends Brush {
             entities.add(entity.name());
         }
 
-        return new ArrayList<>(entities);
+        return entities;
     }
 
     @Override
