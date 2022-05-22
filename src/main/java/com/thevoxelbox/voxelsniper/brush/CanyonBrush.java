@@ -127,10 +127,7 @@ public class CanyonBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("y"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("y"));
     }
 
     @Override
