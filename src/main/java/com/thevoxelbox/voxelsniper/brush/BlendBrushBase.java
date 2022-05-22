@@ -54,10 +54,7 @@ public abstract class BlendBrushBase extends Brush {
 
     @Override
     public List<String> registerArguments() {
-
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("water"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("water"));
     }
 
     @Override
