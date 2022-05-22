@@ -6,14 +6,13 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
-import org.bukkit.entity.EntityType;
 
 /**
  *
@@ -155,7 +154,7 @@ public class EntityRemovalBrush extends Brush {
                 }
 
                 return;
-            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 
@@ -164,11 +163,8 @@ public class EntityRemovalBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("+", "-", "reset", "clear", "list"));
 
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("+", "-", "reset", "clear", "list"));
     }
 
     @Override

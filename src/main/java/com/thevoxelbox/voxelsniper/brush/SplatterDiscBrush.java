@@ -2,14 +2,14 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -31,7 +31,7 @@ public class SplatterDiscBrush extends PerformerBrush {
     private int seedPercent; // Chance block on first pass is made active
     private int growPercent; // chance block on recursion pass is made active
     private int splatterRecursions; // How many times you grow the seeds
-    private Random generator = new Random();
+    private final Random generator = new Random();
 
     /**
      *
@@ -100,9 +100,8 @@ public class SplatterDiscBrush extends PerformerBrush {
 
             // integrate tempsplat back into splat at end of iteration
             for (int x = 2 * v.getBrushSize(); x >= 0; x--) {
-                for (int y = 2 * v.getBrushSize(); y >= 0; y--) {
-                    splat[x][y] = tempSplat[x][y];
-                }
+                if (2 * v.getBrushSize() + 1 >= 0)
+                    System.arraycopy(tempSplat[x], 0, splat[x], 0, 2 * v.getBrushSize() + 1);
             }
         }
         this.growPercent = gref;
@@ -193,7 +192,7 @@ public class SplatterDiscBrush extends PerformerBrush {
 
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
                     v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
-                    this.growPercent = (int) temp;
+                    this.growPercent = temp;
                 } else {
                     v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
                 }
@@ -211,7 +210,7 @@ public class SplatterDiscBrush extends PerformerBrush {
                 }
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

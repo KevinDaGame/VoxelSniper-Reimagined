@@ -1,15 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-
 import org.bukkit.block.Block;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Dome_Brush
@@ -49,7 +48,7 @@ public class DomeBrush extends Brush {
         final int absoluteHeight = Math.abs(v.getVoxelHeight());
         final boolean negative = v.getVoxelHeight() < 0;
 
-        final Set<Vector> changeablePositions = new HashSet<Vector>();
+        final Set<Vector> changeablePositions = new HashSet<>();
 
         final Undo undo = new Undo();
 

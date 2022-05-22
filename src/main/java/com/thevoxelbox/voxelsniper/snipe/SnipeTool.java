@@ -1,11 +1,7 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ClassToInstanceMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.MutableClassToInstanceMap;
+import com.google.common.collect.*;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
@@ -21,7 +17,7 @@ public class SnipeTool {
     VoxelMessage messageHelper;
     ClassToInstanceMap<IBrush> brushes = MutableClassToInstanceMap.create();
     private Class<? extends IBrush> previousBrush;
-    private BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
+    private final BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
     SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
@@ -106,9 +102,7 @@ public class SnipeTool {
     IBrush instanciateBrush(Class<? extends IBrush> brush) {
         try {
             return brush.newInstance();
-        } catch (InstantiationException e) {
-            return null;
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
     }

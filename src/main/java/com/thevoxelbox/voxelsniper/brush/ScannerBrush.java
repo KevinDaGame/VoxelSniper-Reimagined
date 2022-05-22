@@ -3,13 +3,13 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author DivineRage
@@ -33,11 +33,7 @@ public class ScannerBrush extends Brush {
     private int clamp(final int value, final int min, final int max) {
         if (value < min) {
             return min;
-        } else if (value > max) {
-            return max;
-        } else {
-            return value;
-        }
+        } else return Math.min(value, max);
     }
 
     private void scan(final SnipeData v, final BlockFace bf) {
@@ -123,7 +119,6 @@ public class ScannerBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void arrow(final SnipeData v) {
         this.checkFor = v.getVoxelMaterial();
@@ -150,7 +145,7 @@ public class ScannerBrush extends Brush {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
                 v.sendMessage(ChatColor.AQUA + "Scanner depth set to " + this.depth);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
@@ -158,11 +153,8 @@ public class ScannerBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("depth"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("depth"));
     }
 
     @Override

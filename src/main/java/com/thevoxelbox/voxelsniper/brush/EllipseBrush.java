@@ -2,13 +2,14 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipse_Brush
@@ -242,7 +243,7 @@ public class EllipseBrush extends PerformerBrush {
                 v.sendMessage(ChatColor.AQUA + "Render step number set to: " + this.steps);
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

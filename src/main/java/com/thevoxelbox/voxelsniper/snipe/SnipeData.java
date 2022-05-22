@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -25,7 +24,7 @@ public class SnipeData {
 
     private int range = 0;
     private boolean ranged = false;
-    private boolean lightning = false;
+    private final boolean lightning = false;
 
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 

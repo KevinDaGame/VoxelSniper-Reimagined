@@ -2,13 +2,14 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipsoid_Brush
@@ -19,7 +20,7 @@ public class EllipsoidBrush extends PerformerBrush {
     private double xRad;
     private double yRad;
     private double zRad;
-    private boolean istrue = false;
+    private final boolean istrue = false;
 
     /**
      *
@@ -110,7 +111,7 @@ public class EllipsoidBrush extends PerformerBrush {
                 v.sendMessage(ChatColor.AQUA + "Z radius set to: " + this.zRad);
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

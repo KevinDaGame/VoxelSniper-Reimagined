@@ -4,11 +4,12 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Extrude_Brush
@@ -102,7 +103,6 @@ public class ExtrudeBrush extends Brush {
         v.owner().storeUndo(undo);
     }
 
-    @SuppressWarnings("deprecation")
     private Undo perform(final Block b1, final Block b2, final SnipeData v, final Undo undo) {
         Block clampedBlock1 = this.clampY(b1.getX(), b1.getY(), b1.getZ());
         Block clampedBlock2 = this.clampY(b2.getX(), b2.getY(), b2.getZ());
@@ -181,11 +181,8 @@ public class ExtrudeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("smooth"));
-        
-        return arguments;
+
+        return new ArrayList<>(Lists.newArrayList("smooth"));
     }
 
     @Override

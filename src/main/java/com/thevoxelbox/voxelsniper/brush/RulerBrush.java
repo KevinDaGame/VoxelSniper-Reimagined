@@ -3,7 +3,6 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
@@ -18,9 +17,9 @@ public class RulerBrush extends Brush {
     private boolean first = true;
     private Vector coords = new Vector(0, 0, 0);
 
-    private int xOff = 0;
-    private int yOff = 0;
-    private int zOff = 0;
+    private final int xOff = 0;
+    private final int yOff = 0;
+    private final int zOff = 0;
 
     /**
      *

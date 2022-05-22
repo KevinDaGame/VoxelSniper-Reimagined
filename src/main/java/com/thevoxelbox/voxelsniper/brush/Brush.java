@@ -1,21 +1,23 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import com.thevoxelbox.voxelsniper.*;
-import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Abstract implementation of the {@link IBrush} interface.
@@ -136,7 +138,7 @@ public abstract class Brush implements IBrush {
         } else {
             BlockHelper rangeBlockHelper;
             if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isRanged()) {
-                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld(), (double) v.owner().getSnipeData(v.owner().getCurrentToolId()).getRange());
+                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld(), v.owner().getSnipeData(v.owner().getCurrentToolId()).getRange());
                 this.setTargetBlock(rangeBlockHelper.getRangeBlock());
             } else {
                 rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld());
@@ -215,7 +217,6 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    @SuppressWarnings("deprecation")
     protected Material getBlockMaterialAt(int x, int y, int z) {
         return clampY(x, y, z).getBlockData().getMaterial();
     }
@@ -228,7 +229,6 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
-    @SuppressWarnings("deprecation")
     protected BlockData getBlockDataAt(int x, int y, int z) {
         return this.clampY(x, y, z).getBlockData();
     }

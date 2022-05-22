@@ -3,7 +3,6 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -12,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,9 +75,9 @@ public class JockeyBrush extends Brush {
 
             if (!playerTeleportEvent.isCancelled()) {
                 if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
-                    player.setPassenger(closest);
+                    player.addPassenger(closest);
                 } else {
-                    closest.setPassenger(player);
+                    closest.addPassenger(player);
                     jockeyedEntity = closest;
                 }
                 v.sendMessage(ChatColor.GOLD + "You are now sitting on the most nearby entity!");
@@ -97,12 +97,12 @@ public class JockeyBrush extends Brush {
         for (Entity entity : nearbyEntities) {
             if (!(stackHeight >= ENTITY_STACK_LIMIT)) {
                 if (jockeyType == JockeyType.STACK_ALL_ENTITIES) {
-                    lastEntity.setPassenger(entity);
+                    lastEntity.addPassenger(entity);
                     lastEntity = entity;
                     stackHeight++;
                 } else if (jockeyType == JockeyType.STACK_PLAYER_ONLY) {
                     if (entity instanceof Player) {
-                        lastEntity.setPassenger(entity);
+                        lastEntity.addPassenger(entity);
                         lastEntity = entity;
                         stackHeight++;
                     }
@@ -192,17 +192,14 @@ public class JockeyBrush extends Brush {
                 }
             }
             v.sendMessage("Current Jockey Mode: " + ChatColor.GREEN + jockeyType.toString());
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
     }
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("inverse", "stack", "normal", "player"));
 
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal", "player"));
     }
 
     /**
@@ -216,7 +213,7 @@ public class JockeyBrush extends Brush {
         STACK_ALL_ENTITIES("Stack (All)"),
         STACK_PLAYER_ONLY("Stack (Player only)");
 
-        private String name;
+        private final String name;
 
         JockeyType(String name) {
             this.name = name;

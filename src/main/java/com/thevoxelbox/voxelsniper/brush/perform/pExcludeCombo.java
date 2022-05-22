@@ -6,7 +6,6 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
-
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -37,7 +36,6 @@ public class pExcludeCombo extends vPerformer {
         excludeList = v.getVoxelList();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (!excludeList.contains(b.getType())) {

@@ -2,13 +2,14 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 
 /**
  * @author Kavutop
@@ -108,7 +109,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.setVoxelHeight(Integer.parseInt(params[1]));
                 v.getVoxelMessage().height();
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 
@@ -117,7 +118,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.setcCen(Integer.parseInt(params[1]));
                 v.sendMessage(ChatColor.AQUA + "Cylinder will shift by " + v.getcCen() + " blocks on y-axis");
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 

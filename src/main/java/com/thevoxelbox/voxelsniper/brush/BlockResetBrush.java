@@ -1,19 +1,18 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import java.util.ArrayList;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+
+import java.util.ArrayList;
 
 /**
  * @author MikeMatrix
  */
 public class BlockResetBrush extends Brush {
 
-    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<Material>();
+    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<>();
 
     static {
         BlockResetBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
@@ -52,7 +51,6 @@ public class BlockResetBrush extends Brush {
         this.setName("Block Reset Brush");
     }
 
-    @SuppressWarnings("deprecation")
     private void applyBrush(final SnipeData v) {
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {

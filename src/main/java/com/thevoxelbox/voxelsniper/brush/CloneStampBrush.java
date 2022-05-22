@@ -3,10 +3,10 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.ChatColor;
 
 /**
  * The CloneStamp class is used to create a collection of blocks in a cylinder shape according to the selection the player has set.
@@ -153,11 +153,8 @@ public class CloneStampBrush extends StampBrush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("air", "fill", "default"));
 
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("air", "fill", "default"));
     }
 
     @Override

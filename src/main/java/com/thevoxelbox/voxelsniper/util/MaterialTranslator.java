@@ -1,7 +1,8 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import java.util.HashMap;
 import org.bukkit.Material;
+
+import java.util.HashMap;
 
 /**
  * Resolves legacy numerical item IDs to Materials.

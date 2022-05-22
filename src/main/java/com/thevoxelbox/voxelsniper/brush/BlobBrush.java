@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import java.util.Random;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.ChatColor;
+import java.util.Random;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Blob_Brush
@@ -23,7 +22,7 @@ public class BlobBrush extends PerformerBrush {
     private static final int GROW_PERCENT_MIN = 1;
     private static final int GROW_PERCENT_MAX = 9999;
 
-    private Random randomGenerator = new Random();
+    private final Random randomGenerator = new Random();
     private int growPercent = GROW_PERCENT_DEFAULT; // chance block on recursion pass is made active
 
     public BlobBrush() {
@@ -97,9 +96,7 @@ public class BlobBrush extends PerformerBrush {
             // integrate tempsplat back into splat at end of iteration
             for (int x = brushSizeDoubled; x >= 0; x--) {
                 for (int y = brushSizeDoubled; y >= 0; y--) {
-                    for (int z = brushSizeDoubled; z >= 0; z--) {
-                        splat[x][y][z] = tempSplat[x][y][z];
-                    }
+                    System.arraycopy(tempSplat[x][y], 0, splat[x][y], 0, brushSizeDoubled + 1);
                 }
             }
         }
@@ -175,9 +172,7 @@ public class BlobBrush extends PerformerBrush {
             // integrate tempsplat back into splat at end of iteration
             for (int x = brushSizeDoubled; x >= 0; x--) {
                 for (int y = brushSizeDoubled; y >= 0; y--) {
-                    for (int z = brushSizeDoubled; z >= 0; z--) {
-                        splat[x][y][z] = tempSplat[x][y][z];
-                    }
+                    System.arraycopy(tempSplat[x][y], 0, splat[x][y], 0, brushSizeDoubled + 1);
                 }
             }
         }
@@ -245,7 +240,7 @@ public class BlobBrush extends PerformerBrush {
                     v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
                 }
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

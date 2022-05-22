@@ -5,17 +5,17 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Tree_Brush
@@ -58,19 +58,19 @@ public class TreeSnipeBrush extends Brush {
     }
 
     private void printTreeType(final VoxelMessage vm) {
-        String printout = "";
+        StringBuilder printout = new StringBuilder();
 
         boolean delimiterHelper = true;
         for (final TreeType treeType : TreeType.values()) {
             if (delimiterHelper) {
                 delimiterHelper = false;
             } else {
-                printout += ", ";
+                printout.append(", ");
             }
-            printout += ((treeType.equals(this.treeType)) ? ChatColor.GRAY + treeType.name().toLowerCase() : ChatColor.DARK_GRAY + treeType.name().toLowerCase()) + ChatColor.WHITE;
+            printout.append((treeType.equals(this.treeType)) ? ChatColor.GRAY + treeType.name().toLowerCase() : ChatColor.DARK_GRAY + treeType.name().toLowerCase()).append(ChatColor.WHITE);
         }
 
-        vm.custom(printout);
+        vm.custom(printout.toString());
     }
 
     @Override
@@ -108,11 +108,8 @@ public class TreeSnipeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
-
-        return arguments;
+        return new ArrayList<>(Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
     }
 
     @Override

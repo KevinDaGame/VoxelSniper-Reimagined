@@ -1,18 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Arrays;
 
 /**
  * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
@@ -28,8 +24,8 @@ public class SignOverwriteBrush extends Brush {
     private static final int SIGN_LINE_2 = 2;
     private static final int SIGN_LINE_3 = 3;
     private static final int SIGN_LINE_4 = 4;
-    private String[] signTextLines = new String[NUM_SIGN_LINES];
-    private boolean[] signLinesEnabled = new boolean[NUM_SIGN_LINES];
+    private final String[] signTextLines = new String[NUM_SIGN_LINES];
+    private final boolean[] signLinesEnabled = new boolean[NUM_SIGN_LINES];
     private boolean rangedMode = false;
 
     /**
@@ -67,7 +63,6 @@ public class SignOverwriteBrush extends Brush {
             setSignText((Sign) this.getTargetBlock().getState());
         } else {
             v.sendMessage(ChatColor.RED + "Target block is not a sign.");
-            return;
         }
     }
 
@@ -245,7 +240,7 @@ public class SignOverwriteBrush extends Brush {
             return i;
         }
 
-        String newText = "";
+        StringBuilder newText = new StringBuilder();
 
         // go through the array until the next top level parameter is found
         for (i++; i < params.length; i++) {
@@ -255,16 +250,16 @@ public class SignOverwriteBrush extends Brush {
                 i--;
                 break;
             } else {
-                newText += currentParameter + " ";
+                newText.append(currentParameter).append(" ");
             }
         }
 
-        newText = ChatColor.translateAlternateColorCodes('&', newText);
+        newText = new StringBuilder(ChatColor.translateAlternateColorCodes('&', newText.toString()));
 
         // remove last space or return if the string is empty and the user just wanted to set the status
-        if (!newText.isEmpty() && newText.endsWith(" ")) {
-            newText = newText.substring(0, newText.length() - 1);
-        } else if (newText.isEmpty()) {
+        if ((newText.length() > 0) && newText.toString().endsWith(" ")) {
+            newText = new StringBuilder(newText.substring(0, newText.length() - 1));
+        } else if (newText.length() == 0) {
             if (statusSet) {
                 return i;
             }
@@ -274,10 +269,10 @@ public class SignOverwriteBrush extends Brush {
         // check the line length and cut the text if needed
         if (newText.length() > MAX_SIGN_LINE_LENGTH) {
             v.sendMessage(ChatColor.RED + "Warning: Text on line " + lineNumber + " exceeds the maximum line length of " + MAX_SIGN_LINE_LENGTH + " characters. Your text will be cut.");
-            newText = newText.substring(0, MAX_SIGN_LINE_LENGTH);
+            newText = new StringBuilder(newText.substring(0, MAX_SIGN_LINE_LENGTH));
         }
 
-        this.signTextLines[lineIndex] = newText;
+        this.signTextLines[lineIndex] = newText.toString();
         return i;
     }
 
@@ -307,7 +302,7 @@ public class SignOverwriteBrush extends Brush {
             BufferedWriter outStream = new BufferedWriter(outFile);
 
             for (int i = 0; i < this.signTextLines.length; i++) {
-                outStream.write(String.valueOf(this.signLinesEnabled[i]) + "\n");
+                outStream.write(this.signLinesEnabled[i] + "\n");
                 outStream.write(this.signTextLines[i] + "\n");
             }
 
@@ -340,7 +335,7 @@ public class SignOverwriteBrush extends Brush {
             BufferedReader inStream = new BufferedReader(inFile);
 
             for (int i = 0; i < this.signTextLines.length; i++) {
-                this.signLinesEnabled[i] = Boolean.valueOf(inStream.readLine());
+                this.signLinesEnabled[i] = Boolean.parseBoolean(inStream.readLine());
                 this.signTextLines[i] = inStream.readLine();
             }
 
@@ -358,18 +353,14 @@ public class SignOverwriteBrush extends Brush {
      * Clears the internal text buffer. (Sets it to empty strings)
      */
     private void clearBuffer() {
-        for (int i = 0; i < this.signTextLines.length; i++) {
-            this.signTextLines[i] = "";
-        }
+        Arrays.fill(this.signTextLines, "");
     }
 
     /**
      * Resets line enabled states to enabled.
      */
     private void resetStates() {
-        for (int i = 0; i < this.signLinesEnabled.length; i++) {
-            this.signLinesEnabled[i] = true;
-        }
+        Arrays.fill(this.signLinesEnabled, true);
     }
 
     @Override

@@ -2,13 +2,11 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Entity_Brush
@@ -72,16 +70,13 @@ public class EntityBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
         List<String> entities = new ArrayList<>();
 
         for (EntityType entity : EntityType.values()) {
             entities.add(entity.name());
         }
 
-        arguments.addAll(entities);
-        
-        return arguments;
+        return entities;
     }
 
     @Override

@@ -25,18 +25,18 @@ public class BrushesTest {
     private VoxelCommandManager commands;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         brushes = new VoxelBrushManager();
     }
 
     @Test
-    public void testRegisterSniperBrush() throws Exception {
+    public void testRegisterSniperBrush() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
     }
 
     @Test
-    public void testGetBrushForHandle() throws Exception {
+    public void testGetBrushForHandle() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Assert.assertEquals(brush.getClass(), brushes.getBrushForHandle("mockhandle"));
@@ -45,7 +45,7 @@ public class BrushesTest {
     }
 
     @Test
-    public void testRegisteredSniperBrushes() throws Exception {
+    public void testRegisteredSniperBrushes() {
         Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
@@ -53,7 +53,7 @@ public class BrushesTest {
     }
 
     @Test
-    public void testRegisteredSniperBrushHandles() throws Exception {
+    public void testRegisteredSniperBrushHandles() {
         Assert.assertEquals(0, brushes.registeredSniperBrushHandles());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
@@ -61,7 +61,7 @@ public class BrushesTest {
     }
 
     @Test
-    public void testGetSniperBrushHandles() throws Exception {
+    public void testGetSniperBrushHandles() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brush.getClass());
@@ -71,7 +71,7 @@ public class BrushesTest {
     }
 
     @Test
-    public void testGetRegisteredBrushesMultimap() throws Exception {
+    public void testGetRegisteredBrushesMultimap() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Multimap<Class<? extends IBrush>, String> registeredBrushesMultimap = brushes.getRegisteredBrushesMultimap();
@@ -94,13 +94,13 @@ public class BrushesTest {
         System.out.println("PERFORMER ARGUMENTS TEST");
         System.out.println("HINT A:     If this test fails, you need go to registerArguments where the class is failing, and add super.registerArguments() into your own arguments list.");
         System.out.println("EXAMPLE:    arguments.addAll(super.registerArguments());");
-        System.out.println("");
+        System.out.println();
         System.out.println("HINT Z:     If this fails, your own argument is overriding the performer arguments. Please rename your arguments to something else other than \"p\".");
         System.out.println("======================================================================");
 
         for (String brushHandle : brushes.getBrushHandles()) {
             Class<? extends IBrush> clazz = brushes.getBrushForHandle(brushHandle);
-            IBrush brush = clazz.newInstance();
+            IBrush brush = clazz.getDeclaredConstructor().newInstance();
 
             if (brush instanceof PerformerBrush) {
                 List<String> arguments = brush.registerArguments();
@@ -128,16 +128,16 @@ public class BrushesTest {
         System.out.println("PERFORMER ARGUMENTS VALUES TEST");
         System.out.println("HINT A:     If this fails, you need go to registerArgumentValues where the class is failing, and add super.registerArgumentValues() into your own arguments map.");
         System.out.println("EXAMPLE:    argumentValues.putAll(super.registerArgumentValues());");
-        System.out.println("");
+        System.out.println();
         System.out.println("HINT Z:     If this fails, your own argument values are overriding the performer argument values. Please rename your arguments to something else other than \"p\".");
         System.out.println("======================================================================");
 
         Collection<String> performerHandles = Performer.getPerformerHandles();
-        String[] performerHandlesArray = performerHandles.toArray(new String[performerHandles.size()]);
+        String[] performerHandlesArray = performerHandles.toArray(new String[0]);
 
         for (String brushHandle : brushes.getBrushHandles()) {
             Class<? extends IBrush> clazz = brushes.getBrushForHandle(brushHandle);
-            IBrush brush = clazz.newInstance();
+            IBrush brush = clazz.getDeclaredConstructor().newInstance();
 
             if (brush instanceof PerformerBrush) {
                 HashMap<String, List<String>> argumentValues = brush.registerArgumentValues();

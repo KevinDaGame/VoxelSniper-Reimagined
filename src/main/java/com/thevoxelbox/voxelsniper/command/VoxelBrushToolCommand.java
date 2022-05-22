@@ -4,13 +4,13 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class VoxelBrushToolCommand extends VoxelCommand {
 
@@ -63,7 +63,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return true;
                 }
 
-                String toolLabel = Arrays.stream(Arrays.copyOfRange(args, 2, args.length)).collect(Collectors.joining(" "));
+                String toolLabel = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
                 if (sniper.setTool(toolLabel, action, itemInHand)) {
                     player.sendMessage(ChatColor.GOLD + itemInHand.name() + " has been assigned to '" + toolLabel + "' as action " + action.name() + ".");
@@ -71,11 +71,10 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     player.sendMessage(ChatColor.RED + "Couldn't assign action to that tool.");
                 }
 
-                return true;
             } else {
                 player.sendMessage(ChatColor.DARK_AQUA + "Please assign your own label to the tool to identify it.");
-                return true;
             }
+            return true;
         }
 
         

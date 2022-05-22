@@ -1,13 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import java.util.ArrayList;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+
+import java.util.ArrayList;
 
 /**
  * This brush only looks for solid blocks, and then changes those plus any air blocks touching them. If it works, this brush should be faster than the original
@@ -26,7 +25,7 @@ import org.bukkit.block.Block;
  */
 public class BlockResetSurfaceBrush extends Brush {
 
-    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<Material>();
+    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<>();
 
     static {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
@@ -132,7 +131,6 @@ public class BlockResetSurfaceBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void resetBlock(Block block, final byte oldData) {
         // Resets the block state to initial state by creating a new BlockData with default values.
         block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);

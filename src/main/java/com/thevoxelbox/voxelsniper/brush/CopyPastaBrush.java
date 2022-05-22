@@ -4,14 +4,14 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#CopyPasta_Brush
@@ -27,13 +27,13 @@ public class CopyPastaBrush extends Brush {
     private int numBlocks = 0;
     private int[] firstPoint = new int[3];
     private int[] secondPoint = new int[3];
-    private int[] pastePoint = new int[3];
-    private int[] minPoint = new int[3];
-    private int[] offsetPoint = new int[3];
+    private final int[] pastePoint = new int[3];
+    private final int[] minPoint = new int[3];
+    private final int[] offsetPoint = new int[3];
 
     private BlockData[] substanceArray;
 
-    private int[] arraySize = new int[3];
+    private final int[] arraySize = new int[3];
     private int pivot = 0; // ccw degrees    
 
     /**
@@ -192,11 +192,8 @@ public class CopyPastaBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("rotate", "air"));
-        
-        return arguments;
+
+        return new ArrayList<>(Lists.newArrayList("rotate", "air"));
     }
 
     @Override

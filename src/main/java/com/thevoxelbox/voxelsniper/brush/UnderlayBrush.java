@@ -2,14 +2,15 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Underlay_Brush
@@ -32,7 +33,6 @@ public class UnderlayBrush extends PerformerBrush {
         this.setName("Underlay (Reverse Overlay)");
     }
 
-    @SuppressWarnings("deprecation")
     private void underlay(final SnipeData v) {
         final int[][] memory = new int[v.getBrushSize() * 2 + 1][v.getBrushSize() * 2 + 1];
         final double brushSizeSquared = Math.pow(v.getBrushSize() + 0.5, 2);
@@ -156,7 +156,7 @@ public class UnderlayBrush extends PerformerBrush {
 
                 v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

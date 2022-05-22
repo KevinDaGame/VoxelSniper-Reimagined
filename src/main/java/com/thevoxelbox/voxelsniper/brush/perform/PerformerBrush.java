@@ -6,16 +6,15 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.Brush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
-import java.util.ArrayList;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
 
 /**
  * @author Voxel
@@ -52,7 +51,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
     @Override
     public final void parsePerformer(String triggerHandle, String[] args, SnipeData v) {
         if (args.length > 1 && args[0].equalsIgnoreCase("p")) {
-            if (parsePerformer(args[1], v) == false) {
+            if (!parsePerformer(args[1], v)) {
                 parseParameters(triggerHandle, args, v);
             }
         } else {
@@ -69,11 +68,8 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("p"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("p"));
     }
 
     @Override

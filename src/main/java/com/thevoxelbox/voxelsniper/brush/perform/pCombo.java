@@ -5,7 +5,6 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -33,7 +32,6 @@ public class pCombo extends vPerformer {
         voxelSubstance = v.getVoxelSubstance();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         h.put(b);

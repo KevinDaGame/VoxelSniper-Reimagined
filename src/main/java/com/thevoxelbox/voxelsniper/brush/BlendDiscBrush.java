@@ -2,12 +2,12 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
@@ -21,7 +21,6 @@ public class BlendDiscBrush extends BlendBrushBase {
         this.setName("Blend Disc");
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void blend(final SnipeData v) {
         final int brushSize = v.getBrushSize();
@@ -38,9 +37,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
         // Log current materials into newmats
         for (int x = 0; x <= brushSizeDoubled; x++) {
-            for (int z = 0; z <= brushSizeDoubled; z++) {
-                newMaterials[x][z] = oldMaterials[x + 1][z + 1];
-            }
+            System.arraycopy(oldMaterials[x + 1], 1, newMaterials[x], 0, brushSizeDoubled + 1);
         }
 
         // Blend materials

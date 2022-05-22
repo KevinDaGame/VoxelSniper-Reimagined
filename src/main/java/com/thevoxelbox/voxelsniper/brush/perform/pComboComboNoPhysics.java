@@ -5,7 +5,6 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -37,7 +36,6 @@ public class pComboComboNoPhysics extends vPerformer {
         vm.replaceData();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (b.getBlockData().matches(targetSubstance)) {

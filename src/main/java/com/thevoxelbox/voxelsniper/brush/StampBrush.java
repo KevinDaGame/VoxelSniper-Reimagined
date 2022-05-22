@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import java.util.HashSet;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+
+import java.util.HashSet;
 
 /**
  *
@@ -34,7 +33,6 @@ public class StampBrush extends Brush {
          * @param bly
          * @param blz
          */
-        @SuppressWarnings("deprecation")
         public BlockWrapper(final Block b, final int blx, final int bly, final int blz, final World world) {
             this.blockData = b.getBlockData();
             this.x = blx;
@@ -51,10 +49,10 @@ public class StampBrush extends Brush {
         NO_AIR, FILL, DEFAULT
     }
 
-    protected HashSet<BlockWrapper> clone = new HashSet<BlockWrapper>();
-    protected HashSet<BlockWrapper> fall = new HashSet<BlockWrapper>();
-    protected HashSet<BlockWrapper> drop = new HashSet<BlockWrapper>();
-    protected HashSet<BlockWrapper> solid = new HashSet<BlockWrapper>();
+    protected HashSet<BlockWrapper> clone = new HashSet<>();
+    protected HashSet<BlockWrapper> fall = new HashSet<>();
+    protected HashSet<BlockWrapper> drop = new HashSet<>();
+    protected HashSet<BlockWrapper> solid = new HashSet<>();
     protected Undo undo;
     protected boolean sorted = false;
 
@@ -98,7 +96,6 @@ public class StampBrush extends Brush {
     /**
      * @param cb
      */
-    @SuppressWarnings("deprecation")
     protected final void setBlock(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
@@ -108,7 +105,6 @@ public class StampBrush extends Brush {
     /**
      * @param cb
      */
-    @SuppressWarnings("deprecation")
     protected final void setBlockFill(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         if (block.getType() == Material.AIR) {

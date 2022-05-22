@@ -2,8 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class SplineBrush extends PerformerBrush {
 
-    private final ArrayList<Block> endPts = new ArrayList<Block>();
-    private final ArrayList<Block> ctrlPts = new ArrayList<Block>();
-    protected ArrayList<Point> spline = new ArrayList<Point>();
+    private final ArrayList<Block> endPts = new ArrayList<>();
+    private final ArrayList<Block> ctrlPts = new ArrayList<>();
+    protected ArrayList<Point> spline = new ArrayList<>();
     protected boolean set;
     protected boolean ctrl;
     protected String[] sparams = {"ss", "sc", "clear"};

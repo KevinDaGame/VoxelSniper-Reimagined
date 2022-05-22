@@ -4,13 +4,13 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class OceanBrush extends Brush {
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
     private static final int WATER_LEVEL_MIN = 12;
     private static final int LOW_CUT_LEVEL = 12;
-    private static final List<Material> EXCLUDED_MATERIALS = new LinkedList<Material>();
+    private static final List<Material> EXCLUDED_MATERIALS = new LinkedList<>();
 
     static {
         EXCLUDED_MATERIALS.add(Material.AIR);
@@ -117,7 +117,7 @@ public class OceanBrush extends Brush {
             for (int z = minZ; z <= maxZ; z++) {
                 final int currentHeight = getHeight(x, z);
                 final int wLevelDiff = currentHeight - (this.waterLevel - 1);
-                final int newSeaFloorLevel = ((this.waterLevel - wLevelDiff) >= LOW_CUT_LEVEL) ? this.waterLevel - wLevelDiff : LOW_CUT_LEVEL;
+                final int newSeaFloorLevel = Math.max((this.waterLevel - wLevelDiff), LOW_CUT_LEVEL);
 
                 final int highestY = this.getWorld().getHighestBlockYAt(x, z);
 
@@ -193,7 +193,7 @@ public class OceanBrush extends Brush {
                 v.sendMessage(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
@@ -201,11 +201,8 @@ public class OceanBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("water", "floor"));
 
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("water", "floor"));
     }
 
     @Override

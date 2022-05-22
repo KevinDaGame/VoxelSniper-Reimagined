@@ -1,23 +1,23 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelBrushManager;
-import com.thevoxelbox.voxelsniper.VoxelCommandManager;
-import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
-import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
-import java.util.ArrayList;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
-import org.bukkit.ChatColor;
+
+import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
+import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
 
 public class VoxelBrushCommand extends VoxelCommand {
 
@@ -72,7 +72,7 @@ public class VoxelBrushCommand extends VoxelCommand {
 
                 snipeData.getVoxelMessage().size();
                 return true;
-            } catch (NumberFormatException exception) {
+            } catch (NumberFormatException ignored) {
             }
         }
 
@@ -104,11 +104,10 @@ public class VoxelBrushCommand extends VoxelCommand {
                     // Parse performer if the brush is a performer
                     if (newBrush instanceof IPerformerBrush) {
                         ((IPerformerBrush) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
-                        return true;
                     } else {
                         newBrush.parseParameters(args[0], additionalParameters, snipeData);
-                        return true;
                     }
+                    return true;
                 }
                 SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
                 sniper.displayInfo();

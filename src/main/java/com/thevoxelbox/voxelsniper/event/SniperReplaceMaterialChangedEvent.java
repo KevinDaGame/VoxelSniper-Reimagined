@@ -3,7 +3,6 @@ package com.thevoxelbox.voxelsniper.event;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.event.HandlerList;
-import org.bukkit.material.MaterialData;
 
 /**
  *

@@ -1,18 +1,17 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 /**
@@ -23,8 +22,8 @@ import org.bukkit.block.Block;
 public class GenerateTreeBrush extends Brush {
 
     // Tree Variables.
-    private Random randGenerator = new Random();
-    private ArrayList<Block> branchBlocks = new ArrayList<Block>();
+    private final Random randGenerator = new Random();
+    private final ArrayList<Block> branchBlocks = new ArrayList<>();
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
     private Material leavesMaterial = Material.OAK_LEAVES;
@@ -36,7 +35,7 @@ public class GenerateTreeBrush extends Brush {
     private int minRoots = 1;
     private int thickness = 1;
     private int slopeChance = 40;
-    private int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
+    private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     private int heightMininmum = 14;
     private int heightMaximum = 18;
     private int branchLength = 8;
@@ -72,10 +71,10 @@ public class GenerateTreeBrush extends Brush {
 
             // Alters direction according to preferences.
             if (this.randGenerator.nextInt(100) < xPreference) {
-                blockPositionX = blockPositionX + 1 * xDirection;
+                blockPositionX = blockPositionX + xDirection;
             }
             if (this.randGenerator.nextInt(100) < zPreference) {
-                blockPositionZ = blockPositionZ + 1 * zDirection;
+                blockPositionZ = blockPositionZ + zDirection;
             }
 
             // 50% chance to increase elevation every second block.
@@ -421,10 +420,10 @@ public class GenerateTreeBrush extends Brush {
                     zDirection *= -1;
                 }
                 if (this.randGenerator.nextInt(100) < xPreference) {
-                    blockPositionX = blockPositionX + 1 * xDirection;
+                    blockPositionX = blockPositionX + xDirection;
                 }
                 if (this.randGenerator.nextInt(100) < zPreference) {
-                    blockPositionZ = blockPositionZ + 1 * zDirection;
+                    blockPositionZ = blockPositionZ + zDirection;
                 }
 
                 // Creates a trunk section
@@ -633,7 +632,7 @@ public class GenerateTreeBrush extends Brush {
                 v.sendMessage(ChatColor.BLUE + "Leaf thickness set to " + this.nodeMin);
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
 
         }
 
@@ -661,12 +660,9 @@ public class GenerateTreeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
-                "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
 
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
+                "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
     }
 
     @Override

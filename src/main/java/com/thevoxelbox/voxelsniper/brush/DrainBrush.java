@@ -4,12 +4,12 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Drain_Brush
@@ -19,7 +19,7 @@ import org.bukkit.block.Block;
  */
 public class DrainBrush extends Brush {
 
-    private double trueCircle = 0.5;
+    private final double trueCircle = 0.5;
     private boolean disc = false;
 
     /**
@@ -112,11 +112,8 @@ public class DrainBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("shape"));
-        
-        return arguments;
+
+        return new ArrayList<>(Lists.newArrayList("shape"));
     }
 
     @Override

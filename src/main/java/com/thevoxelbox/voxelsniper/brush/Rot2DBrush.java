@@ -4,20 +4,20 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Piotr
  */
 public class Rot2DBrush extends Brush {
 
-    private int mode = 0;
+    private final int mode = 0;
     private int bSize;
     private int brushSize;
     private BlockWrapper[][][] snap;
@@ -30,7 +30,6 @@ public class Rot2DBrush extends Brush {
         this.setName("2D Rotation");
     }
 
-    @SuppressWarnings("deprecation")
     private void getMatrix() {
         this.brushSize = (this.bSize * 2) + 1;
 
@@ -181,7 +180,7 @@ public class Rot2DBrush extends Brush {
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
             v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
@@ -189,11 +188,8 @@ public class Rot2DBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Lists.newArrayList("[number]"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("[number]"));
     }
 
     @Override

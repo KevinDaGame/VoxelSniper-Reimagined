@@ -4,14 +4,14 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
+import org.bukkit.ChatColor;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bukkit.ChatColor;
 
 /**
  * @author Voxel
@@ -74,15 +74,15 @@ public enum Performer {
     //COMBO_INK_NOPHYS_UPDATE(  pComboInkNoPhysUpdate.class,    "ciup",         "combo-ink-update-nophys"), //              place combo, replace ink, graphical update, no physics
     //COMBO_COMBO_UPDATE(       pComboComboUpdate.class,        "ccu",          "combo-combo-update"),      //              place combo, replace combo, graphical update
     //COMBO_COMBO_NOPHYS_UPDATE(pComboComboNoPhysUpdate.class,  "ccup",         "combo-combo-update-nophys"),//             place combo, replace combo, graphical update, no physics
-    private static Map<String, vPerformer> performers;
-    private static Map<String, String> long_names;
-    private Class<? extends vPerformer> pclass;
-    private String short_name;
-    private String long_name;
+    private static final Map<String, vPerformer> performers;
+    private static final Map<String, String> long_names;
+    private final Class<? extends vPerformer> pclass;
+    private final String short_name;
+    private final String long_name;
     public static String performer_list_short = "";
     public static String performer_list_long = "";
 
-    private Performer(Class<? extends vPerformer> c, String s, String l) {
+    Performer(Class<? extends vPerformer> c, String s, String l) {
         pclass = c;
         short_name = s;
         long_name = l;
@@ -94,18 +94,11 @@ public enum Performer {
             try {
                 p = pclass.getConstructor().newInstance();
                 return p;
-            } catch (InstantiationException ex) {
-                Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvocationTargetException ex) {
+            } catch (InstantiationException | InvocationTargetException | IllegalArgumentException |
+                     IllegalAccessException ex) {
                 Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
+        } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -132,8 +125,8 @@ public enum Performer {
     }
 
     static {
-        performers = new TreeMap<String, vPerformer>();
-        long_names = new TreeMap<String, String>();
+        performers = new TreeMap<>();
+        long_names = new TreeMap<>();
 
         for (Performer pe : values()) {
             performers.put(pe.short_name, pe.getPerformer());

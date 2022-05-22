@@ -3,15 +3,15 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
 
 /**
  * @author Monofraps
  */
-@SuppressWarnings("deprecation")
 public abstract class BlendBrushBase extends Brush {
 
     protected boolean excludeAir = true;
@@ -55,11 +55,7 @@ public abstract class BlendBrushBase extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("water"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("water"));
     }
 
     @Override

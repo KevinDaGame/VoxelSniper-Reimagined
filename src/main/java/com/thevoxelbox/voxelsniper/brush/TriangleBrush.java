@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 
 /**
@@ -12,15 +12,15 @@ import org.bukkit.ChatColor;
  */
 public class TriangleBrush extends PerformerBrush {
 
-    private double[] coordsOne = new double[3]; // Three corners
-    private double[] coordsTwo = new double[3];
-    private double[] coordsThree = new double[3];
+    private final double[] coordsOne = new double[3]; // Three corners
+    private final double[] coordsTwo = new double[3];
+    private final double[] coordsThree = new double[3];
     private int cornernumber = 1;
-    private double[] currentCoords = new double[3]; // For loop tracking
-    private double[] vectorOne = new double[3]; // Point 1 to 2
-    private double[] vectorTwo = new double[3]; // Point 1 to 3
-    private double[] vectorThree = new double[3]; // Point 2 to 3, for area calculations
-    private double[] normalVector = new double[3];
+    private final double[] currentCoords = new double[3]; // For loop tracking
+    private final double[] vectorOne = new double[3]; // Point 1 to 2
+    private final double[] vectorTwo = new double[3]; // Point 1 to 3
+    private final double[] vectorThree = new double[3]; // Point 2 to 3, for area calculations
+    private final double[] normalVector = new double[3];
 
     /**
      *
@@ -86,7 +86,7 @@ public class TriangleBrush extends PerformerBrush {
         lengthThree = Math.pow(Math.pow(this.vectorThree[0], 2) + Math.pow(this.vectorThree[1], 2) + Math.pow(this.vectorThree[2], 2), .5);
 
         // Bigger vector determines brush size
-        final int brushSize = (int) Math.ceil((lengthOne > lengthTwo) ? lengthOne : lengthTwo);
+        final int brushSize = (int) Math.ceil(Math.max(lengthOne, lengthTwo));
 
         // Calculate constant term
         final double planeConstant = this.normalVector[0] * this.coordsOne[0] + this.normalVector[1] * this.coordsOne[1] + this.normalVector[2] * this.coordsOne[2];

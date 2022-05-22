@@ -5,9 +5,9 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.HashSet;
-import org.bukkit.block.data.BlockData;
 
 /**
  * @author Piotr
@@ -15,7 +15,7 @@ import org.bukkit.block.data.BlockData;
 // TODO: Figure out what this does
 public class PullBrush extends Brush {
 
-    private final HashSet<BlockWrapper> surface = new HashSet<BlockWrapper>();
+    private final HashSet<BlockWrapper> surface = new HashSet<>();
     private int vh;
     private double c1 = 1;
     private double c2 = 0;
@@ -99,7 +99,6 @@ public class PullBrush extends Brush {
 
     }
 
-    @SuppressWarnings("deprecation")
     private void setBlock(final BlockWrapper block) {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == Material.AIR) {
@@ -116,7 +115,6 @@ public class PullBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void setBlockDown(final BlockWrapper block) {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         currentBlock.setBlockData(block.getBlockData());
@@ -142,7 +140,6 @@ public class PullBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void powder(final SnipeData v) {
         this.vh = v.getVoxelHeight();
@@ -259,7 +256,6 @@ public class PullBrush extends Brush {
          * @param block
          * @param st
          */
-        @SuppressWarnings("deprecation")
         public BlockWrapper(final Block block, final double st) {
             this.blockData = block.getBlockData();
             this.x = block.getX();
