@@ -311,7 +311,7 @@ public class BlockHelper {
         if (bestMatch != null) {
             if (auto) {
                 try {
-                    final int i = bestMatch.getArt().getId() + (back ? -1 : 1);
+                    final int i = (bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length) % Art.values().length;
                     Art art = Art.getById(i);
                     if (art == null) {
                         p.sendMessage(ChatColor.RED + "This is the final painting, try scrolling to the other direction.");
