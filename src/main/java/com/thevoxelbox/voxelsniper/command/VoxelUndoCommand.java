@@ -1,12 +1,13 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import java.util.ArrayList;
-import java.util.List;
+import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VoxelUndoCommand extends VoxelCommand {
 

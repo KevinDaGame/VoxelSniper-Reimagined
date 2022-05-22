@@ -2,14 +2,15 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Overlay_.2F_Topsoil_Brush

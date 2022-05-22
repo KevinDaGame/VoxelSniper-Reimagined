@@ -2,14 +2,7 @@ package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.BrewingStand;
-import org.bukkit.block.Chest;
-import org.bukkit.block.CreatureSpawner;
-import org.bukkit.block.Dispenser;
-import org.bukkit.block.Furnace;
-import org.bukkit.block.Sign;
+import org.bukkit.block.*;
 import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.util.Vector;
 

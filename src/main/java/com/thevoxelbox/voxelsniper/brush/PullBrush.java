@@ -5,9 +5,9 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.HashSet;
-import org.bukkit.block.data.BlockData;
 
 /**
  * @author Piotr

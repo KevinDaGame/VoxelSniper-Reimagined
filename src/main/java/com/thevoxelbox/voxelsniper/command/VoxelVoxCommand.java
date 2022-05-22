@@ -2,11 +2,12 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

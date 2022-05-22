@@ -1,25 +1,14 @@
 package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.brush.IBrush;
-import com.thevoxelbox.voxelsniper.command.VoxelBrushCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelBrushToolCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelDefaultCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelInkCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelInkReplaceCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelPerformerCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelReplaceCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelSniperCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelUndoCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelVariablesCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelVoxCommand;
-import com.thevoxelbox.voxelsniper.command.VoxelVoxelCommand;
+import com.thevoxelbox.voxelsniper.command.*;
+import org.bukkit.command.PluginCommand;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.command.PluginCommand;
 
 /**
  *

@@ -1,12 +1,13 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
-import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
+import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
+import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,10 +16,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
-import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 
 /**
  *

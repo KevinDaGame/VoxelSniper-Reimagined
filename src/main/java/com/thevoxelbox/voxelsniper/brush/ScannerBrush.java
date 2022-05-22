@@ -3,13 +3,13 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author DivineRage
@@ -154,9 +154,7 @@ public class ScannerBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("depth"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("depth"));
     }
 
     @Override

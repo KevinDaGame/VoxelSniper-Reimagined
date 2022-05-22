@@ -11,12 +11,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Moves a selection blockPositionY a certain amount. http://www.voxelwiki.com/minecraft/Voxelsniper#Move_Brush
@@ -277,9 +272,7 @@ public class MoveBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("reset", "x", "y", "z"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("reset", "x", "y", "z"));
     }
 
     @Override

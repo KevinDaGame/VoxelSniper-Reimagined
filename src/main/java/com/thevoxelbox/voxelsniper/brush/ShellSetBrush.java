@@ -43,11 +43,11 @@ public class ShellSetBrush extends Brush {
             final int highY = Math.max(this.block.getY(), bl.getY());
             final int highZ = Math.max(this.block.getZ(), bl.getZ());
 
-            int i = Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY);
-            if (i > MAX_SIZE) {
+            int size = Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY);
+            if (size > MAX_SIZE) {
                 v.sendMessage(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
             } else {
-                final ArrayList<Block> blocks = new ArrayList<>((i / 2));
+                final ArrayList<Block> blocks = new ArrayList<>((size / 2));
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {

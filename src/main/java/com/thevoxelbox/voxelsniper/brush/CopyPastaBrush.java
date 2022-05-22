@@ -4,14 +4,14 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#CopyPasta_Brush
@@ -193,9 +193,7 @@ public class CopyPastaBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("rotate", "air"));
-        
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("rotate", "air"));
     }
 
     @Override

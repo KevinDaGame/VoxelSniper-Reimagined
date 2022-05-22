@@ -4,22 +4,15 @@ import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.ArrayList;
-import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.util.Vector;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
-import static org.bukkit.Material.LAVA;
-import static org.bukkit.Material.WATER;
-import org.bukkit.block.data.BlockData;
 
 /**
  * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
@@ -186,9 +179,7 @@ public class ErodeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        List<String> arguments = new ArrayList<>(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
-        
-        return arguments;
+        return new ArrayList<>(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
     }
 
     /**

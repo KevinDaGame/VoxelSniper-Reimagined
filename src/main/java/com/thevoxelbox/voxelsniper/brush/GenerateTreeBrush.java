@@ -1,18 +1,17 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 /**
@@ -662,10 +661,8 @@ public class GenerateTreeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
+        return new ArrayList<>(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
                 "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
-
-        return arguments;
     }
 
     @Override

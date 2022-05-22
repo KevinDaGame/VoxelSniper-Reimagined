@@ -3,9 +3,6 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,8 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -317,9 +313,7 @@ public class PunishBrush extends Brush {
         List<String> punishArguments = Arrays.stream(Punishment.values()).map(e -> e.name()).collect(Collectors.toList());
         punishArguments.addAll(Lists.newArrayList("-hypno", "-self", "-player"));
 
-        List<String> arguments = new ArrayList<>(punishArguments);
-
-        return arguments;
+        return new ArrayList<>(punishArguments);
     }
 
     @Override

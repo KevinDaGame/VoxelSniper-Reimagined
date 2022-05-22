@@ -1,8 +1,9 @@
 package com.thevoxelbox.voxelsniper;
 
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
 
 /**
  * Bukkit extension point.

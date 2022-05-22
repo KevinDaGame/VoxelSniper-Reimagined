@@ -3,15 +3,15 @@ package com.thevoxelbox.voxelsniper.command;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.entity.Player;
-
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.ChatColor;
 
 public class VoxelPerformerCommand extends VoxelCommand {
 

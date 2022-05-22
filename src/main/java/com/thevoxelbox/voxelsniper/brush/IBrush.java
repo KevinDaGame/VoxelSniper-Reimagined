@@ -3,9 +3,10 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.block.Block;
+
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.block.Block;
 
 /**
  * Brush Interface.

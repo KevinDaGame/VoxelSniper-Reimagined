@@ -1,8 +1,9 @@
 package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
+
+import java.util.stream.Collectors;
 
 /**
  *  Messaging handler for various Voxel functions.

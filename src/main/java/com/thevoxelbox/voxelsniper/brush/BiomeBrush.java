@@ -2,13 +2,14 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
 
 /**
  *

@@ -1,14 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +65,7 @@ public class CometBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        List<String> arguments = new ArrayList<>(Lists.newArrayList("big", "small"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("big", "small"));
     }
 
     @Override
