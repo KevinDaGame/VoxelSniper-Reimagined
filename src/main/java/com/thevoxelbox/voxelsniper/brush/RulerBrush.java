@@ -39,9 +39,7 @@ public class RulerBrush extends Brush {
             this.first = !this.first;
         } else {
             final Undo undo = new Undo();
-
-            undo.put(this.clampY(this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, this.getTargetBlock().getZ() + this.zOff));
-            this.setBlockMaterialAt(this.getTargetBlock().getZ() + this.zOff, this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, voxelMaterial);
+            setBlockMaterialAt(this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, this.getTargetBlock().getZ() + this.zOff, voxelMaterial, undo);
             v.owner().storeUndo(undo);
         }
     }

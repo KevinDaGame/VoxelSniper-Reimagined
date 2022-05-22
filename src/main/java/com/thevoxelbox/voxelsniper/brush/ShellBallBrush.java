@@ -95,10 +95,7 @@ public class ShellBallBrush extends Brush {
 
                 for (int z = 2 * brushSize; z >= 0; z--) {
                     if (xSquared + ySquared + Math.pow(z - brushSize, 2) <= rSquared) {
-                        if (this.getBlockMaterialAt(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z) != newMaterials[x][y][z]) {
-                            undo.put(this.clampY(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z));
-                        }
-                        this.setBlockMaterialAt(blockPositionZ - brushSize + z, blockPositionX - brushSize + x, blockPositionY - brushSize + y, newMaterials[x][y][z]);
+                        setBlockMaterialAt(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z, newMaterials[x][y][z], undo);
                     }
                 }
             }
