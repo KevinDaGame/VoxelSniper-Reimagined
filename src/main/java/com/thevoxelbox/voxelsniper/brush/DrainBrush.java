@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Drain_Brush
