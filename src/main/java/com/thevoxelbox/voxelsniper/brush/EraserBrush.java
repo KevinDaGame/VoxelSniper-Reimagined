@@ -18,9 +18,18 @@ import org.bukkit.block.Block;
 public class EraserBrush extends Brush {
 
     private static final Set<Material> EXCLUSIVE_MATERIALS = EnumSet.of(
-            Material.AIR, Material.STONE, Material.GRASS_BLOCK, Material.DIRT, Material.SAND, Material.GRAVEL, Material.SANDSTONE, Material.DEEPSLATE);
+            Material.AIR, Material.STONE, Material.GRASS_BLOCK, Material.DIRT, Material.SAND, Material.GRAVEL, Material.SANDSTONE);
     private static final Set<Material> EXCLUSIVE_LIQUIDS = EnumSet.of(
             Material.WATER, Material.LAVA);
+
+    static {
+        try {
+            // 1.17+
+            EXCLUSIVE_MATERIALS.add(Material.DEEPSLATE);
+        } catch(Throwable ignore) {
+            // Don't add for older versions
+        }
+    }
 
     /**
      *
