@@ -104,7 +104,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
 
         for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-                for (int y = this.getTargetBlock().getY(); y > 0; y--) {
+                for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) {
                     // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) {
                         // if haven't already found the surface in this column
@@ -196,7 +196,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
 
         for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-                for (int y = this.getTargetBlock().getY(); y > 0; y--) { // start scanning from the height you clicked at
+                for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) { // if inside of the column...&& if to be splattered
                             if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != Material.AIR) { // if not a floating block (like one of Notch'world pools)

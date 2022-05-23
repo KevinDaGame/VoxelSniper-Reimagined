@@ -33,9 +33,9 @@ public class FlatOceanBrush extends Brush {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 // chunk.getWorld() == getWorld()
-                for (int y = 0; y < getMaxHeight(); y++) {
+                for (int y = this.getMinHeight(); y < this.getMaxHeight(); y++) {
                     if (y <= this.floorLevel) {
-                        chunk.getBlock(x, y, z).setType(Material.DIRT);
+                        chunk.getBlock(x, y, z).setType(Material.DIRT, false);
                     } else if (y <= this.waterLevel) {
                         chunk.getBlock(x, y, z).setType(Material.WATER, false);
                     } else {
@@ -94,7 +94,7 @@ public class FlatOceanBrush extends Brush {
             return;
         }
 
-        if (params[0].equalsIgnoreCase("yl")) {
+        if (params[0].equalsIgnoreCase("floor")) {
             int newFloorLevel = Integer.parseInt(params[1]);
 
             if (newFloorLevel > this.waterLevel) {
