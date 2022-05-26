@@ -99,8 +99,8 @@ public class Sniper {
             }
 
             SnipeData snipeData = sniperTool.getSnipeData();
-                Block targetBlock;
-                SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
+            Block targetBlock;
+            SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
             if (getPlayer().isSneaking()) {
 
                 switch (action) {
@@ -132,44 +132,35 @@ public class Sniper {
                                 snipeData.getVoxelMessage().voxel();
                                 return true;
                             default:
-                                break;
+                                return false;
                         }
-                        break;
                     default:
-                        return false;
-                }
-            } else {
-                Block lastBlock;
-
-                switch (action) {
-                    case RIGHT_CLICK_AIR:
-                    case RIGHT_CLICK_BLOCK:
                         break;
-                    default:
-                        return false;
                 }
-
-                if (clickedBlock != null) {
-                    targetBlock = clickedBlock;
-                    lastBlock = clickedBlock.getRelative(clickedFace);
-                } else {
-                    BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
-                    targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
-                    lastBlock = rangeBlockHelper.getLastBlock();
-
-                    if (targetBlock == null || lastBlock == null) {
-                        getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
-                        return true;
-                    }
-                }
-
-                if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
-                    PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
-                    performerBrush.initP(snipeData);
-                }
-
-                return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
             }
+
+            Block lastBlock;
+            if (clickedBlock != null) {
+                targetBlock = clickedBlock;
+                lastBlock = clickedBlock.getRelative(clickedFace);
+            } else {
+                BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
+                targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
+                lastBlock = rangeBlockHelper.getLastBlock();
+
+                if (targetBlock == null || lastBlock == null) {
+                    getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                    return true;
+                }
+            }
+
+            if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
+                PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
+                performerBrush.initP(snipeData);
+            }
+
+            return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+
         }
         return false;
     }
