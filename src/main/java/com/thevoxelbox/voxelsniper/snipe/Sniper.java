@@ -87,83 +87,77 @@ public class Sniper {
                 return false;
         }
 
-        if (sniperTool.hasToolAssigned(itemInHand)) {
-            if (sniperTool.getCurrentBrush() == null) {
-                getPlayer().sendMessage("No Brush selected.");
-                return true;
-            }
-
-            if (!getPlayer().hasPermission(sniperTool.getCurrentBrush().getPermissionNode())) {
-                getPlayer().sendMessage("You are not allowed to use this brush. You're missing the permission node '" + sniperTool.getCurrentBrush().getPermissionNode() + "'");
-                return true;
-            }
-
-            SnipeData snipeData = sniperTool.getSnipeData();
-            Block targetBlock;
-            SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
-            if (getPlayer().isSneaking()) {
-
-                switch (action) {
-                    case LEFT_CLICK_AIR:
-                    case LEFT_CLICK_BLOCK:
-                        if (clickedBlock != null) {
-                            targetBlock = clickedBlock;
-                        } else {
-                            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
-                            targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
-                        }
-
-                        BlockData oldSubstance,
-                                newSubstance;
-                        switch (snipeAction) {
-                            case GUNPOWDER:
-                                oldSubstance = snipeData.getReplaceSubstance();
-                                snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                newSubstance = snipeData.getReplaceSubstance();
-                                Bukkit.getPluginManager().callEvent(new SniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance));
-
-                                snipeData.getVoxelMessage().replace();
-                                return true;
-                            case ARROW:
-                                oldSubstance = snipeData.getVoxelSubstance();
-                                snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                newSubstance = snipeData.getVoxelSubstance();
-                                Bukkit.getPluginManager().callEvent(new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance));
-                                snipeData.getVoxelMessage().voxel();
-                                return true;
-                            default:
-                                return false;
-                        }
-                    default:
-                        break;
-                }
-            }
-
-            Block lastBlock;
-            if (clickedBlock != null) {
-                targetBlock = clickedBlock;
-                lastBlock = clickedBlock.getRelative(clickedFace);
-            } else {
-                BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
-                targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
-                lastBlock = rangeBlockHelper.getLastBlock();
-
-                if (targetBlock == null || lastBlock == null) {
-                    getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
-                    return true;
-                }
-            }
-
-            if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
-                PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
-                performerBrush.initP(snipeData);
-            }
-
-            return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-
+        if (!sniperTool.hasToolAssigned(itemInHand)) {
+            return false;
         }
-        return false;
+        if (sniperTool.getCurrentBrush() == null) {
+            getPlayer().sendMessage("No Brush selected.");
+            return true;
+        }
+
+        if (!getPlayer().hasPermission(sniperTool.getCurrentBrush().getPermissionNode())) {
+            getPlayer().sendMessage("You are not allowed to use this brush. You're missing the permission node '" + sniperTool.getCurrentBrush().getPermissionNode() + "'");
+            return true;
+        }
+
+        SnipeData snipeData = sniperTool.getSnipeData();
+        SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
+        Block targetBlock;
+        Block lastBlock = null;
+
+        if (clickedBlock != null) {
+            targetBlock = clickedBlock;
+        } else {
+            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
+            targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
+            lastBlock = rangeBlockHelper.getLastBlock();
+        }
+
+        if (getPlayer().isSneaking()) {
+            switch (action) {
+                case LEFT_CLICK_AIR:
+                case LEFT_CLICK_BLOCK:
+                    BlockData oldSubstance, newSubstance;
+                    switch (snipeAction) {
+                        case GUNPOWDER:
+                            oldSubstance = snipeData.getReplaceSubstance();
+                            snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                            newSubstance = snipeData.getReplaceSubstance();
+                            Bukkit.getPluginManager().callEvent(new SniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance));
+
+                            snipeData.getVoxelMessage().replace();
+                            return true;
+                        case ARROW:
+                            oldSubstance = snipeData.getVoxelSubstance();
+                            snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                            newSubstance = snipeData.getVoxelSubstance();
+                            Bukkit.getPluginManager().callEvent(new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance));
+                            snipeData.getVoxelMessage().voxel();
+                            return true;
+                        default:
+                            return false;
+                    }
+                default:
+                    break;
+            }
+        }
+
+        if (clickedBlock == null) {
+            if (targetBlock == null || lastBlock == null) {
+                getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                return true;
+            }
+        }
+
+        if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
+            PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
+            performerBrush.initP(snipeData);
+        }
+
+        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+
     }
+
 
     public IBrush setBrush(String toolId, Class<? extends IBrush> brush) {
         if (!tools.containsKey(toolId)) {
