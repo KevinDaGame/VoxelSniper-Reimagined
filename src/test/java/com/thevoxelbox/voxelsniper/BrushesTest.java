@@ -22,7 +22,6 @@ import static org.hamcrest.CoreMatchers.hasItems;
 public class BrushesTest {
 
     private VoxelBrushManager brushes;
-    private VoxelCommandManager commands;
 
     @Before
     public void setUp() {
@@ -30,13 +29,8 @@ public class BrushesTest {
     }
 
     @Test
-    public void testRegisterSniperBrush() {
-        IBrush brush = Mockito.mock(IBrush.class);
-        brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-    }
-
-    @Test
     public void testGetBrushForHandle() {
+        Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Assert.assertEquals(brush.getClass(), brushes.getBrushForHandle("mockhandle"));
@@ -47,9 +41,11 @@ public class BrushesTest {
     @Test
     public void testRegisteredSniperBrushes() {
         Assert.assertEquals(0, brushes.registeredSniperBrushes());
+        Assert.assertEquals(0, brushes.registeredSniperBrushHandles());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Assert.assertEquals(1, brushes.registeredSniperBrushes());
+        Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
@@ -62,6 +58,7 @@ public class BrushesTest {
 
     @Test
     public void testGetSniperBrushHandles() {
+        Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brush.getClass());
@@ -72,6 +69,7 @@ public class BrushesTest {
 
     @Test
     public void testGetRegisteredBrushesMultimap() {
+        Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Multimap<Class<? extends IBrush>, String> registeredBrushesMultimap = brushes.getRegisteredBrushesMultimap();
@@ -113,8 +111,6 @@ public class BrushesTest {
         System.out.println(" ");
         System.out.println(" ");
         System.out.println(" ");
-        // Unload and revert.
-        brushes = new VoxelBrushManager();
     }
 
     @Test
@@ -146,7 +142,5 @@ public class BrushesTest {
             }
         }
         System.out.println("Performer Arguments VALUES Test OK!");
-        // Unload and revert.
-        brushes = new VoxelBrushManager();
     }
 }

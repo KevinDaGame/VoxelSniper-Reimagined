@@ -24,32 +24,38 @@ public class UndoTest
         undo = new Undo();
     }
 
+    private Block mockBlock(Location loc, Material t) {
+        Block block = Mockito.mock(Block.class);
+        BlockState normalBlockState = Mockito.mock(BlockState.class);
+        Mockito.when(block.getLocation())
+                .thenReturn(loc);
+        Mockito.when(block.getState())
+                .thenReturn(normalBlockState);
+        Mockito.when(block.getType())
+                .thenReturn(t);
+
+        Mockito.when(normalBlockState.getLocation())
+                .thenReturn(loc);
+        Mockito.when(normalBlockState.getBlock())
+                .thenReturn(block);
+
+        return block;
+    }
+
     @Test
     public void testGetSize() {
+        Assert.assertEquals(0, undo.getSize());
         World world = Mockito.mock(World.class);
         for (int i = 0; i < 5; i++)
         {
-            Block block = Mockito.mock(Block.class);
-            BlockState blockState = Mockito.mock(BlockState.class);
             Location location = new Location(world, 0, 0, i);
-            Mockito.when(block.getLocation())
-                   .thenReturn(location);
-            Mockito.when(block.getState())
-                   .thenReturn(blockState);
-            Mockito.when(blockState.getLocation())
-                   .thenReturn(location);
+            Block block = mockBlock(location, Material.DIRT);
+
             undo.put(block);
         }
         Assert.assertEquals(5, undo.getSize());
-        Block block = Mockito.mock(Block.class);
-        BlockState blockState = Mockito.mock(BlockState.class);
-        Location location = new Location(world, 0, 0, 6);
-        Mockito.when(block.getLocation())
-               .thenReturn(location);
-        Mockito.when(block.getState())
-               .thenReturn(blockState);
-        Mockito.when(blockState.getLocation())
-               .thenReturn(location);
+        Location location = new Location(world, 0, 0, 8);
+        Block block = mockBlock(location, Material.DIRT);
         undo.put(block);
         Assert.assertEquals(6, undo.getSize());
         undo.put(block);
@@ -59,65 +65,31 @@ public class UndoTest
 
     @Test
     public void testPut() {
+        Assert.assertEquals(0, undo.getSize());
         World world = Mockito.mock(World.class);
-        Block block = Mockito.mock(Block.class);
-        BlockState blockState = Mockito.mock(BlockState.class);
         Location location = new Location(world, 0, 0, 0);
-        Mockito.when(block.getLocation())
-               .thenReturn(location);
-        Mockito.when(block.getState())
-               .thenReturn(blockState);
-        Mockito.when(blockState.getLocation())
-               .thenReturn(location);
+        Block block = mockBlock(location, Material.DIRT);
 
         undo.put(block);
+        Assert.assertEquals(1, undo.getSize());
     }
 
     @Test
     public void testUndo() {
+        Assert.assertEquals(0, undo.getSize());
         World world = Mockito.mock(World.class);
 
-        Block normalBlock = Mockito.mock(Block.class);
-        BlockState normalBlockState = Mockito.mock(BlockState.class);
         Location normalBlockLocation = new Location(world, 0, 0, 0);
-        Mockito.when(normalBlock.getLocation())
-               .thenReturn(normalBlockLocation);
-        Mockito.when(normalBlock.getState())
-               .thenReturn(normalBlockState);
-        Mockito.when(normalBlock.getType())
-               .thenReturn(Material.STONE);
-        Mockito.when(normalBlockState.getLocation())
-               .thenReturn(normalBlockLocation);
-        Mockito.when(normalBlockState.getBlock())
-               .thenReturn(normalBlock);
+        Block normalBlock = mockBlock(normalBlockLocation, Material.STONE);
+        BlockState normalBlockState = normalBlock.getState();
 
-        Block fragileBlock = Mockito.mock(Block.class);
-        BlockState fragileBlockState = Mockito.mock(BlockState.class);
         Location fragileBlockLocation = new Location(world, 0, 0, 1);
-        Mockito.when(fragileBlock.getLocation())
-               .thenReturn(fragileBlockLocation);
-        Mockito.when(fragileBlock.getState())
-               .thenReturn(fragileBlockState);
-        Mockito.when(fragileBlock.getType())
-               .thenReturn(Material.TORCH);
-        Mockito.when(fragileBlockState.getLocation())
-               .thenReturn(fragileBlockLocation);
-        Mockito.when(fragileBlockState.getBlock())
-               .thenReturn(fragileBlock);
+        Block fragileBlock = mockBlock(fragileBlockLocation, Material.TORCH);
+        BlockState fragileBlockState = fragileBlock.getState();
 
-        Block waterBlock = Mockito.mock(Block.class);
-        BlockState waterBlockState = Mockito.mock(BlockState.class);
         Location waterBlockLocation = new Location(world, 0, 0, 2);
-        Mockito.when(waterBlock.getLocation())
-               .thenReturn(waterBlockLocation);
-        Mockito.when(waterBlock.getState())
-               .thenReturn(waterBlockState);
-        Mockito.when(waterBlock.getType())
-               .thenReturn(Material.WATER);
-        Mockito.when(waterBlockState.getLocation())
-               .thenReturn(waterBlockLocation);
-        Mockito.when(waterBlockState.getBlock())
-               .thenReturn(waterBlock);
+        Block waterBlock = mockBlock(waterBlockLocation, Material.WATER);
+        BlockState waterBlockState = waterBlock.getState();
 
 
         undo.put(waterBlock);
@@ -126,8 +98,9 @@ public class UndoTest
         undo.undo();
 
         InOrder inOrder = Mockito.inOrder(normalBlockState, waterBlockState, fragileBlockState);
-        inOrder.verify(normalBlockState).update(Mockito.anyBoolean(), Mockito.anyBoolean());
-        inOrder.verify(fragileBlockState).update(Mockito.anyBoolean(), Mockito.anyBoolean());
-        inOrder.verify(waterBlockState).update(Mockito.anyBoolean(), Mockito.anyBoolean());
+        // first stone, then torch, then water
+        inOrder.verify(normalBlockState).update(true, false);
+        inOrder.verify(fragileBlockState).update(true, false);
+        inOrder.verify(waterBlockState).update(true, false);
     }
 }
