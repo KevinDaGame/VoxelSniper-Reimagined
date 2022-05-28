@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,7 +15,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Set;
-import static org.hamcrest.CoreMatchers.hasItems;
 
 /**
  *
@@ -29,8 +29,13 @@ public class BrushesTest {
     }
 
     @Test
-    public void testGetBrushForHandle() {
+    public void testBrushesEmpty() {
         Assert.assertEquals(0, brushes.registeredSniperBrushes());
+        Assert.assertEquals(0, brushes.registeredSniperBrushHandles());
+    }
+
+    @Test
+    public void testGetBrushForHandle() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Assert.assertEquals(brush.getClass(), brushes.getBrushForHandle("mockhandle"));
@@ -40,17 +45,13 @@ public class BrushesTest {
 
     @Test
     public void testRegisteredSniperBrushes() {
-        Assert.assertEquals(0, brushes.registeredSniperBrushes());
-        Assert.assertEquals(0, brushes.registeredSniperBrushHandles());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Assert.assertEquals(1, brushes.registeredSniperBrushes());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testRegisteredSniperBrushHandles() {
-        Assert.assertEquals(0, brushes.registeredSniperBrushHandles());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
@@ -58,7 +59,6 @@ public class BrushesTest {
 
     @Test
     public void testGetSniperBrushHandles() {
-        Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brush.getClass());
@@ -69,7 +69,6 @@ public class BrushesTest {
 
     @Test
     public void testGetRegisteredBrushesMultimap() {
-        Assert.assertEquals(0, brushes.registeredSniperBrushes());
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
         Multimap<Class<? extends IBrush>, String> registeredBrushesMultimap = brushes.getRegisteredBrushesMultimap();
@@ -129,7 +128,6 @@ public class BrushesTest {
         System.out.println("======================================================================");
 
         Collection<String> performerHandles = Performer.getPerformerHandles();
-        String[] performerHandlesArray = performerHandles.toArray(new String[0]);
 
         for (String brushHandle : brushes.getBrushHandles()) {
             Class<? extends IBrush> clazz = brushes.getBrushForHandle(brushHandle);
@@ -138,7 +136,7 @@ public class BrushesTest {
             if (brush instanceof PerformerBrush) {
                 HashMap<String, List<String>> argumentValues = brush.registerArgumentValues();
                 Assert.assertTrue("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT A above. Failing at: " + clazz.getName(), argumentValues.containsKey("p"));
-                Assert.assertThat("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT Z above. Failing at: " + clazz.getName(), argumentValues.get("p"), hasItems(performerHandlesArray));
+                Assert.assertTrue("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT Z above. Failing at: " + clazz.getName(), argumentValues.get("p").containsAll(performerHandles));
             }
         }
         System.out.println("Performer Arguments VALUES Test OK!");

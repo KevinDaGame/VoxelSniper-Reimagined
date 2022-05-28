@@ -43,8 +43,12 @@ public class UndoTest
     }
 
     @Test
-    public void testGetSize() {
+    public void testUndoEmpty() {
         Assert.assertEquals(0, undo.getSize());
+    }
+
+    @Test
+    public void testGetSize() {
         World world = Mockito.mock(World.class);
         for (int i = 0; i < 5; i++)
         {
@@ -65,7 +69,6 @@ public class UndoTest
 
     @Test
     public void testPut() {
-        Assert.assertEquals(0, undo.getSize());
         World world = Mockito.mock(World.class);
         Location location = new Location(world, 0, 0, 0);
         Block block = mockBlock(location, Material.DIRT);
@@ -76,7 +79,6 @@ public class UndoTest
 
     @Test
     public void testUndo() {
-        Assert.assertEquals(0, undo.getSize());
         World world = Mockito.mock(World.class);
 
         Location normalBlockLocation = new Location(world, 0, 0, 0);
