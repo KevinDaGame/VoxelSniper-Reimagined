@@ -5,6 +5,12 @@ The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigo
 
 I'm thinking of renaming the project to prevent confusion with the already existing VoxelSniper. Please suggest any in the issues section!
 
+Discord 
+-------
+
+We have a discord server!
+https://discord.com/invite/YDjykYsAFF
+
 Minecraft Version
 ------------------
 VoxelSniper is being built against the Bukkit 1.18.1 API.
