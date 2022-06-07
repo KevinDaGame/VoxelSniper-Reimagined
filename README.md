@@ -13,15 +13,18 @@ https://discord.com/invite/YDjykYsAFF
 
 Minecraft Version
 ------------------
-VoxelSniper is being built against the Bukkit 1.18.1 API.
+VoxelSniper is being built against the Bukkit 1.19 API.
+
+- Minecraft 1.19
+- Minecraft 1.18.2
+- Minecraft 1.17.1
+- Minecraft 1.16.5
 
 ***We will not support anything below 1.16.5***
 
- - Minecraft 1.18
-
 Compilation
 -----------
-Pre-compiled JARs will be available in releases..
+Pre-compiled JARs are available in [Releases](https://github.com/KevinDaGame/VoxelSniper/releases).
 
 We use Maven to handle dependencies.
 
