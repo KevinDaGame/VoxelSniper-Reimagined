@@ -22,13 +22,13 @@ public abstract class vPerformer {
 
     public abstract void init(com.thevoxelbox.voxelsniper.snipe.SnipeData v);
 
-    public void setUndo() {
+    public final void setUndo() {
         h = new Undo();
     }
 
     public abstract void perform(Block b);
 
-    public Undo getUndo() {
+    public final Undo getUndo() {
         Undo temp = h;
         h = null;
         return temp;
