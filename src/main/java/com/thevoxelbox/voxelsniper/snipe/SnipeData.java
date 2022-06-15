@@ -1,7 +1,11 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -148,7 +152,11 @@ public class SnipeData {
     }
 
     public final void sendMessage(final String message) {
-        this.owner.getPlayer().sendMessage(message);
+        this.owner.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+    }
+
+    public final void sendMessage(final Messages.Message message) {
+        this.sendMessage(message.getMessage());
     }
 
 }

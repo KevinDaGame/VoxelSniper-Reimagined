@@ -1,5 +1,7 @@
 package com.thevoxelbox.voxelsniper;
 
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +36,8 @@ public class VoxelSniper extends JavaPlugin {
     @Override
     public void onEnable() {
         VoxelSniper.instance = this;
+
+        Messages.load(this);
 
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize();
