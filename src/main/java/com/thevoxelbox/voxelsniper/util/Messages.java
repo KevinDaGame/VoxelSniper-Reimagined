@@ -2,15 +2,18 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
-import javax.annotation.Nonnull;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Locale;
 
-public enum Messages {
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+
+public enum Messages implements ComponentLike {
     BRUSH_MESSAGE_PREFIX,
     BRUSH_NAME,
     BRUSH_CENTER,
@@ -28,7 +31,7 @@ public enum Messages {
     TOGGLE_PRINTOUT,
     TOGGLE_RANGE;
 
-    private Message message;
+    private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
 
     public static void load(VoxelSniper voxelSniper) {
         File langFile = new File(voxelSniper.getDataFolder(), "lang.yml");
@@ -40,46 +43,47 @@ public enum Messages {
             String langMessage = lang.getString(message.name());
             if (langMessage == null) {
                 voxelSniper.getLogger().warning("Unable to load message " + message.name() + ". Please make sure it exists in the lang file.");
-                langMessage = message.name().toLowerCase(Locale.ROOT);
+            } else {
+                message.message = langMessage;
             }
-
-            message.message = new Message(langMessage);
         }
     }
 
-    public final Message replace(String pattern, Object replacement) {
-        return this.message.replace(pattern, replacement);
+    @NotNull public final Message replace(String pattern, Object replacement) {
+        return new Message(this.message).replace(pattern, replacement);
     }
 
-    public final Message append(String message) {
-        return this.message.append(message);
+    @NotNull public final Message append(String message) {
+        return new Message(this.message).append(message);
     }
 
-    public final Message getMessage() {
-        return this.message;
+    @Override
+    public @NotNull Component asComponent() {
+        return MiniMessage.miniMessage().deserialize(this.message);
     }
 
-    public static final class Message {
-        private final String message;
+    public static final class Message implements ComponentLike {
+        @NotNull private String message;
 
-        private Message(String message) {
+        private Message(@NotNull String message) {
             this.message = message;
         }
 
-        public String getMessage() {
-            return message;
+        @NotNull public Message replace(String target, Object replacement) {
+            if (target != null && replacement != null)
+                this.message = this.message.replace(target, String.valueOf(replacement));
+
+            return this;
         }
 
-        public Message replace(String pattern, Object replacement) {
-            if (pattern == null || replacement == null) return this;
-
-            return new Message(this.message.replace(pattern, String.valueOf(replacement)));
+        @NotNull public Message append(String message) {
+            if (message != null) this.message += message;
+            return this;
         }
 
-        public Message append(String message) {
-            if (message == null) return this;
-
-            return new Message(this.message + message);
+        @Override
+        public @NotNull Component asComponent() {
+            return MiniMessage.miniMessage().deserialize(this.message);
         }
     }
 }

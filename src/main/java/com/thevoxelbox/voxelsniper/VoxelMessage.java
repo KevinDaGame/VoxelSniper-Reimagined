@@ -106,7 +106,7 @@ public class VoxelMessage {
     public void size() {
         snipeData.sendMessage(Messages.BRUSH_SIZE.replace("%size%", snipeData.getBrushSize()));
         if (snipeData.getBrushSize() >= BRUSH_SIZE_WARNING_THRESHOLD) {
-            snipeData.sendMessage(Messages.BRUSH_SIZE_LARGE.getMessage());
+            snipeData.sendMessage(Messages.BRUSH_SIZE_LARGE);
         }
     }
 
@@ -141,7 +141,7 @@ public class VoxelMessage {
      */
     public void voxelList() {
         if (snipeData.getVoxelList().isEmpty()) {
-            snipeData.sendMessage(Messages.VOXEL_LIST_EMPTY.getMessage());
+            snipeData.sendMessage(Messages.VOXEL_LIST_EMPTY);
         } else {
 
             String blocks = snipeData.getVoxelList().getList().stream().map(e -> e.getKey().toString()).collect(Collectors.joining(","));
