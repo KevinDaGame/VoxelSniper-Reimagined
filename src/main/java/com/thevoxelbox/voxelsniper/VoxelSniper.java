@@ -7,13 +7,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+
 /**
  * Bukkit extension point.
  */
 public class VoxelSniper extends JavaPlugin {
 
     private static VoxelSniper instance;
-    
+    private static BukkitAudiences adventure;
+
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
     private VoxelSniperConfiguration voxelSniperConfiguration;
 
@@ -22,6 +25,10 @@ public class VoxelSniper extends JavaPlugin {
      */
     public static VoxelSniper getInstance() {
         return VoxelSniper.instance;
+    }
+
+    public static BukkitAudiences getAdventure() {
+        return VoxelSniper.adventure;
     }
 
     /**
@@ -36,6 +43,7 @@ public class VoxelSniper extends JavaPlugin {
     @Override
     public void onEnable() {
         VoxelSniper.instance = this;
+        VoxelSniper.adventure = BukkitAudiences.create(this);
 
         Messages.load(this);
 
@@ -54,5 +62,13 @@ public class VoxelSniper extends JavaPlugin {
 
         // Initialize commands
         VoxelCommandManager.initialize();
+    }
+
+    @Override
+    public void onDisable() {
+        if(VoxelSniper.adventure != null) {
+            VoxelSniper.adventure.close();
+            VoxelSniper.adventure = null;
+        }
     }
 }

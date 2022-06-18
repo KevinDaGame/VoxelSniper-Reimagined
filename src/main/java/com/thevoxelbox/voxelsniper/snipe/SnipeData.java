@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.util.BukkitComponentConverter;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 
 import net.kyori.adventure.audience.Audience;
@@ -12,6 +12,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -160,7 +161,11 @@ public class SnipeData implements Audience {
     }
 
     public final void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type) {
-        this.owner.getPlayer().spigot().sendMessage(new BukkitComponentConverter().convert(message));
+        Player p = this.owner.getPlayer();
+        if (p instanceof Audience)
+            ((Audience)p).sendMessage(source, message, type);
+        else
+            VoxelSniper.getAdventure().player(this.owner.getPlayer()).sendMessage(source, message, type);
     }
 
 }
