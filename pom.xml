@@ -190,8 +190,8 @@
                                     <shadedPattern>com.thevoxelbox.voxelsniper.libs.com.google.common</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>net.kyori.adventure</pattern>
-                                    <shadedPattern>com.thevoxelbox.voxelsniper.libs.adventure</shadedPattern>
+                                    <pattern>net.kyori</pattern>
+                                    <shadedPattern>com.thevoxelbox.voxelsniper.libs.net.kyori</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
