@@ -174,7 +174,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
             this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
             v.sendMessage(ChatColor.GOLD + "Brush tolerance set to " + ChatColor.YELLOW + this.tolerance.name().toLowerCase() + ChatColor.GOLD + ".");
         } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.sendMessage(ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
             sendPerformerMessage(triggerHandle, v);
         }
     }

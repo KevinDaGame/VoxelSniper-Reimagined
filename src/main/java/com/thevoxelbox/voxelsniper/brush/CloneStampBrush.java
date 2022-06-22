@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
@@ -44,18 +46,18 @@ public class CloneStampBrush extends StampBrush {
 
         if (yStartingPoint < this.getMinHeight()) {
             yStartingPoint = this.getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Messages.OFF_WORLD_START_POS);
         } else if (yStartingPoint > this.getMaxHeight() - 1) {
             yStartingPoint = this.getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Messages.OFF_WORLD_START_POS);
         }
 
         if (yEndPoint < this.getMinHeight()) {
             yEndPoint = this.getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Messages.OFF_WORLD_END_POS);
         } else if (yEndPoint > this.getMaxHeight() - 1) {
             yEndPoint = this.getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Messages.OFF_WORLD_END_POS);
         }
 
         final double bSquared = Math.pow(brushSize, 2);
@@ -96,19 +98,19 @@ public class CloneStampBrush extends StampBrush {
         vm.center();
         switch (this.stamp) {
             case DEFAULT:
-                vm.brushMessage("Default Stamp");
+                vm.brushMessage(Messages.DEFAULT_STAMP);
                 break;
 
             case NO_AIR:
-                vm.brushMessage("No-Air Stamp");
+                vm.brushMessage(Messages.NO_AIR_STAMP);
                 break;
 
             case FILL:
-                vm.brushMessage("Fill Stamp");
+                vm.brushMessage(Messages.FILL_STAMP);
                 break;
 
             default:
-                vm.custom(ChatColor.DARK_RED + "Error while stamping! Report");
+                vm.custom(Messages.CLONE_STAMP_ERROR);
                 break;
         }
     }

@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 
@@ -47,7 +49,7 @@ public class EntityBrush extends Brush {
     @SuppressWarnings("deprecation")
     @Override
     public final void info(final VoxelMessage vm) {
-        vm.brushMessage(ChatColor.LIGHT_PURPLE + "Entity Brush" + " (" + this.entityType.getName() + ")");
+        vm.brushMessage(Messages.ENTITY_BRUSH_MESSAGE.replace("%entity%", this.entityType.getName()));
         vm.size();
     }
 

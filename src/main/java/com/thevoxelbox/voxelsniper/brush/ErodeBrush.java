@@ -172,7 +172,7 @@ public class ErodeBrush extends Brush {
             this.presetName = preset.name();
             v.sendMessage(ChatColor.GOLD + "Brush preset changed to " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
         } catch (IllegalArgumentException e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That preset does not exist.");
+            v.sendMessage(ChatColor.RED + "That preset does not exist.");
         }
     }
 

@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -158,7 +160,7 @@ public class MoveBrush extends Brush {
             try {
                 newSelection.calculateRegion();
             } catch (final Exception exception) {
-                v.getVoxelMessage().brushMessage("The new Selection has more blocks than the original selection. This should never happen!");
+                v.sendMessage(exception.getMessage());
             }
 
             for (final BlockState blockState : selection.getBlockStates()) {
@@ -189,7 +191,7 @@ public class MoveBrush extends Brush {
             this.selection = new Selection();
         }
         this.selection.setLocation1(this.getTargetBlock().getLocation());
-        v.getVoxelMessage().brushMessage("Point 1 set.");
+        v.getVoxelMessage().brushMessage(Messages.POINT_1_SET);
 
         try {
             if (this.selection.calculateRegion()) {
@@ -207,7 +209,7 @@ public class MoveBrush extends Brush {
             this.selection = new Selection();
         }
         this.selection.setLocation2(this.getTargetBlock().getLocation());
-        v.getVoxelMessage().brushMessage("Point 2 set.");
+        v.getVoxelMessage().brushMessage(Messages.POINT_2_SET);
 
         try {
             if (this.selection.calculateRegion()) {
@@ -326,7 +328,7 @@ public class MoveBrush extends Brush {
                     final int highY = Math.max(this.location1.getBlockY(), this.location2.getBlockY());
                     final int highZ = Math.max(this.location1.getBlockZ(), this.location2.getBlockZ());
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
-                        throw new Exception(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                        throw new Exception(Messages.SELECTION_SIZE_ABOVE_LIMIT);
                     }
                     final World world = this.location1.getWorld();
                     for (int y = lowY; y <= highY; y++) {

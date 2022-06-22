@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -93,8 +94,7 @@ public class TreeSnipeBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Tree Snipe Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [treeType]  -- Change tree type");
+            v.sendMessage(Messages.TREESNIPE_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -102,7 +102,7 @@ public class TreeSnipeBrush extends Brush {
             this.treeType = TreeType.valueOf(params[0].toUpperCase());
             this.printTreeType(v.getVoxelMessage());
         } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tree type does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.getVoxelMessage().brushMessage(Messages.TREESNIPE_BRUSH_MESSAGE.replace("%triggerHandle%", triggerHandle));
         }
     }
 
