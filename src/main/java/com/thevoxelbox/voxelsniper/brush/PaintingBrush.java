@@ -25,7 +25,7 @@ public class PaintingBrush extends Brush {
      */
     @Override
     protected final void arrow(final SnipeData v) {
-        BlockHelper.paint(v.owner().getPlayer(), true, false, 0);
+        BlockHelper.painting(v.owner().getPlayer(), true, false, 0);
     }
 
     /**
@@ -35,7 +35,7 @@ public class PaintingBrush extends Brush {
      */
     @Override
     protected final void powder(final SnipeData v) {
-        BlockHelper.paint(v.owner().getPlayer(), true, true, 0);
+        BlockHelper.painting(v.owner().getPlayer(), true, true, 0);
     }
 
     @Override

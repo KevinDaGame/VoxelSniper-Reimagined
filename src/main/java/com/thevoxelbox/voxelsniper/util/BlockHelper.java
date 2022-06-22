@@ -286,7 +286,7 @@ public class BlockHelper {
     
     
     /**
-     * The paint method used to scroll or set a painting to a specific type.
+     * The painting method used to scroll or set a painting to a specific type.
      *
      * @param p The player executing the method
      * @param auto Scroll automatically? If false will use 'choice' to try and set the painting
@@ -294,7 +294,7 @@ public class BlockHelper {
      * @param choice Chosen index to set the painting to
      */
     @SuppressWarnings(value = "deprecation")
-    public static void paint(final Player p, final boolean auto, final boolean back, final int choice) {
+    public static void painting(final Player p, final boolean auto, final boolean back, final int choice) {
         Location targetLocation = p.getTargetBlock(null, 4).getLocation();
         Chunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
         double bestDistanceMatch = 50.0;
