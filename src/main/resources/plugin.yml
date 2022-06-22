@@ -59,7 +59,7 @@ commands:
   vox:
     description: Multi-purpose command to perform various utility functions.
     permission: voxelsniper.sniper
-    aliases: [paint, vchunk, goto]
+    aliases: [painting, vchunk, goto]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   vv:
     description: Changes various variables related to voxel brushes.
