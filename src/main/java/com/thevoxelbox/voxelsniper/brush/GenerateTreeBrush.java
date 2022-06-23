@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.LocationWrapper;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,7 +22,7 @@ import java.util.*;
 public class GenerateTreeBrush extends Brush {
 
     // Tree Variables.
-    private final Random randGenerator = new Random();
+    private final Random random = new Random();
     private final ArrayList<Block> branchBlocks = new ArrayList<>();
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
@@ -56,8 +57,8 @@ public class GenerateTreeBrush extends Brush {
         final LocationWrapper origin = new LocationWrapper(location);
 
         // Sets direction preference.
-        final int xPreference = this.randGenerator.nextInt(60) + 20;
-        final int zPreference = this.randGenerator.nextInt(60) + 20;
+        final int xPreference = this.random.nextInt(60) + 20;
+        final int zPreference = this.random.nextInt(60) + 20;
 
         // Iterates according to branch length.
         for (int r = 0; r < this.branchLength; r++) {
@@ -72,7 +73,7 @@ public class GenerateTreeBrush extends Brush {
 
             // 50% chance to increase elevation every second block.
             if (Math.abs(r % 2) == 1) {
-                location.addY(this.randGenerator.nextInt(2));
+                location.addY(this.random.nextInt(2));
             }
 
             // Add block to undo function.
@@ -91,7 +92,7 @@ public class GenerateTreeBrush extends Brush {
 
     private void leafNodeCreate() {
         // Generates the node size.
-        final int nodeRadius = this.randGenerator.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
+        final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
 
         // Lowers the current block in order to start at the bottom of the node.
@@ -106,7 +107,7 @@ public class GenerateTreeBrush extends Brush {
                 for (int y = nodeRadius; y >= 0; y--) {
                     if ((xSquared + Math.pow(y, 2) + zSquared) <= bSquared) {
                         // Chance to skip creation of a block.
-                        if (this.chance(30)) {
+                        if (this.chance(70)) {
                             // If block is Air, create a leaf block.
                             if (location.getOffsetBlock(x, y, z).getType() == Material.AIR) {
                                 // Adds block to undo function.
@@ -118,7 +119,7 @@ public class GenerateTreeBrush extends Brush {
                             }
                         }
                         for (int i = 0; i < 7; i++) {
-                            if (this.chance(30)) {
+                            if (this.chance(70)) {
                                 switch (i) {
                                     case 0:
                                         this.createLeaf(x, y, -z);
@@ -162,7 +163,7 @@ public class GenerateTreeBrush extends Brush {
         final LocationWrapper origin = new LocationWrapper(location);
 
         // Generates the number of roots to create.
-        final int roots = this.randGenerator.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
+        final int roots = this.random.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
 
         // A roots preference to move along the X and Y axis.
         // Loops for each root to be created.
@@ -174,8 +175,8 @@ public class GenerateTreeBrush extends Brush {
             }
 
             // Generate directional preference between 30% and 70%
-            final int xPreference = this.randGenerator.nextInt(30) + 40;
-            final int zPreference = this.randGenerator.nextInt(30) + 40;
+            final int xPreference = this.random.nextInt(30) + 40;
+            final int zPreference = this.random.nextInt(30) + 40;
 
             for (int j = 0; j < this.rootLength; j++) {
                 // For the purposes of this algorithm, logs aren't considered solid.
@@ -240,7 +241,6 @@ public class GenerateTreeBrush extends Brush {
         this.rootCreate(-1, -1);
     }
 
-    @SuppressWarnings("deprecation")
     private void trunkCreate() {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
@@ -271,7 +271,7 @@ public class GenerateTreeBrush extends Brush {
         // If block is air, then create a block.
         if (location.getOffsetBlock(x, 0, z).getType() == Material.AIR) {
             // Adds block to undo function.
-            this.undo.put(this.clampY(x, 0, z));
+            this.undo.put(location.getOffsetClampedBlock(x, 0, z));
             // Creates block.
             location.getOffsetClampedBlock(x, 0, z).setBlockData(woodMaterial.createBlockData(), false);
         }
@@ -289,22 +289,16 @@ public class GenerateTreeBrush extends Brush {
         // Main Trunk
         // ----------
         // Sets diretional preferences.
-        int xPreference = this.randGenerator.nextInt(this.slopeChance);
-        int zPreference = this.randGenerator.nextInt(this.slopeChance);
+        int xPreference = this.random.nextInt(this.slopeChance);
+        int zPreference = this.random.nextInt(this.slopeChance);
 
         // Sets direction.
-        int xDirection = 1;
-        if (this.chance(50)) {
-            xDirection = -1;
-        }
+        int xDirection = this.chance(50) ? -1 : 1;
+        int zDirection = this.chance(50) ? -1 : 1;
 
-        int zDirection = 1;
-        if (this.chance(50)) {
-            zDirection = -1;
-        }
 
         // Generates a height for trunk.
-        int height = this.randGenerator.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
+        int height = this.random.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
 
         for (int p = 0; p < height; p++) {
             if (p > 3) {
@@ -343,8 +337,8 @@ public class GenerateTreeBrush extends Brush {
         // Secondary Trunk
         // ---------------
         // Sets diretional preferences.
-        xPreference = this.randGenerator.nextInt(this.slopeChance);
-        zPreference = this.randGenerator.nextInt(this.slopeChance);
+        xPreference = this.random.nextInt(this.slopeChance);
+        zPreference = this.random.nextInt(this.slopeChance);
 
         // Sets direction.
         xDirection = 1;
@@ -358,7 +352,7 @@ public class GenerateTreeBrush extends Brush {
         }
 
         // Generates a height for trunk.
-        height = this.randGenerator.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
+        height = this.random.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
 
         if (height > 4) {
             for (int p = 0; p < height; p++) {
@@ -402,7 +396,6 @@ public class GenerateTreeBrush extends Brush {
 
         // Generates the roots.
         this.rootGen();
-
         // Generates the trunk, which also generates branches.
         this.trunkGen();
 
@@ -429,13 +422,14 @@ public class GenerateTreeBrush extends Brush {
     }
 
     /** Method handling % chance. Returns true if the % chance happens
-     * chance is the % chance of something happening
      *
-     * @param chance
+     *
+     * @param chance this is the chance that the method returns true
      * @return boolean
      */
-    private boolean chance(double chance) {
-        return randGenerator.nextDouble(100) < chance;
+    public boolean chance(int chance) {
+
+        return random.nextInt(100) < chance;
     }
 
 

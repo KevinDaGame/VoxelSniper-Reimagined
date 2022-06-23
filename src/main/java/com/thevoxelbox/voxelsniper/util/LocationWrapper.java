@@ -42,9 +42,9 @@ public class LocationWrapper extends Location {
         setX(getX() + x);
     }
     public void addY(int y) {
-        setX(getY() + y);
+        setY(getY() + y);
     }
     public void addZ(int z) {
-        setX(getZ() + z);
+        setZ(getZ() + z);
     }
 }
