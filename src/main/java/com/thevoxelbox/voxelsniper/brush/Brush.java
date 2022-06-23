@@ -8,6 +8,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import com.thevoxelbox.voxelsniper.util.LocationWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -217,8 +218,13 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
+    @Deprecated //This should probably be replaced with the LocationWrapper variant below
     protected Material getBlockMaterialAt(int x, int y, int z) {
         return clampY(x, y, z).getBlockData().getMaterial();
+    }
+
+    protected Material getBlockMaterialAt(LocationWrapper l) {
+        return l.getBlock().getBlockData().getMaterial();
     }
 
     /**
