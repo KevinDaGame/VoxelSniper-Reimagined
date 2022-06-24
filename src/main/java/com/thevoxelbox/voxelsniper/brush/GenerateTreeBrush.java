@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.LocationWrapper;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -36,8 +35,8 @@ public class GenerateTreeBrush extends Brush {
     private int thickness = 1;
     private int slopeChance = 40;
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
-    private int heightMinimum = 14;
-    private int heightMaximum = 18;
+    private int minimumHeight = 14;
+    private int maximumHeight = 18;
     private int branchLength = 8;
     private int nodeMax = 4;
     private int nodeMin = 3;
@@ -278,7 +277,7 @@ public class GenerateTreeBrush extends Brush {
 
 
         // Generates a height for trunk.
-        int height = this.random.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
+        int height = this.random.nextInt(this.maximumHeight - this.minimumHeight + 1) + this.minimumHeight;
 
         for (int p = 0; p < height; p++) {
             if (p > 3) {
@@ -332,7 +331,7 @@ public class GenerateTreeBrush extends Brush {
         }
 
         // Generates a height for trunk.
-        height = this.random.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
+        height = this.random.nextInt(this.maximumHeight - this.minimumHeight + 1) + this.minimumHeight;
 
         if (height > 4) {
             for (int p = 0; p < height; p++) {
@@ -430,13 +429,13 @@ public class GenerateTreeBrush extends Brush {
                 v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "info 2  -- next page");
             } else if (params[1].equals("2")) {
                 v.sendMessage(ChatColor.GOLD + "Generate Tree Brush Parameters:         [2/2]");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootMin [number]  -- minimum roots");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootMax [number]  -- maximum roots");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "heightMin [number]  -- minimum height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "heightMax [number]  -- maximum height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leavesMin [number]  -- minimum leaf node size");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leavesMax [number]  -- maximum leaf node size");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "default  -- restore default params");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " rootMin [number]  -- minimum roots");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " rootMax [number]  -- maximum roots");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " minHeight [number]  -- minimum height");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " maxHeight [number]  -- maximum height");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " leavesMin [number]  -- minimum leaf node size");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " leavesMax [number]  -- maximum leaf node size");
+                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- restore default params");
             }
             return;
         }
@@ -530,24 +529,24 @@ public class GenerateTreeBrush extends Brush {
                 return;
             }
 
-            if (params[0].equalsIgnoreCase("heightMin")) { // Height Minimum
-                this.heightMinimum = Integer.parseInt(params[1]);
-                if (this.heightMinimum > this.heightMaximum) {
-                    this.heightMinimum = this.heightMaximum;
-                    v.sendMessage(ChatColor.RED + "Minimum height exceed than maximum height, has been set to " + this.heightMinimum + " instead!");
+            if (params[0].equalsIgnoreCase("minHeight")) { // Height Minimum
+                this.minimumHeight = Integer.parseInt(params[1]);
+                if (this.minimumHeight > this.maximumHeight) {
+                    this.minimumHeight = this.maximumHeight;
+                    v.sendMessage(ChatColor.RED + "Minimum height exceed than maximum height, has been set to " + this.minimumHeight + " instead!");
                 } else {
-                    v.sendMessage(ChatColor.BLUE + "Minimum height set to " + this.heightMinimum);
+                    v.sendMessage(ChatColor.BLUE + "Minimum height set to " + this.minimumHeight);
                 }
                 return;
             }
 
-            if (params[0].equalsIgnoreCase("heightMax")) { // Height Maximum
-                this.heightMaximum = Integer.parseInt(params[1]);
-                if (this.heightMinimum > this.heightMaximum) {
-                    this.heightMaximum = this.heightMinimum;
-                    v.sendMessage(ChatColor.RED + "Maximum height can't be lower than minimum height, has been set to " + this.heightMaximum + " instead!");
+            if (params[0].equalsIgnoreCase("maxHeight")) { // Height Maximum
+                this.maximumHeight = Integer.parseInt(params[1]);
+                if (this.minimumHeight > this.maximumHeight) {
+                    this.maximumHeight = this.minimumHeight;
+                    v.sendMessage(ChatColor.RED + "Maximum height can't be lower than minimum height, has been set to " + this.maximumHeight + " instead!");
                 } else {
-                    v.sendMessage(ChatColor.BLUE + "Maximum height set to " + this.heightMaximum);
+                    v.sendMessage(ChatColor.BLUE + "Maximum height set to " + this.maximumHeight);
                 }
                 return;
             }
@@ -577,8 +576,8 @@ public class GenerateTreeBrush extends Brush {
             this.minRoots = 1;
             this.thickness = 1;
             this.slopeChance = 40;
-            this.heightMinimum = 14;
-            this.heightMaximum = 18;
+            this.minimumHeight = 14;
+            this.maximumHeight = 18;
             this.branchLength = 8;
             this.nodeMax = 4;
             this.nodeMin = 3;
@@ -593,7 +592,7 @@ public class GenerateTreeBrush extends Brush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
-                "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
+                "rootFloat", "info", "rootMin", "rootMax", "minHeight", "maxHeight", "leavesMin", "leavesMax", "default"));
     }
 
     @Override
@@ -608,8 +607,8 @@ public class GenerateTreeBrush extends Brush {
         argumentValues.put("rootLength", Lists.newArrayList("[number]"));
         argumentValues.put("rootMin", Lists.newArrayList("[number]"));
         argumentValues.put("rootMax", Lists.newArrayList("[number]"));
-        argumentValues.put("heightMin", Lists.newArrayList("[number]"));
-        argumentValues.put("heightMax", Lists.newArrayList("[number]"));
+        argumentValues.put("minHeight", Lists.newArrayList("[number]"));
+        argumentValues.put("maxHeight", Lists.newArrayList("[number]"));
         argumentValues.put("leavesMin", Lists.newArrayList("[number]"));
         argumentValues.put("leavesMax", Lists.newArrayList("[number]"));
 
