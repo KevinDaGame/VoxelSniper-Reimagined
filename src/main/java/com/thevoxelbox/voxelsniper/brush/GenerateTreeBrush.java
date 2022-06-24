@@ -421,10 +421,10 @@ public class GenerateTreeBrush extends Brush {
         vm.brushName(this.getName());
     }
 
-    /** Method handling % chance. Returns true if the % chance happens
+    /**
+     * Method handling randomization. Returns true [chance] % of the time.
      *
-     *
-     * @param chance this is the chance that the method returns true
+     * @param chance The chance of returning true (%)
      * @return boolean
      */
     public boolean chance(int chance) {
