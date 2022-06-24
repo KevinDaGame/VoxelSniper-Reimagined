@@ -2,13 +2,10 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Locale;
 
 import net.kyori.adventure.text.Component;
@@ -57,37 +54,13 @@ public enum Messages implements ComponentLike {
     // TODO move this into YAML (probably with some kind of tool)
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
 
-    private static YamlConfiguration getMessageFile(ClassLoader loader, String fileName, VoxelSniper voxelSniper) {
-        YamlConfiguration yaml = new YamlConfiguration();
-
-        try(InputStream inputstream = loader.getResourceAsStream(fileName)) {
-            if(inputstream != null) {
-                try(InputStreamReader reader = new InputStreamReader(inputstream)) {
-                    try {
-                        yaml.load(reader);
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                voxelSniper.getLogger().warning("The resource " + fileName + " could not be found!");
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        return yaml;
-    }
-
     public static void load(VoxelSniper voxelSniper) {
         File langFile = new File(voxelSniper.getDataFolder(), "lang.yml");
         if (!langFile.exists()) {
             voxelSniper.saveResource("lang.yml", false);
         }
-        YamlConfiguration lang = YamlConfiguration.loadConfiguration(langFile);
-        lang.options().width(500);
-        YamlConfiguration fallBackLang = getMessageFile(Messages.class.getClassLoader(), "lang.yml", voxelSniper);
+        YamlConfiguration lang = new YamlConfiguration(langFile);
+        YamlConfiguration fallBackLang = new YamlConfiguration(Messages.class.getClassLoader(), "lang.yml", voxelSniper);
         boolean changedFile = false;
 
         for (Messages message : values()) {
