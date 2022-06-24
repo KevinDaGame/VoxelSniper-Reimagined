@@ -118,24 +118,10 @@ public class GenerateTreeBrush extends Brush {
                                 location.getClampedBlock().setBlockData(leavesMaterial.createBlockData(), false);
                             }
                         }
-                        for (int i = 0; i < 7; i++) {
-                            if (this.chance(70)) {
-                                switch (i) {
-                                    case 0:
-                                        this.createLeaf(x, y, -z);
-                                    case 1:
-                                        this.createLeaf(-x, y, z);
-                                    case 2:
-                                        this.createLeaf(-x, y, -z);
-                                    case 3:
-                                        this.createLeaf(x, -y, z);
-                                    case 4:
-                                        this.createLeaf(x, -y, -z);
-                                    case 5:
-                                        this.createLeaf(-x, -y, z);
-                                    case 6:
-                                        this.createLeaf(-x, -y, -z);
-
+                        for (int dx : new int[]{-1, 1}) {
+                            for (int dy : new int[]{-1, 1}) {
+                                for (int dz : new int[]{-1, 1}) {
+                                    this.createLeaf(x * dx, y * dy, z * dz);
                                 }
                             }
                         }
@@ -250,17 +236,11 @@ public class GenerateTreeBrush extends Brush {
 
             for (int z = this.thickness; z >= 0; z--) {
                 if ((xSquared + Math.pow(z, 2)) <= bSquared) {
-                    for (int i = 0; i < 4; i++) {
-                        switch (i) {
-                            case 0:
-                                createTrunk(x, z);
-                            case 1:
-                                createTrunk(x, -z);
-                            case 2:
-                                createTrunk(-x, z);
-                            case 3:
-                                createTrunk(-x, -z);
+                    for (int dx : new int[]{-1, 1}) {
+                        for (int dz : new int[]{-1, 1}) {
+                            this.createTrunk(x * dx, z * dz);
                         }
+
                     }
                 }
             }
