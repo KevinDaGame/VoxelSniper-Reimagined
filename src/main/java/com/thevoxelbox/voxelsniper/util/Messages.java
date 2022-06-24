@@ -2,12 +2,13 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 import net.kyori.adventure.text.Component;
@@ -56,18 +57,61 @@ public enum Messages implements ComponentLike {
     // TODO move this into YAML (probably with some kind of tool)
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
 
+    private static YamlConfiguration getMessageFile(ClassLoader loader, String fileName, VoxelSniper voxelSniper) {
+        YamlConfiguration yaml = new YamlConfiguration();
+
+        try(InputStream inputstream = loader.getResourceAsStream(fileName)) {
+            if(inputstream != null) {
+                try(InputStreamReader reader = new InputStreamReader(inputstream)) {
+                    try {
+                        yaml.load(reader);
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                voxelSniper.getLogger().warning("The resource " + fileName + " could not be found!");
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return yaml;
+    }
+
     public static void load(VoxelSniper voxelSniper) {
         File langFile = new File(voxelSniper.getDataFolder(), "lang.yml");
         if (!langFile.exists()) {
             voxelSniper.saveResource("lang.yml", false);
         }
-        FileConfiguration lang = YamlConfiguration.loadConfiguration(langFile);
+        YamlConfiguration lang = YamlConfiguration.loadConfiguration(langFile);
+        lang.options().width(500);
+        YamlConfiguration fallBackLang = getMessageFile(Messages.class.getClassLoader(), "lang.yml", voxelSniper);
+        boolean changedFile = false;
+
         for (Messages message : values()) {
             String langMessage = lang.getString(message.name());
             if (langMessage == null) {
-                voxelSniper.getLogger().warning("Unable to load message " + message.name() + ". Please make sure it exists in the lang file.");
+                // try to read from internal file
+                langMessage = fallBackLang.getString(message.name());
+                if (langMessage == null) {
+                    voxelSniper.getLogger().warning("Unable to load message " + message.name() + ". This is an error and should be reported.");
+                } else {
+                    // add default to 'public' file
+                    lang.set(message.name(), langMessage);
+                    changedFile = true;
+                    message.message = langMessage;
+                }
             } else {
                 message.message = langMessage;
+            }
+        }
+
+        if (changedFile) {
+            try {
+                lang.save(langFile);
+            } catch (IOException ignored) {
             }
         }
     }
