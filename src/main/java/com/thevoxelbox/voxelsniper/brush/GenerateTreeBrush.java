@@ -114,7 +114,7 @@ public class GenerateTreeBrush extends Brush {
                                     this.undo.put(location.getOffsetBlock(x, y, z));
                                 }
                                 // Creates block.
-                                location.getClampedBlock().setBlockData(leavesMaterial.createBlockData(), false);
+                                location.getOffsetClampedBlock(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
                             }
                         }
                         for (int dx : new int[]{-1, 1}) {
