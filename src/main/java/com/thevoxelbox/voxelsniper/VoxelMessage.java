@@ -5,6 +5,8 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.stream.Collectors;
 
+import net.kyori.adventure.text.ComponentLike;
+
 /**
  *  Messaging handler for various Voxel functions.
  *  // TODO: Rewrite messaging to builder functions.
@@ -31,6 +33,10 @@ public class VoxelMessage {
         snipeData.sendMessage(Messages.BRUSH_MESSAGE_PREFIX.append(brushMessage));
     }
 
+    public void brushMessage(ComponentLike brushMessage) {
+        snipeData.sendMessage(Messages.BRUSH_MESSAGE_PREFIX.append(brushMessage));
+    }
+
     /**
      * Display Brush Name.
      *
@@ -53,6 +59,10 @@ public class VoxelMessage {
      * @param message
      */
     public void custom(String message) {
+        snipeData.sendMessage(message);
+    }
+
+    public void custom(ComponentLike message) {
         snipeData.sendMessage(message);
     }
 

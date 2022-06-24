@@ -12,8 +12,13 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 /**
  * Moves a selection blockPositionY a certain amount. http://www.voxelwiki.com/minecraft/Voxelsniper#Move_Brush
@@ -21,6 +26,24 @@ import java.util.*;
  * @author MikeMatrix
  */
 public class MoveBrush extends Brush {
+
+    private static class ComponentException extends Exception implements ComponentLike {
+        private final ComponentLike component;
+
+        ComponentException(ComponentLike component) {
+            this.component = component;
+        }
+
+        @Override
+        public String getMessage() {
+            return LegacyComponentSerializer.legacySection().serialize(this.asComponent());
+        }
+
+        @Override
+        public @NotNull Component asComponent() {
+            return component.asComponent();
+        }
+    }
 
     /**
      * Breakable Blocks to determine if no-physics should be used.
@@ -159,8 +182,8 @@ public class MoveBrush extends Brush {
             newSelection.setLocation2(movedLocation2);
             try {
                 newSelection.calculateRegion();
-            } catch (final Exception exception) {
-                v.sendMessage(exception.getMessage());
+            } catch (final ComponentException exception) {
+                v.sendMessage(exception);
             }
 
             for (final BlockState blockState : selection.getBlockStates()) {
@@ -198,8 +221,8 @@ public class MoveBrush extends Brush {
                 this.moveSelection(v, this.selection, this.moveDirections);
                 this.selection = null;
             }
-        } catch (final Exception exception) {
-            v.sendMessage(exception.getMessage());
+        } catch (final ComponentException exception) {
+            v.sendMessage(exception);
         }
     }
 
@@ -216,8 +239,8 @@ public class MoveBrush extends Brush {
                 this.moveSelection(v, this.selection, this.moveDirections);
                 this.selection = null;
             }
-        } catch (final Exception exception) {
-            v.sendMessage(exception.getMessage());
+        } catch (final ComponentException exception) {
+            v.sendMessage(exception);
         }
     }
 
@@ -318,7 +341,7 @@ public class MoveBrush extends Brush {
          * @return boolean success.
          * @throws Exception Message to be sent to the player.
          */
-        public boolean calculateRegion() throws Exception {
+        public boolean calculateRegion() throws ComponentException {
             if (this.location1 != null && this.location2 != null) {
                 if (this.location1.getWorld().equals(this.location2.getWorld())) {
                     final int lowX = (Math.min(this.location1.getBlockX(), this.location2.getBlockX()));
@@ -328,7 +351,7 @@ public class MoveBrush extends Brush {
                     final int highY = Math.max(this.location1.getBlockY(), this.location2.getBlockY());
                     final int highZ = Math.max(this.location1.getBlockZ(), this.location2.getBlockZ());
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
-                        throw new Exception(Messages.SELECTION_SIZE_ABOVE_LIMIT);
+                        throw new ComponentException(Messages.SELECTION_SIZE_ABOVE_LIMIT);
                     }
                     final World world = this.location1.getWorld();
                     for (int y = lowY; y <= highY; y++) {
