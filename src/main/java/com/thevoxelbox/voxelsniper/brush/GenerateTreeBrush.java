@@ -155,8 +155,8 @@ public class GenerateTreeBrush extends Brush {
     /**
      * Code Concerning Root Generation.
      *
-     * @ param xDirection
-     * @ param zDirection
+     * @param xDirection
+     * @param zDirection
      */
     private void rootCreate(final int xDirection, final int zDirection) {
         // Sets Origin.
