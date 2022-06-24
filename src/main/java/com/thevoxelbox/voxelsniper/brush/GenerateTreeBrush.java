@@ -196,7 +196,7 @@ public class GenerateTreeBrush extends Brush {
                 List<Material> blocks = Arrays.asList(Material.WATER, Material.SNOW, Material.OAK_LOG, Material.BIRCH_LOG, Material.ACACIA_LOG, Material.DARK_OAK_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG);
                 // Checks is block below is solid
                 if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getType())) {
-                    // Mos down if solid.
+                    // Move down if solid.
                     location.addY(-1);
                     if (this.rootFloat) {
                         if (this.chance(xPreference)) {
