@@ -82,7 +82,7 @@ public class GenerateTreeBrush extends Brush {
             }
 
             // Creates a branch block.
-            location.setBlockData(woodMaterial.createBlockData(), false);
+            location.getBlock().setBlockData(woodMaterial.createBlockData(), false);
             this.branchBlocks.add(location.getClampedBlock());
         }
 
