@@ -218,7 +218,6 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    @Deprecated //This should probably be replaced with the LocationWrapper variant below
     protected Material getBlockMaterialAt(int x, int y, int z) {
         return clampY(x, y, z).getBlockData().getMaterial();
     }
