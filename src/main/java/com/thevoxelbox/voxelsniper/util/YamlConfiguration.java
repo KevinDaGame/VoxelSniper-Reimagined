@@ -51,7 +51,6 @@ public class YamlConfiguration {
         } catch(IOException e) {
             e.printStackTrace();
         } finally {
-            System.out.println(contents);
             this.contents = contents != null ? contents : new HashMap<>();
         }
     }
