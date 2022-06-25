@@ -161,11 +161,7 @@ public class SnipeData implements Audience {
     }
 
     public final void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type) {
-        Player p = this.owner.getPlayer();
-        if (p instanceof Audience)
-            ((Audience)p).sendMessage(source, message, type);
-        else
-            VoxelSniper.getAdventure().player(this.owner.getPlayer()).sendMessage(source, message, type);
+        VoxelSniper.getAdventure().player(this.owner.getPlayer()).sendMessage(source, message, type);
     }
 
 }
