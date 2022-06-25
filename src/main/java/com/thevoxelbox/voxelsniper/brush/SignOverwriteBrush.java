@@ -235,7 +235,7 @@ public class SignOverwriteBrush extends Brush {
                 return i;
             }
 
-            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%",lineNumber));
+            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%", String.valueOf(lineNumber)));
             signTextLines[lineIndex] = "";
             return i;
         }
@@ -263,12 +263,12 @@ public class SignOverwriteBrush extends Brush {
             if (statusSet) {
                 return i;
             }
-            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%",lineNumber));
+            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%", String.valueOf(lineNumber)));
         }
 
         // check the line length and cut the text if needed
         if (newText.length() > MAX_SIGN_LINE_LENGTH) {
-            v.sendMessage(ChatColor.RED + "Warning: Text on line " + lineNumber + " exceeds the maximum line length of " + MAX_SIGN_LINE_LENGTH + " characters. Your text will be cut.");
+            v.sendMessage((ChatColor.RED + "Warning: Text on line " + "%lineNumber%" + " exceeds the maximum line length of " + "%MAX_SIGN_LINE_LENGTH%" + " characters. Your text will be cut.").replace("%lineNumber%", String.valueOf(lineNumber)).replace("%MAX_SIGN_LINE_LENGTH%", String.valueOf(MAX_SIGN_LINE_LENGTH)));
             newText = new StringBuilder(newText.substring(0, MAX_SIGN_LINE_LENGTH));
         }
 

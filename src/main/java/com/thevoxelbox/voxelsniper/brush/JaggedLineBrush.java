@@ -110,7 +110,7 @@ public class JaggedLineBrush extends PerformerBrush {
                     this.recursion = newRecursion;
                     v.sendMessage(ChatColor.GREEN + "Recursion set to: " + this.recursion);
                 } else {
-                    v.sendMessage(ChatColor.RED + "Recursion must be between " + RECURSION_MIN + " - " + RECURSION_MAX);
+                    v.sendMessage((ChatColor.RED + "Recursion must be between " + "%RECURSION_MIN%" + " - " + "%RECURSION_MAX%").replace("%RECURSION_MIN%", String.valueOf(RECURSION_MIN).replace("%RECURSION_MAX%", String.valueOf(RECURSION_MAX))));
                 }
 
                 return;

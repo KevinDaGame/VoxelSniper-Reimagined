@@ -655,7 +655,7 @@ public class GenerateTreeBrush extends Brush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

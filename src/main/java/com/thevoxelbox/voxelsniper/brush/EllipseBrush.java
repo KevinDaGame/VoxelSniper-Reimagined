@@ -209,7 +209,7 @@ public class EllipseBrush extends PerformerBrush {
                 int xValue = Integer.parseInt(params[1]);
 
                 if (xValue < SCL_MIN || xValue > SCL_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid X scale, must be between " + SCL_MIN + " - " + SCL_MAX);
+                    v.sendMessage((ChatColor.RED + "Invalid X scale, must be between " + "%SCL_MIN%" + " - " + "%SCL_MAX%").replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
                     return;
                 }
 
@@ -222,7 +222,7 @@ public class EllipseBrush extends PerformerBrush {
                 int yValue = Integer.parseInt(params[1]);
 
                 if (yValue < SCL_MIN || yValue > SCL_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid Y scale, must be between " + SCL_MIN + " - " + SCL_MAX);
+                    v.sendMessage((ChatColor.RED + "Invalid Y scale, must be between " + "%SCL_MIN%" + " - " + "%SCL_MAX%").replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
                     return;
                 }
 
@@ -235,7 +235,7 @@ public class EllipseBrush extends PerformerBrush {
                 int stepValue = Integer.parseInt(params[1]);
 
                 if (stepValue < STEPS_MIN || stepValue > STEPS_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid step amount, must be between " + STEPS_MIN + " - " + STEPS_MAX);
+                    v.sendMessage((ChatColor.RED + "Invalid step amount, must be between " + "%STEPS_MIN%" + " - " + "%STEPS_MAX%").replace("%STEPS_MIN%", String.valueOf(STEPS_MIN)).replace("%STEPS_MAX%", String.valueOf(STEPS_MAX)));
                     return;
                 }
 

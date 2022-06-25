@@ -46,7 +46,7 @@ public class ScannerBrush extends Brush {
                 // Scan south
                 for (int i = 1; i < this.depth + 1; i++) {
                     if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                        v.sendMessage((ChatColor.GREEN + "" + "%this.checkFor%" + " found after " + "%i%" + " blocks.").replace("%this.checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
@@ -57,7 +57,7 @@ public class ScannerBrush extends Brush {
                 // Scan north
                 for (int i = 1; i < this.depth + 1; i++) {
                     if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                        v.sendMessage((ChatColor.GREEN + "" + "%this.checkFor%" + " found after " + "%i%" + " blocks.").replace("%this.checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
@@ -68,7 +68,7 @@ public class ScannerBrush extends Brush {
                 // Scan west
                 for (int i = 1; i < this.depth + 1; i++) {
                     if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                        v.sendMessage((ChatColor.GREEN + "" + "%this.checkFor%" + " found after " + "%i%" + " blocks.").replace("%this.checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
@@ -79,7 +79,7 @@ public class ScannerBrush extends Brush {
                 // Scan east
                 for (int i = 1; i < this.depth + 1; i++) {
                     if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                        v.sendMessage((ChatColor.GREEN + "" + "%this.checkFor%" + " found after " + "%i%" + " blocks.").replace("%this.checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
@@ -93,7 +93,7 @@ public class ScannerBrush extends Brush {
                         break;
                     }
                     if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                        v.sendMessage((ChatColor.GREEN + "" + "%this.checkFor%" + " found after " + "%i%" + " blocks.").replace("%this.checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
@@ -107,7 +107,7 @@ public class ScannerBrush extends Brush {
                         break;
                     }
                     if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                        v.sendMessage((ChatColor.GREEN + "" + "%this.checkFor%" + " found after " + "%i%" + " blocks.").replace("%this.checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
