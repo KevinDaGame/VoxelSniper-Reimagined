@@ -88,9 +88,9 @@ public class EllipsoidBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set X radius");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set Y radius");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " z [number]  -- Set Z radius");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " x [number]  -- Set X radius").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " y [number]  -- Set Y radius").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " z [number]  -- Set Z radius").replace("%triggerHandle%",triggerHandle));
             return;
         }
         try {
@@ -114,7 +114,7 @@ public class EllipsoidBrush extends PerformerBrush {
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

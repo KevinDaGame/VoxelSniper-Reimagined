@@ -150,8 +150,8 @@ public class JockeyBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Jockey Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [inverse, stack, normal] -- Switch between modes");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " player  -- Toggle target players or all entities (default: players only)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [inverse, stack, normal] -- Switch between modes").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " player  -- Toggle target players or all entities (default: players only)").replace("%triggerHandle%",triggerHandle));
             v.sendMessage(ChatColor.BLUE + "Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other ");
             return;
         }

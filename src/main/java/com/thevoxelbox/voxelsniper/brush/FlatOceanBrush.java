@@ -76,8 +76,8 @@ public class FlatOceanBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Set the y-level the water will rise to. (default: 29)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " water [number]  -- Set the y-level the water will rise to. (default: 29)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)").replace("%triggerHandle%",triggerHandle));
             v.sendMessage(ChatColor.RED + "BEWARE! THIS BRUSH DOES NOT UNDO.");
             return;
         }
@@ -110,7 +110,7 @@ public class FlatOceanBrush extends Brush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

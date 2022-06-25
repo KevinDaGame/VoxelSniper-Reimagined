@@ -136,7 +136,7 @@ public class ScannerBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Scanner brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number] -- will set the search depth to #. Clamps to 1 - 64.");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " depth [number] -- will set the search depth to #. Clamps to 1 - 64.").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -148,7 +148,7 @@ public class ScannerBrush extends Brush {
         } catch (NumberFormatException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

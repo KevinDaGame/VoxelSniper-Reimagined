@@ -152,10 +152,10 @@ public class SplineBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " ss  -- Enable endpoint selection mode for desired curve");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " sc  -- Enable control point selection mode for desired curve");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear out the curve selection");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " render  -- Render curve from control points");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " ss  -- Enable endpoint selection mode for desired curve").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " sc  -- Enable control point selection mode for desired curve").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " clear  -- Clear out the curve selection").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " render  -- Render curve from control points").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -195,7 +195,7 @@ public class SplineBrush extends PerformerBrush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

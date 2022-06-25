@@ -58,7 +58,7 @@ public class EntityBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [entityType] -- Change brush to the specified entity type");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [entityType] -- Change brush to the specified entity type").replace("%triggerHandle%",triggerHandle));
             return;
         }
 

@@ -235,7 +235,7 @@ public class SignOverwriteBrush extends Brush {
                 return i;
             }
 
-            v.sendMessage(ChatColor.RED + "Warning: No text after -" + lineNumber + ". Setting buffer text to \"\" (empty string)");
+            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%",lineNumber));
             signTextLines[lineIndex] = "";
             return i;
         }
@@ -263,7 +263,7 @@ public class SignOverwriteBrush extends Brush {
             if (statusSet) {
                 return i;
             }
-            v.sendMessage(ChatColor.RED + "Warning: No text after -" + lineNumber + ". Setting buffer text to \"\" (empty string)");
+            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%",lineNumber));
         }
 
         // check the line length and cut the text if needed

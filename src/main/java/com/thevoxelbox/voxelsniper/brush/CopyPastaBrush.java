@@ -167,8 +167,8 @@ public class CopyPastaBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "CopyPasta Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " air  -- Toggle include air during paste (default: true)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " rotate [number]  -- Set rotation pivot (default: 0)").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -187,7 +187,7 @@ public class CopyPastaBrush extends Brush {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

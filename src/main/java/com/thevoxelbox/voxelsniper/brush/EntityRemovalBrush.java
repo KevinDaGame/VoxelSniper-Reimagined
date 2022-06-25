@@ -112,11 +112,11 @@ public class EntityRemovalBrush extends Brush {
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " + [entityType]  -- Add entity to exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " - [entityType]  -- Remove entity from exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets exception list to defaults");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " list  -- Shows entities in exception list");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " + [entityType]  -- Add entity to exception list").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " - [entityType]  -- Remove entity from exception list").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " reset  -- Resets exception list to defaults").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " clear  -- Clear exception list").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " list  -- Shows entities in exception list").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -158,7 +158,7 @@ public class EntityRemovalBrush extends Brush {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

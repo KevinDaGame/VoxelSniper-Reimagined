@@ -158,8 +158,8 @@ public class OverlayBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Overlay Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " mode  -- Change target blocks to natural, custom defined or all blocks.");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " depth [number]  -- Depth of blocks to overlay from surface").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " mode  -- Change target blocks to natural, custom defined or all blocks.").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -192,7 +192,7 @@ public class OverlayBrush extends PerformerBrush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

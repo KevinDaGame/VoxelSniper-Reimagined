@@ -173,7 +173,7 @@ public class Rot2DBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "2D Rotation Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [number]  -- Set angle in degrees");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [number]  -- Set angle in degrees").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -183,7 +183,7 @@ public class Rot2DBrush extends Brush {
         } catch (NumberFormatException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

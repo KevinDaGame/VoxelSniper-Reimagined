@@ -207,10 +207,10 @@ public class HeatRayBrush extends Brush {
 
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " octave [number]  -- Octaves for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " amplitude [number]  -- Amplitude for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " frequency [number]  -- Frequency for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Reset to default values.");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " octave [number]  -- Octaves for the noise generator.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " amplitude [number]  -- Amplitude for the noise generator.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " frequency [number]  -- Frequency for the noise generator.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " default  -- Reset to default values.").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -242,7 +242,7 @@ public class HeatRayBrush extends Brush {
         } catch (NumberFormatException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

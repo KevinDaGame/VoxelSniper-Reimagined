@@ -165,7 +165,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [mode]  -- Change mode to prioritize accuracy or smoothness");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [mode]  -- Change mode to prioritize accuracy or smoothness").replace("%triggerHandle%",triggerHandle));
             v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
             return;
         }
@@ -174,7 +174,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
             this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
             v.sendMessage(ChatColor.GOLD + "Brush tolerance set to " + ChatColor.YELLOW + this.tolerance.name().toLowerCase() + ChatColor.GOLD + ".");
         } catch (Exception e) {
-            v.sendMessage(ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.sendMessage((ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + "%triggerHandle%" + " info " + ChatColor.GOLD + " to see brush parameters.").replace("%triggerHandle%",triggerHandle));
             sendPerformerMessage(triggerHandle, v);
         }
     }

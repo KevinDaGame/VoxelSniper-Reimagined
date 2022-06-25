@@ -119,9 +119,9 @@ public class CloneStampBrush extends StampBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Clone / Stamp Cylinder Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " fill  -- Change to Fill mode");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Change to No-Air mode");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Change to Default mode");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " fill  -- Change to Fill mode").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " air  -- Change to No-Air mode").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " default  -- Change to Default mode").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -150,7 +150,7 @@ public class CloneStampBrush extends StampBrush {
          * TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
          * set to " + v.getcCen()); return; }
          */
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

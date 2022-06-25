@@ -108,7 +108,7 @@ public class BlendDiscBrush extends BlendBrushBase {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Blend Ball Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water -- toggle include water (default: exclude)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " water -- toggle include water (default: exclude)").replace("%triggerHandle%",triggerHandle));
             return;
         }
 

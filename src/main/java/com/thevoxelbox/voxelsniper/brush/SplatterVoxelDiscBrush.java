@@ -155,10 +155,10 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Splatter Voxel Disc Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " seed [decimal]  -- Set a seed percentage");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [decimal]  -- Set a growth percentage");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " recursion [number]  -- Set a recursion value");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets to default values");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " seed [decimal]  -- Set a seed percentage").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " growth [decimal]  -- Set a growth percentage").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " recursion [number]  -- Set a recursion value").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " reset  -- Resets to default values").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -209,7 +209,7 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
         } catch (NumberFormatException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

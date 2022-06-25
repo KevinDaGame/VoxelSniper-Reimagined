@@ -162,7 +162,7 @@ public class ErodeBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Erode Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [preset]  -- Change active erode brush preset");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [preset]  -- Change active erode brush preset").replace("%triggerHandle%",triggerHandle));
             return;
         }
 

@@ -34,7 +34,7 @@ public class RegenerateChunkBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.sendMessage("Generate that chunk! " + chunk.getX() + " " + chunk.getZ());
+        "%chunk.getX()%"
         this.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
         this.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
     }

@@ -92,9 +92,9 @@ public class CylinderBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Cylinder Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " height [number]  -- Set voxel height (default: 1)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " height [number]  -- Set voxel height (default: 1)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " smooth  -- Toggle smooth circle (default: false)").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -122,7 +122,7 @@ public class CylinderBrush extends PerformerBrush {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

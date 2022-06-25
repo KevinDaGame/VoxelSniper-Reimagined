@@ -98,7 +98,7 @@ public class DrainBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Drain Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " shape  -- Toggle between brush shapes (default: ball)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " shape  -- Toggle between brush shapes (default: ball)").replace("%triggerHandle%",triggerHandle));
             return;
         }
         if (params[0].startsWith("shape")) {
@@ -107,7 +107,7 @@ public class DrainBrush extends Brush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

@@ -218,7 +218,7 @@ public class PunishBrush extends Brush {
                 }
             }
         }
-        v.sendMessage(ChatColor.DARK_RED + "Punishment applied to " + numPunishApps + " living entities.");
+        v.sendMessage((ChatColor.DARK_RED + "Punishment applied to " + "%numPunishApps%" + " living entities.").replace("%numPunishApps%",String.valueOf(numPunishApps)));
     }
 
     @Override
@@ -259,10 +259,10 @@ public class PunishBrush extends Brush {
             v.sendMessage(ChatColor.GOLD + "Punish Brush Options:");
             v.sendMessage(ChatColor.BLUE + "Punishment level can be set with /vc [level]");
             v.sendMessage(ChatColor.BLUE + "Punishment duration in seconds can be set with /vh [duration]");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [punishment]  -- Sets the punishment");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -hypno  -- Toggle whether Hypno will affect landscape only");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -player [playername]  -- Target specific player, clear with empty playername");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -self  -- Toggle whether you will be affected");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [punishment]  -- Sets the punishment").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " -hypno  -- Toggle whether Hypno will affect landscape only").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " -player [playername]  -- Target specific player, clear with empty playername").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " -self  -- Toggle whether you will be affected").replace("%triggerHandle%",triggerHandle));
             v.sendMessage(ChatColor.AQUA + "Available Punishment Options:");
             final StringBuilder punishmentOptions = new StringBuilder();
             for (final Punishment punishment : Punishment.values()) {
@@ -303,7 +303,7 @@ public class PunishBrush extends Brush {
             this.punishment = Punishment.valueOf(params[0].toUpperCase());
             v.sendMessage(ChatColor.YELLOW + this.punishment.name() + ChatColor.GOLD + " punishment selected.");
         } catch (final IllegalArgumentException exception) {
-            v.sendMessage(ChatColor.GOLD + "That punishment does not exist! Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.sendMessage((ChatColor.GOLD + "That punishment does not exist! Use " + ChatColor.LIGHT_PURPLE + " /b " + "%triggerHandle%" + " info " + ChatColor.GOLD + " to see brush parameters.").replace("%triggerHandle%",triggerHandle));
         }
     }
 

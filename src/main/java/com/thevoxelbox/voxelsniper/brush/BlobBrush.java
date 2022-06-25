@@ -220,7 +220,7 @@ public class BlobBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Blob Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " to " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " to " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100))).replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -244,7 +244,7 @@ public class BlobBrush extends PerformerBrush {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

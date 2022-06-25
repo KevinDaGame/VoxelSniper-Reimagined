@@ -100,7 +100,7 @@ public class CanyonBrush extends Brush {
     public final void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Blob Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " y [number] -- Set the y-coordinate where the land will be shifted to");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " y [number] -- Set the y-coordinate where the land will be shifted to").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -123,7 +123,7 @@ public class CanyonBrush extends Brush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override

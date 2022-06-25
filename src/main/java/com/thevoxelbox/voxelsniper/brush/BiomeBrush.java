@@ -72,7 +72,7 @@ public class BiomeBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "Biome Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [biomeType] -- Change brush to the specified biome");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [biomeType] -- Change brush to the specified biome").replace("%triggerHandle%",triggerHandle));
             return;
         }
 

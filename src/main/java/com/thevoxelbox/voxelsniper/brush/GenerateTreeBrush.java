@@ -488,24 +488,24 @@ public class GenerateTreeBrush extends Brush {
         if (params[0].equalsIgnoreCase("info")) {
             if (params.length == 1 || params[1].equals("1")) {
                 v.sendMessage(ChatColor.GOLD + "Generate Tree Brush Parameters:         [1/2]");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leaves [material]  -- leaves type");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "wood [material]  -- wood type");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "thickness [number]  -- tree thickness");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "startHeight [number] -- starting height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "slope [0 - 100]  -- trunk slope chance");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "branchLength [number]  -- branch length");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootLength [number]  -- root length");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootFloat [true/false]  -- root float ");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "info 2  -- next page");
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "leaves [material]  -- leaves type").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "wood [material]  -- wood type").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "thickness [number]  -- tree thickness").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "startHeight [number] -- starting height").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "slope [0 - 100]  -- trunk slope chance").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "branchLength [number]  -- branch length").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "rootLength [number]  -- root length").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "rootFloat [true/false]  -- root float ").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "info 2  -- next page").replace("%triggerHandle%",triggerHandle));
             } else if (params[1].equals("2")) {
                 v.sendMessage(ChatColor.GOLD + "Generate Tree Brush Parameters:         [2/2]");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootMin [number]  -- minimum roots");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootMax [number]  -- maximum roots");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "heightMin [number]  -- minimum height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "heightMax [number]  -- maximum height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leavesMin [number]  -- minimum leaf node size");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leavesMax [number]  -- maximum leaf node size");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "default  -- restore default params");
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "rootMin [number]  -- minimum roots").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "rootMax [number]  -- maximum roots").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "heightMin [number]  -- minimum height").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "heightMax [number]  -- maximum height").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "leavesMin [number]  -- minimum leaf node size").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "leavesMax [number]  -- maximum leaf node size").replace("%triggerHandle%",triggerHandle));
+                v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "default  -- restore default params").replace("%triggerHandle%",triggerHandle));
             }
             return;
         }

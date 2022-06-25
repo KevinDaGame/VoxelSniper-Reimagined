@@ -61,7 +61,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
 
         if (params[0].equals("info")) {
             v.sendMessage(ChatColor.GOLD + "Checker Voxel Disc Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " worldcoords -- Toggle to use World Coordinates or not (default: true)");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " worldcoords -- Toggle to use World Coordinates or not (default: true)").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -71,7 +71,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

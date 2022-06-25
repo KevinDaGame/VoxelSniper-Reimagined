@@ -50,9 +50,9 @@ public class Rot3DBrush extends Brush {
         // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(ChatColor.GOLD + "3D Rotation Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " pitch [0-359] -- Set pitch rotation (rotation about the Z axis).");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " roll [0-359] -- Set roll rotation (rotation about the X axis).");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).");
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " pitch [0-359] -- Set pitch rotation (rotation about the Z axis).").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " roll [0-359] -- Set roll rotation (rotation about the X axis).").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).").replace("%triggerHandle%",triggerHandle));
             return;
         }
         try {
@@ -85,7 +85,7 @@ public class Rot3DBrush extends Brush {
         } catch (NumberFormatException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
     }
 
     @Override
