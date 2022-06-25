@@ -29,10 +29,6 @@ public class VoxelMessage {
      *
      * @param brushMessage
      */
-    public void brushMessage(String brushMessage) {
-        snipeData.sendMessage(Messages.BRUSH_MESSAGE_PREFIX.append(brushMessage));
-    }
-
     public void brushMessage(ComponentLike brushMessage) {
         snipeData.sendMessage(Messages.BRUSH_MESSAGE_PREFIX.append(brushMessage));
     }

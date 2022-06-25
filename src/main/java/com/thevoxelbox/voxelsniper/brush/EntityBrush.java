@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class EntityBrush extends Brush {
             try {
                 this.getWorld().spawn(this.getLastBlock().getLocation(), this.entityType.getEntityClass());
             } catch (final IllegalArgumentException exception) {
-                v.sendMessage(ChatColor.RED + "Cannot spawn entity!");
+                v.sendMessage(Messages.ENTITYBRUSH_SPAWN_FAIL);
             }
         }
     }
@@ -46,27 +45,24 @@ public class EntityBrush extends Brush {
         this.spawn(v);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushMessage(Messages.ENTITY_BRUSH_MESSAGE.replace("%entity%", this.entityType.getName()));
         vm.size();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [entityType] -- Change brush to the specified entity type").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ENTITYBRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
             this.entityType = EntityType.valueOf(params[0]);
-            v.sendMessage(ChatColor.GOLD + "Entity type: " + ChatColor.DARK_GREEN + this.entityType.name());
+            v.sendMessage(Messages.ENTITYBRUSH_ENTITY_TYPE.replace("%type%", this.entityType.name()));
         } catch (IllegalArgumentException e) {
-            v.sendMessage(ChatColor.RED + "That entity type does not exist.");
+            v.sendMessage(Messages.ENTITYBRUSH_UNKNOWN_ENTITY);
         }
     }
 
@@ -75,7 +71,8 @@ public class EntityBrush extends Brush {
         List<String> entities = new ArrayList<>();
 
         for (EntityType entity : EntityType.values()) {
-            entities.add(entity.name());
+            if (entity != EntityType.UNKNOWN)
+                entities.add(entity.name());
         }
 
         return entities;

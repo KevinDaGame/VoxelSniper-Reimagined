@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -180,11 +182,7 @@ public class EllipseBrush extends PerformerBrush {
         vm.custom(ChatColor.AQUA + "X-size set to: " + ChatColor.DARK_AQUA + this.xscl);
         vm.custom(ChatColor.AQUA + "Y-size set to: " + ChatColor.DARK_AQUA + this.yscl);
         vm.custom(ChatColor.AQUA + "Render step number set to: " + ChatColor.DARK_AQUA + this.steps);
-        if (this.fill) {
-            vm.custom(ChatColor.AQUA + "Fill mode is enabled");
-        } else {
-            vm.custom(ChatColor.AQUA + "Fill mode is disabled");
-        }
+        vm.custom(Messages.ELLIPSEBRUSH_FILL_MODE.replace("%state%", this.fill ? "enabled" : "disabled"));
     }
 
     @Override
@@ -200,7 +198,7 @@ public class EllipseBrush extends PerformerBrush {
 
         if (params[0].equalsIgnoreCase("fill")) {
             this.fill = !this.fill;
-            v.sendMessage(ChatColor.AQUA + "Fill mode is now " + (this.fill ? "enabled" : "disabled"));
+            v.sendMessage(Messages.ELLIPSEBRUSH_FILL_MODE.replace("%state%", this.fill ? "enabled" : "disabled"));
             return;
         }
 
@@ -246,7 +244,7 @@ public class EllipseBrush extends PerformerBrush {
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
-        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

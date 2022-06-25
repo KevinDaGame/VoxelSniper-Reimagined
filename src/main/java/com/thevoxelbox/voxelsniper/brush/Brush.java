@@ -8,7 +8,8 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -99,7 +100,7 @@ public abstract class Brush implements IBrush {
 
     @Override
     public void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
-        v.sendMessage(ChatColor.RED + "This brush does not accept additional parameters.");
+        v.sendMessage(Messages.BRUSH_NO_PARAMS_ACCEPTED);
     }
 
     // TODO: make abstract
@@ -128,7 +129,7 @@ public abstract class Brush implements IBrush {
             this.setTargetBlock(clickedBlock);
             this.setLastBlock(clickedBlock.getRelative(clickedFace));
             if (this.getLastBlock() == null) {
-                v.sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                 return false;
             }
             if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isLightningEnabled()) {
@@ -147,7 +148,7 @@ public abstract class Brush implements IBrush {
             if (this.getTargetBlock() != null) {
                 this.setLastBlock(rangeBlockHelper.getLastBlock());
                 if (this.getLastBlock() == null) {
-                    v.sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                    v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                     return false;
                 }
                 if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isLightningEnabled()) {
@@ -155,7 +156,7 @@ public abstract class Brush implements IBrush {
                 }
                 return true;
             } else {
-                v.sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                 return false;
             }
         }

@@ -71,7 +71,7 @@ public class EntityRemovalBrush extends Brush {
         } catch (final PatternSyntaxException pse) {
             pse.printStackTrace();
             v.sendMessage(ChatColor.RED + "Error in RegEx: " + ChatColor.LIGHT_PURPLE + pse.getPattern());
-            v.sendMessage(ChatColor.RED + String.format("%s (Index: %d)", pse.getDescription(), pse.getIndex()));
+            v.sendMessage((ChatColor.RED + "%desc% (Index: %idx%)").replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
         }
         v.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.RED + entityCount + ChatColor.GREEN + " entities out of " + ChatColor.BLUE + chunkCount + ChatColor.GREEN + (chunkCount == 1 ? " chunk." : " chunks."));
     }

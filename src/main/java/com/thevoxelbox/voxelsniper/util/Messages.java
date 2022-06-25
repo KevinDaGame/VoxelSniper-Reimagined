@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -12,7 +13,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-public enum Messages implements ComponentLike {
+public enum Messages implements ComponentLike, Messages0 {
     BRUSH_MESSAGE_PREFIX,
     BRUSH_NAME,
     BRUSH_CENTER,
@@ -51,7 +52,6 @@ public enum Messages implements ComponentLike {
     ROT3D_BRUSH_MESSAGE,
     ;
 
-    // TODO move this into YAML (probably with some kind of tool)
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
 
     public static void load(VoxelSniper voxelSniper) {

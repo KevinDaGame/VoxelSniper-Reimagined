@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -65,22 +67,21 @@ public class BiomeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+        vm.custom((ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + "%selectedBiome%").replace("%selectedBiome%", this.selectedBiome.name()));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Biome Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [biomeType] -- Change brush to the specified biome").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.GOLD + "Biome Brush Parameters:") + "\n" + (ChatColor.AQUA + "/b " + "%triggerHandle%" + " [biomeType] -- Change brush to the specified biome").replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
             this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+            v.sendMessage((ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + "%selectedBiome%").replace("%selectedBiome%", this.selectedBiome.name()));
         } catch (IllegalArgumentException e) {
-            v.sendMessage(ChatColor.RED + "That biome does not exist.");
+            v.sendMessage(Messages.BIOME_DOES_NOT_EXIST);
         }
     }
 
