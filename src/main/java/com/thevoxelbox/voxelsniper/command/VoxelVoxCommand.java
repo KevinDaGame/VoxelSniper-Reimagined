@@ -23,18 +23,18 @@ public class VoxelVoxCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        // Command: /paint
-        if (getActiveAlias().equalsIgnoreCase("paint")) {
+        // Command: /painting
+        if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 0) {
-                BlockHelper.paint(player, true, false, 0);
+                BlockHelper.painting(player, true, false, 0);
                 return true;
             }
 
             if (args.length == 1) {
                 try {
-                    BlockHelper.paint(player, false, false, Integer.parseInt(args[0]));
+                    BlockHelper.painting(player, false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /paint <number>");
+                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /painting <number>");
                 }
                 return true;
             }
@@ -74,19 +74,19 @@ public class VoxelVoxCommand extends VoxelCommand {
             return true;
         }
 
-        // Command: /vox paint
-        if (args[0].equalsIgnoreCase("paint")) {
-            if (args.length == 0) {
-                BlockHelper.paint(player, true, false, 0);
+        // Command: /vox painting
+        if (args[0].equalsIgnoreCase("painting")) {
+            if (args.length == 1) {
+                BlockHelper.painting(player, true, false, 0);
                 return true;
             }
 
-            // Command: /vox paint [number]
-            if (args.length == 1) {
+            // Command: /vox painting [number]
+            if (args.length == 2) {
                 try {
-                    BlockHelper.paint(player, false, false, Integer.parseInt(args[0]));
+                    BlockHelper.painting(player, false, false, Integer.parseInt(args[1]));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /" + getActiveAlias() + " paint [number]");
+                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /" + getActiveAlias() + " painting [number]");
                 }
                 return true;
             }
@@ -118,7 +118,7 @@ public class VoxelVoxCommand extends VoxelCommand {
 
     @Override
     public List<String> doSuggestion(Player player, String[] args) {
-        if (getActiveAlias().equalsIgnoreCase("paint")) {
+        if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 1) {
                 return Lists.newArrayList("[number]");
             }
@@ -132,10 +132,10 @@ public class VoxelVoxCommand extends VoxelCommand {
 
         if (getActiveIdentifier().equalsIgnoreCase("vox")) {
             if (args.length == 1) {
-                return Lists.newArrayList("goto", "paint", "chunk");
+                return Lists.newArrayList("goto", "painting", "chunk");
             }
 
-            if (args[0].equalsIgnoreCase("paint")) {
+            if (args[0].equalsIgnoreCase("painting")) {
                 if (args.length == 2) {
                     return Lists.newArrayList("[number]");
                 }

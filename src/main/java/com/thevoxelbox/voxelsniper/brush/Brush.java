@@ -9,6 +9,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.LocationWrapper;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -220,6 +221,10 @@ public abstract class Brush implements IBrush {
      */
     protected Material getBlockMaterialAt(int x, int y, int z) {
         return clampY(x, y, z).getBlockData().getMaterial();
+    }
+
+    protected Material getBlockMaterialAt(LocationWrapper l) {
+        return l.getBlock().getBlockData().getMaterial();
     }
 
     /**
