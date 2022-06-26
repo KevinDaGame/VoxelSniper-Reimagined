@@ -16,6 +16,11 @@ public class BukkitWorld implements IWorld {
     }
 
     @Override
+    public IBlock getBlock(int x, int y, int z) {
+        return new BukkitBlock(world.getBlockAt(x, y, z));
+    }
+
+    @Override
     public int getMinWorldHeight() {
         return 0;
     }

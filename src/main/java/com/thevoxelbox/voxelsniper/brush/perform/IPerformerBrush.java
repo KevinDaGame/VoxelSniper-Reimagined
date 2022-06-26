@@ -4,7 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 
 /**
  * @author Voxel

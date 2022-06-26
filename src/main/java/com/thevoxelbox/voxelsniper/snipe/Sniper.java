@@ -1,17 +1,20 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Maps;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
@@ -26,17 +29,17 @@ import java.util.UUID;
  */
 public class Sniper {
 
-    private final VoxelSniper plugin;
+    private final IVoxelsniper main;
     private final UUID player;
     private boolean enabled = true;
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
-    public Sniper(VoxelSniper plugin, Player player) {
-        this.plugin = plugin;
+    public Sniper(IVoxelsniper main, Player player) {
+        this.main = main;
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
-        sniperTool.assignAction(SnipeAction.ARROW, Material.ARROW);
+        sniperTool.assignAction(SnipeAction.ARROW, Material.ARROW.getKey());
         sniperTool.assignAction(SnipeAction.GUNPOWDER, Material.GUNPOWDER);
         tools.put(null, sniperTool);
     }
@@ -46,7 +49,7 @@ public class Sniper {
         return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand().getType() : null);
     }
 
-    public String getToolId(Material itemInHand) {
+    public String getToolId(IMaterial itemInHand) {
         if (itemInHand == null) {
             return null;
         }
@@ -59,8 +62,8 @@ public class Sniper {
         return null;
     }
 
-    public Player getPlayer() {
-        return Bukkit.getPlayer(player);
+    public IPlayer getPlayer() {
+        return main.getPlayer(this.player);
     }
 
     /**
@@ -72,7 +75,7 @@ public class Sniper {
      * @param clickedFace  Face of that targeted Block
      * @return true if command visibly processed, false otherwise.
      */
-    public boolean snipe(Action action, Material itemInHand, Block clickedBlock, BlockFace clickedFace) {
+    public boolean snipe(Action action, IMaterial itemInHand, IBlock clickedBlock, BlockFace clickedFace) {
         String toolId = getToolId(itemInHand);
         SnipeTool sniperTool = tools.get(toolId);
 
@@ -102,8 +105,8 @@ public class Sniper {
 
         SnipeData snipeData = sniperTool.getSnipeData();
         SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
-        Block targetBlock;
-        Block lastBlock = null;
+        IBlock targetBlock;
+        IBlock lastBlock = null;
 
         if (clickedBlock != null) {
             targetBlock = clickedBlock;
@@ -226,7 +229,7 @@ public class Sniper {
             return;
         }
         if (undo != null && undo.getSize() > 0) {
-            while (undoList.size() >= plugin.getVoxelSniperConfiguration().getUndoCacheSize()) {
+            while (undoList.size() >= main.getVoxelSniperConfiguration().getUndoCacheSize()) {
                 this.undoList.pollLast();
             }
             undoList.push(undo);

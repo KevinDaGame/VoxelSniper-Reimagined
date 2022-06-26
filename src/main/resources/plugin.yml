@@ -1,5 +1,5 @@
 name: ${project.artifactId}
-main: com.thevoxelbox.voxelsniper.VoxelSniper
+main: com.thevoxelbox.voxelsniper.bukkit.VoxelSniper
 version: ${project.build.version}
 api-version: 1.15
 website: ${project.url}

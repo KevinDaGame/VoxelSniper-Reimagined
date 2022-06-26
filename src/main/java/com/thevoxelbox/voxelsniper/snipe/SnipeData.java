@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import org.bukkit.Material;
 import org.bukkit.World;

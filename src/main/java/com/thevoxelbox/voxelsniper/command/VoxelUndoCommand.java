@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

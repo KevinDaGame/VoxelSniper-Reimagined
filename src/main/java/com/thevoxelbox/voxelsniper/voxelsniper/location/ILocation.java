@@ -27,5 +27,10 @@ public interface ILocation {
     default void addZ(int z) {
         this.setZ(this.getZ() + z);
     }
+    float getYaw();
+    float getPitch();
+    void setYaw(float yaw);
+    void setPitch(float pitch);
+    IWorld getWorld();
 
 }

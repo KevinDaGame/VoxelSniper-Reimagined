@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Sets;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.Material;
 import org.bukkit.block.*;
 import org.bukkit.block.data.type.NoteBlock;
@@ -134,7 +135,7 @@ public class Undo {
      *
      * @param block Block to be added
      */
-    public void put(Block block) {
+    public void put(IBlock block) {
         Vector pos = block.getLocation().toVector();
         if (this.containing.contains(pos)) {
             return;

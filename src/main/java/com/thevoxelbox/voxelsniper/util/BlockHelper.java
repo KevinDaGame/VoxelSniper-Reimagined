@@ -1,5 +1,9 @@
 package com.thevoxelbox.voxelsniper.util;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -17,7 +21,7 @@ public class BlockHelper {
     private static final double DEFAULT_STEP = 0.2;
     private static final int DEFAULT_RANGE = 250;
 
-    private Location playerLoc;
+    private ILocation playerLoc;
     private double rotX, rotY, viewHeight, rotXSin, rotXCos, rotYSin, rotYCos;
     private double length, hLength, step;
     private double range;
@@ -25,7 +29,7 @@ public class BlockHelper {
     private double xOffset, yOffset, zOffset;
     private int lastX, lastY, lastZ;
     private int targetX, targetY, targetZ;
-    private World world;
+    private IWorld world;
     private int maxWorldHeight;
     private int minWorldHeight;
 
@@ -34,7 +38,7 @@ public class BlockHelper {
      *
      * @param location
      */
-    public BlockHelper(final Location location) {
+    public BlockHelper(final ILocation location) {
         this.init(location, BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
     }
 
@@ -45,7 +49,7 @@ public class BlockHelper {
      * @param range
      * @param step
      */
-    public BlockHelper(final Location location, final int range, final double step) {
+    public BlockHelper(final ILocation location, final int range, final double step) {
         this.world = location.getWorld();
         this.init(location, range, step, BlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
     }
@@ -57,7 +61,7 @@ public class BlockHelper {
      * @param range
      * @param step
      */
-    public BlockHelper(final Player player, final int range, final double step) {
+    public BlockHelper(final IPlayer player, final int range, final double step) {
         this.init(player.getLocation(), range, step, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
     }
 
@@ -67,7 +71,7 @@ public class BlockHelper {
      * @param player
      * @param world
      */
-    public BlockHelper(final Player player, final World world) {
+    public BlockHelper(final IPlayer player, final IWorld world) {
         this.world = world;
         this.init(player.getLocation(), BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
         // values
@@ -78,7 +82,7 @@ public class BlockHelper {
      * @param world
      * @param range
      */
-    public BlockHelper(final Player player, final World world, final double range) {
+    public BlockHelper(final IPlayer player, final IWorld world, final double range) {
         this.world = world;
         this.init(player.getLocation(), range, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
         this.fromOffworld();
@@ -134,23 +138,23 @@ public class BlockHelper {
     /**
      * Returns the current block along the line of vision.
      *
-     * @return Block
+     * @return IBlock
      */
-    public final Block getCurBlock() {
+    public final IBlock getCurBlock() {
         if (this.length > this.range || this.targetY > maxWorldHeight || this.targetY < minWorldHeight) {
             return null;
         } else {
-            return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
+            return this.world.getBlock(this.targetX, this.targetY, this.targetZ);
         }
     }
 
     /**
      * Returns the block attached to the face at the cursor, or null if out of range.
      *
-     * @return Block
+     * @return IBlock
      */
-    public final Block getFaceBlock() {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
+    public final IBlock getFaceBlock() {
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == Material.AIR)) {
         }
 
         if (this.getCurBlock() != null) {
@@ -163,21 +167,21 @@ public class BlockHelper {
     /**
      * Returns the previous block along the line of vision.
      *
-     * @return Block
+     * @return IBlock
      */
-    public final Block getLastBlock() {
+    public final IBlock getLastBlock() {
         if (this.lastY > maxWorldHeight || this.lastY < minWorldHeight) {
             return null;
         }
-        return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
+        return this.world.getBlock(this.lastX, this.lastY, this.lastZ);
     }
 
     /**
      * Returns STEPS forward along line of vision and returns block.
      *
-     * @return Block
+     * @return IBlock
      */
-    public final Block getNextBlock() {
+    public final IBlock getNextBlock() {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
         this.lastZ = this.targetZ;
@@ -200,13 +204,13 @@ public class BlockHelper {
             return null;
         }
 
-        return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
+        return this.world.getBlock(this.targetX, this.targetY, this.targetZ);
     }
 
     /**
-     * @return Block
+     * @return IBlock
      */
-    public final Block getRangeBlock() {
+    public final IBlock getRangeBlock() {
         this.fromOffworld();
         if (this.length > this.range) {
             return null;
@@ -218,9 +222,9 @@ public class BlockHelper {
     /**
      * Returns the block at the cursor, or null if out of range.
      *
-     * @return Block
+     * @return IBlock
      */
-    public final Block getTargetBlock() {
+    public final IBlock getTargetBlock() {
         this.fromOffworld();
         while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
 
@@ -228,7 +232,7 @@ public class BlockHelper {
         return this.getCurBlock();
     }
 
-    private Block getRange() {
+    private IBlock getRange() {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
         this.lastZ = this.targetZ;
@@ -247,20 +251,20 @@ public class BlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.world.getBlockAt(this.targetX, this.targetY, this.targetZ).getType() != Material.AIR) {
-            return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
+        if (this.world.getBlock(this.targetX, this.targetY, this.targetZ).getMaterial() != Material.AIR) {
+            return this.world.getBlock(this.targetX, this.targetY, this.targetZ);
         }
 
         if (this.length > this.range || this.targetY > maxWorldHeight || this.targetY < minWorldHeight) {
-            return this.world.getBlockAt(this.lastX, this.lastY, this.lastZ);
+            return this.world.getBlock(this.lastX, this.lastY, this.lastZ);
         } else {
             return this.getRange();
         }
     }
 
-    private void init(final Location location, final double range, final double step, final double viewHeight) {
-        this.maxWorldHeight = world.getMaxHeight();
-        this.minWorldHeight = world.getMinHeight();
+    private void init(final ILocation location, final double range, final double step, final double viewHeight) {
+        this.maxWorldHeight = world.getMaxWorldHeight();
+        this.minWorldHeight = world.getMinWorldHeight();
         this.playerLoc = location;
         this.viewHeight = viewHeight;
         this.playerX = this.playerLoc.getX();

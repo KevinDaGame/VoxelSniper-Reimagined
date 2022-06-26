@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.VoxelBrushManager;
-import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelBrushManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
-import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
+import static com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
+import static com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
 
 public class VoxelBrushCommand extends VoxelCommand {
 

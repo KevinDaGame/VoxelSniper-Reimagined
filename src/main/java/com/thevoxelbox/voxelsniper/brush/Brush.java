@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelCommandManager;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
@@ -9,6 +9,9 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import com.thevoxelbox.voxelsniper.util.LocationWrapper;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -31,11 +34,11 @@ public abstract class Brush implements IBrush {
     /**
      * Targeted Block.
      */
-    private Block targetBlock;
+    private IBlock targetBlock;
     /**
      * Last Block before targeted Block.
      */
-    private Block lastBlock;
+    private IBlock lastBlock;
     /**
      * Brush name.
      */
@@ -47,9 +50,9 @@ public abstract class Brush implements IBrush {
      * @param z
      * @return {@link Block}
      */
-    public final Block clampY(final int x, final int y, final int z) {
+    public final IBlock clampY(final int x, final int y, final int z) {
         int clampedY = this.clampWorldHeight(y);
-        return this.getWorld().getBlockAt(x, clampedY, z);
+        return this.getWorld().getBlock(x, clampedY, z);
     }
 
     private boolean preparePerform(final SnipeData v, final Block clickedBlock, final BlockFace clickedFace) {
@@ -64,7 +67,7 @@ public abstract class Brush implements IBrush {
     }
 
     @Override
-    public boolean perform(SnipeAction action, SnipeData data, Block targetBlock, Block lastBlock) {
+    public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
         switch (action) {
@@ -124,7 +127,7 @@ public abstract class Brush implements IBrush {
      * @param clickedFace
      * @return boolean
      */
-    protected final boolean getTarget(final SnipeData v, final Block clickedBlock, final BlockFace clickedFace) {
+    protected final boolean getTarget(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (clickedBlock != null) {
             this.setTargetBlock(clickedBlock);
             this.setLastBlock(clickedBlock.getRelative(clickedFace));
@@ -180,30 +183,30 @@ public abstract class Brush implements IBrush {
     /**
      * @return the targetBlock
      */
-    protected final Block getTargetBlock() {
+    protected final IBlock getTargetBlock() {
         return this.targetBlock;
     }
 
     /**
      * @param targetBlock the targetBlock to set
      */
-    protected final void setTargetBlock(final Block targetBlock) {
+    protected final void setTargetBlock(final IBlock targetBlock) {
         this.targetBlock = targetBlock;
     }
 
     /**
      * @return the world
      */
-    protected final World getWorld() {
+    protected final IWorld getWorld() {
         return targetBlock.getWorld();
     }
 
     protected final int getMinHeight() {
-        return getWorld().getMinHeight();
+        return getWorld().getMinWorldHeight();
     }
 
     protected final int getMaxHeight() {
-        return getWorld().getMaxHeight();
+        return getWorld().getMaxWorldHeight();
     }
 
     protected final int clampWorldHeight(int height) {
@@ -218,12 +221,8 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    protected Material getBlockMaterialAt(int x, int y, int z) {
-        return clampY(x, y, z).getBlockData().getMaterial();
-    }
-
-    protected Material getBlockMaterialAt(LocationWrapper l) {
-        return l.getBlock().getBlockData().getMaterial();
+    protected IMaterial getBlockMaterialAt(int x, int y, int z) {
+        return clampY(x, y, z).getMaterial();
     }
 
     /**
@@ -241,14 +240,14 @@ public abstract class Brush implements IBrush {
     /**
      * @return Block before target Block.
      */
-    protected final Block getLastBlock() {
+    protected final IBlock getLastBlock() {
         return this.lastBlock;
     }
 
     /**
      * @param lastBlock Last Block before target Block.
      */
-    protected final void setLastBlock(Block lastBlock) {
+    protected final void setLastBlock(IBlock lastBlock) {
         this.lastBlock = lastBlock;
     }
 
@@ -296,12 +295,12 @@ public abstract class Brush implements IBrush {
      * @param material the material to set this block to
      * @param undo The Undo container to store the change
      */
-    protected final void setBlockMaterialAt(int x, int y, int z, Material material, Undo undo) {
-        Block b = this.clampY(x, y, z);
-        if (b.getType() != material) {
+    protected final void setBlockMaterialAt(int x, int y, int z, IMaterial material, Undo undo) {
+        IBlock b = this.clampY(x, y, z);
+        if (b.getMaterial() != material) {
             undo.put(b);
         }
-        b.setType(material);
+        b.setMaterial(material);
     }
 
     /**
@@ -311,14 +310,14 @@ public abstract class Brush implements IBrush {
      * @param material the material to set this block to
      * @param undo The Undo container to store the change
      */
-    protected final void setBlockType(Block b, Material material, Undo undo) {
+    protected final void setBlockType(IBlock b, IMaterial material, Undo undo) {
         int clampedY = this.clampWorldHeight(b.getY());
         if (clampedY != b.getY()) {
-            b = getWorld().getBlockAt(b.getX(), clampedY, b.getX());
+            b = getWorld().getBlock(b.getX(), clampedY, b.getX());
         }
-        if (b.getType() != material) {
+        if (b.getMaterial() != material) {
             undo.put(b);
         }
-        b.setType(material);
+        b.setMaterial(material);
     }
 }

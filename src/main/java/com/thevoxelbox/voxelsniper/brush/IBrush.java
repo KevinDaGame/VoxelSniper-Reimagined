@@ -1,8 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.block.Block;
 
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public interface IBrush {
      */
     void parseParameters(String triggerHandle, String[] params, SnipeData v);
 
-    boolean perform(SnipeAction action, SnipeData data, Block targetBlock, Block lastBlock);
+    boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock);
 
     /**
      * @return The name of the Brush

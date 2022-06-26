@@ -41,4 +41,29 @@ public class BukkitLocation extends AbstractLocation {
     public void setZ(int z) {
         location.setZ(z);
     }
+
+    @Override
+    public float getYaw() {
+        return location.getYaw();
+    }
+
+    @Override
+    public float getPitch() {
+        return location.getPitch();
+    }
+
+    @Override
+    public void setYaw(float yaw) {
+        location.setYaw(yaw);
+    }
+
+    @Override
+    public void setPitch(float pitch) {
+        location.setPitch(pitch);
+    }
+
+    @Override
+    public BukkitWorld getWorld() {
+        return new BukkitWorld(location.getWorld());
+    }
 }
