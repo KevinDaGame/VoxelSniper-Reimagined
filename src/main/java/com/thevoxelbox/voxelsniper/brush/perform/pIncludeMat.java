@@ -6,6 +6,7 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -36,7 +37,7 @@ public class pIncludeMat extends vPerformer {
     }
 
     @Override
-    public void perform(Block b) {
+    public void perform(IBlock b) {
         if (includeList.contains(b.getType())) {
             h.put(b);
             b.setBlockData(voxelMaterial.createBlockData());

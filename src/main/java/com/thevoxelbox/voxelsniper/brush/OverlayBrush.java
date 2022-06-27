@@ -97,7 +97,7 @@ public class OverlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private boolean isIgnoredBlock(Material material) {
+    private boolean isIgnoredBlock(IMaterial material) {
         return material == new BukkitMaterial( Material.WATER) || material.isTransparent() || material == new BukkitMaterial( Material.CACTUS);
     }
 

@@ -13,4 +13,14 @@ public interface IPlayer {
     boolean hasPermission(String permissionNode);
 
     boolean isSneaking();
+
+    ILocation getEyeLocation();
+
+    String getName();
+
+    void teleport(ILocation location);
+
+    int getEntityId();
+
+    void eject();
 }

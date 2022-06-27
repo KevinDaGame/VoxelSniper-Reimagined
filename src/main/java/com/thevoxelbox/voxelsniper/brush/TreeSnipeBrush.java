@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,7 +39,7 @@ public class TreeSnipeBrush extends Brush {
     private void single(final SnipeData v,  IBlock targetBlock) {
         UndoDelegate undoDelegate = new UndoDelegate(targetBlock.getWorld());
          IBlock  blockBelow = targetBlock.getRelative(BlockFace.DOWN);
-        BlockState currentState = blockBelow.getState();
+        IBlockState currentState = blockBelow.getState();
         undoDelegate.setBlock(blockBelow);
         blockBelow.setMaterial(new BukkitMaterial(Material.GRASS));
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);

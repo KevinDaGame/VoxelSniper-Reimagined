@@ -1,6 +1,8 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.location;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+import org.bukkit.block.Block;
 
 public interface ILocation {
 
@@ -43,4 +45,7 @@ public interface ILocation {
     void setPitch(float pitch);
     IWorld getWorld();
 
+    IBlock getClampedBlock();
+
+    IBlock getBlock();
 }

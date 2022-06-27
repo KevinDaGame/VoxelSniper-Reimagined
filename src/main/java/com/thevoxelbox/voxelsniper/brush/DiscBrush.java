@@ -45,7 +45,7 @@ public class DiscBrush extends PerformerBrush {
             for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
                 currentPoint.setZ(centerPoint.getZ() + z);
                 if (centerPoint.distanceSquared(currentPoint) <= radiusSquared) {
-                    this.currentPerformer.perform(this.clampY(currentPoint.getX(), currentPoint.getX(), currentPoint.getBlockZ()));
+                    this.currentPerformer.perform(this.clampY(currentPoint.getBlockX(), currentPoint.getBlockX(), currentPoint.getBlockZ()));
                 }
             }
         }

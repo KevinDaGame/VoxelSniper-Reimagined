@@ -44,4 +44,24 @@ public class BukkitPlayer implements IPlayer{
     public boolean isSneaking() {
         return player.isSneaking();
     }
+
+    @Override
+    public ILocation getEyeLocation() {
+        return new BukkitLocation(player.getEyeLocation());
+    }
+
+    @Override
+    public String getName() {
+        return player.getName();
+    }
+
+    @Override
+    public void teleport(ILocation location) {
+        player.teleport(((BukkitLocation)location).getLocation());
+    }
+
+    @Override
+    public int getEntityId() {
+        return 0;
+    }
 }

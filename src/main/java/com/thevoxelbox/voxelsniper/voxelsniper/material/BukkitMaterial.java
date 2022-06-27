@@ -1,5 +1,7 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import org.bukkit.Material;
 
 public class BukkitMaterial implements IMaterial {
@@ -22,5 +24,24 @@ public class BukkitMaterial implements IMaterial {
     @Override
     public boolean equals(String key) {
         return getKey().equals(key);
+    }
+
+    @Override
+    public IBlockData createBlockData() {
+        return new BukkitBlockData(material.createBlockData());
+    }
+
+    @Override
+    public String getName() {
+        return material.name();
+    }
+
+    @Override
+    public boolean isTransparent() {
+        return material.isTransparent();
+    }
+
+    public Material getMaterial() {
+        return material;
     }
 }

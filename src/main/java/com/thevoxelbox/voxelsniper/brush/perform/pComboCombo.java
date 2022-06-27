@@ -5,6 +5,8 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -13,8 +15,8 @@ import org.bukkit.block.data.BlockData;
  */
 public class pComboCombo extends vPerformer {
 
-    private BlockData voxelSubstance;
-    private BlockData targetSubstance;
+    private IBlockData voxelSubstance;
+    private IBlockData targetSubstance;
 
     public pComboCombo() {
         name = "Combo-Combo";
@@ -37,7 +39,7 @@ public class pComboCombo extends vPerformer {
     }
 
     @Override
-    public void perform(Block b) {
+    public void perform(IBlock b) {
         if (b.getBlockData().matches(targetSubstance)) {
             h.put(b);
             b.setBlockData(voxelSubstance, true);

@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -56,8 +57,8 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         // Command: /vir [data]
         if (args.length >= 1) {
             try {
-                BlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + String.join(",", args) + "]");
-                BlockData activeData = snipeData.getReplaceSubstance();
+                IBlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + String.join(",", args) + "]");
+                IBlockData activeData = snipeData.getReplaceSubstance();
 
                 snipeData.setReplaceSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().replaceData();

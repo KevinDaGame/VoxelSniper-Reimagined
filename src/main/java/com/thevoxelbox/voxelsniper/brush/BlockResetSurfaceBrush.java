@@ -134,7 +134,7 @@ public class BlockResetSurfaceBrush extends Brush {
         }
     }
 
-    private void resetBlock(Block block, final byte oldData) {
+    private void resetBlock(IBlock block, final byte oldData) {
         // Resets the block state to initial state by creating a new BlockData with default values.
         block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
     }

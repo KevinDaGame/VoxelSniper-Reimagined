@@ -227,7 +227,7 @@ public class BlockHelper {
      */
     public final IBlock getTargetBlock() {
         this.fromOffworld();
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == new BukkitMaterial(Material.AIR))) {
 
         }
         return this.getCurBlock();
@@ -252,7 +252,7 @@ public class BlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.world.getBlock(this.targetX, this.targetY, this.targetZ).getMaterial() != Material.AIR) {
+        if (this.world.getBlock(this.targetX, this.targetY, this.targetZ).getMaterial() != new BukkitMaterial(Material.AIR)) {
             return this.world.getBlock(this.targetX, this.targetY, this.targetZ);
         }
 

@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,7 +33,7 @@ public class CopyPastaBrush extends Brush {
     private final int[] minPoint = new int[3];
     private final int[] offsetPoint = new int[3];
 
-    private BlockData[] substanceArray;
+    private IBlockData[] substanceArray;
 
     private final int[] arraySize = new int[3];
     private int pivot = 0; // ccw degrees    
@@ -55,7 +56,7 @@ public class CopyPastaBrush extends Brush {
         this.numBlocks = (this.arraySize[0]) * (this.arraySize[1]) * (this.arraySize[2]);
 
         if (this.numBlocks > 0 && this.numBlocks < CopyPastaBrush.BLOCK_LIMIT) {
-            this.substanceArray = new BlockData[this.numBlocks];
+            this.substanceArray = new IBlockData[this.numBlocks];
 
             for (int i = 0; i < this.arraySize[0]; i++) {
                 for (int j = 0; j < this.arraySize[1]; j++) {
@@ -132,7 +133,7 @@ public class CopyPastaBrush extends Brush {
                 this.firstPoint = new int[3];
                 this.secondPoint = new int[3];
                 this.numBlocks = 0;
-                this.substanceArray = new BlockData[1];
+                this.substanceArray = new IBlockData[1];
                 this.points = 0;
                 v.sendMessage(ChatColor.GRAY + "Points cleared.");
                 break;

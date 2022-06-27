@@ -18,10 +18,10 @@ import java.util.Set;
  * @author Voxel
  */
 public class EraserBrush extends Brush {
-
-    private static final Set<IMaterial> EXCLUSIVE_MATERIALS = EnumSet.of(
+    //todo This was enumset, should it still be?
+    private static final Set<IMaterial> EXCLUSIVE_MATERIALS = Set.of(
            new BukkitMaterial( Material.AIR),new BukkitMaterial( Material.STONE),new BukkitMaterial( Material.GRASS_BLOCK),new BukkitMaterial( Material.DIRT),new BukkitMaterial( Material.SAND),new BukkitMaterial( Material.GRAVEL), new BukkitMaterial( Material.SANDSTONE));
-    private static final Set<IMaterial> EXCLUSIVE_LIQUIDS = EnumSet.of(
+    private static final Set<IMaterial> EXCLUSIVE_LIQUIDS = Set.of(
             new BukkitMaterial( Material.WATER), new BukkitMaterial( Material.LAVA));
 
     static {

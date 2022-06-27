@@ -4,7 +4,10 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -24,7 +27,7 @@ public class JockeyBrush extends Brush {
 
     private static final int ENTITY_STACK_LIMIT = 50;
     private JockeyType jockeyType = JockeyType.NORMAL_ALL_ENTITIES;
-    private Entity jockeyedEntity = null;
+    private IEntity jockeyedEntity = null;
 
     private boolean playerOnly = false;
 
@@ -41,11 +44,11 @@ public class JockeyBrush extends Brush {
         final int targetChunkZ = targetChunk.getZ();
 
         double range = Double.MAX_VALUE;
-        Entity closest = null;
+        IEntity closest = null;
 
         for (int x = targetChunkX - 1; x <= targetChunkX + 1; x++) {
             for (int y = targetChunkZ - 1; y <= targetChunkZ + 1; y++) {
-                for (final Entity entity : this.getWorld().getChunkAtLocation(x, y).getEntities()) {
+                for (final IEntity entity : this.getWorld().getChunkAtLocation(x, y).getEntities()) {
                     if (entity.getEntityId() == v.owner().getPlayer().getEntityId()) {
                         continue;
                     }
@@ -68,7 +71,7 @@ public class JockeyBrush extends Brush {
         }
 
         if (closest != null) {
-            final Player player = v.owner().getPlayer();
+            final IPlayer player = v.owner().getPlayer();
             final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(player, player.getLocation(), closest.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
 
             Bukkit.getPluginManager().callEvent(playerTeleportEvent);

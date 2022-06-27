@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.voxelsniper.block;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
@@ -32,6 +34,13 @@ public class BukkitBlock extends AbstractBlock {
     @Override
     public void setMaterial(IMaterial material) {
         this.material = material;
+        block.setType(((BukkitMaterial)material).getMaterial());
+    }
+
+    @Override
+    public void setMaterial(IMaterial material, boolean applyPhysics) {
+        this.material = material;
+        block.setType(((BukkitMaterial)material).getMaterial(), applyPhysics);
     }
 
     @Override
@@ -59,4 +68,51 @@ public class BukkitBlock extends AbstractBlock {
     public void setBlockData(IBlockData blockData) {
         block.setBlockData(((BukkitBlockData) blockData).getBlockData());
     }
+
+    @Override
+    public void setBlockData(IBlockData blockData, boolean applyPhysics) {
+        block.setBlockData(((BukkitBlockData) blockData).getBlockData(), applyPhysics);
+    }
+
+    @Override
+    public byte getData() {
+        return block.getData();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return block.isEmpty();
+    }
+
+    @Override
+    public boolean isLiquid() {
+        return block.isLiquid();
+    }
+
+    @Override
+    public IBlockState getState() {
+        return new BukkitBlockState(block.getState());
+    }
+
+    @Override
+    public boolean isBlockFacePowered(BlockFace face) {
+        return block.isBlockFacePowered(org.bukkit.block.BlockFace.valueOf(face.toString()));
+    }
+
+    @Override
+    public boolean isBlockFaceIndirectlyPowered(BlockFace face) {
+        return block.isBlockFaceIndirectlyPowered(org.bukkit.block.BlockFace.valueOf(face.toString()));
+    }
+
+    @Override
+    public boolean isBlockIndirectlyPowered() {
+        return block.isBlockIndirectlyPowered();
+    }
+
+    @Override
+    public boolean isBlockPowered() {
+        return block.isBlockPowered();
+    }
+
+
 }

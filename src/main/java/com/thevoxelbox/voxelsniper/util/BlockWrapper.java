@@ -1,5 +1,9 @@
 package com.thevoxelbox.voxelsniper.util;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -10,16 +14,16 @@ import org.bukkit.block.data.BlockData;
  */
 public class BlockWrapper {
 
-    private BlockData blockData;
+    private IBlockData blockData;
     private int x;
     private int y;
     private int z;
-    private World world;
+    private IWorld world;
 
     /**
      * @param block
      */
-    public BlockWrapper(final Block block) {
+    public BlockWrapper(final IBlock block) {
         this.setBlockData(block.getBlockData());
         this.setX(block.getX());
         this.setY(block.getY());
@@ -30,21 +34,21 @@ public class BlockWrapper {
     /**
      * @return the data
      */
-    public final BlockData getBlockData() {
+    public final IBlockData getBlockData() {
         return this.blockData;
     }
 
     /**
      * @return the id
      */
-    public final Material getMaterial() {
+    public final IMaterial getMaterial() {
         return this.blockData.getMaterial();
     }
 
     /**
      * @return the world
      */
-    public final World getWorld() {
+    public final IWorld getWorld() {
         return this.world;
     }
 
@@ -72,14 +76,14 @@ public class BlockWrapper {
     /**
      * @param blockData the data to set
      */
-    public final void setBlockData(final BlockData blockData) {
+    public final void setBlockData(final IBlockData blockData) {
         this.blockData = blockData;
     }
 
     /**
      * @param world the world to set
      */
-    public final void setWorld(final World world) {
+    public final void setWorld(final IWorld world) {
         this.world = world;
     }
 

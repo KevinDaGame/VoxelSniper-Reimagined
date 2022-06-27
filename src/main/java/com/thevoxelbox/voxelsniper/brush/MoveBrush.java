@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
@@ -163,10 +164,10 @@ public class MoveBrush extends Brush {
                 v.getVoxelMessage().brushMessage("The new Selection has more blocks than the original selection. This should never happen!");
             }
 
-            for (final BlockState blockState : selection.getBlockStates()) {
+            for (final IBlockState blockState : selection.getBlockStates()) {
                 undoSet.add(blockState.getBlock());
             }
-            for (final BlockState blockState : newSelection.getBlockStates()) {
+            for (final IBlockState blockState : newSelection.getBlockStates()) {
                 undoSet.add(blockState.getBlock());
             }
 
@@ -178,7 +179,7 @@ public class MoveBrush extends Brush {
             for (final IBlockState blockState : selection.getBlockStates()) {
                 blockState.getBlock().setMaterial(new BukkitMaterial(Material.AIR));
             }
-            for (final BlockState blockState : selection.getBlockStates()) {
+            for (final IBlockState blockState : selection.getBlockStates()) {
                 final  IBlock  affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
                 affectedBlock.setBlockData(blockState.getBlockData(), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getMaterial()));
             }
@@ -302,7 +303,7 @@ public class MoveBrush extends Brush {
         /**
          * Calculated BlockStates of the selection.
          */
-        private final ArrayList<BlockState> blockStates = new ArrayList<>();
+        private final ArrayList<IBlockState> blockStates = new ArrayList<>();
         /**
          *
          */
@@ -347,7 +348,7 @@ public class MoveBrush extends Brush {
         /**
          * @return ArrayList<BlockState> calculated BlockStates of defined region.
          */
-        public ArrayList<BlockState> getBlockStates() {
+        public ArrayList<IBlockState> getBlockStates() {
             return this.blockStates;
         }
 

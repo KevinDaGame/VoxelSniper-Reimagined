@@ -4,14 +4,17 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.World;
 
 public class BukkitWorld implements IWorld {
     private final World world;
+
     public BukkitWorld(World world) {
         this.world = world;
     }
+
     @Override
     public IBlock getBlock(ILocation location) {
         return new BukkitBlock(world.getBlockAt(location.getX(), location.getY(), location.getZ()));
@@ -50,5 +53,15 @@ public class BukkitWorld implements IWorld {
     @Override
     public void refreshChunk(int x, int z) {
         world.refreshChunk(x, z);
+    }
+
+    @Override
+    public void strikeLightning(ILocation location) {
+        var bukkitloc = (BukkitLocation) location;
+        world.strikeLightning(bukkitloc.getLocation());
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

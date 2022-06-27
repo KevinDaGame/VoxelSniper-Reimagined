@@ -1,6 +1,13 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.chunk;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import org.bukkit.Chunk;
+import org.bukkit.entity.Entity;
+
+import java.util.ArrayList;
 
 public class BukkitChunk implements IChunk {
     private Chunk chunk;
@@ -16,5 +23,20 @@ public class BukkitChunk implements IChunk {
     @Override
     public int getZ() {
         return chunk.getZ();
+    }
+
+    @Override
+    public IBlock getBlock(int x, int y, int z) {
+        return new BukkitBlock(chunk.getWorld().getBlockAt(getX() + x, y, getZ() + z));
+    }
+
+    @Override
+    public Iterable<? extends IEntity> getEntities() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+        var chunkEntities = chunk.getEntities();
+        for (Entity entity : chunkEntities) {
+            entities.add(new BukkitEntity(entity));
+        }
+        return entities;
     }
 }

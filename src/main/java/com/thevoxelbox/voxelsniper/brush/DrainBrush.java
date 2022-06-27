@@ -44,7 +44,7 @@ public class DrainBrush extends Brush {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dz : new int[]{-1, 1}) {
                                 IBlock b = this.clampY(this.getTargetBlock().getX() + (x*dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z*dz));
-                                if (b.getMaterial() == new BukkitMaterial(Material.WATER)) || b.getMaterial() == new BukkitMaterial(Material.LAVA)) {
+                                if (b.getMaterial() == new BukkitMaterial(Material.WATER) || b.getMaterial() == new BukkitMaterial(Material.LAVA)) {
                                     undo.put(b);
                                     b.setMaterial(new BukkitMaterial(Material.AIR));
                                 }

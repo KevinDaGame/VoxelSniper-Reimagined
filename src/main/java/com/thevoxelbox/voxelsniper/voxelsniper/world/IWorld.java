@@ -14,4 +14,6 @@ public interface IWorld {
     IChunk getChunkAtLocation(int x, int z);
     IChunk getChunkAtLocation(ILocation location);
     void refreshChunk(int x, int z);
+
+    void strikeLightning(ILocation location);
 }
