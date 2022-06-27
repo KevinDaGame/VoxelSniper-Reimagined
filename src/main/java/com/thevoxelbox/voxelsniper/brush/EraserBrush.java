@@ -3,6 +3,9 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -41,7 +44,7 @@ public class EraserBrush extends Brush {
     private void doErase(final SnipeData v, final boolean keepWater) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
-        World world = this.getTargetBlock().getWorld();
+        IWorld world = this.getTargetBlock().getWorld();
         final Undo undo = new Undo();
 
         for (int x = brushSizeDoubled; x >= 0; x--) {
@@ -50,13 +53,13 @@ public class EraserBrush extends Brush {
                 int currentY = this.getTargetBlock().getY() - brushSize + y;
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     int currentZ = this.getTargetBlock().getZ() - brushSize + z;
-                    Block currentBlock = world.getBlockAt(currentX, currentY, currentZ);
+                    IBlock currentBlock = world.getBlock(currentX, currentY, currentZ);
                     if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
                             || (keepWater && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                         continue;
                     }
                     undo.put(currentBlock);
-                    currentBlock.setType(new BukkitMaterial(Material.AIR));
+                    currentBlock.setMaterial(new BukkitMaterial(Material.AIR));
                 }
             }
         }

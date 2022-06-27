@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -14,7 +15,7 @@ import org.bukkit.block.Block;
 public class SetBrush extends PerformerBrush {
 
     private static final int SELECTION_SIZE_MAX = 5000000;
-    private Block block = null;
+    private IBlock block = null;
 
     /**
      *
@@ -23,7 +24,7 @@ public class SetBrush extends PerformerBrush {
         this.setName("Set");
     }
 
-    private boolean set(final Block bl, final SnipeData v) {
+    private boolean set(final  IBlock  bl, final SnipeData v) {
         if (this.block == null) {
             this.block = bl;
             return true;

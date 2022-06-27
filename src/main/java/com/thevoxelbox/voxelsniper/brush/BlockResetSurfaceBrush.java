@@ -2,8 +2,10 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -68,63 +70,63 @@ public class BlockResetSurfaceBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void applyBrush(final SnipeData v) {
-        final World world = this.getWorld();
+        final IWorld world = this.getWorld();
 
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     // TODO clampY
-                    Block block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                    IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                     if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
                     }
 
                     boolean airFound = false;
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                    if (world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                    if (world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial() == new BukkitMaterial( Material.AIR)) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial() == new BukkitMaterial( Material.AIR)) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
                     if (airFound) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                     }

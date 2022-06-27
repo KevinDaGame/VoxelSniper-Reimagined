@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,7 +23,7 @@ public class ShellVoxelBrush extends Brush {
         this.setName("Shell Voxel");
     }
 
-    private void vShell(final SnipeData v, Block targetBlock) {
+    private void vShell(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final int brushSizeSquared = 2 * brushSize;
         final IMaterial[][][] oldMaterials = new IMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a  buffer

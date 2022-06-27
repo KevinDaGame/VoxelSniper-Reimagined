@@ -84,7 +84,7 @@ public class SignOverwriteBrush extends Brush {
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
-                    BlockState blockState = this.getWorld().getBlockAt(x, y, z).getState();
+                    BlockState blockState = this.getWorld().getBlock(x, y, z).getState();
                     if (blockState instanceof Sign) {
                         setSignText((Sign) blockState);
                         signFound = true;

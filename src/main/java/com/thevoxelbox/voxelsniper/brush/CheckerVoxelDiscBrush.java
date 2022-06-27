@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -28,7 +29,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
      * @param v
      * @param target
      */
-    private void applyBrush(final SnipeData v, final Block target) {
+    private void applyBrush(final SnipeData v, final IBlock target) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 final int sum = this.useWorldCoordinates ? target.getX() + x + target.getZ() + y : x + y;

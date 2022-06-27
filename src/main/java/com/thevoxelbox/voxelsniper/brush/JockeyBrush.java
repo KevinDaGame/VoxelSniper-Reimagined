@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -36,7 +38,7 @@ public class JockeyBrush extends Brush {
     }
 
     private void sitOn(final SnipeData v) {
-        final Chunk targetChunk = this.getWorld().getChunkAt(this.getTargetBlock().getLocation());
+        final IChunk targetChunk = this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation());
         final int targetChunkX = targetChunk.getX();
         final int targetChunkZ = targetChunk.getZ();
 
@@ -45,7 +47,7 @@ public class JockeyBrush extends Brush {
 
         for (int x = targetChunkX - 1; x <= targetChunkX + 1; x++) {
             for (int y = targetChunkZ - 1; y <= targetChunkZ + 1; y++) {
-                for (final Entity entity : this.getWorld().getChunkAt(x, y).getEntities()) {
+                for (final Entity entity : this.getWorld().getChunkAtLocation(x, y).getEntities()) {
                     if (entity.getEntityId() == v.owner().getPlayer().getEntityId()) {
                         continue;
                     }
@@ -56,7 +58,7 @@ public class JockeyBrush extends Brush {
                         }
                     }
 
-                    final Location entityLocation = entity.getLocation();
+                    final ILocation entityLocation = entity.getLocation();
                     final double entityDistance = entityLocation.distance(v.owner().getPlayer().getLocation());
 
                     if (entityDistance < range) {

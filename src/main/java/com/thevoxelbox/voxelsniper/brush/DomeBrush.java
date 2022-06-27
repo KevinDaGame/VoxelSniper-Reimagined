@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.block.Block;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -38,7 +39,7 @@ public class DomeBrush extends Brush {
      * @param targetBlock
      */
     @SuppressWarnings("deprecation")
-    private void generateDome(final SnipeData v, final Block targetBlock) {
+    private void generateDome(final SnipeData v, final IBlock targetBlock) {
 
         if (v.getVoxelHeight() == 0) {
             v.sendMessage("VoxelHeight must not be 0.");
@@ -79,7 +80,7 @@ public class DomeBrush extends Brush {
         }
 
         for (final Vector vector : changeablePositions) {
-            final Block currentTargetBlock = vector.toLocation(this.getTargetBlock().getWorld()).getBlock();
+            final IBlock currentTargetBlock = vector.toLocation(this.getTargetBlock().getWorld()).getBlock();
             // TODO: Check whether BlockData omission affects this or not.
             // if (currentTargetBlock.getMaterial() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
             if (currentTargetBlock.getMaterial() != v.getVoxelMaterial()) {

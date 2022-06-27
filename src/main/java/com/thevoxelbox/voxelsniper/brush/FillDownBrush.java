@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -30,10 +31,10 @@ public class FillDownBrush extends PerformerBrush {
         this.setName("Fill Down");
     }
 
-    private void fillDown(final SnipeData v, final Block b) {
+    private void fillDown(final SnipeData v, final IBlock b) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-        final Block targetBlock = this.getTargetBlock();
+        final  IBlock  targetBlock = this.getTargetBlock();
         for (int x = -brushSize; x <= brushSize; x++) {
             final double currentXSquared = Math.pow(x, 2);
 
@@ -43,7 +44,7 @@ public class FillDownBrush extends PerformerBrush {
                     boolean found = false;
                     if (this.fromExisting) {
                         for (y = -v.getVoxelHeight(); y < v.getVoxelHeight(); y++) {
-                            final Block currentBlock = this.getWorld().getBlockAt(
+                            final  IBlock  currentBlock = this.getWorld().getBlock(
                                     targetBlock.getX() + x,
                                     targetBlock.getY() + y,
                                     targetBlock.getZ() + z);
@@ -58,7 +59,7 @@ public class FillDownBrush extends PerformerBrush {
                         y--;
                     }
                     for (; y >= -targetBlock.getY(); --y) {
-                        final Block currentBlock = this.getWorld().getBlockAt(
+                        final  IBlock  currentBlock = this.getWorld().getBlock(
                                 targetBlock.getX() + x,
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);

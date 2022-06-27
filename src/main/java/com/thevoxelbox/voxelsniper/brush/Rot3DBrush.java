@@ -5,6 +5,8 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -124,9 +126,9 @@ public class Rot3DBrush extends Brush {
 
                 for (int y = 0; y < this.snap.length; y++) {
                     if (xSquared + zSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
-                        final Block block = this.clampY(sx, sz, sz);
+                        final IBlock block = this.clampY(sx, sz, sz);
                         this.snap[x][y][z] = new BlockWrapper(block);
-                        block.setType(new BukkitMaterial(Material.AIR));
+                        block.setMaterial(new BukkitMaterial(Material.AIR));
                         sz++;
                     }
                 }
@@ -205,12 +207,12 @@ public class Rot3DBrush extends Brush {
                         if (!doNotFill[x][y][z]) {
                             // smart fill stuff
                             final int fy = y + this.getTargetBlock().getY() - this.bSize;
-                            final BlockData a = this.getBlockDataAt(fx + 1, fy, fz);
-                            final BlockData d = this.getBlockDataAt(fx - 1, fy, fz);
-                            final BlockData c = this.getBlockDataAt(fx, fy, fz + 1);
-                            final BlockData b = this.getBlockDataAt(fx, fy, fz - 1);
+                            final IBlockData a = this.getBlockDataAt(fx + 1, fy, fz);
+                            final IBlockData d = this.getBlockDataAt(fx - 1, fy, fz);
+                            final IBlockData c = this.getBlockDataAt(fx, fy, fz + 1);
+                            final IBlockData b = this.getBlockDataAt(fx, fy, fz - 1);
 
-                            BlockData winner;
+                            IBlockData winner;
 
                             if (a.getMaterial() == b.getMaterial() || a.getMaterial() == c.getMaterial() || a.getMaterial() == d.getMaterial()) { // I figure that since we are already narrowing it down to ONLY the holes left behind, it
                                 // should

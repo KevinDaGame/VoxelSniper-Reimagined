@@ -40,7 +40,7 @@ public class SplatterVoxelBrush extends PerformerBrush {
         this.setName("Splatter Voxel");
     }
 
-    private void vSplatterBall(final SnipeData v, Block targetBlock) {
+    private void vSplatterBall(final SnipeData v,  IBlock  targetBlock) {
         if (this.seedPercent < SEED_PERCENT_MIN || this.seedPercent > SEED_PERCENT_MAX) {
             v.sendMessage(ChatColor.BLUE + "Seed percent set to: 10%");
             this.seedPercent = SEED_PERCENT_DEFAULT;

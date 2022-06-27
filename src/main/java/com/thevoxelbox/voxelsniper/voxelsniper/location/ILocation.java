@@ -27,6 +27,16 @@ public interface ILocation {
     default void addZ(int z) {
         this.setZ(this.getZ() + z);
     }
+    default void add(int x, int y, int z) {
+        this.addX(x);
+        this.addY(y);
+        this.addZ(z);
+    }
+    default void add(ILocation location) {
+        this.addX(location.getX());
+        this.addY(location.getY());
+        this.addZ(location.getZ());
+    }
     float getYaw();
     float getPitch();
     void setYaw(float yaw);

@@ -4,6 +4,9 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -106,7 +109,7 @@ public class OceanBrush extends Brush {
      */
     @SuppressWarnings("deprecation")
     protected final void oceanator(final SnipeData v, final Undo undo) {
-        final World world = this.getWorld();
+        final IWorld world = this.getWorld();
 
         final int minX = (int) Math.floor((this.getTargetBlock().getX() - v.getBrushSize()));
         final int minZ = (int) Math.floor((this.getTargetBlock().getZ() - v.getBrushSize()));
@@ -123,28 +126,28 @@ public class OceanBrush extends Brush {
 
                 // go down from highest Y block down to new sea floor
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
-                    final Block block = world.getBlockAt(x, y, z);
+                    final IBlock block = world.getBlock(x, y, z);
                     if (!block.getType().equals(new BukkitMaterial(Material.AIR))) {
                         undo.put(block);
-                        block.setType(new BukkitMaterial(Material.AIR));
+                        block.setMaterial(new BukkitMaterial(Material.AIR));
                     }
                 }
 
                 // go down from water level to new sea level
                 for (int y = this.waterLevel; y > newSeaFloorLevel; y--) {
-                    final Block block = world.getBlockAt(x, y, z);
+                    final  IBlock  block = world.getBlock(x, y, z);
                     if (!block.getType().equals(new BukkitMaterial(Material.WATER))) {
                         // do not put blocks into the undo we already put into
                         if (!block.getType().equals(new BukkitMaterial(Material.AIR))) {
                             undo.put(block);
                         }
-                        block.setType(new BukkitMaterial(Material.WATER));
+                        block.setMaterial(new BukkitMaterial(Material.WATER));
                     }
                 }
 
                 // cover the sea floor of required
                 if (this.coverFloor && (newSeaFloorLevel < this.waterLevel)) {
-                    Block block = world.getBlockAt(x, newSeaFloorLevel, z);
+                     IBlock  block = world.getBlock(x, newSeaFloorLevel, z);
                     if (block.getType() != v.getVoxelMaterial()) {
                         undo.put(block);
                         block.setBlockData(v.getVoxelMaterial().createBlockData());

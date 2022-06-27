@@ -66,4 +66,8 @@ public class BukkitLocation extends AbstractLocation {
     public BukkitWorld getWorld() {
         return new BukkitWorld(location.getWorld());
     }
+
+    public Location getLocation() {
+        return this.location;
+    }
 }

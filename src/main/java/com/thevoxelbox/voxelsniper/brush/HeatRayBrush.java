@@ -4,6 +4,10 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -117,9 +121,9 @@ public class HeatRayBrush extends Brush {
         final PerlinNoiseGenerator generator = new PerlinNoiseGenerator(new Random());
 
         final Vector targetLocation = this.getTargetBlock().getLocation().toVector();
-        final Location currentLocation = new Location(this.getTargetBlock().getWorld(), 0, 0, 0);
+        final ILocation currentLocation = new Location(this.getTargetBlock().getWorld(), 0, 0, 0);
         final Undo undo = new Undo();
-        Block currentBlock;
+         IBlock currentBlock;
 
         for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
@@ -136,13 +140,13 @@ public class HeatRayBrush extends Brush {
 
                         if (currentBlock.isLiquid()) {
                             undo.put(currentBlock);
-                            currentBlock.setType(new BukkitMaterial(Material.AIR));
+                            currentBlock.setMaterial(new BukkitMaterial(Material.AIR));
                             continue;
                         }
 
                         if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getMaterial())) {
                             undo.put(currentBlock);
-                            currentBlock.setType(new BukkitMaterial(Material.FIRE));
+                            currentBlock.setMaterial(new BukkitMaterial(Material.FIRE));
                             continue;
                         }
 
@@ -155,22 +159,22 @@ public class HeatRayBrush extends Brush {
                             if (obsidianDensity >= HeatRayBrush.REQUIRED_OBSIDIAN_DENSITY) {
                                 undo.put(currentBlock);
                                 if (currentBlock.getMaterial() != new BukkitMaterial( Material.OBSIDIAN)) {
-                                    currentBlock.setType(new BukkitMaterial(Material.OBSIDIAN));
+                                    currentBlock.setMaterial(new BukkitMaterial(Material.OBSIDIAN));
                                 }
                             } else if (cobbleDensity >= HeatRayBrush.REQUIRED_COBBLE_DENSITY) {
                                 undo.put(currentBlock);
                                 if (currentBlock.getMaterial() != new BukkitMaterial( Material.COBBLESTONE)) {
-                                    currentBlock.setType(new BukkitMaterial(Material.COBBLESTONE));
+                                    currentBlock.setMaterial(new BukkitMaterial(Material.COBBLESTONE));
                                 }
                             } else if (fireDensity >= HeatRayBrush.REQUIRED_FIRE_DENSITY) {
                                 undo.put(currentBlock);
                                 if (currentBlock.getMaterial() != new BukkitMaterial( Material.FIRE)) {
-                                    currentBlock.setType(new BukkitMaterial(Material.FIRE));
+                                    currentBlock.setMaterial(new BukkitMaterial(Material.FIRE));
                                 }
                             } else if (airDensity >= HeatRayBrush.REQUIRED_AIR_DENSITY) {
                                 undo.put(currentBlock);
                                 if (currentBlock.getMaterial() != new BukkitMaterial( Material.AIR)) {
-                                    currentBlock.setType(new BukkitMaterial(Material.AIR));
+                                    currentBlock.setMaterial(new BukkitMaterial(Material.AIR));
                                 }
                             }
                         }

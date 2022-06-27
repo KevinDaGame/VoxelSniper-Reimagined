@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 
@@ -25,7 +26,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
     }
 
     private void execute(final SnipeData v) {
-        final Chunk chunk = getTargetBlock().getChunk();
+        final IChunk chunk = getTargetBlock().getChunk();
 
         if (this.first) {
             this.fx = chunk.getX();
@@ -46,7 +47,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
 
         for (int x = lowX; x <= highX; x++) {
             for (int z = lowZ; z <= highZ; z++) {
-                canyon(getWorld().getChunkAt(x, z), undo);
+                canyon(getWorld().getChunkAtLocation(x, z), undo);
             }
         }
 

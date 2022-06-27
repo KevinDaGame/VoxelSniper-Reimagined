@@ -32,7 +32,7 @@ public class RingBrush extends PerformerBrush {
         this.setName("Ring");
     }
 
-    private void ring(final SnipeData v, Block targetBlock) {
+    private void ring(final SnipeData v,  IBlock  targetBlock) {
         final int brushSize = v.getBrushSize();
         final double outerSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         final double innerSquared = Math.pow(this.innerSize, 2);

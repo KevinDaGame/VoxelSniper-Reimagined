@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -40,7 +41,7 @@ public class SplatterBallBrush extends PerformerBrush {
         this.setName("Splatter Ball");
     }
 
-    private void splatterBall(final SnipeData v, Block targetBlock) {
+    private void splatterBall(final SnipeData v,  IBlock targetBlock) {
         if (this.seedPercent < SEED_PERCENT_MIN || this.seedPercent > SEED_PERCENT_MAX) {
             v.owner().getPlayer().sendMessage(ChatColor.BLUE + "Seed percent set to: 10%");
             this.seedPercent = SEED_PERCENT_DEFAULT;

@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -22,7 +24,7 @@ public class LineBrush extends PerformerBrush {
     private static final Vector HALF_BLOCK_OFFSET = new Vector(0.5, 0.5, 0.5);
     private Vector originCoords = null;
     private Vector targetCoords = new Vector();
-    private World targetWorld;
+    private IWorld targetWorld;
 
     /**
      *
@@ -58,7 +60,7 @@ public class LineBrush extends PerformerBrush {
             this.currentPerformer.perform(this.targetCoords.toLocation(this.targetWorld).getBlock());
         } else {
             for (final BlockIterator blockIterator = new BlockIterator(this.targetWorld, originClone, direction, 0, NumberConversions.round(length)); blockIterator.hasNext();) {
-                final Block currentBlock = blockIterator.next();
+                final IBlock currentBlock = blockIterator.next();
                 this.currentPerformer.perform(currentBlock);
             }
         }

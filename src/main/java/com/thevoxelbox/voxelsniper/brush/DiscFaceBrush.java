@@ -30,7 +30,7 @@ public class DiscFaceBrush extends PerformerBrush {
         this.setName("Disc Face");
     }
 
-    private void discUD(final SnipeData v, Block targetBlock) {
+    private void discUD(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
 
@@ -50,7 +50,7 @@ public class DiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void discNS(final SnipeData v, Block targetBlock) {
+    private void discNS(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
 
@@ -69,7 +69,7 @@ public class DiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void discEW(final SnipeData v, Block targetBlock) {
+    private void discEW(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
 
@@ -88,7 +88,7 @@ public class DiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void pre(final SnipeData v, Block targetBlock) {
+    private void pre(final SnipeData v, IBlock targetBlock) {
         BlockFace blockFace = getTargetBlock().getFace(this.getLastBlock());
         if (blockFace == null) {
             return;

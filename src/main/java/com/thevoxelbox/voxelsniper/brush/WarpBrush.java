@@ -25,8 +25,8 @@ public class WarpBrush extends Brush {
     @Override
     protected final void arrow(final SnipeData v) {
         Player player = v.owner().getPlayer();
-        Location location = this.getLastBlock().getLocation();
-        Location playerLocation = player.getLocation();
+        ILocation location = this.getLastBlock().getLocation();
+        ILocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
 
@@ -36,8 +36,8 @@ public class WarpBrush extends Brush {
     @Override
     protected final void powder(final SnipeData v) {
         Player player = v.owner().getPlayer();
-        Location location = this.getLastBlock().getLocation();
-        Location playerLocation = player.getLocation();
+        ILocation location = this.getLastBlock().getLocation();
+        ILocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
 

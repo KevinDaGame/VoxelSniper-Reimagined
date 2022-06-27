@@ -52,7 +52,7 @@ public class EntityRemovalBrush extends Brush {
     }
 
     private void radialRemoval(SnipeData v) {
-        final Chunk targetChunk = getTargetBlock().getChunk();
+        final IChunk targetChunk = getTargetBlock().getChunk();
         int entityCount = 0;
         int chunkCount = 0;
 
@@ -63,7 +63,7 @@ public class EntityRemovalBrush extends Brush {
 
             for (int x = targetChunk.getX() - radius; x <= targetChunk.getX() + radius; x++) {
                 for (int z = targetChunk.getZ() - radius; z <= targetChunk.getZ() + radius; z++) {
-                    entityCount += removeEntities(getWorld().getChunkAt(x, z));
+                    entityCount += removeEntities(getWorld().getChunkAtLocation(x, z));
 
                     chunkCount++;
                 }

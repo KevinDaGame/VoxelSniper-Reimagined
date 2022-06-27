@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -29,17 +31,17 @@ public class FlatOceanBrush extends Brush {
     }
 
     @SuppressWarnings("deprecation")
-    private void flatOcean(final Chunk chunk) {
+    private void flatOcean(final IChunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 // chunk.getWorld() == getWorld()
                 for (int y = this.getMinHeight(); y < this.getMaxHeight(); y++) {
                     if (y <= this.floorLevel) {
-                        chunk.getBlock(x, y, z).setType(new BukkitMaterial(Material.DIRT), false);
+                        chunk.getBlock(x, y, z).setMaterial(new BukkitMaterial(Material.DIRT), false);
                     } else if (y <= this.waterLevel) {
-                        chunk.getBlock(x, y, z).setType(new BukkitMaterial(Material.WATER), false);
+                        chunk.getBlock(x, y, z).setMaterial(new BukkitMaterial(Material.WATER), false);
                     } else {
-                        chunk.getBlock(x, y, z).setType(new BukkitMaterial(Material.AIR), false);
+                        chunk.getBlock(x, y, z).setMaterial(new BukkitMaterial(Material.AIR), false);
                     }
                 }
             }
@@ -48,20 +50,20 @@ public class FlatOceanBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.flatOcean(this.getWorld().getChunkAt(this.getTargetBlock()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.flatOcean(this.getWorld().getChunkAt(this.getTargetBlock()));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ())));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() + CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ())));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() - CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE)));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
     }
 
     @Override

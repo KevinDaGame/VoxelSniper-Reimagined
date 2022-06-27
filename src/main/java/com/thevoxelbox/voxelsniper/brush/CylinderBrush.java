@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -28,7 +29,7 @@ public class CylinderBrush extends PerformerBrush {
         this.setName("Cylinder");
     }
 
-    private void cylinder(final SnipeData v, Block targetBlock) {
+    private void cylinder(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         int yStartingPoint = targetBlock.getY() + v.getcCen();
         int yEndPoint = targetBlock.getY() + v.getVoxelHeight() + v.getcCen();

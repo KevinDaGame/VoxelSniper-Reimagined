@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -37,32 +39,32 @@ public class CanyonBrush extends Brush {
      * @param undo
      */
     @SuppressWarnings("deprecation")
-    protected final void canyon(final Chunk chunk, final Undo undo) {
+    protected final void canyon(final IChunk chunk, final Undo undo) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 int currentYLevel = this.yLevel;
 
                 for (int y = 63; y < this.getMaxHeight(); y++) {
-                    final Block block = chunk.getBlock(x, y, z);
-                    final Block currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
+                    final IBlock block = chunk.getBlock(x, y, z);
+                    final IBlock currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
 
                     undo.put(block);
                     undo.put(currentYLevelBlock);
 
-                    currentYLevelBlock.setType(block.getMaterial(), false);
-                    block.setType(new BukkitMaterial(Material.AIR));
+                    currentYLevelBlock.setMaterial(block.getMaterial(), false);
+                    block.setMaterial(new BukkitMaterial(Material.AIR));
 
                     currentYLevel++;
                 }
 
-                final Block block = chunk.getBlock(x, this.getMinHeight(), z);
+                final IBlock block = chunk.getBlock(x, this.getMinHeight(), z);
                 undo.put(block);
-                block.setType(new BukkitMaterial(Material.BEDROCK));
+                block.setMaterial(new BukkitMaterial(Material.BEDROCK));
 
                 for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
-                    final Block currentBlock = chunk.getBlock(x, y, z);
+                    final IBlock currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
-                    currentBlock.setType(new BukkitMaterial(Material.STONE));
+                    currentBlock.setMaterial(new BukkitMaterial(Material.STONE));
                 }
             }
         }
@@ -81,10 +83,10 @@ public class CanyonBrush extends Brush {
     protected void powder(final SnipeData v) {
         final Undo undo = new Undo();
 
-        Chunk targetChunk = getTargetBlock().getChunk();
+        IChunk targetChunk = getTargetBlock().getChunk();
         for (int x = targetChunk.getX() - 1; x <= targetChunk.getX() + 1; x++) {
             for (int z = targetChunk.getZ() - 1; z <= targetChunk.getZ() + 1; z++) {
-                canyon(getWorld().getChunkAt(x, z), undo);
+                canyon(getWorld().getChunkAtLocation(x, z), undo);
             }
         }
 

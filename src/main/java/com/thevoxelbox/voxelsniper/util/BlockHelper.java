@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.*;
@@ -154,7 +155,7 @@ public class BlockHelper {
      * @return IBlock
      */
     public final IBlock getFaceBlock() {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == Material.AIR)) {
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == new BukkitMaterial(Material.AIR))) {
         }
 
         if (this.getCurBlock() != null) {

@@ -35,7 +35,7 @@ public class DiscBrush extends PerformerBrush {
      *
      * @param v
      */
-    private void disc(final SnipeData v, final Block targetBlock) {
+    private void disc(final SnipeData v, final IBlock targetBlock) {
         final double radiusSquared = (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
         final Vector centerPoint = targetBlock.getLocation().toVector();
         final Vector currentPoint = centerPoint.clone();
@@ -45,7 +45,7 @@ public class DiscBrush extends PerformerBrush {
             for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
                 currentPoint.setZ(centerPoint.getZ() + z);
                 if (centerPoint.distanceSquared(currentPoint) <= radiusSquared) {
-                    this.currentPerformer.perform(this.clampY(currentPoint.getBlockX(), currentPoint.getBlockY(), currentPoint.getBlockZ()));
+                    this.currentPerformer.perform(this.clampY(currentPoint.getX(), currentPoint.getX(), currentPoint.getBlockZ()));
                 }
             }
         }

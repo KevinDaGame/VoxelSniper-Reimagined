@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.block.Block;
 
 /**
@@ -19,7 +20,7 @@ public class VoxelDiscBrush extends PerformerBrush {
         this.setName("Voxel Disc");
     }
 
-    private void disc(final SnipeData v, Block targetBlock) {
+    private void disc(final SnipeData v,  IBlock targetBlock) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
                 currentPerformer.perform(targetBlock.getRelative(x, 0, z));

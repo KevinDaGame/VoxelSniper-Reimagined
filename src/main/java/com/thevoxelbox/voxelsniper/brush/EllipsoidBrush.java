@@ -29,7 +29,7 @@ public class EllipsoidBrush extends PerformerBrush {
         this.setName("Ellipsoid");
     }
 
-    private void execute(final SnipeData v, Block targetBlock) {
+    private void execute(final SnipeData v, IBlock targetBlock) {
         this.currentPerformer.perform(targetBlock);
         double istrueoffset = istrue ? 0.5 : 0;
         int blockPositionX = targetBlock.getX();

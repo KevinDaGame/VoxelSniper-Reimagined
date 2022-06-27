@@ -29,7 +29,7 @@ public class SplineBrush extends PerformerBrush {
         this.setName("Spline");
     }
 
-    public final void addToSet(final SnipeData v, final boolean ep, Block targetBlock) {
+    public final void addToSet(final SnipeData v, final boolean ep,  IBlock  targetBlock) {
         if (ep) {
             if (this.endPts.contains(targetBlock) || this.endPts.size() == 2) {
                 return;
@@ -49,7 +49,7 @@ public class SplineBrush extends PerformerBrush {
                 + "to control point selection");
     }
 
-    public final void removeFromSet(final SnipeData v, final boolean ep, Block targetBlock) {
+    public final void removeFromSet(final SnipeData v, final boolean ep,  IBlock  targetBlock) {
         if (ep) {
             if (!this.endPts.contains(targetBlock)) {
                 v.sendMessage(ChatColor.RED + "That block is not in the endpoint selection set.");
@@ -215,7 +215,7 @@ public class SplineBrush extends PerformerBrush {
         private int y;
         private int z;
 
-        public Point(final Block b) {
+        public Point(final  IBlock  b) {
             this.setX(b.getX());
             this.setY(b.getY());
             this.setZ(b.getZ());

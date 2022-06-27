@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -103,9 +104,9 @@ public class ExtrudeBrush extends Brush {
         v.owner().storeUndo(undo);
     }
 
-    private Undo perform(final Block b1, final Block b2, final SnipeData v, final Undo undo) {
-        Block clampedBlock1 = this.clampY(b1.getX(), b1.getY(), b1.getZ());
-        Block clampedBlock2 = this.clampY(b2.getX(), b2.getY(), b2.getZ());
+    private Undo perform(final IBlock b1, final IBlock b2, final SnipeData v, final Undo undo) {
+        IBlock clampedBlock1 = this.clampY(b1.getX(), b1.getY(), b1.getZ());
+        IBlock clampedBlock2 = this.clampY(b2.getX(), b2.getY(), b2.getZ());
         if (v.getVoxelList().contains(clampedBlock1.getMaterial())) {
             undo.put(clampedBlock2);
             clampedBlock2.setBlockData(clampedBlock1.getBlockData());

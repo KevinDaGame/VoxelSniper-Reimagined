@@ -233,7 +233,7 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
-    protected BlockData getBlockDataAt(int x, int y, int z) {
+    protected IBlockData getBlockDataAt(int x, int y, int z) {
         return this.clampY(x, y, z).getBlockData();
     }
 
@@ -282,7 +282,7 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @param blockData The blockData to set this block to
      */
-    protected final void setBlockMaterialAndDataAt(int x, int y, int z, BlockData blockData) {
+    protected final void setBlockMaterialAndDataAt(int x, int y, int z, IBlockData blockData) {
         this.clampY(x, y, z).setBlockData(blockData, true);
     }
 

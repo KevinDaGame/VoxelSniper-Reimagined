@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -38,7 +39,7 @@ public class EllipseBrush extends PerformerBrush {
         this.setName("Ellipse");
     }
 
-    private void ellipse(final SnipeData v, Block targetBlock) {
+    private void ellipse(final SnipeData v, IBlock targetBlock) {
         try {
             for (double steps = 0; (steps <= TWO_PI); steps += stepSize) {
                 final int x = (int) Math.round(this.xscl * Math.cos(steps));
@@ -71,7 +72,7 @@ public class EllipseBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void ellipsefill(final SnipeData v, Block targetBlock) {
+    private void ellipsefill(final SnipeData v, IBlock targetBlock) {
         int ix = this.xscl;
         int iy = this.yscl;
 
@@ -142,7 +143,7 @@ public class EllipseBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void execute(final SnipeData v, Block targetBlock) {
+    private void execute(final SnipeData v, IBlock targetBlock) {
         this.stepSize = (TWO_PI / this.steps);
 
         if (this.fill) {

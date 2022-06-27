@@ -125,7 +125,7 @@ public class PunishBrush extends Brush {
                 break;
             case RANDOMTP:
                 final Random random = new Random();
-                final Location targetLocation = entity.getLocation();
+                final ILocation targetLocation = entity.getLocation();
                 targetLocation.setX(targetLocation.getX() + (random.nextInt(MAXIMAL_RANDOM_TELEPORTATION_RANGE) - (MAXIMAL_RANDOM_TELEPORTATION_RANGE / 2)));
                 targetLocation.setZ(targetLocation.getZ() + (random.nextInt(PunishBrush.MAXIMAL_RANDOM_TELEPORTATION_RANGE) - PunishBrush.MAXIMAL_RANDOM_TELEPORTATION_RANGE / 2));
                 entity.teleport(targetLocation);
@@ -148,8 +148,8 @@ public class PunishBrush extends Brush {
                 break;
             case HYPNO:
                 if (entity instanceof Player) {
-                    final Location location = entity.getLocation();
-                    Location target = location.clone();
+                    final ILocation location = entity.getLocation();
+                    ILocation target = location.clone();
                     for (int z = this.punishLevel; z >= -this.punishLevel; z--) {
                         for (int x = this.punishLevel; x >= -this.punishLevel; x--) {
                             for (int y = this.punishLevel; y >= -this.punishLevel; y--) {
@@ -195,7 +195,7 @@ public class PunishBrush extends Brush {
         }
 
         final int brushSizeSquare = v.getBrushSize() * v.getBrushSize();
-        final Location targetLocation = new Location(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        final ILocation targetLocation = new Location(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
 
         final List<LivingEntity> entities = v.getWorld().getLivingEntities();
         int numPunishApps = 0;
@@ -229,7 +229,7 @@ public class PunishBrush extends Brush {
         }
 
         final int brushSizeSquare = v.getBrushSize() * v.getBrushSize();
-        final Location targetLocation = new Location(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        final ILocation targetLocation = new Location(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
 
         final List<LivingEntity> entities = v.getWorld().getLivingEntities();
 

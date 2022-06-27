@@ -3,6 +3,9 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -21,8 +24,8 @@ public class StampBrush extends Brush {
      */
     protected class BlockWrapper {
 
-        private final World world;
-        public BlockData blockData;
+        private final IWorld world;
+        public IBlockData blockData;
         public int x;
         public int y;
         public int z;
@@ -33,7 +36,7 @@ public class StampBrush extends Brush {
          * @param bly
          * @param blz
          */
-        public BlockWrapper(final Block b, final int blx, final int bly, final int blz, final World world) {
+        public BlockWrapper(final IBlock b, final int blx, final int bly, final int blz, final IWorld world) {
             this.blockData = b.getBlockData();
             this.x = blx;
             this.y = bly;
@@ -97,7 +100,7 @@ public class StampBrush extends Brush {
      * @param cb
      */
     protected final void setBlock(final BlockWrapper cb) {
-        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
+        final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
         block.setBlockData(cb.blockData);
     }
@@ -106,7 +109,7 @@ public class StampBrush extends Brush {
      * @param cb
      */
     protected final void setBlockFill(final BlockWrapper cb) {
-        final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
+        final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         if (block.getType() == new BukkitMaterial( Material.AIR)) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);

@@ -4,6 +4,9 @@ import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -232,10 +235,10 @@ public class ErodeBrush extends Brush {
 
         private final Map<Integer, Map<Vector, BlockWrapper>> blockChanges;
         private final Map<Vector, BlockWrapper> flatChanges;
-        private final World world;
+        private final IWorld world;
         private int nextIterationId = 0;
 
-        public BlockChangeTracker(final World world) {
+        public BlockChangeTracker(final IWorld world) {
             this.blockChanges = new HashMap<>();
             this.flatChanges = new HashMap<>();
             this.world = world;
@@ -279,16 +282,16 @@ public class ErodeBrush extends Brush {
      */
     private static final class BlockWrapper {
 
-        private final Block block;
-        private final BlockData blockData;
+        private final IBlock block;
+        private final IBlockData blockData;
 
         @SuppressWarnings("deprecation")
-        public BlockWrapper(final Block block) {
+        public BlockWrapper(final IBlock block) {
             this.block = block;
             this.blockData = block.getBlockData();
         }
 
-        public BlockWrapper(final Block block, final IMaterial material) {
+        public BlockWrapper(final IBlock block, final IMaterial material) {
             this.block = block;
             this.blockData = material.createBlockData();
         }
@@ -296,14 +299,14 @@ public class ErodeBrush extends Brush {
         /**
          * @return the block
          */
-        public Block getBlock() {
+        public IBlock getBlock() {
             return this.block;
         }
 
         /**
          * @return the data
          */
-        public BlockData getBlockData() {
+        public IBlockData getBlockData() {
             return this.blockData;
         }
 

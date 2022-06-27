@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.Material;
@@ -57,7 +58,7 @@ public class BlockResetBrush extends Brush {
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
-                    final Block block = this.getWorld().getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                    final IBlock block = this.getWorld().getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                     if (BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
                     }

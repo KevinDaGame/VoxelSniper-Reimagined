@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -60,7 +62,7 @@ public class CopyPastaBrush extends Brush {
                 for (int j = 0; j < this.arraySize[1]; j++) {
                     for (int k = 0; k < this.arraySize[2]; k++) {
                         final int currentPosition = i + this.arraySize[0] * j + this.arraySize[0] * this.arraySize[1] * k;
-                        this.substanceArray[currentPosition] = this.getWorld().getBlockAt(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k).getBlockData();
+                        this.substanceArray[currentPosition] = this.getWorld().getBlock(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k).getBlockData();
                     }
                 }
             }
@@ -79,7 +81,7 @@ public class CopyPastaBrush extends Brush {
             for (int j = 0; j < this.arraySize[1]; j++) {
                 for (int k = 0; k < this.arraySize[2]; k++) {
                     final int currentPosition = i + this.arraySize[0] * j + this.arraySize[0] * this.arraySize[1] * k;
-                    Block block;
+                    IBlock block;
 
                     switch (this.pivot) {
                         case 180:
