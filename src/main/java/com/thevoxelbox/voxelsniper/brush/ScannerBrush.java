@@ -47,7 +47,7 @@ public class ScannerBrush extends Brush {
             case NORTH:
                 // Scan south
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
+                    if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
                         v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
                         return;
                     }
@@ -58,7 +58,7 @@ public class ScannerBrush extends Brush {
             case SOUTH:
                 // Scan north
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
+                    if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
                         v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
                         return;
                     }
@@ -69,7 +69,7 @@ public class ScannerBrush extends Brush {
             case EAST:
                 // Scan west
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getType() == this.checkFor) {
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getMaterial() == this.checkFor) {
                         v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
                         return;
                     }
@@ -80,7 +80,7 @@ public class ScannerBrush extends Brush {
             case WEST:
                 // Scan east
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getType() == this.checkFor) {
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getMaterial() == this.checkFor) {
                         v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
                         return;
                     }
@@ -94,7 +94,7 @@ public class ScannerBrush extends Brush {
                     if ((this.getTargetBlock().getY() - i) <= 0) {
                         break;
                     }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
                         v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
                         return;
                     }
@@ -108,7 +108,7 @@ public class ScannerBrush extends Brush {
                     if ((this.getTargetBlock().getY() + i) >= this.getMaxHeight()) {
                         break;
                     }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
                         v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
                         return;
                     }

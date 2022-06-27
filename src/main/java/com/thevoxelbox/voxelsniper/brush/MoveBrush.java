@@ -10,10 +10,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 
 import java.util.*;
@@ -178,12 +175,12 @@ public class MoveBrush extends Brush {
             }
             v.owner().storeUndo(undo);
 
-            for (final BlockState blockState : selection.getBlockStates()) {
+            for (final IBlockState blockState : selection.getBlockStates()) {
                 blockState.getBlock().setMaterial(new BukkitMaterial(Material.AIR));
             }
             for (final BlockState blockState : selection.getBlockStates()) {
                 final  IBlock  affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
-                affectedBlock.setBlockData(blockState.getBlockData(), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getType()));
+                affectedBlock.setBlockData(blockState.getBlockData(), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getMaterial()));
             }
         }
     }

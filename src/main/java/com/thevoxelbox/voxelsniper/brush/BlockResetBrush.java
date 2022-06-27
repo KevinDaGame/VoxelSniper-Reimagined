@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 import java.util.ArrayList;
 

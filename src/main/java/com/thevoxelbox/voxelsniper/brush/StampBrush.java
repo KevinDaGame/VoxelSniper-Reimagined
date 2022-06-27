@@ -4,13 +4,12 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 
 import java.util.HashSet;
 
@@ -110,7 +109,7 @@ public class StampBrush extends Brush {
      */
     protected final void setBlockFill(final BlockWrapper cb) {
         final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
-        if (block.getType() == new BukkitMaterial( Material.AIR)) {
+        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);
         }

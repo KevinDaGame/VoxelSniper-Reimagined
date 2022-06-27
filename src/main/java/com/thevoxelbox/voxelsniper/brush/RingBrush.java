@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class RingBrush extends PerformerBrush {
         this.setName("Ring");
     }
 
-    private void ring(final SnipeData v,  IBlock  targetBlock) {
+    private void ring(final SnipeData v,  IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double outerSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         final double innerSquared = Math.pow(this.innerSize, 2);

@@ -11,7 +11,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 import org.bukkit.util.noise.PerlinNoiseGenerator;
 

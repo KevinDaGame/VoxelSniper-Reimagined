@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class SplineBrush extends PerformerBrush {
 
-    private final ArrayList<Block> endPts = new ArrayList<>();
-    private final ArrayList<Block> ctrlPts = new ArrayList<>();
+    private final ArrayList<IBlock> endPts = new ArrayList<>();
+    private final ArrayList<IBlock> ctrlPts = new ArrayList<>();
     protected ArrayList<Point> spline = new ArrayList<>();
     protected boolean set;
     protected boolean ctrl;
@@ -29,7 +29,7 @@ public class SplineBrush extends PerformerBrush {
         this.setName("Spline");
     }
 
-    public final void addToSet(final SnipeData v, final boolean ep,  IBlock  targetBlock) {
+    public final void addToSet(final SnipeData v, final boolean ep,  IBlock targetBlock) {
         if (ep) {
             if (this.endPts.contains(targetBlock) || this.endPts.size() == 2) {
                 return;

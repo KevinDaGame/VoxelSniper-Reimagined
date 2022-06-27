@@ -3,12 +3,11 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 
 import java.util.HashSet;
 
@@ -178,7 +177,7 @@ public class PullBrush extends Brush {
                         final double volume = zSquared + xSquared + (y * y);
 
                         // Is this in the range of the brush?
-                        if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != new BukkitMaterial( Material.AIR)) {
+                        if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial() != new BukkitMaterial( Material.AIR)) {
 
                             int actualY = this.getTargetBlock().getY() + y;
 
@@ -187,7 +186,7 @@ public class PullBrush extends Brush {
                             lastStr = (int) (this.vh * str);
                             lastY = actualY + lastStr;
 
-                            this.clampY(actualX, lastY, actualZ).setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getType());
+                            this.clampY(actualX, lastY, actualZ).setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
 
                             if (str == 1) {
                                 str = 0.8;
@@ -199,7 +198,7 @@ public class PullBrush extends Brush {
                                 }
                                 lastStr = (int) (this.vh * str);
                                 newY = actualY + lastStr;
-                                material = this.getWorld().getBlock(actualX, actualY, actualZ).getType();
+                                material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
                                     this.clampY(actualX, i, actualZ).setBlockData(material.createBlockData());
                                 }
@@ -220,15 +219,15 @@ public class PullBrush extends Brush {
                     final int actualX = this.getTargetBlock().getX() + x;
                     for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                         double volume = (xSquared + Math.pow(y, 2) + zSquared);
-                        if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != new BukkitMaterial( Material.AIR)) {
+                        if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial() != new BukkitMaterial( Material.AIR)) {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                            this.clampY(actualX, lastY, actualZ).setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getType());
+                            this.clampY(actualX, lastY, actualZ).setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                                final IMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getType();
+                                final IMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
                                     this.clampY(actualX, i, actualZ).setBlockData(blockMaterial.createBlockData());
                                 }

@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;

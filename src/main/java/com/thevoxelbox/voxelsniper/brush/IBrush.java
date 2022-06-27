@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import org.bukkit.block.Block;
 
 import java.util.HashMap;
 import java.util.List;

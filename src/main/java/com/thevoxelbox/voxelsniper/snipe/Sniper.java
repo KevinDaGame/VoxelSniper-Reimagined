@@ -10,6 +10,7 @@ import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
@@ -120,7 +121,7 @@ public class Sniper {
             switch (action) {
                 case LEFT_CLICK_AIR:
                 case LEFT_CLICK_BLOCK:
-                    BlockData oldSubstance, newSubstance;
+                    IBlockData oldSubstance, newSubstance;
                     switch (snipeAction) {
                         case GUNPOWDER:
                             oldSubstance = snipeData.getReplaceSubstance();

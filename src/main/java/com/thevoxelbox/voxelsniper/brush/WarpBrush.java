@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.Location;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.entity.Player;
 
 /**

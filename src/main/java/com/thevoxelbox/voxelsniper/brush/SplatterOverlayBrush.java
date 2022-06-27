@@ -1,10 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -119,7 +121,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                                     final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
-                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != new BukkitMaterial( Material.AIR)) {
+                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getMaterial() != new BukkitMaterial( Material.AIR)) {
                                             // fills down as many layers as you specify in parameters
                                             this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
                                             // stop it from checking any other blocks in this vertical 1x1 column.

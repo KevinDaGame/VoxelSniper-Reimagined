@@ -5,8 +5,8 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.Brush;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.Bukkit;

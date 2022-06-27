@@ -5,6 +5,7 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -13,8 +14,8 @@ import org.bukkit.block.Block;
  */
 public class pMatMatNoPhysics extends vPerformer {
 
-    private Material voxelMaterial;
-    private Material targetMaterial;
+    private IMaterial voxelMaterial;
+    private IMaterial targetMaterial;
 
     public pMatMatNoPhysics() {
         name = "Mat-Mat, No Physics";

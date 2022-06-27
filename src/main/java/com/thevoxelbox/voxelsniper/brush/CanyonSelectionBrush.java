@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Canyon_Selection_Brush

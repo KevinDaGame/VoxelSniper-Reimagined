@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 
 import java.util.ArrayList;
 

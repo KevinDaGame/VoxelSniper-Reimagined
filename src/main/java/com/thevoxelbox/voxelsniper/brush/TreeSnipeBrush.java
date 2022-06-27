@@ -10,7 +10,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 
@@ -52,7 +51,7 @@ public class TreeSnipeBrush extends Brush {
     private int getYOffset() {
         // getMaxHeight() is the same as getTargetBlock().getWorld().getMaxHeight()
         for (int i = 1; i < (getMaxHeight() - 1 - getTargetBlock().getY()); i++) {
-            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getType(), new BukkitMaterial( Material.AIR))) {
+            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getMaterial(), new BukkitMaterial( Material.AIR))) {
                 return i;
             }
         }

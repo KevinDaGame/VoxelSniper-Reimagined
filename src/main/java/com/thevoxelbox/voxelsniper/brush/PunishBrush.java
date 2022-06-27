@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -156,7 +158,7 @@ public class PunishBrush extends Brush {
                                 target.setX(location.getX() + x);
                                 target.setY(location.getY() + y);
                                 target.setZ(location.getZ() + z);
-                                if (this.hypnoAffectLandscape && target.getBlock().getType() == new BukkitMaterial( Material.AIR)) {
+                                if (this.hypnoAffectLandscape && target.getBlock().getMaterial() == new BukkitMaterial( Material.AIR)) {
                                     continue;
                                 }
                                 target = location.clone();
