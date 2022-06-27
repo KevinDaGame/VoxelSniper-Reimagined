@@ -70,4 +70,10 @@ GROWTH_PERCENT_SET: '<blue>Growth percent set to: %growPercent%%'
 CANYON_BRUSH_USAGE: <gold>Canyon Parameters:\\n</gold><aqua>/b %triggerHandle% y [number] -- Set the y-coordinate where the land will be shifted to
 CANYON_BRUSH_SHIFT_LEVEL: <green>Shift Level set to %yLevel%
 INPUT_NO_NUMBER: <red>Invalid input, please enter a valid number!
+ELLIPSOID_BRUSH_USAGE: '<gold>Ellipse Brush Parameters: \\n</gold><aqua>/b %triggerHandle% x [number]  -- Set X radius\\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y radius\\n</aqua><aqua>/b %triggerHandle% z [number]  -- Set Z radius'
+AXIS_SET_TO_VALUE: '<aqua>%axis% radius set to: </aqua><dark_aqua>%value%'
+BLOB_BRUSH_USAGE: <gold>Blob Brush Parameters:\\n</gold><aqua>/b %triggerHandle% growth [number] -- Set growth percentage (between %min% and %max%).  Default is %default%
+BLOB_BRUSH_SET_DEFAULT: '<aqua>Growth percent set to default value: %default%%'
+BLOB_BRUSH_RANGE: <red>Growth percent must be a number between %min% and %%max!
+BLOB_BRUSH_SET_VALUE: '<aqua>Growth percent set to: %value%%'
 

@@ -84,6 +84,12 @@ public enum Messages implements ComponentLike, Messages0 {
     CANYON_BRUSH_USAGE,
     CANYON_BRUSH_SHIFT_LEVEL,
     INPUT_NO_NUMBER,
+    ELLIPSOID_BRUSH_USAGE,
+    AXIS_SET_TO_VALUE,
+    BLOB_BRUSH_USAGE,
+    BLOB_BRUSH_SET_DEFAULT,
+    BLOB_BRUSH_RANGE,
+    BLOB_BRUSH_SET_VALUE,
     ;
 
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);

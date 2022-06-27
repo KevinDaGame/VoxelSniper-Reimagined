@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -81,36 +80,33 @@ public class EllipsoidBrush extends PerformerBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.AQUA + "X radius set to: " + ChatColor.DARK_AQUA + this.xRad);
-        vm.custom(ChatColor.AQUA + "Y radius set to: " + ChatColor.DARK_AQUA + this.yRad);
-        vm.custom(ChatColor.AQUA + "Z radius set to: " + ChatColor.DARK_AQUA + this.zRad);
+        vm.custom(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "X").replace("%value%", String.valueOf(this.xRad)));
+        vm.custom(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "Y").replace("%value%", String.valueOf(this.yRad)));
+        vm.custom(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "Z").replace("%value%", String.valueOf(this.zRad)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " x [number]  -- Set X radius").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " y [number]  -- Set Y radius").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " z [number]  -- Set Z radius").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ELLIPSOID_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
         try {
             if (params[0].startsWith("x")) {
                 this.xRad = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.AQUA + "X radius set to: " + this.xRad);
+                v.sendMessage(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "X").replace("%value%", String.valueOf(this.xRad)));
                 return;
             }
 
             if (params[0].startsWith("y")) {
                 this.yRad = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.AQUA + "Y radius set to: " + this.yRad);
+                v.sendMessage(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "Y").replace("%value%", String.valueOf(this.yRad)));
                 return;
             }
 
             if (params[0].startsWith("z")) {
                 this.zRad = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.AQUA + "Z radius set to: " + this.zRad);
+                v.sendMessage(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "Z").replace("%value%", String.valueOf(this.zRad)));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {

@@ -6,8 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +32,7 @@ public class BlobBrush extends PerformerBrush {
     private void checkValidGrowPercent(final SnipeData v) {
         if (this.growPercent < GROW_PERCENT_MIN || this.growPercent > GROW_PERCENT_MAX) {
             this.growPercent = GROW_PERCENT_DEFAULT;
-            v.sendMessage(ChatColor.BLUE + "Growth percent set to: 10%");
+            v.sendMessage(Messages.BLOB_BRUSH_SET_VALUE.replace("%value%", "10"));
         }
     }
 
@@ -222,7 +220,10 @@ public class BlobBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage((ChatColor.GOLD + "Blob Brush Parameters:" + "\n" + ChatColor.AQUA + "/b " + "%triggerHandle%" + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100))).replace("%triggerHandle%",triggerHandle));
+            String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
+            String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
+            String def = String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100));
+            v.sendMessage(Messages.BLOB_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle).replace("%min%", min).replace("%max%", max).replace("%default%", def));
             return;
         }
 
@@ -230,16 +231,19 @@ public class BlobBrush extends PerformerBrush {
             try {
                 if (params.length == 1) {
                     this.growPercent = GROW_PERCENT_DEFAULT;
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to default value: " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)) + "%");
+                    String def = String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100));
+                    v.sendMessage(Messages.BLOB_BRUSH_SET_DEFAULT.replace("%default%", def));
                     return;
                 }
 
                 float growthValue = Float.parseFloat(params[1]);
                 if ((int) (growthValue * 100) >= GROW_PERCENT_MIN && (int) (growthValue * 100) <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", growthValue) + "%");
+                    v.sendMessage(Messages.BLOB_BRUSH_SET_VALUE.replace("%value%", String.format("%.2f", growthValue)));
                     this.growPercent = (int) growthValue * 100;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
+                    String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
+                    String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
+                    v.sendMessage(Messages.BLOB_BRUSH_RANGE.replace("%min%", min).replace("%max%", max));
                 }
                 return;
             } catch (NumberFormatException ignored) {
