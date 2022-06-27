@@ -21,7 +21,7 @@ public class ScannerBrush extends Brush {
     private static final int DEPTH_MAX = 64;
 
     private int depth = DEPTH_DEFAULT;
-    private Material checkFor = Material.AIR;
+    private IMaterial checkFor = new BukkitMaterial( Material.AIR);
 
     /**
      *

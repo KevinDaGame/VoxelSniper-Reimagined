@@ -51,7 +51,7 @@ public class Rot2DvertBrush extends Brush {
                 for (int y = 0; y < this.snap.length; y++) {
                     final Block block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                     this.snap[x][y][z] = new BlockWrapper(block);
-                    block.setType(Material.AIR);
+                    block.setType(new BukkitMaterial(Material.AIR));
                     sy++;
                 }
 
@@ -87,7 +87,7 @@ public class Rot2DvertBrush extends Brush {
                         final int yy = y - this.bSize;
 
                         final BlockWrapper block = this.snap[y][x][z];
-                        if (block.getMaterial() == Material.AIR) {
+                        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());

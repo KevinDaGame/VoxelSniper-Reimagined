@@ -96,7 +96,7 @@ public class CopyPastaBrush extends Brush {
                             break;
                     }
 
-                    if (!(this.substanceArray[currentPosition].getMaterial() == Material.AIR && !this.pasteAir)) {
+                    if (!(this.substanceArray[currentPosition].getMaterial() == new BukkitMaterial( Material.AIR) && !this.pasteAir)) {
                         if (block.getMaterial() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
                             undo.put(block);
                         }

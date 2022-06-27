@@ -89,22 +89,22 @@ public class PullBrush extends Brush {
      * @return boolean
      */
     private boolean isSurface(final int x, final int y, final int z) {
-        return this.getBlockMaterialAt(x, y, z) != Material.AIR
-                && ((this.getBlockMaterialAt(x, y - 1, z) == Material.AIR)
-                || (this.getBlockMaterialAt(x, y + 1, z) == Material.AIR)
-                || (this.getBlockMaterialAt(x + 1, y, z) == Material.AIR)
-                || (this.getBlockMaterialAt(x - 1, y, z) == Material.AIR)
-                || (this.getBlockMaterialAt(x, y, z + 1) == Material.AIR)
-                || (this.getBlockMaterialAt(x, y, z - 1) == Material.AIR));
+        return this.getBlockMaterialAt(x, y, z) != new BukkitMaterial( Material.AIR)
+                && ((this.getBlockMaterialAt(x, y - 1, z) == new BukkitMaterial( Material.AIR))
+                || (this.getBlockMaterialAt(x, y + 1, z) == new BukkitMaterial( Material.AIR))
+                || (this.getBlockMaterialAt(x + 1, y, z) == new BukkitMaterial( Material.AIR))
+                || (this.getBlockMaterialAt(x - 1, y, z) == new BukkitMaterial( Material.AIR))
+                || (this.getBlockMaterialAt(x, y, z + 1) == new BukkitMaterial( Material.AIR))
+                || (this.getBlockMaterialAt(x, y, z - 1) == new BukkitMaterial( Material.AIR)));
 
     }
 
     private void setBlock(final BlockWrapper block) {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
-        if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == Material.AIR) {
+        if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == new BukkitMaterial( Material.AIR)) {
             currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
-                this.setBlockMaterialAt(block.getX(), y, block.getZ(), Material.AIR);
+                this.setBlockMaterialAt(block.getX(), y, block.getZ(), new BukkitMaterial( Material.AIR));
             }
         } else {
             currentBlock.setBlockData(block.getBlockData());
@@ -119,7 +119,7 @@ public class PullBrush extends Brush {
         final Block currentBlock = this.clampY(block.getX(), block.getY() + (int) (this.vh * block.getStr()), block.getZ());
         currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
-            this.setBlockMaterialAt(block.getX(), y, block.getZ(), Material.AIR);
+            this.setBlockMaterialAt(block.getX(), y, block.getZ(), new BukkitMaterial( Material.AIR));
         }
         // }
     }
@@ -152,7 +152,7 @@ public class PullBrush extends Brush {
         double str;
         final double brushSizeSquared = Math.pow(v.getBrushSize() + 0.5, 2);
 
-        Material material;
+        IMaterial material;
 
         // Are we pulling up ?
         if (this.vh > 0) {
@@ -175,7 +175,7 @@ public class PullBrush extends Brush {
                         final double volume = zSquared + xSquared + (y * y);
 
                         // Is this in the range of the brush?
-                        if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != Material.AIR) {
+                        if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != new BukkitMaterial( Material.AIR)) {
 
                             int actualY = this.getTargetBlock().getY() + y;
 
@@ -217,7 +217,7 @@ public class PullBrush extends Brush {
                     final int actualX = this.getTargetBlock().getX() + x;
                     for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                         double volume = (xSquared + Math.pow(y, 2) + zSquared);
-                        if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != Material.AIR) {
+                        if (volume <= brushSizeSquared && this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType() != new BukkitMaterial( Material.AIR)) {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (this.vh * this.getStr(volume / brushSizeSquared));
                             this.clampY(actualX, lastY, actualZ).setType(this.getWorld().getBlockAt(actualX, actualY, actualZ).getType());
@@ -225,7 +225,7 @@ public class PullBrush extends Brush {
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (this.vh * this.getStr(volume / brushSizeSquared));
-                                final Material blockMaterial = this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType();
+                                final IMaterial blockMaterial = this.getWorld().getBlockAt(actualX, this.getTargetBlock().getY() + y, actualZ).getType();
                                 for (int i = blockY; i < lastY; i++) {
                                     this.clampY(actualX, i, actualZ).setBlockData(blockMaterial.createBlockData());
                                 }
@@ -274,7 +274,7 @@ public class PullBrush extends Brush {
         /**
          * @return the id
          */
-        public Material getMaterial() {
+        public IMaterial getMaterial() {
             return this.blockData.getMaterial();
         }
 

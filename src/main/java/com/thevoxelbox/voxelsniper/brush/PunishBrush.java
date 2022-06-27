@@ -156,7 +156,7 @@ public class PunishBrush extends Brush {
                                 target.setX(location.getX() + x);
                                 target.setY(location.getY() + y);
                                 target.setZ(location.getZ() + z);
-                                if (this.hypnoAffectLandscape && target.getBlock().getType() == Material.AIR) {
+                                if (this.hypnoAffectLandscape && target.getBlock().getType() == new BukkitMaterial( Material.AIR)) {
                                     continue;
                                 }
                                 target = location.clone();

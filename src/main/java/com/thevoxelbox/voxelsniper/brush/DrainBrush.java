@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -43,9 +44,9 @@ public class DrainBrush extends Brush {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dz : new int[]{-1, 1}) {
                                 Block b = this.clampY(this.getTargetBlock().getX() + (x*dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z*dz));
-                                if (b.getMaterial() == Material.WATER || b.getMaterial() == Material.LAVA) {
+                                if (b.getMaterial() == new BukkitMaterial(Material.WATER)) || b.getMaterial() == new BukkitMaterial(Material.LAVA)) {
                                     undo.put(b);
-                                    b.setType(Material.AIR);
+                                    b.setType(new BukkitMaterial(Material.AIR));
                                 }
                             }
                         }
@@ -62,9 +63,9 @@ public class DrainBrush extends Brush {
                     for (int y = (brushSize + 1) * 2; y >= 0; y--) {
                         if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                             Block b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
-                            if (b.getMaterial() == Material.WATER || b.getMaterial() == Material.LAVA) {
+                            if (b.getMaterial() == new BukkitMaterial( Material.WATER) || b.getMaterial() == new BukkitMaterial( Material.LAVA)) {
                                 undo.put(b);
-                                b.setType(Material.AIR);
+                                b.setType(new BukkitMaterial(Material.AIR));
                             }
                         }
                     }

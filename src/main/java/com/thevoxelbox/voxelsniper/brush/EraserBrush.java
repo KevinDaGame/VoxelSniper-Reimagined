@@ -17,15 +17,15 @@ import java.util.Set;
  */
 public class EraserBrush extends Brush {
 
-    private static final Set<Material> EXCLUSIVE_MATERIALS = EnumSet.of(
-            Material.AIR, Material.STONE, Material.GRASS_BLOCK, Material.DIRT, Material.SAND, Material.GRAVEL, Material.SANDSTONE);
-    private static final Set<Material> EXCLUSIVE_LIQUIDS = EnumSet.of(
-            Material.WATER, Material.LAVA);
+    private static final Set<IMaterial> EXCLUSIVE_MATERIALS = EnumSet.of(
+           new BukkitMaterial( Material.AIR),new BukkitMaterial( Material.STONE),new BukkitMaterial( Material.GRASS_BLOCK),new BukkitMaterial( Material.DIRT),new BukkitMaterial( Material.SAND),new BukkitMaterial( Material.GRAVEL), new BukkitMaterial( Material.SANDSTONE));
+    private static final Set<IMaterial> EXCLUSIVE_LIQUIDS = EnumSet.of(
+            new BukkitMaterial( Material.WATER), new BukkitMaterial( Material.LAVA));
 
     static {
         try {
             // 1.17+
-            EXCLUSIVE_MATERIALS.add(Material.DEEPSLATE);
+            EXCLUSIVE_MATERIALS.add(new BukkitMaterial(Material.DEEPSLATE));
         } catch(Throwable ignore) {
             // Don't add for older versions
         }
@@ -56,7 +56,7 @@ public class EraserBrush extends Brush {
                         continue;
                     }
                     undo.put(currentBlock);
-                    currentBlock.setType(Material.AIR);
+                    currentBlock.setType(new BukkitMaterial(Material.AIR));
                 }
             }
         }

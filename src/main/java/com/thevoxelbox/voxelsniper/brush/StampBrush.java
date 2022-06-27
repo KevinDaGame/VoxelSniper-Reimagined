@@ -73,14 +73,14 @@ public class StampBrush extends Brush {
     }
 
 
-    protected final boolean falling(final Material material) {
+    protected final boolean falling(final IMaterial material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
         return false;
     }
 
 
-    protected final boolean fallsOff(final Material material) {
+    protected final boolean fallsOff(final IMaterial material) {
         switch (material) {
             // TODO: Translate this
             // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83
@@ -107,7 +107,7 @@ public class StampBrush extends Brush {
      */
     protected final void setBlockFill(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
-        if (block.getType() == Material.AIR) {
+        if (block.getType() == new BukkitMaterial( Material.AIR)) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);
         }
@@ -231,7 +231,7 @@ public class StampBrush extends Brush {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
-                } else if (block.blockData.getMaterial() != Material.AIR) {
+                } else if (block.blockData.getMaterial() != new BukkitMaterial( Material.AIR)) {
                     this.solid.add(block);
                     this.setBlock(block);
                 }

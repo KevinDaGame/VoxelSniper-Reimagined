@@ -262,14 +262,14 @@ public abstract class Brush implements IBrush {
     }
 
     /**
-     * Sets the Material of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
+     * Sets the IMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
      * @param x X coordinate
      * @param y Y coordinate
      * @param z Z coordinate
      * @param material the material to set this block to
      */
-    protected final void setBlockMaterialAt(int x, int y, int z, Material material) {
+    protected final void setBlockMaterialAt(int x, int y, int z, IMaterial material) {
         this.clampY(x, y, z).setBlockData(material.createBlockData());
     }
 

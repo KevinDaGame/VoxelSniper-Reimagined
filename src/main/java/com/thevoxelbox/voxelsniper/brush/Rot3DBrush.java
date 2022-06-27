@@ -126,7 +126,7 @@ public class Rot3DBrush extends Brush {
                     if (xSquared + zSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
                         final Block block = this.clampY(sx, sz, sz);
                         this.snap[x][y][z] = new BlockWrapper(block);
-                        block.setType(Material.AIR);
+                        block.setType(new BukkitMaterial(Material.AIR));
                         sz++;
                     }
                 }
@@ -183,7 +183,7 @@ public class Rot3DBrush extends Brush {
                         // after all three, though.
 
                         final BlockWrapper block = this.snap[x][y][z];
-                        if (block.getMaterial() == Material.AIR) {
+                        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ, block.getBlockData());

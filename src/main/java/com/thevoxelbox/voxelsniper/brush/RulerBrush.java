@@ -30,7 +30,7 @@ public class RulerBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        final Material voxelMaterial = v.getVoxelMaterial();
+        final IMaterial voxelMaterial = v.getVoxelMaterial();
         this.coords = this.getTargetBlock().getLocation().toVector();
 
         if (this.xOff == 0 && this.yOff == 0 && this.zOff == 0) {

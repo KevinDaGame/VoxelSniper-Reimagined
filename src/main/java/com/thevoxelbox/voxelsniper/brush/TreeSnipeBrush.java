@@ -39,7 +39,7 @@ public class TreeSnipeBrush extends Brush {
         Block blockBelow = targetBlock.getRelative(BlockFace.DOWN);
         BlockState currentState = blockBelow.getState();
         undoDelegate.setBlock(blockBelow);
-        blockBelow.setType(Material.GRASS);
+        blockBelow.setType(new BukkitMaterial(Material.GRASS));
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);
         Undo undo = undoDelegate.getUndo();
         blockBelow.setBlockData(currentState.getBlockData().getMaterial().createBlockData(), true);
@@ -50,7 +50,7 @@ public class TreeSnipeBrush extends Brush {
     private int getYOffset() {
         // getMaxHeight() is the same as getTargetBlock().getWorld().getMaxHeight()
         for (int i = 1; i < (getMaxHeight() - 1 - getTargetBlock().getY()); i++) {
-            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getType(), Material.AIR)) {
+            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getType(), new BukkitMaterial( Material.AIR))) {
                 return i;
             }
         }

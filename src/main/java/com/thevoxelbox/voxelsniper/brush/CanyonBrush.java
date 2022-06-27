@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -49,19 +50,19 @@ public class CanyonBrush extends Brush {
                     undo.put(currentYLevelBlock);
 
                     currentYLevelBlock.setType(block.getMaterial(), false);
-                    block.setType(Material.AIR);
+                    block.setType(new BukkitMaterial(Material.AIR));
 
                     currentYLevel++;
                 }
 
                 final Block block = chunk.getBlock(x, this.getMinHeight(), z);
                 undo.put(block);
-                block.setType(Material.BEDROCK);
+                block.setType(new BukkitMaterial(Material.BEDROCK));
 
                 for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
                     final Block currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
-                    currentBlock.setType(Material.STONE);
+                    currentBlock.setType(new BukkitMaterial(Material.STONE));
                 }
             }
         }

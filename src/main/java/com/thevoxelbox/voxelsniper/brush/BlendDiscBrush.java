@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -60,11 +61,11 @@ public class BlendDiscBrush extends BlendBrushBase {
                 }
 
                 int highestMaterialCount = 0;
-                IMaterial highestMaterial = Material.AIR;
+                IMaterial highestMaterial = new BukkitMaterial( Material.AIR);
 
                 // Find most common neighboring material.
                 for (Entry<IMaterial, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && e.getKey() == new BukkitMaterial( Material.WATER))) {
                         highestMaterialCount = e.getValue();
                         highestMaterial = e.getKey();
                     }
@@ -72,7 +73,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
                 // Make sure that there's no tie in highest material
                 for (Entry<IMaterial, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && e.getKey() == new BukkitMaterial( Material.WATER))) {
                         if (e.getKey() == highestMaterial) {
                             continue;
                         }
@@ -96,7 +97,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
             for (int z = brushSizeDoubled; z >= 0; z--) {
                 if (xSquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                    if (!(this.excludeAir && newMaterials[x][z] == Material.AIR) && !(this.excludeWater && newMaterials[x][z] == Material.WATER)) {
+                    if (!(this.excludeAir && newMaterials[x][z] == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && newMaterials[x][z] == new BukkitMaterial( Material.WATER))) {
                         this.setBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY(), this.getTargetBlock().getZ() - brushSize + z, newMaterials[x][z], undo);
                     }
                 }

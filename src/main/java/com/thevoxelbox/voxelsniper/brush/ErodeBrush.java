@@ -90,7 +90,7 @@ public class ErodeBrush extends Brush {
                         }
 
                         if (count >= erosionPreset.getErosionFaces()) {
-                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), Material.AIR), currentIteration);
+                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), new BukkitMaterial( Material.AIR)), currentIteration);
                         }
                     }
                 }
@@ -130,7 +130,7 @@ public class ErodeBrush extends Brush {
                             }
                         }
 
-                        BlockWrapper currentMaterial = new BlockWrapper(null, Material.AIR);
+                        BlockWrapper currentMaterial = new BlockWrapper(null, new BukkitMaterial( Material.AIR));
                         int amount = 0;
 
                         for (final BlockWrapper wrapper : blockCount.keySet()) {
@@ -288,7 +288,7 @@ public class ErodeBrush extends Brush {
             this.blockData = block.getBlockData();
         }
 
-        public BlockWrapper(final Block block, final Material material) {
+        public BlockWrapper(final Block block, final IMaterial material) {
             this.block = block;
             this.blockData = material.createBlockData();
         }
@@ -310,7 +310,7 @@ public class ErodeBrush extends Brush {
         /**
          * @return the material
          */
-        public Material getMaterial() {
+        public IMaterial getMaterial() {
             return this.blockData.getMaterial();
         }
 
@@ -318,7 +318,7 @@ public class ErodeBrush extends Brush {
          * @return if the block is Empty.
          */
         public boolean isEmpty() {
-            return this.getMaterial() == Material.AIR;
+            return this.getMaterial() == new BukkitMaterial( Material.AIR);
         }
 
         /**

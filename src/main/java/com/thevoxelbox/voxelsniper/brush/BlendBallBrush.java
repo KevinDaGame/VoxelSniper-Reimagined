@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -26,9 +28,9 @@ public class BlendBallBrush extends BlendBrushBase {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         // Array that holds the original materials plus a buffer
-        final Material[][][] oldMaterials = new Material[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
+        final IMaterial[][][] oldMaterials = new IMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
         // Array that holds the blended materials
-        final Material[][][] newMaterials = new Material[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
+        final IMaterial[][][] newMaterials = new IMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
 
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {
@@ -50,7 +52,7 @@ public class BlendBallBrush extends BlendBrushBase {
         for (int x = 0; x <= brushSizeDoubled; x++) {
             for (int y = 0; y <= brushSizeDoubled; y++) {
                 for (int z = 0; z <= brushSizeDoubled; z++) {
-                    Map<Material, Integer> materialFrequency = new HashMap<>();
+                    Map<IMaterial, Integer> materialFrequency = new HashMap<>();
 
                     boolean tiecheck = true;
 
@@ -58,7 +60,7 @@ public class BlendBallBrush extends BlendBrushBase {
                         for (int n = -1; n <= 1; n++) {
                             for (int o = -1; o <= 1; o++) {
                                 if (!(m == 0 && n == 0 && o == 0)) {
-                                    Material currentMaterial = oldMaterials[x + 1 + m][y + 1 + n][z + 1 + o];
+                                    IMaterial currentMaterial = oldMaterials[x + 1 + m][y + 1 + n][z + 1 + o];
                                     int currentFrequency = materialFrequency.getOrDefault(currentMaterial, 0) + 1;
 
                                     materialFrequency.put(currentMaterial, currentFrequency);
@@ -68,19 +70,19 @@ public class BlendBallBrush extends BlendBrushBase {
                     }
 
                     int highestMaterialCount = 0;
-                    Material highestMaterial = Material.AIR;
+                    IMaterial highestMaterial = new BukkitMaterial( Material.AIR);
 
                     // Find most common neighbouring material
-                    for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
-                        if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                    for (Entry<IMaterial, Integer> e : materialFrequency.entrySet()) {
+                        if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && e.getKey() == new BukkitMaterial( Material.WATER))) {
                             highestMaterialCount = e.getValue();
                             highestMaterial = e.getKey();
                         }
                     }
 
                     // Make sure that there's no tie in highest material
-                    for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
-                        if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                    for (Entry<IMaterial, Integer> e : materialFrequency.entrySet()) {
+                        if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && e.getKey() == new BukkitMaterial( Material.WATER))) {
                             if (e.getKey() == highestMaterial) {
                                 continue;
                             }
@@ -108,7 +110,7 @@ public class BlendBallBrush extends BlendBrushBase {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        if (!(this.excludeAir && newMaterials[x][y][z] == Material.AIR) && !(this.excludeWater && (newMaterials[x][y][z] == Material.WATER))) {
+                        if (!(this.excludeAir && newMaterials[x][y][z] == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && (newMaterials[x][y][z] == new BukkitMaterial( Material.WATER)))) {
                             this.setBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z, newMaterials[x][y][z], undo);
                         }
                     }

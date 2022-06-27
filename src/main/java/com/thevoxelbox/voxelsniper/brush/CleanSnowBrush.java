@@ -44,8 +44,8 @@ public class CleanSnowBrush extends Brush {
                     if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                         Block b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
                         Block blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
-                        if ((b.getMaterial() == Material.SNOW) && ((blockDown.getMaterial() == Material.SNOW) || (blockDown.getMaterial() == Material.AIR))) {
-                            setBlockType(b, Material.AIR, undo);
+                        if ((b.getMaterial() == new BukkitMaterial( Material.SNOW)) && ((blockDown.getMaterial() == new BukkitMaterial( Material.SNOW)) || (blockDown.getMaterial() == new BukkitMaterial( Material.AIR)))) {
+                            setBlockType(b, new BukkitMaterial( Material.AIR), undo);
                         }
 
                     }

@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -25,36 +27,36 @@ import java.util.ArrayList;
  */
 public class BlockResetSurfaceBrush extends Brush {
 
-    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<>();
+    private static final ArrayList<IMaterial> DENIED_UPDATES = new ArrayList<>();
 
     static {
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CHEST);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.FURNACE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REDSTONE_TORCH);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REDSTONE_WIRE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REPEATER);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.IRON_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_WALL_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_WALL_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_WALL_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_WALL_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_WALL_SIGN));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.CHEST));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.FURNACE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.REDSTONE_TORCH));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.REDSTONE_WIRE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.REPEATER));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_DOOR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_DOOR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_DOOR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_DOOR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_DOOR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.IRON_DOOR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_FENCE_GATE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_FENCE_GATE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_FENCE_GATE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_FENCE_GATE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_FENCE_GATE));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.AIR));
     }
 
     /**
@@ -79,42 +81,42 @@ public class BlockResetSurfaceBrush extends Brush {
 
                     boolean airFound = false;
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial() == new BukkitMaterial( Material.AIR)) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial() == new BukkitMaterial( Material.AIR)) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial() == new BukkitMaterial( Material.AIR)) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
