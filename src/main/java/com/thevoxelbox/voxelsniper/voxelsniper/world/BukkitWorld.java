@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.World;
 
@@ -31,7 +33,22 @@ public class BukkitWorld implements IWorld {
     }
 
     @Override
-    public IBlock setBlock(ILocation location, IBlock block) {
-        return null;
+    public void setBlock(ILocation location, IBlock block) {
+        return;
+    }
+
+    @Override
+    public IChunk getChunkAtLocation(int x, int z) {
+        return new BukkitChunk(world.getChunkAt(x, z));
+    }
+
+    @Override
+    public IChunk getChunkAtLocation(ILocation location) {
+        return new BukkitChunk(world.getChunkAt(location.getX(), location.getZ()));
+    }
+
+    @Override
+    public void refreshChunk(int x, int z) {
+        world.refreshChunk(x, z);
     }
 }

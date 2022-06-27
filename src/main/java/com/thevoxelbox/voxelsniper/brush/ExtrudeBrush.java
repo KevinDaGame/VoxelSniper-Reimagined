@@ -106,7 +106,7 @@ public class ExtrudeBrush extends Brush {
     private Undo perform(final Block b1, final Block b2, final SnipeData v, final Undo undo) {
         Block clampedBlock1 = this.clampY(b1.getX(), b1.getY(), b1.getZ());
         Block clampedBlock2 = this.clampY(b2.getX(), b2.getY(), b2.getZ());
-        if (v.getVoxelList().contains(clampedBlock1.getType())) {
+        if (v.getVoxelList().contains(clampedBlock1.getMaterial())) {
             undo.put(clampedBlock2);
             clampedBlock2.setBlockData(clampedBlock1.getBlockData());
         }

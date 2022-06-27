@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -29,7 +30,7 @@ public class BallBrush extends PerformerBrush {
         this.setName("Ball");
     }
 
-    private void ball(final SnipeData v, Block targetBlock) {
+    private void ball(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (this.smoothSphere ? SMOOTH_SPHERE_VALUE : VOXEL_SPHERE_VALUE), 2);
 

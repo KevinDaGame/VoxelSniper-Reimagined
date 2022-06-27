@@ -97,7 +97,7 @@ public class CopyPastaBrush extends Brush {
                     }
 
                     if (!(this.substanceArray[currentPosition].getMaterial() == Material.AIR && !this.pasteAir)) {
-                        if (block.getType() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
+                        if (block.getMaterial() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
                             undo.put(block);
                         }
                         block.setBlockData(this.substanceArray[currentPosition], true);

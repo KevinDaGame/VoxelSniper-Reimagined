@@ -81,8 +81,8 @@ public class DomeBrush extends Brush {
         for (final Vector vector : changeablePositions) {
             final Block currentTargetBlock = vector.toLocation(this.getTargetBlock().getWorld()).getBlock();
             // TODO: Check whether BlockData omission affects this or not.
-            // if (currentTargetBlock.getType() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
-            if (currentTargetBlock.getType() != v.getVoxelMaterial()) {
+            // if (currentTargetBlock.getMaterial() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
+            if (currentTargetBlock.getMaterial() != v.getVoxelMaterial()) {
                 undo.put(currentTargetBlock);
                 currentTargetBlock.setBlockData(v.getVoxelMaterial().createBlockData(), true);
             }

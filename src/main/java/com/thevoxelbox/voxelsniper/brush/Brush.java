@@ -55,7 +55,7 @@ public abstract class Brush implements IBrush {
         return this.getWorld().getBlock(x, clampedY, z);
     }
 
-    private boolean preparePerform(final SnipeData v, final Block clickedBlock, final BlockFace clickedFace) {
+    private boolean preparePerform(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (this.getTarget(v, clickedBlock, clickedFace)) {
             if (this instanceof PerformerBrush) {
                 ((PerformerBrush) this).initP(v);

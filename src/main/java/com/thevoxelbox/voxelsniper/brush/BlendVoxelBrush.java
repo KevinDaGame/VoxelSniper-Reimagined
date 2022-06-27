@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -26,9 +27,9 @@ public class BlendVoxelBrush extends BlendBrushBase {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         // Array that holds the original materials plus a buffer
-        final Material[][][] oldMaterials = new Material[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
+        final IMaterial[][][] oldMaterials = new IMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
         // Array that holds the blended materials
-        final Material[][][] newMaterials = new Material[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
+        final IMaterial[][][] newMaterials = new IMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
 
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {

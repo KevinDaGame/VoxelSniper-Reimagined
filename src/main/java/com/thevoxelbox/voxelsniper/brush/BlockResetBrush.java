@@ -56,7 +56,7 @@ public class BlockResetBrush extends Brush {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     final Block block = this.getWorld().getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetBrush.DENIED_UPDATES.contains(block.getType())) {
+                    if (BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
                     }
 
@@ -64,7 +64,7 @@ public class BlockResetBrush extends Brush {
                     block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
 
                     // Do we need this???
-                    // block.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(block.getType()), oldData), true);
+                    // block.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(block.getMaterial()), oldData), true);
                 }
             }
         }

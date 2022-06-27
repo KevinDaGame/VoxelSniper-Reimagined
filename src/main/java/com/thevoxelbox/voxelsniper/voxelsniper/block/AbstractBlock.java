@@ -11,4 +11,10 @@ public abstract class AbstractBlock implements IBlock{
         this.location = location;
         this.material = material;
     }
+
+    @Override
+    public IBlock getRelative(int x, int y, int z) {
+        return getWorld().getBlock(getX() + x, getY() + y, getZ() + z);
+    }
+
 }

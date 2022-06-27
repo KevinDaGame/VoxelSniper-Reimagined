@@ -51,8 +51,8 @@ public class EraserBrush extends Brush {
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     int currentZ = this.getTargetBlock().getZ() - brushSize + z;
                     Block currentBlock = world.getBlockAt(currentX, currentY, currentZ);
-                    if (EXCLUSIVE_MATERIALS.contains(currentBlock.getType())
-                            || (keepWater && EXCLUSIVE_LIQUIDS.contains(currentBlock.getType()))) {
+                    if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
+                            || (keepWater && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                         continue;
                     }
                     undo.put(currentBlock);

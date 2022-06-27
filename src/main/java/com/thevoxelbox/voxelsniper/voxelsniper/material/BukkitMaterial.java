@@ -13,4 +13,14 @@ public class BukkitMaterial implements IMaterial {
     public boolean isSolid() {
         return material.isSolid();
     }
+
+    @Override
+    public String getKey() {
+        return this.material.getKey().toString();
+    }
+
+    @Override
+    public boolean equals(String key) {
+        return getKey().equals(key);
+    }
 }

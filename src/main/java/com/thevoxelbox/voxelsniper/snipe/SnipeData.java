@@ -2,6 +2,10 @@ package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -29,8 +33,9 @@ public class SnipeData {
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 
     // Voxel and ReplaceTarget Materials & BlockData
-    private BlockData voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
-    private BlockData replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
+    //todo abstract these variables
+    private IBlockData voxelSubstance = new BukkitBlockData(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+    private IBlockData replaceSubstance = new BukkitBlockData(SnipeData.DEFAULT_TARGET_SUBSTANCE);
 
     // Others
     private int cCen = SnipeData.DEFAULT_CYLINDER_CENTER;
@@ -73,27 +78,27 @@ public class SnipeData {
         this.voxelHeight = voxelHeight;
     }
 
-    public BlockData getVoxelSubstance() {
+    public IBlockData getVoxelSubstance() {
         return voxelSubstance;
     }
 
-    public Material getVoxelMaterial() {
+    public IMaterial getVoxelMaterial() {
         return voxelSubstance.getMaterial();
     }
 
-    public void setVoxelSubstance(BlockData voxelSubstance) {
+    public void setVoxelSubstance(IBlockData voxelSubstance) {
         this.voxelSubstance = voxelSubstance;
     }
 
-    public BlockData getReplaceSubstance() {
+    public IBlockData getReplaceSubstance() {
         return replaceSubstance;
     }
 
-    public Material getReplaceMaterial() {
+    public IMaterial getReplaceMaterial() {
         return replaceSubstance.getMaterial();
     }
 
-    public void setReplaceSubstance(BlockData targetSubstance) {
+    public void setReplaceSubstance(IBlockData targetSubstance) {
         this.replaceSubstance = targetSubstance;
     }
 
@@ -125,7 +130,7 @@ public class SnipeData {
         return lightning;
     }
 
-    public final World getWorld() {
+    public final IWorld getWorld() {
         return this.owner.getPlayer().getWorld();
     }
 
@@ -137,8 +142,8 @@ public class SnipeData {
      * Reset to default values.
      */
     public final void reset() {
-        this.voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
-        this.replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
+        this.voxelSubstance = new BukkitBlockData(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+        this.replaceSubstance = new BukkitBlockData(SnipeData.DEFAULT_TARGET_SUBSTANCE);
 
         this.brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 

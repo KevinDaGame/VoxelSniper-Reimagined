@@ -80,7 +80,7 @@ public class EntityRemovalBrush extends Brush {
         int entityCount = 0;
 
         for (Entity entity : chunk.getEntities()) {
-            if (exclusionList.contains(entity.getType())) {
+            if (exclusionList.contains(entity.getMaterial())) {
                 continue;
             }
 

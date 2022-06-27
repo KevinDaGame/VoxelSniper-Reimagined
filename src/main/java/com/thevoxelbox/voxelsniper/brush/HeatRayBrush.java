@@ -130,7 +130,7 @@ public class HeatRayBrush extends Brush {
 
                     if (currentLocation.toVector().isInSphere(targetLocation, v.getBrushSize())) {
                         currentBlock = currentLocation.getBlock();
-                        if (currentBlock == null || currentBlock.getType() == Material.CHEST) {
+                        if (currentBlock == null || currentBlock.getMaterial() == Material.CHEST) {
                             continue;
                         }
 
@@ -140,13 +140,13 @@ public class HeatRayBrush extends Brush {
                             continue;
                         }
 
-                        if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getType())) {
+                        if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getMaterial())) {
                             undo.put(currentBlock);
                             currentBlock.setType(Material.FIRE);
                             continue;
                         }
 
-                        if (!currentBlock.getType().equals(Material.AIR)) {
+                        if (!currentBlock.getMaterial().equals(Material.AIR)) {
                             final double airDensity = generator.noise(currentLocation.getX(), currentLocation.getY(), currentLocation.getZ(), this.octaves, this.frequency, this.amplitude);
                             final double fireDensity = generator.noise(currentLocation.getX(), currentLocation.getY(), currentLocation.getZ(), this.octaves, this.frequency, this.amplitude);
                             final double cobbleDensity = generator.noise(currentLocation.getX(), currentLocation.getY(), currentLocation.getZ(), this.octaves, this.frequency, this.amplitude);
@@ -154,22 +154,22 @@ public class HeatRayBrush extends Brush {
 
                             if (obsidianDensity >= HeatRayBrush.REQUIRED_OBSIDIAN_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.OBSIDIAN) {
+                                if (currentBlock.getMaterial() != Material.OBSIDIAN) {
                                     currentBlock.setType(Material.OBSIDIAN);
                                 }
                             } else if (cobbleDensity >= HeatRayBrush.REQUIRED_COBBLE_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.COBBLESTONE) {
+                                if (currentBlock.getMaterial() != Material.COBBLESTONE) {
                                     currentBlock.setType(Material.COBBLESTONE);
                                 }
                             } else if (fireDensity >= HeatRayBrush.REQUIRED_FIRE_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.FIRE) {
+                                if (currentBlock.getMaterial() != Material.FIRE) {
                                     currentBlock.setType(Material.FIRE);
                                 }
                             } else if (airDensity >= HeatRayBrush.REQUIRED_AIR_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.AIR) {
+                                if (currentBlock.getMaterial() != Material.AIR) {
                                     currentBlock.setType(Material.AIR);
                                 }
                             }

@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -36,8 +37,8 @@ public class BiomeBrush extends Brush {
             }
         }
 
-        final Block block1 = this.getWorld().getBlockAt(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
-        final Block block2 = this.getWorld().getBlockAt(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
+        final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
+        final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
 
         final int lowChunkX = (block1.getX() <= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
         final int lowChunkZ = (block1.getZ() <= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();

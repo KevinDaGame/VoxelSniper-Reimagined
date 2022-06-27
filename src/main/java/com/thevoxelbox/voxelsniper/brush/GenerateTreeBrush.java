@@ -108,7 +108,7 @@ public class GenerateTreeBrush extends Brush {
                         // Chance to skip creation of a block.
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
-                            if (location.getOffsetBlock(x, y, z).getType() == Material.AIR) {
+                            if (location.getOffsetBlock(x, y, z).getMaterial() == Material.AIR) {
                                 // Adds block to undo function.
                                 if (location.getOffsetBlock(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
                                     this.undo.put(location.getOffsetBlock(x, y, z));
@@ -131,7 +131,7 @@ public class GenerateTreeBrush extends Brush {
     }
 
     private void createLeaf(int x, int y, int z) {
-        if (location.getOffsetBlock(x, y, z).getType() == Material.AIR) {
+        if (location.getOffsetBlock(x, y, z).getMaterial() == Material.AIR) {
             this.undo.put(location.getOffsetClampedBlock(x, y, z));
             location.getOffsetBlock(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
         }
@@ -180,7 +180,7 @@ public class GenerateTreeBrush extends Brush {
                 }
                 List<Material> blocks = Arrays.asList(Material.WATER, Material.SNOW, Material.OAK_LOG, Material.BIRCH_LOG, Material.ACACIA_LOG, Material.DARK_OAK_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG);
                 // Checks is block below is solid
-                if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getType())) {
+                if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getMaterial())) {
                     // Move down if solid.
                     location.addY(-1);
                     if (this.rootFloat) {
@@ -200,7 +200,7 @@ public class GenerateTreeBrush extends Brush {
                         location.addZ(zDirection);
                     }
                     // Checks if new location is solid, if not then move down.
-                    if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getType())) {
+                    if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getMaterial())) {
                         location.addY(-1);
                     }
                 }
@@ -248,7 +248,7 @@ public class GenerateTreeBrush extends Brush {
 
     private void createTrunk(int x, int z) {
         // If block is air, then create a block.
-        if (location.getOffsetBlock(x, 0, z).getType() == Material.AIR) {
+        if (location.getOffsetBlock(x, 0, z).getMaterial() == Material.AIR) {
             // Adds block to undo function.
             this.undo.put(location.getOffsetClampedBlock(x, 0, z));
             // Creates block.

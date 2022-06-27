@@ -73,48 +73,48 @@ public class BlockResetSurfaceBrush extends Brush {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     // TODO clampY
                     Block block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getType())) {
+                    if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
                     }
 
                     boolean airFound = false;
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial() == Material.AIR) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getType() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial() == Material.AIR) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getType() == Material.AIR) {
+                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial() == Material.AIR) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
                         final byte oldData = block.getData();
                         resetBlock(block, oldData);

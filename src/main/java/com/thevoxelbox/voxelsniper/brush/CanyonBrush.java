@@ -48,7 +48,7 @@ public class CanyonBrush extends Brush {
                     undo.put(block);
                     undo.put(currentYLevelBlock);
 
-                    currentYLevelBlock.setType(block.getType(), false);
+                    currentYLevelBlock.setType(block.getMaterial(), false);
                     block.setType(Material.AIR);
 
                     currentYLevel++;
