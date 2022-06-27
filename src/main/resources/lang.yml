@@ -36,3 +36,38 @@ POINT_1_SET: Point 1 set.
 POINT_2_SET: Point 2 set.
 REGENERATE_CHUNK_MESSAGE: Tread lightly, This brush will melt your spleen and sell your kidneys.
 ROT3D_BRUSH_MESSAGE: Rotates Yaw (XZ), then Pitch(XY), then Roll(ZY), in order.
+EXTRUDEBRUSH_SMOOTH_CIRCLE_MODE: <gold>Using smooth circles mode
+ELLIPSEBRUSH_FILL_MODE: <aqua>Fill mode is %state%
+BRUSH_NO_PARAMS_ACCEPTED: <red>This brush does not accept additional parameters.
+TARGET_MUST_BE_VISIBLE: <red>Snipe target block must be visible.
+ENTITYBRUSH_USAGE: <gold>Entity Brush Parameters:\\n</gold><aqua>/b %triggerHandle% [entityType] -- Change brush to the specified entity type
+ENTITYBRUSH_ENTITY_TYPE: '<gold>Entity type: </gold><dark_green>%type%'
+ENTITYBRUSH_UNKNOWN_ENTITY: <red>That entity type does not exist.
+ENTITYBRUSH_SPAWN_FAIL: <red>Cannot spawn entity!
+BALLBRUSH_USAGE: '<gold>Ball Brush Parameters:\\n</gold><aqua>/b %triggerHandle% smooth -- Toggle using smooth sphere algorithm (default: false)'
+BALLBRUSH_SMOOTHSPHERE: '<aqua>Smooth sphere algorithm: %smoothSphere%'
+BRUSH_INVALID_PARAM: <red>Invalid parameter! Use </red><light_purple>'/b %triggerHandle% info'</light_purple><red> to display valid parameters.
+BIOME_DOES_NOT_EXIST: <red>That biome does not exist.
+BRUSH_NO_UNDO: <red>THIS BRUSH DOES NOT UNDO.
+REFRESHED_CHUNK: Refreshed the chunk that you are standing in.
+GOTO_INVALID_SYNTAX: <red>Invalid syntax. Command:</red><gold>/goto \<x> \<z>
+GOTO_MSG: <dark_purple>Whoosh!
+PAINTING_INVALID_SYNTAX: '<red>Invalid syntax. Command: /painting \<number>'
+FINAL_PAINTING: <red>This is the final painting, try scrolling to the other direction.
+PAINTING_SET: '<green>Painting set to ID: %id%'
+INVALID_INPUT: <red>Your input was invalid somewhere.
+ERROR: <red>Oops. Something went wrong.
+NOTHING_TO_UNDO: <green>There's nothing to undo.
+UNDO_SUCCESSFUL: '<green>Undo successful: </green><red>%changedBlocks%</red><green> blocks have been replaced.'
+SELECTED_BIOME_TYPE: '<gold>Currently selected biome type: </gold><dark_green>%selectedBiome%'
+BIOME_BRUSH_USAGE: <gold>Biome Brush Parameters:\\n</gold><aqua>/b %triggerHandle% [biomeType] -- Change brush to the specified biome
+BLEND_BALL_BRUSH_USAGE: '<gold>Blend Ball Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
+BLEND_BRUSH_WATER_MODE: '<aqua>Water Mode: %excludeWater%'
+BLEND_DISC_BRUSH_USAGE: '<gold>Blend Disc Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
+BLEND_VOXEL_BRUSH_USAGE: '<gold>Voxel blend Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
+BALL_BLEND_BRUSH_USAGE: '<gold>Blend Ball Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
+GROWTH_PERCENT_SET: '<blue>Growth percent set to: %growPercent%%'
+CANYON_BRUSH_USAGE: <gold>Canyon Parameters:\\n</gold><aqua>/b %triggerHandle% y [number] -- Set the y-coordinate where the land will be shifted to
+CANYON_BRUSH_SHIFT_LEVEL: <green>Shift Level set to %yLevel%
+INPUT_NO_NUMBER: <red>Invalid input, please enter a valid number!
+

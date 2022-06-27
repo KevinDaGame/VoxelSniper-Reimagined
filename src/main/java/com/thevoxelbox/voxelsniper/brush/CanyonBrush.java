@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -93,14 +95,13 @@ public class CanyonBrush extends Brush {
     @Override
     public void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Shift Level set to " + this.yLevel);
+        vm.custom(Messages.CANYON_BRUSH_SHIFT_LEVEL.replace("%yLevel%", String.valueOf(this.yLevel)));
     }
 
     @Override
     public final void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blob Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " y [number] -- Set the y-coordinate where the land will be shifted to").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CANYON_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -118,12 +119,12 @@ public class CanyonBrush extends Brush {
 
                 v.sendMessage(ChatColor.GREEN + "Land will be shifted to y-coordinate of " + this.yLevel);
             } catch (NumberFormatException e) {
-                v.sendMessage(ChatColor.RED + "Invalid input, please enter a valid number!");
+                v.sendMessage(Messages.INPUT_NO_NUMBER);
             }
             return;
         }
 
-        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

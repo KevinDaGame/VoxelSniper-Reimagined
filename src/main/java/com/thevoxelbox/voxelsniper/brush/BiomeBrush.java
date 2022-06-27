@@ -67,19 +67,19 @@ public class BiomeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom((ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + "%selectedBiome%").replace("%selectedBiome%", this.selectedBiome.name()));
+        vm.custom(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.name()));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage((ChatColor.GOLD + "Biome Brush Parameters:") + "\n" + (ChatColor.AQUA + "/b " + "%triggerHandle%" + " [biomeType] -- Change brush to the specified biome").replace("%triggerHandle%", triggerHandle));
+            v.sendMessage(Messages.BIOME_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
             this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
-            v.sendMessage((ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + "%selectedBiome%").replace("%selectedBiome%", this.selectedBiome.name()));
+            v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.name()));
         } catch (IllegalArgumentException e) {
             v.sendMessage(Messages.BIOME_DOES_NOT_EXIST);
         }

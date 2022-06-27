@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
@@ -71,8 +73,7 @@ public class DiscBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Disc Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " smooth  -- Toggle smooth circle (default: false)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.GOLD + "Disc Brush Parameters:" + "\n" + ChatColor.AQUA + "/b " + "%triggerHandle%" + " smooth  -- Toggle smooth circle (default: false)").replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -82,7 +83,7 @@ public class DiscBrush extends PerformerBrush {
             return;
         }
 
-        v.sendMessage((ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + "%triggerHandle%" + " info'" + ChatColor.RED + " to display valid parameters.").replace("%triggerHandle%",triggerHandle));
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

@@ -1,24 +1,19 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.audience.MessageType;
-import net.kyori.adventure.identity.Identity;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Piotr
  */
-public class SnipeData implements Audience {
+public class SnipeData {
 
     // Default values
     public static final int DEFAULT_CYLINDER_CENTER = 0;
@@ -156,12 +151,13 @@ public class SnipeData implements Audience {
         this.voxelList = new VoxelList();
     }
 
+    @Deprecated
     public final void sendMessage(final String message) {
         this.owner.getPlayer().sendMessage(message);
     }
 
-    public final void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type) {
-        VoxelSniper.getAdventure().player(this.owner.getPlayer()).sendMessage(source, message, type);
+    public final void sendMessage(final @NotNull ComponentLike message) {
+        this.owner.sendMessage(message);
     }
 
 }

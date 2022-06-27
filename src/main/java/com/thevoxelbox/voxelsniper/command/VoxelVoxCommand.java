@@ -1,13 +1,18 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.kyori.adventure.text.ComponentLike;
 
 /**
  *
@@ -34,7 +39,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 try {
                     BlockHelper.painting(player, false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /painting <number>");
+                            sendMessage(player, Messages.PAINTING_INVALID_SYNTAX);
                 }
                 return true;
             }
@@ -43,7 +48,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vchunk
         if (getActiveAlias().equalsIgnoreCase("vchunk")) {
             player.getWorld().refreshChunk(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-            player.sendMessage("Refreshed the chunk that you are standing in.");
+            sendMessage(player, Messages.REFRESHED_CHUNK);
             return true;
         }
 
@@ -54,9 +59,9 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int z = Integer.parseInt(args[1]);
 
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
-                player.sendMessage(ChatColor.DARK_PURPLE + "Whoosh!");
+                sendMessage(player, Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                player.sendMessage(ChatColor.RED + "Invalid syntax. Command:" + ChatColor.GOLD + "/goto <x> <z>");
+                sendMessage(player, Messages.GOTO_INVALID_SYNTAX);
             }
             return true;
         }
@@ -95,7 +100,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vox chunk
         if (args[0].equalsIgnoreCase("chunk")) {
             player.getWorld().refreshChunk(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-            player.sendMessage("Refreshed the chunk that you are standing in.");
+            sendMessage(player, Messages.REFRESHED_CHUNK);
             return true;
         }
 
@@ -106,7 +111,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int z = Integer.parseInt(args[2]);
 
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
-                player.sendMessage(ChatColor.DARK_PURPLE + "Whoosh!");
+                sendMessage(player, Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 player.sendMessage(ChatColor.RED + "Invalid syntax. Command:" + ChatColor.GOLD + "/" + getActiveAlias() + " goto <x> <z>");
             }
@@ -149,6 +154,10 @@ public class VoxelVoxCommand extends VoxelCommand {
         }
 
         return new ArrayList<>();
+    }
+
+    private static void sendMessage(Player p, ComponentLike msg) {
+        VoxelSniper.getAdventure().player(p).sendMessage(msg);
     }
 
 }

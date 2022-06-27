@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -114,8 +116,7 @@ public class BlendVoxelBrush extends BlendBrushBase {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blend Ball Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " water -- toggle include water (default: exclude)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.BLEND_VOXEL_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
