@@ -7,4 +7,5 @@ import java.util.UUID;
 public interface IVoxelsniper {
     IPlayer getPlayer(UUID uuid);
     Environment getEnvironment();
+    Version getVersion();
 }

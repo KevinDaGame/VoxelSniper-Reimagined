@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
-import com.thevoxelbox.voxelsniper.bukkit.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.thevoxelbox.voxelsniper.bukkit.Version.*;
+import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
 public class VoxelMaterial {
     public static List<VoxelMaterial> BLOCKS = new ArrayList<>();
@@ -952,6 +952,7 @@ public class VoxelMaterial {
     private final String namespace;
 
     private static VoxelMaterial register(String namespace, String key, Version version) {
+
         var material = new VoxelMaterial(namespace, key, version);
         BLOCKS.add(material);
         return material;

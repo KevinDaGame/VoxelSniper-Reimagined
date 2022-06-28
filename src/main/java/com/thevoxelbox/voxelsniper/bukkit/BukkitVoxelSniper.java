@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
@@ -65,5 +66,12 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     @Override
     public Environment getEnvironment() {
         return Environment.BUKKIT;
+    }
+
+    @Override
+    public Version getVersion() {
+        //todo: Does this work?
+        String version = "V" + Bukkit.getBukkitVersion().split("-")[0].replace('.' , '_');
+        return Version.valueOf(version);
     }
 }
