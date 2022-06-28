@@ -153,11 +153,7 @@ public class SplineBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " ss  -- Enable endpoint selection mode for desired curve").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " sc  -- Enable control point selection mode for desired curve").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " clear  -- Clear out the curve selection").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " render  -- Render curve from control points").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SPLINE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

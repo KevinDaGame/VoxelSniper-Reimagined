@@ -75,7 +75,7 @@ public class EntityRemovalBrush extends Brush {
             v.sendMessage(ChatColor.RED + "Error in RegEx: " + ChatColor.LIGHT_PURPLE + pse.getPattern());
             v.sendMessage((ChatColor.RED + "%desc% (Index: %idx%)").replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
         }
-        v.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.RED + entityCount + ChatColor.GREEN + " entities out of " + ChatColor.BLUE + chunkCount + ChatColor.GREEN + (chunkCount == 1 ? " chunk." : " chunks."));
+                v.sendMessage(Messages.ENTITY_REMOVE_COUNT.replace("%chunkCount%", String.valueOf(chunkCount)).replace("%entityCount%", String.valueOf(entityCount)).replace("%multiple%", (chunkCount == 1 ? " chunk." : " chunks.")));
     }
 
     private int removeEntities(Chunk chunk) throws PatternSyntaxException {
@@ -113,12 +113,7 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " + [entityType]  -- Add entity to exception list").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " - [entityType]  -- Remove entity from exception list").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " reset  -- Resets exception list to defaults").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " clear  -- Clear exception list").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " list  -- Shows entities in exception list").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ENTITY_REMOVAL_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -179,7 +174,7 @@ public class EntityRemovalBrush extends Brush {
             entities.add(entity.name());
         }
 
-        
+
         argumentValues.put("+", entities);
         argumentValues.put("-", entities);
         return argumentValues;

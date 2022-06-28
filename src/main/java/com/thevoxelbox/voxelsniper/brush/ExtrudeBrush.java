@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -160,21 +159,20 @@ public class ExtrudeBrush extends Brush {
         vm.voxelList();
 
         if (this.smoothCircle) {
-            vm.custom(Messages.EXTRUDEBRUSH_SMOOTH_CIRCLE_MODE);
+            vm.custom(Messages.BRUSH_SMOOTH_CIRCLE);
         }
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Extrude Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " smooth  -- Toggle smooth circle (default: false)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.EXTRUDE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            v.sendMessage(Messages.BRUSH_SMOOTH_CIRCLE);
             return;
         }
 

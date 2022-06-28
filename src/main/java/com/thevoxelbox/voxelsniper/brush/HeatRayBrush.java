@@ -208,11 +208,7 @@ public class HeatRayBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " octave [number]  -- Octaves for the noise generator.").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " amplitude [number]  -- Amplitude for the noise generator.").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " frequency [number]  -- Frequency for the noise generator.").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " default  -- Reset to default values.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.HEAT_RAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

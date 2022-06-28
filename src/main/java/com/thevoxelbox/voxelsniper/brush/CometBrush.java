@@ -45,8 +45,7 @@ public class CometBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Comet Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [big|small]  -- Sets your ball size").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.COMET_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
         }
 
         if (params[0].equalsIgnoreCase("big")) {

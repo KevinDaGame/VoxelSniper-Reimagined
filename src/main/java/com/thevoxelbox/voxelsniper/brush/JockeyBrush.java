@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -149,10 +151,7 @@ public class JockeyBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Jockey Brush Parameters: ");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [inverse, stack, normal] -- Switch between modes").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " player  -- Toggle target players or all entities (default: players only)").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage(ChatColor.BLUE + "Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other ");
+            v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -62,13 +61,13 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equals("info")) {
-            v.sendMessage((ChatColor.GOLD + "Checker Voxel Disc Parameters:" + "\n" + ChatColor.AQUA + "/b " + "%triggerHandle%" + " worldcoords -- Toggle to use World Coordinates or not (default: true)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CHECKER_DISC_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].startsWith("worldcoords")) {
             this.useWorldCoordinates = !this.useWorldCoordinates;
-            v.sendMessage(ChatColor.AQUA + "Using world coordinates: " + this.useWorldCoordinates);
+            v.sendMessage(Messages.CHECKER_USING_WORLD_CORDS.replace("%useWorldCoordinates%", String.valueOf(this.useWorldCoordinates)));
             return;
         }
 

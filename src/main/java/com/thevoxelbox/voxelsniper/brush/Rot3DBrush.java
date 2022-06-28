@@ -49,10 +49,7 @@ public class Rot3DBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "3D Rotation Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " pitch [0-359] -- Set pitch rotation (rotation about the Z axis).").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " roll [0-359] -- Set roll rotation (rotation about the X axis).").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ROTATION_3D_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
         try {

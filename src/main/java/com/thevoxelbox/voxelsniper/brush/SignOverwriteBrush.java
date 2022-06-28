@@ -1,8 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Sets;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -134,19 +137,8 @@ public class SignOverwriteBrush extends Brush {
 
             try {
                 if (parameter.equalsIgnoreCase("info")) {
-                    v.sendMessage(ChatColor.AQUA + "Sign Overwrite Brush Powder/Arrow:");
-                    v.sendMessage(ChatColor.BLUE + "The arrow writes the internal line buffer to the tearget sign.");
-                    v.sendMessage(ChatColor.BLUE + "The powder reads the text of the target sign into the internal buffer.");
-                    v.sendMessage(ChatColor.AQUA + "Sign Overwrite Brush Parameters:");
-                    v.sendMessage(ChatColor.GREEN + "-1[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the first sign line. (e.g. -1 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-2[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the second sign line. (e.g. -2 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-3[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the third sign line. (e.g. -3 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-4[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the fourth sign line. (e.g. -4 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-clear " + ChatColor.BLUE + "-- Clears the line buffer. (Alias: -c)");
-                    v.sendMessage(ChatColor.GREEN + "-clearall " + ChatColor.BLUE + "-- Clears the line buffer and sets all lines back to enabled. (Alias: -ca)");
-                    v.sendMessage(ChatColor.GREEN + "-multiple [on|off] " + ChatColor.BLUE + "-- Enables or disables ranged mode. (Alias: -m) (see Wiki for more information)");
-                    v.sendMessage(ChatColor.GREEN + "-save (name) " + ChatColor.BLUE + "-- Save your buffer to a file named [name]. (Alias: -s)");
-                    v.sendMessage(ChatColor.GREEN + "-open (name) " + ChatColor.BLUE + "-- Loads a buffer from a file named [name]. (Alias: -o)");
+                    v.sendMessage(Messages.SIGN_BRUSH_USAGE);
+
                 } else if (parameter.startsWith("-1")) {
                     textChanged = true;
                     i = parseSignLineFromParam(params, SIGN_LINE_1, v, i);
@@ -168,7 +160,7 @@ public class SignOverwriteBrush extends Brush {
                     v.sendMessage(ChatColor.BLUE + "Internal text buffer cleard and states back to enabled.");
                 } else if (parameter.equalsIgnoreCase("-multiple") || parameter.equalsIgnoreCase("-m")) {
                     if ((i + 1) >= params.length) {
-                        v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
+                        v.sendMessage(Messages.MISSING_PARAMETER.replace("%parameter%", parameter));
                         continue;
                     }
 
@@ -180,7 +172,7 @@ public class SignOverwriteBrush extends Brush {
                     }
                 } else if (parameter.equalsIgnoreCase("-save") || parameter.equalsIgnoreCase("-s")) {
                     if ((i + 1) >= params.length) {
-                        v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
+                        v.sendMessage(Messages.MISSING_PARAMETER.replace("%parameter%", parameter));
                         continue;
                     }
 
@@ -188,7 +180,7 @@ public class SignOverwriteBrush extends Brush {
                     saveBufferToFile(fileName, v);
                 } else if (parameter.equalsIgnoreCase("-open") || parameter.equalsIgnoreCase("-o")) {
                     if ((i + 1) >= params.length) {
-                        v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
+                        v.sendMessage(Messages.MISSING_PARAMETER.replace("%parameter%", parameter));
                         continue;
                     }
 
@@ -197,7 +189,7 @@ public class SignOverwriteBrush extends Brush {
                     textChanged = true;
                 }
             } catch (Exception exception) {
-                v.sendMessage(ChatColor.RED + String.format("Error while parsing parameter %s", parameter));
+                v.sendMessage(Messages.PARAMETER_PARSE_ERROR.replace("%parameter%", parameter));
                 exception.printStackTrace();
             }
         }
@@ -225,7 +217,7 @@ public class SignOverwriteBrush extends Brush {
 
         if (parameter.contains(":")) {
             this.signLinesEnabled[lineIndex] = parameter.substring(parameter.indexOf(":")).equalsIgnoreCase(":enabled");
-            v.sendMessage(ChatColor.BLUE + "Line " + lineNumber + " is " + ChatColor.GREEN + (this.signLinesEnabled[lineIndex] ? "enabled" : "disabled"));
+            v.sendMessage((ChatColor.BLUE + "Line " + "%lineNumber%" + " is " + ChatColor.GREEN + (this.signLinesEnabled[lineIndex] ? "enabled" : "disabled")).replace("%lineNumber%", String.valueOf(lineNumber)));
             statusSet = true;
         }
 
@@ -235,7 +227,7 @@ public class SignOverwriteBrush extends Brush {
                 return i;
             }
 
-            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%", String.valueOf(lineNumber)));
+            v.sendMessage(Messages.SIGN_BRUSH_EMPTY_LINE.replace("%lineNumber%", String.valueOf(lineNumber)));
             signTextLines[lineIndex] = "";
             return i;
         }
@@ -263,7 +255,7 @@ public class SignOverwriteBrush extends Brush {
             if (statusSet) {
                 return i;
             }
-            v.sendMessage((ChatColor.RED + "Warning: No text after -" + "%lineNumber%" + ". Setting buffer text to \"\" (empty string)").replace("%lineNumber%", String.valueOf(lineNumber)));
+            v.sendMessage(Messages.SIGN_BRUSH_EMPTY_LINE.replace("%lineNumber%", String.valueOf(lineNumber)));
         }
 
         // check the line length and cut the text if needed

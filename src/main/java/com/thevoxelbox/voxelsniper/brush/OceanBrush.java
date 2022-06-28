@@ -171,9 +171,7 @@ public class OceanBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " water [number]  -- Sets the water level").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
         try {

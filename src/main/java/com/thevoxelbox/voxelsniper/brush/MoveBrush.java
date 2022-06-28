@@ -253,12 +253,7 @@ public class MoveBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.getVoxelMessage().custom(ChatColor.GOLD + "Move Brush Parameters:");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set the x direction (positive => east)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set the y direction (positive => up)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " z [number]  -- Set the z direction (positive => south)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Reset brush to default values");
-            v.getVoxelMessage().custom(ChatColor.BLUE + "Instructions: Use arrow and gunpowder to define two points.");
+            v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

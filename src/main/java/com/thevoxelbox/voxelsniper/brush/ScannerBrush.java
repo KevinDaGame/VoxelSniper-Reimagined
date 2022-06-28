@@ -137,8 +137,7 @@ public class ScannerBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Scanner brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " depth [number] -- will set the search depth to #. Clamps to 1 - 64.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

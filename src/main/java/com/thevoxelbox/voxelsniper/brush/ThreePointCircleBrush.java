@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -164,9 +166,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [mode]  -- Change mode to prioritize accuracy or smoothness").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
+            v.sendMessage(Messages.THREE_POINT_CIRCLE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

@@ -259,10 +259,7 @@ public class PunishBrush extends Brush {
             v.sendMessage(ChatColor.GOLD + "Punish Brush Options:");
             v.sendMessage(ChatColor.BLUE + "Punishment level can be set with /vc [level]");
             v.sendMessage(ChatColor.BLUE + "Punishment duration in seconds can be set with /vh [duration]");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [punishment]  -- Sets the punishment").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " -hypno  -- Toggle whether Hypno will affect landscape only").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " -player [playername]  -- Target specific player, clear with empty playername").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " -self  -- Toggle whether you will be affected").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [punishment]  -- Sets the punishment\n" +ChatColor.AQUA + "/b " + "%triggerHandle%" + " -hypno  -- Toggle whether Hypno will affect landscape only\n" +ChatColor.AQUA + "/b " + "%triggerHandle%" + " -player [playername]  -- Target specific player, clear with empty playername\n" +ChatColor.AQUA + "/b " + "%triggerHandle%" + " -self  -- Toggle whether you will be affected").replace("%triggerHandle%",triggerHandle));
             v.sendMessage(ChatColor.AQUA + "Available Punishment Options:");
             final StringBuilder punishmentOptions = new StringBuilder();
             for (final Punishment punishment : Punishment.values()) {

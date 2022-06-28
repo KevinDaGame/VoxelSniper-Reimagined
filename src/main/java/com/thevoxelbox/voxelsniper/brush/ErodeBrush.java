@@ -4,6 +4,8 @@ import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -161,8 +163,7 @@ public class ErodeBrush extends Brush {
     // TODO: Implement changing of individual variables | fill erode fillrecursion eroderecursion
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Erode Brush Parameters:");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [preset]  -- Change active erode brush preset").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ERODE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

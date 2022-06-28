@@ -110,7 +110,7 @@ public class BallBrush extends PerformerBrush {
 
         if (params[0].equalsIgnoreCase("smooth")) {
             this.smoothSphere = !this.smoothSphere;
-            v.sendMessage(Messages.BALLBRUSH_SMOOTHSPHERE.replace("%smoothSphere%", String.valueOf(this.smoothSphere)));
+            v.sendMessage(Messages.SMOOTHSPHERE_ALGORITHM.replace("%smoothSphere%", String.valueOf(this.smoothSphere)));
             return;
         }
 

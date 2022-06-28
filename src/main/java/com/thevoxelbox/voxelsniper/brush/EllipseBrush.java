@@ -188,11 +188,7 @@ public class EllipseBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " x [number]  -- Set X size modifier").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " y [number]  -- Set Y size modifier").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " t [number]  -- Set time steps").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + "fill  -- Toggles fill mode").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ELLIPSE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
