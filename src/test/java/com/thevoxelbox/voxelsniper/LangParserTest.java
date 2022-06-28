@@ -38,7 +38,7 @@ public class LangParserTest {
             System.out.println(name+',');
             try {
                 String value = (String) field.get(null);
-                String encoded = MiniMessage.miniMessage().serialize(LegacyComponentSerializer.legacySection().deserialize(value.replace("\n", "\\n")));
+                String encoded = MiniMessage.miniMessage().serialize(LegacyComponentSerializer.legacySection().deserialize(value));
                 yaml.set(name, encoded);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);

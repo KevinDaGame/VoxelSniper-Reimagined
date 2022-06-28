@@ -1,79 +1,265 @@
-BRUSH_MESSAGE_PREFIX: <light_purple>
-BRUSH_NAME: '<aqua>Brush Type: <light_purple>%name%</light_purple></aqua>'
-BRUSH_CENTER: '<dark_blue>Brush Center: <dark_red>%center%</dark_red></dark_blue>'
-BRUSH_HEIGHT: '<dark_aqua>Brush Height: <dark_red>%height%</dark_red></dark_aqua>'
-BRUSH_SIZE: '<green>Brush Size: <dark_red>%size%</dark_red></green>'
-BRUSH_SIZE_LARGE: '<red>WARNING: Large brush size selected!</red>'
-VOXEL_MAT: '<gold>Voxel Material: <red>%mat%</red></gold>'
-VOXEL_DATA: '<blue>Voxel Data Value: <dark_red>%data%</dark_red></blue>'
-VOXEL_LIST: '<dark_green>Block Types Selected: <aqua>%blocks%</aqua></dark_green>'
-VOXEL_LIST_EMPTY: <dark_green>No blocks selected!</dark_green>
-REPLACEMENT_MAT: '<aqua>Replace Target Material: <red>%mat%</red></aqua>'
-REPLACEMENT_DATA: '<dark_gray>Replace Target Data Value: <dark_aqua>%data%</dark_aqua></dark_gray>'
-PERFORMER: '<dark_purple>Performer: <dark_green>%performer%</dark_green></dark_purple>'
-TOGGLE_LIGHTNING: <gold>Lightning mode has been toggled <dark_red>%state%</dark_red></gold>
-TOGGLE_PRINTOUT: <gold>Brush info printout mode has been toggled <dark_red>%state%</dark_red></gold>
-TOGGLE_RANGE: <gold>Distance Restriction toggled <dark_red>%state%</dark_red>, range is <light_purple>%range%</light_purple></gold>
-PERFORMER_MESSAGE: <dark_aqua>You can use </dark_aqua><yellow>'/b %triggerHandle% p [performer]'</yellow><dark_aqua> to change performers now.
-BLOCKS_UNTIL_REPEATER_MESSAGE: '<aqua>Blocks until repeater needed: %blocks%'
-BLOCK_POWER_MESSAGE: <aqua>Direct Power? %direct% Indirect Power? %indirect%
-FACE_POWER_MESSAGE: <blue>%face% Direct? %direct% %face% Indirect? %indirect%
+BRUSH_INVALID_PARAM: <red>Invalid parameter! Use </red><light_purple>'/b %triggerHandle% info'</light_purple><red> to display valid parameters.
 TREESNIPE_USAGE: |-
   <gold>Tree Snipe Brush Parameters:
   </gold><aqua>/b %triggerHandle% [treeType]  -- Change tree type
-TREESNIPE_BRUSH_MESSAGE: <red>That tree type does not exist. Use </red><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
-VOLTMETER_BRUSH_MESSAGE: Right click with arrow to see if blocks/faces are powered. Powder measures wire current.
-DEFAULT_STAMP: Default Stamp
-NO_AIR_STAMP: No-Air Stamp
-FILL_STAMP: Fill Stamp
-CLONE_STAMP_ERROR: <dark_red>Error while stamping! Report
-OFF_WORLD_END_POS: '<dark_purple>Warning: off-world end position.'
-OFF_WORLD_START_POS: '<dark_purple>Warning: off-world start position.'
-ENTITY_BRUSH_MESSAGE: <light_purple>Entity Brush (%entity%)
-LIGHTNING_BRUSH_MESSAGE: Lightning Brush!  Please use in moderation.
-SELECTION_SIZE_ABOVE_LIMIT: <red>Selection size above hardcoded limit, please use a smaller selection.
-POINT_1_SET: Point 1 set.
-POINT_2_SET: Point 2 set.
-REGENERATE_CHUNK_MESSAGE: Tread lightly, This brush will melt your spleen and sell your kidneys.
-ROT3D_BRUSH_MESSAGE: Rotates Yaw (XZ), then Pitch(XY), then Roll(ZY), in order.
-EXTRUDEBRUSH_SMOOTH_CIRCLE_MODE: <gold>Using smooth circles mode
-ELLIPSEBRUSH_FILL_MODE: <aqua>Fill mode is %state%
-BRUSH_NO_PARAMS_ACCEPTED: <red>This brush does not accept additional parameters.
-TARGET_MUST_BE_VISIBLE: <red>Snipe target block must be visible.
-ENTITYBRUSH_USAGE: <gold>Entity Brush Parameters:\\n</gold><aqua>/b %triggerHandle% [entityType] -- Change brush to the specified entity type
-ENTITYBRUSH_ENTITY_TYPE: '<gold>Entity type: </gold><dark_green>%type%'
-ENTITYBRUSH_UNKNOWN_ENTITY: <red>That entity type does not exist.
-ENTITYBRUSH_SPAWN_FAIL: <red>Cannot spawn entity!
-BALLBRUSH_USAGE: '<gold>Ball Brush Parameters:\\n</gold><aqua>/b %triggerHandle% smooth -- Toggle using smooth sphere algorithm (default: false)'
-BALLBRUSH_SMOOTHSPHERE: '<aqua>Smooth sphere algorithm: %smoothSphere%'
-BRUSH_INVALID_PARAM: <red>Invalid parameter! Use </red><light_purple>'/b %triggerHandle% info'</light_purple><red> to display valid parameters.
+SPLATTER_VOXEL_DISC_BRUSH_USAGE: |-
+  <gold>Splatter Voxel Disc Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+CHECKER_USING_WORLD_CORDS: '<aqua>Using world coordinates: %useWorldCoordinates%'
+EXTRUDE_BRUSH_USAGE: |-
+  <gold>Extrude Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+SPLATTER_FOXEL_BRUSH_USAGE: |-
+  <gold>Splatter Voxel Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+JAGGED_LINE_BRUSH_RECURSION_RANGE: <red>Recursion must be between %RECURSION_MIN% - %RECURSION_MAX%
+BLEND_VOXEL_BRUSH_USAGE: |-
+  <gold>Voxel blend Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
 BIOME_DOES_NOT_EXIST: <red>That biome does not exist.
-BRUSH_NO_UNDO: <red>THIS BRUSH DOES NOT UNDO.
-REFRESHED_CHUNK: Refreshed the chunk that you are standing in.
-GOTO_INVALID_SYNTAX: <red>Invalid syntax. Command:</red><gold>/goto \<x> \<z>
-GOTO_MSG: <dark_purple>Whoosh!
-PAINTING_INVALID_SYNTAX: '<red>Invalid syntax. Command: /painting \<number>'
-FINAL_PAINTING: <red>This is the final painting, try scrolling to the other direction.
-PAINTING_SET: '<green>Painting set to ID: %id%'
-INVALID_INPUT: <red>Your input was invalid somewhere.
 ERROR: <red>Oops. Something went wrong.
-NOTHING_TO_UNDO: <green>There's nothing to undo.
-UNDO_SUCCESSFUL: '<green>Undo successful: </green><red>%changedBlocks%</red><green> blocks have been replaced.'
-SELECTED_BIOME_TYPE: '<gold>Currently selected biome type: </gold><dark_green>%selectedBiome%'
-BIOME_BRUSH_USAGE: <gold>Biome Brush Parameters:\\n</gold><aqua>/b %triggerHandle% [biomeType] -- Change brush to the specified biome
-BLEND_BALL_BRUSH_USAGE: '<gold>Blend Ball Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
-BLEND_BRUSH_WATER_MODE: '<aqua>Water Mode: %excludeWater%'
-BLEND_DISC_BRUSH_USAGE: '<gold>Blend Disc Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
-BLEND_VOXEL_BRUSH_USAGE: '<gold>Voxel blend Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
-BALL_BLEND_BRUSH_USAGE: '<gold>Blend Ball Parameters:\\n</gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)'
-GROWTH_PERCENT_SET: '<blue>Growth percent set to: %growPercent%%'
-CANYON_BRUSH_USAGE: <gold>Canyon Parameters:\\n</gold><aqua>/b %triggerHandle% y [number] -- Set the y-coordinate where the land will be shifted to
-CANYON_BRUSH_SHIFT_LEVEL: <green>Shift Level set to %yLevel%
+FLAT_OCEAN_BRUSH_USAGE: |-
+  <gold>Flat Ocean Brush Parameters:
+  </gold><aqua>/b %triggerHandle% water [number]  -- Set the y-level the water will rise to. (default: 29)
+  </aqua><aqua>/b %triggerHandle% floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)
+ENTITY_REMOVAL_BRUSH_USAGE: |-
+  <gold>Entity Brush Parameters:
+  </gold><aqua>/b %triggerHandle% + [entityType]  -- Add entity to exception list
+  </aqua><aqua>/b %triggerHandle% - [entityType]  -- Remove entity from exception list
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets exception list to defaults
+  </aqua><aqua>/b %triggerHandle% clear  -- Clear exception list
+  </aqua><aqua>/b %triggerHandle% list  -- Shows entities in exception list
+BRUSH_SMOOTH_CIRCLE: <gold>Using smooth circles mode
+OFF_WORLD_END_POS: '<dark_purple>Warning: off-world end position.'
 INPUT_NO_NUMBER: <red>Invalid input, please enter a valid number!
-ELLIPSOID_BRUSH_USAGE: '<gold>Ellipse Brush Parameters: \\n</gold><aqua>/b %triggerHandle% x [number]  -- Set X radius\\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y radius\\n</aqua><aqua>/b %triggerHandle% z [number]  -- Set Z radius'
+ROTATION_3D_BRUSH_USAGE: |-
+  <gold>3D Rotation Brush Parameters:
+  </gold><aqua>/b %triggerHandle% pitch [0-359] -- Set pitch rotation (rotation about the Z axis).
+  </aqua><aqua>/b %triggerHandle% roll [0-359] -- Set roll rotation (rotation about the X axis).
+  </aqua><aqua>/b %triggerHandle% yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).
+DISC_BRUSH_USAGE: |-
+  <gold>Disc Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+REPLACEMENT_DATA: '<dark_gray>Replace Target Data Value: <dark_aqua>%data%</dark_aqua></dark_gray>'
+PERFORMER_MESSAGE: <dark_aqua>You can use </dark_aqua><yellow>'/b %triggerHandle% p [performer]'</yellow><dark_aqua> to change performers now.
+BIOME_BRUSH_USAGE: |-
+  <gold>Biome Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [biomeType] -- Change brush to the specified biome
+REFRESHED_CHUNK: Refreshed the chunk that you are standing in.
+BLEND_BALL_BRUSH_USAGE: |-
+  <gold>Blend Ball Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+FIRST_POINT_SELECTED: <dark_purple>First point selected.
+FACE_POWER_MESSAGE: <blue>%face% Direct? %direct% %face% Indirect? %indirect%
 AXIS_SET_TO_VALUE: '<aqua>%axis% radius set to: </aqua><dark_aqua>%value%'
-BLOB_BRUSH_USAGE: <gold>Blob Brush Parameters:\\n</gold><aqua>/b %triggerHandle% growth [number] -- Set growth percentage (between %min% and %max%).  Default is %default%
-BLOB_BRUSH_SET_DEFAULT: '<aqua>Growth percent set to default value: %default%%'
-BLOB_BRUSH_RANGE: <red>Growth percent must be a number between %min% and %%max!
+PARAMETER_PARSE_ERROR: <red>Error while parsing parameter %parameter%
+CHECKER_DISC_BRUSH_USAGE: |-
+  <gold>Checker Voxel Disc Parameters:
+  </gold><aqua>/b %triggerHandle% worldcoords -- Toggle to use World Coordinates or not (default: true)
+COMET_BRUSH_USAGE: |-
+  <gold>Comet Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [big|small]  -- Sets your ball size
+GOTO_INVALID_SYNTAX: <red>Invalid syntax. Command:</red><gold>/goto \<x> \<z>
+OFF_WORLD_START_POS: '<dark_purple>Warning: off-world start position.'
+FILL_DOWN_BRUSH_USAGE: |-
+  <gold>Fill Down Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle use smooth circles (default: false)
+  </aqua><aqua>/b %triggerHandle% liquid  -- Toggle filling liquids (default: true)
+  </aqua><aqua>/b %triggerHandle% existing  -- Toggle filling existing blocks or all blocks. (Toggle)
+ROTATE_2D_BRUSH_USAGE: |-
+  <gold>2D Rotation Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [number]  -- Set angle in degrees
+FILL_STAMP: Fill Stamp
+BALL_BLEND_BRUSH_USAGE: |-
+  <gold>Blend Ball Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+TARGET_MUST_BE_VISIBLE: <red>Snipe target block must be visible.
+HEAT_RAY_BRUSH_USAGE: |-
+  <gold>Heat Ray brush Parameters:
+  </gold><aqua>/b %triggerHandle% octave [number]  -- Octaves for the noise generator.
+  </aqua><aqua>/b %triggerHandle% amplitude [number]  -- Amplitude for the noise generator.
+  </aqua><aqua>/b %triggerHandle% frequency [number]  -- Frequency for the noise generator.
+  </aqua><aqua>/b %triggerHandle% default  -- Reset to default values.
+BLEND_DISC_BRUSH_USAGE: |-
+  <gold>Blend Disc Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+TOGGLE_PRINTOUT: <gold>Brush info printout mode has been toggled <dark_red>%state%</dark_red></gold>
+NO_AIR_STAMP: No-Air Stamp
+VOXEL_LIST_EMPTY: <dark_green>No blocks selected!</dark_green>
+VOLTMETER_BRUSH_MESSAGE: Right click with arrow to see if blocks/faces are powered. Powder measures wire current.
+SCANNER_BRUSH_USAGE: |-
+  <gold>Scanner brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number] -- will set the search depth to #. Clamps to 1 - 64.
+SPLINE_BRUSH_USAGE: |-
+  <gold>Spline Brush Parameters:
+  </gold><aqua>/b %triggerHandle% ss  -- Enable endpoint selection mode for desired curve
+  </aqua><aqua>/b %triggerHandle% sc  -- Enable control point selection mode for desired curve
+  </aqua><aqua>/b %triggerHandle% clear  -- Clear out the curve selection
+  </aqua><aqua>/b %triggerHandle% render  -- Render curve from control points
+ENTITY_BRUSH_MESSAGE: <light_purple>Entity Brush (%entity%)
+REPLACEMENT_MAT: '<aqua>Replace Target Material: <red>%mat%</red></aqua>'
+BRUSH_MESSAGE_PREFIX: <light_purple>
+PAINTING_SET: '<green>Painting set to ID: %id%'
+OVERLAY_BRUSH_USAGE: |-
+  <gold>Overlay Brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
+  </aqua><aqua>/b %triggerHandle% mode  -- Change target blocks to natural, custom defined or all blocks.
 BLOB_BRUSH_SET_VALUE: '<aqua>Growth percent set to: %value%%'
-
+POINT_1_SET: Point 1 set.
+SMOOTHSPHERE_ALGORITHM: '<aqua>Smooth sphere algorithm: %smoothSphere%'
+COPYPASTA_BRUSH_USAGE: |-
+  <gold>CopyPasta Brush Parameters:
+  </gold><aqua>/b %triggerHandle% air  -- Toggle include air during paste (default: true)
+  </aqua><aqua>/b %triggerHandle% rotate [number]  -- Set rotation pivot (default: 0)
+ERODE_BRUSH_USAGE: |-
+  <gold>Erode Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [preset]  -- Change active erode brush preset
+PERFORMER: '<dark_purple>Performer: <dark_green>%performer%</dark_green></dark_purple>'
+BRUSH_SIZE_LARGE: '<red>WARNING: Large brush size selected!</red>'
+TOGGLE_LIGHTNING: <gold>Lightning mode has been toggled <dark_red>%state%</dark_red></gold>
+ENTITYBRUSH_ENTITY_TYPE: '<gold>Entity type: </gold><dark_green>%type%'
+FIRST_COORDINATE_NOT_SET: '<red>Warning: You did not select a first coordinate with the arrow'
+ENTITYBRUSH_UNKNOWN_ENTITY: <red>That entity type does not exist.
+ENTITYBRUSH_USAGE: |-
+  <gold>Entity Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [entityType] -- Change brush to the specified entity type
+ENTITY_REMOVE_COUNT: <green>Removed </green><red>%entityCount%</red><green> entities out of </green><blue>%chunkCount%</blue><green>%multiple%
+BRUSH_SIZE: '<green>Brush Size: <dark_red>%size%</dark_red></green>'
+RING_BRUSH_USAGE: |-
+  <gold>Ring Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+  </aqua><aqua>/b %triggerHandle% inner [decimal]  -- Set inner radius to specified value
+SIGN_BRUSH_USAGE: |-
+  <aqua>Sign Overwrite Brush Powder/Arrow:
+  </aqua><blue>The arrow writes the internal line buffer to the tearget sign.
+  </blue><blue>The powder reads the text of the target sign into the internal buffer.
+  </blue><aqua>Sign Overwrite Brush Parameters:
+  </aqua><green>-1[:(enabled|disabled)] ... </green><blue>-- Sets the text of the first sign line. (e.g. -1 Blah Blah)
+  </blue><green>-2[:(enabled|disabled)] ... </green><blue>-- Sets the text of the second sign line. (e.g. -2 Blah Blah)
+  </blue><green>-3[:(enabled|disabled)] ... </green><blue>-- Sets the text of the third sign line. (e.g. -3 Blah Blah)
+  </blue><green>-4[:(enabled|disabled)] ... </green><blue>-- Sets the text of the fourth sign line. (e.g. -4 Blah Blah)
+  </blue><green>-clear </green><blue>-- Clears the line buffer. (Alias: -c)
+  </blue><green>-clearall </green><blue>-- Clears the line buffer and sets all lines back to enabled. (Alias: -ca)
+  </blue><green>-multiple [on|off] </green><blue>-- Enables or disables ranged mode. (Alias: -m) (see Wiki for more information)
+  </blue><green>-save (name) </green><blue>-- Save your buffer to a file named [name]. (Alias: -s)
+  </blue><green>-open (name) </green><blue>-- Loads a buffer from a file named [name]. (Alias: -o)
+SELECTION_SIZE_ABOVE_LIMIT: <red>Selection size above hardcoded limit, please use a smaller selection.
+ENTITYBRUSH_SPAWN_FAIL: <red>Cannot spawn entity!
+NOTHING_TO_UNDO: <green>There's nothing to undo.
+PAINTING_INVALID_SYNTAX: '<red>Invalid syntax. Command: /painting \<number>'
+JOCKEY_BRUSH_USAGE: "<gold>Jockey Brush Parameters: \n</gold><aqua>/b %triggerHandle% [inverse, stack, normal] -- Switch between modes\n</aqua><aqua>/b %triggerHandle% player  -- Toggle target players or all entities (default: players only)\n</aqua><blue>Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other "
+BLOB_BRUSH_RANGE: <red>Growth percent must be a number between %min% and %%max!
+SELECTED_BIOME_TYPE: '<gold>Currently selected biome type: </gold><dark_green>%selectedBiome%'
+MOVE_BRUSH_USAGE: |-
+  <gold>Move Brush Parameters:
+  </gold><aqua>/b %triggerHandle% x [number]  -- Set the x direction (positive => east)
+  </aqua><aqua>/b %triggerHandle% y [number]  -- Set the y direction (positive => up)
+  </aqua><aqua>/b %triggerHandle% z [number]  -- Set the z direction (positive => south)
+  </aqua><aqua>/b %triggerHandle% reset  -- Reset brush to default values
+  </aqua><blue>Instructions: Use arrow and gunpowder to define two points.
+UNDERLAY_BRUSH_USAGE: |-
+  <gold>Underlay (Reverse Overlay) Brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
+  </aqua><aqua>/b %triggerHandle% mode  -- Toggle between overlaying natural blocks or all blocks.
+CYLINDER_BRUSH_USAGE: |-
+  <gold>Cylinder Brush Parameters:
+  </gold><aqua>/b %triggerHandle% height [number]  -- Set voxel height (default: 1)
+  </aqua><aqua>/b %triggerHandle% shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)
+  </aqua><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+SIGN_BRUSH_EMPTY_LINE: '<red>Warning: No text after -%lineNumber%. Setting buffer text to "" (empty string)'
+BLOB_BRUSH_SET_DEFAULT: '<aqua>Growth percent set to default value: %default%%'
+CLONE_STAMP_BRUSH_USAGE: "<gold>Clone / Stamp Cylinder Brush Parameters: \n</gold><aqua>/b %triggerHandle% fill  -- Change to Fill mode\n</aqua><aqua>/b %triggerHandle% air  -- Change to No-Air mode\n</aqua><aqua>/b %triggerHandle% default  -- Change to Default mode"
+VOXEL_MAT: '<gold>Voxel Material: <red>%mat%</red></gold>'
+CANYON_BRUSH_USAGE: |-
+  <gold>Canyon Parameters:
+  </gold><aqua>/b %triggerHandle% y [number] -- Set the y-coordinate where the land will be shifted to
+GROWTH_PERCENT_SET: '<blue>Growth percent set to: %growPercent%%'
+DISC_FACE_BRUSH_USAGE: |-
+  <gold>Disc Face Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+JAGGED_LINE_BRUSH_SET_SPREAD: '<green>Spread set to: %spread%'
+BRUSH_NO_PARAMS_ACCEPTED: <red>This brush does not accept additional parameters.
+INVALID_INPUT: <red>Your input was invalid somewhere.
+ELLIPSOID_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X radius\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y radius\n</aqua><aqua>/b %triggerHandle% z [number]  -- Set Z radius"
+TOGGLE_RANGE: <gold>Distance Restriction toggled <dark_red>%state%</dark_red>, range is <light_purple>%range%</light_purple></gold>
+MISSING_PARAMETER: <red>Missing parameter after %parameter%.
+BLOCKS_UNTIL_REPEATER_MESSAGE: '<aqua>Blocks until repeater needed: %blocks%'
+BRUSH_CENTER: '<dark_blue>Brush Center: <dark_red>%center%</dark_red></dark_blue>'
+FINAL_PAINTING: <red>This is the final painting, try scrolling to the other direction.
+GEN_TREE_BRUSH_USAGE_2: |-
+  <gold>Generate Tree Brush Parameters:         [2/2]
+  </gold><aqua>/b %triggerHandle% rootMin [number]  -- minimum roots
+  </aqua><aqua>/b %triggerHandle% rootMax [number]  -- maximum roots
+  </aqua><aqua>/b %triggerHandle% minHeight [number]  -- minimum height
+  </aqua><aqua>/b %triggerHandle% maxHeight [number]  -- maximum height
+  </aqua><aqua>/b %triggerHandle% leavesMin [number]  -- minimum leaf node size
+  </aqua><aqua>/b %triggerHandle% leavesMax [number]  -- maximum leaf node size
+  </aqua><aqua>/b %triggerHandle% default  -- restore default params
+GEN_TREE_BRUSH_USAGE_1: "<gold>Generate Tree Brush Parameters:         [1/2]\n</gold><aqua>/b %triggerHandle% leaves [material]  -- leaves type\n</aqua><aqua>/b %triggerHandle% wood [material]  -- wood type\n</aqua><aqua>/b %triggerHandle%thickness [number]  -- tree thickness\n</aqua><aqua>/b %triggerHandle% startHeight [number] -- starting height\n</aqua><aqua>/b %triggerHandle% slope [0 - 100]  -- trunk slope chance\n</aqua><aqua>/b %triggerHandle% branchLength [number]  -- branch length\n</aqua><aqua>/b %triggerHandle% rootLength [number]  -- root length\n</aqua><aqua>/b %triggerHandle% rootFloat [true/false]  -- root float \n</aqua><aqua>/b %triggerHandle% info 2  -- next page"
+BLOB_BRUSH_USAGE: |-
+  <gold>Blob Brush Parameters:
+  </gold><aqua>/b %triggerHandle% growth [number] -- Set growth percentage (between %min% and %max%).  Default is %default%
+DRAIN_BRUSH_USAGE: |-
+  <gold>Drain Brush Parameters:
+  </gold><aqua>/b %triggerHandle% shape  -- Toggle between brush shapes (default: ball)
+CANYON_BRUSH_SHIFT_LEVEL: <green>Shift Level set to %yLevel%
+SPLATTER_OVERLAY_BRUSH_USAGE: |-
+  <gold>Splatter Overlay Brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
+  </aqua><aqua>/b %triggerHandle% mode  -- Toggle between overlaying natural blocks or all blocks.
+  </aqua><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+ROT3D_BRUSH_MESSAGE: Rotates Yaw (XZ), then Pitch(XY), then Roll(ZY), in order.
+LIGHTNING_BRUSH_MESSAGE: Lightning Brush!  Please use in moderation.
+JAGGED_LINE_BRUSH_RECURSION_SET: '<green>Recursion set to: %recursion%'
+UNDO_SUCCESSFUL: '<green>Undo successful: </green><red>%changedBlocks%</red><green> blocks have been replaced.'
+BALLBRUSH_USAGE: |-
+  <gold>Ball Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth -- Toggle using smooth sphere algorithm (default: false)
+ELLIPSEBRUSH_FILL_MODE: <aqua>Fill mode is %state%
+SPLATTER_DISC_BRUSH_USAGE: |-
+  <gold>Splatter Disc Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+DEFAULT_STAMP: Default Stamp
+CLEAN_SNOW_BURSH_USAGE: |-
+  <gold>Clean Snow Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth -- Toggle using smooth sphere algorithm (default: false)
+VOXEL_LIST: '<dark_green>Block Types Selected: <aqua>%blocks%</aqua></dark_green>'
+GOTO_MSG: <dark_purple>Whoosh!
+BRUSH_HEIGHT: '<dark_aqua>Brush Height: <dark_red>%height%</dark_red></dark_aqua>'
+JAGGED_LINE_BRUSH_USAGE: "<gold>Jagged Line Brush Parameters: \n</gold><aqua>/b %triggerHandle% recursion [number] - sets the number of recursions (default 3, must be 1-10)\n/b %triggerHandle% spread [number] - sets the spread (default 3, must be 1-10)\n</aqua><blue>Instructions: Right click first point with the arrow. Right click with powder to draw a jagged line to set the second point."
+BLOCK_POWER_MESSAGE: <aqua>Direct Power? %direct% Indirect Power? %indirect%
+BLEND_BRUSH_WATER_MODE: '<aqua>Water Mode: %excludeWater%'
+REGENERATE_CHUNK_MESSAGE: Tread lightly, This brush will melt your spleen and sell your kidneys.
+TREESNIPE_BRUSH_MESSAGE: <red>That tree type does not exist. Use </red><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
+VOXEL_DATA: '<blue>Voxel Data Value: <dark_red>%data%</dark_red></blue>'
+CLONE_STAMP_ERROR: <dark_red>Error while stamping! Report
+BRUSH_NO_UNDO: <red>THIS BRUSH DOES NOT UNDO.
+SPLATTER_BALL_BRUSH_USAGE: |-
+  <gold>Splatter Ball Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+BRUSH_NAME: '<aqua>Brush Type: <light_purple>%name%</light_purple></aqua>'
+THREE_POINT_CIRCLE_BRUSH_USAGE: |-
+  <gold>three Point Circle Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [mode]  -- Change mode to prioritize accuracy or smoothness
+  </aqua><blue>Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.
+POINT_2_SET: Point 2 set.
+OCEAN_BRUSH_USAGE: |-
+  <gold>Parameters:
+  </gold><aqua>/b %triggerHandle% water [number]  -- Sets the water level
+  </aqua><aqua>/b %triggerHandle% floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)
+ELLIPSE_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X size modifier\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y size modifier\n</aqua><aqua>/b %triggerHandle% t [number]  -- Set time steps\n</aqua><aqua>/b %triggerHandle%fill  -- Toggles fill mode"
