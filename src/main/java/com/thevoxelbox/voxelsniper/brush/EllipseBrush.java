@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
             }
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid target.");
+            v.sendMessage(Messages.INVALID_TARGET);
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
@@ -138,7 +137,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
             }
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid target.");
+            v.sendMessage(Messages.INVALID_TARGET);
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
@@ -179,9 +178,9 @@ public class EllipseBrush extends PerformerBrush {
         }
 
         vm.brushName(this.getName());
-        vm.custom(ChatColor.AQUA + "X-size set to: " + ChatColor.DARK_AQUA + this.xscl);
-        vm.custom(ChatColor.AQUA + "Y-size set to: " + ChatColor.DARK_AQUA + this.yscl);
-        vm.custom(ChatColor.AQUA + "Render step number set to: " + ChatColor.DARK_AQUA + this.steps);
+        vm.custom(Messages.X_SIZE_SET.replace("%xscl%",String.valueOf(this.xscl)));
+        vm.custom(Messages.Y_SIZE_SET.replace("%yscl%",String.valueOf(this.yscl)));
+        vm.custom(Messages.ELLIPSE_RENDER_STEP_NUMBER.replace("%steps%",String.valueOf(this.steps)));
         vm.custom(Messages.ELLIPSEBRUSH_FILL_MODE.replace("%state%", this.fill ? "enabled" : "disabled"));
     }
 
@@ -203,12 +202,12 @@ public class EllipseBrush extends PerformerBrush {
                 int xValue = Integer.parseInt(params[1]);
 
                 if (xValue < SCL_MIN || xValue > SCL_MAX) {
-                    v.sendMessage((ChatColor.RED + "Invalid X scale, must be between " + "%SCL_MIN%" + " - " + "%SCL_MAX%").replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
+                    v.sendMessage(Messages.INVALID_X_SCALE.replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
                     return;
                 }
 
                 this.xscl = xValue;
-                v.sendMessage(ChatColor.AQUA + "X-scale modifier set to: " + this.xscl);
+                v.sendMessage(Messages.X_SCALE_MODIFIER_SET.replace("%xscl%",String.valueOf(this.xscl)));
                 return;
             }
 
@@ -216,12 +215,12 @@ public class EllipseBrush extends PerformerBrush {
                 int yValue = Integer.parseInt(params[1]);
 
                 if (yValue < SCL_MIN || yValue > SCL_MAX) {
-                    v.sendMessage((ChatColor.RED + "Invalid Y scale, must be between " + "%SCL_MIN%" + " - " + "%SCL_MAX%").replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
+                    v.sendMessage(Messages.INVALID_Y_SCALE.replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
                     return;
                 }
 
                 this.yscl = yValue;
-                v.sendMessage(ChatColor.AQUA + "Y-scale modifier set to: " + this.yscl);
+                v.sendMessage(Messages.Y_SCALE_MODIFIER_SET.replace("%yscl%",String.valueOf(this.yscl)));
                 return;
             }
 
@@ -229,12 +228,12 @@ public class EllipseBrush extends PerformerBrush {
                 int stepValue = Integer.parseInt(params[1]);
 
                 if (stepValue < STEPS_MIN || stepValue > STEPS_MAX) {
-                    v.sendMessage((ChatColor.RED + "Invalid step amount, must be between " + "%STEPS_MIN%" + " - " + "%STEPS_MAX%").replace("%STEPS_MIN%", String.valueOf(STEPS_MIN)).replace("%STEPS_MAX%", String.valueOf(STEPS_MAX)));
+                    v.sendMessage(Messages.INVALID_STEP_AMOUNT.replace("%STEPS_MIN%", String.valueOf(STEPS_MIN)).replace("%STEPS_MAX%", String.valueOf(STEPS_MAX)));
                     return;
                 }
 
                 this.steps = stepValue;
-                v.sendMessage(ChatColor.AQUA + "Render step number set to: " + this.steps);
+                v.sendMessage(Messages.RENDER_STEP_NUMBER_SET.replace("%steps%",String.valueOf(this.steps)));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {

@@ -5,8 +5,6 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +80,7 @@ public class CloneStampBrush extends StampBrush {
                 }
             }
         }
-        v.sendMessage(ChatColor.GREEN + String.valueOf(this.clone.size()) + ChatColor.AQUA + " blocks copied successfully.");
+        v.sendMessage(Messages.BLOCKS_COPIED_SUCCESSFULLY.replace("%amount%", String.valueOf(this.clone.size())));
     }
 
     @Override
@@ -125,21 +123,21 @@ public class CloneStampBrush extends StampBrush {
         if (params[0].equalsIgnoreCase("air")) {
             this.setStamp(StampType.NO_AIR);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "Stamp Mode: No-Air");
+            v.sendMessage(Messages.CLONE_STAMP_NO_AIR);
             return;
         }
 
         if (params[0].equalsIgnoreCase("fill")) {
             this.setStamp(StampType.FILL);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "Stamp Mode: Fill");
+            v.sendMessage(Messages.CLONE_STAMP_FILL);
             return;
         }
 
         if (params[0].equalsIgnoreCase("default")) {
             this.setStamp(StampType.DEFAULT);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "StampMode: Default");
+            v.sendMessage(Messages.CLONE_STAMP_DEFAULT_MODE);
             return;
         }
 

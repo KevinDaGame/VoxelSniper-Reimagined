@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -40,17 +39,17 @@ public class CylinderBrush extends PerformerBrush {
         }
         if (yStartingPoint < this.getMinHeight()) {
             yStartingPoint = this.getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Messages.OFF_WORLD_START_POS);
         } else if (yStartingPoint > this.getMaxHeight() - 1) {
             yStartingPoint = this.getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Messages.OFF_WORLD_START_POS);
         }
         if (yEndPoint < this.getMinHeight()) {
             yEndPoint = this.getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Messages.OFF_WORLD_START_POS);
         } else if (yEndPoint > this.getMaxHeight() - 1) {
             yEndPoint = this.getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Messages.OFF_WORLD_START_POS);
         }
 
         final double bSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
@@ -115,7 +114,7 @@ public class CylinderBrush extends PerformerBrush {
         if (params[0].startsWith("shift")) {
             try {
                 v.setcCen(Integer.parseInt(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Cylinder will shift by " + v.getcCen() + " blocks on y-axis");
+                v.sendMessage(Messages.CYLINDER_SHIFT_Y.replace("%count%", String.valueOf(v.getcCen())));
                 return;
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }

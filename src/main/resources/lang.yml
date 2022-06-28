@@ -56,6 +56,8 @@ BLEND_BALL_BRUSH_USAGE: |-
   <gold>Blend Ball Parameters:
   </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
 FIRST_POINT_SELECTED: <dark_purple>First point selected.
+SECOND_POINT_SELECTED: <dark_purple>First point selected.
+POINTS_CLEARED: <dark_purple>Points cleared
 FACE_POWER_MESSAGE: <blue>%face% Direct? %direct% %face% Indirect? %indirect%
 AXIS_SET_TO_VALUE: '<aqua>%axis% radius set to: </aqua><dark_aqua>%value%'
 PARAMETER_PARSE_ERROR: <red>Error while parsing parameter %parameter%
@@ -263,3 +265,50 @@ OCEAN_BRUSH_USAGE: |-
   </gold><aqua>/b %triggerHandle% water [number]  -- Sets the water level
   </aqua><aqua>/b %triggerHandle% floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)
 ELLIPSE_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X size modifier\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y size modifier\n</aqua><aqua>/b %triggerHandle% t [number]  -- Set time steps\n</aqua><aqua>/b %triggerHandle%fill  -- Toggles fill mode"
+SIGN_OVERWRITE_BRUSH_RANGE_MODE: <blue>Ranged mode is </blue><green>%rangedMode%
+SIGN_OVERWRITE_ENABLED: '<green>(E): </green><black>%signTextLines%'
+SIGN_OVERWRITE_DISABLED: '<red>(D): </red><black>%signTextLines%'
+SIGN_OVERWRITE_BUFFER_TEXT: '<blue>Buffer text: '
+FILE_LOAD_SUCCESSFUL: <blue>File loaded successfully.
+FILE_LOAD_FAIL: <red>Failed to load file. %exception.getMessage%
+THIS_FILE_DOES_NOT_EXIST: This file does not exist.
+FILE_SAVE_SUCCESSFUL: <blue>File saved successfully.
+FILE_SAVE_FAIL: <red>Failed to save file. %exception.getMessage%
+SIGN_OVERWRITE_EXCEED_CHAR_LIMIT: '<red>Warning: Text on line %lineNumber% exceeds the maximum line length of %MAX_SIGN_LINE_LENGTH% characters. Your text will be cut.'
+SIGN_BUFFER_TEXT_SET: '<blue>Buffer text set to: '
+SIGN_LINE_ENABLED_DISABLED: <blue>Line %lineNumber% is </blue><green>%state%
+TARGET_BLOCK_NO_SIGN: <red>Target block is not a sign.
+SIGN_BUFFER_CLEARED: <blue>Internal text buffer cleared.
+SIGN_BUFFER_CLEARED_ENABLED: <blue>Internal text buffer cleared and states back to enabled.
+BRUSH_SIZE_SET: <green>Brush size set to </green><red>%getBrushSize%
+BRUSH_HEIGHT_SET: <aqua>Brush height set to </aqua><red>%getVoxelHeight%
+NO_SIGN_FOUND: <red>Did not found any sign in selection box.
+SLATTER_OVERLAY_RESET_DEFAULT: <gold>Values are reset to default values.
+OVERLAY_DEPTH_SET: <aqua>Overlay depth set to %depth%
+SHIFT_LEVEL_SET: <green>Shift Level set to %getYLevel%
+LAND_WILL_BE_SHIFTED_TO_Y: <green>Land will be shifted to y-coordinate of %yLevel%
+BLOCKS_COPIED_SUCCESSFULLY: <green>%amount%</green><aqua> blocks copied successfully.
+CLONE_STAMP_NO_AIR: '<aqua>Stamp Mode: No-Air'
+CLONE_STAMP_FILL: '<aqua>Stamp Mode: Fill'
+CLONE_STAMP_DEFAULT_MODE: '<aqua>StampMode: Default'
+COMET_SIZE: Your balls are <dark_red>%size%
+BLOCKS_COPIED_COUNT: <aqua>%numBlocks% blocks copied.
+COPY_AREA_TOO_BIG: '<red>Copy area too big: %numBlocks%(Limit: %BLOCK_LIMIT%)'
+MUST_SELECT_2_POINTS: <red>You must select exactly two points.
+PASTE_AIR_STATE: '<gold>Air included in paste: %pasteAir%'
+PIVOT_ANGLE: '<gold>Pivot angle: %pivot% degrees'
+BLOCKS_PASTED_COUNT: <aqua>%numBlocks% blocks pasted.
+CYLINDER_SHIFT_Y: <aqua>Cylinder will shift by %count% blocks on y-axis
+DRAIN_TRUE_CIRCLE_MODE: <aqua>True circle mode %state%
+DISC_DRAIN_MODE: <aqua>Disc drain mode %state%
+DRAIN_BRUSH_SHAPE: '<aqua>Drain Brush Shape: %shape%'
+INVALID_TARGET: <red>Invalid target.
+X_SIZE_SET: '<aqua>X-size set to: </aqua><dark_aqua>%xscl%'
+Y_SIZE_SET: '<aqua>Y-size set to: </aqua><dark_aqua>%yscl%'
+ELLIPSE_RENDER_STEP_NUMBER: '<aqua>Render step number set to: </aqua><dark_aqua>%steps%'
+INVALID_X_SCALE: <red>Invalid X scale, must be between %SCL_MIN% - %SCL_MAX%
+X_SCALE_MODIFIER_SET: '<aqua>X-scale modifier set to: %xscl%'
+INVALID_Y_SCALE: <red>Invalid Y scale, must be between %SCL_MIN% - %SCL_MAX%
+Y_SCALE_MODIFIER_SET: '<aqua>Y-scale modifier set to: %yscl%'
+INVALID_STEP_AMOUNT: <red>Invalid step amount, must be between %STEPS_MIN% - %STEPS_MAX%
+RENDER_STEP_NUMBER_SET: '<aqua>Render step number set to: %steps%'

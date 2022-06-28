@@ -301,7 +301,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
             this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
             this.depth = 3;
             this.allBlocks = false;
-            v.sendMessage(ChatColor.GOLD + "Values resetted to default values.");
+            v.sendMessage(Messages.SLATTER_OVERLAY_RESET_DEFAULT);
             return;
         }
 
@@ -328,7 +328,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
                 return;
             }
 

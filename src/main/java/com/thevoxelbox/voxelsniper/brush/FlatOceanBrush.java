@@ -78,7 +78,7 @@ public class FlatOceanBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.FLAT_OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
-            v.sendMessage(ChatColor.RED + "BEWARE! THIS BRUSH DOES NOT UNDO.");
+            v.sendMessage(Messages.BRUSH_NO_UNDO);
             return;
         }
 

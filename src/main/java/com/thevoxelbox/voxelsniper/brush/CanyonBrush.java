@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -117,7 +116,7 @@ public class CanyonBrush extends Brush {
 
                 this.yLevel = yLevel;
 
-                v.sendMessage(ChatColor.GREEN + "Land will be shifted to y-coordinate of " + this.yLevel);
+                v.sendMessage(Messages.LAND_WILL_BE_SHIFTED_TO_Y.replace("%yLevel%",String.valueOf(this.yLevel)));
             } catch (NumberFormatException e) {
                 v.sendMessage(Messages.INPUT_NO_NUMBER);
             }

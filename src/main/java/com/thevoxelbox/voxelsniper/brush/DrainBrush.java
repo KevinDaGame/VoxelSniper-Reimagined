@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -92,8 +91,8 @@ public class DrainBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
 
-        vm.custom(ChatColor.AQUA + ((this.trueCircle == 0.5) ? "True circle mode ON" : "True circle mode OFF"));
-        vm.custom(ChatColor.AQUA + ((this.disc) ? "Disc drain mode ON" : "Disc drain mode OFF"));
+        vm.custom(Messages.DRAIN_TRUE_CIRCLE_MODE.replace("%state%", (this.trueCircle == 0.5) ? "ON" : "OFF"));
+        vm.custom(Messages.DISC_DRAIN_MODE.replace("%state%", (this.disc) ? "ON" : "OFF"));
     }
 
     @Override
@@ -104,7 +103,7 @@ public class DrainBrush extends Brush {
         }
         if (params[0].startsWith("shape")) {
             this.disc = !this.disc;
-            v.sendMessage(ChatColor.AQUA + "Drain Brush Shape: " + (this.disc ? "Disc" : "Ball"));
+            v.sendMessage(Messages.DRAIN_BRUSH_SHAPE.replace("%shape%", this.disc ? "Disc" : "Ball"));
             return;
         }
 
