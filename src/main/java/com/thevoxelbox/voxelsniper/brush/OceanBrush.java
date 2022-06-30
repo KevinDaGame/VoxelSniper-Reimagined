@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -179,18 +178,18 @@ public class OceanBrush extends Brush {
                 int temp = Integer.parseInt(params[1]);
 
                 if (temp <= WATER_LEVEL_MIN) {
-                    v.sendMessage(ChatColor.RED + "The water level must be at least 12.");
+                    v.sendMessage(Messages.OCEAN_LEVEL_AT_LEAST_12);
                     return;
                 }
 
                 this.waterLevel = temp - 1;
-                v.sendMessage(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1));
+                v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel+1)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("floor")) {
                 this.coverFloor = Boolean.parseBoolean(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
+                v.sendMessage(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
                 return;
             }
         } catch (NumberFormatException ignored) {
@@ -221,8 +220,8 @@ public class OceanBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1)); // +1 since we are working with 0-based array indices
-        vm.custom(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel+1))); // +1 since we are working with 0-based array indices
+        vm.custom(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
     }
 
     @Override

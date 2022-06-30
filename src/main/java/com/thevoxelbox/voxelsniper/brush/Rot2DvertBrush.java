@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -147,7 +146,7 @@ public class Rot2DvertBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -163,7 +162,7 @@ public class Rot2DvertBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -182,7 +181,7 @@ public class Rot2DvertBrush extends Brush {
 
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
-            v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
+            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(this.se)));
         } catch (NumberFormatException ignored) {
         }
 

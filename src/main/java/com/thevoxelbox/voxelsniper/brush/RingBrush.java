@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -69,7 +68,7 @@ public class RingBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.AQUA + "The inner radius is " + ChatColor.RED + this.innerSize);
+        vm.custom(Messages.INNER_RADIUS_INFO.replace("%innerSize%",String.valueOf(this.innerSize)));
     }
 
     @Override
@@ -88,7 +87,7 @@ public class RingBrush extends PerformerBrush {
         try {
             if (params[0].startsWith("inner")) {
                 this.innerSize = Double.parseDouble(params[1]);
-                v.sendMessage(ChatColor.AQUA + "The inner radius has been set to " + ChatColor.RED + this.innerSize + ChatColor.AQUA + ".");
+                v.sendMessage(Messages.INNER_RADIUS_SET.replace("%innerSize%",String.valueOf(this.innerSize)));
                 return;
             }
         } catch (final NumberFormatException ignored) {

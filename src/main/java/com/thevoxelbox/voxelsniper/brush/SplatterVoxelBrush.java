@@ -167,7 +167,7 @@ public class SplatterVoxelBrush extends PerformerBrush {
         vm.size();
         vm.custom(ChatColor.BLUE + "Seed percent set to: " + this.seedPercent / 100 + "%");
         vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
-        vm.custom(ChatColor.BLUE + "Recursions set to: " + this.splatterRecursions);
+        vm.custom((ChatColor.BLUE + "Recursions set to: " + "%splatterRecursions%").replace("%splatterRecursions%",String.valueOf(this.splatterRecursions)));
     }
 
     @Override
@@ -214,7 +214,7 @@ public class SplatterVoxelBrush extends PerformerBrush {
                 final int temp = Integer.parseInt(params[1]);
 
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Recursions set to: " + temp);
+                    v.sendMessage((ChatColor.AQUA + "Recursions set to: " + "%temp%").replace("%temp%",String.valueOf(temp)));
                     this.splatterRecursions = temp;
                 } else {
                     v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");

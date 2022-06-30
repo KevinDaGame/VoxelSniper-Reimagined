@@ -283,7 +283,7 @@ SIGN_BUFFER_CLEARED_ENABLED: <blue>Internal text buffer cleared and states back 
 BRUSH_SIZE_SET: <green>Brush size set to </green><red>%getBrushSize%
 BRUSH_HEIGHT_SET: <aqua>Brush height set to </aqua><red>%getVoxelHeight%
 NO_SIGN_FOUND: <red>Did not found any sign in selection box.
-SLATTER_OVERLAY_RESET_DEFAULT: <gold>Values are reset to default values.
+BRUSH_RESET_DEFAULT: <gold>Values are reset to default values.
 OVERLAY_DEPTH_SET: <aqua>Overlay depth set to %depth%
 SHIFT_LEVEL_SET: <green>Shift Level set to %getYLevel%
 LAND_WILL_BE_SHIFTED_TO_Y: <green>Land will be shifted to y-coordinate of %yLevel%
@@ -312,3 +312,88 @@ INVALID_Y_SCALE: <red>Invalid Y scale, must be between %SCL_MIN% - %SCL_MAX%
 Y_SCALE_MODIFIER_SET: '<aqua>Y-scale modifier set to: %yscl%'
 INVALID_STEP_AMOUNT: <red>Invalid step amount, must be between %STEPS_MIN% - %STEPS_MAX%
 RENDER_STEP_NUMBER_SET: '<aqua>Render step number set to: %steps%'
+ENTITY_REMOVAL_REGEX_ERROR: |-
+  <red>Error in RegEx: </red><light_purple>%pattern%
+  </light_purple><red>%desc% (Index: %idx%)
+ENTITY_REMOVAL_EXCLUSIONS: '<green>Exclusions: </green><dark_green>%exclusionList%'
+ENTITY_REMOVAL_EXCLUSION_LIST: <aqua>, </aqua><dark_green>
+ENTITY_REMOVAL_RESET: <gold>Reset exclusions list to default values.
+ENTITY_REMOVAL_CLEAR: <gold>Cleared the exclusions list.</gold><red> WARNING! </red><dark_red>All</dark_red><red> entities can now be removed by the brush. BE CAREFUL!
+ENTITY_REMOVAL_ADD: <gold>Added %name% to exclusion list.
+ENTITY_REMOVAL_REMOVE: <gold>Removed %name% from exclusion list.
+ENTITY_REMOVAL_NOT_IN_LIST: <gold>%name% wasn't in exclusion list. Nothing happened.
+PRESET_DOES_NOT_EXIST: <red>That preset does not exist.
+ACTIVE_BRUSH_PRESET: <gold>Active brush preset is </gold><yellow>%this.presetName%</yellow><gold>.
+BRUSH_PRESET_CHANGED: <gold>Brush preset changed to </gold><yellow>%this.presetName%</yellow><gold>.
+WATER_LEVEL_SET: <green>Water level set to %waterLevel%
+OCEAN_FLOOR_LEVEL_SET: <green>Ocean floor level set to %floorLevel%
+LEAVES_MAT_SET: <blue>Leaves material set to %leavesMaterial.name%
+WOOD_LOG_MAT_SET: <blue>Wood log material set to %woodMaterial.name%
+INVALID_TYPE: <red>Not a valid material type.
+THICKNESS_SET: <blue>Thickness set to %thickness%
+START_HEIGHT_SET: <blue>Starting height set to %startHeight%
+TRUNK_SLOPE_SET: <blue>Trunk slope set to %this.slopeChance%% chance
+BRANCH_LENGTH_SET: <blue>Branch length set to %branchLength%
+ROOT_LENGTH_SET: <blue>Root length set to %rootLength%
+FLOATING_ROOTS_SET: <blue>Floating roots set to %rootFloat%
+MIN_ROOTS_SET: <blue>Minimum roots set to %minRoots%
+MIN_ROOTS_ABOVE_MAX: <red>Minimum roots can't exceed maximum roots, has  been set to %this.minRoots% instead!
+MAX_ROOTS_BELOW_MIN: <red>Maximum roots can't be lower than minimum roots, has been set to %this.minRoots% instead!
+MAX_ROOTS_SET: <blue>Maximum roots set to %maxRoots%
+MIN_HEIGHT_SET: <blue>Minimum height set to %minimumHeight%
+MIN_HEIGHT_ABOVE_MAX: <red>Minimum height exceed than maximum height, has been set to %this.minimumHeight% instead!
+MAX_HEIGHT_BELOW_MIN: <red>Maximum height can't be lower than minimum height, has been set to %this.maximumHeight% instead!
+MAX_HEIGHT_SET: <blue>Maximum height set to %maximumHeight%
+LEAF_THICKNESS_MAX_SET: <blue>Leaf thickness set to %nodeMax%
+LEAF_THICKNESS_MIN_SET: <blue>Leaf thickness set to %nodeMin%
+HEAT_RAY_BRUSH_INFO: |-
+  <green>Octaves: %octaves%
+  Amplitude: %amplitude%
+  Frequency: %frequency%
+SITTING_ON_CLOSEST_ENTITY: <gold>You are now sitting on the most nearby entity!
+NO_PLAYERS_FOUND_TO_SIT_ON: <red>Could not find any players to sit on :(
+NO_ENTITIES_FOUND_TO_SIT_ON: <red>Could not find any entities to sit on :(
+YOU_BROKE_THE_STACK: You broke the stack! :O
+ENTITY_EJECTED: <gold>The entity on top of you has been ejected!
+YOU_HAVE_BEEN_EJECTED: <gold>You have been ejected!
+CURRENT_JOCKEY_MODE: 'Current Jockey Mode: <green>%mode%'
+JOCKEY_TARGETING_PLAYERS: <green>Now targeting players only.
+JOCKEY_TARGETING_ENTITIES: <green>Now targeting all entities.
+LINE_BRUSH_INFO: '<blue>Instructions: Right click first point with the arrow. Right click with powder to draw a line to set the second point.'
+MOVE_BRUSH_RESET: <aqua>X, Y, Z direction set to 0. No movement will occur.
+MOVE_DIRECTION_SET: '<aqua>%dir% direction set to: %val%'
+OCEAN_LEVEL_AT_LEAST_12: <red>The water level must be at least 12.
+OCEAN_FLOOR_COVER: <blue>Floor cover </blue><green>%state%
+OVERLAY_BRUSH_VOXELLIST_EMPTY: |-
+  <dark_aqua>Overlay mode is set to custom defined blocks, but the VoxelList is empty.
+  </dark_aqua><gold>Please use /vv list to see how to populate the list.
+INVALID_BRUSH_PARAM: <red>Invalid brush parameters!
+INVALID_BRUSH_PARAM_ANGLE: <red>Invalid brush parameters! Angles must be from 1-359
+PUNISH_BRUSH_USAGE: |-
+  <gold>Punish Brush Options:
+  </gold><blue>Punishment level can be set with /vc [level]
+  </blue><blue>Punishment duration in seconds can be set with /vh [duration]
+  </blue><aqua>/b %triggerHandle% [punishment]  -- Sets the punishment
+  </aqua><aqua>/b %triggerHandle% -hypno  -- Toggle whether Hypno will affect landscape only
+  </aqua><aqua>/b %triggerHandle% -player [playername]  -- Target specific player, clear with empty playername
+  </aqua><aqua>/b %triggerHandle% -self  -- Toggle whether you will be affected
+  </aqua><aqua>Available Punishment Options:
+NO_LONGER_TARGETING_A_SPECIFIC_PLAYER: No longer targeting a specific player.
+NOW_TARGETING_A_SPECIFIC_PLAYER: 'Now targeting a specific player: '
+PUNISHMENT_APPLIED_NUMBER: <dark_red>Punishment applied to %numPunishApps% living entities.
+PUNISHMENT_NAME: '<green>Punishment: %punishment%'
+PUNISHMENT_DOES_NOT_EXIST: <gold>That punishment does not exist! Use </gold><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
+INNER_RADIUS_INFO: <aqua>The inner radius is </aqua><red>%innerSize%
+INNER_RADIUS_SET: <aqua>The inner radius has been set to </aqua><red>%innerSize%</red><aqua>.
+ANGLE_SET: <green>Angle set to %se%
+RULER_BRUSH_USAGE: '<blue>Instructions: Right click first point with the arrow. Right click with powder for distances from that block (can repeat without getting a new first block.)'
+SCANNER_FOUND_BLOCKS: <green>%checkFor% found after %i% blocks.
+SCANNER_FOUND_NO_BLOCKS: <gray>Nope.
+SCANNER_BRUSH_INFO: |-
+  <green>Scanner scans for %checkFor% (change with /v #)
+  </green><green>Scanner depth set to %depth%
+SCANNER_DEPTH_SET: <aqua>Scanner depth set to %depth%
+SELECTED_POINTS_DIFFERENT_WORLD: <red>You selected points in different worlds!
+SELECTION_SIZE_LIMIT: <red>Selection size above hardcoded limit, please use a smaller selection.
+ANGLE_AROUND_AXIS_SET: <aqua>Around %axis%-axis degrees set to %angle%
+SHELL_BRUSH_COMPLETE: <aqua>Shell complete.

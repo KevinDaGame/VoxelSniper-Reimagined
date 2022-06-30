@@ -174,7 +174,7 @@ public class SplatterBallBrush extends PerformerBrush {
         vm.size();
         vm.custom(ChatColor.BLUE + "Seed percent set to: " + this.seedPercent / 100 + "%");
         vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
-        vm.custom(ChatColor.BLUE + "Recursions set to: " + this.splatterRecursions);
+        vm.custom((ChatColor.BLUE + "Recursions set to: " + "%splatterRecursions%").replace("%splatterRecursions%",String.valueOf(this.splatterRecursions)));
 
     }
 
@@ -222,7 +222,7 @@ public class SplatterBallBrush extends PerformerBrush {
                 final int recursionValue = Integer.parseInt(params[1]);
 
                 if (recursionValue >= SPLATREC_PERCENT_MIN && recursionValue <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Recursions set to: " + recursionValue);
+                    v.sendMessage((ChatColor.AQUA + "Recursions set to: " + "%recursionValue%").replace("%recursionValue%",String.valueOf(recursionValue)));
                     this.splatterRecursions = recursionValue;
                 } else {
                     v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");

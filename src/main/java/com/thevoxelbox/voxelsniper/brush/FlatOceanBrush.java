@@ -70,8 +70,8 @@ public class FlatOceanBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(Messages.BRUSH_NO_UNDO);
-        vm.custom(ChatColor.GREEN + "Water level set to " + this.waterLevel);
-        vm.custom(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
+        vm.custom(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%",String.valueOf(this.floorLevel)));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.waterLevel = newWaterLevel;
-            v.sendMessage(ChatColor.GREEN + "Water level set to " + this.waterLevel);
+            v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
             return;
         }
 
@@ -106,7 +106,7 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.floorLevel = newFloorLevel;
-            v.sendMessage(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+            v.sendMessage(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%", String.valueOf(floorLevel)));
             return;
         }
 

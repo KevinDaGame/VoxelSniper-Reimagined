@@ -153,7 +153,7 @@ public class UnderlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                v.sendMessage((ChatColor.AQUA + "Overlay depth set to " + "%depth%").replace("%depth%",String.valueOf(this.depth)));
                 return;
             } catch (NumberFormatException ignored) {
             }
@@ -170,7 +170,7 @@ public class UnderlayBrush extends PerformerBrush {
                 this.allBlocks = false;
                 this.useVoxelList = false;
             }
-            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.");
+            v.sendMessage((ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + "%this.depth%" + " blocks deep.").replace("%this.depth%",String.valueOf(this.depth)));
             return;
         }
 

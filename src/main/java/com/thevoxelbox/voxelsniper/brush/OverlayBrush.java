@@ -136,8 +136,7 @@ public class OverlayBrush extends PerformerBrush {
     @Override
     protected final void arrow(final SnipeData v) {
         if (this.useVoxelList && v.getVoxelList().isEmpty()) {
-            v.sendMessage(ChatColor.DARK_AQUA + "Overlay mode is set to custom defined blocks, but the VoxelList is empty. "
-                    + ChatColor.GOLD + "Please use /vv list to see how to populate the list.");
+            v.sendMessage(Messages.OVERLAY_BRUSH_VOXELLIST_EMPTY);
             return;
         }
         this.overlay(v);
@@ -170,7 +169,7 @@ public class OverlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
                 return;
             } catch (NumberFormatException ignored) {
             }
@@ -187,7 +186,7 @@ public class OverlayBrush extends PerformerBrush {
                 this.allBlocks = false;
                 this.useVoxelList = false;
             }
-            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.");
+            v.sendMessage((ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + "%this.depth%" + " blocks deep.").replace("%this.depth%",String.valueOf(this.depth)));
             return;
         }
 

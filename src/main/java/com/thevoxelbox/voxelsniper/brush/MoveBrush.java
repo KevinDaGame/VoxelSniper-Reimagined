@@ -261,26 +261,26 @@ public class MoveBrush extends Brush {
             this.moveDirections[0] = 0;
             this.moveDirections[1] = 0;
             this.moveDirections[2] = 0;
-            v.getVoxelMessage().custom(ChatColor.AQUA + "X, Y, Z direction set to 0. No movement will occur.");
+            v.getVoxelMessage().custom(Messages.MOVE_BRUSH_RESET);
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("x")) {
                 this.moveDirections[0] = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
+                v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "X").replace("%val%", String.valueOf(this.moveDirections[0])));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("y")) {
                 this.moveDirections[1] = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
+                v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "Y").replace("%val%", String.valueOf(this.moveDirections[1])));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("z")) {
                 this.moveDirections[2] = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
+                v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "Z").replace("%val%", String.valueOf(this.moveDirections[2])));
                 return;
             }
         } catch (NumberFormatException ignored) {

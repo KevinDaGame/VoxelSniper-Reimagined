@@ -156,7 +156,7 @@ public class ErodeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Active brush preset is " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
+        vm.custom(Messages.ACTIVE_BRUSH_PRESET.replace("%this.presetName%",this.presetName));
     }
 
     @Override
@@ -171,9 +171,9 @@ public class ErodeBrush extends Brush {
             Preset preset = Preset.valueOf(params[0].toUpperCase());
             this.currentPreset = preset.getPreset();
             this.presetName = preset.name();
-            v.sendMessage(ChatColor.GOLD + "Brush preset changed to " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
+            v.sendMessage(Messages.BRUSH_PRESET_CHANGED.replace("%this.presetName%",this.presetName));
         } catch (IllegalArgumentException e) {
-            v.sendMessage(ChatColor.RED + "That preset does not exist.");
+            v.sendMessage(Messages.PRESET_DOES_NOT_EXIST);
         }
     }
 

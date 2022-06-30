@@ -55,27 +55,27 @@ public class Rot3DBrush extends Brush {
         try {
             if (params[0].equalsIgnoreCase("pitch")) {
                 this.sePitch = Math.toRadians(Double.parseDouble(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Around Z-axis degrees set to " + this.sePitch);
+                v.sendMessage(Messages.ANGLE_AROUND_AXIS_SET.replace("%axis%", "Z").replace("%angle%",String.valueOf(this.sePitch)));
                 if (this.sePitch < 0 || this.sePitch > 359) {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
+                    v.sendMessage(Messages.INVALID_BRUSH_PARAM_ANGLE);
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("roll")) {
                 this.seRoll = Math.toRadians(Double.parseDouble(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Around X-axis degrees set to " + this.seRoll);
+                v.sendMessage(Messages.ANGLE_AROUND_AXIS_SET.replace("%axis%", "X").replace("%angle%",String.valueOf(this.seRoll)));
                 if (this.seRoll < 0 || this.seRoll > 359) {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
+                    v.sendMessage(Messages.INVALID_BRUSH_PARAM_ANGLE);
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("yaw")) {
                 this.seYaw = Math.toRadians(Double.parseDouble(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Around Y-axis degrees set to " + this.seYaw);
+                v.sendMessage(Messages.ANGLE_AROUND_AXIS_SET.replace("%axis%", "Y").replace("%angle%",String.valueOf(this.seYaw)));
                 if (this.seYaw < 0 || this.seYaw > 359) {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
+                    v.sendMessage(Messages.INVALID_BRUSH_PARAM_ANGLE);
                 }
                 return;
             }
@@ -241,7 +241,7 @@ public class Rot3DBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -257,7 +257,7 @@ public class Rot3DBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }

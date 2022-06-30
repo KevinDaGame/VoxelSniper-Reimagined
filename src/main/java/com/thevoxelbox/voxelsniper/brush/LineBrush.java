@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.util.BlockIterator;
@@ -41,7 +40,7 @@ public class LineBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.BLUE + "Instructions: Right click first point with the arrow. Right click with powder to draw a line to set the second point.");
+            v.sendMessage(Messages.LINE_BRUSH_INFO);
             return;
         }
 
@@ -72,13 +71,13 @@ public class LineBrush extends PerformerBrush {
     protected final void arrow(final SnipeData v) {
         this.originCoords = this.getTargetBlock().getLocation().toVector();
         this.targetWorld = this.getTargetBlock().getWorld();
-        v.owner().getPlayer().sendMessage(ChatColor.DARK_PURPLE + "First point selected.");
+        v.sendMessage(Messages.FIRST_POINT_SELECTED);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         if (this.originCoords == null || !this.getTargetBlock().getWorld().equals(this.targetWorld)) {
-            v.owner().getPlayer().sendMessage(ChatColor.RED + "Warning: You did not select a first coordinate with the arrow");
+            v.sendMessage(Messages.FIRST_COORDINATE_NOT_SET);
         } else {
             this.targetCoords = this.getTargetBlock().getLocation().toVector();
             this.linePowder(v);

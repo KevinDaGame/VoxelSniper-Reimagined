@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,6 +17,9 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Punish_Brush
@@ -186,7 +191,7 @@ public class PunishBrush extends Brush {
         if (this.specificPlayer) {
             final Player punishedPlayer = Bukkit.getPlayer(this.punishPlayerName);
             if (punishedPlayer == null) {
-                v.sendMessage("No player " + this.punishPlayerName + " found.");
+                v.sendMessage(("No player " + "%this.punishPlayerName%" + " found.").replace("%this.punishPlayerName%",this.punishPlayerName));
                 return;
             }
 
@@ -218,7 +223,7 @@ public class PunishBrush extends Brush {
                 }
             }
         }
-        v.sendMessage((ChatColor.DARK_RED + "Punishment applied to " + "%numPunishApps%" + " living entities.").replace("%numPunishApps%",String.valueOf(numPunishApps)));
+        v.sendMessage(Messages.PUNISHMENT_APPLIED_NUMBER.replace("%numPunishApps%",String.valueOf(numPunishApps)));
     }
 
     @Override
@@ -248,7 +253,7 @@ public class PunishBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Punishment: " + this.punishment.toString());
+        vm.custom(Messages.PUNISHMENT_NAME.replace("%punishment%",String.valueOf(this.punishment.toString())));
         vm.size();
         vm.center();
     }
@@ -256,11 +261,7 @@ public class PunishBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Punish Brush Options:");
-            v.sendMessage(ChatColor.BLUE + "Punishment level can be set with /vc [level]");
-            v.sendMessage(ChatColor.BLUE + "Punishment duration in seconds can be set with /vh [duration]");
-            v.sendMessage((ChatColor.AQUA + "/b " + "%triggerHandle%" + " [punishment]  -- Sets the punishment\n" +ChatColor.AQUA + "/b " + "%triggerHandle%" + " -hypno  -- Toggle whether Hypno will affect landscape only\n" +ChatColor.AQUA + "/b " + "%triggerHandle%" + " -player [playername]  -- Target specific player, clear with empty playername\n" +ChatColor.AQUA + "/b " + "%triggerHandle%" + " -self  -- Toggle whether you will be affected").replace("%triggerHandle%",triggerHandle));
-            v.sendMessage(ChatColor.AQUA + "Available Punishment Options:");
+            v.sendMessage(Messages.PUNISH_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             final StringBuilder punishmentOptions = new StringBuilder();
             for (final Punishment punishment : Punishment.values()) {
                 if (punishmentOptions.length() != 0) {
@@ -268,18 +269,18 @@ public class PunishBrush extends Brush {
                 }
                 punishmentOptions.append(punishment.name());
             }
-            v.sendMessage(ChatColor.GOLD + punishmentOptions.toString());
+            v.sendMessage(Component.text(punishmentOptions.toString()).color(NamedTextColor.GOLD));
             return;
         }
 
         if (params[0].equalsIgnoreCase("-player")) {
             if (params.length == 1) {
                 this.specificPlayer = false;
-                v.sendMessage("No longer targeting a specific player.");
+                v.sendMessage(Messages.NO_LONGER_TARGETING_A_SPECIFIC_PLAYER);
             } else {
                 this.specificPlayer = true;
                 this.punishPlayerName = params[1];
-                v.sendMessage("Now targeting a specific player: " + params[1]);
+                v.sendMessage(Messages.NOW_TARGETING_A_SPECIFIC_PLAYER + params[1]);
             }
             return;
         }
@@ -300,7 +301,7 @@ public class PunishBrush extends Brush {
             this.punishment = Punishment.valueOf(params[0].toUpperCase());
             v.sendMessage(ChatColor.YELLOW + this.punishment.name() + ChatColor.GOLD + " punishment selected.");
         } catch (final IllegalArgumentException exception) {
-            v.sendMessage((ChatColor.GOLD + "That punishment does not exist! Use " + ChatColor.LIGHT_PURPLE + " /b " + "%triggerHandle%" + " info " + ChatColor.GOLD + " to see brush parameters.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.PUNISHMENT_DOES_NOT_EXIST.replace("%triggerHandle%",triggerHandle));
         }
     }
 

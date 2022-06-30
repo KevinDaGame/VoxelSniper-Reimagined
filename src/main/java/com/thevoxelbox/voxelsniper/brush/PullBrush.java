@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -44,7 +46,7 @@ public class PullBrush extends Brush {
             this.c1 = 1 - pinch;
             this.c2 = bubble;
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid brush parameters!");
+            v.sendMessage(Messages.INVALID_BRUSH_PARAM);
         }
     }
 

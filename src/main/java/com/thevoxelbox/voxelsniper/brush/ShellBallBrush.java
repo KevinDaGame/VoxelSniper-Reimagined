@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -101,7 +103,7 @@ public class ShellBallBrush extends Brush {
         v.owner().storeUndo(undo);
 
         // This is needed because most uses of this brush will not be sible to the sniper.
-        v.owner().getPlayer().sendMessage(ChatColor.AQUA + "Shell complete.");
+        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
     }
 
     @Override

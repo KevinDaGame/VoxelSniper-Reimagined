@@ -245,6 +245,7 @@ public class SignOverwriteBrush extends Brush {
             }
         }
 
+        // TODO not entirely sure what to do here
         newText = new StringBuilder(ChatColor.translateAlternateColorCodes('&', newText.toString()));
 
         // remove last space or return if the string is empty and the user just wanted to set the status

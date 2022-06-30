@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
@@ -31,7 +33,7 @@ public class ShellSetBrush extends Brush {
             return true;
         } else {
             if (!this.block.getWorld().getName().equals(bl.getWorld().getName())) {
-                v.sendMessage(ChatColor.RED + "You selected points in different worlds!");
+                v.sendMessage(Messages.SELECTED_POINTS_DIFFERENT_WORLD);
                 this.block = null;
                 return true;
             }
@@ -45,7 +47,7 @@ public class ShellSetBrush extends Brush {
 
             int size = Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY);
             if (size > MAX_SIZE) {
-                v.sendMessage(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                v.sendMessage(Messages.SELECTION_SIZE_LIMIT);
             } else {
                 final ArrayList<Block> blocks = new ArrayList<>((size / 2));
                 for (int y = lowY; y <= highY; y++) {
@@ -73,7 +75,7 @@ public class ShellSetBrush extends Brush {
                     }
                 }
                 v.owner().storeUndo(undo);
-                v.sendMessage(ChatColor.AQUA + "Shell complete.");
+                v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
             }
 
             this.block = null;
@@ -84,14 +86,14 @@ public class ShellSetBrush extends Brush {
     @Override
     protected final void arrow(final SnipeData v) {
         if (this.set(this.getTargetBlock(), v)) {
-            v.owner().getPlayer().sendMessage(ChatColor.GRAY + "Point one");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         }
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         if (this.set(this.getLastBlock(), v)) {
-            v.owner().getPlayer().sendMessage(ChatColor.GRAY + "Point one");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         }
     }
 
