@@ -977,11 +977,7 @@ public class VoxelMaterial {
         this.main = voxelsniper;
     }
     public static VoxelMaterial getMaterial(String key) {
-        var block = BLOCKS.get("minecraft:" + key);
-        if(main.getVersion().isSupported(block.getVersion())){
-            return block;
-        }
-        return null;
+        return getMaterial("minecraft", key);
     }
     public static VoxelMaterial getMaterial(String namespace, String key) {
         var block = BLOCKS.get(namespace + ":" + key);
