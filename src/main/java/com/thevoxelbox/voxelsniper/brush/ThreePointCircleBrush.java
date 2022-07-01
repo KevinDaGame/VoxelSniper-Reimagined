@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 
@@ -37,18 +36,18 @@ public class ThreePointCircleBrush extends PerformerBrush {
     protected final void arrow(final SnipeData v) {
         if (this.coordsOne == null) {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "First Corner set.");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         } else if (this.coordsTwo == null) {
             this.coordsTwo = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "Second Corner set.");
+            v.sendMessage(Messages.SECOND_POINT_SELECTED);
         } else if (this.coordsThree == null) {
             this.coordsThree = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "Third Corner set.");
+            v.sendMessage(Messages.THIRD_POINT_SELECTED);
         } else {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
             this.coordsTwo = null;
             this.coordsThree = null;
-            v.sendMessage(ChatColor.GRAY + "First Corner set.");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         }
     }
 
@@ -69,7 +68,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
         // Redundant data check
         if (vectorOne.length() == 0 || vectorTwo.length() == 0 || vectorThree.length() == 0 || vectorOne.angle(vectorTwo) == 0 || vectorOne.angle(vectorThree) == 0 || vectorThree.angle(vectorTwo) == 0) {
 
-            v.sendMessage(ChatColor.RED + "ERROR: Invalid points, try again.");
+            v.sendMessage(Messages.ERROR_INVALID_POINTS);
             this.coordsOne = null;
             this.coordsTwo = null;
             this.coordsThree = null;
@@ -133,7 +132,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
             }
         }
 
-        v.sendMessage(ChatColor.GREEN + "Done.");
+        v.sendMessage(Messages.TRI_POINT_CIRCLE_DONE);
         v.owner().storeUndo(this.currentPerformer.getUndo());
 
         // Reset Brush
@@ -148,16 +147,16 @@ public class ThreePointCircleBrush extends PerformerBrush {
         vm.brushName(this.getName());
         switch (this.tolerance) {
             case ACCURATE:
-                vm.custom(ChatColor.GOLD + "Mode: Accurate");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_ACCURATE);
                 break;
             case DEFAULT:
-                vm.custom(ChatColor.GOLD + "Mode: Default");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_DEFAULT);
                 break;
             case SMOOTH:
-                vm.custom(ChatColor.GOLD + "Mode: Smooth");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_SMOOTH);
                 break;
             default:
-                vm.custom(ChatColor.GOLD + "Mode: Unknown");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_UNKNOWN);
                 break;
         }
 
@@ -172,9 +171,9 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
         try {
             this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.GOLD + "Brush tolerance set to " + ChatColor.YELLOW + this.tolerance.name().toLowerCase() + ChatColor.GOLD + ".");
+            v.sendMessage(Messages.BRUSH_TOLERANCE_SET.replace("%tolerance%", this.tolerance.name().toLowerCase()));
         } catch (Exception e) {
-            v.sendMessage((ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + "%triggerHandle%" + " info " + ChatColor.GOLD + " to see brush parameters.").replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.TOLERANCE_SETTING_DOES_NOT_EXIST.replace("%triggerHandle%",triggerHandle));
             sendPerformerMessage(triggerHandle, v);
         }
     }

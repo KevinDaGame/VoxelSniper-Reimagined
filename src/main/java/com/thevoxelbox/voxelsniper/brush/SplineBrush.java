@@ -54,7 +54,7 @@ public class SplineBrush extends PerformerBrush {
     public final void removeFromSet(final SnipeData v, final boolean ep, Block targetBlock) {
         if (ep) {
             if (!this.endPts.contains(targetBlock)) {
-                v.sendMessage(ChatColor.RED + "That block is not in the endpoint selection set.");
+                v.sendMessage(Messages.BLOCK_NOT_IN_ENDPOINT_SELECTION);
                 return;
             }
 
@@ -65,7 +65,7 @@ public class SplineBrush extends PerformerBrush {
         }
 
         if (!this.ctrlPts.contains(targetBlock)) {
-            v.sendMessage(ChatColor.RED + "That block is not in the control point selection set.");
+            v.sendMessage(Messages.BLOCK_NOT_IN_CONTROL_POINT_SELECTION);
             return;
         }
 
@@ -124,7 +124,7 @@ public class SplineBrush extends PerformerBrush {
         this.spline.clear();
         this.ctrlPts.clear();
         this.endPts.clear();
-        v.sendMessage(ChatColor.GRAY + "Bezier curve cleared.");
+        v.sendMessage(Messages.BEZIER_CURVE_CLEARED);
     }
 
     @Override
@@ -142,11 +142,11 @@ public class SplineBrush extends PerformerBrush {
         vm.brushName(this.getName());
 
         if (this.set) {
-            vm.custom(ChatColor.GRAY + "Endpoint selection mode ENABLED.");
+            vm.custom(Messages.ENDPOINT_SELECTION_MODE_ENABLED);
         } else if (this.ctrl) {
-            vm.custom(ChatColor.GRAY + "Control point selection mode ENABLED.");
+            vm.custom(Messages.CONTROL_POINT_SELECTION_MODE_ENABLED);
         } else {
-            vm.custom(ChatColor.AQUA + "No selection mode enabled.");
+            vm.custom(Messages.NO_SELECTION_MODE);
         }
     }
 
@@ -161,10 +161,10 @@ public class SplineBrush extends PerformerBrush {
             if (!this.ctrl) {
                 this.set = false;
                 this.ctrl = true;
-                v.sendMessage(ChatColor.GRAY + "Control point selection mode ENABLED.");
+                v.sendMessage(Messages.CONTROL_POINT_SELECTION_MODE_ENABLED);
             } else {
                 this.ctrl = false;
-                v.sendMessage(ChatColor.AQUA + "Control point selection mode disabled.");
+                v.sendMessage(Messages.CONTROL_POINT_SELECTION_MODE_DISABLED);
             }
             return;
         }
@@ -173,10 +173,10 @@ public class SplineBrush extends PerformerBrush {
             if (!this.set) {
                 this.set = true;
                 this.ctrl = false;
-                v.sendMessage(ChatColor.GRAY + "Endpoint selection mode ENABLED.");
+                v.sendMessage(Messages.ENDPOINT_SELECTION_MODE_ENABLED);
             } else {
                 this.set = false;
-                v.sendMessage(ChatColor.AQUA + "Endpoint selection mode disabled.");
+                v.sendMessage(Messages.ENDPOINT_SELECTION_MODE_DISABLED);
             }
             return;
         }

@@ -282,10 +282,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
         }
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.BLUE + "Seed percent set to: " + this.seedPercent / 100 + "%");
-        vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
-        vm.custom((ChatColor.BLUE + "Recursions set to: " + "%splatterRecursions%").replace("%splatterRecursions%",String.valueOf(this.splatterRecursions)));
-        vm.custom((ChatColor.BLUE + "Y-Offset set to: " + "%yOffset%").replace("%yOffset%",String.valueOf(this.yOffset)));
+        vm.custom(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(this.seedPercent / 100)));
+        vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
+        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(this.splatterRecursions)));
+        vm.custom(Messages.Y_OFFSET_SET.replace("%yOffset%",String.valueOf(this.yOffset)));
     }
 
     @Override
@@ -336,10 +336,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = ((int) Double.parseDouble(params[1]) * 100);
 
                 if (temp >= SEED_PERCENT_MIN && temp <= SEED_PERCENT_MAX) {
-                    v.sendMessage((ChatColor.AQUA + "Seed percent set to: %value%%").replace("%value%", String.valueOf((double) temp / 100)));
+                    v.sendMessage(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(temp / 100)));
                     this.seedPercent = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Seed percent must be a decimal between 0.01 - 99.99!");
+                    v.sendMessage(Messages.SEED_PERCENT_RANGE);
                 }
                 return;
             }
@@ -348,10 +348,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = ((int) Double.parseDouble(params[1]) * 100);
 
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
+                    v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(temp / 100)));
                     this.growPercent = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
+                    v.sendMessage(Messages.GROWTH_PERCENT_RANGE.replace("%min%", "0.01").replace("%max%", "99.99"));
                 }
                 return;
             }
@@ -360,10 +360,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = Integer.parseInt(params[1]);
 
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage((ChatColor.AQUA + "Recursions set to: " + "%temp%").replace("%temp%",String.valueOf(temp)));
+                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(temp)));
                     this.splatterRecursions = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");
+                    v.sendMessage(Messages.SPLATTER_BALL_BRUSH_RECURSION_RANGE);
                 }
                 return;
             }

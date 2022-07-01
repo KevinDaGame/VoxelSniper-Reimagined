@@ -56,7 +56,8 @@ BLEND_BALL_BRUSH_USAGE: |-
   <gold>Blend Ball Parameters:
   </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
 FIRST_POINT_SELECTED: <dark_purple>First point selected.
-SECOND_POINT_SELECTED: <dark_purple>First point selected.
+SECOND_POINT_SELECTED: <dark_purple>Second point selected.
+THIRD_POINT_SELECTED: <dark_purple>Third point selected.
 POINTS_CLEARED: <dark_purple>Points cleared
 FACE_POWER_MESSAGE: <blue>%face% Direct? %direct% %face% Indirect? %indirect%
 AXIS_SET_TO_VALUE: '<aqua>%axis% radius set to: </aqua><dark_aqua>%value%'
@@ -112,7 +113,6 @@ OVERLAY_BRUSH_USAGE: |-
   <gold>Overlay Brush Parameters:
   </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
   </aqua><aqua>/b %triggerHandle% mode  -- Change target blocks to natural, custom defined or all blocks.
-BLOB_BRUSH_SET_VALUE: '<aqua>Growth percent set to: %value%%'
 POINT_1_SET: Point 1 set.
 SMOOTHSPHERE_ALGORITHM: '<aqua>Smooth sphere algorithm: %smoothSphere%'
 COPYPASTA_BRUSH_USAGE: |-
@@ -156,7 +156,7 @@ ENTITYBRUSH_SPAWN_FAIL: <red>Cannot spawn entity!
 NOTHING_TO_UNDO: <green>There's nothing to undo.
 PAINTING_INVALID_SYNTAX: '<red>Invalid syntax. Command: /painting \<number>'
 JOCKEY_BRUSH_USAGE: "<gold>Jockey Brush Parameters: \n</gold><aqua>/b %triggerHandle% [inverse, stack, normal] -- Switch between modes\n</aqua><aqua>/b %triggerHandle% player  -- Toggle target players or all entities (default: players only)\n</aqua><blue>Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other "
-BLOB_BRUSH_RANGE: <red>Growth percent must be a number between %min% and %%max!
+GROWTH_PERCENT_RANGE: <red>Growth percent must be a number between %min% and %%max!
 SELECTED_BIOME_TYPE: '<gold>Currently selected biome type: </gold><dark_green>%selectedBiome%'
 MOVE_BRUSH_USAGE: |-
   <gold>Move Brush Parameters:
@@ -246,7 +246,7 @@ BLEND_BRUSH_WATER_MODE: '<aqua>Water Mode: %excludeWater%'
 REGENERATE_CHUNK_MESSAGE: Tread lightly, This brush will melt your spleen and sell your kidneys.
 TREESNIPE_BRUSH_MESSAGE: <red>That tree type does not exist. Use </red><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
 VOXEL_DATA: '<blue>Voxel Data Value: <dark_red>%data%</dark_red></blue>'
-CLONE_STAMP_ERROR: <dark_red>Error while stamping! Report
+STAMP_ERROR: <dark_red>Error while stamping! Report
 BRUSH_NO_UNDO: <red>THIS BRUSH DOES NOT UNDO.
 SPLATTER_BALL_BRUSH_USAGE: |-
   <gold>Splatter Ball Brush Parameters:
@@ -397,3 +397,25 @@ SELECTED_POINTS_DIFFERENT_WORLD: <red>You selected points in different worlds!
 SELECTION_SIZE_LIMIT: <red>Selection size above hardcoded limit, please use a smaller selection.
 ANGLE_AROUND_AXIS_SET: <aqua>Around %axis%-axis degrees set to %angle%
 SHELL_BRUSH_COMPLETE: <aqua>Shell complete.
+BRUSH_SEED_PERCENT_SET: '<blue>Seed percent set to: %val%%'
+BRUSH_RECURSION_SET: '<blue>Recursions set to: %val%'
+SPLATTER_BALL_BRUSH_RECURSION_RANGE: <red>Recursions must be an number between 1 - 10!
+SEED_PERCENT_RANGE: <red>Seed percent must be a decimal between 0.01 - 99.99!
+Y_OFFSET_SET: '<blue>Y-Offset set to: %yOffset%'
+BLOCK_NOT_IN_ENDPOINT_SELECTION: <red>That block is not in the endpoint selection set.
+BLOCK_NOT_IN_CONTROL_POINT_SELECTION: <red>That block is not in the control point selection set.
+BEZIER_CURVE_CLEARED: <gray>Bezier curve cleared.
+ENDPOINT_SELECTION_MODE_ENABLED: <gray>Endpoint selection mode ENABLED.
+CONTROL_POINT_SELECTION_MODE_ENABLED: <gray>Control point selection mode ENABLED.
+NO_SELECTION_MODE: <aqua>No selection mode enabled.
+CONTROL_POINT_SELECTION_MODE_DISABLED: <aqua>Control point selection mode disabled.
+ENDPOINT_SELECTION_MODE_DISABLED: <aqua>Endpoint selection mode disabled.
+ERROR_INVALID_POINTS: '<red>ERROR: Invalid points, try again.'
+TOLERANCE_SETTING_DOES_NOT_EXIST: <red>That tolerance setting does not exist. Use </red><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
+TRI_POINT_CIRCLE_MODE_ACCURATE: '<gold>Mode: Accurate'
+TRI_POINT_CIRCLE_MODE_DEFAULT: '<gold>Mode: Default'
+TRI_POINT_CIRCLE_MODE_SMOOTH: '<gold>Mode: Smooth'
+TRI_POINT_CIRCLE_MODE_UNKNOWN: '<gold>Mode: Unknown'
+TRI_POINT_CIRCLE_DONE: <green>Done.
+BRUSH_TOLERANCE_SET: <gold>Brush tolerance set to </gold><yellow>%tolerance%</yellow><gold>.
+TRIANGLE_BRUSH_INFO: '<blue>Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.'

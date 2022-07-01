@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -44,15 +43,15 @@ public class SplatterBallBrush extends PerformerBrush {
 
     private void splatterBall(final SnipeData v, Block targetBlock) {
         if (this.seedPercent < SEED_PERCENT_MIN || this.seedPercent > SEED_PERCENT_MAX) {
-            v.owner().getPlayer().sendMessage(ChatColor.BLUE + "Seed percent set to: 10%");
+            v.sendMessage(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", "10"));
             this.seedPercent = SEED_PERCENT_DEFAULT;
         }
         if (this.growPercent < GROW_PERCENT_MIN || this.growPercent > GROW_PERCENT_MAX) {
-            v.owner().getPlayer().sendMessage(ChatColor.BLUE + "Growth percent set to: 10%");
+            v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", "10"));
             this.growPercent = GROW_PERCENT_DEFAULT;
         }
         if (this.splatterRecursions < SPLATREC_PERCENT_MIN || this.splatterRecursions > SPLATREC_PERCENT_MAX) {
-            v.owner().getPlayer().sendMessage(ChatColor.BLUE + "Recursions set to: 3");
+            v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%", "3"));
             this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
         }
 
@@ -172,9 +171,9 @@ public class SplatterBallBrush extends PerformerBrush {
         }
         vm.brushName("Splatter Ball");
         vm.size();
-        vm.custom(ChatColor.BLUE + "Seed percent set to: " + this.seedPercent / 100 + "%");
-        vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
-        vm.custom((ChatColor.BLUE + "Recursions set to: " + "%splatterRecursions%").replace("%splatterRecursions%",String.valueOf(this.splatterRecursions)));
+        vm.custom(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(this.seedPercent / 100)));
+        vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
+        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(this.splatterRecursions)));
 
     }
 
@@ -189,7 +188,7 @@ public class SplatterBallBrush extends PerformerBrush {
             this.seedPercent = SEED_PERCENT_DEFAULT;
             this.growPercent = GROW_PERCENT_DEFAULT;
             this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
-            v.sendMessage(ChatColor.GOLD + "Values resetted to default values.");
+            v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
             return;
         }
 
@@ -198,10 +197,10 @@ public class SplatterBallBrush extends PerformerBrush {
                 final int seedPercentage = ((int) Double.parseDouble(params[1]) * 100);
 
                 if (seedPercentage >= SEED_PERCENT_MIN && seedPercentage <= SEED_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Seed percent set to: " + String.format("%.2f", (double) seedPercentage / 100) + "%");
+                    v.sendMessage(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(seedPercentage / 100)));
                     this.seedPercent = seedPercentage;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Seed percent must be a decimal between 0.01 - 99.99!");
+                    v.sendMessage(Messages.SEED_PERCENT_RANGE);
                 }
                 return;
             }
@@ -210,10 +209,10 @@ public class SplatterBallBrush extends PerformerBrush {
                 final int growthPercentage = ((int) Double.parseDouble(params[1]) * 100);
 
                 if (growthPercentage >= GROW_PERCENT_MIN && growthPercentage <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) growthPercentage / 100) + "%");
+                    v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(growthPercentage / 100)));
                     this.growPercent = growthPercentage;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
+                    v.sendMessage(Messages.GROWTH_PERCENT_RANGE.replace("%min%", "0.01").replace("%max%", "99.99"));
                 }
                 return;
             }
@@ -222,10 +221,10 @@ public class SplatterBallBrush extends PerformerBrush {
                 final int recursionValue = Integer.parseInt(params[1]);
 
                 if (recursionValue >= SPLATREC_PERCENT_MIN && recursionValue <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage((ChatColor.AQUA + "Recursions set to: " + "%recursionValue%").replace("%recursionValue%",String.valueOf(recursionValue)));
+                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(recursionValue)));
                     this.splatterRecursions = recursionValue;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");
+                    v.sendMessage(Messages.SPLATTER_BALL_BRUSH_RECURSION_RANGE);
                 }
                 return;
             }

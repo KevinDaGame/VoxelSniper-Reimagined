@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -264,7 +265,7 @@ public class StampBrush extends Brush {
                 break;
 
             default:
-                v.sendMessage(ChatColor.DARK_RED + "Error while stamping! Report");
+                v.sendMessage(Messages.STAMP_ERROR);
                 break;
         }
     }

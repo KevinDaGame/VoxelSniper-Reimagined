@@ -108,7 +108,7 @@ public class CloneStampBrush extends StampBrush {
                 break;
 
             default:
-                vm.custom(Messages.CLONE_STAMP_ERROR);
+                vm.custom(Messages.STAMP_ERROR);
                 break;
         }
     }

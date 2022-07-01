@@ -32,7 +32,7 @@ public class BlobBrush extends PerformerBrush {
     private void checkValidGrowPercent(final SnipeData v) {
         if (this.growPercent < GROW_PERCENT_MIN || this.growPercent > GROW_PERCENT_MAX) {
             this.growPercent = GROW_PERCENT_DEFAULT;
-            v.sendMessage(Messages.BLOB_BRUSH_SET_VALUE.replace("%value%", "10"));
+            v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", "10"));
         }
     }
 
@@ -238,12 +238,12 @@ public class BlobBrush extends PerformerBrush {
 
                 float growthValue = Float.parseFloat(params[1]);
                 if ((int) (growthValue * 100) >= GROW_PERCENT_MIN && (int) (growthValue * 100) <= GROW_PERCENT_MAX) {
-                    v.sendMessage(Messages.BLOB_BRUSH_SET_VALUE.replace("%value%", String.format("%.2f", growthValue)));
+                    v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.format("%.2f", growthValue)));
                     this.growPercent = (int) growthValue * 100;
                 } else {
                     String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
                     String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
-                    v.sendMessage(Messages.BLOB_BRUSH_RANGE.replace("%min%", min).replace("%max%", max));
+                    v.sendMessage(Messages.GROWTH_PERCENT_RANGE.replace("%min%", min).replace("%max%", max));
                 }
                 return;
             } catch (NumberFormatException ignored) {
