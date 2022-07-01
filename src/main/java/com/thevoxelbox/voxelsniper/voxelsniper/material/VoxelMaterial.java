@@ -964,10 +964,7 @@ public class VoxelMaterial {
     }
 
     private static VoxelMaterial register(String namespace, String key) {
-        var material = new VoxelMaterial(namespace, key, V1_16);
-        var mapKey = namespace + ":" + key;
-        BLOCKS.put(mapKey, material);
-        return material;
+        return register(namespace, key, V1_16);
     }
     
     public VoxelMaterial(String namespace, String key, Version version) {
