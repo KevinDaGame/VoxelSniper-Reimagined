@@ -8,6 +8,6 @@ public enum Version {
 
     //todo: Test if this works
     public boolean isSupported(Version v) {
-        return Integer.parseInt(this.toString().substring(3)) >= Integer.parseInt(v.toString().substring(3));
+        return Integer.parseInt(this.name().substring(3)) >= Integer.parseInt(v.name().substring(3));
     }
 }
