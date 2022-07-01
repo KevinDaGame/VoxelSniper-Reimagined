@@ -50,7 +50,7 @@ public class Sniper {
         return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand().getType() : null);
     }
 
-    public String getToolId(IMaterial itemInHand) {
+    public String getToolId(VoxelMaterial itemInHand) {
         if (itemInHand == null) {
             return null;
         }
@@ -76,7 +76,7 @@ public class Sniper {
      * @param clickedFace  Face of that targeted Block
      * @return true if command visibly processed, false otherwise.
      */
-    public boolean snipe(Action action, IMaterial itemInHand, IBlock clickedBlock, BlockFace clickedFace) {
+    public boolean snipe(Action action, VoxelMaterial itemInHand, IBlock clickedBlock, BlockFace clickedFace) {
         String toolId = getToolId(itemInHand);
         SnipeTool sniperTool = tools.get(toolId);
 

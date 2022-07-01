@@ -174,8 +174,8 @@ public class Undo {
     /**
      * @param blockState
      */
-    private void updateSpecialBlocks(BlockState blockState) {
-        BlockState currentState = blockState.getBlock().getState();
+    private void updateSpecialBlocks(IBlockState blockState) {
+        IBlockState currentState = blockState.getBlock().getState();
         if (blockState instanceof BrewingStand && currentState instanceof BrewingStand) {
             ((BrewingStand) currentState).getInventory().setContents(((BrewingStand) blockState).getInventory().getContents());
         } else if (blockState instanceof Chest && currentState instanceof Chest) {

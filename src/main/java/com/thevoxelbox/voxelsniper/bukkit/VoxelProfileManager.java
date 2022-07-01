@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 
 import java.util.Map;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
  */
 public class VoxelProfileManager {
 
+    private static IVoxelsniper main;
     private static VoxelProfileManager instance = null;
 
     private final Map<UUID, Sniper> sniperInstances = Maps.newHashMap();
@@ -20,7 +22,8 @@ public class VoxelProfileManager {
         return instance;
     }
 
-    public static void initialize() {
+    public static void initialize(IVoxelsniper main) {
+        VoxelProfileManager.main = main;
         VoxelProfileManager profileManager = getInstance();
 
         if (profileManager == null) {
@@ -29,9 +32,9 @@ public class VoxelProfileManager {
         }
     }
 
-    public Sniper getSniperForPlayer(Player player) {
+    public Sniper getSniperForPlayer(IPlayer player) {
         if (sniperInstances.get(player.getUniqueId()) == null) {
-            sniperInstances.put(player.getUniqueId(), new Sniper(VoxelSniper.getInstance(), player));
+            sniperInstances.put(player.getUniqueId(), new Sniper(main, player));
         }
         return sniperInstances.get(player.getUniqueId());
     }

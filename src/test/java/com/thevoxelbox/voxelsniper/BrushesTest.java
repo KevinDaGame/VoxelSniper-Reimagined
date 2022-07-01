@@ -84,7 +84,7 @@ public class BrushesTest {
     @Test
     public void testPerformerBrushesArgumentsOverloading() throws Exception {
         // Load all brushes
-        brushes = VoxelBrushManager.initialize();
+        brushes = VoxelBrushManager.initialize(this);
 
         System.out.println(" ");
         System.out.println(" ");
@@ -117,7 +117,7 @@ public class BrushesTest {
     @Test
     public void testPerformerBrushesArgumentValuesOverloading() throws Exception {
         // Load all brushes
-        brushes = VoxelBrushManager.initialize();
+        brushes = VoxelBrushManager.initialize(this);
         System.out.println(" ");
         System.out.println(" ");
         System.out.println(" ");

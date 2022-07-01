@@ -58,4 +58,19 @@ public class BukkitBlockState implements IBlockState {
     public ILocation getLocation() {
         return new BukkitLocation(blockState.getLocation());
     }
+
+    @Override
+    public boolean update() {
+        return blockState.update();
+    }
+
+    @Override
+    public boolean update(boolean force) {
+        return blockState.update(force);
+    }
+
+    @Override
+    public boolean update(boolean force, boolean applyPhysics) {
+        return blockState.update(force, applyPhysics);
+    }
 }

@@ -49,7 +49,7 @@ public class SnipeTool {
         return snipeData;
     }
 
-    public boolean hasToolAssigned(IMaterial material) {
+    public boolean hasToolAssigned(VoxelMaterial material) {
         return actionTools.containsValue(material);
     }
 
