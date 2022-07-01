@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -82,7 +83,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             List<String> invalidMaterials = new ArrayList<>();
             for (final String string : args) {
                 boolean remove = string.contains("-");
-                Material material = Material.matchMaterial(string.toLowerCase().replace("-", ""));
+                IMaterial material = Material.matchMaterial(string.toLowerCase().replace("-", ""));
 
                 if (material == null || !material.isBlock()) {
                     invalidMaterials.add(string.replace("-", ""));

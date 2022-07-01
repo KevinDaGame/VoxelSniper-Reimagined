@@ -7,6 +7,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -99,28 +100,7 @@ public class UnderlayBrush extends PerformerBrush {
             return true;
         }
 
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material.getVoxelMaterial());
     }
 
     @Override

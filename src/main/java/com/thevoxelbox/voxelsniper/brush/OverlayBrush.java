@@ -7,10 +7,12 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,7 +100,7 @@ public class OverlayBrush extends PerformerBrush {
     }
 
     private boolean isIgnoredBlock(IMaterial material) {
-        return material == new BukkitMaterial( Material.WATER) || material.isTransparent() || material == new BukkitMaterial( Material.CACTUS);
+        return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material == new BukkitMaterial( Material.CACTUS);
     }
 
     private boolean isOverrideableMaterial(VoxelList list, IMaterial material) {
@@ -106,32 +108,10 @@ public class OverlayBrush extends PerformerBrush {
             return list.contains(material);
         }
 
-        if (allBlocks && !(material == new BukkitMaterial( Material.AIR))) {
+        if (allBlocks && !(material.equals(VoxelMaterial.AIR))) {
             return true;
         }
-
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material.getVoxelMaterial());
     }
 
     @Override

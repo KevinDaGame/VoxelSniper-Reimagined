@@ -142,8 +142,8 @@ public class SnipeData {
      * Reset to default values.
      */
     public final void reset() {
-        this.voxelSubstance = new BukkitBlockData(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-        this.replaceSubstance = new BukkitBlockData(SnipeData.DEFAULT_TARGET_SUBSTANCE);
+        this.voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
+        this.replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
 
         this.brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 

@@ -4,7 +4,9 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -22,7 +24,8 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
     }
     
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(Player bukkitPlayer, String[] args) {
+        BukkitPlayer player = new BukkitPlayer(bukkitPlayer);
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
@@ -40,9 +43,9 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
 
         // Command: /vir
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            IBlock selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
-                if (selectedBlock.getType() != snipeData.getReplaceMaterial()) {
+                if (selectedBlock.getMaterial() != snipeData.getReplaceMaterial()) {
                     player.sendMessage(ChatColor.RED + "That block is not the same as your active replace material.");
                 } else {
                     snipeData.setReplaceSubstance(selectedBlock.getBlockData());

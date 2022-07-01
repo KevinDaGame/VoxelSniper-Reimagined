@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.bukkit;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
@@ -33,13 +34,10 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
      *
      * @return {@link VoxelSniperConfiguration} object for accessing global VoxelSniper options.
      */
-    public VoxelSniperConfiguration getVoxelSniperConfiguration() {
-        return voxelSniperConfiguration;
-    }
-
     @Override
     public void onEnable() {
         BukkitVoxelSniper.instance = this;
+        LocationFactory.main = this;
 
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize();
@@ -73,5 +71,10 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
         //todo: Does this work?
         String version = "V" + Bukkit.getBukkitVersion().split("-")[0].replace('.' , '_').split("_")[0];
         return Version.valueOf(version);
+    }
+
+    @Override
+    public VoxelSniperConfiguration getVoxelSniperConfiguration() {
+        return voxelSniperConfiguration;
     }
 }

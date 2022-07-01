@@ -3,10 +3,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.material;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
@@ -947,6 +944,23 @@ public class VoxelMaterial {
     public static final VoxelMaterial STRIPPED_MANGROVE_WOOD = register("minecraft", "stripped_mangrove_wood", V1_19);
     public static final VoxelMaterial VERDANT_FROGLIGHT = register("minecraft", "verdant_froglight", V1_19);
 
+    public static List<VoxelMaterial> OVERRIDABLE_MATERIALS = Arrays.asList(VoxelMaterial.STONE,
+            VoxelMaterial.ANDESITE,
+            VoxelMaterial.DIORITE,
+            VoxelMaterial.GRANITE,
+            VoxelMaterial.GRASS_BLOCK,
+            VoxelMaterial.DIRT,
+            VoxelMaterial.COARSE_DIRT,
+            VoxelMaterial.PODZOL,
+            VoxelMaterial.SAND,
+            VoxelMaterial.RED_SAND,
+            VoxelMaterial.GRAVEL,
+            VoxelMaterial.SANDSTONE,
+            VoxelMaterial.MOSSY_COBBLESTONE,
+            VoxelMaterial.CLAY,
+            VoxelMaterial.SNOW,
+            VoxelMaterial.OBSIDIAN
+    );
 
 
 

@@ -4,6 +4,9 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -21,7 +24,8 @@ public class VoxelInkCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(Player bukkitPlayer, String[] args) {
+        BukkitPlayer player = new BukkitPlayer(bukkitPlayer);
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
@@ -39,9 +43,9 @@ public class VoxelInkCommand extends VoxelCommand {
 
         // Command: /vi          <- Sets the block user is looking at as voxel data values.
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            IBlock selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
-                if (selectedBlock.getType() != snipeData.getVoxelMaterial()) {
+                if (selectedBlock.getMaterial() != snipeData.getVoxelMaterial()) {
                     player.sendMessage(ChatColor.RED + "That block is not the same as your active voxel material.");
                 } else {
                     snipeData.setVoxelSubstance(selectedBlock.getBlockData());
@@ -56,8 +60,8 @@ public class VoxelInkCommand extends VoxelCommand {
         // Command: /vi [material]      <- Sets the defined material as voxel substance.
         if (args.length >= 1) {
             try {
-                BlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
-                BlockData activeData = snipeData.getVoxelSubstance();
+                IBlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
+                IBlockData activeData = snipeData.getVoxelSubstance();
 
                 snipeData.setVoxelSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().data();

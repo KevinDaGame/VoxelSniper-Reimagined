@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Maps;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
@@ -12,6 +11,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,11 +36,11 @@ public class Sniper {
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
-    public Sniper(IVoxelsniper main, Player player) {
+    public Sniper(IVoxelsniper main, IPlayer player) {
         this.main = main;
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
-        sniperTool.assignAction(SnipeAction.ARROW, Material.ARROW.getKey());
+        sniperTool.assignAction(SnipeAction.ARROW, Material.ARROW);
         sniperTool.assignAction(SnipeAction.GUNPOWDER, Material.GUNPOWDER);
         tools.put(null, sniperTool);
     }
@@ -187,7 +187,7 @@ public class Sniper {
         return tools.get(toolId).previousBrush();
     }
 
-    public boolean setTool(String toolId, SnipeAction action, Material itemInHand) {
+    public boolean setTool(String toolId, SnipeAction action, VoxelMaterial itemInHand) {
         for (Map.Entry<String, SnipeTool> entry : tools.entrySet()) {
             if (entry.getKey() != toolId && entry.getValue().hasToolAssigned(itemInHand)) {
                 return false;
@@ -202,7 +202,7 @@ public class Sniper {
         return true;
     }
 
-    public void removeTool(String toolId, Material itemInHand) {
+    public void removeTool(String toolId, VoxelMaterial itemInHand) {
         if (!tools.containsKey(toolId)) {
             SnipeTool tool = new SnipeTool(this);
             tools.put(toolId, tool);
@@ -226,7 +226,7 @@ public class Sniper {
     }
 
     public void storeUndo(Undo undo) {
-        if (VoxelSniper.getInstance().getVoxelSniperConfiguration().getUndoCacheSize() <= 0) {
+        if (main.getVoxelSniperConfiguration().getUndoCacheSize() <= 0) {
             return;
         }
         if (undo != null && undo.getSize() > 0) {
@@ -265,7 +265,7 @@ public class Sniper {
         SnipeTool backup = tools.remove(toolId);
         SnipeTool newTool = new SnipeTool(this);
 
-        for (Map.Entry<SnipeAction, Material> entry : backup.getActionTools().entrySet()) {
+        for (Map.Entry<SnipeAction, VoxelMaterial> entry : backup.getActionTools().entrySet()) {
             newTool.assignAction(entry.getKey(), entry.getValue());
         }
         tools.put(toolId, newTool);

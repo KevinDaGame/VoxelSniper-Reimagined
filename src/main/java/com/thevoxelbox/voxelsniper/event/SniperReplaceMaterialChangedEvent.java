@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.event;
 
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.event.HandlerList;
 
@@ -11,7 +12,7 @@ public class SniperReplaceMaterialChangedEvent extends SniperMaterialChangedEven
 
     private static final HandlerList handlers = new HandlerList();
 
-    public SniperReplaceMaterialChangedEvent(Sniper sniper, String toolId, BlockData originalMaterial, BlockData newMaterial) {
+    public SniperReplaceMaterialChangedEvent(Sniper sniper, String toolId, IBlockData originalMaterial, IBlockData newMaterial) {
         super(sniper, toolId, originalMaterial, newMaterial);
     }
 

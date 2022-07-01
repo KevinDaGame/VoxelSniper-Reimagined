@@ -77,7 +77,7 @@ public class ErodeBrush extends Brush {
                     if (currentPosition.isInSphere(targetBlockVector, v.getBrushSize())) {
                         final BlockWrapper currentBlock = blockChangeTracker.get(currentPosition, currentIteration);
 
-                        if (currentBlock.isEmpty() || currentBlock.isLiquid()) {
+                        if (currentBlock.isEmpty() || currentBlock.getBlock().isLiquid()) {
                             continue;
                         }
 
@@ -86,7 +86,7 @@ public class ErodeBrush extends Brush {
                             final Vector relativePosition = currentPosition.clone().add(vector);
                             final BlockWrapper relativeBlock = blockChangeTracker.get(relativePosition, currentIteration);
 
-                            if (relativeBlock.isEmpty() || relativeBlock.isLiquid()) {
+                            if (relativeBlock.isEmpty() || relativeBlock.getBlock().isLiquid()) {
                                 count++;
                             }
                         }
@@ -109,7 +109,7 @@ public class ErodeBrush extends Brush {
                     if (currentPosition.isInSphere(targetBlockVector, v.getBrushSize())) {
                         final BlockWrapper currentBlock = blockChangeTracker.get(currentPosition, currentIteration);
 
-                        if (!(currentBlock.isEmpty() || currentBlock.isLiquid())) {
+                        if (!(currentBlock.isEmpty() || currentBlock.getBlock().isLiquid())) {
                             continue;
                         }
 
@@ -121,7 +121,7 @@ public class ErodeBrush extends Brush {
                             final Vector relativePosition = currentPosition.clone().add(vector);
                             final BlockWrapper relativeBlock = blockChangeTracker.get(relativePosition, currentIteration);
 
-                            if (!(relativeBlock.isEmpty() || relativeBlock.isLiquid())) {
+                            if (!(relativeBlock.isEmpty() || relativeBlock.getBlock().isLiquid())) {
                                 count++;
                                 final BlockWrapper typeBlock = new BlockWrapper(null, relativeBlock.getMaterial());
                                 if (blockCount.containsKey(typeBlock)) {
@@ -321,19 +321,6 @@ public class ErodeBrush extends Brush {
          */
         public boolean isEmpty() {
             return this.getMaterial() == new BukkitMaterial( Material.AIR);
-        }
-
-        /**
-         * @return if the block is a Liquid.
-         */
-        public boolean isLiquid() {
-            switch (this.getMaterial()) {
-                case WATER:
-                case LAVA:
-                    return true;
-                default:
-                    return false;
-            }
         }
 
     }

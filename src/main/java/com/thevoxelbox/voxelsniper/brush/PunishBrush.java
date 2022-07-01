@@ -3,7 +3,9 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -197,7 +199,7 @@ public class PunishBrush extends Brush {
         }
 
         final int brushSizeSquare = v.getBrushSize() * v.getBrushSize();
-        final ILocation targetLocation = new Location(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        final ILocation targetLocation = LocationFactory.getLocation(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
 
         final List<LivingEntity> entities = v.getWorld().getLivingEntities();
         int numPunishApps = 0;
@@ -231,7 +233,7 @@ public class PunishBrush extends Brush {
         }
 
         final int brushSizeSquare = v.getBrushSize() * v.getBrushSize();
-        final ILocation targetLocation = new Location(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        final ILocation targetLocation = LocationFactory.getLocation(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
 
         final List<LivingEntity> entities = v.getWorld().getLivingEntities();
 

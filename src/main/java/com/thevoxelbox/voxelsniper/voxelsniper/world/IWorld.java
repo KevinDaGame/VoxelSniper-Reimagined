@@ -16,4 +16,6 @@ public interface IWorld {
     void refreshChunk(int x, int z);
 
     void strikeLightning(ILocation location);
+
+    String getName();
 }

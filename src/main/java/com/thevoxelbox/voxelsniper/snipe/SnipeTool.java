@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.Material;
 
 /**
@@ -18,7 +19,7 @@ public class SnipeTool {
     VoxelMessage messageHelper;
     ClassToInstanceMap<IBrush> brushes = MutableClassToInstanceMap.create();
     private Class<? extends IBrush> previousBrush;
-    private final BiMap<SnipeAction, IMaterial> actionTools = HashBiMap.create();
+    private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
     SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
@@ -63,7 +64,7 @@ public class SnipeTool {
         return setCurrentBrush(previousBrush);
     }
 
-    public void unassignAction(IMaterial itemInHand) {
+    public void unassignAction(VoxelMaterial itemInHand) {
         actionTools.inverse().remove(itemInHand);
     }
 
@@ -92,11 +93,11 @@ public class SnipeTool {
         return actionTools.inverse().get(itemInHand);
     }
 
-    public IMaterial getToolAssigned(SnipeAction action) {
+    public VoxelMaterial getToolAssigned(SnipeAction action) {
         return actionTools.get(action);
     }
 
-    public BiMap<SnipeAction, IMaterial> getActionTools() {
+    public BiMap<SnipeAction, VoxelMaterial> getActionTools() {
         return ImmutableBiMap.copyOf(actionTools);
     }
 
@@ -108,7 +109,7 @@ public class SnipeTool {
         }
     }
 
-    public void assignAction(SnipeAction action, IMaterial itemInHand) {
+    public void assignAction(SnipeAction action, VoxelMaterial itemInHand) {
         actionTools.forcePut(action, itemInHand);
     }
 

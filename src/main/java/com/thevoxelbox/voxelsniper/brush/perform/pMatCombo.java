@@ -5,6 +5,9 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -14,8 +17,8 @@ import org.bukkit.block.data.BlockData;
  */
 public class pMatCombo extends vPerformer {
 
-    private Material voxelMaterial;
-    private BlockData targetSubstance;
+    private IMaterial voxelMaterial;
+    private IBlockData targetSubstance;
 
     public pMatCombo() {
         name = "Mat-Combo";
@@ -37,7 +40,7 @@ public class pMatCombo extends vPerformer {
     }
 
     @Override
-    public void perform(Block b) {
+    public void perform(IBlock b) {
         if (b.getBlockData().matches(targetSubstance)) {
             h.put(b);
             b.setBlockData(voxelMaterial.createBlockData(), true);

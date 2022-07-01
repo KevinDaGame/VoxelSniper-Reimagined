@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
         
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            Material itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+            VoxelMaterial itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
 
             if (itemInHand == null) {
                 player.sendMessage(ChatColor.RED + "Please hold an item to unassign a tool action.");

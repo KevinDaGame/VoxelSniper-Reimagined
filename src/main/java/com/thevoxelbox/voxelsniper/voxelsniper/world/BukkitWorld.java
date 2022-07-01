@@ -61,6 +61,11 @@ public class BukkitWorld implements IWorld {
         world.strikeLightning(bukkitloc.getLocation());
     }
 
+    @Override
+    public String getName() {
+        return world.getName();
+    }
+
     public World getWorld() {
         return world;
     }

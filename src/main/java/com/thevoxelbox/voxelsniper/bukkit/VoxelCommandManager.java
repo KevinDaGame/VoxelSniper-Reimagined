@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.command.*;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import org.bukkit.command.PluginCommand;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
  */
 public class VoxelCommandManager {
 
+    private static IVoxelsniper main;
     private static VoxelCommandManager instance = null;
 
     public static final String BRUSH_SUBCOMMAND_PREFIX = "brush-";
@@ -58,7 +60,7 @@ public class VoxelCommandManager {
         commands.add(command);
 
         // Initializes the Bukkit-sided registration of the command
-        PluginCommand bukkitCommand = VoxelSniper.getInstance().getCommand(command.getIdentifier());
+        PluginCommand bukkitCommand = main.getCommand(command.getIdentifier());
         argumentsMap.put(command.getIdentifier(), command.registerTabCompletion());
 
         bukkitCommand.setExecutor(command);

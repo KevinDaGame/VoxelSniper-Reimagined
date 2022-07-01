@@ -46,6 +46,11 @@ public class BukkitMaterial implements IMaterial {
         return material.isTransparent();
     }
 
+    @Override
+    public VoxelMaterial getVoxelMaterial() {
+        return VoxelMaterial.getMaterial(this.getMaterial().getKey().getNamespace(), this.getMaterial().getKey().getKey());
+    }
+
     public Material getMaterial() {
         return material;
     }

@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.location;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Location;
 
 public class BukkitLocation extends AbstractLocation {
@@ -65,6 +65,16 @@ public class BukkitLocation extends AbstractLocation {
     @Override
     public BukkitWorld getWorld() {
         return new BukkitWorld(location.getWorld());
+    }
+
+    @Override
+    public IBlock getClampedBlock() {
+        return getWorld().getBlock(location.getBlockX(), Math.max(Math.min(getY(), getWorld().getMaxWorldHeight()), getWorld().getMinWorldHeight()), location.getBlockZ());
+    }
+
+    @Override
+    public IBlock getBlock() {
+        return getWorld().getBlock(this);
     }
 
     public Location getLocation() {

@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -84,7 +84,7 @@ public class SignOverwriteBrush extends Brush {
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
-                    BlockState blockState = this.getWorld().getBlock(x, y, z).getState();
+                    IBlockState blockState = this.getWorld().getBlock(x, y, z).getState();
                     if (blockState instanceof Sign) {
                         setSignText((Sign) blockState);
                         signFound = true;
