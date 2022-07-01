@@ -10,5 +10,7 @@ public interface IMaterial {
 
     String getName();
 
+    boolean equals(VoxelMaterial material);
+
     boolean isTransparent();
 }
