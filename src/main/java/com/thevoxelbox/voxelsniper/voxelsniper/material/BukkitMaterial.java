@@ -37,6 +37,11 @@ public class BukkitMaterial implements IMaterial {
     }
 
     @Override
+    public boolean equals(VoxelMaterial material) {
+        return this.material.getKey().getNamespace().equals(material.getNamespace()) && this.material.getKey().getKey().equals(material.getKey());
+    }
+
+    @Override
     public boolean isTransparent() {
         return material.isTransparent();
     }
@@ -44,4 +49,5 @@ public class BukkitMaterial implements IMaterial {
     public Material getMaterial() {
         return material;
     }
+
 }

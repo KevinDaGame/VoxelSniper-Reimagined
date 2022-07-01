@@ -1,14 +1,17 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
 public class VoxelMaterial {
-    public static List<VoxelMaterial> BLOCKS = new ArrayList<>();
+    public static Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
 
     public static final VoxelMaterial AIR = register("minecraft", "air");
     public static final VoxelMaterial STONE = register("minecraft", "stone");
@@ -950,17 +953,20 @@ public class VoxelMaterial {
     private final Version version;
     private final String key;
     private final String namespace;
+    private static IVoxelsniper main;
 
     private static VoxelMaterial register(String namespace, String key, Version version) {
 
         var material = new VoxelMaterial(namespace, key, version);
-        BLOCKS.add(material);
+        var mapKey = namespace + ":" + key;
+        BLOCKS.put(mapKey, material);
         return material;
     }
 
     private static VoxelMaterial register(String namespace, String key) {
         var material = new VoxelMaterial(namespace, key, V1_16);
-        BLOCKS.add(material);
+        var mapKey = namespace + ":" + key;
+        BLOCKS.put(mapKey, material);
         return material;
     }
     
@@ -970,4 +976,33 @@ public class VoxelMaterial {
         this.version = version;
     }
 
+    public void setMain(IVoxelsniper voxelsniper){
+        this.main = voxelsniper;
+    }
+    public static VoxelMaterial getMaterial(String key) {
+        var block = BLOCKS.get("minecraft:" + key);
+        if(main.getVersion().isSupported(block.getVersion())){
+            return block;
+        }
+        return null;
+    }
+    public static VoxelMaterial getMaterial(String namespace, String key) {
+        var block = BLOCKS.get(namespace + ":" + key);
+        if(main.getVersion().isSupported(block.getVersion())){
+            return block;
+        }
+        return null;
+    }
+
+    public Version getVersion() {
+        return version;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
 }
