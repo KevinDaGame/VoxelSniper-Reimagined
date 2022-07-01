@@ -71,7 +71,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     @Override
     public Version getVersion() {
         //todo: Does this work?
-        String version = "V" + Bukkit.getBukkitVersion().split("-")[0].replace('.' , '_');
+        String version = "V" + Bukkit.getBukkitVersion().split("-")[0].replace('.' , '_').split("_")[0];
         return Version.valueOf(version);
     }
 }
