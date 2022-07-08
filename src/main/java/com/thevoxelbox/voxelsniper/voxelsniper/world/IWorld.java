@@ -1,8 +1,10 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import org.bukkit.block.Biome;
 
 public interface IWorld {
     IBlock getBlock(ILocation location);
@@ -18,4 +20,6 @@ public interface IWorld {
     void strikeLightning(ILocation location);
 
     String getName();
+
+    void setBiome(int x, int z, VoxelBiome selectedBiome);
 }

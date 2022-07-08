@@ -1,8 +1,10 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.location;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 public interface ILocation {
 
@@ -48,4 +50,6 @@ public interface ILocation {
     IBlock getClampedBlock();
 
     IBlock getBlock();
+
+    IVector toVector();
 }
