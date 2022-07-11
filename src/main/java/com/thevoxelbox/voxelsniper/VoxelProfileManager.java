@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper;
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.UUID;

@@ -46,7 +46,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
             if (brush instanceof IPerformerBrush) {
                 ((IPerformerBrush) brush).parsePerformer("m", snipeData);
             } else {
-                player.sendMessage("The active brush is not a performer brush.");
+                sniper.sendMessage(Messages.THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH);
             }
             return true;
         }
@@ -56,10 +56,10 @@ public class VoxelPerformerCommand extends VoxelCommand {
             if (brush instanceof IPerformerBrush) {
                 boolean success = ((IPerformerBrush) brush).parsePerformer(args[0], snipeData);
                 if (!success) {
-                    player.sendMessage(ChatColor.RED + "No such performer with the handle " + ChatColor.DARK_RED + "'" + args[1] + "'" + ChatColor.DARK_RED + " exists.");
+                    sniper.sendMessage(Messages.NO_SUCH_PERFORMER.replace("%arg%", args[0]));
                 }
             } else {
-                player.sendMessage("The active brush is not a performer brush.");
+                sniper.sendMessage(Messages.THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH);
             }
             return true;
         }

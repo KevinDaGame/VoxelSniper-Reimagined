@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
@@ -39,13 +38,13 @@ public class VoxelInkCommand extends VoxelCommand {
             Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 if (selectedBlock.getType() != snipeData.getVoxelMaterial()) {
-                    player.sendMessage(ChatColor.RED + "That block is not the same as your active voxel material.");
+                    sniper.sendMessage(Messages.VOXEL_INK_DIFFERENT_TYPE);
                 } else {
                     snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                     snipeData.getVoxelMessage().data();
                 }
             } else {
-                player.sendMessage(ChatColor.GOLD + "No block to imitate voxel material data values. No changes were made.");
+                sniper.sendMessage(Messages.VOXEL_INK_NO_BLOCK_TO_IMITATE_DATA);
             }
             return true;
         }
@@ -59,7 +58,7 @@ public class VoxelInkCommand extends VoxelCommand {
                 snipeData.setVoxelSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().data();
             } catch (IllegalArgumentException e) {
-                player.sendMessage(ChatColor.RED + "The data value(s) cannot be imitated to the active voxel material.");
+                sniper.sendMessage(Messages.VOXEL_INK_CANT_IMITATE_DATA);
             }
 
             return true;
@@ -78,7 +77,7 @@ public class VoxelInkCommand extends VoxelCommand {
 
         if (a.length == 2) {
             List<String> possibleDataValues = new ArrayList<>();
-            
+
             String values = a[1].replace("]", "");
 
             for (String value : values.split(",")) {

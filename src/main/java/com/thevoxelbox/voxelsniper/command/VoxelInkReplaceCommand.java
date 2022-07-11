@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
@@ -39,13 +38,13 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
             Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 if (selectedBlock.getType() != snipeData.getReplaceMaterial()) {
-                    player.sendMessage(ChatColor.RED + "That block is not the same as your active replace material.");
+                    sniper.sendMessage(Messages.VOXEL_INK_REPLACE_DIFFERENT_TYPE);
                 } else {
                     snipeData.setReplaceSubstance(selectedBlock.getBlockData());
                     snipeData.getVoxelMessage().replaceData();
                 }
             } else {
-                player.sendMessage(ChatColor.GOLD + "No block to imitate replace material data values. No changes were made.");
+                sniper.sendMessage(Messages.VOXEL_INK_REPLACE_NO_BLOCK_TO_IMITATE_DATA);
             }
             return true;
         }
@@ -59,7 +58,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
                 snipeData.setReplaceSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().replaceData();
             } catch (IllegalArgumentException e) {
-                player.sendMessage(ChatColor.RED + "The data value(s) cannot be imitated to the active voxel material.");
+                sniper.sendMessage(Messages.VOXEL_INK_REPLACE_CANT_IMITATE_DATA);
             }
             return true;
         }

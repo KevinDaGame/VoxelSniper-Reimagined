@@ -91,7 +91,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             snipeData.getVoxelMessage().voxelList();
 
             if (!invalidMaterials.isEmpty()) {
-                player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- \n" + ChatColor.GOLD + "    " + String.join(", ", invalidMaterials));
+                sniper.sendMessage(Messages.VOXEL_LIST_COULDNT_ADD.replace("%blocks%", String.join(", ", invalidMaterials)));
             }
             return true;
         }
@@ -156,7 +156,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 snipeData.getVoxelMessage().voxelList();
 
                 if (!invalidMaterials.isEmpty()) {
-                    player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- \n" + ChatColor.GOLD + "    " + String.join(", ", invalidMaterials));
+                    sniper.sendMessage(Messages.VOXEL_LIST_COULDNT_ADD.replace("%blocks%", String.join(", ", invalidMaterials)));
                 }
                 return true;
             }

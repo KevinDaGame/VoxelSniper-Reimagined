@@ -50,7 +50,7 @@ public class VoxelReplaceCommand extends VoxelCommand {
                 snipeData.setReplaceSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().replace();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to imitate replace material. No changes were made.");
+                sniper.sendMessage(Messages.REPLACE_NOTHING_TO_IMITATE);
             }
             return true;
         }
@@ -67,7 +67,7 @@ public class VoxelReplaceCommand extends VoxelCommand {
             snipeData.getVoxelMessage().replace();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Item ID.");
+            sniper.sendMessage(Messages.INVALID_ITEM_ID);
             return true;
         }
     }

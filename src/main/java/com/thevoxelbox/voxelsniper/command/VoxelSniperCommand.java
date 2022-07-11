@@ -37,7 +37,7 @@ public class VoxelSniperCommand extends VoxelCommand {
         }
 
         if (args.length == 0) {
-            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
+            sniper.sendMessage(Messages.CURRENT_BRUSH_SETTINGS);
             sniper.displayInfo();
             return true;
         }

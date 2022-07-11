@@ -50,37 +50,36 @@ public class VoxelUndoCommand extends VoxelCommand {
         }
 
         if (!player.hasPermission("voxelsniper.undouser")) {
-            player.sendMessage(ChatColor.RED + "You need the 'voxelsniper.undouser' permission to undo other user's changes.");
+            sniper.sendMessage(Messages.UNDO_USER_PERMISSION);
             return true;
         }
 
         // Command: /u [playerName]             <- Undo [playerName]'s changes.
         if (args.length == 1 || args.length == 2) {
-            try {
-                Player targetPlayer = Bukkit.getPlayer(args[0]);
-                assert targetPlayer != null;
-
-                sniper = profileManager.getSniperForPlayer(targetPlayer);
-                int undoAmount = 1;
-
-                // Command: /u [playerName] [amount]    <- Undo the previous [amount] changes made by [playerName].
-                if (args.length == 2) {
-                    try {
-                        undoAmount = Integer.parseInt(args[1]);
-                    } catch (NumberFormatException e) {
-                        player.sendMessage(ChatColor.RED + "Please enter a valid amount to undo. Value must be a number.");
-                        return true;
-                    }
-                }
-
-                targetPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "Your changes were undone by someone else.");
-                int amountChanged = sniper.undo(undoAmount);
-                player.sendMessage(ChatColor.GOLD + "Undid " + sniper.getPlayer().getName() + "'s changes: " + ChatColor.DARK_AQUA + amountChanged + " blocks replaced");
-                return true;
-            } catch (Exception e) {
-                player.sendMessage(ChatColor.RED + "Could not find the player " + ChatColor.GOLD + "'" + args[0] + "'" + ChatColor.RED + ".");
+            Player targetPlayer = Bukkit.getPlayer(args[0]);
+            if (targetPlayer == null) {
+                sniper.sendMessage(Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
                 return true;
             }
+
+            sniper = profileManager.getSniperForPlayer(targetPlayer);
+            int undoAmount = 1;
+
+            // Command: /u [playerName] [amount]    <- Undo the previous [amount] changes made by [playerName].
+            if (args.length == 2) {
+                try {
+                    undoAmount = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    sniper.sendMessage(Messages.INVALID_UNDO_AMOUNT);
+                    return true;
+                }
+            }
+
+            Sniper targetSniper = profileManager.getSniperForPlayer(targetPlayer);
+            targetSniper.sendMessage(Messages.CHANGES_UNDONE_BY_OTHER);
+            int amountChanged = sniper.undo(undoAmount);
+            player.sendMessage(ChatColor.GOLD + "Undid " + sniper.getPlayer().getName() + "'s changes: " + ChatColor.DARK_AQUA + amountChanged + " blocks replaced");
+            return true;
         }
 
         return false;

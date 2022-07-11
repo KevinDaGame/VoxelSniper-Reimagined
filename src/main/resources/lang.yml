@@ -555,3 +555,21 @@ VOXEL_COMMAND_USAGE: |-
   </gold><yellow>    Sets the block you are looking at as the active voxel material.
   </yellow><gold>/%alias% [material]
   </gold><yellow>    Sets the specified block as the active voxel material.
+VOXEL_INK_DIFFERENT_TYPE: <red>That block is not the same as your active voxel material.
+VOXEL_INK_NO_BLOCK_TO_IMITATE_DATA: <gold>No block to imitate voxel material data values. No changes were made.
+VOXEL_INK_CANT_IMITATE_DATA: <red>The data value(s) cannot be imitated to the active voxel material.
+VOXEL_INK_REPLACE_DIFFERENT_TYPE: <red>That block is not the same as your active replace material.
+VOXEL_INK_REPLACE_NO_BLOCK_TO_IMITATE_DATA: <gold>No block to imitate replace material data values. No changes were made.
+VOXEL_INK_REPLACE_CANT_IMITATE_DATA: <red>The data value(s) cannot be imitated to the active replace material.
+NO_SUCH_PERFORMER: <red>No such performer with the handle </red><dark_red>'%arg%'</dark_red><dark_red> exists.
+THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH: The active brush is not a performer brush.
+REPLACE_NOTHING_TO_IMITATE: <gold>Nothing to imitate replace material. No changes were made.
+INVALID_ITEM_ID: <red>You have entered an invalid Item ID.
+CURRENT_BRUSH_SETTINGS: '<dark_red>VoxelSniper - Current Brush Settings:'
+UNDO_USER_PERMISSION: <red>You need the 'voxelsniper.undouser' permission to undo other user's changes.
+INVALID_UNDO_AMOUNT: <red>Please enter a valid amount to undo. Value must be a number.
+CHANGES_UNDONE_BY_OTHER: <light_purple>Your changes were undone by someone else.
+PLAYER_NOT_FOUND: <red>Could not find the player </red><gold>'%player%'</gold><red>.
+NOTHING_TO_SET_SUBSTANCE: <gold>Nothing to set voxel substance. No changes were made.
+INVALID_TYPE_ID: <red>You have entered an invalid Material ID.
+VOXEL_LIST_COULDNT_ADD: "<red>Couldn't add because item is non-existent or aren't blocks:- \n</red><gold>    %blocks%"

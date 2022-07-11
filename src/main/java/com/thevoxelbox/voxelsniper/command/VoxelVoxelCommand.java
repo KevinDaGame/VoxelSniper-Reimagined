@@ -50,7 +50,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to set voxel substance. No changes were made.");
+                sniper.sendMessage(Messages.NOTHING_TO_SET_SUBSTANCE);
             }
             return true;
         }
@@ -67,7 +67,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
             snipeData.getVoxelMessage().voxel();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Material ID.");
+            sniper.sendMessage(Messages.INVALID_TYPE_ID);
             return true;
         }
     }
