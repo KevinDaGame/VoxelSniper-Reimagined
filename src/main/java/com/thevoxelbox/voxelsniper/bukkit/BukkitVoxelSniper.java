@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +39,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     public void onEnable() {
         BukkitVoxelSniper.instance = this;
         LocationFactory.main = this;
+        VectorFactory.main = this;
 
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize(this);

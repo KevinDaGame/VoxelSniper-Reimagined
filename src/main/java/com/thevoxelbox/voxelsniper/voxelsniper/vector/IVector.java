@@ -39,4 +39,6 @@ public interface IVector {
     void multiply(double t);
 
     double distance(IVector vector);
+
+    IVector normalize();
 }

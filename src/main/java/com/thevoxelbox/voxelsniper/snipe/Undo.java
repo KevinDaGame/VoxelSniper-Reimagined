@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import org.bukkit.Material;
 import org.bukkit.block.*;
 import org.bukkit.block.data.type.NoteBlock;
@@ -107,7 +108,7 @@ public class Undo {
             VoxelMaterial.VINE,
             VoxelMaterial.LILY_PAD,
             VoxelMaterial.NETHER_WART);
-    private final Set<Vector> containing = Sets.newHashSet();
+    private final Set<IVector> containing = Sets.newHashSet();
     private final List<IBlockState> all;
     private final List<IBlockState> falloff;
     private final List<IBlockState> dropdown;
@@ -136,7 +137,7 @@ public class Undo {
      * @param block Block to be added
      */
     public void put(IBlock block) {
-        Vector pos = block.getLocation().toVector();
+        IVector pos = block.getLocation().toVector();
         if (this.containing.contains(pos)) {
             return;
         }

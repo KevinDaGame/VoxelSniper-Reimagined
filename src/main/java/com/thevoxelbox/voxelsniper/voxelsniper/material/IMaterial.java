@@ -13,6 +13,7 @@ public interface IMaterial {
     boolean equals(VoxelMaterial material);
 
     boolean isTransparent();
+    boolean isBlock();
 
     VoxelMaterial getVoxelMaterial();
 }

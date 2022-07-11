@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import org.bukkit.ChatColor;
@@ -101,7 +102,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
         final double t = tNumerator.length() / tDenominator.length();
 
         // Calculate Circumcenter and Brushcenter.
-        final IVector circumcenter = new VoxelVector();
+        final IVector circumcenter = VectorFactory.getVector();
         circumcenter.copy(perpendicularOne);
         circumcenter.multiply(t);
         circumcenter.add(midpointOne);
@@ -109,7 +110,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
         final Vector brushCenter = new Vector(Math.round(circumcenter.getX()), Math.round(circumcenter.getY()), Math.round(circumcenter.getZ()));
 
         // Calculate radius of circumcircle and determine brushsize
-        final double radius = circumcenter.distance(new VoxelVector(this.coordsOne.getX(), this.coordsOne.getY(), this.coordsOne.getZ()));
+        final double radius = circumcenter.distance(VectorFactory.getVector(this.coordsOne.getX(), this.coordsOne.getY(), this.coordsOne.getZ()));
         final int brushSize = NumberConversions.ceil(radius) + 1;
 
         for (int x = -brushSize; x <= brushSize; x++) {

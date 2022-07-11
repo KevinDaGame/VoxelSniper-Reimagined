@@ -6,8 +6,10 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -119,8 +121,8 @@ public class HeatRayBrush extends Brush {
     public final void heatRay(final SnipeData v) {
         final PerlinNoiseGenerator generator = new PerlinNoiseGenerator(new Random());
 
-        final Vector targetLocation = this.getTargetBlock().getLocation().toVector();
-        final ILocation currentLocation = new Location(this.getTargetBlock().getWorld(), 0, 0, 0);
+        final IVector targetLocation = this.getTargetBlock().getLocation().toVector();
+        final ILocation currentLocation = LocationFactory.getLocation(this.getTargetBlock().getWorld(), 0, 0, 0);
         final Undo undo = new Undo();
          IBlock currentBlock;
 

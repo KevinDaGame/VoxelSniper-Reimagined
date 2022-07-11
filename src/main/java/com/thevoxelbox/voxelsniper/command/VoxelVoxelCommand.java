@@ -6,6 +6,11 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.MaterialTranslator;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,7 +36,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
         
         // Default command
@@ -47,7 +52,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
 
         // Command: /v          <- Sets the block user is looking at as voxel substance.
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            IBlock selectedBlock = new BlockHelper(new BukkitPlayer(player), new BukkitPlayer(player).getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();
@@ -58,11 +63,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
         }
 
         // Command: /v [material]       <- Sets the defined material as voxel substance.
-        Material material = Material.matchMaterial(args[0]);
-        
-        if (material == null) {
-            material = MaterialTranslator.resolveMaterial(args[0]);
-        }
+        IMaterial material = MaterialFactory.getMaterial(VoxelMaterial.getMaterial(args[0]));
 
         if (material != null && material.isBlock()) {
             snipeData.setVoxelSubstance(material.createBlockData());

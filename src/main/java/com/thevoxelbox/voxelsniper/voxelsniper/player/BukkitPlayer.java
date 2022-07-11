@@ -4,11 +4,14 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class BukkitPlayer implements IPlayer{
+public class BukkitPlayer implements IPlayer {
     private final Player player;
 
     public BukkitPlayer(Player player) {
@@ -57,11 +60,21 @@ public class BukkitPlayer implements IPlayer{
 
     @Override
     public void teleport(ILocation location) {
-        player.teleport(((BukkitLocation)location).getLocation());
+        player.teleport(((BukkitLocation) location).getLocation());
     }
 
     @Override
     public int getEntityId() {
         return 0;
+    }
+
+    @Override
+    public void eject() {
+        player.eject();
+    }
+
+    @Override
+    public Entity launchProjectile(Class<Fireball> fireball) {
+        return player.launchProjectile(fireball);
     }
 }

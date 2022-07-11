@@ -1,11 +1,12 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.biome;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.Map;
 //todo: backwards compatibility
-public record VoxelBiome(String namespace, String key) {
+public record VoxelBiome(String namespace, String key, Version version) {
     public static String DEFAULT_NAMESPACE = "minecraft";
     public static Map<String, VoxelBiome> BIOMES;
     public static VoxelBiome OCEAN = register("ocean");
@@ -76,11 +77,11 @@ public record VoxelBiome(String namespace, String key) {
         return new VoxelBiome(key);
     }
     private static VoxelBiome register(String key, Version version) {
-        return new VoxelBiome(key);
+        return new VoxelBiome("minecraft", key, version);
     }
 
     public VoxelBiome(String key) {
-        this(DEFAULT_NAMESPACE, key);
+        this(DEFAULT_NAMESPACE, key, Version.V1_16);
     }
     String getNamespace() {
         return namespace;
@@ -88,7 +89,25 @@ public record VoxelBiome(String namespace, String key) {
     String getKey() {
         return key;
     }
+    private static IVoxelsniper main;
+    public void setMain(IVoxelsniper voxelsniper){
+        this.main = voxelsniper;
+    }
     String getName() {
         return namespace + ":" + key;
+    }
+    public static VoxelBiome getBiome(String key) {
+        return getBiome("minecraft", key);
+    }
+    public static VoxelBiome getBiome(String namespace, String key) {
+        var biome = BIOMES.get(namespace + ":" + key);
+        if(main.getVersion().isSupported(biome.getVersion())){
+            return biome;
+        }
+        return null;
+    }
+
+    private Version getVersion() {
+        return version;
     }
 }

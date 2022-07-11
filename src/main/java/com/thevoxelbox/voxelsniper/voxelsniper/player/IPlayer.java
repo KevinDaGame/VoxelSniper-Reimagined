@@ -2,6 +2,9 @@ package com.thevoxelbox.voxelsniper.voxelsniper.player;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LargeFireball;
 
 import java.util.UUID;
 
@@ -23,4 +26,6 @@ public interface IPlayer {
     int getEntityId();
 
     void eject();
+
+    Entity launchProjectile(Class<Fireball> fireball);
 }

@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class BiomeBrush extends Brush {
 
-    private Biome selectedBiome = Biome.PLAINS;
+    private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
     public BiomeBrush() {
         this.setName("Biome");
@@ -65,7 +66,7 @@ public class BiomeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+        vm.custom(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.key());
     }
 
     @Override
@@ -78,7 +79,7 @@ public class BiomeBrush extends Brush {
 
         try {
             this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+            v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.key());
         } catch (IllegalArgumentException e) {
             v.sendMessage(ChatColor.RED + "That biome does not exist.");
         }

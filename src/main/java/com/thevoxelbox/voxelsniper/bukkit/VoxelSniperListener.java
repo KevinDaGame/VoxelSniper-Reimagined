@@ -3,6 +3,10 @@ package com.thevoxelbox.voxelsniper.bukkit;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +34,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public final void onPlayerInteract(final PlayerInteractEvent event) {
-        Player player = event.getPlayer();
+        IPlayer player = new BukkitPlayer(event.getPlayer());
 
         if (!player.hasPermission(SNIPER_PERMISSION)) {
             return;
@@ -38,7 +42,7 @@ public class VoxelSniperListener implements Listener {
 
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
-            if (sniper.isEnabled() && sniper.snipe(event.getAction(), new BukkitMaterial(event.getMaterial()), new BukkitBlock(event.getClickedBlock()), event.getBlockFace())) {
+            if (sniper.isEnabled() && sniper.snipe(event.getAction(), VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()), new BukkitBlock(event.getClickedBlock()), event.getBlockFace())) {
                 event.setCancelled(true);
             }
         } catch (final Exception ignored) {
@@ -50,7 +54,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        IPlayer player = new BukkitPlayer(event.getPlayer());
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {

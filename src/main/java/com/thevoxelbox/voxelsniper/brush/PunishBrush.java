@@ -7,6 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -141,8 +142,8 @@ public class PunishBrush extends Brush {
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, PunishBrush.TICKS_PER_SECOND * this.punishDuration, this.punishLevel), true);
                 break;
             case FORCE:
-                final Vector playerVector = this.getTargetBlock().getLocation().toVector();
-                final Vector direction = entity.getLocation().toVector().clone();
+                final IVector playerVector = this.getTargetBlock().getLocation().toVector();
+                final IVector direction = entity.getLocation().toVector().clone();
                 direction.subtract(playerVector);
                 final double length = direction.length();
                 final double stregth = (1 - (length / v.getBrushSize())) * this.punishLevel;

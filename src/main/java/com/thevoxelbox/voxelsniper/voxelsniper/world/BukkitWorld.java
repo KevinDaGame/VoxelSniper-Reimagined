@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
@@ -7,6 +8,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 
 public class BukkitWorld implements IWorld {
     private final World world;
@@ -64,6 +66,11 @@ public class BukkitWorld implements IWorld {
     @Override
     public String getName() {
         return world.getName();
+    }
+
+    @Override
+    public void setBiome(int x, int z, VoxelBiome selectedBiome) {
+        world.setBiome(x, z, Biome.valueOf(selectedBiome.key()));
     }
 
     public World getWorld() {

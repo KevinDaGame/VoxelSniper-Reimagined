@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -26,13 +27,13 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /painting
         if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 0) {
-                BlockHelper.painting(player, true, false, 0);
+                BlockHelper.painting(new BukkitPlayer(player), true, false, 0);
                 return true;
             }
 
             if (args.length == 1) {
                 try {
-                    BlockHelper.painting(player, false, false, Integer.parseInt(args[0]));
+                    BlockHelper.painting(new BukkitPlayer(player), false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
                     player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /painting <number>");
                 }
@@ -77,14 +78,14 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vox painting
         if (args[0].equalsIgnoreCase("painting")) {
             if (args.length == 0) {
-                BlockHelper.painting(player, true, false, 0);
+                BlockHelper.painting(new BukkitPlayer(player), true, false, 0);
                 return true;
             }
 
             // Command: /vox painting [number]
             if (args.length == 1) {
                 try {
-                    BlockHelper.painting(player, false, false, Integer.parseInt(args[0]));
+                    BlockHelper.painting(new BukkitPlayer(player), false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
                     player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /" + getActiveAlias() + " painting [number]");
                 }

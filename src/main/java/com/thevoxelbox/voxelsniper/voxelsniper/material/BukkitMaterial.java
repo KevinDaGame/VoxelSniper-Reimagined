@@ -47,6 +47,11 @@ public class BukkitMaterial implements IMaterial {
     }
 
     @Override
+    public boolean isBlock() {
+        return material.isBlock();
+    }
+
+    @Override
     public VoxelMaterial getVoxelMaterial() {
         return VoxelMaterial.getMaterial(this.getMaterial().getKey().getNamespace(), this.getMaterial().getKey().getKey());
     }
