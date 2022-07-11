@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -221,18 +220,18 @@ public class HeatRayBrush extends Brush {
         try {
             if (params[0].equalsIgnoreCase("octave")) {
                 this.octaves = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Octave: " + this.octaves);
+                v.sendMessage(Messages.HEATRAY_OCTAVE.replace("%this.octaves%",String.valueOf(this.octaves)));
                 return;
             }
             if (params[0].equalsIgnoreCase("amplitude")) {
                 this.amplitude = Double.parseDouble(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
+                v.sendMessage(Messages.HEATRAY_AMPLITUDE.replace("%this.amplitude%",String.valueOf(this.amplitude)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("frequency")) {
                 this.frequency = Double.parseDouble(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+                v.sendMessage(Messages.HEATRAY_FREQ.replace("%this.frequency%",String.valueOf(this.frequency)));
                 return;
             }
         } catch (NumberFormatException ignored) {
@@ -250,11 +249,11 @@ public class HeatRayBrush extends Brush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("octave", Lists.newArrayList("[number]"));
         argumentValues.put("amplitude", Lists.newArrayList("[number]"));
         argumentValues.put("frequency", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
     }
 

@@ -7,6 +7,8 @@ import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -34,11 +36,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
         // Default command
         // Command: /p info, /p help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the performer to the default performer; Material performer.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [performerHandle]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the performer to the specified performer.");
+            sniper.sendMessage(Messages.VOXEL_PERFORMER_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 

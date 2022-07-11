@@ -299,7 +299,7 @@ public class PunishBrush extends Brush {
 
         try {
             this.punishment = Punishment.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.YELLOW + this.punishment.name() + ChatColor.GOLD + " punishment selected.");
+            v.sendMessage(Messages.PUNISHMENT_SELECTED.replace("%punishment%", this.punishment.name()));
         } catch (final IllegalArgumentException exception) {
             v.sendMessage(Messages.PUNISHMENT_DOES_NOT_EXIST.replace("%triggerHandle%",triggerHandle));
         }

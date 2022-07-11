@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -27,15 +29,9 @@ public class VoxelSniperCommand extends VoxelCommand {
         // Default command
         // Command: /sniper, /sniper help, /sniper info
         if ((args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <enable | disable>");
-            player.sendMessage(ChatColor.YELLOW + "    Activates or deactivates VoxelSniper for yourself.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " range");
-            player.sendMessage(ChatColor.YELLOW + "    Toggles whether range limit is enabled or not.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " range [number]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets and enables the range limitation.");
+            sniper.sendMessage(Messages.VOXELSNIPER_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             // TODO: List all bound tools
-            // player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list"); 
+            // player.sendMessage(ChatColor.GOLD + "/" + "%alias%" + " list"); 
             // player.sendMessage(ChatColor.YELLOW + "    Lists all items that you have bound an action to.");
             return true;
         }

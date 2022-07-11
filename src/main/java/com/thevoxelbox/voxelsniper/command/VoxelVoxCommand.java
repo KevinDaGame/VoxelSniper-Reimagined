@@ -1,7 +1,9 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
@@ -28,6 +30,7 @@ public class VoxelVoxCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         // Command: /painting
         if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 0) {
@@ -69,13 +72,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Default command
         // Command: /vox, /vox help, /vox info
         if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " chunk");
-            player.sendMessage(ChatColor.YELLOW + "    Force refreshes the chunk that you are standing in.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " painting");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the painting you are looking at.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " painting [number]");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the painting you are looking at to a specified ID.");
+            sniper.sendMessage(Messages.VOX_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
@@ -91,7 +88,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 try {
                     BlockHelper.painting(player, false, false, Integer.parseInt(args[1]));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /" + getActiveAlias() + " painting [number]");
+                    sniper.sendMessage(Messages.VOX_PAINTING_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 }
                 return true;
             }
@@ -113,7 +110,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
                 sendMessage(player, Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                player.sendMessage(ChatColor.RED + "Invalid syntax. Command:" + ChatColor.GOLD + "/" + getActiveAlias() + " goto <x> <z>");
+                sniper.sendMessage(Messages.VOX_GOTO_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             }
             return true;
         }

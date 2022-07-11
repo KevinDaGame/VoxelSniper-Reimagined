@@ -2,6 +2,8 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -24,17 +26,11 @@ public class VoxelUndoCommand extends VoxelCommand {
         Sniper sniper = profileManager.getSniperForPlayer(player);
 
         if ((args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) || args.length > 2) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
+            sniper.sendMessage(Messages.VOXEL_UNDO_COMMAND_USAGE_START.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             if (getActiveIdentifier().equalsIgnoreCase("u")) {
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias());
-                player.sendMessage(ChatColor.YELLOW + "    Undo latest changes for yourself.");
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [changes]");
-                player.sendMessage(ChatColor.YELLOW + "    Undo previous [amount] changes for yourself.");
+                sniper.sendMessage(Messages.VOXEL_UNDO_COMMAND_USAGE_UNDO.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             }
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [player]");
-            player.sendMessage(ChatColor.YELLOW + "    Undo the latest changes for specified player.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [player] [amount]");
-            player.sendMessage(ChatColor.YELLOW + "    Undo the previous [amount] changes for specified player.");
+            sniper.sendMessage(Messages.VOXEL_UNDO_COMMAND_USAGE_END.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 

@@ -8,8 +8,9 @@ import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -44,19 +45,13 @@ public class VoxelBrushCommand extends VoxelCommand {
         // Default command
         // Command: /b, /b help, /b info
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushHandle] [arguments...]");
-            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle, with the specified arguments.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " p [performerHandle]");
-            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle and the specified performer.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushSize]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the brush size of the active brush.");
+            snipeData.sendMessage(Messages.VOXEL_BRUSH_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
         // No arguments -> show brush settings
         if (args.length == 0) {
-            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
+            snipeData.sendMessage(Messages.VOXEL_BRUSH_COMMAND_SETTINGS);
             sniper.displayInfo();
             return true;
         }
@@ -87,13 +82,13 @@ public class VoxelBrushCommand extends VoxelCommand {
             Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
 
             if (brush == null) {
-                player.sendMessage(ChatColor.RED + "No brush exists with the brush handle '" + args[0] + "'.");
+                snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
             } else {
                 IBrush oldBrush = sniper.getBrush(currentToolId);
                 IBrush newBrush = sniper.setBrush(currentToolId, brush);
 
                 if (newBrush == null) {
-                    player.sendMessage(ChatColor.RED + "You do not have the required permissions to use that brush.");
+                    snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
                     return true;
                 }
 

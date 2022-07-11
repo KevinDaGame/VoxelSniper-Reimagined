@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -34,8 +33,8 @@ public class PullBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
         vm.height();
-        vm.custom(ChatColor.AQUA + "Pinch " + (-this.c1 + 1));
-        vm.custom(ChatColor.AQUA + "Bubble " + this.c2);
+        vm.custom(Messages.PULLBRUSH_PINCH.replace("%val%",String.valueOf((-this.c1 + 1))));
+        vm.custom(Messages.PULLBRUSH_BUBBLE.replace("%val%",String.valueOf(this.c2)));
     }
 
     @Override

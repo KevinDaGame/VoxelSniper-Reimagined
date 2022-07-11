@@ -59,8 +59,7 @@ public class SplineBrush extends PerformerBrush {
             }
 
             this.endPts.add(targetBlock);
-            v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY
-                    + "from endpoint selection");
+            v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY + "from endpoint selection");
             return;
         }
 
@@ -70,8 +69,7 @@ public class SplineBrush extends PerformerBrush {
         }
 
         this.ctrlPts.remove(targetBlock);
-        v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY
-                + "from control point selection");
+        v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY + "from control point selection");
     }
 
     public final boolean spline(final Point start, final Point end, final Point c1, final Point c2, final SnipeData v) {

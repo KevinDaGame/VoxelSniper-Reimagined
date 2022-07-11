@@ -52,15 +52,13 @@ public class RulerBrush extends Brush {
             return;
         }
 
-        v.sendMessage(ChatColor.BLUE + "Format = (second coord - first coord)");
-        v.sendMessage(ChatColor.AQUA + "X change: " + (this.getTargetBlock().getX() - this.coords.getX()));
-        v.sendMessage(ChatColor.AQUA + "Y change: " + (this.getTargetBlock().getY() - this.coords.getY()));
-        v.sendMessage(ChatColor.AQUA + "Z change: " + (this.getTargetBlock().getZ() - this.coords.getZ()));
+        double x = this.getTargetBlock().getX() - this.coords.getX();
+        double y = this.getTargetBlock().getY() - this.coords.getY();
+        double z = this.getTargetBlock().getZ() - this.coords.getZ();
         final double distance = (double) (Math.round(this.getTargetBlock().getLocation().toVector().subtract(this.coords).length() * 100) / 100);
-        final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(this.getTargetBlock().getX() - coords.getX()), Math.abs(this.getTargetBlock().getY() - this.coords.getY())), Math.abs(this.getTargetBlock().getZ() - this.coords.getZ()))) + 1) * 100) / 100);
+        final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z))) + 1) * 100) / 100);
 
-        v.sendMessage((ChatColor.AQUA + "Euclidean distance = " + "%distance%").replace("%distance%",String.valueOf(distance)));
-        v.sendMessage((ChatColor.AQUA + "Block distance = " + "%blockDistance%").replace("%blockDistance%",String.valueOf(blockDistance)));
+        v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%",String.valueOf(x)).replace("%y%",String.valueOf(y)).replace("%z%",String.valueOf(z)).replace("%distance%",String.valueOf(distance)).replace("%blockDistance%",String.valueOf(blockDistance)));
     }
 
     @Override

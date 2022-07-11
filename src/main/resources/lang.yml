@@ -419,3 +419,139 @@ TRI_POINT_CIRCLE_MODE_UNKNOWN: '<gold>Mode: Unknown'
 TRI_POINT_CIRCLE_DONE: <green>Done.
 BRUSH_TOLERANCE_SET: <gold>Brush tolerance set to </gold><yellow>%tolerance%</yellow><gold>.
 TRIANGLE_BRUSH_INFO: '<blue>Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.'
+HEATRAY_FREQ: '<green>Frequency: %this.frequency%'
+HEATRAY_OCTAVE: '<green>Octave: %this.octaves%'
+HEATRAY_AMPLITUDE: '<green>Amplitude: %this.amplitude%'
+PULLBRUSH_PINCH: <aqua>Pinch %val%
+PULLBRUSH_BUBBLE: <aqua>Bubble %val%
+RULER_BRUSH_POWDER: |
+  <blue>Format = (second coord - first coord)
+  </blue><aqua>X change: %x%
+  Y change: %y%
+  Z change: %z%
+  Euclidean distance = %distance%
+  Block distance = %blockDistance%
+PUNISHMENT_SELECTED: <yellow>%punishment%</yellow><gold> punishment selected.
+VOXEL_BRUSH_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% [brushHandle] [arguments...]
+  </gold><yellow>    Changes to the brush with the specified brush handle, with the specified arguments.
+  </yellow><gold>/%alias% p [performerHandle]
+  </gold><yellow>    Changes to the brush with the specified brush handle and the specified performer.
+  </yellow><gold>/%alias% [brushSize]
+  </gold><yellow>    Sets the brush size of the active brush.
+VOXEL_BRUSH_COMMAND_SETTINGS: '<dark_red>VoxelSniper - Current Brush Settings:'
+BRUSH_HANDLE_NOT_FOUND: <red>No brush exists with the brush handle '%arg%'.
+VOXEL_BRUSH_NO_PERMISSION: <red>You do not have the required permissions to use that brush.
+VOXEL_BRUSH_TOOL_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% assign \<arrow | powder> \<label>
+  </gold><yellow>    Assign an action to your currently held item with the specified label.
+  </yellow><gold>/%alias% remove
+  </gold><yellow>    Removes the action that is bound to the currently held item.
+VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM: <red>Please hold an item to assign a tool action to.
+VOXEL_BRUSH_TOOL_COMMAND_CANT_ASSIGN: <red>You can't assign an action to an item that can be placed as a block!
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_FAIL: <red>Couldn't assign action to that tool.
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED: <gold>%item% has been assigned to '%toolLabel%' as action %action%.
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_OWN: <dark_aqua>Please assign your own label to the tool to identify it.
+VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN: <red>Please hold an item to unassign a tool action.
+VOXEL_BRUSH_TOOL_COMMAND_NOT_ALLOWED_UNASSIGN: <red>You are not allowed to unassign the default tool!
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED_AS_TOOL: <gold>%item% has been unassigned as a tool.
+VOXEL_DEFAULT_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Resets tool to default values.
+BRUSH_SETTINGS_RESET: <aqua>Brush settings reset to their default values.
+VOXEL_INK_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Copy data value of the block you are looking at into the active voxel material.
+  </yellow><gold>/%alias% [dataValue]
+  </gold><yellow>    Set specified data value to the active voxel material.
+  </yellow><dark_aqua>    Example: /%alias% snowy=true,age=7
+VOXEL_INK_REPLACE_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Copy data value of the block you are looking at into the active replace material.
+  </yellow><gold>/%alias% [dataValue]
+  </gold><yellow>    Set specified data value to the active replace material.
+  </yellow><dark_aqua>    Example: /%alias%rotation=3 waterlogged=false
+VOXEL_PERFORMER_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Sets the performer to the default performer; Material performer.
+  </yellow><gold>/%alias% [performerHandle]
+  </gold><yellow>    Sets the performer to the specified performer.
+VOXEL_REPLACE_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Sets the block you are looking at as the active replace material.
+  </yellow><gold>/%alias% [material]
+  </gold><yellow>    Sets the specified block as the active replace material.
+VOXELSNIPER_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% \<enable | disable>
+  </gold><yellow>    Activates or deactivates VoxelSniper for yourself.
+  </yellow><gold>/%alias% range
+  </gold><yellow>    Toggles whether range limit is enabled or not.
+  </yellow><gold>/%alias% range [number]
+  </gold><yellow>    Sets and enables the range limitation.
+VOXEL_UNDO_COMMAND_USAGE_START: '<dark_aqua>%name% Command Syntax:'
+VOXEL_UNDO_COMMAND_USAGE_UNDO: |-
+  <gold>/%alias%
+  </gold><yellow>    Undo latest changes for yourself.
+  </yellow><gold>/%alias% [changes]
+  </gold><yellow>    Undo previous [amount] changes for yourself.
+VOXEL_UNDO_COMMAND_USAGE_END: |-
+  <gold>/%alias% [player]
+  </gold><yellow>    Undo the latest changes for specified player.
+  </yellow><gold>/%alias% [player] [amount]
+  </gold><yellow>    Undo the previous [amount] changes for specified player.
+VOXEL_CENTER_USAGE: |-
+  <gold>/%alias% \<number>
+  </gold><yellow>    Changes the voxel center parameter of the brush to the specified number.
+VOXEL_LIST_USAGE: |-
+  <dark_aqua>Using Voxel List:
+  </dark_aqua><gold>/%alias% list \<material>[-]...
+  </gold><yellow>    Adds or removes the specified material into the voxel list.
+  </yellow><dark_aqua>    Example: /%alias% list acacia_log stone- grass_block
+  </dark_aqua><aqua>      Adds acacia_log, removes stone, adds grass_block; in order
+  </aqua><dark_aqua>    Example: /%alias% list dirt- grass_block
+  </dark_aqua><aqua>      Removes dirt, adds grass_block; in order
+VOXEL_HEIGHT_USAGE: |-
+  <gold>/%alias% height \<number>
+  </gold><yellow>    Changes the voxel height parameter of the brush to the specified number.
+VOXEL_LIST_CLEAR_USAGE: |-
+  <dark_aqua>Using Voxel List:
+  </dark_aqua><gold>/%alias% clear
+  </gold><yellow>    Clears the contents of the VoxelList.
+  </yellow><gold>/%alias% \<material>[-]...
+  </gold><yellow>    Adds or removes the specified material into the voxel list.
+  </yellow><dark_aqua>    Example: /%alias% list dirt stone- wheat
+  </dark_aqua><aqua>      Adds dirt, removes stone, adds wheat; in order
+  </aqua><dark_aqua>    Example: /%alias% list dirt- grass_block
+  </dark_aqua><aqua>      Removes dirt, adds grass_block; in order
+VOXEL_VARIABLE_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% height \<number>
+  </gold><yellow>    Changes the voxel height parameter of the brush to the specified number.
+  </yellow><gold>/%alias% center \<number>
+  </gold><yellow>    Changes the voxel center parameter of the brush to the specified number.
+  </yellow><gold>/%alias% list
+  </gold><yellow>    Shows you how to use voxel list.
+VOX_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% chunk
+  </gold><yellow>    Force refreshes the chunk that you are standing in.
+  </yellow><gold>/%alias% painting
+  </gold><yellow>    Changes the painting you are looking at.
+  </yellow><gold>/%alias% painting [number]
+  </gold><yellow>    Changes the painting you are looking at to a specified ID.
+VOX_PAINTING_USAGE: '<red>Invalid syntax. Command: /%alias% painting [number]'
+VOX_GOTO_USAGE: <red>Invalid syntax. Command:</red><gold>/%alias% goto \<x> \<z>
+VOXEL_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Sets the block you are looking at as the active voxel material.
+  </yellow><gold>/%alias% [material]
+  </gold><yellow>    Sets the specified block as the active voxel material.

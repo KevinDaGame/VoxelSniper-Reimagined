@@ -4,6 +4,8 @@ import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -28,12 +30,7 @@ public class VoxelInkCommand extends VoxelCommand {
         // Default command
         // Command: /d info, /d help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Copy data value of the block you are looking at into the active voxel material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [dataValue]");
-            player.sendMessage(ChatColor.YELLOW + "    Set specified data value to the active voxel material.");
-            player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " snowy=true,age=7");
+            sniper.sendMessage(Messages.VOXEL_INK_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
