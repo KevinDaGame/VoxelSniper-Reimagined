@@ -1,13 +1,11 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.player;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.LargeFireball;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 import java.util.UUID;
 
@@ -74,7 +72,7 @@ public class BukkitPlayer implements IPlayer {
     }
 
     @Override
-    public Entity launchProjectile(Class<Fireball> fireball) {
-        return player.launchProjectile(fireball);
+    public IEntity launchProjectile(Class<? extends Projectile> fireball) {
+        return new BukkitEntity(player.launchProjectile(fireball));
     }
 }

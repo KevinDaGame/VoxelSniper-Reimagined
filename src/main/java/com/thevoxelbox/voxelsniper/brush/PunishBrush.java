@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
@@ -51,7 +52,7 @@ public class PunishBrush extends Brush {
     }
 
     @SuppressWarnings("deprecation")
-    private void applyPunishment(final LivingEntity entity, final SnipeData v) {
+    private void applyPunishment(final IEntity entity, final SnipeData v) {
         switch (this.punishment) {
             case FIRE:
                 entity.setFireTicks(PunishBrush.TICKS_PER_SECOND * this.punishDuration);
@@ -202,9 +203,9 @@ public class PunishBrush extends Brush {
         final int brushSizeSquare = v.getBrushSize() * v.getBrushSize();
         final ILocation targetLocation = LocationFactory.getLocation(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
 
-        final List<LivingEntity> entities = v.getWorld().getLivingEntities();
+        final List<IEntity> entities = v.getWorld().getLivingEntities();
         int numPunishApps = 0;
-        for (final LivingEntity entity : entities) {
+        for (final IEntity entity : entities) {
             if (v.owner().getPlayer() != entity || hitsSelf) {
                 if (v.getBrushSize() >= 0) {
                     try {
@@ -236,9 +237,9 @@ public class PunishBrush extends Brush {
         final int brushSizeSquare = v.getBrushSize() * v.getBrushSize();
         final ILocation targetLocation = LocationFactory.getLocation(v.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
 
-        final List<LivingEntity> entities = v.getWorld().getLivingEntities();
+        final List<IEntity> entities = v.getWorld().getLivingEntities();
 
-        for (final LivingEntity entity : entities) {
+        for (final IEntity entity : entities) {
             if (entity.getLocation().distanceSquared(targetLocation) < brushSizeSquare) {
                 entity.setFireTicks(0);
                 entity.removePotionEffect(PotionEffectType.BLINDNESS);

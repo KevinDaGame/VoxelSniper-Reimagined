@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import org.bukkit.ChatColor;
 import org.bukkit.util.Vector;
 
@@ -37,8 +38,8 @@ public class DiscBrush extends PerformerBrush {
      */
     private void disc(final SnipeData v, final IBlock targetBlock) {
         final double radiusSquared = (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
-        final Vector centerPoint = targetBlock.getLocation().toVector();
-        final Vector currentPoint = centerPoint.clone();
+        final IVector centerPoint = targetBlock.getLocation().toVector();
+        final IVector currentPoint = centerPoint.clone();
 
         for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
             currentPoint.setX(centerPoint.getX() + x);

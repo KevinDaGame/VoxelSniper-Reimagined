@@ -4,6 +4,8 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.util.BlockIterator;
@@ -19,9 +21,9 @@ import org.bukkit.util.Vector;
  */
 public class LineBrush extends PerformerBrush {
 
-    private static final Vector HALF_BLOCK_OFFSET = new Vector(0.5, 0.5, 0.5);
-    private Vector originCoords = null;
-    private Vector targetCoords = new Vector();
+    private static final IVector HALF_BLOCK_OFFSET = VectorFactory.getVector(0.5, 0.5, 0.5);
+    private IVector originCoords = null;
+    private IVector targetCoords = VectorFactory.getVector();
     private IWorld targetWorld;
 
     /**
@@ -48,10 +50,10 @@ public class LineBrush extends PerformerBrush {
     }
 
     private void linePowder(final SnipeData v) {
-        final Vector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
-        final Vector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
+        final IVector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
+        final IVector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
 
-        final Vector direction = targetClone.clone().subtract(originClone);
+        final IVector direction = targetClone.clone().subtract(originClone);
         final double length = this.targetCoords.distance(this.originCoords);
 
         if (length == 0) {

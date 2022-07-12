@@ -41,4 +41,6 @@ public interface IVector {
     double distance(IVector vector);
 
     IVector normalize();
+
+    double distanceSquared(IVector currentPoint);
 }

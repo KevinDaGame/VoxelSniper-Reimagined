@@ -52,4 +52,7 @@ public interface ILocation {
     IBlock getBlock();
 
     IVector toVector();
+
+    double distanceSquared(ILocation targetLocation);
+    ILocation clone();
 }

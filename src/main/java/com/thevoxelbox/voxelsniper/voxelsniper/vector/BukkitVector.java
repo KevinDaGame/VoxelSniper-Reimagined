@@ -101,4 +101,18 @@ public class BukkitVector implements IVector {
     public double distance(IVector vector) {
         return this.vector.distance(((BukkitVector)vector).vector);
     }
+
+    @Override
+    public IVector normalize() {
+        return new BukkitVector(vector.normalize());
+    }
+
+    @Override
+    public double distanceSquared(IVector currentPoint) {
+        return vector.distanceSquared(((BukkitVector)currentPoint).vector);
+    }
+
+    public Vector getVector() {
+        return vector;
+    }
 }

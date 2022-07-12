@@ -4,6 +4,8 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.util.Vector;
 
@@ -15,7 +17,7 @@ import org.bukkit.util.Vector;
 public class RulerBrush extends Brush {
 
     private boolean first = true;
-    private Vector coords = new Vector(0, 0, 0);
+    private IVector coords = VectorFactory.getVector();
 
     private final int xOff = 0;
     private final int yOff = 0;

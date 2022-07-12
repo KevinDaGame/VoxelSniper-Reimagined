@@ -84,6 +84,16 @@ public class BukkitLocation extends AbstractLocation {
         return new BukkitVector(location.toVector());
     }
 
+    @Override
+    public double distanceSquared(ILocation targetLocation) {
+        return location.distanceSquared(((BukkitLocation) targetLocation).getLocation());
+    }
+
+    @Override
+    public ILocation clone() {
+        return new BukkitLocation(location.clone());
+    }
+
     public Location getLocation() {
         return this.location;
     }
