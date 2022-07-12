@@ -78,7 +78,7 @@ public class BiomeBrush extends Brush {
         }
 
         try {
-            this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
+            this.selectedBiome = VoxelBiome.getBiome(params[0].toUpperCase());
             v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.key());
         } catch (IllegalArgumentException e) {
             v.sendMessage(ChatColor.RED + "That biome does not exist.");
