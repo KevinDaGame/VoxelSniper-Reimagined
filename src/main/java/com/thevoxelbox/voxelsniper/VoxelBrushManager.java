@@ -72,7 +72,6 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
         brushManager.registerSniperBrush(PaintingBrush.class, "painting");
         brushManager.registerSniperBrush(PullBrush.class, "pull");
-        brushManager.registerSniperBrush(PunishBrush.class, "p", "punish");
         //brushManager.registerSniperBrush(RandomErodeBrush.class, "re", "randomerode");
         brushManager.registerSniperBrush(RegenerateChunkBrush.class, "gc", "generatechunk");
         brushManager.registerSniperBrush(RingBrush.class, "ri", "ring");
