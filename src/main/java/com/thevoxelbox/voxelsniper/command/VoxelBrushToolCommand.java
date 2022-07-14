@@ -53,7 +53,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                Material itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+                VoxelMaterial itemInHand = (new BukkitPlayer(player).getItemInHand() != null) ? (new BukkitPlayer(player).getItemInHand()) : VoxelMaterial.AIR;
 
                 if (itemInHand == null) {
                     player.sendMessage(ChatColor.RED + "Please hold an item to assign a tool action to.");
@@ -68,7 +68,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                 String toolLabel = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
                 if (sniper.setTool(toolLabel, action, itemInHand)) {
-                    player.sendMessage(ChatColor.GOLD + itemInHand.name() + " has been assigned to '" + toolLabel + "' as action " + action.name() + ".");
+                    player.sendMessage(ChatColor.GOLD + itemInHand.getKey() + " has been assigned to '" + toolLabel + "' as action " + action.name() + ".");
                 } else {
                     player.sendMessage(ChatColor.RED + "Couldn't assign action to that tool.");
                 }
@@ -82,7 +82,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
         
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            VoxelMaterial itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+            VoxelMaterial itemInHand = (new BukkitPlayer(player).getItemInHand() != null) ? new BukkitPlayer(player).getItemInHand() : VoxelMaterial.AIR;
 
             if (itemInHand == null) {
                 player.sendMessage(ChatColor.RED + "Please hold an item to unassign a tool action.");
@@ -95,7 +95,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
             }
 
             sniper.removeTool(sniper.getCurrentToolId(), itemInHand);
-            player.sendMessage(ChatColor.GOLD + itemInHand.name() + " has been unassigned as a tool.");
+            player.sendMessage(ChatColor.GOLD + itemInHand.getKey() + " has been unassigned as a tool.");
             return true;
         }
 

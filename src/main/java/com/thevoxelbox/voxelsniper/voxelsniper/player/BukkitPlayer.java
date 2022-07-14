@@ -1,13 +1,19 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.player;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 
-import java.util.UUID;
+import java.util.*;
 
 public class BukkitPlayer implements IPlayer {
     private final Player player;
@@ -74,5 +80,14 @@ public class BukkitPlayer implements IPlayer {
     @Override
     public IEntity launchProjectile(Class<? extends Projectile> fireball) {
         return new BukkitEntity(player.launchProjectile(fireball));
+    }
+
+    @Override
+    public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
+        Set<Material> materials = new HashSet<>(transparent.size());
+        for (VoxelMaterial material : transparent) {
+            materials.add(((BukkitMaterial)MaterialFactory.getMaterial(material)).getMaterial());
+        }
+        return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
     }
 }

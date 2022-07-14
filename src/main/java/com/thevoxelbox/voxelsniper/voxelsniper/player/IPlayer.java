@@ -1,13 +1,17 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.player;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.Projectile;
 
+import java.util.Set;
 import java.util.UUID;
 
 public interface IPlayer {
@@ -30,4 +34,8 @@ public interface IPlayer {
     void eject();
 
     IEntity launchProjectile(Class<? extends Projectile> projectile);
+
+    IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);
+
+    VoxelMaterial getItemInHand();
 }

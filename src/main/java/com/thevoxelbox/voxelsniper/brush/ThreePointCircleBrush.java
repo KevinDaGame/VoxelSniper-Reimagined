@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import org.bukkit.ChatColor;
 import org.bukkit.util.NumberConversions;

@@ -11,6 +11,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
@@ -40,14 +41,13 @@ public class Sniper {
         this.main = main;
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
-        sniperTool.assignAction(SnipeAction.ARROW, Material.ARROW);
-        sniperTool.assignAction(SnipeAction.GUNPOWDER, Material.GUNPOWDER);
+        sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("ARROW"));
+        sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterial("GUNPOWDER"));
         tools.put(null, sniperTool);
     }
 
     public String getCurrentToolId() {
-        //TODO this isn't quite right
-        return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand().getType() : null);
+        return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand() : VoxelMaterial.AIR);
     }
 
     public String getToolId(VoxelMaterial itemInHand) {
@@ -105,7 +105,7 @@ public class Sniper {
         }
 
         SnipeData snipeData = sniperTool.getSnipeData();
-        SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
+        SnipeAction snipeAction = sniperTool.getActionAssigned(MaterialFactory.getMaterial(itemInHand));
         IBlock targetBlock;
         IBlock lastBlock = null;
 

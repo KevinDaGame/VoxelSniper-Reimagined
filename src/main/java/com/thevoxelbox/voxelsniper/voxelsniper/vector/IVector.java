@@ -43,4 +43,6 @@ public interface IVector {
     IVector normalize();
 
     double distanceSquared(IVector currentPoint);
+
+    boolean isInSphere(IVector target, int range);
 }

@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.location;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.block.Block;
@@ -55,4 +56,6 @@ public interface ILocation {
 
     double distanceSquared(ILocation targetLocation);
     ILocation clone();
+
+    IChunk getChunk();
 }

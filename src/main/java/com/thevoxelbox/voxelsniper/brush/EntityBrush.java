@@ -30,7 +30,7 @@ public class EntityBrush extends Brush {
     private void spawn(final SnipeData v) {
         for (int x = 0; x < v.getBrushSize(); x++) {
             try {
-                this.getWorld().spawn(this.getLastBlock().getLocation(), this.entityType.getEntityClass());
+                this.getWorld().spawn(this.getLastBlock().getLocation(), this.entityType);
             } catch (final IllegalArgumentException exception) {
                 v.sendMessage(ChatColor.RED + "Cannot spawn entity!");
             }

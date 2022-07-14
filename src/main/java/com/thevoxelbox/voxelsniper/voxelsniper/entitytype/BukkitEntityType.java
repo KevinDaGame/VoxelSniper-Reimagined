@@ -13,4 +13,7 @@ public class BukkitEntityType implements IEntityType {
     public String getName() {
         return type.getName();
     }
+    public EntityType getType() {
+        return type;
+    }
 }

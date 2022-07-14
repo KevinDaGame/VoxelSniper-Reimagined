@@ -18,12 +18,5 @@ public interface IEntity {
 
     ILocation getLocation();
     void setVelocity(IVector velocity);
-
-    void setFireTicks(int ticks);
-
-    void removePotionEffect(PotionEffectType effect);
-
     IWorld getWorld();
-
-    void addPotionEffect(PotionEffect potionEffect, boolean force);
 }

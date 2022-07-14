@@ -6,9 +6,12 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class BukkitEntity implements IEntity {
     private Entity entity;
@@ -28,9 +31,8 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public void remove() {
-
+        entity.remove();
     }
-
     @Override
     public int getEntityId() {
         return entity.getEntityId();
@@ -44,5 +46,10 @@ public class BukkitEntity implements IEntity {
     @Override
     public void setVelocity(IVector velocity) {
         entity.setVelocity(((BukkitVector)velocity).getVector());
+    }
+
+    @Override
+    public IWorld getWorld() {
+        return null;
     }
 }

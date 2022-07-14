@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.google.common.collect.ImmutableList;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -12,21 +13,21 @@ import java.util.List;
  */
 public class VoxelList {
 
-    private final List<IMaterial> materials = new ArrayList<>();
+    private final List<VoxelMaterial> materials = new ArrayList<>();
 
-    public void add(IMaterial material) {
+    public void add(VoxelMaterial material) {
         if (!materials.contains(material)) {
             this.materials.add(material);
         }
     }
 
-    public void remove(IMaterial material) {
+    public void remove(VoxelMaterial material) {
         if (materials.contains(material)) {
             this.materials.remove(material);
         }
     }
 
-    public boolean contains(IMaterial material) {
+    public boolean contains(VoxelMaterial material) {
         return this.materials.contains(material);
     }
 
@@ -51,7 +52,7 @@ public class VoxelList {
      *
      * @return defensive copy of the List with pairs
      */
-    public List<IMaterial> getList() {
+    public List<VoxelMaterial> getList() {
         return ImmutableList.copyOf(materials);
     }
 

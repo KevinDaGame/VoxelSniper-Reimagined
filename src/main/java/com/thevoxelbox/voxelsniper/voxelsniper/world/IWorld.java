@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.voxelsniper.world;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.block.Biome;
 
@@ -20,6 +22,6 @@ public interface IWorld {
     void strikeLightning(ILocation location);
 
     String getName();
-
+    void spawn(ILocation location, IEntityType entity);
     void setBiome(int x, int z, VoxelBiome selectedBiome);
 }

@@ -112,6 +112,11 @@ public class BukkitVector implements IVector {
         return vector.distanceSquared(((BukkitVector)currentPoint).vector);
     }
 
+    @Override
+    public boolean isInSphere(IVector target, int range) {
+        return vector.isInSphere(((BukkitVector)target).vector, range);
+    }
+
     public Vector getVector() {
         return vector;
     }

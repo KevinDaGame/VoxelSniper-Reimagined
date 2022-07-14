@@ -1,6 +1,8 @@
 package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
@@ -300,11 +302,11 @@ public class BlockHelper {
      */
     @SuppressWarnings(value = "deprecation")
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
-        Location targetLocation = p.getTargetBlock(null, 4).getLocation();
-        Chunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
+        ILocation targetLocation = p.getTargetBlock(null, 4).getLocation();
+        IChunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
         double bestDistanceMatch = 50.0;
         Painting bestMatch = null;
-        for (Entity entity : paintingChunk.getEntities()) {
+        for (IEntity entity : paintingChunk.getEntities()) {
             if (entity.getType() == EntityType.PAINTING) {
                 double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {

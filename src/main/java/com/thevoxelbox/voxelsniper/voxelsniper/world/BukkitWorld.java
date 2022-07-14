@@ -5,6 +5,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.World;
@@ -66,6 +69,12 @@ public class BukkitWorld implements IWorld {
     @Override
     public String getName() {
         return world.getName();
+    }
+
+    @Override
+    public void spawn(ILocation location, IEntityType entity) {
+        var bukkitloc = (BukkitLocation) location;
+        world.spawnEntity(bukkitloc.getLocation(), ((BukkitEntityType)entity).getType());
     }
 
     @Override

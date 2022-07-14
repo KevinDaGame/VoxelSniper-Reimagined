@@ -986,6 +986,12 @@ public class VoxelMaterial {
         this.key = key;
         this.version = version;
     }
+    public VoxelMaterial(String namespace, String key) {
+        this(namespace, key, V1_16);
+    }
+    public VoxelMaterial(String key) {
+        this("minecraft", key);
+    }
 
     public void setMain(IVoxelsniper voxelsniper){
         this.main = voxelsniper;
@@ -1000,7 +1006,9 @@ public class VoxelMaterial {
         }
         return null;
     }
-
+    public boolean isBlock() {
+        return getMaterial(this.getKey()) != null;
+    }
     public Version getVersion() {
         return version;
     }
