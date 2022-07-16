@@ -58,4 +58,6 @@ public interface ILocation {
     ILocation clone();
 
     IChunk getChunk();
+
+    double distance(ILocation location);
 }

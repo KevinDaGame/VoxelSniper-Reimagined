@@ -39,7 +39,7 @@ public class pExcludeMat extends vPerformer {
 
     @Override
     public void perform(IBlock b) {
-        if (!excludeList.contains(b.getMaterial())) {
+        if (!excludeList.contains(b.getMaterial().getVoxelMaterial())) {
             h.put(b);
             b.setBlockData(voxelMaterial.createBlockData());
         }

@@ -5,9 +5,8 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -71,7 +70,7 @@ public class JockeyBrush extends Brush {
         }
 
         if (closest != null) {
-            final IPlayer player = v.owner().getPlayer();
+            final AbstractPlayer player = v.owner().getPlayer();
             final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(player, player.getLocation(), closest.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
 
             Bukkit.getPluginManager().callEvent(playerTeleportEvent);
@@ -93,11 +92,11 @@ public class JockeyBrush extends Brush {
     private void stack(final SnipeData v) {
         final int brushSizeDoubled = v.getBrushSize() * 2;
 
-        List<Entity> nearbyEntities = v.owner().getPlayer().getNearbyEntities(brushSizeDoubled, brushSizeDoubled, brushSizeDoubled);
-        Entity lastEntity = v.owner().getPlayer();
+        List<IEntity> nearbyEntities = v.owner().getPlayer().getNearbyEntities(brushSizeDoubled, brushSizeDoubled, brushSizeDoubled);
+        IEntity lastEntity = v.owner().getPlayer();
         int stackHeight = 0;
 
-        for (Entity entity : nearbyEntities) {
+        for (IEntity entity : nearbyEntities) {
             if (!(stackHeight >= ENTITY_STACK_LIMIT)) {
                 if (jockeyType == JockeyType.STACK_ALL_ENTITIES) {
                     lastEntity.addPassenger(entity);

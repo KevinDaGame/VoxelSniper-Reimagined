@@ -7,6 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -82,7 +83,7 @@ public class StampBrush extends Brush {
     }
 
 
-    protected final boolean fallsOff(final IMaterial material) {
+    protected final boolean fallsOff(final VoxelMaterial material) {
         switch (material) {
             // TODO: Translate this
             // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83
@@ -143,7 +144,7 @@ public class StampBrush extends Brush {
             this.drop.clear();
             this.solid.clear();
             for (final BlockWrapper block : this.clone) {
-                if (this.fallsOff(block.blockData.getMaterial())) {
+                if (this.fallsOff(block.blockData.getMaterial().getVoxelMaterial())) {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
@@ -186,7 +187,7 @@ public class StampBrush extends Brush {
             this.drop.clear();
             this.solid.clear();
             for (final BlockWrapper block : this.clone) {
-                if (this.fallsOff(block.blockData.getMaterial())) {
+                if (this.fallsOff(block.blockData.getMaterial().getVoxelMaterial())) {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
@@ -229,7 +230,7 @@ public class StampBrush extends Brush {
             this.drop.clear();
             this.solid.clear();
             for (final BlockWrapper block : this.clone) {
-                if (this.fallsOff(block.blockData.getMaterial())) {
+                if (this.fallsOff(block.blockData.getMaterial().getVoxelMaterial())) {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);

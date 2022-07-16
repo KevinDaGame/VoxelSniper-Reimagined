@@ -5,14 +5,11 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
-import org.bukkit.entity.Player;
 
 /**
  * @author Voxel
@@ -64,7 +61,7 @@ public class BlockHelper {
      * @param range
      * @param step
      */
-    public BlockHelper(final IPlayer player, final int range, final double step) {
+    public BlockHelper(final AbstractPlayer player, final int range, final double step) {
         this.init(player.getLocation(), range, step, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
     }
 
@@ -74,7 +71,7 @@ public class BlockHelper {
      * @param player
      * @param world
      */
-    public BlockHelper(final IPlayer player, final IWorld world) {
+    public BlockHelper(final AbstractPlayer player, final IWorld world) {
         this.world = world;
         this.init(player.getLocation(), BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
         // values
@@ -85,7 +82,7 @@ public class BlockHelper {
      * @param world
      * @param range
      */
-    public BlockHelper(final IPlayer player, final IWorld world, final double range) {
+    public BlockHelper(final AbstractPlayer player, final IWorld world, final double range) {
         this.world = world;
         this.init(player.getLocation(), range, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
         this.fromOffworld();
@@ -301,7 +298,7 @@ public class BlockHelper {
      * @param choice Chosen index to set the painting to
      */
     @SuppressWarnings(value = "deprecation")
-    public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
+    public static void painting(final AbstractPlayer p, final boolean auto, final boolean back, final int choice) {
         ILocation targetLocation = p.getTargetBlock(null, 4).getLocation();
         IChunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
         double bestDistanceMatch = 50.0;

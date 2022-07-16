@@ -4,10 +4,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public interface IEntity {
     IEntityType getType();
@@ -19,4 +15,7 @@ public interface IEntity {
     ILocation getLocation();
     void setVelocity(IVector velocity);
     IWorld getWorld();
+
+    void addPassenger(IEntity entity);
+    ILocation getEyeLocation();
 }

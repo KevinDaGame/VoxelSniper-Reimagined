@@ -2,12 +2,9 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,7 +31,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public final void onPlayerInteract(final PlayerInteractEvent event) {
-        IPlayer player = new BukkitPlayer(event.getPlayer());
+        AbstractPlayer player = new BukkitPlayer(event.getPlayer());
 
         if (!player.hasPermission(SNIPER_PERMISSION)) {
             return;
@@ -54,7 +51,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
-        IPlayer player = new BukkitPlayer(event.getPlayer());
+        AbstractPlayer player = new BukkitPlayer(event.getPlayer());
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {

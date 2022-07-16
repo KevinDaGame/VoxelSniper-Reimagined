@@ -1,12 +1,12 @@
 package com.thevoxelbox.voxelsniper.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelSniperConfiguration;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 
 import java.util.UUID;
 
 public interface IVoxelsniper {
-    IPlayer getPlayer(UUID uuid);
+    AbstractPlayer getPlayer(UUID uuid);
     Environment getEnvironment();
     Version getVersion();
 

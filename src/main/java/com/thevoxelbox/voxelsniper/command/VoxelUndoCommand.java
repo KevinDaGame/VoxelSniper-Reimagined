@@ -2,8 +2,8 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -63,7 +63,7 @@ public class VoxelUndoCommand extends VoxelCommand {
         // Command: /u [playerName]             <- Undo [playerName]'s changes.
         if (args.length == 1 || args.length == 2) {
             try {
-                IPlayer targetPlayer = new BukkitPlayer(Bukkit.getPlayer(args[0]));
+                AbstractPlayer targetPlayer = new BukkitPlayer(Bukkit.getPlayer(args[0]));
                 assert targetPlayer != null;
 
                 sniper = profileManager.getSniperForPlayer(targetPlayer);

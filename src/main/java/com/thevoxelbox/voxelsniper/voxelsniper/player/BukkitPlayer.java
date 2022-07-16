@@ -4,18 +4,20 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 
 import java.util.*;
 
-public class BukkitPlayer implements IPlayer {
+public class BukkitPlayer extends AbstractPlayer {
     private final Player player;
 
     public BukkitPlayer(Player player) {
@@ -25,6 +27,11 @@ public class BukkitPlayer implements IPlayer {
     @Override
     public BukkitWorld getWorld() {
         return new BukkitWorld(player.getWorld());
+    }
+
+    @Override
+    public void addPassenger(IEntity entity) {
+
     }
 
     @Override
@@ -40,6 +47,11 @@ public class BukkitPlayer implements IPlayer {
     @Override
     public BukkitLocation getLocation() {
         return new BukkitLocation(player.getLocation());
+    }
+
+    @Override
+    public void setVelocity(IVector velocity) {
+
     }
 
     @Override
@@ -68,6 +80,16 @@ public class BukkitPlayer implements IPlayer {
     }
 
     @Override
+    public IEntityType getType() {
+        return null;
+    }
+
+    @Override
+    public void remove() {
+
+    }
+
+    @Override
     public int getEntityId() {
         return 0;
     }
@@ -89,5 +111,11 @@ public class BukkitPlayer implements IPlayer {
             materials.add(((BukkitMaterial)MaterialFactory.getMaterial(material)).getMaterial());
         }
         return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
+    }
+
+    @Override
+    public VoxelMaterial getItemInHand() {
+        var item = player.getInventory().getItemInMainHand();
+        return new VoxelMaterial(item.getType().getKey().getKey());
     }
 }

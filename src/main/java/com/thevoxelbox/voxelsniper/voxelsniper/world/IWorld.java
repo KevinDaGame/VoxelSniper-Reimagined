@@ -24,4 +24,8 @@ public interface IWorld {
     String getName();
     void spawn(ILocation location, IEntityType entity);
     void setBiome(int x, int z, VoxelBiome selectedBiome);
+
+    int getHighestBlockYAt(int x, int z);
+
+    void regenerateChunk(int x, int z);
 }

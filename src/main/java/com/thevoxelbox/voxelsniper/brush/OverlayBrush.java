@@ -50,7 +50,7 @@ public class OverlayBrush extends PerformerBrush {
                             if (!isIgnoredBlock(layerBlock)) {
                                 for (int currentDepth = y; y - currentDepth < depth; currentDepth--) {
                                     final IMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
-                                    if (isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
+                                    if (isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
                                         this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z));
                                     }
                                 }
@@ -80,7 +80,7 @@ public class OverlayBrush extends PerformerBrush {
                                 if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == new BukkitMaterial( Material.AIR)) { // must start at surface... this prevents it filling stuff in if
                                     // you click in a wall and it starts out below surface.
                                     final IMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
-                                    if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
+                                    if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
                                         for (int d = 1; (d < this.depth + 1); d++) {
                                             this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
                                             // in parameters
@@ -103,7 +103,7 @@ public class OverlayBrush extends PerformerBrush {
         return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material == new BukkitMaterial( Material.CACTUS);
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, IMaterial material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
@@ -111,7 +111,7 @@ public class OverlayBrush extends PerformerBrush {
         if (allBlocks && !(material.equals(VoxelMaterial.AIR))) {
             return true;
         }
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material.getVoxelMaterial());
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override
