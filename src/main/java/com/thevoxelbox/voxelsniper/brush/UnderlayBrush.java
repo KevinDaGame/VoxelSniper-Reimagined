@@ -46,7 +46,7 @@ public class UnderlayBrush extends PerformerBrush {
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
                             final IMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
-                            if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
+                            if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
                                 for (int d = 0; (d < this.depth); d++) {
                                     if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getMaterial() != new BukkitMaterial( Material.AIR)) {
                                         this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
@@ -75,7 +75,7 @@ public class UnderlayBrush extends PerformerBrush {
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
                             final IMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
-                            if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
+                            if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
                                 for (int d = -1; (d < this.depth - 1); d++) {
                                     this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                     // parameters
@@ -91,16 +91,16 @@ public class UnderlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, IMaterial material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
 
-        if (allBlocks && !(material == new BukkitMaterial( Material.AIR))) {
+        if (allBlocks && !(material == VoxelMaterial.AIR)) {
             return true;
         }
 
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material.getVoxelMaterial());
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override

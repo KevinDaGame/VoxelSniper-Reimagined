@@ -10,6 +10,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -51,5 +52,15 @@ public class BukkitEntity implements IEntity {
     @Override
     public IWorld getWorld() {
         return null;
+    }
+
+    @Override
+    public void addPassenger(IEntity entity) {
+        this.entity.addPassenger(((BukkitEntity)entity).getEntity());
+    }
+
+    @Override
+    public ILocation getEyeLocation() {
+        return new BukkitLocation(((LivingEntity)entity).getEyeLocation());
     }
 }

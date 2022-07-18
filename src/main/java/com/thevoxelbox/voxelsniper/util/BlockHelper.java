@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.util;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
@@ -304,7 +305,7 @@ public class BlockHelper {
         double bestDistanceMatch = 50.0;
         Painting bestMatch = null;
         for (IEntity entity : paintingChunk.getEntities()) {
-            if (entity.getType() == EntityType.PAINTING) {
+            if (((BukkitEntityType)entity.getType()).getType() == EntityType.PAINTING) {
                 double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;

@@ -78,8 +78,20 @@ public class BukkitWorld implements IWorld {
     }
 
     @Override
+    @Deprecated
     public void setBiome(int x, int z, VoxelBiome selectedBiome) {
         world.setBiome(x, z, Biome.valueOf(selectedBiome.key()));
+    }
+
+    @Override
+    public int getHighestBlockYAt(int x, int z) {
+        return world.getHighestBlockYAt(x, z);
+    }
+
+    @Override
+    @Deprecated
+    public void regenerateChunk(int x, int z) {
+        world.regenerateChunk(x, z);
     }
 
     public World getWorld() {

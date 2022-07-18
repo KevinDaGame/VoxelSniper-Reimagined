@@ -12,7 +12,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  *
@@ -79,11 +81,12 @@ public class StampBrush extends Brush {
     protected final boolean falling(final IMaterial material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
-        return false;
+        return material.hasGravity();
     }
 
 
     protected final boolean fallsOff(final VoxelMaterial material) {
+        //todo find a way to check
         switch (material) {
             // TODO: Translate this
             // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83

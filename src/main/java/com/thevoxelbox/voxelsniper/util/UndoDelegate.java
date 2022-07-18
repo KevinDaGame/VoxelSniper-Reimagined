@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.BlockChangeDelegate;
@@ -29,15 +30,15 @@ public class UndoDelegate implements BlockChangeDelegate {
     }
 
     @Override
-    public boolean setBlockData(int x, int y, int z, IBlockData blockData) {
+    public boolean setBlockData(int x, int y, int z, BlockData blockData) {
         this.currentUndo.put(targetWorld.getBlock(x, y, z));
-        this.targetWorld.getBlock(x, y, z).setBlockData(blockData, false);
+        this.targetWorld.getBlock(x, y, z).setBlockData((BukkitBlockData)blockData, false);
         return true;
     }
 
     @Override
     public BlockData getBlockData(int x, int y, int z) {
-        return this.targetWorld.getBlock(x, y, z).getBlockData();
+        return ((BukkitBlockData)this.targetWorld.getBlock(x, y, z)).getBlockData();
     }
 
     public boolean setBlock(IBlock b) {

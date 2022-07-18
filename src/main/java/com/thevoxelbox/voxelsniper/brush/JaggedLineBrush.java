@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.util.BlockIterator;
@@ -56,7 +58,7 @@ public class JaggedLineBrush extends PerformerBrush {
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.getWorld()).getBlock());
         } else {
-            for (final BlockIterator iterator = new BlockIterator(this.getWorld(), originClone, direction, 0, NumberConversions.round(length)); iterator.hasNext();) {
+            for (final BlockIterator iterator = new BlockIterator(((BukkitWorld)this.getWorld()).getWorld(), ((BukkitVector)originClone).getVector(), ((BukkitVector)direction).getVector(), 0, NumberConversions.round(length)); iterator.hasNext();) {
                 final Block block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
                     this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));

@@ -1,6 +1,8 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.location;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
@@ -92,6 +94,16 @@ public class BukkitLocation extends AbstractLocation {
     @Override
     public ILocation clone() {
         return new BukkitLocation(location.clone());
+    }
+
+    @Override
+    public IChunk getChunk() {
+        return new BukkitChunk(location.getChunk());
+    }
+
+    @Override
+    public double distance(ILocation location) {
+        return this.location.distance(((BukkitLocation)location).getLocation());
     }
 
     public Location getLocation() {

@@ -3,9 +3,12 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.util.BlockIterator;
@@ -59,8 +62,9 @@ public class LineBrush extends PerformerBrush {
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.targetWorld).getBlock());
         } else {
-            for (final BlockIterator blockIterator = new BlockIterator(this.targetWorld, originClone, direction, 0, NumberConversions.round(length)); blockIterator.hasNext();) {
-                final IBlock currentBlock = blockIterator.next();
+            //TODO replace BlockIterator
+            for (final BlockIterator blockIterator = new BlockIterator(((BukkitWorld)this.targetWorld).getWorld(), ((BukkitVector)originClone).getVector(), ((BukkitVector)direction).getVector(), 0, NumberConversions.round(length)); blockIterator.hasNext();) {
+                final IBlock currentBlock = new BukkitBlock(blockIterator.next());
                 this.currentPerformer.perform(currentBlock);
             }
         }
