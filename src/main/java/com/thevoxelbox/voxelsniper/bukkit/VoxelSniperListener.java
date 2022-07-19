@@ -43,7 +43,6 @@ public class VoxelSniperListener implements Listener {
                 event.setCancelled(true);
             }
         } catch (final Exception ignored) {
-            ignored.printStackTrace();
         }
     }
 
