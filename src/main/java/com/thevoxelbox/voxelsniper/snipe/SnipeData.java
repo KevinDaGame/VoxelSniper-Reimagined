@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelList;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -82,8 +83,8 @@ public class SnipeData {
         return voxelSubstance;
     }
 
-    public IMaterial getVoxelMaterial() {
-        return voxelSubstance.getMaterial();
+    public VoxelMaterial getVoxelMaterial() {
+        return voxelSubstance.getMaterial().getVoxelMaterial();
     }
 
     public void setVoxelSubstance(IBlockData voxelSubstance) {
@@ -94,8 +95,8 @@ public class SnipeData {
         return replaceSubstance;
     }
 
-    public IMaterial getReplaceMaterial() {
-        return replaceSubstance.getMaterial();
+    public VoxelMaterial getReplaceMaterial() {
+        return replaceSubstance.getMaterial().getVoxelMaterial();
     }
 
     public void setReplaceSubstance(IBlockData targetSubstance) {

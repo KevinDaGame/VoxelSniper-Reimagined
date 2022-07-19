@@ -55,7 +55,6 @@ public interface ILocation {
     IVector toVector();
 
     double distanceSquared(ILocation targetLocation);
-    ILocation clone();
 
     IChunk getChunk();
 

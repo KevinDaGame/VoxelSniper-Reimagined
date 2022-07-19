@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import org.bukkit.ChatColor;
 
 /**
@@ -75,7 +76,7 @@ public class ShellBallBrush extends Brush {
                     }
 
                     if (temp == 0) {
-                        newMaterials[x][y][z] = v.getVoxelMaterial();
+                        newMaterials[x][y][z] = MaterialFactory.getMaterial(v.getVoxelMaterial());
                     }
                 }
             }

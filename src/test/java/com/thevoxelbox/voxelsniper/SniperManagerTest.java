@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 
 import java.util.UUID;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.junit.Assert;
@@ -28,7 +29,7 @@ public class SniperManagerTest {
     @Test
     public void testGetSniperForPlayer() {
         UUID uuid = UUID.randomUUID();
-        Player player = Mockito.mock(Player.class);
+        AbstractPlayer player = Mockito.mock(AbstractPlayer.class);
         Mockito.when(player.getUniqueId())
                 .thenReturn(uuid);
 

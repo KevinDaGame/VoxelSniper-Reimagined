@@ -29,4 +29,9 @@ public class BukkitBlockData implements IBlockData {
     public String getAsString() {
         return blockData.getAsString();
     }
+
+    @Override
+    public IBlockData merge(IBlockData newData) {
+        return new BukkitBlockData(this.blockData.merge(((BukkitBlockData) newData).getBlockData()));
+    }
 }

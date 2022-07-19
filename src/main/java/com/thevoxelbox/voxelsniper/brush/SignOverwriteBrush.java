@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
@@ -290,7 +291,8 @@ public class SignOverwriteBrush extends Brush {
      * @param v
      */
     private void saveBufferToFile(final String fileName, final SnipeData v) {
-        final File store = new File(VoxelSniper.getInstance().getDataFolder() + "/" + fileName + ".vsign");
+        final File store = VoxelSniper.voxelsniper.getFileHandler().getDataFile( "/" + fileName + ".vsign");
+
         if (store.exists()) {
             v.sendMessage("This file already exists.");
             return;
@@ -324,7 +326,7 @@ public class SignOverwriteBrush extends Brush {
      * @param v
      */
     private void loadBufferFromFile(final String fileName, final String userDomain, final SnipeData v) {
-        final File store = new File(VoxelSniper.getInstance().getDataFolder() + "/" + fileName + ".vsign");
+        final File store = VoxelSniper.voxelsniper.getFileHandler().getDataFile( "/" + fileName + ".vsign");
         if (!store.exists()) {
             v.sendMessage("This file does not exist.");
             return;

@@ -117,6 +117,11 @@ public class BukkitVector implements IVector {
         return vector.isInSphere(((BukkitVector)target).vector, range);
     }
 
+    @Override
+    public double lengthSquared() {
+        return vector.lengthSquared();
+    }
+
     public Vector getVector() {
         return vector;
     }

@@ -1,9 +1,13 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import org.bukkit.Bukkit;
@@ -21,6 +25,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
     private VoxelSniperConfiguration voxelSniperConfiguration;
+    private IFileHandler fileHandler;
 
     /**
      * @return {@link BukkitVoxelSniper}
@@ -36,10 +41,12 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
      */
     @Override
     public void onEnable() {
+        VoxelSniper.voxelsniper = this;
         BukkitVoxelSniper.instance = this;
         LocationFactory.main = this;
         VectorFactory.main = this;
-
+        this.fileHandler = new BukkitFileHandler(this);
+        VoxelMaterial.setMain(this);
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize(this);
 
@@ -71,12 +78,17 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     @Override
     public Version getVersion() {
         //todo: Does this work?
-        String version = "V" + Bukkit.getBukkitVersion().split("-")[0].replace('.' , '_').split("_")[0];
+        String version = "V" + Bukkit.getBukkitVersion().substring(0, 4).replace('.' , '_');
         return Version.valueOf(version);
     }
 
     @Override
     public VoxelSniperConfiguration getVoxelSniperConfiguration() {
         return voxelSniperConfiguration;
+    }
+
+    @Override
+    public IFileHandler getFileHandler() {
+        return fileHandler;
     }
 }

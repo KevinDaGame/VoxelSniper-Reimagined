@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -124,7 +125,7 @@ public class ScannerBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.checkFor = v.getVoxelMaterial();
+        this.checkFor = MaterialFactory.getMaterial(v.getVoxelMaterial());
         this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
     }
 

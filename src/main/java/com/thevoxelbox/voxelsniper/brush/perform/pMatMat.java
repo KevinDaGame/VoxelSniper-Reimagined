@@ -7,6 +7,8 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -15,8 +17,8 @@ import org.bukkit.block.Block;
  */
 public class pMatMat extends vPerformer {
 
-    private IMaterial voxelMaterial;
-    private IMaterial targetMaterial;
+    private VoxelMaterial voxelMaterial;
+    private VoxelMaterial targetMaterial;
 
     public pMatMat() {
         name = "Mat-Mat";
@@ -40,7 +42,7 @@ public class pMatMat extends vPerformer {
     public void perform(IBlock b) {
         if (b.getMaterial() == targetMaterial) {
             h.put(b);
-            b.setBlockData(voxelMaterial.createBlockData());
+            b.setBlockData(MaterialFactory.getMaterial(voxelMaterial).createBlockData());
         }
     }
 

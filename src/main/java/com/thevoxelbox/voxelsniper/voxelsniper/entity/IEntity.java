@@ -5,6 +5,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
+import java.util.List;
+
 public interface IEntity {
     IEntityType getType();
 
@@ -18,4 +20,8 @@ public interface IEntity {
 
     void addPassenger(IEntity entity);
     ILocation getEyeLocation();
+
+    List<IEntity> getNearbyEntities(int x, int y, int z);
+
+    void eject();
 }

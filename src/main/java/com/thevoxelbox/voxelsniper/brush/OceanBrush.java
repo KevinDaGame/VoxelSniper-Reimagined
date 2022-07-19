@@ -7,6 +7,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -149,7 +150,7 @@ public class OceanBrush extends Brush {
                      IBlock  block = world.getBlock(x, newSeaFloorLevel, z);
                     if (block.getMaterial() != v.getVoxelMaterial()) {
                         undo.put(block);
-                        block.setBlockData(v.getVoxelMaterial().createBlockData());
+                        block.setBlockData(MaterialFactory.getMaterial(v.getVoxelMaterial()).createBlockData());
                     }
                 }
             }

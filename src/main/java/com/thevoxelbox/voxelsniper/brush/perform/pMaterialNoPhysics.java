@@ -7,6 +7,8 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -15,7 +17,7 @@ import org.bukkit.block.Block;
  */
 public class pMaterialNoPhysics extends vPerformer {
 
-    private IMaterial voxelMaterial;
+    private VoxelMaterial voxelMaterial;
 
     public pMaterialNoPhysics() {
         name = "Material, No Physics";
@@ -37,7 +39,7 @@ public class pMaterialNoPhysics extends vPerformer {
     public void perform(IBlock b) {
         if (b.getMaterial() != voxelMaterial) {
             h.put(b);
-            b.setBlockData(voxelMaterial.createBlockData(), false);
+            b.setBlockData(MaterialFactory.getMaterial(voxelMaterial).createBlockData(), false);
         }
     }
 }

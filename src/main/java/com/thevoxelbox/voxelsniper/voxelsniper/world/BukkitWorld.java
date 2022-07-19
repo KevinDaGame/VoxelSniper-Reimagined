@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
+import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
@@ -10,6 +11,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
@@ -92,6 +94,12 @@ public class BukkitWorld implements IWorld {
     @Deprecated
     public void regenerateChunk(int x, int z) {
         world.regenerateChunk(x, z);
+    }
+
+    @Override
+    public void generateTree(ILocation location, TreeType treeType, UndoDelegate undoDelegate) {
+
+        world.generateTree(((BukkitLocation)location).getLocation(), treeType, undoDelegate);
     }
 
     public World getWorld() {

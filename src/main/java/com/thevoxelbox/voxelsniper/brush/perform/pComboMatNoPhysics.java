@@ -8,6 +8,7 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -18,7 +19,7 @@ import org.bukkit.block.data.BlockData;
 public class pComboMatNoPhysics extends vPerformer {
 
     private IBlockData voxelSubstance;
-    private IMaterial targetMaterial;
+    private VoxelMaterial targetMaterial;
 
     public pComboMatNoPhysics() {
         name = "Combo-Mat, No Physics";

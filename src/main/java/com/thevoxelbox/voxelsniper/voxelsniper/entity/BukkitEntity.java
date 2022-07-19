@@ -14,6 +14,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BukkitEntity implements IEntity {
     private Entity entity;
 
@@ -62,5 +65,20 @@ public class BukkitEntity implements IEntity {
     @Override
     public ILocation getEyeLocation() {
         return new BukkitLocation(((LivingEntity)entity).getEyeLocation());
+    }
+
+    @Override
+    public List<IEntity> getNearbyEntities(int x, int y, int z) {
+        var entities = entity.getNearbyEntities(x, y, z);
+        var result = new ArrayList<IEntity>();
+        for (var entity : entities) {
+            result.add(new BukkitEntity(entity));
+        }
+        return result;
+    }
+
+    @Override
+    public void eject() {
+        entity.eject();
     }
 }

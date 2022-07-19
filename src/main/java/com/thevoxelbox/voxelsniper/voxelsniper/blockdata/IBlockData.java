@@ -8,4 +8,6 @@ public interface IBlockData {
     boolean matches(IBlockData blockData);
 
     String getAsString();
+
+    IBlockData merge(IBlockData newData);
 }

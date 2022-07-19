@@ -4,7 +4,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import org.bukkit.Material;
 
-public class BukkitMaterial implements IMaterial {
+public class BukkitMaterial implements IMaterial, Comparable<BukkitMaterial> {
     private final Material material;
 
     public BukkitMaterial(Material material) {
@@ -56,8 +56,22 @@ public class BukkitMaterial implements IMaterial {
         return VoxelMaterial.getMaterial(this.getMaterial().getKey().getNamespace(), this.getMaterial().getKey().getKey());
     }
 
+    @Override
+    public boolean hasGravity() {
+        return material.hasGravity();
+    }
+
+    @Override
+    public IBlockData createBlockData(String s) {
+        return new BukkitBlockData(material.createBlockData(s));
+    }
+
     public Material getMaterial() {
         return material;
     }
 
+    @Override
+    public int compareTo(BukkitMaterial o) {
+        return material.compareTo(o.material);
+    }
 }

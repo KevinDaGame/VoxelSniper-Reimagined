@@ -39,10 +39,11 @@ public class VoxelSniperListener implements Listener {
 
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
-            if (sniper.isEnabled() && sniper.snipe(event.getAction(), VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()), new BukkitBlock(event.getClickedBlock()), event.getBlockFace())) {
+            if (sniper.isEnabled() && sniper.snipe(event.getAction(), VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()), event.getClickedBlock() == null ? null : new BukkitBlock(event.getClickedBlock()), event.getBlockFace())) {
                 event.setCancelled(true);
             }
         } catch (final Exception ignored) {
+            ignored.printStackTrace();
         }
     }
 

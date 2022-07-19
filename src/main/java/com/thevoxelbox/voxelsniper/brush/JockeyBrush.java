@@ -5,8 +5,10 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -71,7 +73,7 @@ public class JockeyBrush extends Brush {
 
         if (closest != null) {
             final AbstractPlayer player = v.owner().getPlayer();
-            final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(player, player.getLocation(), closest.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+            final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(((BukkitPlayer)player).getPlayer(), ((BukkitLocation)player.getLocation()).getLocation(), ((BukkitLocation)closest.getLocation()).getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
 
             Bukkit.getPluginManager().callEvent(playerTeleportEvent);
 

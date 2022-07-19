@@ -993,14 +993,17 @@ public class VoxelMaterial {
         this("minecraft", key);
     }
 
-    public void setMain(IVoxelsniper voxelsniper){
-        this.main = voxelsniper;
+    public static void setMain(IVoxelsniper voxelsniper){
+        main = voxelsniper;
     }
     public static VoxelMaterial getMaterial(String key) {
         return getMaterial("minecraft", key);
     }
     public static VoxelMaterial getMaterial(String namespace, String key) {
         var block = BLOCKS.get(namespace + ":" + key);
+        if(block == null) {
+            return new VoxelMaterial(namespace, key);
+        }
         if(main.getVersion().isSupported(block.getVersion())){
             return block;
         }

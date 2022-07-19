@@ -70,6 +70,16 @@ public class BukkitPlayer extends AbstractPlayer {
     }
 
     @Override
+    public List<IEntity> getNearbyEntities(int x, int y, int z) {
+        var entities = player.getNearbyEntities(x, y, z);
+        var result = new ArrayList<IEntity>();
+        for (var entity : entities) {
+             result.add(new BukkitEntity(entity));
+        }
+        return result;
+    }
+
+    @Override
     public String getName() {
         return player.getName();
     }
@@ -117,5 +127,9 @@ public class BukkitPlayer extends AbstractPlayer {
     public VoxelMaterial getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
         return new VoxelMaterial(item.getType().getKey().getKey());
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

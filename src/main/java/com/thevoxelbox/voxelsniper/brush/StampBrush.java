@@ -87,16 +87,18 @@ public class StampBrush extends Brush {
 
     protected final boolean fallsOff(final VoxelMaterial material) {
         //todo find a way to check
-        switch (material) {
-            // TODO: Translate this
-            // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83
-            /**
-             * case (6): case (37): case (38): case (39): case (40): case (50): case (51): case (55): case (59): case (63): case (64): case (65): case (66):
-             * case (68): case (69): case (70): case (71): case (72): case (75): case (76): case (77): case (78): case (83): case (93): case (94):
-             */
-            default:
-                return false;
-        }
+//        switch (material) {
+//            // TODO: Translate this
+//            // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83
+//            /**
+//             * case (6): case (37): case (38): case (39): case (40): case (50): case (51): case (55): case (59): case (63): case (64): case (65): case (66):
+//             * case (68): case (69): case (70): case (71): case (72): case (75): case (76): case (77): case (78): case (83): case (93): case (94):
+//             */
+//            default:
+//                return false;
+//        }
+
+        return false;
     }
 
     /**

@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class ShellSetBrush extends Brush {
                 for (final IBlock currentBlock : blocks) {
                     if (currentBlock.getMaterial() != v.getVoxelMaterial()) {
                         undo.put(currentBlock);
-                        currentBlock.setBlockData(v.getVoxelMaterial().createBlockData());
+                        currentBlock.setBlockData(MaterialFactory.getMaterial(v.getVoxelMaterial()).createBlockData());
                     }
                 }
                 v.owner().storeUndo(undo);

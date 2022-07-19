@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -60,7 +61,7 @@ public class VoxelInkCommand extends VoxelCommand {
         // Command: /vi [material]      <- Sets the defined material as voxel substance.
         if (args.length >= 1) {
             try {
-                IBlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
+                IBlockData newData = MaterialFactory.getMaterial(snipeData.getVoxelMaterial()).createBlockData("[" + String.join(",", args) + "]");
                 IBlockData activeData = snipeData.getVoxelSubstance();
 
                 snipeData.setVoxelSubstance(activeData.merge(newData));

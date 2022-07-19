@@ -16,4 +16,8 @@ public interface IMaterial {
     boolean isBlock();
 
     VoxelMaterial getVoxelMaterial();
+
+    boolean hasGravity();
+
+    IBlockData createBlockData(String s);
 }
