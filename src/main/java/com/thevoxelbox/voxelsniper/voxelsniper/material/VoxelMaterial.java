@@ -1009,6 +1009,25 @@ public class VoxelMaterial {
         }
         return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VoxelMaterial that = (VoxelMaterial) o;
+        return version == that.version && key.equals(that.key) && namespace.equals(that.namespace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(version, key, namespace);
+    }
+
+    @Override
+    public String toString() {
+        return namespace + ":" + key;
+    }
+
     public boolean isBlock() {
         return getMaterial(this.getKey()) != null;
     }

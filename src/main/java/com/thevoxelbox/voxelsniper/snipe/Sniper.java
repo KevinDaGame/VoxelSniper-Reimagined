@@ -37,8 +37,8 @@ public class Sniper {
         this.main = main;
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
-        sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("ARROW"));
-        sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterial("GUNPOWDER"));
+        sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
+        sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterial("gunpowder"));
         tools.put(null, sniperTool);
     }
 
@@ -101,7 +101,7 @@ public class Sniper {
         }
 
         SnipeData snipeData = sniperTool.getSnipeData();
-        SnipeAction snipeAction = sniperTool.getActionAssigned(MaterialFactory.getMaterial(itemInHand));
+        SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
         IBlock targetBlock;
         IBlock lastBlock = null;
 

@@ -7,6 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
@@ -44,6 +45,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
         VoxelSniper.voxelsniper = this;
         BukkitVoxelSniper.instance = this;
         LocationFactory.main = this;
+        MaterialFactory.main = this;
         VectorFactory.main = this;
         this.fileHandler = new BukkitFileHandler(this);
         VoxelMaterial.setMain(this);

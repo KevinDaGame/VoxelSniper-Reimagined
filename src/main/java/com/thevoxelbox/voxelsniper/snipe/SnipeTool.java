@@ -89,7 +89,7 @@ public class SnipeTool {
         return null;
     }
 
-    public SnipeAction getActionAssigned(IMaterial itemInHand) {
+    public SnipeAction getActionAssigned(VoxelMaterial itemInHand) {
         return actionTools.inverse().get(itemInHand);
     }
 
