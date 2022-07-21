@@ -17,32 +17,47 @@ public class BukkitLocation extends AbstractLocation {
     }
 
     @Override
-    public int getX() {
+    public int getBlockX() {
         return location.getBlockX();
     }
 
     @Override
-    public int getY() {
+    public int getBlockY() {
         return location.getBlockY();
     }
 
     @Override
-    public int getZ() {
+    public int getBlockZ() {
         return location.getBlockZ();
     }
 
     @Override
-    public void setX(int x) {
+    public double getX() {
+        return location.getX();
+    }
+
+    @Override
+    public double getY() {
+        return location.getY();
+    }
+
+    @Override
+    public double getZ() {
+        return location.getZ();
+    }
+
+    @Override
+    public void setX(double x) {
         location.setX(x);
     }
 
     @Override
-    public void setY(int y) {
+    public void setY(double y) {
         location.setY(y);
     }
 
     @Override
-    public void setZ(int z) {
+    public void setZ(double z) {
         location.setZ(z);
     }
 
@@ -73,7 +88,7 @@ public class BukkitLocation extends AbstractLocation {
 
     @Override
     public IBlock getClampedBlock() {
-        return getWorld().getBlock(location.getBlockX(), Math.max(Math.min(getY(), getWorld().getMaxWorldHeight()), getWorld().getMinWorldHeight()), location.getBlockZ());
+        return getWorld().getBlock(location.getBlockX(), Math.max(Math.min(getBlockY(), getWorld().getMaxWorldHeight()), getWorld().getMinWorldHeight()), location.getBlockZ());
     }
 
     @Override

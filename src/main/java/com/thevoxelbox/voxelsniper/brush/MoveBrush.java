@@ -322,12 +322,12 @@ public class MoveBrush extends Brush {
         public boolean calculateRegion() throws Exception {
             if (this.location1 != null && this.location2 != null) {
                 if (this.location1.getWorld().equals(this.location2.getWorld())) {
-                    final int lowX = (Math.min(this.location1.getX(), this.location2.getX()));
-                    final int lowY = Math.min(this.location1.getY(), this.location2.getY());
-                    final int lowZ = Math.min(this.location1.getZ(), this.location2.getZ());
-                    final int highX = Math.max(this.location1.getX(), this.location2.getX());
-                    final int highY = Math.max(this.location1.getY(), this.location2.getY());
-                    final int highZ = Math.max(this.location1.getZ(), this.location2.getZ());
+                    final int lowX = (Math.min(this.location1.getBlockX(), this.location2.getBlockX()));
+                    final int lowY = Math.min(this.location1.getBlockY(), this.location2.getBlockY());
+                    final int lowZ = Math.min(this.location1.getBlockZ(), this.location2.getBlockZ());
+                    final int highX = Math.max(this.location1.getBlockX(), this.location2.getBlockX());
+                    final int highY = Math.max(this.location1.getBlockY(), this.location2.getBlockY());
+                    final int highZ = Math.max(this.location1.getBlockZ(), this.location2.getBlockZ());
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
                         throw new Exception(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
                     }

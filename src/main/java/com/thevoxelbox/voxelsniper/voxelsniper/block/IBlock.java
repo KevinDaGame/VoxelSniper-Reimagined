@@ -17,13 +17,13 @@ public interface IBlock {
     IWorld getWorld();
 
     default int getX() {
-        return getLocation().getX();
+        return getLocation().getBlockX();
     }
     default int getY() {
-        return getLocation().getY();
+        return getLocation().getBlockY();
     }
     default int getZ() {
-        return getLocation().getZ();
+        return getLocation().getBlockZ();
     }
     BlockFace getFace(IBlock block);
     IBlock getRelative(int x, int y, int z);

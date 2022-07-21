@@ -24,7 +24,7 @@ public class BukkitWorld implements IWorld {
 
     @Override
     public IBlock getBlock(ILocation location) {
-        return new BukkitBlock(world.getBlockAt(location.getX(), location.getY(), location.getZ()));
+        return new BukkitBlock(world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BukkitWorld implements IWorld {
 
     @Override
     public IChunk getChunkAtLocation(ILocation location) {
-        return new BukkitChunk(world.getChunkAt(location.getX(), location.getZ()));
+        return new BukkitChunk(world.getChunkAt(location.getBlockX(), location.getBlockZ()));
     }
 
     @Override

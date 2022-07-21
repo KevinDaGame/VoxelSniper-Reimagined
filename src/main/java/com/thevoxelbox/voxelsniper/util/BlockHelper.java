@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.*;
@@ -186,7 +187,7 @@ public class BlockHelper {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
         this.lastZ = this.targetZ;
-
+        System.out.println("x=" + this.lastX + " y=" + this.lastY + " z=" + this.lastZ);
         do {
             this.length += this.step;
 
@@ -227,7 +228,8 @@ public class BlockHelper {
      */
     public final IBlock getTargetBlock() {
         this.fromOffworld();
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == new BukkitMaterial(Material.AIR))) {
+        System.out.println("starting x=" + this.targetX + " y=" + this.targetY + " z=" + this.targetZ);
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial().getVoxelMaterial() == VoxelMaterial.AIR)) {
 
         }
         return this.getCurBlock();

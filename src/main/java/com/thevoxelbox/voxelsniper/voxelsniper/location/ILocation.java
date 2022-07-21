@@ -4,32 +4,35 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
 
 public interface ILocation {
 
-    public int getX();
+    public int getBlockX();
 
-    public int getY();
+    public int getBlockY();
 
-    public int getZ();
+    public int getBlockZ();
+    public double getX();
 
-    public void setX(int x);
+    public double getY();
 
-    public void setY(int y);
+    public double getZ();
 
-    public void setZ(int z);
+    public void setX(double x);
 
-    default void addX(int x) {
+    public void setY(double y);
+
+    public void setZ(double z);
+
+    default void addX(double x) {
         this.setX(this.getX() + x);
     }
 
-    default void addY(int y) {
+    default void addY(double y) {
         this.setY(this.getY() + y);
     }
 
-    default void addZ(int z) {
+    default void addZ(double z) {
         this.setZ(this.getZ() + z);
     }
     default void add(int x, int y, int z) {
