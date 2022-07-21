@@ -34,17 +34,16 @@ public class BukkitWorld implements IWorld {
 
     @Override
     public int getMinWorldHeight() {
-        return 0;
+        return world.getMinHeight();
     }
 
     @Override
     public int getMaxWorldHeight() {
-        return 0;
+        return world.getMaxHeight();
     }
 
     @Override
     public void setBlock(ILocation location, IBlock block) {
-        return;
     }
 
     @Override
