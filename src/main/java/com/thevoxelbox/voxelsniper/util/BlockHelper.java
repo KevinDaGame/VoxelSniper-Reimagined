@@ -187,7 +187,6 @@ public class BlockHelper {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
         this.lastZ = this.targetZ;
-        System.out.println("x=" + this.lastX + " y=" + this.lastY + " z=" + this.lastZ);
         do {
             this.length += this.step;
 
@@ -228,7 +227,6 @@ public class BlockHelper {
      */
     public final IBlock getTargetBlock() {
         this.fromOffworld();
-        System.out.println("starting x=" + this.targetX + " y=" + this.targetY + " z=" + this.targetZ);
         while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial().getVoxelMaterial() == VoxelMaterial.AIR)) {
 
         }
