@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper.voxelsniper.material;
+package com.thevoxelbox.voxelsniper.voxelsniper.biome.material;
 
 import junit.framework.TestCase;
 

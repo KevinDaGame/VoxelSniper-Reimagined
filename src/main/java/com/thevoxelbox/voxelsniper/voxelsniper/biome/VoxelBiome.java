@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
+import java.util.HashMap;
 import java.util.Map;
 //todo: backwards compatibility
 public record VoxelBiome(String namespace, String key, Version version) {
@@ -74,10 +75,15 @@ public record VoxelBiome(String namespace, String key, Version version) {
     public static VoxelBiome STONY_PEAKS = register("stony_peaks", Version.V1_18);
 
     private static VoxelBiome register(String key) {
-        return new VoxelBiome(key);
+        return register(key, Version.V1_16);
     }
     private static VoxelBiome register(String key, Version version) {
-        return new VoxelBiome("minecraft", key, version);
+        var biome = new VoxelBiome("minecraft", key, version);
+        if (BIOMES == null) {
+            BIOMES = new HashMap<>();
+        }
+        BIOMES.put(biome.getName(), biome);
+        return biome;
     }
 
     public VoxelBiome(String key) {
@@ -90,8 +96,8 @@ public record VoxelBiome(String namespace, String key, Version version) {
         return key;
     }
     private static IVoxelsniper main;
-    public void setMain(IVoxelsniper voxelsniper){
-        this.main = voxelsniper;
+    public static void setMain(IVoxelsniper voxelsniper){
+        main = voxelsniper;
     }
     String getName() {
         return namespace + ":" + key;

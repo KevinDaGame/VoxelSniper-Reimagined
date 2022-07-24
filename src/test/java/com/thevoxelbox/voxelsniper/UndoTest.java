@@ -1,6 +1,8 @@
 package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
@@ -31,6 +33,10 @@ public class UndoTest
 
     @Before
     public void setUp() {
+        var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        LocationFactory.main = main;
+        MaterialFactory.main = main;
         undo = new Undo();
     }
 
@@ -79,7 +85,7 @@ public class UndoTest
 
     @Test
     public void testPut() {
-        IWorld world = Mockito.mock(IWorld.class);
+        IWorld world = Mockito.mock(BukkitWorld.class);
         ILocation location = LocationFactory.getLocation(world, 0, 0, 0);
         IBlock block = mockBlock(location, MaterialFactory.getMaterial(VoxelMaterial.DIRT));
 
@@ -89,7 +95,7 @@ public class UndoTest
 
     @Test
     public void testUndo() {
-        IWorld world = Mockito.mock(IWorld.class);
+        IWorld world = Mockito.mock(BukkitWorld.class);
 
         ILocation normalBlockLocation = LocationFactory.getLocation(world, 0, 0, 0);
         IBlock normalBlock = mockBlock(normalBlockLocation, MaterialFactory.getMaterial(VoxelMaterial.STONE));
