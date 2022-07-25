@@ -2,12 +2,12 @@ package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.logging.Level;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Bukkit extension point.

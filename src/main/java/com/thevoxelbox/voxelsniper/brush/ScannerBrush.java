@@ -5,12 +5,12 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 
 /**
  * @author DivineRage

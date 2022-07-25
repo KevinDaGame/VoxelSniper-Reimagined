@@ -3,12 +3,13 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.block.Block;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.bukkit.block.Block;
+import org.bukkit.util.NumberConversions;
+import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Dome_Brush

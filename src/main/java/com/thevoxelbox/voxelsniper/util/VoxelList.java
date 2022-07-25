@@ -1,10 +1,11 @@
 package com.thevoxelbox.voxelsniper.util;
 
 import com.google.common.collect.ImmutableList;
-import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.Material;
 
 /**
  * Container class for multiple ID/Datavalue pairs.

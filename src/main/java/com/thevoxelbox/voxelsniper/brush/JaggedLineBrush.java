@@ -6,15 +6,15 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.block.Block;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import org.bukkit.block.Block;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.NumberConversions;
+import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush

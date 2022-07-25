@@ -5,8 +5,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
-
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Triangle_Brush
  *

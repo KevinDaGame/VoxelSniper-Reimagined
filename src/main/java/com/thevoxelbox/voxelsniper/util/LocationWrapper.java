@@ -1,12 +1,11 @@
 package com.thevoxelbox.voxelsniper.util;
 
+import java.util.Objects;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class LocationWrapper extends Location {
 

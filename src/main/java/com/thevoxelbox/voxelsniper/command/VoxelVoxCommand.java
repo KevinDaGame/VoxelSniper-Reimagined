@@ -7,14 +7,13 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import net.kyori.adventure.text.ComponentLike;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 /**
  *

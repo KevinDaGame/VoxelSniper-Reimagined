@@ -7,10 +7,14 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.LocationWrapper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-
-import java.util.*;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 

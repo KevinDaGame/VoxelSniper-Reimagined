@@ -6,10 +6,10 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.block.Block;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.block.Block;
 
 /**
  * @author MikeMatrix

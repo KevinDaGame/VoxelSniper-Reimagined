@@ -2,8 +2,6 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -11,6 +9,8 @@ import java.util.Locale;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+
+import org.jetbrains.annotations.NotNull;
 
 public enum Messages implements ComponentLike {
     BRUSH_MESSAGE_PREFIX,
