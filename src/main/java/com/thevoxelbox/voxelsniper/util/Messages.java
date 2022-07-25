@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
-import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -332,6 +331,17 @@ public enum Messages implements ComponentLike, Messages0 {
     NOTHING_TO_SET_SUBSTANCE,
     INVALID_TYPE_ID,
     VOXEL_LIST_COULDNT_ADD,
+    UNDID_PLAYER_CHANGES,
+    SPLINE_BRUSH_NOT_ENOUGH_POINTS,
+    ADDED_BLOCK_ENDPOINT,
+    ADDED_BLOCK_CONTROL,
+    REMOVED_BLOCK_CONTROL,
+    REMOVED_BLOCK_ENDPOINT,
+    MOVE_BRUSH_SELECTION,
+    FILL_DOWN_MODE,
+    FILL_DOWN_FROM,
+    OVERLAY_MODE,
+    OVERLAY_ON_MODE_DEPTH,
     ;
 
 

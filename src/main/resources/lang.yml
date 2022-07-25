@@ -573,3 +573,14 @@ PLAYER_NOT_FOUND: <red>Could not find the player </red><gold>'%player%'</gold><r
 NOTHING_TO_SET_SUBSTANCE: <gold>Nothing to set voxel substance. No changes were made.
 INVALID_TYPE_ID: <red>You have entered an invalid Material ID.
 VOXEL_LIST_COULDNT_ADD: "<red>Couldn't add because item is non-existent or aren't blocks:- \n</red><gold>    %blocks%"
+UNDID_PLAYER_CHANGES: '<gold>Undid %player%''s changes: </gold><dark_aqua>%amountChanged% blocks replaced'
+SPLINE_BRUSH_NOT_ENOUGH_POINTS: <red>Not enough points selected; %endPts% endpoints, %ctrlPts% control points
+ADDED_BLOCK_ENDPOINT: <gray>Added block </gray><red>%pos%</red><gray>to endpoint selection
+ADDED_BLOCK_CONTROL: <gray>Added block </gray><red>%pos%</red><gray>to control point selection
+REMOVED_BLOCK_CONTROL: <gray>Removed block </gray><red>%pos%</red><gray>from control point selection
+REMOVED_BLOCK_ENDPOINT: <gray>Removed block </gray><red>%pos%</red><gray>from endpoint selection
+MOVE_BRUSH_SELECTION: <blue>Move selection blockPositionY </blue><gold>x:%x% y:%y% z:%z%
+FILL_DOWN_MODE: <aqua>Now filling %mode%.
+FILL_DOWN_FROM: <aqua>Now filling down from %mode% blocks.
+OVERLAY_MODE: <gold>Overlaying on %mode% blocks
+OVERLAY_ON_MODE_DEPTH: <blue>Will overlay on %mode% blocks, %depth% blocks deep.

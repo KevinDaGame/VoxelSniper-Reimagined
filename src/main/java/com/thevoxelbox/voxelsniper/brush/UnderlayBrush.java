@@ -170,7 +170,9 @@ public class UnderlayBrush extends PerformerBrush {
                 this.allBlocks = false;
                 this.useVoxelList = false;
             }
-            v.sendMessage((ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + "%depth%" + " blocks deep.").replace("%depth%",String.valueOf(depth)));
+            String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
+            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%",String.valueOf(this.depth)).replace("%mode%",mode));
+
             return;
         }
 

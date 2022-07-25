@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -102,13 +101,15 @@ public class FillDownBrush extends PerformerBrush {
 
         if (params[0].equalsIgnoreCase("liquid")) {
             this.fillLiquid = !this.fillLiquid;
-            v.sendMessage(ChatColor.AQUA + "Now filling " + ((this.fillLiquid) ? "liquid and air" : "air only") + ".");
+            String mode = (this.fillLiquid) ? "liquid and air" : "air only";
+            v.sendMessage(Messages.FILL_DOWN_MODE.replace("%mode%",mode));
             return;
         }
 
         if (params[0].equalsIgnoreCase("existing")) {
             this.fromExisting = !this.fromExisting;
-            v.sendMessage(ChatColor.AQUA + "Now filling down from " + ((this.fromExisting) ? "existing" : "all") + " blocks.");
+            String mode = (this.fromExisting) ? "existing" : "all";
+            v.sendMessage(Messages.FILL_DOWN_FROM.replace("%mode%",mode));
             return;
         }
 

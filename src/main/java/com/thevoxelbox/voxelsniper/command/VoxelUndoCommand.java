@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class VoxelUndoCommand extends VoxelCommand {
             Sniper targetSniper = profileManager.getSniperForPlayer(targetPlayer);
             targetSniper.sendMessage(Messages.CHANGES_UNDONE_BY_OTHER);
             int amountChanged = sniper.undo(undoAmount);
-            player.sendMessage(ChatColor.GOLD + "Undid " + sniper.getPlayer().getName() + "'s changes: " + ChatColor.DARK_AQUA + amountChanged + " blocks replaced");
+            sniper.sendMessage(Messages.UNDID_PLAYER_CHANGES.replace("%player%", sniper.getPlayer().getName()).replace("%amountChanged%", String.valueOf(amountChanged)));
             return true;
         }
 

@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -32,13 +31,14 @@ public class SplineBrush extends PerformerBrush {
     }
 
     public final void addToSet(final SnipeData v, final boolean ep, Block targetBlock) {
+        String pos = "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ";
         if (ep) {
             if (this.endPts.contains(targetBlock) || this.endPts.size() == 2) {
                 return;
             }
 
             this.endPts.add(targetBlock);
-            v.sendMessage(ChatColor.GRAY + "Added block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY + "to endpoint selection");
+            v.sendMessage(Messages.ADDED_BLOCK_ENDPOINT.replace("%pos%",pos));
             return;
         }
 
@@ -47,11 +47,11 @@ public class SplineBrush extends PerformerBrush {
         }
 
         this.ctrlPts.add(targetBlock);
-        v.sendMessage(ChatColor.GRAY + "Added block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY
-                + "to control point selection");
+        v.sendMessage(Messages.ADDED_BLOCK_CONTROL.replace("%pos%",pos));
     }
 
     public final void removeFromSet(final SnipeData v, final boolean ep, Block targetBlock) {
+        String pos = "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ";
         if (ep) {
             if (!this.endPts.contains(targetBlock)) {
                 v.sendMessage(Messages.BLOCK_NOT_IN_ENDPOINT_SELECTION);
@@ -59,7 +59,7 @@ public class SplineBrush extends PerformerBrush {
             }
 
             this.endPts.add(targetBlock);
-            v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY + "from endpoint selection");
+            v.sendMessage(Messages.REMOVED_BLOCK_ENDPOINT.replace("%pos%",pos));
             return;
         }
 
@@ -69,7 +69,7 @@ public class SplineBrush extends PerformerBrush {
         }
 
         this.ctrlPts.remove(targetBlock);
-        v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY + "from control point selection");
+        v.sendMessage(Messages.REMOVED_BLOCK_CONTROL.replace("%pos%",pos));
     }
 
     public final boolean spline(final Point start, final Point end, final Point c1, final Point c2, final SnipeData v) {
@@ -92,7 +92,7 @@ public class SplineBrush extends PerformerBrush {
 
             return true;
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Not enough points selected; " + this.endPts.size() + " endpoints, " + this.ctrlPts.size() + " control points");
+            v.sendMessage(Messages.SPLINE_BRUSH_NOT_ENOUGH_POINTS.replace("%endPts%", String.valueOf(this.endPts.size())).replace("%ctrlPts%", String.valueOf(this.ctrlPts.size())));
             return false;
         }
     }

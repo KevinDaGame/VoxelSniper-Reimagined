@@ -6,7 +6,7 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
-import org.bukkit.ChatColor;
+
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -151,7 +151,8 @@ public class OverlayBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Overlaying on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks");
+        String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
+        vm.custom(Messages.OVERLAY_MODE.replace("%mode%",mode));
     }
 
     @Override
@@ -186,7 +187,8 @@ public class OverlayBrush extends PerformerBrush {
                 this.allBlocks = false;
                 this.useVoxelList = false;
             }
-            v.sendMessage((ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + "%this.depth%" + " blocks deep.").replace("%this.depth%",String.valueOf(this.depth)));
+            String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
+            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%",String.valueOf(this.depth)).replace("%mode%",mode));
             return;
         }
 
