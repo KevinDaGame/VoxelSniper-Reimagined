@@ -12,7 +12,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-public enum Messages implements ComponentLike, Messages0 {
+public enum Messages implements ComponentLike {
     BRUSH_MESSAGE_PREFIX,
     BRUSH_NAME,
     BRUSH_CENTER,
