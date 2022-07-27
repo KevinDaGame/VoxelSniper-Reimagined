@@ -12,7 +12,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +57,7 @@ public class JaggedLineBrush extends PerformerBrush {
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.getWorld()).getBlock());
         } else {
-            for (final BlockIterator iterator = new BlockIterator(((BukkitWorld)this.getWorld()).getWorld(), ((BukkitVector)originClone).getVector(), ((BukkitVector)direction).getVector(), 0, NumberConversions.round(length)); iterator.hasNext();) {
+            for (final BlockIterator iterator = new BlockIterator(((BukkitWorld)this.getWorld()).world(), ((BukkitVector)originClone).vector(), ((BukkitVector)direction).vector(), 0, NumberConversions.round(length)); iterator.hasNext();) {
                 final Block block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
                     this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));

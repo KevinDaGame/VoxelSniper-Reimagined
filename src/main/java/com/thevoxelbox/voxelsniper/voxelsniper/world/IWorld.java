@@ -4,11 +4,9 @@ import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import org.bukkit.TreeType;
-import org.bukkit.block.Biome;
 
 public interface IWorld {
     IBlock getBlock(ILocation location);

@@ -13,7 +13,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Line_Brush
@@ -63,7 +62,7 @@ public class LineBrush extends PerformerBrush {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.targetWorld).getBlock());
         } else {
             //TODO replace BlockIterator
-            for (final BlockIterator blockIterator = new BlockIterator(((BukkitWorld)this.targetWorld).getWorld(), ((BukkitVector)originClone).getVector(), ((BukkitVector)direction).getVector(), 0, NumberConversions.round(length)); blockIterator.hasNext();) {
+            for (final BlockIterator blockIterator = new BlockIterator(((BukkitWorld)this.targetWorld).world(), ((BukkitVector)originClone).vector(), ((BukkitVector)direction).vector(), 0, NumberConversions.round(length)); blockIterator.hasNext();) {
                 final IBlock currentBlock = new BukkitBlock(blockIterator.next());
                 this.currentPerformer.perform(currentBlock);
             }

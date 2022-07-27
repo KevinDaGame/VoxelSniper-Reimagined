@@ -4,12 +4,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import org.bukkit.Material;
 
-public class BukkitMaterial implements IMaterial, Comparable<BukkitMaterial> {
-    private final Material material;
-
-    public BukkitMaterial(Material material) {
-        this.material = material;
-    }
+public record BukkitMaterial(Material material) implements IMaterial, Comparable<BukkitMaterial> {
 
     @Override
     public boolean isSolid() {
@@ -53,7 +48,7 @@ public class BukkitMaterial implements IMaterial, Comparable<BukkitMaterial> {
 
     @Override
     public VoxelMaterial getVoxelMaterial() {
-        return VoxelMaterial.getMaterial(this.getMaterial().getKey().getNamespace(), this.getMaterial().getKey().getKey());
+        return VoxelMaterial.getMaterial(this.material().getKey().getNamespace(), this.material().getKey().getKey());
     }
 
     @Override
@@ -64,10 +59,6 @@ public class BukkitMaterial implements IMaterial, Comparable<BukkitMaterial> {
     @Override
     public IBlockData createBlockData(String s) {
         return new BukkitBlockData(material.createBlockData(s));
-    }
-
-    public Material getMaterial() {
-        return material;
     }
 
     @Override

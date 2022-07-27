@@ -6,20 +6,16 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.util.Vector;
 
-public class BukkitVector implements IVector {
-    private final Vector vector;
-    public BukkitVector(Vector vector) {
-        this.vector = vector;
-    }
+public record BukkitVector(Vector vector) implements IVector {
 
     @Override
     public ILocation getLocation(IWorld world) {
-        return new BukkitLocation(vector.toLocation(((BukkitWorld)world).getWorld()));
+        return new BukkitLocation(vector.toLocation(((BukkitWorld) world).world()));
     }
 
     @Override
     public IVector getMidpoint(IVector coordsTwo) {
-        return new BukkitVector(vector.midpoint(((BukkitVector)coordsTwo).vector));
+        return new BukkitVector(vector.midpoint(((BukkitVector) coordsTwo).vector));
     }
 
     @Override
@@ -74,7 +70,7 @@ public class BukkitVector implements IVector {
 
     @Override
     public double angle(IVector vector) {
-        return this.vector.angle(((BukkitVector)vector).vector);
+        return this.vector.angle(((BukkitVector) vector).vector);
     }
 
     @Override
@@ -84,7 +80,7 @@ public class BukkitVector implements IVector {
 
     @Override
     public IVector crossProduct(IVector vector) {
-        return new BukkitVector(this.vector.crossProduct(((BukkitVector)vector).vector));
+        return new BukkitVector(this.vector.crossProduct(((BukkitVector) vector).vector));
     }
 
     @Override
@@ -99,7 +95,7 @@ public class BukkitVector implements IVector {
 
     @Override
     public double distance(IVector vector) {
-        return this.vector.distance(((BukkitVector)vector).vector);
+        return this.vector.distance(((BukkitVector) vector).vector);
     }
 
     @Override
@@ -109,20 +105,16 @@ public class BukkitVector implements IVector {
 
     @Override
     public double distanceSquared(IVector currentPoint) {
-        return vector.distanceSquared(((BukkitVector)currentPoint).vector);
+        return vector.distanceSquared(((BukkitVector) currentPoint).vector);
     }
 
     @Override
     public boolean isInSphere(IVector target, int range) {
-        return vector.isInSphere(((BukkitVector)target).vector, range);
+        return vector.isInSphere(((BukkitVector) target).vector, range);
     }
 
     @Override
     public double lengthSquared() {
         return vector.lengthSquared();
-    }
-
-    public Vector getVector() {
-        return vector;
     }
 }

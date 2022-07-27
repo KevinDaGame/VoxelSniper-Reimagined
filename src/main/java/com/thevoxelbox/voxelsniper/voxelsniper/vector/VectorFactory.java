@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.voxelsniper.vector;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.util.Vector;
 
 public class VectorFactory {

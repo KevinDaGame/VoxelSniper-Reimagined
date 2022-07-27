@@ -5,8 +5,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.BrewingStand;
 
 public interface IBlockState {
     IBlock getBlock();

@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.entity.Projectile;
 
 import java.util.Set;

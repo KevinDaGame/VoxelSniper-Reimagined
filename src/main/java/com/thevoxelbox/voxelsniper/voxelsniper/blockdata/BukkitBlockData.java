@@ -5,7 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import org.bukkit.block.data.BlockData;
 
 public class BukkitBlockData implements IBlockData {
-    private BlockData blockData;
+    private final BlockData blockData;
 
     public BukkitBlockData(BlockData blockData) {
         this.blockData = blockData;

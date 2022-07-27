@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 
 import java.util.UUID;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -24,7 +26,9 @@ public class SniperManagerTest {
 
     @Before
     public void setUp() {
+        VoxelProfileManager.initialize(Mockito.mock(IVoxelsniper.class));
         sniperManager = new VoxelProfileManager();
+
     }
 
     @Test
@@ -37,10 +41,10 @@ public class SniperManagerTest {
 
         try (MockedStatic<Bukkit> bukkit = Mockito.mockStatic(Bukkit.class)) {
             bukkit.when(() -> Bukkit.getPlayer(uuid)).thenReturn(player);
-            Assert.assertSame(new BukkitPlayer(Bukkit.getPlayer(uuid)), absplayer);
-
+            Assert.assertEquals(absplayer, new BukkitPlayer(Bukkit.getPlayer(uuid)));
             Sniper sniper = sniperManager.getSniperForPlayer(absplayer);
-            Assert.assertSame(player, sniper.getPlayer());
+
+            Assert.assertSame(absplayer, sniper.getPlayer());
             Assert.assertSame(sniper, sniperManager.getSniperForPlayer(absplayer));
         }
     }

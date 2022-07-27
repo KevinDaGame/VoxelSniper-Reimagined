@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.fileHandler;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 
 import java.io.File;

@@ -7,18 +7,14 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BukkitEntity implements IEntity {
-    private Entity entity;
+    private final Entity entity;
 
     public BukkitEntity(Entity entity) {
         this.entity = entity;
@@ -49,7 +45,7 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public void setVelocity(IVector velocity) {
-        entity.setVelocity(((BukkitVector)velocity).getVector());
+        entity.setVelocity(((BukkitVector)velocity).vector());
     }
 
     @Override

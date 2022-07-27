@@ -13,7 +13,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.block.BlockState;
 
 public class BukkitBlockState implements IBlockState {
-    private BlockState blockState;
+    private final BlockState blockState;
 
     public BukkitBlockState(BlockState blockState) {
         this.blockState = blockState;

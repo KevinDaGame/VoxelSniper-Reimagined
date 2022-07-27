@@ -7,22 +7,22 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 public interface ILocation {
 
-    public int getBlockX();
+    int getBlockX();
 
-    public int getBlockY();
+    int getBlockY();
 
-    public int getBlockZ();
-    public double getX();
+    int getBlockZ();
+    double getX();
 
-    public double getY();
+    double getY();
 
-    public double getZ();
+    double getZ();
 
-    public void setX(double x);
+    void setX(double x);
 
-    public void setY(double y);
+    void setY(double y);
 
-    public void setZ(double z);
+    void setZ(double z);
 
     default void addX(double x) {
         this.setX(this.getX() + x);

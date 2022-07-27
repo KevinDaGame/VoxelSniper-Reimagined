@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.voxelsniper.vector;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.util.Vector;
 
 public interface IVector {
     ILocation getLocation(IWorld world);

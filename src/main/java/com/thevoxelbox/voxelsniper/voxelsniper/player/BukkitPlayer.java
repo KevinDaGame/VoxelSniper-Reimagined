@@ -118,7 +118,7 @@ public class BukkitPlayer extends AbstractPlayer {
     public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
         Set<Material> materials = new HashSet<>(transparent.size());
         for (VoxelMaterial material : transparent) {
-            materials.add(((BukkitMaterial)MaterialFactory.getMaterial(material)).getMaterial());
+            materials.add(((BukkitMaterial)MaterialFactory.getMaterial(material)).material());
         }
         return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
     }
@@ -127,6 +127,19 @@ public class BukkitPlayer extends AbstractPlayer {
     public VoxelMaterial getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
         return new VoxelMaterial(item.getType().getKey().getKey());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BukkitPlayer that = (BukkitPlayer) o;
+        return player.equals(that.player);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player);
     }
 
     public Player getPlayer() {

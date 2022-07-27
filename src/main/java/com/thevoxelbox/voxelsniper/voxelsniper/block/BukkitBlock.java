@@ -5,11 +5,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import org.bukkit.block.Block;
 
 public class BukkitBlock extends AbstractBlock {
@@ -34,13 +32,13 @@ public class BukkitBlock extends AbstractBlock {
     @Override
     public void setMaterial(IMaterial material) {
         this.material = material;
-        block.setType(((BukkitMaterial)material).getMaterial());
+        block.setType(((BukkitMaterial)material).material());
     }
 
     @Override
     public void setMaterial(IMaterial material, boolean applyPhysics) {
         this.material = material;
-        block.setType(((BukkitMaterial)material).getMaterial(), applyPhysics);
+        block.setType(((BukkitMaterial)material).material(), applyPhysics);
     }
 
     @Override

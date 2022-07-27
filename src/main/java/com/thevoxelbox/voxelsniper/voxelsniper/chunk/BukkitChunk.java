@@ -10,7 +10,7 @@ import org.bukkit.entity.Entity;
 import java.util.ArrayList;
 
 public class BukkitChunk implements IChunk {
-    private Chunk chunk;
+    private final Chunk chunk;
 
     public BukkitChunk(Chunk chunk) {
         this.chunk = chunk;

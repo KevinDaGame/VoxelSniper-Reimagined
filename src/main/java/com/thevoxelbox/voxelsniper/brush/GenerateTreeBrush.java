@@ -13,7 +13,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 import java.util.*;
 
@@ -377,7 +376,7 @@ public class GenerateTreeBrush extends Brush {
 
         // Sets the location variables.
 
-        location = new BukkitLocation(new Location(((BukkitWorld)this.getTargetBlock().getWorld()).getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ()));
+        location = new BukkitLocation(new Location(((BukkitWorld)this.getTargetBlock().getWorld()).world(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ()));
 
         // Generates the roots.
         this.rootGen();
@@ -387,7 +386,7 @@ public class GenerateTreeBrush extends Brush {
         // Each branch block was saved in an array. This is now fed through an array.
         // This array takes each branch block and constructs a leaf node around it.
         for (final IBlock block : this.branchBlocks) {
-            location = new BukkitLocation(new Location(((BukkitWorld)block.getWorld()).getWorld(), block.getX(), block.getY(), block.getZ()));
+            location = new BukkitLocation(new Location(((BukkitWorld)block.getWorld()).world(), block.getX(), block.getY(), block.getZ()));
             this.leafNodeCreate();
         }
 

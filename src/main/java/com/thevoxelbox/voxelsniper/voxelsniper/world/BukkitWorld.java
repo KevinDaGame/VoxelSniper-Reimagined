@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
@@ -15,12 +14,7 @@ import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
-public class BukkitWorld implements IWorld {
-    private final World world;
-
-    public BukkitWorld(World world) {
-        this.world = world;
-    }
+public record BukkitWorld(World world) implements IWorld {
 
     @Override
     public IBlock getBlock(ILocation location) {
@@ -75,7 +69,7 @@ public class BukkitWorld implements IWorld {
     @Override
     public void spawn(ILocation location, IEntityType entity) {
         var bukkitloc = (BukkitLocation) location;
-        world.spawnEntity(bukkitloc.getLocation(), ((BukkitEntityType)entity).getType());
+        world.spawnEntity(bukkitloc.getLocation(), ((BukkitEntityType) entity).getType());
     }
 
     @Override
@@ -98,10 +92,6 @@ public class BukkitWorld implements IWorld {
     @Override
     public void generateTree(ILocation location, TreeType treeType, UndoDelegate undoDelegate) {
 
-        world.generateTree(((BukkitLocation)location).getLocation(), treeType, undoDelegate);
-    }
-
-    public World getWorld() {
-        return world;
+        world.generateTree(((BukkitLocation) location).getLocation(), treeType, undoDelegate);
     }
 }

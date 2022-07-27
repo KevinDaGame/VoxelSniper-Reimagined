@@ -7,8 +7,9 @@ import java.util.*;
 
 import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
+@SuppressWarnings("unused")
 public class VoxelMaterial {
-    public static Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
+    public static final Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
 
     public static final VoxelMaterial AIR = register("minecraft", "air");
     public static final VoxelMaterial STONE = register("minecraft", "stone");

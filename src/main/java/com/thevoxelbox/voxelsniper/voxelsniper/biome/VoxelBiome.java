@@ -2,13 +2,13 @@ package com.thevoxelbox.voxelsniper.voxelsniper.biome;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
 //todo: backwards compatibility
+@SuppressWarnings("unused")
 public record VoxelBiome(String namespace, String key, Version version) {
-    public static String DEFAULT_NAMESPACE = "minecraft";
+    public static final String DEFAULT_NAMESPACE = "minecraft";
     public static Map<String, VoxelBiome> BIOMES;
     public static VoxelBiome OCEAN = register("ocean");
     public static VoxelBiome PLAINS = register("plains");
