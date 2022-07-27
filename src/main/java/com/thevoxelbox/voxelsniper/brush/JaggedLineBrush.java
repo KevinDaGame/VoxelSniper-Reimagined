@@ -124,7 +124,8 @@ public class JaggedLineBrush extends PerformerBrush {
                 v.sendMessage(ChatColor.GREEN + "Spread set to: " + this.spread);
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException temp) {
+temp.printStackTrace();
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

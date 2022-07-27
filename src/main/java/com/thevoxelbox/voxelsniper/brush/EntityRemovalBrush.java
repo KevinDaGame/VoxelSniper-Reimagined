@@ -156,7 +156,8 @@ public class EntityRemovalBrush extends Brush {
                 }
 
                 return;
-            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException ignored) {
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException temp) {
+temp.printStackTrace();
             }
         }
 

@@ -244,7 +244,8 @@ public class HeatRayBrush extends Brush {
                 v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException temp) {
+temp.printStackTrace();
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");

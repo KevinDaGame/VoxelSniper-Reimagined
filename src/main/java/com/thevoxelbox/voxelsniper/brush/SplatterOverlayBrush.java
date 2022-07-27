@@ -351,7 +351,8 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 }
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException temp) {
+temp.printStackTrace();
         }
 
         v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
