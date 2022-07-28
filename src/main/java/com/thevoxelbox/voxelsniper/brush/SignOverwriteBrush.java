@@ -293,7 +293,7 @@ public class SignOverwriteBrush extends Brush {
     private void saveBufferToFile(final String fileName, final SnipeData v) {
         final File store = new File(VoxelSniper.getInstance().getDataFolder() + "/" + fileName + ".vsign");
         if (store.exists()) {
-            v.sendMessage("This file already exists.");
+            v.sendMessage(Messages.FILE_ALREADY_EXISTS);
             return;
         }
 

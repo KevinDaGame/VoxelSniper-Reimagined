@@ -584,3 +584,15 @@ FILL_DOWN_MODE: <aqua>Now filling %mode%.
 FILL_DOWN_FROM: <aqua>Now filling down from %mode% blocks.
 OVERLAY_MODE: <gold>Overlaying on %mode% blocks
 OVERLAY_ON_MODE_DEPTH: <blue>Will overlay on %mode% blocks, %depth% blocks deep.
+ONLY_PLAYERS_CAN_EXECUTE_COMMANDS: Only players can execute commands!
+NEGATIVE_VALUES_ARE_NOT_ALLOWED: Negative values are not allowed.
+CAN_T_PARSE_NUMBER: Can't parse number.
+VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU: VoxelSniper is now enabled for you.
+VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU: VoxelSniper is now disabled for you.
+NO_BRUSH_SELECTED: No Brush selected.
+CURRENT_TOOL: 'Current Tool: %tool%'
+NO_PERMISSION_BRUSH: You are not allowed to use this brush. You're missing the permission node '%permissionNode%'
+NO_PERMISSION_MESSAGE: You do not have the '%permission%' permission node to do that.
+VOXEL_HEIGHT_MUST_NOT_BE_0: VoxelHeight must not be 0.
+GENERATED_CHUNK: Generate that chunk! %chunk.getX% %chunk.getZ%
+FILE_ALREADY_EXISTS: This file already exists.

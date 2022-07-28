@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class DomeBrush extends Brush {
     private void generateDome(final SnipeData v, final Block targetBlock) {
 
         if (v.getVoxelHeight() == 0) {
-            v.sendMessage("VoxelHeight must not be 0.");
+            v.sendMessage(Messages.VOXEL_HEIGHT_MUST_NOT_BE_0);
             return;
         }
 

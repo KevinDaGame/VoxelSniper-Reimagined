@@ -54,24 +54,24 @@ public class VoxelSniperCommand extends VoxelCommand {
                     try {
                         int range = Integer.parseInt(args[1]);
                         if (range < 0) {
-                            player.sendMessage("Negative values are not allowed.");
+                            sniper.sendMessage(Messages.NEGATIVE_VALUES_ARE_NOT_ALLOWED);
                         } else {
                             snipeData.setRange(range);
                             snipeData.setRanged(true);
                             snipeData.getVoxelMessage().toggleRange();
                         }
                     } catch (NumberFormatException exception) {
-                        player.sendMessage("Can't parse number.");
+                        sniper.sendMessage(Messages.CAN_T_PARSE_NUMBER);
                     }
                 }
                 return true;
             } else if (args[0].equalsIgnoreCase("enable")) {
                 sniper.setEnabled(true);
-                player.sendMessage("VoxelSniper is now enabled for you.");
+                sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU);
                 return true;
             } else if (args[0].equalsIgnoreCase("disable")) {
                 sniper.setEnabled(false);
-                player.sendMessage("VoxelSniper is now disabled for you.");
+                sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU);
                 return true;
             } else {
                 return false;

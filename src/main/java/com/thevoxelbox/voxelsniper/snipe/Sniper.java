@@ -98,12 +98,13 @@ public class Sniper implements Audience {
             return false;
         }
         if (sniperTool.getCurrentBrush() == null) {
-            getPlayer().sendMessage("No Brush selected.");
+            sendMessage(Messages.NO_BRUSH_SELECTED);
             return true;
         }
 
-        if (!getPlayer().hasPermission(sniperTool.getCurrentBrush().getPermissionNode())) {
-            getPlayer().sendMessage("You are not allowed to use this brush. You're missing the permission node '" + sniperTool.getCurrentBrush().getPermissionNode() + "'");
+        String permissionNode = sniperTool.getCurrentBrush().getPermissionNode();
+        if (!getPlayer().hasPermission(permissionNode)) {
+            sendMessage(Messages.NO_PERMISSION_BRUSH.replace("%permissionNode%",permissionNode));
             return true;
         }
 
@@ -282,9 +283,9 @@ public class Sniper implements Audience {
         String currentToolId = getCurrentToolId();
         SnipeTool sniperTool = tools.get(currentToolId);
         IBrush brush = sniperTool.getCurrentBrush();
-        getPlayer().sendMessage("Current Tool: " + ((currentToolId != null) ? currentToolId : "Default Tool"));
+        sendMessage(Messages.CURRENT_TOOL.replace("%tool%", (currentToolId != null) ? currentToolId : "Default Tool"));
         if (brush == null) {
-            getPlayer().sendMessage("No brush selected.");
+            sendMessage(Messages.NO_BRUSH_SELECTED);
             return;
         }
         brush.info(sniperTool.getMessageHelper());

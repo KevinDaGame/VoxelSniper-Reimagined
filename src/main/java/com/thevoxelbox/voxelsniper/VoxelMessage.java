@@ -54,10 +54,6 @@ public class VoxelMessage {
      *
      * @param message
      */
-    public void custom(String message) {
-        snipeData.sendMessage(message);
-    }
-
     public void custom(ComponentLike message) {
         snipeData.sendMessage(message);
     }

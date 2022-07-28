@@ -1,6 +1,8 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +36,13 @@ public abstract class VoxelCommand implements TabExecutor {
         this.activeAlias = label;   // This is the alias that was executed.
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can execute commands!");
+            VoxelSniper.getAdventure().sender(sender).sendMessage(Messages.ONLY_PLAYERS_CAN_EXECUTE_COMMANDS);
             return true;
         } else {
             if (command.getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) {
                 return doCommand((Player) sender, args);
             } else {
-                sender.sendMessage("You do not have the '" + getPermission() + "' permission node to do that.");
+                VoxelSniper.getAdventure().sender(sender).sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%",getPermission()));
                 return true;
             }
         }
