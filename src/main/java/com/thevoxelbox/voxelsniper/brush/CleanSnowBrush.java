@@ -6,6 +6,8 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -45,8 +47,8 @@ public class CleanSnowBrush extends Brush {
                     if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                         IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
                         IBlock blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
-                        if ((b.getMaterial() == new BukkitMaterial( Material.SNOW)) && ((blockDown.getMaterial() == new BukkitMaterial( Material.SNOW)) || (blockDown.getMaterial() == new BukkitMaterial( Material.AIR)))) {
-                            setBlockType(b, new BukkitMaterial( Material.AIR), undo);
+                        if ((b.getMaterial().getVoxelMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial().getVoxelMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().getVoxelMaterial() == VoxelMaterial.AIR))) {
+                            setBlockType(b, MaterialFactory.getMaterial(VoxelMaterial.AIR), undo);
                         }
 
                     }

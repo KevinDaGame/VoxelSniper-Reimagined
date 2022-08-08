@@ -7,6 +7,8 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -23,7 +25,7 @@ public class CanyonBrush extends Brush {
 
     private static final int SHIFT_LEVEL_MIN = 10;
     private static final int SHIFT_LEVEL_MAX = 60;
-    private int yLevel = 10;
+    private int yLevel = -53;
 
     /**
      *
@@ -50,19 +52,19 @@ public class CanyonBrush extends Brush {
                     undo.put(currentYLevelBlock);
 
                     currentYLevelBlock.setMaterial(block.getMaterial(), false);
-                    block.setMaterial(new BukkitMaterial(Material.AIR));
+                    block.setMaterial(MaterialFactory.getMaterial(VoxelMaterial.AIR));
 
                     currentYLevel++;
                 }
 
                 final IBlock block = chunk.getBlock(x, this.getMinHeight(), z);
                 undo.put(block);
-                block.setMaterial(new BukkitMaterial(Material.BEDROCK));
+                block.setMaterial(MaterialFactory.getMaterial(VoxelMaterial.BEDROCK));
 
                 for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
                     final IBlock currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
-                    currentBlock.setMaterial(new BukkitMaterial(Material.STONE));
+                    currentBlock.setMaterial(MaterialFactory.getMaterial(VoxelMaterial.STONE));
                 }
             }
         }
