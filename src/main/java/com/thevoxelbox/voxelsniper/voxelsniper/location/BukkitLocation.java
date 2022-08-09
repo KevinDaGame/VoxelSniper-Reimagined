@@ -6,6 +6,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+
 import org.bukkit.Location;
 
 public class BukkitLocation extends AbstractLocation {

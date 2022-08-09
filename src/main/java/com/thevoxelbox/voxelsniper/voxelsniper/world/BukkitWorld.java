@@ -10,6 +10,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;

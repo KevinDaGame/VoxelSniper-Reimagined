@@ -7,11 +7,12 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 
 public class BukkitEntity implements IEntity {
     private final Entity entity;

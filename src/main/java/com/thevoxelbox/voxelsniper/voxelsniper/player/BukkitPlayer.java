@@ -14,15 +14,21 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
-import org.bukkit.entity.*;
-
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.jetbrains.annotations.NotNull;
-import java.util.*;
 
 public class BukkitPlayer extends AbstractPlayer {
     private final Player player;

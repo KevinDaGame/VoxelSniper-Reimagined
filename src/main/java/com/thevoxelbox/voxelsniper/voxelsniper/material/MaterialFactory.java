@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+
 import org.bukkit.Material;
 
 public class MaterialFactory {

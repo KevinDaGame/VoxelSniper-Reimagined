@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.biome;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import junit.framework.TestCase;
+
 import org.junit.Assert;
 import org.mockito.Mockito;
 

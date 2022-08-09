@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import org.bukkit.entity.Projectile;
 
 import java.util.Set;
 import java.util.UUID;
@@ -14,6 +13,7 @@ import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 
+import org.bukkit.entity.Projectile;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractPlayer implements IEntity, Audience {
