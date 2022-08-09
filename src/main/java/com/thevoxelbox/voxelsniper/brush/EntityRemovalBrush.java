@@ -3,18 +3,17 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
+
+import org.bukkit.entity.EntityType;
 
 /**
  *
@@ -72,10 +71,9 @@ public class EntityRemovalBrush extends Brush {
             }
         } catch (final PatternSyntaxException pse) {
             pse.printStackTrace();
-            v.sendMessage(ChatColor.RED + "Error in RegEx: " + ChatColor.LIGHT_PURPLE + pse.getPattern());
-            v.sendMessage(ChatColor.RED + String.format("%s (Index: %d)", pse.getDescription(), pse.getIndex()));
+            v.sendMessage(Messages.ENTITY_REMOVAL_REGEX_ERROR.replace("%pattern%",String.valueOf(pse.getPattern())).replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
         }
-        v.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.RED + entityCount + ChatColor.GREEN + " entities out of " + ChatColor.BLUE + chunkCount + ChatColor.GREEN + (chunkCount == 1 ? " chunk." : " chunks."));
+        v.sendMessage(Messages.ENTITY_REMOVE_COUNT.replace("%chunkCount%", String.valueOf(chunkCount)).replace("%entityCount%", String.valueOf(entityCount)).replace("%multiple%", (chunkCount == 1 ? " chunk." : " chunks.")));
     }
 
     private int removeEntities(IChunk chunk) throws PatternSyntaxException {
@@ -106,36 +104,33 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void info(VoxelMessage vm) {
         vm.brushName(getName());
-        vm.custom(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
+        String exclusionList = this.exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
+        vm.custom(Messages.ENTITY_REMOVAL_EXCLUSIONS.replace("%exclusionList%", exclusionList));
         vm.size();
     }
 
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " + [entityType]  -- Add entity to exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " - [entityType]  -- Remove entity from exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets exception list to defaults");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " list  -- Shows entities in exception list");
+            v.sendMessage(Messages.ENTITY_REMOVAL_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("reset")) {
             defaultValues();
-            v.sendMessage(ChatColor.GOLD + "Reset exclusions list to default values.");
+            v.sendMessage(Messages.ENTITY_REMOVAL_RESET);
             return;
         }
 
         if (params[0].equalsIgnoreCase("clear")) {
             exclusionList.clear();
-            v.sendMessage(ChatColor.GOLD + "Cleared the exclusions list." + ChatColor.RED + " WARNING! " + ChatColor.DARK_RED + "All" + ChatColor.RED + " entities can now be removed by the brush. BE CAREFUL!");
+            v.sendMessage(Messages.ENTITY_REMOVAL_CLEAR);
             return;
         }
 
         if (params[0].equalsIgnoreCase("list")) {
-            v.sendMessage(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
+            String exclusionList = this.exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
+            v.sendMessage(Messages.ENTITY_REMOVAL_EXCLUSIONS.replace("%exclusionList%", exclusionList));
             return;
         }
 
@@ -145,13 +140,13 @@ public class EntityRemovalBrush extends Brush {
 
                 if (params[0].equals("+")) {
                     exclusionList.add(entity);
-                    v.sendMessage(ChatColor.GOLD + "Added " + entity.name() + " to exclusion list.");
+                    v.sendMessage(Messages.ENTITY_REMOVAL_ADD.replace("%name%", String.valueOf(entity.getName())));
                 } else {
                     if (exclusionList.contains(entity)) {
                         exclusionList.remove(entity);
-                        v.sendMessage(ChatColor.GOLD + "Removed " + entity.name() + " from exclusion list.");
+                        v.sendMessage(Messages.ENTITY_REMOVAL_REMOVE.replace("%name%", String.valueOf(entity.getName())));
                     } else {
-                        v.sendMessage(ChatColor.GOLD + entity.name() + " wasn't in exclusion list. Nothing happened.");
+                        v.sendMessage(Messages.ENTITY_REMOVAL_NOT_IN_LIST.replace("%name%", String.valueOf(entity.getName())));
                     }
                 }
 
@@ -161,7 +156,7 @@ temp.printStackTrace();
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
@@ -180,7 +175,7 @@ temp.printStackTrace();
             entities.add(entity.name());
         }
 
-        
+
         argumentValues.put("+", entities);
         argumentValues.put("-", entities);
         return argumentValues;

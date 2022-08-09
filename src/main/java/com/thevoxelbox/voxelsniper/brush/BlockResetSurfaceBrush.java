@@ -6,10 +6,10 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 import java.util.ArrayList;
+
+import org.bukkit.Material;
 
 /**
  * This brush only looks for solid blocks, and then changes those plus any air blocks touching them. If it works, this brush should be faster than the original

@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 /**
  * @author Gavjenks
@@ -18,7 +19,7 @@ public class LightningBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.brushMessage("Lightning Brush!  Please use in moderation.");
+        vm.brushMessage(Messages.LIGHTNING_BRUSH_MESSAGE);
     }
 
     @Override

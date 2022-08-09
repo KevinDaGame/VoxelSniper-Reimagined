@@ -1,9 +1,7 @@
 package com.thevoxelbox.voxelsniper.util;
 
 import com.google.common.collect.ImmutableList;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;

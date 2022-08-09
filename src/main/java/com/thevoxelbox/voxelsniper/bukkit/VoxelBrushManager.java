@@ -7,7 +7,11 @@ import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.*;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Brush registration manager.

@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
@@ -11,12 +12,16 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
@@ -158,15 +163,14 @@ public class ErodeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Active brush preset is " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
+        vm.custom(Messages.ACTIVE_BRUSH_PRESET.replace("%this.presetName%",this.presetName));
     }
 
     @Override
     // TODO: Implement changing of individual variables | fill erode fillrecursion eroderecursion
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Erode Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [preset]  -- Change active erode brush preset");
+            v.sendMessage(Messages.ERODE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -174,9 +178,9 @@ public class ErodeBrush extends Brush {
             Preset preset = Preset.valueOf(params[0].toUpperCase());
             this.currentPreset = preset.getPreset();
             this.presetName = preset.name();
-            v.sendMessage(ChatColor.GOLD + "Brush preset changed to " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
+            v.sendMessage(Messages.BRUSH_PRESET_CHANGED.replace("%this.presetName%",this.presetName));
         } catch (IllegalArgumentException e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That preset does not exist.");
+            v.sendMessage(Messages.PRESET_DOES_NOT_EXIST);
         }
     }
 

@@ -3,15 +3,22 @@ package com.thevoxelbox.voxelsniper.snipe;
 import com.google.common.collect.Sets;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import org.bukkit.Material;
-import org.bukkit.block.*;
-import org.bukkit.block.data.type.NoteBlock;
-import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.bukkit.block.BlockState;
+import org.bukkit.block.BrewingStand;
+import org.bukkit.block.Chest;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.block.Dispenser;
+import org.bukkit.block.Furnace;
+import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.NoteBlock;
 
 /**
  * Holds {@link BlockState}s that can be later on used to reset those block locations back to the recorded states.

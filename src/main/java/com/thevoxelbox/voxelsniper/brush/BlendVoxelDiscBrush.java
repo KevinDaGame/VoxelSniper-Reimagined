@@ -2,14 +2,15 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
@@ -105,8 +106,7 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blend Ball Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water -- toggle include water (default: exclude)");
+            v.sendMessage(Messages.BALL_BLEND_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 

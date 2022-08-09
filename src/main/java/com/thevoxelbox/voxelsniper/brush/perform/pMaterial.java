@@ -6,11 +6,8 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 /**
  * @author Voxel

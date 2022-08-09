@@ -4,14 +4,15 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.Material;
 
 // TODO: Dissect this
 /**
@@ -146,7 +147,7 @@ public class Rot2DvertBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -162,7 +163,7 @@ public class Rot2DvertBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -175,19 +176,18 @@ public class Rot2DvertBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "2D Rotation Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [number]  -- Set angle in degrees");
+            v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
-            v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
+            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(this.se)));
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

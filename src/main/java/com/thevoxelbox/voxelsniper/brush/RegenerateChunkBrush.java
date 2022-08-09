@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 
 /**
@@ -32,7 +33,7 @@ public class RegenerateChunkBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.sendMessage("Generate that chunk! " + chunk.getX() + " " + chunk.getZ());
+        v.sendMessage(Messages.GENERATED_CHUNK.replace("%chunk.getX%", Integer.toString(chunk.getX())).replace("%chunk.getZ%", Integer.toString(chunk.getZ())));
         this.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
         this.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
     }
@@ -50,8 +51,7 @@ public class RegenerateChunkBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.brushMessage("Tread lightly.");
-        vm.brushMessage("This brush will melt your spleen and sell your kidneys.");
+        vm.brushMessage(Messages.REGENERATE_CHUNK_MESSAGE);
     }
 
     @Override

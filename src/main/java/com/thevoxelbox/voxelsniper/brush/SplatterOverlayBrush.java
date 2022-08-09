@@ -4,14 +4,18 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
+import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Splatter_Overlay_Brush
@@ -260,22 +264,16 @@ public class SplatterOverlayBrush extends PerformerBrush {
         }
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.BLUE + "Seed percent set to: " + this.seedPercent / 100 + "%");
-        vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
-        vm.custom(ChatColor.BLUE + "Recursions set to: " + this.splatterRecursions);
-        vm.custom(ChatColor.BLUE + "Y-Offset set to: " + this.yOffset);
+        vm.custom(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(this.seedPercent / 100)));
+        vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
+        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(this.splatterRecursions)));
+        vm.custom(Messages.Y_OFFSET_SET.replace("%yOffset%",String.valueOf(this.yOffset)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Splatter Overlay Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " mode  -- Toggle between overlaying natural blocks or all blocks.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " seed [decimal]  -- Set a seed percentage");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [decimal]  -- Set a growth percentage");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " recursion [number]  -- Set a recursion value");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets to default values");
+            v.sendMessage(Messages.SPLATTER_OVERLAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -285,7 +283,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
             this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
             this.depth = 3;
             this.allBlocks = false;
-            v.sendMessage(ChatColor.GOLD + "Values resetted to default values.");
+            v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
             return;
         }
 
@@ -300,7 +298,8 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 this.allBlocks = false;
                 this.useVoxelList = false;
             }
-            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.");
+            String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
+            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%",String.valueOf(this.depth)).replace("%mode%",mode));
             return;
         }
 
@@ -312,7 +311,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
                 return;
             }
 
@@ -320,10 +319,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = ((int) Double.parseDouble(params[1]) * 100);
 
                 if (temp >= SEED_PERCENT_MIN && temp <= SEED_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Seed percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
+                    v.sendMessage(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(temp / 100)));
                     this.seedPercent = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Seed percent must be a decimal between 0.01 - 99.99!");
+                    v.sendMessage(Messages.SEED_PERCENT_RANGE);
                 }
                 return;
             }
@@ -332,10 +331,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = ((int) Double.parseDouble(params[1]) * 100);
 
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%");
+                    v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(temp / 100)));
                     this.growPercent = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be a decimal between 0.01 - 99.99!");
+                    v.sendMessage(Messages.GROWTH_PERCENT_RANGE.replace("%min%", "0.01").replace("%max%", "99.99"));
                 }
                 return;
             }
@@ -344,10 +343,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = Integer.parseInt(params[1]);
 
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Recursions set to: " + temp);
+                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(temp)));
                     this.splatterRecursions = temp;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Recursions must be an number between 1 - 10!");
+                    v.sendMessage(Messages.SPLATTER_BALL_BRUSH_RECURSION_RANGE);
                 }
                 return;
             }
@@ -355,7 +354,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
 temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

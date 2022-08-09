@@ -3,10 +3,10 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
-import org.bukkit.ChatColor;
 
 /**
  * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
@@ -92,7 +92,7 @@ public class ShellVoxelBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.owner().getPlayer().sendMessage(ChatColor.AQUA + "Shell complete.");
+        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
     }
 
     @Override
