@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 
 import java.io.File;
 import java.io.IOException;
@@ -359,13 +359,13 @@ public enum Messages implements ComponentLike {
 
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
 
-    public static void load(VoxelSniper voxelSniper) {
+    public static void load(BukkitVoxelSniper voxelSniper) {
         File langFile = new File(voxelSniper.getDataFolder(), "lang.yml");
         if (!langFile.exists()) {
             voxelSniper.saveResource("lang.yml", false);
         }
         YamlConfiguration lang = new YamlConfiguration(langFile);
-        YamlConfiguration fallBackLang = new YamlConfiguration(Messages.class.getClassLoader(), "lang.yml", voxelSniper);
+        YamlConfiguration fallBackLang = new YamlConfiguration(Messages.class.getClassLoader(), "lang.yml");
         boolean changedFile = false;
 
         for (Messages message : values()) {

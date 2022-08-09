@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
@@ -11,11 +12,14 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
 import java.util.logging.Level;
+
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Bukkit extension point.
@@ -23,6 +27,7 @@ import java.util.logging.Level;
 public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
 
     private static BukkitVoxelSniper instance;
+    private static BukkitAudiences adventure;
     
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
     private VoxelSniperConfiguration voxelSniperConfiguration;
@@ -33,6 +38,10 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
      */
     public static BukkitVoxelSniper getInstance() {
         return BukkitVoxelSniper.instance;
+    }
+
+    public static BukkitAudiences getAdventure() {
+        return BukkitVoxelSniper.adventure;
     }
 
     /**
@@ -52,7 +61,8 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize(this);
 
-        
+        Messages.load(this);
+        BukkitVoxelSniper.adventure = BukkitAudiences.create(this);
         // Initialize brush manager
         VoxelBrushManager brushManager = VoxelBrushManager.initialize(this);
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
@@ -65,6 +75,14 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
 
         // Initialize commands
         VoxelCommandManager.initialize(this);
+    }
+
+    @Override
+    public void onDisable() {
+        if(BukkitVoxelSniper.adventure != null) {
+            BukkitVoxelSniper.adventure.close();
+            BukkitVoxelSniper.adventure = null;
+        }
     }
 
     @Override

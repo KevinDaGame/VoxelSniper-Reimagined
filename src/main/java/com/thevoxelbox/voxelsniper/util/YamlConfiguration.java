@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,13 +29,13 @@ public class YamlConfiguration {
         return new Yaml(new Constructor(), new Representer(), dumperOptions, loaderOptions, new Resolver());
     }
 
-    public YamlConfiguration(ClassLoader loader, String fileName, VoxelSniper voxelSniper) {
+    public YamlConfiguration(ClassLoader loader, String fileName) {
         Map<String, Object> contents = null;
         try(InputStream inputStream = loader.getResourceAsStream(fileName)) {
             if(inputStream != null) {
                 contents = getYaml().load(inputStream);
             } else {
-                voxelSniper.getLogger().warning("The resource " + fileName + " could not be found!");
+                BukkitVoxelSniper.getInstance().getLogger().warning("The resource " + fileName + " could not be found!");
             }
         } catch(IOException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.player;
 
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
@@ -12,9 +13,15 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.identity.Identity;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 
+import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class BukkitPlayer extends AbstractPlayer {
@@ -127,6 +134,11 @@ public class BukkitPlayer extends AbstractPlayer {
     public VoxelMaterial getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
         return new VoxelMaterial(item.getType().getKey().getKey());
+    }
+
+    @Override
+    public void sendMessage(@NotNull Identity source, @NotNull Component message, @NotNull MessageType type) {
+        BukkitVoxelSniper.getAdventure().player(this.player).sendMessage(source, message, type);
     }
 
     @Override

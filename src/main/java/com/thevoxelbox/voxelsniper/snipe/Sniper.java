@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Maps;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
@@ -19,10 +18,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.audience.MessageType;
-import net.kyori.adventure.identity.Identity;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockFace;
@@ -32,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  *
  */
-public class Sniper implements Audience {
+public class Sniper {
 
     private final IVoxelsniper main;
     private final UUID player;
@@ -298,8 +294,7 @@ public class Sniper implements Audience {
         return tools.get(toolId);
     }
 
-    @Override
-    public void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type) {
-        VoxelSniper.getAdventure().player(this.getPlayer()).sendMessage(source, message, type);
+    public final void sendMessage(final @NotNull ComponentLike message) {
+        this.getPlayer().sendMessage(message);
     }
 }

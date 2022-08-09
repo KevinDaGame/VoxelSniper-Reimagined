@@ -160,7 +160,7 @@ public class SnipeData {
     }
 
     public final void sendMessage(final @NotNull ComponentLike message) {
-        this.owner.sendMessage(message);
+        this.owner.getPlayer().sendMessage(message);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
@@ -11,14 +10,10 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import net.kyori.adventure.audience.Audience;
-
 import org.bukkit.Art;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Voxel
@@ -326,27 +321,23 @@ public class BlockHelper {
                     final int i = (bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length) % Art.values().length;
                     Art art = Art.getById(i);
                     if (art == null) {
-                        audience(p).sendMessage(Messages.FINAL_PAINTING);
+                        p.sendMessage(Messages.FINAL_PAINTING);
                         return;
                     }
                     bestMatch.setArt(art);
-                    audience(p).sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
+                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
                 } catch (final Exception e) {
-                    audience(p).sendMessage(Messages.ERROR);
+                    p.sendMessage(Messages.ERROR);
                 }
             } else {
                 try {
                     Art art = Art.getById(choice);
                     bestMatch.setArt(art);
-                    audience(p).sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));
+                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));
                 } catch (final Exception exception) {
-                    audience(p).sendMessage(Messages.INVALID_INPUT);
+                    p.sendMessage(Messages.INVALID_INPUT);
                 }
             }
         }
-    }
-
-    private static @NotNull Audience audience(Player p) {
-        return VoxelSniper.getAdventure().player(p);
     }
 }

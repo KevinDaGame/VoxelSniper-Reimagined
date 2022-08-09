@@ -2,18 +2,17 @@ package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-
-import java.util.UUID;
-
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 

@@ -1,17 +1,12 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
-import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.kyori.adventure.text.ComponentLike;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -30,7 +25,7 @@ public class VoxelVoxCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
         // Command: /painting
         if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 0) {
@@ -42,7 +37,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 try {
                     BlockHelper.painting(new BukkitPlayer(player), false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
-                            sendMessage(player, Messages.PAINTING_INVALID_SYNTAX);
+                    bukkitPlayer.sendMessage(Messages.PAINTING_INVALID_SYNTAX);
                 }
                 return true;
             }
@@ -51,7 +46,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vchunk
         if (getActiveAlias().equalsIgnoreCase("vchunk")) {
             player.getWorld().refreshChunk(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-            sendMessage(player, Messages.REFRESHED_CHUNK);
+            bukkitPlayer.sendMessage(Messages.REFRESHED_CHUNK);
             return true;
         }
 
@@ -62,9 +57,9 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int z = Integer.parseInt(args[1]);
 
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
-                sendMessage(player, Messages.GOTO_MSG);
+                bukkitPlayer.sendMessage(Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                sendMessage(player, Messages.GOTO_INVALID_SYNTAX);
+                bukkitPlayer.sendMessage(Messages.GOTO_INVALID_SYNTAX);
             }
             return true;
         }
@@ -72,7 +67,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Default command
         // Command: /vox, /vox help, /vox info
         if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            sniper.sendMessage(Messages.VOX_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
+            bukkitPlayer.sendMessage(Messages.VOX_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
@@ -88,7 +83,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 try {
                     BlockHelper.painting(new BukkitPlayer(player), false, false, Integer.parseInt(args[1]));
                 } catch (NumberFormatException e) {
-                    sniper.sendMessage(Messages.VOX_PAINTING_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
+                    bukkitPlayer.sendMessage(Messages.VOX_PAINTING_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 }
                 return true;
             }
@@ -97,7 +92,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vox chunk
         if (args[0].equalsIgnoreCase("chunk")) {
             player.getWorld().refreshChunk(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-            sendMessage(player, Messages.REFRESHED_CHUNK);
+            bukkitPlayer.sendMessage(Messages.REFRESHED_CHUNK);
             return true;
         }
 
@@ -108,9 +103,9 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int z = Integer.parseInt(args[2]);
 
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
-                sendMessage(player, Messages.GOTO_MSG);
+                bukkitPlayer.sendMessage(Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                sniper.sendMessage(Messages.VOX_GOTO_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
+                bukkitPlayer.sendMessage(Messages.VOX_GOTO_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             }
             return true;
         }
@@ -151,10 +146,6 @@ public class VoxelVoxCommand extends VoxelCommand {
         }
 
         return new ArrayList<>();
-    }
-
-    private static void sendMessage(Player p, ComponentLike msg) {
-        VoxelSniper.getAdventure().player(p).sendMessage(msg);
     }
 
 }

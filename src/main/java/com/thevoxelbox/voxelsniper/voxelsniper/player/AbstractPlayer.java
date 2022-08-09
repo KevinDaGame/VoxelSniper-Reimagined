@@ -9,7 +9,14 @@ import org.bukkit.entity.Projectile;
 import java.util.Set;
 import java.util.UUID;
 
-public abstract class AbstractPlayer implements IEntity{
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.identity.Identity;
+import net.kyori.adventure.text.Component;
+
+import org.jetbrains.annotations.NotNull;
+
+public abstract class AbstractPlayer implements IEntity, Audience {
     abstract public UUID getUniqueId();
     abstract public void sendMessage(String message);
     abstract public boolean hasPermission(String permissionNode);
@@ -20,4 +27,7 @@ public abstract class AbstractPlayer implements IEntity{
     abstract public IEntity launchProjectile(Class<? extends Projectile> projectile);
     abstract public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);
     abstract public VoxelMaterial getItemInHand();
+
+    @Override
+    public abstract void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type);
 }
