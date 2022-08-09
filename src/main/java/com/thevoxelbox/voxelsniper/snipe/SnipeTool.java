@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.MutableClassToInstanceMap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**

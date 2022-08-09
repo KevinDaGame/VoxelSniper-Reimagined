@@ -1,7 +1,6 @@
-package com.thevoxelbox.voxelsniper.bukkit;
+package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.stream.Collectors;
 
