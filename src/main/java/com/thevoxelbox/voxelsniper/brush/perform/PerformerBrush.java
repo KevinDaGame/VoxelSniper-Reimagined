@@ -9,12 +9,13 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.Brush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.bukkit.Bukkit;
 
 /**
  * @author Voxel
@@ -28,7 +29,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
     }
 
     public void sendPerformerMessage(String triggerHandle, SnipeData v) {
-        v.sendMessage(ChatColor.DARK_AQUA + "You can use " + ChatColor.YELLOW + "'/b " + triggerHandle + " p [performer]'" + ChatColor.DARK_AQUA + " to change performers now.");
+        v.sendMessage(Messages.PERFORMER_MESSAGE.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

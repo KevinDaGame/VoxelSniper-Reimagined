@@ -6,15 +6,16 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.MaterialTranslator;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 public class VoxelVoxelCommand extends VoxelCommand {
 
@@ -37,11 +38,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
         // Default command
         // Command: /vr info, /vr help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the block you are looking at as the active voxel material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [material]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the specified block as the active voxel material.");
+            sniper.sendMessage(Messages.VOXEL_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
@@ -52,7 +49,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to set voxel substance. No changes were made.");
+                sniper.sendMessage(Messages.NOTHING_TO_SET_SUBSTANCE);
             }
             return true;
         }
@@ -69,7 +66,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
             snipeData.getVoxelMessage().voxel();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Material ID.");
+            sniper.sendMessage(Messages.INVALID_TYPE_ID);
             return true;
         }
     }

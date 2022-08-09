@@ -4,15 +4,16 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_OCEANATOR_5000
@@ -169,9 +170,7 @@ public class OceanBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Sets the water level");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)");
+            v.sendMessage(Messages.OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
         try {
@@ -179,24 +178,24 @@ public class OceanBrush extends Brush {
                 int temp = Integer.parseInt(params[1]);
 
                 if (temp <= WATER_LEVEL_MIN) {
-                    v.sendMessage(ChatColor.RED + "The water level must be at least 12.");
+                    v.sendMessage(Messages.OCEAN_LEVEL_AT_LEAST_12);
                     return;
                 }
 
                 this.waterLevel = temp - 1;
-                v.sendMessage(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1));
+                v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel+1)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("floor")) {
                 this.coverFloor = Boolean.parseBoolean(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
+                v.sendMessage(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
                 return;
             }
         } catch (NumberFormatException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
@@ -221,8 +220,8 @@ public class OceanBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.BLUE + "Water level set to " + ChatColor.GREEN + (waterLevel + 1)); // +1 since we are working with 0-based array indices
-        vm.custom(ChatColor.BLUE + "Floor cover " + ChatColor.GREEN + (this.coverFloor ? "enabled" : "disabled"));
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel+1))); // +1 since we are working with 0-based array indices
+        vm.custom(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
     }
 
     @Override

@@ -1,9 +1,13 @@
 package com.thevoxelbox.voxelsniper;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.logging.Level;
+
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Bukkit extension point.
@@ -11,7 +15,8 @@ import java.util.logging.Level;
 public class VoxelSniper extends JavaPlugin {
 
     private static VoxelSniper instance;
-    
+    private static BukkitAudiences adventure;
+
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
     private VoxelSniperConfiguration voxelSniperConfiguration;
 
@@ -20,6 +25,10 @@ public class VoxelSniper extends JavaPlugin {
      */
     public static VoxelSniper getInstance() {
         return VoxelSniper.instance;
+    }
+
+    public static BukkitAudiences getAdventure() {
+        return VoxelSniper.adventure;
     }
 
     /**
@@ -34,6 +43,9 @@ public class VoxelSniper extends JavaPlugin {
     @Override
     public void onEnable() {
         VoxelSniper.instance = this;
+        VoxelSniper.adventure = BukkitAudiences.create(this);
+
+        Messages.load(this);
 
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize();
@@ -50,5 +62,13 @@ public class VoxelSniper extends JavaPlugin {
 
         // Initialize commands
         VoxelCommandManager.initialize();
+    }
+
+    @Override
+    public void onDisable() {
+        if(VoxelSniper.adventure != null) {
+            VoxelSniper.adventure.close();
+            VoxelSniper.adventure = null;
+        }
     }
 }

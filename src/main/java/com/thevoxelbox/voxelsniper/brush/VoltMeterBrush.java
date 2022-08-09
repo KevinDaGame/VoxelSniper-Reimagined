@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -24,20 +25,20 @@ public class VoltMeterBrush extends Brush {
     private void data(final SnipeData v) {
         final Block block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
         final byte data = block.getData();
-        v.sendMessage(ChatColor.AQUA + "Blocks until repeater needed: " + data);
+        v.sendMessage(Messages.BLOCKS_UNTIL_REPEATER_MESSAGE.replace("%blocks%", String.valueOf(data)));
     }
 
     private void volt(final SnipeData v) {
         final Block block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
         final boolean indirect = block.isBlockIndirectlyPowered();
         final boolean direct = block.isBlockPowered();
-        v.sendMessage(ChatColor.AQUA + "Direct Power? " + direct + " Indirect Power? " + indirect);
-        v.sendMessage(ChatColor.BLUE + "Top Direct? " + block.isBlockFacePowered(BlockFace.UP) + " Top Indirect? " + block.isBlockFaceIndirectlyPowered(BlockFace.UP));
-        v.sendMessage(ChatColor.BLUE + "Bottom Direct? " + block.isBlockFacePowered(BlockFace.DOWN) + " Bottom Indirect? " + block.isBlockFaceIndirectlyPowered(BlockFace.DOWN));
-        v.sendMessage(ChatColor.BLUE + "East Direct? " + block.isBlockFacePowered(BlockFace.EAST) + " East Indirect? " + block.isBlockFaceIndirectlyPowered(BlockFace.EAST));
-        v.sendMessage(ChatColor.BLUE + "West Direct? " + block.isBlockFacePowered(BlockFace.WEST) + " West Indirect? " + block.isBlockFaceIndirectlyPowered(BlockFace.WEST));
-        v.sendMessage(ChatColor.BLUE + "North Direct? " + block.isBlockFacePowered(BlockFace.NORTH) + " North Indirect? " + block.isBlockFaceIndirectlyPowered(BlockFace.NORTH));
-        v.sendMessage(ChatColor.BLUE + "South Direct? " + block.isBlockFacePowered(BlockFace.SOUTH) + " South Indirect? " + block.isBlockFaceIndirectlyPowered(BlockFace.SOUTH));
+        v.sendMessage(Messages.BLOCK_POWER_MESSAGE.replace("%direct%", String.valueOf(direct)).replace("%indirect%", String.valueOf(indirect)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "Top'").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.UP)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.UP)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "Bottom'").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.DOWN)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.DOWN)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "East'").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.EAST)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.EAST)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "West'").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.WEST)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.WEST)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "North'").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.NORTH)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.NORTH)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "South'").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.SOUTH)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.SOUTH)));
     }
 
     @Override
@@ -53,7 +54,7 @@ public class VoltMeterBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.brushMessage("Right click with arrow to see if blocks/faces are powered. Powder measures wire current.");
+        vm.brushMessage(Messages.VOLTMETER_BRUSH_MESSAGE);
     }
 
     @Override

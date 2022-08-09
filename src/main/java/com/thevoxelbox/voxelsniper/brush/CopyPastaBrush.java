@@ -4,14 +4,15 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#CopyPasta_Brush
@@ -65,9 +66,9 @@ public class CopyPastaBrush extends Brush {
                 }
             }
 
-            v.sendMessage(ChatColor.AQUA + "" + this.numBlocks + " blocks copied.");
+            v.sendMessage(Messages.BLOCKS_COPIED_COUNT.replace("%numBlocks%",String.valueOf(this.numBlocks)));
         } else {
-            v.sendMessage(ChatColor.RED + "Copy area too big: " + this.numBlocks + "(Limit: " + CopyPastaBrush.BLOCK_LIMIT + ")");
+            v.sendMessage(Messages.COPY_AREA_TOO_BIG.replace("%numBlocks%", String.valueOf(this.numBlocks)).replace("%BLOCK_LIMIT%",String.valueOf(CopyPastaBrush.BLOCK_LIMIT)));
         }
     }
 
@@ -105,7 +106,7 @@ public class CopyPastaBrush extends Brush {
                 }
             }
         }
-        v.sendMessage(ChatColor.AQUA + "" + this.numBlocks + " blocks pasted.");
+        v.sendMessage(Messages.BLOCKS_PASTED_COUNT.replace("%numBlocks%",String.valueOf(this.numBlocks)));
 
         v.owner().storeUndo(undo);
     }
@@ -117,14 +118,14 @@ public class CopyPastaBrush extends Brush {
                 this.firstPoint[0] = this.getTargetBlock().getX();
                 this.firstPoint[1] = this.getTargetBlock().getY();
                 this.firstPoint[2] = this.getTargetBlock().getZ();
-                v.sendMessage(ChatColor.GRAY + "First point");
+                v.sendMessage(Messages.FIRST_POINT_SELECTED);
                 this.points = 1;
                 break;
             case 1:
                 this.secondPoint[0] = this.getTargetBlock().getX();
                 this.secondPoint[1] = this.getTargetBlock().getY();
                 this.secondPoint[2] = this.getTargetBlock().getZ();
-                v.sendMessage(ChatColor.GRAY + "Second point");
+                v.sendMessage(Messages.SECOND_POINT_SELECTED);
                 this.points = 2;
                 break;
             default:
@@ -133,7 +134,7 @@ public class CopyPastaBrush extends Brush {
                 this.numBlocks = 0;
                 this.substanceArray = new BlockData[1];
                 this.points = 0;
-                v.sendMessage(ChatColor.GRAY + "Points cleared.");
+                v.sendMessage(Messages.POINTS_CLEARED);
                 break;
         }
     }
@@ -149,45 +150,43 @@ public class CopyPastaBrush extends Brush {
                 this.pastePoint[2] = this.getTargetBlock().getZ();
                 this.doPasta(v);
             } else {
-                v.sendMessage(ChatColor.RED + "Error");
+                v.sendMessage(Messages.ERROR);
             }
         } else {
-            v.sendMessage(ChatColor.RED + "You must select exactly two points.");
+            v.sendMessage(Messages.MUST_SELECT_2_POINTS);
         }
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GOLD + "Paste air: " + this.pasteAir);
-        vm.custom(ChatColor.GOLD + "Pivot angle: " + this.pivot);
+        vm.custom(Messages.PASTE_AIR_STATE.replace("%pasteAir%",String.valueOf(this.pasteAir)));
+        vm.custom(Messages.PIVOT_ANGLE.replace("%pivot%",String.valueOf(this.pivot)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "CopyPasta Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)");
+            v.sendMessage(Messages.COPYPASTA_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("air")) {
             this.pasteAir = !this.pasteAir;
 
-            v.sendMessage(ChatColor.GOLD + "Air included in paste: " + this.pasteAir);
+            v.sendMessage(Messages.PASTE_AIR_STATE.replace("%pasteAir%",String.valueOf(this.pasteAir)));
             return;
         }
 
         if (params[0].equalsIgnoreCase("rotate")) {
             if (params[1].equalsIgnoreCase("90") || params[1].equalsIgnoreCase("180") || params[1].equalsIgnoreCase("270") || params[1].equalsIgnoreCase("0")) {
                 this.pivot = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.GOLD + "Pivot angle: " + this.pivot + " degrees");
+                v.sendMessage(Messages.PIVOT_ANGLE.replace("%pivot%",String.valueOf(this.pivot)));
                 return;
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

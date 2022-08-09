@@ -4,11 +4,12 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.entity.Player;
 
 public class VoxelSniperCommand extends VoxelCommand {
 
@@ -27,21 +28,15 @@ public class VoxelSniperCommand extends VoxelCommand {
         // Default command
         // Command: /sniper, /sniper help, /sniper info
         if ((args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <enable | disable>");
-            player.sendMessage(ChatColor.YELLOW + "    Activates or deactivates VoxelSniper for yourself.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " range");
-            player.sendMessage(ChatColor.YELLOW + "    Toggles whether range limit is enabled or not.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " range [number]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets and enables the range limitation.");
+            sniper.sendMessage(Messages.VOXELSNIPER_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             // TODO: List all bound tools
-            // player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list"); 
+            // player.sendMessage(ChatColor.GOLD + "/" + "%alias%" + " list"); 
             // player.sendMessage(ChatColor.YELLOW + "    Lists all items that you have bound an action to.");
             return true;
         }
 
         if (args.length == 0) {
-            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
+            sniper.sendMessage(Messages.CURRENT_BRUSH_SETTINGS);
             sniper.displayInfo();
             return true;
         }
@@ -59,24 +54,24 @@ public class VoxelSniperCommand extends VoxelCommand {
                     try {
                         int range = Integer.parseInt(args[1]);
                         if (range < 0) {
-                            player.sendMessage("Negative values are not allowed.");
+                            sniper.sendMessage(Messages.NEGATIVE_VALUES_ARE_NOT_ALLOWED);
                         } else {
                             snipeData.setRange(range);
                             snipeData.setRanged(true);
                             snipeData.getVoxelMessage().toggleRange();
                         }
                     } catch (NumberFormatException exception) {
-                        player.sendMessage("Can't parse number.");
+                        sniper.sendMessage(Messages.CAN_T_PARSE_NUMBER);
                     }
                 }
                 return true;
             } else if (args[0].equalsIgnoreCase("enable")) {
                 sniper.setEnabled(true);
-                player.sendMessage("VoxelSniper is now enabled for you.");
+                sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU);
                 return true;
             } else if (args[0].equalsIgnoreCase("disable")) {
                 sniper.setEnabled(false);
-                player.sendMessage("VoxelSniper is now disabled for you.");
+                sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU);
                 return true;
             } else {
                 return false;

@@ -4,11 +4,12 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.block.Block;
 
 /**
  * @author MikeMatrix
@@ -60,18 +61,17 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equals("info")) {
-            v.sendMessage(ChatColor.GOLD + "Checker Voxel Disc Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " worldcoords -- Toggle to use World Coordinates or not (default: true)");
+            v.sendMessage(Messages.CHECKER_DISC_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].startsWith("worldcoords")) {
             this.useWorldCoordinates = !this.useWorldCoordinates;
-            v.sendMessage(ChatColor.AQUA + "Using world coordinates: " + this.useWorldCoordinates);
+            v.sendMessage(Messages.CHECKER_USING_WORLD_CORDS.replace("%useWorldCoordinates%", String.valueOf(this.useWorldCoordinates)));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

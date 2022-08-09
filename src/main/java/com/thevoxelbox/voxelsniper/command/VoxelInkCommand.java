@@ -4,13 +4,14 @@ import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Player;
 
 public class VoxelInkCommand extends VoxelCommand {
 
@@ -28,12 +29,7 @@ public class VoxelInkCommand extends VoxelCommand {
         // Default command
         // Command: /d info, /d help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Copy data value of the block you are looking at into the active voxel material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [dataValue]");
-            player.sendMessage(ChatColor.YELLOW + "    Set specified data value to the active voxel material.");
-            player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " snowy=true,age=7");
+            sniper.sendMessage(Messages.VOXEL_INK_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
@@ -42,13 +38,13 @@ public class VoxelInkCommand extends VoxelCommand {
             Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 if (selectedBlock.getType() != snipeData.getVoxelMaterial()) {
-                    player.sendMessage(ChatColor.RED + "That block is not the same as your active voxel material.");
+                    sniper.sendMessage(Messages.VOXEL_INK_DIFFERENT_TYPE);
                 } else {
                     snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                     snipeData.getVoxelMessage().data();
                 }
             } else {
-                player.sendMessage(ChatColor.GOLD + "No block to imitate voxel material data values. No changes were made.");
+                sniper.sendMessage(Messages.VOXEL_INK_NO_BLOCK_TO_IMITATE_DATA);
             }
             return true;
         }
@@ -62,7 +58,7 @@ public class VoxelInkCommand extends VoxelCommand {
                 snipeData.setVoxelSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().data();
             } catch (IllegalArgumentException e) {
-                player.sendMessage(ChatColor.RED + "The data value(s) cannot be imitated to the active voxel material.");
+                sniper.sendMessage(Messages.VOXEL_INK_CANT_IMITATE_DATA);
             }
 
             return true;
@@ -81,7 +77,7 @@ public class VoxelInkCommand extends VoxelCommand {
 
         if (a.length == 2) {
             List<String> possibleDataValues = new ArrayList<>();
-            
+
             String values = a[1].replace("]", "");
 
             for (String value : values.split(",")) {

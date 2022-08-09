@@ -3,16 +3,17 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Jockey_Brush
@@ -80,10 +81,14 @@ public class JockeyBrush extends Brush {
                     closest.addPassenger(player);
                     jockeyedEntity = closest;
                 }
-                v.sendMessage(ChatColor.GOLD + "You are now sitting on the most nearby entity!");
+                v.sendMessage(Messages.SITTING_ON_CLOSEST_ENTITY);
             }
         } else {
-            v.sendMessage(ChatColor.RED + "Could not find any " + (playerOnly ? "players" : "entities") + " to sit on :(");
+            if (playerOnly) {
+                v.sendMessage(Messages.NO_PLAYERS_FOUND_TO_SIT_ON);
+            } else {
+                v.sendMessage(Messages.NO_ENTITIES_FOUND_TO_SIT_ON);
+            }
         }
     }
 
@@ -107,7 +112,7 @@ public class JockeyBrush extends Brush {
                         stackHeight++;
                     }
                 } else {
-                    v.owner().getPlayer().sendMessage("You broke the stack! :O");
+                    v.sendMessage(Messages.YOU_BROKE_THE_STACK);
                 }
             } else {
                 return;
@@ -129,12 +134,12 @@ public class JockeyBrush extends Brush {
     protected final void powder(final SnipeData v) {
         if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
             v.owner().getPlayer().eject();
-            v.owner().getPlayer().sendMessage(ChatColor.GOLD + "The entity on top of you has been ejected!");
+            v.sendMessage(Messages.ENTITY_EJECTED);
         } else {
             if (jockeyedEntity != null) {
                 jockeyedEntity.eject();
                 jockeyedEntity = null;
-                v.owner().getPlayer().sendMessage(ChatColor.GOLD + "You have been ejected!");
+                v.sendMessage(Messages.YOU_HAVE_BEEN_EJECTED);
             }
         }
 
@@ -143,16 +148,13 @@ public class JockeyBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom("Current Jockey Mode: " + ChatColor.GREEN + jockeyType.toString());
+        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%",String.valueOf(jockeyType.toString())));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Jockey Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [inverse, stack, normal] -- Switch between modes");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " player  -- Toggle target players or all entities (default: players only)");
-            v.sendMessage(ChatColor.BLUE + "Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other ");
+            v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -164,7 +166,16 @@ public class JockeyBrush extends Brush {
             } else {
                 jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_ALL_ENTITIES");
             }
-            v.sendMessage(ChatColor.GREEN + "Now targeting " + (this.playerOnly ? "players only." : "all entities."));
+            if (playerOnly) {
+                v.sendMessage(Messages.NO_PLAYERS_FOUND_TO_SIT_ON);
+            } else {
+                v.sendMessage(Messages.NO_ENTITIES_FOUND_TO_SIT_ON);
+            }
+            if (playerOnly) {
+                v.sendMessage(Messages.JOCKEY_TARGETING_PLAYERS);
+            } else {
+                v.sendMessage(Messages.JOCKEY_TARGETING_ENTITIES);
+            }
             return;
         }
 
@@ -186,12 +197,12 @@ public class JockeyBrush extends Brush {
             }
             if (params[0].equalsIgnoreCase("normal")) {
                 if (playerOnly) {
-                    jockeyType = JockeyType.NORMAL_PLAYER_ONLY;
+                    v.sendMessage(Messages.JOCKEY_TARGETING_PLAYERS);
                 } else {
-                    jockeyType = JockeyType.NORMAL_ALL_ENTITIES;
+                    v.sendMessage(Messages.JOCKEY_TARGETING_ENTITIES);
                 }
             }
-            v.sendMessage("Current Jockey Mode: " + ChatColor.GREEN + jockeyType.toString());
+            v.sendMessage(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.toString()));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
     }

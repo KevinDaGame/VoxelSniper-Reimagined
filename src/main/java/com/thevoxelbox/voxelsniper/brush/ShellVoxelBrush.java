@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -91,7 +92,7 @@ public class ShellVoxelBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.owner().getPlayer().sendMessage(ChatColor.AQUA + "Shell complete.");
+        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
     }
 
     @Override

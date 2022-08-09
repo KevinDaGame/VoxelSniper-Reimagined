@@ -9,16 +9,17 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import com.thevoxelbox.voxelsniper.util.LocationWrapper;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Abstract implementation of the {@link IBrush} interface.
@@ -100,7 +101,7 @@ public abstract class Brush implements IBrush {
 
     @Override
     public void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
-        v.sendMessage(ChatColor.RED + "This brush does not accept additional parameters.");
+        v.sendMessage(Messages.BRUSH_NO_PARAMS_ACCEPTED);
     }
 
     // TODO: make abstract
@@ -129,7 +130,7 @@ public abstract class Brush implements IBrush {
             this.setTargetBlock(clickedBlock);
             this.setLastBlock(clickedBlock.getRelative(clickedFace));
             if (this.getLastBlock() == null) {
-                v.sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                 return false;
             }
             if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isLightningEnabled()) {
@@ -148,7 +149,7 @@ public abstract class Brush implements IBrush {
             if (this.getTargetBlock() != null) {
                 this.setLastBlock(rangeBlockHelper.getLastBlock());
                 if (this.getLastBlock() == null) {
-                    v.sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                    v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                     return false;
                 }
                 if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isLightningEnabled()) {
@@ -156,7 +157,7 @@ public abstract class Brush implements IBrush {
                 }
                 return true;
             } else {
-                v.sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                 return false;
             }
         }

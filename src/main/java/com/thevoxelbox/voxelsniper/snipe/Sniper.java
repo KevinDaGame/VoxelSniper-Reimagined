@@ -8,23 +8,30 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.Messages;
+
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.UUID;
+
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.identity.Identity;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
  */
-public class Sniper {
+public class Sniper implements Audience {
 
     private final VoxelSniper plugin;
     private final UUID player;
@@ -91,12 +98,13 @@ public class Sniper {
             return false;
         }
         if (sniperTool.getCurrentBrush() == null) {
-            getPlayer().sendMessage("No Brush selected.");
+            sendMessage(Messages.NO_BRUSH_SELECTED);
             return true;
         }
 
-        if (!getPlayer().hasPermission(sniperTool.getCurrentBrush().getPermissionNode())) {
-            getPlayer().sendMessage("You are not allowed to use this brush. You're missing the permission node '" + sniperTool.getCurrentBrush().getPermissionNode() + "'");
+        String permissionNode = sniperTool.getCurrentBrush().getPermissionNode();
+        if (!getPlayer().hasPermission(permissionNode)) {
+            sendMessage(Messages.NO_PERMISSION_BRUSH.replace("%permissionNode%",permissionNode));
             return true;
         }
 
@@ -144,7 +152,7 @@ public class Sniper {
 
         if (clickedBlock == null) {
             if (targetBlock == null || lastBlock == null) {
-                getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                 return true;
             }
         }
@@ -240,7 +248,7 @@ public class Sniper {
     public int undo(int amount) {
         int changedBlocks = 0;
         if (this.undoList.isEmpty()) {
-            getPlayer().sendMessage(ChatColor.GREEN + "There's nothing to undo.");
+            sendMessage(Messages.NOTHING_TO_UNDO);
         } else {
             for (int x = 0; x < amount && !undoList.isEmpty(); x++) {
                 Undo undo = this.undoList.pop();
@@ -252,7 +260,7 @@ public class Sniper {
                 }
             }
 
-            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful: " + ChatColor.RED + changedBlocks + ChatColor.GREEN + " blocks have been replaced.");
+            sendMessage(Messages.UNDO_SUCCESSFUL.replace("%changedBlocks%", String.valueOf(changedBlocks)));;
         }
         return changedBlocks;
     }
@@ -275,9 +283,9 @@ public class Sniper {
         String currentToolId = getCurrentToolId();
         SnipeTool sniperTool = tools.get(currentToolId);
         IBrush brush = sniperTool.getCurrentBrush();
-        getPlayer().sendMessage("Current Tool: " + ((currentToolId != null) ? currentToolId : "Default Tool"));
+        sendMessage(Messages.CURRENT_TOOL.replace("%tool%", (currentToolId != null) ? currentToolId : "Default Tool"));
         if (brush == null) {
-            getPlayer().sendMessage("No brush selected.");
+            sendMessage(Messages.NO_BRUSH_SELECTED);
             return;
         }
         brush.info(sniperTool.getMessageHelper());
@@ -288,5 +296,10 @@ public class Sniper {
 
     public SnipeTool getSnipeTool(String toolId) {
         return tools.get(toolId);
+    }
+
+    @Override
+    public void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type) {
+        VoxelSniper.getAdventure().player(this.getPlayer()).sendMessage(source, message, type);
     }
 }

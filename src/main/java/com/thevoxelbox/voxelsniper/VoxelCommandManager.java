@@ -2,13 +2,14 @@ package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.command.*;
-import org.bukkit.command.PluginCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.bukkit.command.PluginCommand;
 
 /**
  *

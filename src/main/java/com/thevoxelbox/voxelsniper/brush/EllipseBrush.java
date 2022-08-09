@@ -4,12 +4,13 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipse_Brush
@@ -65,7 +66,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
             }
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid target.");
+            v.sendMessage(Messages.INVALID_TARGET);
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
@@ -136,7 +137,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
             }
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid target.");
+            v.sendMessage(Messages.INVALID_TARGET);
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
@@ -177,30 +178,22 @@ public class EllipseBrush extends PerformerBrush {
         }
 
         vm.brushName(this.getName());
-        vm.custom(ChatColor.AQUA + "X-size set to: " + ChatColor.DARK_AQUA + this.xscl);
-        vm.custom(ChatColor.AQUA + "Y-size set to: " + ChatColor.DARK_AQUA + this.yscl);
-        vm.custom(ChatColor.AQUA + "Render step number set to: " + ChatColor.DARK_AQUA + this.steps);
-        if (this.fill) {
-            vm.custom(ChatColor.AQUA + "Fill mode is enabled");
-        } else {
-            vm.custom(ChatColor.AQUA + "Fill mode is disabled");
-        }
+        vm.custom(Messages.X_SIZE_SET.replace("%xscl%",String.valueOf(this.xscl)));
+        vm.custom(Messages.Y_SIZE_SET.replace("%yscl%",String.valueOf(this.yscl)));
+        vm.custom(Messages.ELLIPSE_RENDER_STEP_NUMBER.replace("%steps%",String.valueOf(this.steps)));
+        vm.custom(Messages.ELLIPSEBRUSH_FILL_MODE.replace("%state%", this.fill ? "enabled" : "disabled"));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set X size modifier");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set Y size modifier");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " t [number]  -- Set time steps");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "fill  -- Toggles fill mode");
+            v.sendMessage(Messages.ELLIPSE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("fill")) {
             this.fill = !this.fill;
-            v.sendMessage(ChatColor.AQUA + "Fill mode is now " + (this.fill ? "enabled" : "disabled"));
+            v.sendMessage(Messages.ELLIPSEBRUSH_FILL_MODE.replace("%state%", this.fill ? "enabled" : "disabled"));
             return;
         }
 
@@ -209,12 +202,12 @@ public class EllipseBrush extends PerformerBrush {
                 int xValue = Integer.parseInt(params[1]);
 
                 if (xValue < SCL_MIN || xValue > SCL_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid X scale, must be between " + SCL_MIN + " - " + SCL_MAX);
+                    v.sendMessage(Messages.INVALID_X_SCALE.replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
                     return;
                 }
 
                 this.xscl = xValue;
-                v.sendMessage(ChatColor.AQUA + "X-scale modifier set to: " + this.xscl);
+                v.sendMessage(Messages.X_SCALE_MODIFIER_SET.replace("%xscl%",String.valueOf(this.xscl)));
                 return;
             }
 
@@ -222,12 +215,12 @@ public class EllipseBrush extends PerformerBrush {
                 int yValue = Integer.parseInt(params[1]);
 
                 if (yValue < SCL_MIN || yValue > SCL_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid Y scale, must be between " + SCL_MIN + " - " + SCL_MAX);
+                    v.sendMessage(Messages.INVALID_Y_SCALE.replace("%SCL_MIN%", String.valueOf(SCL_MIN)).replace("%SCL_MAX%", String.valueOf(SCL_MAX)));
                     return;
                 }
 
                 this.yscl = yValue;
-                v.sendMessage(ChatColor.AQUA + "Y-scale modifier set to: " + this.yscl);
+                v.sendMessage(Messages.Y_SCALE_MODIFIER_SET.replace("%yscl%",String.valueOf(this.yscl)));
                 return;
             }
 
@@ -235,18 +228,18 @@ public class EllipseBrush extends PerformerBrush {
                 int stepValue = Integer.parseInt(params[1]);
 
                 if (stepValue < STEPS_MIN || stepValue > STEPS_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid step amount, must be between " + STEPS_MIN + " - " + STEPS_MAX);
+                    v.sendMessage(Messages.INVALID_STEP_AMOUNT.replace("%STEPS_MIN%", String.valueOf(STEPS_MIN)).replace("%STEPS_MAX%", String.valueOf(STEPS_MAX)));
                     return;
                 }
 
                 this.steps = stepValue;
-                v.sendMessage(ChatColor.AQUA + "Render step number set to: " + this.steps);
+                v.sendMessage(Messages.RENDER_STEP_NUMBER_SET.replace("%steps%",String.valueOf(this.steps)));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 
