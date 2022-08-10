@@ -54,10 +54,13 @@ public abstract class VoxelCommand implements TabExecutor {
     public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         this.activeIdentifier = command.getLabel(); // This is the root command.
         this.activeAlias = alias;   // This is the alias that was executed.
-        
-        // Return partial matches that only match the *beginning* of the string.
-        List<String> suggestions = doSuggestion((Player) sender, args); // MUST SPLIT DECLARATION AND ASSIGNMENT, OTHERWISE PARTIAL MATCHING WON'T WORK
-        return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
+
+        if (sender instanceof Player) {
+            // Return partial matches that only match the *beginning* of the string.
+            List<String> suggestions = doSuggestion((Player) sender, args); // MUST SPLIT DECLARATION AND ASSIGNMENT, OTHERWISE PARTIAL MATCHING WON'T WORK
+            return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
+        }
+        return new ArrayList<>();
     }
 
     public abstract List<String> doSuggestion(Player player, String[] args);

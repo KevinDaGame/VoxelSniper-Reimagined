@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 
 import org.bukkit.Material;
 
 public class MaterialFactory {
-    public static IVoxelsniper main;
     public static IMaterial getMaterial(VoxelMaterial material) {
-        if(main.getEnvironment() == Environment.BUKKIT) {
-            //todo should this be uppercase?
-            return new BukkitMaterial(Material.getMaterial(material.getKey().toUpperCase()));
+        if(VoxelSniper.voxelsniper.getEnvironment() == Environment.BUKKIT) {
+            return new BukkitMaterial(Material.matchMaterial(material.getNamespace() + ":" + material.getKey()));
         }
         return null;
     }

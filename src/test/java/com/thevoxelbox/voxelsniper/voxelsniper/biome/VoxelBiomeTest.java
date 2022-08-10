@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.biome;
 
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import junit.framework.TestCase;
@@ -16,7 +17,7 @@ public class VoxelBiomeTest extends TestCase {
         super.setUp();
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
-        VoxelBiome.setMain(main);
+        VoxelSniper.voxelsniper = main;
         this.biome = new VoxelBiome("namespace", "key", Version.V1_16);
     }
 

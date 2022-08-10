@@ -38,10 +38,8 @@ public class SniperManagerTest {
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
         Mockito.when(main.getPlayer(uuid)).thenReturn(absplayer);
-
-        LocationFactory.main = main;
-        MaterialFactory.main = main;
-        VoxelProfileManager.initialize(main);
+        VoxelSniper.voxelsniper = main;
+        VoxelProfileManager.initialize();
         sniperManager = new VoxelProfileManager();
 
     }

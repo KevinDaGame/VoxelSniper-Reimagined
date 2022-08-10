@@ -76,7 +76,7 @@ public record BukkitWorld(World world) implements IWorld {
     @Override
     @Deprecated
     public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, z, Biome.valueOf(selectedBiome.key()));
+        world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
 
     @Override

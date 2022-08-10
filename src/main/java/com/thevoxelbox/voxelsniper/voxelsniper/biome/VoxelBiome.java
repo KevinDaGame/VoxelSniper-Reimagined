@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.biome;
 
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
@@ -95,10 +96,6 @@ public record VoxelBiome(String namespace, String key, Version version) {
     String getKey() {
         return key;
     }
-    private static IVoxelsniper main;
-    public static void setMain(IVoxelsniper voxelsniper){
-        main = voxelsniper;
-    }
     String getName() {
         return namespace + ":" + key;
     }
@@ -107,7 +104,7 @@ public record VoxelBiome(String namespace, String key, Version version) {
     }
     public static VoxelBiome getBiome(String namespace, String key) {
         var biome = BIOMES.get(namespace + ":" + key);
-        if(main.getVersion().isSupported(biome.getVersion())){
+        if(VoxelSniper.voxelsniper.getVersion().isSupported(biome.getVersion())){
             return biome;
         }
         return null;

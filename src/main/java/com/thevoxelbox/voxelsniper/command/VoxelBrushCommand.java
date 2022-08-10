@@ -68,8 +68,7 @@ public class VoxelBrushCommand extends VoxelCommand {
 
                 snipeData.getVoxelMessage().size();
                 return true;
-            } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            } catch (NumberFormatException ignored) {
             }
         }
 

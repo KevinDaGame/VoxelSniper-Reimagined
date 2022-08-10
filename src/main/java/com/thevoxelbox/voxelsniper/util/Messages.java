@@ -13,6 +13,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
 public enum Messages implements ComponentLike {
+    //<editor-fold defaultstate="collapsed" desc="Messages">
     BRUSH_MESSAGE_PREFIX,
     BRUSH_NAME,
     BRUSH_CENTER,
@@ -355,6 +356,7 @@ public enum Messages implements ComponentLike {
     GENERATED_CHUNK,
     FILE_ALREADY_EXISTS,
     ;
+    //</editor-fold>
 
 
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);

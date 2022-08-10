@@ -32,9 +32,7 @@ public class UndoTest
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
         Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
-        LocationFactory.main = main;
-        MaterialFactory.main = main;
-        VoxelMaterial.setMain(main);
+        VoxelSniper.voxelsniper = main;
         undo = new Undo();
     }
 

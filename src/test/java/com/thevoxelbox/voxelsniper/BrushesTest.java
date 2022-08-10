@@ -33,9 +33,7 @@ public class BrushesTest {
     public void setUp() {
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
-        LocationFactory.main = main;
-        MaterialFactory.main = main;
-        VectorFactory.main = main;
+        VoxelSniper.voxelsniper = main;
         brushes = new VoxelBrushManager();
     }
 
@@ -93,7 +91,7 @@ public class BrushesTest {
     @Test
     public void testPerformerBrushesArgumentsOverloading() throws Exception {
         // Load all brushes
-        brushes = VoxelBrushManager.initialize(Mockito.mock(IVoxelsniper.class));
+        brushes = VoxelBrushManager.initialize();
 
         System.out.println(" ");
         System.out.println(" ");
@@ -126,7 +124,7 @@ public class BrushesTest {
     @Test
     public void testPerformerBrushesArgumentValuesOverloading() throws Exception {
         // Load all brushes
-        brushes = VoxelBrushManager.initialize(Mockito.mock(IVoxelsniper.class));
+        brushes = VoxelBrushManager.initialize();
         System.out.println(" ");
         System.out.println(" ");
         System.out.println(" ");

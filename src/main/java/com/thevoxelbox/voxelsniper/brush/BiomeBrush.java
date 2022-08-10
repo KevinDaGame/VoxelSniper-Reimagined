@@ -78,7 +78,7 @@ public class BiomeBrush extends Brush {
         }
 
         try {
-            this.selectedBiome = VoxelBiome.getBiome(params[0].toUpperCase());
+            this.selectedBiome = VoxelBiome.getBiome(params[0].toLowerCase());
             v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
         } catch (IllegalArgumentException e) {
             v.sendMessage(Messages.BIOME_DOES_NOT_EXIST);
@@ -88,7 +88,7 @@ public class BiomeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
+        return Arrays.stream(Biome.values()).map(Enum::name).collect(Collectors.toList());
     }
 
     @Override

@@ -19,7 +19,6 @@ import java.util.Set;
 public class VoxelBrushManager {
 
     private static VoxelBrushManager instance = null;
-    private static IVoxelsniper main;
 
     private final Multimap<Class<? extends IBrush>, String> brushes = HashMultimap.create();
     private final List<String> brushHandles = new ArrayList<>();
@@ -28,8 +27,7 @@ public class VoxelBrushManager {
         return instance;
     }
 
-    public static VoxelBrushManager initialize(IVoxelsniper main) {
-        VoxelBrushManager.main = main;
+    public static VoxelBrushManager initialize() {
         VoxelBrushManager brushManager = getInstance();
 
         // Instantiate Brush Manager if it's not yet instantiated.

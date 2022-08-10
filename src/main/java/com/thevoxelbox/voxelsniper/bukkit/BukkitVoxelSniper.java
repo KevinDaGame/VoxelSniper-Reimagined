@@ -53,18 +53,14 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     public void onEnable() {
         VoxelSniper.voxelsniper = this;
         BukkitVoxelSniper.instance = this;
-        LocationFactory.main = this;
-        MaterialFactory.main = this;
-        VectorFactory.main = this;
         this.fileHandler = new BukkitFileHandler(this);
-        VoxelMaterial.setMain(this);
         // Initialize profile manager (Sniper)
-        VoxelProfileManager.initialize(this);
+        VoxelProfileManager.initialize();
 
         Messages.load(this);
         BukkitVoxelSniper.adventure = BukkitAudiences.create(this);
         // Initialize brush manager
-        VoxelBrushManager brushManager = VoxelBrushManager.initialize(this);
+        VoxelBrushManager brushManager = VoxelBrushManager.initialize();
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
 
         saveDefaultConfig();
@@ -74,7 +70,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
         getLogger().info("Registered Sniper Listener.");
 
         // Initialize commands
-        VoxelCommandManager.initialize(this);
+        VoxelCommandManager.initialize();
     }
 
     @Override

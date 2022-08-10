@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
 import java.util.Arrays;
@@ -972,7 +972,6 @@ public class VoxelMaterial {
     private final Version version;
     private final String key;
     private final String namespace;
-    private static IVoxelsniper main;
 
     private static VoxelMaterial register(String namespace, String key, Version version) {
 
@@ -997,10 +996,6 @@ public class VoxelMaterial {
     public VoxelMaterial(String key) {
         this("minecraft", key);
     }
-
-    public static void setMain(IVoxelsniper voxelsniper){
-        main = voxelsniper;
-    }
     public static VoxelMaterial getMaterial(String key) {
         return getMaterial("minecraft", key);
     }
@@ -1009,7 +1004,7 @@ public class VoxelMaterial {
         if(block == null) {
             return new VoxelMaterial(namespace, key);
         }
-        if(main.getVersion().isSupported(block.getVersion())){
+        if(VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())){
             return block;
         }
         return null;

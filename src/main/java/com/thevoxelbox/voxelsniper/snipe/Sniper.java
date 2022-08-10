@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Maps;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
@@ -30,14 +31,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Sniper {
 
-    private final IVoxelsniper main;
     private final UUID player;
     private boolean enabled = true;
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
-    public Sniper(IVoxelsniper main, AbstractPlayer player) {
-        this.main = main;
+    public Sniper(AbstractPlayer player) {
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
         sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
@@ -63,7 +62,7 @@ public class Sniper {
     }
 
     public AbstractPlayer getPlayer() {
-        return main.getPlayer(this.player);
+        return VoxelSniper.voxelsniper.getPlayer(this.player);
     }
 
     /**
@@ -226,11 +225,11 @@ public class Sniper {
     }
 
     public void storeUndo(Undo undo) {
-        if (main.getVoxelSniperConfiguration().getUndoCacheSize() <= 0) {
+        if (VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getUndoCacheSize() <= 0) {
             return;
         }
         if (undo != null && undo.getSize() > 0) {
-            while (undoList.size() >= main.getVoxelSniperConfiguration().getUndoCacheSize()) {
+            while (undoList.size() >= VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getUndoCacheSize()) {
                 this.undoList.pollLast();
             }
             undoList.push(undo);
