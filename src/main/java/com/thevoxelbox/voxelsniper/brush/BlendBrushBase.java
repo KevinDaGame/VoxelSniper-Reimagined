@@ -45,7 +45,11 @@ public abstract class BlendBrushBase extends Brush {
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("water")) {
-            this.excludeWater = !this.excludeWater;
+            if (params.length >= 2) {
+                this.excludeWater = !Boolean.parseBoolean(params[1].toLowerCase());
+            } else {
+                this.excludeWater = !this.excludeWater;
+            }
             v.sendMessage(Messages.BLEND_BRUSH_WATER_MODE.replace("%excludeWater%", (this.excludeWater ? "exclude" : "include")));
             return;
         }

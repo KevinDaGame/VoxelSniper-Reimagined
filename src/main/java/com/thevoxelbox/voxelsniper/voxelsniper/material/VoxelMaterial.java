@@ -997,9 +997,14 @@ public class VoxelMaterial {
         this("minecraft", key);
     }
     public static VoxelMaterial getMaterial(String key) {
+        if (key.contains(":")) {
+            String[] components = key.split(":");
+            return getMaterial(components[0], components[1]);
+        }
         return getMaterial("minecraft", key);
     }
     public static VoxelMaterial getMaterial(String namespace, String key) {
+        if (namespace.isEmpty() || key.isEmpty()) return null;
         var block = BLOCKS.get(namespace + ":" + key);
         if(block == null) {
             return new VoxelMaterial(namespace, key);
