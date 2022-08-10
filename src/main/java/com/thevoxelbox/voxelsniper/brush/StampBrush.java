@@ -114,7 +114,7 @@ public class StampBrush extends Brush {
      */
     protected final void setBlockFill(final BlockWrapper cb) {
         final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
-        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
+        if (new BukkitMaterial(Material.AIR).equals(block.getMaterial())) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);
         }
@@ -238,7 +238,7 @@ public class StampBrush extends Brush {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
-                } else if (block.blockData.getMaterial() != new BukkitMaterial( Material.AIR)) {
+                } else if (!new BukkitMaterial(Material.AIR).equals(block.blockData.getMaterial())) {
                     this.solid.add(block);
                     this.setBlock(block);
                 }

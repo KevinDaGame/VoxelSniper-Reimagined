@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class CanyonBrush extends Brush {
 
-    private static final int SHIFT_LEVEL_MIN = 10;
+    private static final int SHIFT_LEVEL_MIN = -60;
     private static final int SHIFT_LEVEL_MAX = 60;
     private int yLevel = -53;
 
