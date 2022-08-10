@@ -5,7 +5,11 @@ import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelBrushManager;
+import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +31,11 @@ public class BrushesTest {
 
     @Before
     public void setUp() {
+        var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        LocationFactory.main = main;
+        MaterialFactory.main = main;
+        VectorFactory.main = main;
         brushes = new VoxelBrushManager();
     }
 

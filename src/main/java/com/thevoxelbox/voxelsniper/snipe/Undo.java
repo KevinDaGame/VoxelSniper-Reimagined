@@ -149,9 +149,9 @@ public class Undo {
             return;
         }
         this.containing.add(pos);
-        if (Undo.FALLING_MATERIALS.contains(block.getMaterial())) {
+        if (Undo.FALLING_MATERIALS.contains(block.getMaterial().getVoxelMaterial())) {
             dropdown.add(block.getState());
-        } else if (Undo.FALLOFF_MATERIALS.contains(block.getMaterial())) {
+        } else if (Undo.FALLOFF_MATERIALS.contains(block.getMaterial().getVoxelMaterial())) {
             falloff.add(block.getState());
         } else {
             all.add(block.getState());
