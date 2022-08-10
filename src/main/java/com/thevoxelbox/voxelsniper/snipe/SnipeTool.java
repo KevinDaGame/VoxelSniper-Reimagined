@@ -1,13 +1,15 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.*;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ClassToInstanceMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.MutableClassToInstanceMap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import org.bukkit.Material;
 
 /**
  *

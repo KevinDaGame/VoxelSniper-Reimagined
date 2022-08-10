@@ -2,9 +2,9 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class BlobBrush extends PerformerBrush {
     private void checkValidGrowPercent(final SnipeData v) {
         if (this.growPercent < GROW_PERCENT_MIN || this.growPercent > GROW_PERCENT_MAX) {
             this.growPercent = GROW_PERCENT_DEFAULT;
-            v.sendMessage(ChatColor.BLUE + "Growth percent set to: 10%");
+            v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", "10"));
         }
     }
 
@@ -213,14 +213,17 @@ public class BlobBrush extends PerformerBrush {
 
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
+
+        vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blob Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " to " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)));
+            String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
+            String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
+            String def = String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100));
+            v.sendMessage(Messages.BLOB_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle).replace("%min%", min).replace("%max%", max).replace("%default%", def));
             return;
         }
 
@@ -228,16 +231,19 @@ public class BlobBrush extends PerformerBrush {
             try {
                 if (params.length == 1) {
                     this.growPercent = GROW_PERCENT_DEFAULT;
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to default value: " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)) + "%");
+                    String def = String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100));
+                    v.sendMessage(Messages.BLOB_BRUSH_SET_DEFAULT.replace("%default%", def));
                     return;
                 }
 
                 float growthValue = Float.parseFloat(params[1]);
                 if ((int) (growthValue * 100) >= GROW_PERCENT_MIN && (int) (growthValue * 100) <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", growthValue) + "%");
+                    v.sendMessage(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.format("%.2f", growthValue)));
                     this.growPercent = (int) growthValue * 100;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
+                    String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
+                    String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
+                    v.sendMessage(Messages.GROWTH_PERCENT_RANGE.replace("%min%", min).replace("%max%", max));
                 }
                 return;
             } catch (NumberFormatException temp) {
@@ -245,7 +251,7 @@ temp.printStackTrace();
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

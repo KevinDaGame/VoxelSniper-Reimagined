@@ -10,6 +10,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+
 import org.bukkit.block.BlockState;
 
 public class BukkitBlockState implements IBlockState {

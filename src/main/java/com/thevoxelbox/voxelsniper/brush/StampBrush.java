@@ -1,20 +1,19 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
+
+import org.bukkit.Material;
 
 /**
  *
@@ -272,7 +271,7 @@ public class StampBrush extends Brush {
                 break;
 
             default:
-                v.sendMessage(ChatColor.DARK_RED + "Error while stamping! Report");
+                v.sendMessage(Messages.STAMP_ERROR);
                 break;
         }
     }

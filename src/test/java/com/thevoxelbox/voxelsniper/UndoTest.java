@@ -3,9 +3,9 @@ package com.thevoxelbox.voxelsniper;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
@@ -13,11 +13,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +31,8 @@ public class UndoTest
     public void setUp() {
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
-        LocationFactory.main = main;
-        MaterialFactory.main = main;
+        Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
+        VoxelSniper.voxelsniper = main;
         undo = new Undo();
     }
 
@@ -65,7 +61,7 @@ public class UndoTest
 
     @Test
     public void testGetSize() {
-        IWorld world = Mockito.mock(IWorld.class);
+        IWorld world = Mockito.mock(BukkitWorld.class);
         for (int i = 0; i < 5; i++)
         {
             ILocation location = LocationFactory.getLocation(world, 0, 0, i);

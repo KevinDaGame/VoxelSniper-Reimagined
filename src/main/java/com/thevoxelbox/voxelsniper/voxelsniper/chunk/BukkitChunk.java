@@ -4,10 +4,11 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import org.bukkit.Chunk;
-import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
+
+import org.bukkit.Chunk;
+import org.bukkit.entity.Entity;
 
 public class BukkitChunk implements IChunk {
     private final Chunk chunk;

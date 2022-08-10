@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+
 import org.bukkit.Material;
 
 public record BukkitMaterial(Material material) implements IMaterial, Comparable<BukkitMaterial> {

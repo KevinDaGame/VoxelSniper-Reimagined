@@ -4,17 +4,17 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -44,8 +44,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 snipeData.getVoxelMessage().center();
                 return true;
             } catch (NumberFormatException exception) {
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <number>");
-                player.sendMessage(ChatColor.YELLOW + "    Changes the voxel center parameter of the brush to the specified number.");
+                sniper.sendMessage(Messages.VOXEL_CENTER_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 return true;
             }
         }
@@ -56,8 +55,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 snipeData.getVoxelMessage().height();
                 return true;
             } catch (NumberFormatException exception) {
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " height <number>");
-                player.sendMessage(ChatColor.YELLOW + "    Changes the voxel height parameter of the brush to the specified number.");
+                sniper.sendMessage(Messages.VOXEL_HEIGHT_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 return false;
             }
         }
@@ -70,15 +68,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             }
             
             if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("help")))) {
-                player.sendMessage(ChatColor.DARK_AQUA + "Using Voxel List:");
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " clear");
-                player.sendMessage(ChatColor.YELLOW + "    Clears the contents of the VoxelList.");
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <material>[-]...");
-                player.sendMessage(ChatColor.YELLOW + "    Adds or removes the specified material into the voxel list.");
-                player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list dirt stone- wheat");
-                player.sendMessage(ChatColor.AQUA + "      Adds dirt, removes stone, adds wheat; in order");
-                player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list dirt- grass_block");
-                player.sendMessage(ChatColor.AQUA + "      Removes dirt, adds grass_block; in order");
+                sniper.sendMessage(Messages.VOXEL_LIST_CLEAR_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 return true;
             }
 
@@ -90,8 +80,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             snipeData.getVoxelMessage().voxelList();
 
             if (!invalidMaterials.isEmpty()) {
-                player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- ");
-                player.sendMessage(ChatColor.GOLD + "    " + String.join(", ", invalidMaterials));
+                sniper.sendMessage(Messages.VOXEL_LIST_COULDNT_ADD.replace("%blocks%", String.join(", ", invalidMaterials)));
             }
             return true;
         }
@@ -99,13 +88,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
         // Default command
         // Command: /vir info, /vir help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " height <number>");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the voxel height parameter of the brush to the specified number.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " center <number>");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the voxel center parameter of the brush to the specified number.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list");
-            player.sendMessage(ChatColor.YELLOW + "    Shows you how to use voxel list.");
+            sniper.sendMessage(Messages.VOXEL_VARIABLE_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
@@ -132,13 +115,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
             if (args[0].equalsIgnoreCase("list")) {
                 if (args.length == 1) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Using Voxel List:");
-                    player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list <material>[-]...");
-                    player.sendMessage(ChatColor.YELLOW + "    Adds or removes the specified material into the voxel list.");
-                    player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list acacia_log stone- grass_block");
-                    player.sendMessage(ChatColor.AQUA + "      Adds acacia_log, removes stone, adds grass_block; in order");
-                    player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + " list dirt- grass_block");
-                    player.sendMessage(ChatColor.AQUA + "      Removes dirt, adds grass_block; in order");
+                    sniper.sendMessage(Messages.VOXEL_LIST_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                     return true;
                 }
 
@@ -156,8 +133,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 snipeData.getVoxelMessage().voxelList();
 
                 if (!invalidMaterials.isEmpty()) {
-                    player.sendMessage(ChatColor.RED + "Couldn't add because item is non-existent or aren't blocks:- ");
-                    player.sendMessage(ChatColor.GOLD + "    " + String.join(", ", invalidMaterials));
+                    sniper.sendMessage(Messages.VOXEL_LIST_COULDNT_ADD.replace("%blocks%", String.join(", ", invalidMaterials)));
                 }
                 return true;
             }

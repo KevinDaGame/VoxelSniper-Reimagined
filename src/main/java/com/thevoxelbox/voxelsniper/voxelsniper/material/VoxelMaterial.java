@@ -1,9 +1,13 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
@@ -968,7 +972,6 @@ public class VoxelMaterial {
     private final Version version;
     private final String key;
     private final String namespace;
-    private static IVoxelsniper main;
 
     private static VoxelMaterial register(String namespace, String key, Version version) {
 
@@ -993,19 +996,20 @@ public class VoxelMaterial {
     public VoxelMaterial(String key) {
         this("minecraft", key);
     }
-
-    public static void setMain(IVoxelsniper voxelsniper){
-        main = voxelsniper;
-    }
     public static VoxelMaterial getMaterial(String key) {
+        if (key.contains(":")) {
+            String[] components = key.split(":");
+            return getMaterial(components[0], components[1]);
+        }
         return getMaterial("minecraft", key);
     }
     public static VoxelMaterial getMaterial(String namespace, String key) {
+        if (namespace.isEmpty() || key.isEmpty()) return null;
         var block = BLOCKS.get(namespace + ":" + key);
         if(block == null) {
             return new VoxelMaterial(namespace, key);
         }
-        if(main.getVersion().isSupported(block.getVersion())){
+        if(VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())){
             return block;
         }
         return null;

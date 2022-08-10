@@ -1,20 +1,30 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.BlockState;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
+import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Moves a selection blockPositionY a certain amount. http://www.voxelwiki.com/minecraft/Voxelsniper#Move_Brush
@@ -22,6 +32,24 @@ import java.util.*;
  * @author MikeMatrix
  */
 public class MoveBrush extends Brush {
+
+    private static class ComponentException extends Exception implements ComponentLike {
+        private final ComponentLike component;
+
+        ComponentException(ComponentLike component) {
+            this.component = component;
+        }
+
+        @Override
+        public String getMessage() {
+            return LegacyComponentSerializer.legacySection().serialize(this.asComponent());
+        }
+
+        @Override
+        public @NotNull Component asComponent() {
+            return component.asComponent();
+        }
+    }
 
     /**
      * Breakable Blocks to determine if no-physics should be used.
@@ -160,8 +188,8 @@ public class MoveBrush extends Brush {
             newSelection.setLocation2(movedLocation2);
             try {
                 newSelection.calculateRegion();
-            } catch (final Exception exception) {
-                v.getVoxelMessage().brushMessage("The new Selection has more blocks than the original selection. This should never happen!");
+            } catch (final ComponentException exception) {
+                v.sendMessage(exception);
             }
 
             for (final IBlockState blockState : selection.getBlockStates()) {
@@ -192,15 +220,15 @@ public class MoveBrush extends Brush {
             this.selection = new Selection();
         }
         this.selection.setLocation1(this.getTargetBlock().getLocation());
-        v.getVoxelMessage().brushMessage("Point 1 set.");
+        v.getVoxelMessage().brushMessage(Messages.POINT_1_SET);
 
         try {
             if (this.selection.calculateRegion()) {
                 this.moveSelection(v, this.selection, this.moveDirections);
                 this.selection = null;
             }
-        } catch (final Exception exception) {
-            v.sendMessage(exception.getMessage());
+        } catch (final ComponentException exception) {
+            v.sendMessage(exception);
         }
     }
 
@@ -210,33 +238,28 @@ public class MoveBrush extends Brush {
             this.selection = new Selection();
         }
         this.selection.setLocation2(this.getTargetBlock().getLocation());
-        v.getVoxelMessage().brushMessage("Point 2 set.");
+        v.getVoxelMessage().brushMessage(Messages.POINT_2_SET);
 
         try {
             if (this.selection.calculateRegion()) {
                 this.moveSelection(v, this.selection, this.moveDirections);
                 this.selection = null;
             }
-        } catch (final Exception exception) {
-            v.sendMessage(exception.getMessage());
+        } catch (final ComponentException exception) {
+            v.sendMessage(exception);
         }
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.BLUE + "Move selection blockPositionY " + ChatColor.GOLD + "x:" + this.moveDirections[0] + " y:" + this.moveDirections[1] + " z:" + this.moveDirections[2]);
+        vm.custom(Messages.MOVE_BRUSH_SELECTION.replace("%x%", String.valueOf(this.moveDirections[0])).replace("%y%", String.valueOf(this.moveDirections[1])).replace("%z%", String.valueOf(this.moveDirections[2])));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.getVoxelMessage().custom(ChatColor.GOLD + "Move Brush Parameters:");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set the x direction (positive => east)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set the y direction (positive => up)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " z [number]  -- Set the z direction (positive => south)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Reset brush to default values");
-            v.getVoxelMessage().custom(ChatColor.BLUE + "Instructions: Use arrow and gunpowder to define two points.");
+            v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -244,33 +267,33 @@ public class MoveBrush extends Brush {
             this.moveDirections[0] = 0;
             this.moveDirections[1] = 0;
             this.moveDirections[2] = 0;
-            v.getVoxelMessage().custom(ChatColor.AQUA + "X, Y, Z direction set to 0. No movement will occur.");
+            v.getVoxelMessage().custom(Messages.MOVE_BRUSH_RESET);
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("x")) {
                 this.moveDirections[0] = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
+                v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "X").replace("%val%", String.valueOf(this.moveDirections[0])));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("y")) {
                 this.moveDirections[1] = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
+                v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "Y").replace("%val%", String.valueOf(this.moveDirections[1])));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("z")) {
                 this.moveDirections[2] = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
+                v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "Z").replace("%val%", String.valueOf(this.moveDirections[2])));
                 return;
             }
         } catch (NumberFormatException temp) {
 temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
@@ -320,7 +343,7 @@ temp.printStackTrace();
          * @return boolean success.
          * @throws Exception Message to be sent to the player.
          */
-        public boolean calculateRegion() throws Exception {
+        public boolean calculateRegion() throws ComponentException {
             if (this.location1 != null && this.location2 != null) {
                 if (this.location1.getWorld().equals(this.location2.getWorld())) {
                     final int lowX = (Math.min(this.location1.getBlockX(), this.location2.getBlockX()));
@@ -330,7 +353,7 @@ temp.printStackTrace();
                     final int highY = Math.max(this.location1.getBlockY(), this.location2.getBlockY());
                     final int highZ = Math.max(this.location1.getBlockZ(), this.location2.getBlockZ());
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
-                        throw new Exception(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                        throw new ComponentException(Messages.SELECTION_SIZE_ABOVE_LIMIT);
                     }
                     final IWorld world = this.location1.getWorld();
                     for (int y = lowY; y <= highY; y++) {

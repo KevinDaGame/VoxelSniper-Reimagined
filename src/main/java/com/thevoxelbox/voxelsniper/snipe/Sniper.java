@@ -1,40 +1,42 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Maps;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.block.BlockFace;
-import org.bukkit.event.block.Action;
 
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
+
+import net.kyori.adventure.text.ComponentLike;
+
+import org.bukkit.Bukkit;
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.block.Action;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
  */
 public class Sniper {
 
-    private final IVoxelsniper main;
     private final UUID player;
     private boolean enabled = true;
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
-    public Sniper(IVoxelsniper main, AbstractPlayer player) {
-        this.main = main;
+    public Sniper(AbstractPlayer player) {
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
         sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
@@ -60,7 +62,7 @@ public class Sniper {
     }
 
     public AbstractPlayer getPlayer() {
-        return main.getPlayer(this.player);
+        return VoxelSniper.voxelsniper.getPlayer(this.player);
     }
 
     /**
@@ -91,12 +93,13 @@ public class Sniper {
             return false;
         }
         if (sniperTool.getCurrentBrush() == null) {
-            getPlayer().sendMessage("No Brush selected.");
+            sendMessage(Messages.NO_BRUSH_SELECTED);
             return true;
         }
 
-        if (!getPlayer().hasPermission(sniperTool.getCurrentBrush().getPermissionNode())) {
-            getPlayer().sendMessage("You are not allowed to use this brush. You're missing the permission node '" + sniperTool.getCurrentBrush().getPermissionNode() + "'");
+        String permissionNode = sniperTool.getCurrentBrush().getPermissionNode();
+        if (!getPlayer().hasPermission(permissionNode)) {
+            sendMessage(Messages.NO_PERMISSION_BRUSH.replace("%permissionNode%",permissionNode));
             return true;
         }
 
@@ -144,7 +147,7 @@ public class Sniper {
 
         if (clickedBlock == null) {
             if (targetBlock == null || lastBlock == null) {
-                getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
                 return true;
             }
         }
@@ -222,11 +225,11 @@ public class Sniper {
     }
 
     public void storeUndo(Undo undo) {
-        if (main.getVoxelSniperConfiguration().getUndoCacheSize() <= 0) {
+        if (VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getUndoCacheSize() <= 0) {
             return;
         }
         if (undo != null && undo.getSize() > 0) {
-            while (undoList.size() >= main.getVoxelSniperConfiguration().getUndoCacheSize()) {
+            while (undoList.size() >= VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getUndoCacheSize()) {
                 this.undoList.pollLast();
             }
             undoList.push(undo);
@@ -240,7 +243,7 @@ public class Sniper {
     public int undo(int amount) {
         int changedBlocks = 0;
         if (this.undoList.isEmpty()) {
-            getPlayer().sendMessage(ChatColor.GREEN + "There's nothing to undo.");
+            sendMessage(Messages.NOTHING_TO_UNDO);
         } else {
             for (int x = 0; x < amount && !undoList.isEmpty(); x++) {
                 Undo undo = this.undoList.pop();
@@ -252,7 +255,7 @@ public class Sniper {
                 }
             }
 
-            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful: " + ChatColor.RED + changedBlocks + ChatColor.GREEN + " blocks have been replaced.");
+            sendMessage(Messages.UNDO_SUCCESSFUL.replace("%changedBlocks%", String.valueOf(changedBlocks)));;
         }
         return changedBlocks;
     }
@@ -275,9 +278,9 @@ public class Sniper {
         String currentToolId = getCurrentToolId();
         SnipeTool sniperTool = tools.get(currentToolId);
         IBrush brush = sniperTool.getCurrentBrush();
-        getPlayer().sendMessage("Current Tool: " + ((currentToolId != null) ? currentToolId : "Default Tool"));
+        sendMessage(Messages.CURRENT_TOOL.replace("%tool%", (currentToolId != null) ? currentToolId : "Default Tool"));
         if (brush == null) {
-            getPlayer().sendMessage("No brush selected.");
+            sendMessage(Messages.NO_BRUSH_SELECTED);
             return;
         }
         brush.info(sniperTool.getMessageHelper());
@@ -288,5 +291,9 @@ public class Sniper {
 
     public SnipeTool getSnipeTool(String toolId) {
         return tools.get(toolId);
+    }
+
+    public final void sendMessage(final @NotNull ComponentLike message) {
+        this.getPlayer().sendMessage(message);
     }
 }

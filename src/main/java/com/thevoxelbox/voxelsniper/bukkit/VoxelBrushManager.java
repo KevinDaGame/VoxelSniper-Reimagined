@@ -7,7 +7,11 @@ import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.*;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Brush registration manager.
@@ -15,7 +19,6 @@ import java.util.*;
 public class VoxelBrushManager {
 
     private static VoxelBrushManager instance = null;
-    private static IVoxelsniper main;
 
     private final Multimap<Class<? extends IBrush>, String> brushes = HashMultimap.create();
     private final List<String> brushHandles = new ArrayList<>();
@@ -24,8 +27,7 @@ public class VoxelBrushManager {
         return instance;
     }
 
-    public static VoxelBrushManager initialize(IVoxelsniper main) {
-        VoxelBrushManager.main = main;
+    public static VoxelBrushManager initialize() {
         VoxelBrushManager brushManager = getInstance();
 
         // Instantiate Brush Manager if it's not yet instantiated.

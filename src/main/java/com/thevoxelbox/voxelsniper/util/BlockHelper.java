@@ -9,7 +9,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-import org.bukkit.*;
+
+import org.bukkit.Art;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 
@@ -319,21 +321,21 @@ public class BlockHelper {
                     final int i = (bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length) % Art.values().length;
                     Art art = Art.getById(i);
                     if (art == null) {
-                        p.sendMessage(ChatColor.RED + "This is the final painting, try scrolling to the other direction.");
+                        p.sendMessage(Messages.FINAL_PAINTING);
                         return;
                     }
                     bestMatch.setArt(art);
-                    p.sendMessage(ChatColor.GREEN + "Painting set to ID: " + (i));
+                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
                 } catch (final Exception e) {
-                    p.sendMessage(ChatColor.RED + "Oops. Something went wrong.");
+                    p.sendMessage(Messages.ERROR);
                 }
             } else {
                 try {
                     Art art = Art.getById(choice);
                     bestMatch.setArt(art);
-                    p.sendMessage(ChatColor.GREEN + "Painting set to ID: " + choice);
+                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));
                 } catch (final Exception exception) {
-                    p.sendMessage(ChatColor.RED + "Your input was invalid somewhere.");
+                    p.sendMessage(Messages.INVALID_INPUT);
                 }
             }
         }

@@ -1,10 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import org.bukkit.ChatColor;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Set_Brush
@@ -23,14 +23,20 @@ public class SetBrush extends PerformerBrush {
         this.setName("Set");
     }
 
-    private boolean set(final  IBlock  bl, final SnipeData v) {
+    /**
+     *  NOTE: TRUE when first point was selected, or second point is in different world
+     * @param bl block
+     * @param v  data
+     * @return TRUE when first point was selected, or second point is in different world
+     */
+    private boolean set(final IBlock bl, final SnipeData v) {
         if (this.block == null) {
             this.block = bl;
             return true;
         } else {
             if (!this.block.getWorld().getName().equals(bl.getWorld().getName())) {
-                v.sendMessage(ChatColor.RED + "You selected points in different worlds!");
-                this.block = null;
+                v.sendMessage(Messages.SELECTED_POINTS_DIFFERENT_WORLD);
+                this.block = bl;
                 return true;
             }
             final int lowX = Math.min(this.block.getX(), bl.getX());
@@ -41,7 +47,7 @@ public class SetBrush extends PerformerBrush {
             final int highZ = Math.max(this.block.getZ(), bl.getZ());
 
             if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > SELECTION_SIZE_MAX) {
-                v.sendMessage(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                v.sendMessage(Messages.SELECTION_SIZE_LIMIT);
             } else {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
@@ -60,7 +66,7 @@ public class SetBrush extends PerformerBrush {
     @Override
     protected final void arrow(final SnipeData v) {
         if (this.set(this.getTargetBlock(), v)) {
-            v.sendMessage(ChatColor.GRAY + "Point one");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         } else {
             v.owner().storeUndo(this.currentPerformer.getUndo());
         }
@@ -69,7 +75,7 @@ public class SetBrush extends PerformerBrush {
     @Override
     protected final void powder(final SnipeData v) {
         if (this.set(this.getLastBlock(), v)) {
-            v.sendMessage(ChatColor.GRAY + "Point one");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         } else {
             v.owner().storeUndo(this.currentPerformer.getUndo());
         }

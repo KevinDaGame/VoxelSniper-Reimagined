@@ -4,8 +4,6 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import org.bukkit.ChatColor;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Map;
@@ -79,8 +77,8 @@ public enum Performer {
     private final Class<? extends vPerformer> pclass;
     private final String short_name;
     private final String long_name;
-    public static String performer_list_short = "";
-    public static String performer_list_long = "";
+//    public static final Component performer_list_short;
+//    public static final Component performer_list_long;
 
     Performer(Class<? extends vPerformer> c, String s, String l) {
         pclass = c;
@@ -128,13 +126,23 @@ public enum Performer {
         performers = new TreeMap<>();
         long_names = new TreeMap<>();
 
-        for (Performer pe : values()) {
+        Performer[] values = values();
+//        TextComponent.Builder performer_list_short_builder = Component.text();
+//        TextComponent.Builder performer_list_long_builder = Component.text();
+//        for (int i = 0; i < values.length; i++) {
+        for (Performer pe : values) {
+//            Performer pe = values[i];
             performers.put(pe.short_name, pe.getPerformer());
             long_names.put(pe.long_name, pe.short_name);
-            performer_list_short = performer_list_short + ChatColor.GREEN + pe.short_name + ChatColor.RED + ", ";
-            performer_list_long = performer_list_long + ChatColor.GREEN + pe.long_name + ChatColor.RED + ", ";
+
+//            if (i > 0) {
+//                performer_list_short_builder.append(Component.text(", ").color(NamedTextColor.RED));
+//                performer_list_long_builder.append(Component.text(", ").color(NamedTextColor.RED));
+//            }
+//            performer_list_short_builder.append(Component.text(pe.short_name).color(NamedTextColor.GREEN));
+//            performer_list_long_builder.append(Component.text(pe.long_name).color(NamedTextColor.GREEN));
         }
-        performer_list_short = performer_list_short.substring(0, performer_list_short.length() - 2);
-        performer_list_long = performer_list_long.substring(0, performer_list_long.length() - 2);
+//        performer_list_short = performer_list_short_builder.build();
+//        performer_list_long = performer_list_long_builder.build();
     }
 }

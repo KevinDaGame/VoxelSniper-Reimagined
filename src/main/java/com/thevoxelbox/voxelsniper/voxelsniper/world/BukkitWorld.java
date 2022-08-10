@@ -10,6 +10,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -75,7 +76,7 @@ public record BukkitWorld(World world) implements IWorld {
     @Override
     @Deprecated
     public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, z, Biome.valueOf(selectedBiome.key()));
+        world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
 
     @Override

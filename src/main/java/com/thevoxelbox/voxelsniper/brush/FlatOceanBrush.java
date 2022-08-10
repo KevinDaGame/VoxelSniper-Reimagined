@@ -1,16 +1,17 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.bukkit.Material;
 
 /**
  * @author GavJenks
@@ -68,18 +69,16 @@ public class FlatOceanBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.RED + "THIS BRUSH DOES NOT UNDO.");
-        vm.custom(ChatColor.GREEN + "Water level set to " + this.waterLevel);
-        vm.custom(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+        vm.custom(Messages.BRUSH_NO_UNDO);
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
+        vm.custom(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%",String.valueOf(this.floorLevel)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Set the y-level the water will rise to. (default: 29)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)");
-            v.sendMessage(ChatColor.RED + "BEWARE! THIS BRUSH DOES NOT UNDO.");
+            v.sendMessage(Messages.FLAT_OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.BRUSH_NO_UNDO);
             return;
         }
 
@@ -91,7 +90,7 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.waterLevel = newWaterLevel;
-            v.sendMessage(ChatColor.GREEN + "Water level set to " + this.waterLevel);
+            v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
             return;
         }
 
@@ -107,11 +106,11 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.floorLevel = newFloorLevel;
-            v.sendMessage(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+            v.sendMessage(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%", String.valueOf(floorLevel)));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

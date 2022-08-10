@@ -1,25 +1,24 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.util.Vector;
-import org.bukkit.util.noise.PerlinNoiseGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import org.bukkit.Material;
+import org.bukkit.util.noise.PerlinNoiseGenerator;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Heat_Ray
@@ -201,9 +200,7 @@ public class HeatRayBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Octaves: " + this.octaves);
-        vm.custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
-        vm.custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+        vm.custom(Messages.HEAT_RAY_BRUSH_INFO.replace("%octaves%",String.valueOf(this.octaves)).replace("%amplitude%",String.valueOf(this.amplitude)).replace("%frequency%",String.valueOf(this.frequency)));
         vm.size();
     }
 
@@ -211,11 +208,7 @@ public class HeatRayBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " octave [number]  -- Octaves for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " amplitude [number]  -- Amplitude for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " frequency [number]  -- Frequency for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Reset to default values.");
+            v.sendMessage(Messages.HEAT_RAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -223,32 +216,32 @@ public class HeatRayBrush extends Brush {
             this.octaves = 5;
             this.amplitude = 0.3;
             this.frequency = 1;
-            v.sendMessage(ChatColor.GOLD + "Values were set to default values.");
+            v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("octave")) {
                 this.octaves = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Octave: " + this.octaves);
+                v.sendMessage(Messages.HEATRAY_OCTAVE.replace("%this.octaves%",String.valueOf(this.octaves)));
                 return;
             }
             if (params[0].equalsIgnoreCase("amplitude")) {
                 this.amplitude = Double.parseDouble(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
+                v.sendMessage(Messages.HEATRAY_AMPLITUDE.replace("%this.amplitude%",String.valueOf(this.amplitude)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("frequency")) {
                 this.frequency = Double.parseDouble(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+                v.sendMessage(Messages.HEATRAY_FREQ.replace("%this.frequency%",String.valueOf(this.frequency)));
                 return;
             }
         } catch (NumberFormatException temp) {
 temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
@@ -260,11 +253,11 @@ temp.printStackTrace();
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("octave", Lists.newArrayList("[number]"));
         argumentValues.put("amplitude", Lists.newArrayList("[number]"));
         argumentValues.put("frequency", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
     }
 

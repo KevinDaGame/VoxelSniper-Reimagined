@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.event;
 
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

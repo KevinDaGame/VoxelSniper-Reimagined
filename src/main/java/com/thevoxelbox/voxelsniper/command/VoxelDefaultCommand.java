@@ -2,12 +2,13 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.entity.Player;
 
 public class VoxelDefaultCommand extends VoxelCommand {
 
@@ -24,15 +25,13 @@ public class VoxelDefaultCommand extends VoxelCommand {
         // Default command
         // Command: /d info, /d help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias());
-            player.sendMessage(ChatColor.YELLOW + "    Resets tool to default values.");
+            sniper.sendMessage(Messages.VOXEL_DEFAULT_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
         if (args.length == 0) {
             sniper.reset(sniper.getCurrentToolId());
-            player.sendMessage(ChatColor.AQUA + "Brush settings reset to their default values.");
+            sniper.sendMessage(Messages.BRUSH_SETTINGS_RESET);
             return true;
         }
         

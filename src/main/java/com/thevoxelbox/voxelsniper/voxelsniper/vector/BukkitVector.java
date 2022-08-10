@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+
 import org.bukkit.util.Vector;
 
 public record BukkitVector(Vector vector) implements IVector {

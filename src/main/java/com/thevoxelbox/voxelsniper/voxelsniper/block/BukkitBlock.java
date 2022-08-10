@@ -8,6 +8,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+
 import org.bukkit.block.Block;
 
 public class BukkitBlock extends AbstractBlock {

@@ -1,12 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,25 +158,24 @@ public class ExtrudeBrush extends Brush {
         vm.voxelList();
 
         if (this.smoothCircle) {
-            vm.custom(ChatColor.GOLD + "Using smooth circles mode");
+            vm.custom(Messages.BRUSH_SMOOTH_CIRCLE);
         }
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Extrude Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
+            v.sendMessage(Messages.EXTRUDE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            v.sendMessage(Messages.BRUSH_SMOOTH_CIRCLE);
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
