@@ -7,12 +7,10 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * @author Piotr
@@ -51,7 +49,7 @@ public class Rot2DBrush extends Brush {
                     for (int z = 0; z < this.snap.length; z++) {
                         final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        block.setMaterial(new BukkitMaterial(Material.AIR));
+                        block.setMaterial(VoxelMaterial.AIR);
                         sy++;
                     }
                 }
@@ -87,7 +85,7 @@ public class Rot2DBrush extends Brush {
                         final int yy = currentY - this.bSize;
                         final BlockWrapper block = this.snap[x][currentY][y];
 
-                        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        if (block.getMaterial() == VoxelMaterial.AIR) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());

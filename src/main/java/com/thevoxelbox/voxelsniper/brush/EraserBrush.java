@@ -4,13 +4,10 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.Set;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Eraser_Brush
@@ -19,15 +16,15 @@ import org.bukkit.Material;
  */
 public class EraserBrush extends Brush {
     //todo This was enumset, should it still be?
-    private static final Set<IMaterial> EXCLUSIVE_MATERIALS = Set.of(
-           new BukkitMaterial( Material.AIR),new BukkitMaterial( Material.STONE),new BukkitMaterial( Material.GRASS_BLOCK),new BukkitMaterial( Material.DIRT),new BukkitMaterial( Material.SAND),new BukkitMaterial( Material.GRAVEL), new BukkitMaterial( Material.SANDSTONE));
-    private static final Set<IMaterial> EXCLUSIVE_LIQUIDS = Set.of(
-            new BukkitMaterial( Material.WATER), new BukkitMaterial( Material.LAVA));
+    private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
+           VoxelMaterial.AIR,VoxelMaterial.STONE,VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT,VoxelMaterial.SAND,VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE);
+    private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
+            VoxelMaterial.WATER, VoxelMaterial.LAVA);
 
     static {
         try {
             // 1.17+
-            EXCLUSIVE_MATERIALS.add(new BukkitMaterial(Material.DEEPSLATE));
+            EXCLUSIVE_MATERIALS.add(VoxelMaterial.DEEPSLATE);
         } catch(Throwable ignore) {
             // Don't add for older versions
         }
@@ -58,7 +55,7 @@ public class EraserBrush extends Brush {
                         continue;
                     }
                     undo.put(currentBlock);
-                    currentBlock.setMaterial(new BukkitMaterial(Material.AIR));
+                    currentBlock.setMaterial(VoxelMaterial.AIR);
                 }
             }
         }

@@ -7,7 +7,6 @@ package com.thevoxelbox.voxelsniper.brush.perform;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
@@ -41,7 +40,7 @@ public class pMatCombo extends vPerformer {
     public void perform(IBlock b) {
         if (b.getBlockData().matches(targetSubstance)) {
             h.put(b);
-            b.setBlockData(MaterialFactory.getMaterial(voxelMaterial).createBlockData(), true);
+            b.setBlockData(voxelMaterial.createBlockData(), true);
         }
     }
 

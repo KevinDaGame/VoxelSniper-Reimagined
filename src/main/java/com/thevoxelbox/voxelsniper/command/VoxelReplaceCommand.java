@@ -7,8 +7,6 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
@@ -59,7 +57,7 @@ public class VoxelReplaceCommand extends VoxelCommand {
         }
 
         // Command: /vr [material]       <- Sets the defined material as voxel substance.
-        IMaterial material = MaterialFactory.getMaterial(VoxelMaterial.getMaterial(args[0])); // TODO: Match old ID numbers to materials
+        VoxelMaterial material = VoxelMaterial.getMaterial(args[0]); // TODO: Match old ID numbers to materials
         if (material != null && material.isBlock()) {
             snipeData.setReplaceSubstance(material.createBlockData());
             snipeData.getVoxelMessage().replace();

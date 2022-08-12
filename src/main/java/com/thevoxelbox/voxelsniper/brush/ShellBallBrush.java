@@ -5,8 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
  * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
@@ -26,8 +25,8 @@ public class ShellBallBrush extends Brush {
     private void bShell(final SnipeData v,  IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
-        final IMaterial[][][] oldMaterials = new IMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
-        final IMaterial[][][] newMaterials = new IMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the hollowed materials
+        final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
+        final VoxelMaterial[][][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the hollowed materials
 
         int blockPositionX = targetBlock.getX();
         int blockPositionY = targetBlock.getY();
@@ -76,7 +75,7 @@ public class ShellBallBrush extends Brush {
                     }
 
                     if (temp == 0) {
-                        newMaterials[x][y][z] = MaterialFactory.getMaterial(v.getVoxelMaterial());
+                        newMaterials[x][y][z] = v.getVoxelMaterial();
                     }
                 }
             }

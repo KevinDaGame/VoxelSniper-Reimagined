@@ -9,7 +9,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
@@ -131,7 +130,7 @@ public class BukkitPlayer extends AbstractPlayer {
     public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
         Set<Material> materials = new HashSet<>(transparent.size());
         for (VoxelMaterial material : transparent) {
-            materials.add(((BukkitMaterial)MaterialFactory.getMaterial(material)).material());
+            materials.add(((BukkitMaterial)material.getIMaterial()).material());
         }
         return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
     }

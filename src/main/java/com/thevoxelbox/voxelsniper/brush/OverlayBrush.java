@@ -6,15 +6,11 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Overlay_.2F_Topsoil_Brush
@@ -41,15 +37,15 @@ public class OverlayBrush extends PerformerBrush {
             for (int x = brushSize; x >= -brushSize; x--) {
                 // check if column is valid
                 // column is valid if it has no solid block right above the clicked layer
-                final IMaterial material = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + 1, this.getTargetBlock().getZ() + z);
+                final VoxelMaterial material = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + 1, this.getTargetBlock().getZ() + z);
                 if (isIgnoredBlock(material)) {
                     if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) {
                         for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) {
                             // check for surface
-                            final IMaterial layerBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            final VoxelMaterial layerBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (!isIgnoredBlock(layerBlock)) {
                                 for (int currentDepth = y; y - currentDepth < depth; currentDepth--) {
-                                    final IMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
+                                    final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
                                     if (isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
                                         this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z));
                                     }
@@ -76,10 +72,10 @@ public class OverlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y > this.getMinHeight() && !surfaceFound; y--) { // start scanning from the height you clicked at
                     if (memory[x + brushSize][z + brushSize] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
-                            if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != new BukkitMaterial( Material.AIR)) { // if not a floating block (like one of Notch'world pools)
-                                if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == new BukkitMaterial( Material.AIR)) { // must start at surface... this prevents it filling stuff in if
+                            if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != VoxelMaterial.AIR) { // if not a floating block (like one of Notch'world pools)
+                                if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == VoxelMaterial.AIR) { // must start at surface... this prevents it filling stuff in if
                                     // you click in a wall and it starts out below surface.
-                                    final IMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                    final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
                                         for (int d = 1; (d < this.depth + 1); d++) {
                                             this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
@@ -99,8 +95,8 @@ public class OverlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private boolean isIgnoredBlock(IMaterial material) {
-        return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material == new BukkitMaterial( Material.CACTUS);
+    private boolean isIgnoredBlock(VoxelMaterial material) {
+        return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material == VoxelMaterial.CACTUS;
     }
 
     private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {

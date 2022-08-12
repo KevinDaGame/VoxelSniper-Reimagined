@@ -38,7 +38,7 @@ public class pIncludeCombo extends vPerformer {
 
     @Override
     public void perform(IBlock b) {
-        if (includeList.contains(b.getMaterial().getVoxelMaterial())) {
+        if (includeList.contains(b.getMaterial())) {
             h.put(b);
             b.setBlockData(voxelSubstance, true);
         }

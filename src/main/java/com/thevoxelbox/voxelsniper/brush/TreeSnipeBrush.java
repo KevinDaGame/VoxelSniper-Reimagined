@@ -9,7 +9,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-import org.bukkit.Material;
 import org.bukkit.TreeType;
 
 /**
@@ -45,7 +44,7 @@ public class TreeSnipeBrush extends Brush {
          IBlock  blockBelow = targetBlock.getRelative(BlockFace.DOWN);
         IBlockState currentState = blockBelow.getState();
         undoDelegate.setBlock(blockBelow);
-        blockBelow.setMaterial(new BukkitMaterial(Material.GRASS));
+        blockBelow.setMaterial(VoxelMaterial.GRASS);
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);
         Undo undo = undoDelegate.getUndo();
         blockBelow.setBlockData(currentState.getBlockData().getMaterial().createBlockData(), true);
@@ -56,7 +55,7 @@ public class TreeSnipeBrush extends Brush {
     private int getYOffset() {
         // getMaxHeight() is the same as getTargetBlock().getWorld().getMaxHeight()
         for (int i = 1; i < (getMaxHeight() - 1 - getTargetBlock().getY()); i++) {
-            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getMaterial(), new BukkitMaterial( Material.AIR))) {
+            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getMaterial(), VoxelMaterial.AIR)) {
                 return i;
             }
         }

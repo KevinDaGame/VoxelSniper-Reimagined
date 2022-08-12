@@ -7,8 +7,7 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
@@ -20,8 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
@@ -99,7 +96,7 @@ public class ErodeBrush extends Brush {
                         }
 
                         if (count >= erosionPreset.getErosionFaces()) {
-                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), new BukkitMaterial( Material.AIR)), currentIteration);
+                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), VoxelMaterial.AIR), currentIteration);
                         }
                     }
                 }
@@ -139,7 +136,7 @@ public class ErodeBrush extends Brush {
                             }
                         }
 
-                        BlockWrapper currentMaterial = new BlockWrapper(null, new BukkitMaterial( Material.AIR));
+                        BlockWrapper currentMaterial = new BlockWrapper(null, VoxelMaterial.AIR);
                         int amount = 0;
 
                         for (final BlockWrapper wrapper : blockCount.keySet()) {
@@ -296,7 +293,7 @@ public class ErodeBrush extends Brush {
             this.blockData = block.getBlockData();
         }
 
-        public BlockWrapper(final IBlock block, final IMaterial material) {
+        public BlockWrapper(final IBlock block, final VoxelMaterial material) {
             this.block = block;
             this.blockData = material.createBlockData();
         }
@@ -318,7 +315,7 @@ public class ErodeBrush extends Brush {
         /**
          * @return the material
          */
-        public IMaterial getMaterial() {
+        public VoxelMaterial getMaterial() {
             return this.blockData.getMaterial();
         }
 
@@ -326,7 +323,7 @@ public class ErodeBrush extends Brush {
          * @return if the block is Empty.
          */
         public boolean isEmpty() {
-            return this.getMaterial() == new BukkitMaterial( Material.AIR);
+            return this.getMaterial() == VoxelMaterial.AIR;
         }
 
     }

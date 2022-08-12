@@ -5,13 +5,11 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.Art;
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 
@@ -158,7 +156,7 @@ public class BlockHelper {
      * @return IBlock
      */
     public final IBlock getFaceBlock() {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == new BukkitMaterial(Material.AIR))) {
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial() == VoxelMaterial.AIR)) {
         }
 
         if (this.getCurBlock() != null) {
@@ -229,7 +227,7 @@ public class BlockHelper {
      */
     public final IBlock getTargetBlock() {
         this.fromOffworld();
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getMaterial().getVoxelMaterial() == VoxelMaterial.AIR)) {
+        while ((this.getNextBlock() != null) && this.getCurBlock() != null && (this.getCurBlock().getMaterial() == VoxelMaterial.AIR)) {
 
         }
         return this.getCurBlock();
@@ -254,7 +252,7 @@ public class BlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.world.getBlock(this.targetX, this.targetY, this.targetZ).getMaterial() != new BukkitMaterial(Material.AIR)) {
+        if (this.world.getBlock(this.targetX, this.targetY, this.targetZ).getMaterial() != VoxelMaterial.AIR) {
             return this.world.getBlock(this.targetX, this.targetY, this.targetZ);
         }
 

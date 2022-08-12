@@ -85,7 +85,7 @@ public class SnipeData {
     }
 
     public VoxelMaterial getVoxelMaterial() {
-        return voxelSubstance.getMaterial().getVoxelMaterial();
+        return voxelSubstance.getMaterial();
     }
 
     public void setVoxelSubstance(IBlockData voxelSubstance) {
@@ -97,7 +97,7 @@ public class SnipeData {
     }
 
     public VoxelMaterial getReplaceMaterial() {
-        return replaceSubstance.getMaterial().getVoxelMaterial();
+        return replaceSubstance.getMaterial();
     }
 
     public void setReplaceSubstance(IBlockData targetSubstance) {

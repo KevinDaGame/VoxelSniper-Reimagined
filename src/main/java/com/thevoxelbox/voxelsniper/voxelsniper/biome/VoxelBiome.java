@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.biome;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
-import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
 import java.util.HashMap;

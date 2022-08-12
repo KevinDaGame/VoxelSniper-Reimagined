@@ -8,8 +8,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
 import java.util.ArrayList;
@@ -35,8 +34,8 @@ public class GenerateTreeBrush extends Brush {
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
-    private IMaterial leavesMaterial = new BukkitMaterial( Material.OAK_LEAVES);
-    private IMaterial woodMaterial = new BukkitMaterial( Material.OAK_WOOD);
+    private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
+    private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD;
     private boolean rootFloat = false;
     private int startHeight = 0;
     private int rootLength = 9;
@@ -118,7 +117,7 @@ public class GenerateTreeBrush extends Brush {
                         // Chance to skip creation of a block.
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
-                            if (location.getBlock().getRelative(x, y, z).getMaterial() == new BukkitMaterial( Material.AIR)) {
+                            if (location.getBlock().getRelative(x, y, z).getMaterial() == VoxelMaterial.AIR) {
                                 // Adds block to undo function.
                                 if (location.getBlock().getRelative(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
                                     this.undo.put(location.getBlock().getRelative(x, y, z));
@@ -141,7 +140,7 @@ public class GenerateTreeBrush extends Brush {
     }
 
     private void createLeaf(int x, int y, int z) {
-        if (location.getBlock().getRelative(x, y, z).getMaterial() == new BukkitMaterial( Material.AIR)) {
+        if (location.getBlock().getRelative(x, y, z).getMaterial() == VoxelMaterial.AIR) {
             this.undo.put(location.getClampedBlock().getRelative(x, y, z));
             location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
         }
@@ -188,7 +187,7 @@ public class GenerateTreeBrush extends Brush {
                     // End loop
                     break;
                 }
-                List<IMaterial> blocks = Arrays.asList(new BukkitMaterial(Material.WATER), new BukkitMaterial( Material.SNOW), new BukkitMaterial( Material.OAK_LOG), new BukkitMaterial( Material.BIRCH_LOG), new BukkitMaterial( Material.ACACIA_LOG), new BukkitMaterial( Material.DARK_OAK_LOG), new BukkitMaterial(Material.SPRUCE_LOG), new BukkitMaterial(Material.JUNGLE_LOG));
+                List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
                 // Checks is block below is solid
                 if (blocks.contains(location.getClampedBlock().getRelative(0, -1, 0).getMaterial())) {
                     // Move down if solid.
@@ -258,7 +257,7 @@ public class GenerateTreeBrush extends Brush {
 
     private void createTrunk(int x, int z) {
         // If block is air, then create a block.
-        if (location.getBlock().getRelative(x, 0, z).getMaterial() == new BukkitMaterial(Material.AIR)) {
+        if (location.getBlock().getRelative(x, 0, z).getMaterial() == VoxelMaterial.AIR) {
             // Adds block to undo function.
             this.undo.put(location.getClampedBlock().getRelative(x, 0, z));
             // Creates block.
@@ -435,10 +434,11 @@ public class GenerateTreeBrush extends Brush {
         }
         try {
             if (params[0].equalsIgnoreCase("leaves")) {
-                IMaterial material = new BukkitMaterial(Material.valueOf(params[1]));
+                VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
+                if (material == null) throw new IllegalArgumentException();
 
-                if (material == new BukkitMaterial(Material.OAK_LEAVES) || material == new BukkitMaterial(Material.ACACIA_LEAVES) || material == new BukkitMaterial(Material.SPRUCE_LEAVES)
-                        || material == new BukkitMaterial(Material.JUNGLE_LEAVES) || material == new BukkitMaterial(Material.DARK_OAK_LEAVES) || material == new BukkitMaterial(Material.BIRCH_LEAVES)) {
+                if (material == VoxelMaterial.OAK_LEAVES || material == VoxelMaterial.ACACIA_LEAVES || material == VoxelMaterial.SPRUCE_LEAVES
+                        || material == VoxelMaterial.JUNGLE_LEAVES || material == VoxelMaterial.DARK_OAK_LEAVES || material == VoxelMaterial.BIRCH_LEAVES) {
                     this.leavesMaterial = material;
                     v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%",String.valueOf(this.leavesMaterial.getName())));
                 } else {
@@ -448,10 +448,11 @@ public class GenerateTreeBrush extends Brush {
             }
 
             if (params[0].equalsIgnoreCase("wood")) {
-                IMaterial material = new BukkitMaterial(Material.valueOf(params[1]));
+                VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
+                if (material == null) throw new IllegalArgumentException();
 
-                if (material == new BukkitMaterial(Material.OAK_WOOD) || material == new BukkitMaterial(Material.ACACIA_WOOD) || material == new BukkitMaterial(Material.SPRUCE_WOOD)
-                        || material == new BukkitMaterial(Material.JUNGLE_WOOD) || material == new BukkitMaterial(Material.DARK_OAK_WOOD) || material == new BukkitMaterial(Material.BIRCH_WOOD)) {
+                if (material == VoxelMaterial.OAK_WOOD || material == VoxelMaterial.ACACIA_WOOD || material == VoxelMaterial.SPRUCE_WOOD
+                        || material == VoxelMaterial.JUNGLE_WOOD || material == VoxelMaterial.DARK_OAK_WOOD || material == VoxelMaterial.BIRCH_WOOD) {
                     this.woodMaterial = material;
                     v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%",String.valueOf(this.woodMaterial.getName())));
                 } else {
@@ -562,8 +563,8 @@ temp.printStackTrace();
         }
 
         if (params[0].equalsIgnoreCase("default")) { // Default settings.
-            this.leavesMaterial = new BukkitMaterial(Material.OAK_LEAVES);
-            this.woodMaterial = new BukkitMaterial(Material.OAK_WOOD);
+            this.leavesMaterial = VoxelMaterial.OAK_LEAVES;
+            this.woodMaterial = VoxelMaterial.OAK_WOOD;
             this.rootFloat = false;
             this.startHeight = 0;
             this.rootLength = 9;
@@ -614,11 +615,11 @@ temp.printStackTrace();
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(new BukkitMaterial(Material.OAK_WOOD).getName(), Material.ACACIA_WOOD.name(), Material.SPRUCE_WOOD.name(), Material.JUNGLE_WOOD.name(),
+        argumentValues.put("wood", Lists.newArrayList(VoxelMaterial.OAK_WOOD.getName(), Material.ACACIA_WOOD.name(), Material.SPRUCE_WOOD.name(), Material.JUNGLE_WOOD.name(),
                 Material.DARK_OAK_WOOD.name(), Material.BIRCH_WOOD.name()));
 
         // Leaves material variables
-        argumentValues.put("leaves", Lists.newArrayList(new BukkitMaterial(Material.OAK_LEAVES).getName(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
+        argumentValues.put("leaves", Lists.newArrayList(VoxelMaterial.OAK_LEAVES.getName(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
                 Material.DARK_OAK_LEAVES.name(), Material.BIRCH_LEAVES.name()));
 
         return argumentValues;

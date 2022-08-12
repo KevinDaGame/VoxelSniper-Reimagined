@@ -5,13 +5,11 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * @author GavJenks
@@ -37,11 +35,11 @@ public class FlatOceanBrush extends Brush {
                 // chunk.getWorld() == getWorld()
                 for (int y = this.getMinHeight(); y < this.getMaxHeight(); y++) {
                     if (y <= this.floorLevel) {
-                        chunk.getBlock(x, y, z).setMaterial(new BukkitMaterial(Material.DIRT), false);
+                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.DIRT, false);
                     } else if (y <= this.waterLevel) {
-                        chunk.getBlock(x, y, z).setMaterial(new BukkitMaterial(Material.WATER), false);
+                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.WATER, false);
                     } else {
-                        chunk.getBlock(x, y, z).setMaterial(new BukkitMaterial(Material.AIR), false);
+                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.AIR, false);
                     }
                 }
             }

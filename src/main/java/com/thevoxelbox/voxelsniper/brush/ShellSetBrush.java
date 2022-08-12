@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 
 import java.util.ArrayList;
 
@@ -70,7 +69,7 @@ public class ShellSetBrush extends Brush {
                 for (final IBlock currentBlock : blocks) {
                     if (currentBlock.getMaterial() != v.getVoxelMaterial()) {
                         undo.put(currentBlock);
-                        currentBlock.setBlockData(MaterialFactory.getMaterial(v.getVoxelMaterial()).createBlockData());
+                        currentBlock.setBlockData(v.getVoxelMaterial().createBlockData());
                     }
                 }
                 v.owner().storeUndo(undo);

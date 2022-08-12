@@ -5,15 +5,11 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * @author DivineRage
@@ -25,7 +21,7 @@ public class ScannerBrush extends Brush {
     private static final int DEPTH_MAX = 64;
 
     private int depth = DEPTH_DEFAULT;
-    private IMaterial checkFor = new BukkitMaterial( Material.AIR);
+    private VoxelMaterial checkFor = VoxelMaterial.AIR;
 
     /**
      *
@@ -125,7 +121,7 @@ public class ScannerBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.checkFor = MaterialFactory.getMaterial(v.getVoxelMaterial());
+        this.checkFor = v.getVoxelMaterial();
         this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
     }
 

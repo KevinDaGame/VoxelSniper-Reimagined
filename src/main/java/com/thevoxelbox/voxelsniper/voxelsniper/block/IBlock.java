@@ -4,14 +4,14 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 public interface IBlock {
     ILocation getLocation();
-    IMaterial getMaterial();
-    void setMaterial(IMaterial material);
-    void setMaterial(IMaterial material, boolean applyPhysics);
+    VoxelMaterial getMaterial();
+    void setMaterial(VoxelMaterial material);
+    void setMaterial(VoxelMaterial material, boolean applyPhysics);
 
     IWorld getWorld();
 

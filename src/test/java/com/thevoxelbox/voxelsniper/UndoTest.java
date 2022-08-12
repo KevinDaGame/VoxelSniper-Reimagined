@@ -8,8 +8,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
@@ -36,7 +34,7 @@ public class UndoTest
         undo = new Undo();
     }
 
-    private IBlock mockBlock(ILocation loc, IMaterial t) {
+    private IBlock mockBlock(ILocation loc, VoxelMaterial t) {
         IBlock block = Mockito.mock(IBlock.class);
         IBlockState normalBlockState = Mockito.mock(IBlockState.class);
         Mockito.when(block.getLocation())
@@ -65,13 +63,13 @@ public class UndoTest
         for (int i = 0; i < 5; i++)
         {
             ILocation location = LocationFactory.getLocation(world, 0, 0, i);
-            IBlock block = mockBlock(location, MaterialFactory.getMaterial(VoxelMaterial.DIRT));
+            IBlock block = mockBlock(location, VoxelMaterial.DIRT);
 
             undo.put(block);
         }
         Assert.assertEquals(5, undo.getSize());
         ILocation location = LocationFactory.getLocation(world, 0, 0, 8);
-        IBlock block = mockBlock(location, MaterialFactory.getMaterial(VoxelMaterial.DIRT));
+        IBlock block = mockBlock(location, VoxelMaterial.DIRT);
         undo.put(block);
         Assert.assertEquals(6, undo.getSize());
         undo.put(block);
@@ -83,7 +81,7 @@ public class UndoTest
     public void testPut() {
         IWorld world = Mockito.mock(BukkitWorld.class);
         ILocation location = LocationFactory.getLocation(world, 0, 0, 0);
-        IBlock block = mockBlock(location, MaterialFactory.getMaterial(VoxelMaterial.DIRT));
+        IBlock block = mockBlock(location, VoxelMaterial.DIRT);
 
         undo.put(block);
         Assert.assertEquals(1, undo.getSize());
@@ -94,15 +92,15 @@ public class UndoTest
         IWorld world = Mockito.mock(BukkitWorld.class);
 
         ILocation normalBlockLocation = LocationFactory.getLocation(world, 0, 0, 0);
-        IBlock normalBlock = mockBlock(normalBlockLocation, MaterialFactory.getMaterial(VoxelMaterial.STONE));
+        IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE);
         IBlockState normalBlockState = normalBlock.getState();
 
         ILocation fragileBlockLocation = LocationFactory.getLocation(world, 0, 0, 1);
-        IBlock fragileBlock = mockBlock(fragileBlockLocation, MaterialFactory.getMaterial(VoxelMaterial.TORCH));
+        IBlock fragileBlock = mockBlock(fragileBlockLocation, VoxelMaterial.TORCH);
         IBlockState fragileBlockState = fragileBlock.getState();
 
         ILocation waterBlockLocation = LocationFactory.getLocation(world, 0, 0, 2);
-        IBlock waterBlock = mockBlock(waterBlockLocation, MaterialFactory.getMaterial(VoxelMaterial.WATER));
+        IBlock waterBlock = mockBlock(waterBlockLocation, VoxelMaterial.WATER);
         IBlockState waterBlockState = waterBlock.getState();
 
 

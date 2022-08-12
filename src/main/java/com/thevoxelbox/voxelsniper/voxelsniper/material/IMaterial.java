@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
-public interface IMaterial {
+public interface IMaterial extends Comparable<IMaterial> {
     boolean isSolid();
     String getKey();
     boolean equals(String key);
@@ -20,4 +20,9 @@ public interface IMaterial {
     boolean hasGravity();
 
     IBlockData createBlockData(String s);
+
+    @Override
+    default int compareTo(IMaterial m) {
+        return getKey().compareTo(m.getKey());
+    }
 }

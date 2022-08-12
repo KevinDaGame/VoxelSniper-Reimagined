@@ -5,7 +5,6 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.*;
-import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 
 import java.util.ArrayList;
 import java.util.HashSet;

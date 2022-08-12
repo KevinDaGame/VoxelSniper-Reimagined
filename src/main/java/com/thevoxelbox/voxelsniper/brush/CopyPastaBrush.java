@@ -7,13 +7,11 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#CopyPasta_Brush
@@ -98,7 +96,7 @@ public class CopyPastaBrush extends Brush {
                             break;
                     }
 
-                    if (!(this.substanceArray[currentPosition].getMaterial() == new BukkitMaterial( Material.AIR) && !this.pasteAir)) {
+                    if (!(this.substanceArray[currentPosition].getMaterial() == VoxelMaterial.AIR && !this.pasteAir)) {
                         if (block.getMaterial() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
                             undo.put(block);
                         }

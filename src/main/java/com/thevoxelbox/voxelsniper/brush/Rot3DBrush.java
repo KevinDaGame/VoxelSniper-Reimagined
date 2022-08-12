@@ -8,13 +8,11 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  *
@@ -126,7 +124,7 @@ temp.printStackTrace();
                     if (xSquared + zSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
                         final IBlock block = this.clampY(sx, sz, sz);
                         this.snap[x][y][z] = new BlockWrapper(block);
-                        block.setMaterial(new BukkitMaterial(Material.AIR));
+                        block.setMaterial(VoxelMaterial.AIR);
                         sz++;
                     }
                 }
@@ -183,7 +181,7 @@ temp.printStackTrace();
                         // after all three, though.
 
                         final BlockWrapper block = this.snap[x][y][z];
-                        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        if (block.getMaterial() == VoxelMaterial.AIR) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ, block.getBlockData());

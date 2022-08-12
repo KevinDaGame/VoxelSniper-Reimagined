@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.blockstate;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 public interface IBlockState {
@@ -17,7 +17,7 @@ public interface IBlockState {
 
     int getZ();
 
-    IMaterial getMaterial();
+    VoxelMaterial getMaterial();
 
     IBlockData getBlockData();
 

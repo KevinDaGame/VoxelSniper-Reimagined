@@ -7,12 +7,10 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
 
 // TODO: Dissect this
 /**
@@ -53,7 +51,7 @@ public class Rot2DvertBrush extends Brush {
                 for (int y = 0; y < this.snap.length; y++) {
                     final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                     this.snap[x][y][z] = new BlockWrapper(block);
-                    block.setMaterial(new BukkitMaterial(Material.AIR));
+                    block.setMaterial(VoxelMaterial.AIR);
                     sy++;
                 }
 
@@ -89,7 +87,7 @@ public class Rot2DvertBrush extends Brush {
                         final int yy = y - this.bSize;
 
                         final BlockWrapper block = this.snap[y][x][z];
-                        if (block.getMaterial() == new BukkitMaterial( Material.AIR)) {
+                        if (block.getMaterial() == VoxelMaterial.AIR) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());

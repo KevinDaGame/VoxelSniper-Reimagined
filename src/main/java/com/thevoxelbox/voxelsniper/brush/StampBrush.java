@@ -6,14 +6,10 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.HashSet;
-
-import org.bukkit.Material;
 
 /**
  *
@@ -77,7 +73,7 @@ public class StampBrush extends Brush {
     }
 
 
-    protected final boolean falling(final IMaterial material) {
+    protected final boolean falling(final VoxelMaterial material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
         return material.hasGravity();
@@ -114,7 +110,7 @@ public class StampBrush extends Brush {
      */
     protected final void setBlockFill(final BlockWrapper cb) {
         final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
-        if (new BukkitMaterial(Material.AIR).equals(block.getMaterial())) {
+        if (VoxelMaterial.AIR.equals(block.getMaterial())) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);
         }
@@ -148,7 +144,7 @@ public class StampBrush extends Brush {
             this.drop.clear();
             this.solid.clear();
             for (final BlockWrapper block : this.clone) {
-                if (this.fallsOff(block.blockData.getMaterial().getVoxelMaterial())) {
+                if (this.fallsOff(block.blockData.getMaterial())) {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
@@ -191,7 +187,7 @@ public class StampBrush extends Brush {
             this.drop.clear();
             this.solid.clear();
             for (final BlockWrapper block : this.clone) {
-                if (this.fallsOff(block.blockData.getMaterial().getVoxelMaterial())) {
+                if (this.fallsOff(block.blockData.getMaterial())) {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
@@ -234,11 +230,11 @@ public class StampBrush extends Brush {
             this.drop.clear();
             this.solid.clear();
             for (final BlockWrapper block : this.clone) {
-                if (this.fallsOff(block.blockData.getMaterial().getVoxelMaterial())) {
+                if (this.fallsOff(block.blockData.getMaterial())) {
                     this.fall.add(block);
                 } else if (this.falling(block.blockData.getMaterial())) {
                     this.drop.add(block);
-                } else if (!new BukkitMaterial(Material.AIR).equals(block.blockData.getMaterial())) {
+                } else if (!VoxelMaterial.AIR.equals(block.blockData.getMaterial())) {
                     this.solid.add(block);
                     this.setBlock(block);
                 }

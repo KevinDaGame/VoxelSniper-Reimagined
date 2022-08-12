@@ -1,9 +1,7 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.command.*;
-import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

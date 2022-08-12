@@ -1,9 +1,9 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.blockdata;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 public interface IBlockData {
-    IMaterial getMaterial();
+    VoxelMaterial getMaterial();
 
     boolean matches(IBlockData blockData);
 

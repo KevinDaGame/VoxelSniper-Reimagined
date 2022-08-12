@@ -7,7 +7,6 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
@@ -50,19 +49,19 @@ public class CanyonBrush extends Brush {
                     undo.put(currentYLevelBlock);
 
                     currentYLevelBlock.setMaterial(block.getMaterial(), false);
-                    block.setMaterial(MaterialFactory.getMaterial(VoxelMaterial.AIR));
+                    block.setMaterial(VoxelMaterial.AIR);
 
                     currentYLevel++;
                 }
 
                 final IBlock block = chunk.getBlock(x, this.getMinHeight(), z);
                 undo.put(block);
-                block.setMaterial(MaterialFactory.getMaterial(VoxelMaterial.BEDROCK));
+                block.setMaterial(VoxelMaterial.BEDROCK);
 
                 for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
                     final IBlock currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
-                    currentBlock.setMaterial(MaterialFactory.getMaterial(VoxelMaterial.STONE));
+                    currentBlock.setMaterial(VoxelMaterial.STONE);
                 }
             }
         }

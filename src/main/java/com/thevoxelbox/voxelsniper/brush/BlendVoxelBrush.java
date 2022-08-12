@@ -3,14 +3,11 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
@@ -29,9 +26,9 @@ public class BlendVoxelBrush extends BlendBrushBase {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         // Array that holds the original materials plus a buffer
-        final IMaterial[][][] oldMaterials = new IMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
+        final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1];
         // Array that holds the blended materials
-        final IMaterial[][][] newMaterials = new IMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
+        final VoxelMaterial[][][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
 
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {
@@ -53,7 +50,7 @@ public class BlendVoxelBrush extends BlendBrushBase {
         for (int x = 0; x <= brushSizeDoubled; x++) {
             for (int y = 0; y <= brushSizeDoubled; y++) {
                 for (int z = 0; z <= brushSizeDoubled; z++) {
-                    Map<IMaterial, Integer> materialFrequency = new HashMap<>();
+                    Map<VoxelMaterial, Integer> materialFrequency = new HashMap<>();
 
                     boolean tiecheck = true;
 
@@ -61,7 +58,7 @@ public class BlendVoxelBrush extends BlendBrushBase {
                         for (int n = -1; n <= 1; n++) {
                             for (int o = -1; o <= 1; o++) {
                                 if (!(m == 0 && n == 0 && o == 0)) {
-                                    IMaterial currentMaterial = oldMaterials[x + 1 + m][y + 1 + n][z + 1 + o];
+                                    VoxelMaterial currentMaterial = oldMaterials[x + 1 + m][y + 1 + n][z + 1 + o];
                                     int currentFrequency = materialFrequency.getOrDefault(currentMaterial, 0) + 1;
 
                                     materialFrequency.put(currentMaterial, currentFrequency);
@@ -71,19 +68,19 @@ public class BlendVoxelBrush extends BlendBrushBase {
                     }
 
                     int highestMaterialCount = 0;
-                    IMaterial highestMaterial = new BukkitMaterial( Material.AIR);
+                    VoxelMaterial highestMaterial = VoxelMaterial.AIR;
 
                     // Find most common neighbouring material
-                    for (Entry<IMaterial, Integer> e : materialFrequency.entrySet()) {
-                        if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && e.getKey() == new BukkitMaterial( Material.WATER))) {
+                    for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
+                        if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == VoxelMaterial.AIR) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
                             highestMaterialCount = e.getValue();
                             highestMaterial = e.getKey();
                         }
                     }
 
                     // Make sure that there's no tie in highest material
-                    for (Entry<IMaterial, Integer> e : materialFrequency.entrySet()) {
-                        if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && e.getKey() == new BukkitMaterial( Material.WATER))) {
+                    for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
+                        if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == VoxelMaterial.AIR) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
                             if (e.getKey() == highestMaterial) {
                                 continue;
                             }
@@ -105,7 +102,7 @@ public class BlendVoxelBrush extends BlendBrushBase {
         for (int x = brushSizeDoubled; x >= 0; x--) {
             for (int y = 0; y <= brushSizeDoubled; y++) {
                 for (int z = brushSizeDoubled; z >= 0; z--) {
-                    if (!(this.excludeAir && newMaterials[x][y][z] == new BukkitMaterial( Material.AIR)) && !(this.excludeWater && newMaterials[x][y][z] == new BukkitMaterial( Material.WATER))) {
+                    if (!(this.excludeAir && newMaterials[x][y][z] == VoxelMaterial.AIR) && !(this.excludeWater && newMaterials[x][y][z] == VoxelMaterial.WATER)) {
                         setBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + y, this.getTargetBlock().getZ() - brushSize + z, newMaterials[x][y][z], undo);
                     }
                 }

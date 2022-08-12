@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.blockdata;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import org.bukkit.block.data.BlockData;
 
@@ -17,8 +17,8 @@ public class BukkitBlockData implements IBlockData {
     }
 
     @Override
-    public IMaterial getMaterial() {
-        return new BukkitMaterial(blockData.getMaterial());
+    public VoxelMaterial getMaterial() {
+        return BukkitMaterial.fromBukkitMaterial(blockData.getMaterial());
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
@@ -45,8 +44,8 @@ public class CleanSnowBrush extends Brush {
                     if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                         IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
                         IBlock blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
-                        if ((b.getMaterial().getVoxelMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial().getVoxelMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().getVoxelMaterial() == VoxelMaterial.AIR))) {
-                            setBlockType(b, MaterialFactory.getMaterial(VoxelMaterial.AIR), undo);
+                        if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial() == VoxelMaterial.AIR))) {
+                            setBlockType(b, VoxelMaterial.AIR, undo);
                         }
 
                     }

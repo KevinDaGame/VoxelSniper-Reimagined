@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.material;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,9 +13,10 @@ import java.util.Objects;
 import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
 @SuppressWarnings("unused")
-public class VoxelMaterial {
+public class VoxelMaterial implements IMaterial {
     public static final Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
 
+    //<editor-fold defaultstate="collapsed" desc="Blocks">
     public static final VoxelMaterial AIR = register("minecraft", "air");
     public static final VoxelMaterial STONE = register("minecraft", "stone");
     public static final VoxelMaterial GRANITE = register("minecraft", "granite");
@@ -948,6 +950,7 @@ public class VoxelMaterial {
     public static final VoxelMaterial STRIPPED_MANGROVE_LOG = register("minecraft", "stripped_mangrove_log", V1_19);
     public static final VoxelMaterial STRIPPED_MANGROVE_WOOD = register("minecraft", "stripped_mangrove_wood", V1_19);
     public static final VoxelMaterial VERDANT_FROGLIGHT = register("minecraft", "verdant_froglight", V1_19);
+    //</editor-fold>
 
     public static List<VoxelMaterial> OVERRIDABLE_MATERIALS = Arrays.asList(VoxelMaterial.STONE,
             VoxelMaterial.ANDESITE,
@@ -972,6 +975,7 @@ public class VoxelMaterial {
     private final Version version;
     private final String key;
     private final String namespace;
+    private IMaterial material = null;
 
     private static VoxelMaterial register(String namespace, String key, Version version) {
 
@@ -1007,6 +1011,7 @@ public class VoxelMaterial {
         if (namespace.isEmpty() || key.isEmpty()) return null;
         var block = BLOCKS.get(namespace + ":" + key);
         if(block == null) {
+            // TODO should we store this??
             return new VoxelMaterial(namespace, key);
         }
         if(VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())){
@@ -1036,15 +1041,68 @@ public class VoxelMaterial {
     public boolean isBlock() {
         return getMaterial(this.getKey()) != null;
     }
+
+    @Override
+    public VoxelMaterial getVoxelMaterial() {
+        return this;
+    }
+
+    @Override
+    public boolean hasGravity() {
+        return this.getIMaterial().hasGravity();
+    }
+
+    @Override
+    public IBlockData createBlockData(String s) {
+        return this.getIMaterial().createBlockData(s);
+    }
+
+    @Override
+    public IBlockData createBlockData() {
+        return this.getIMaterial().createBlockData();
+    }
+
     public Version getVersion() {
         return version;
+    }
+
+    @Override
+    public boolean isSolid() {
+        return this.getIMaterial().isSolid();
     }
 
     public String getKey() {
         return key;
     }
 
+    @Override
+    public boolean equals(String key) {
+        return this.getIMaterial().equals(key);
+    }
+
+    @Override
+    public String getName() {
+        return this.getIMaterial().getName();
+    }
+
+    @Override
+    public boolean equals(VoxelMaterial material) {
+        return this.getIMaterial().equals(material);
+    }
+
+    @Override
+    public boolean isTransparent() {
+        return this.getIMaterial().isTransparent();
+    }
+
     public String getNamespace() {
         return namespace;
+    }
+
+    public IMaterial getIMaterial() {
+        if (material == null) {
+            this.material = MaterialFactory. getMaterial(this);
+        }
+        return material;
     }
 }

@@ -5,7 +5,6 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 
@@ -88,7 +87,7 @@ public class DomeBrush extends Brush {
             // if (currentTargetBlock.getMaterial() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
             if (currentTargetBlock.getMaterial() != v.getVoxelMaterial()) {
                 undo.put(currentTargetBlock);
-                currentTargetBlock.setBlockData(MaterialFactory.getMaterial(v.getVoxelMaterial()).createBlockData(), true);
+                currentTargetBlock.setBlockData(v.getVoxelMaterial().createBlockData(), true);
             }
         }
 

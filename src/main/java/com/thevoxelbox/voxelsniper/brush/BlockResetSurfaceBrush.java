@@ -3,14 +3,11 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import org.bukkit.Material;
 
 /**
  * This brush only looks for solid blocks, and then changes those plus any air blocks touching them. If it works, this brush should be faster than the original
@@ -29,36 +26,36 @@ import org.bukkit.Material;
  */
 public class BlockResetSurfaceBrush extends Brush {
 
-    private static final ArrayList<IMaterial> DENIED_UPDATES = new ArrayList<>();
+    private static final ArrayList<VoxelMaterial> DENIED_UPDATES = new ArrayList<>();
 
     static {
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_WALL_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_WALL_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_WALL_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_WALL_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_WALL_SIGN));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.CHEST));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.FURNACE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.REDSTONE_TORCH));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.REDSTONE_WIRE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.REPEATER));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_DOOR));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_DOOR));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_DOOR));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_DOOR));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_DOOR));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.IRON_DOOR));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.ACACIA_FENCE_GATE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.BIRCH_FENCE_GATE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.DARK_OAK_FENCE_GATE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.JUNGLE_FENCE_GATE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.OAK_FENCE_GATE));
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(new BukkitMaterial(Material.AIR));
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CHEST);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.FURNACE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_TORCH);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WIRE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REPEATER);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.IRON_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.AIR);
     }
 
     /**
@@ -83,37 +80,37 @@ public class BlockResetSurfaceBrush extends Brush {
 
                     boolean airFound = false;
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial(), new BukkitMaterial(Material.AIR))) {
+                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
                         block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial(), new BukkitMaterial(Material.AIR))) {
+                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
                         block = world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial(), new BukkitMaterial(Material.AIR))) {
+                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial(), new BukkitMaterial(Material.AIR))) {
+                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial(), new BukkitMaterial(Material.AIR))) {
+                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial(), VoxelMaterial.AIR)) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial(), new BukkitMaterial(Material.AIR))) {
+                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial(), VoxelMaterial.AIR)) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
                         resetBlock(block);
                         airFound = true;

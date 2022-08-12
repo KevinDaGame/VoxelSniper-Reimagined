@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 /**
@@ -37,7 +37,7 @@ public class BlockWrapper {
     /**
      * @return the id
      */
-    public final IMaterial getMaterial() {
+    public final VoxelMaterial getMaterial() {
         return this.blockData.getMaterial();
     }
 

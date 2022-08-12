@@ -6,7 +6,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
 import org.bukkit.block.Block;
@@ -16,7 +16,7 @@ public class BukkitBlock extends AbstractBlock {
     private final Block block;
 
     public BukkitBlock(Block block) {
-        super(new BukkitLocation(block.getLocation()), new BukkitMaterial(block.getType()));
+        super(new BukkitLocation(block.getLocation()), BukkitMaterial.fromBukkitMaterial(block.getType()));
         this.block = block;
     }
 
@@ -26,20 +26,15 @@ public class BukkitBlock extends AbstractBlock {
     }
 
     @Override
-    public BukkitMaterial getMaterial() {
-        return (BukkitMaterial) material;
+    public void setMaterial(VoxelMaterial material) {
+        this.material = material;
+        block.setType(((BukkitMaterial)material.getIMaterial()).material());
     }
 
     @Override
-    public void setMaterial(IMaterial material) {
+    public void setMaterial(VoxelMaterial material, boolean applyPhysics) {
         this.material = material;
-        block.setType(((BukkitMaterial)material).material());
-    }
-
-    @Override
-    public void setMaterial(IMaterial material, boolean applyPhysics) {
-        this.material = material;
-        block.setType(((BukkitMaterial)material).material(), applyPhysics);
+        block.setType(((BukkitMaterial)material.getIMaterial()).material(), applyPhysics);
     }
 
     @Override

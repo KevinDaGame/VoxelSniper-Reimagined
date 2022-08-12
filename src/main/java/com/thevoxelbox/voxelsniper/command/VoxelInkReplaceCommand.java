@@ -7,7 +7,6 @@ import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         // Command: /vir [data]
         if (args.length >= 1) {
             try {
-                IBlockData newData = MaterialFactory.getMaterial(snipeData.getReplaceMaterial()).createBlockData("[" + String.join(",", args) + "]");
+                IBlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + String.join(",", args) + "]");
                 IBlockData activeData = snipeData.getReplaceSubstance();
 
                 snipeData.setReplaceSubstance(activeData.merge(newData));

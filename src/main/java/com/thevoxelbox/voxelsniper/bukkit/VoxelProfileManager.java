@@ -1,9 +1,7 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.google.common.collect.Maps;
-import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 
 import java.util.Map;

@@ -6,12 +6,10 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Drain_Brush
@@ -45,9 +43,9 @@ public class DrainBrush extends Brush {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dz : new int[]{-1, 1}) {
                                 IBlock b = this.clampY(this.getTargetBlock().getX() + (x*dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z*dz));
-                                if (b.getMaterial() == new BukkitMaterial(Material.WATER) || b.getMaterial() == new BukkitMaterial(Material.LAVA)) {
+                                if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
                                     undo.put(b);
-                                    b.setMaterial(new BukkitMaterial(Material.AIR));
+                                    b.setMaterial(VoxelMaterial.AIR);
                                 }
                             }
                         }
@@ -64,9 +62,9 @@ public class DrainBrush extends Brush {
                     for (int y = (brushSize + 1) * 2; y >= 0; y--) {
                         if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                             IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
-                            if (b.getMaterial() == new BukkitMaterial( Material.WATER) || b.getMaterial() == new BukkitMaterial( Material.LAVA)) {
+                            if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
                                 undo.put(b);
-                                b.setMaterial(new BukkitMaterial(Material.AIR));
+                                b.setMaterial(VoxelMaterial.AIR);
                             }
                         }
                     }

@@ -12,7 +12,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.ArrayList;
@@ -220,7 +220,7 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    protected IMaterial getBlockMaterialAt(int x, int y, int z) {
+    protected VoxelMaterial getBlockMaterialAt(int x, int y, int z) {
         return clampY(x, y, z).getMaterial();
     }
 
@@ -261,14 +261,14 @@ public abstract class Brush implements IBrush {
     }
 
     /**
-     * Sets the IMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
+     * Sets the VoxelMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
      * @param x X coordinate
      * @param y Y coordinate
      * @param z Z coordinate
      * @param material the material to set this block to
      */
-    protected final void setBlockMaterialAt(int x, int y, int z, IMaterial material) {
+    protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material) {
         this.clampY(x, y, z).setBlockData(material.createBlockData());
     }
 
@@ -294,7 +294,7 @@ public abstract class Brush implements IBrush {
      * @param material the material to set this block to
      * @param undo The Undo container to store the change
      */
-    protected final void setBlockMaterialAt(int x, int y, int z, IMaterial material, Undo undo) {
+    protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material, Undo undo) {
         IBlock b = this.clampY(x, y, z);
         if (b.getMaterial() != material) {
             undo.put(b);
@@ -309,7 +309,7 @@ public abstract class Brush implements IBrush {
      * @param material the material to set this block to
      * @param undo The Undo container to store the change
      */
-    protected final void setBlockType(IBlock b, IMaterial material, Undo undo) {
+    protected final void setBlockType(IBlock b, VoxelMaterial material, Undo undo) {
         int clampedY = this.clampWorldHeight(b.getY());
         if (clampedY != b.getY()) {
             b = getWorld().getBlock(b.getX(), clampedY, b.getX());
