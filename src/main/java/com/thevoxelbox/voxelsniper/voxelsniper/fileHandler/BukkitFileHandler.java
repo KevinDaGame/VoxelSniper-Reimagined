@@ -4,6 +4,8 @@ import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 
 import java.io.File;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BukkitFileHandler implements IFileHandler {
     private final BukkitVoxelSniper voxelSniper;
 
@@ -19,6 +21,11 @@ public class BukkitFileHandler implements IFileHandler {
     @Override
     public File getDataFolder() {
         return voxelSniper.getDataFolder();
+    }
+
+    @Override
+    public void saveResource(@NotNull String resourcePath, boolean replace) {
+        voxelSniper.saveResource(resourcePath, replace);
     }
 }
 
