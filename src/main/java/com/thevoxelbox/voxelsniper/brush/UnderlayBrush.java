@@ -43,7 +43,7 @@ public class UnderlayBrush extends PerformerBrush {
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
                             final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
-                            if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock.getVoxelMaterial())) {
+                            if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = 0; (d < this.depth); d++) {
                                     if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getMaterial() != VoxelMaterial.AIR) {
                                         this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in

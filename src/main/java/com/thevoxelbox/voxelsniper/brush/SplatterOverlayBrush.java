@@ -227,14 +227,14 @@ public class SplatterOverlayBrush extends PerformerBrush {
 
     private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
         if (this.useVoxelList) {
-            return list.contains(material.getVoxelMaterial());
+            return list.contains(material);
         }
 
         if (allBlocks && !(material.equals(VoxelMaterial.AIR))) {
             return true;
         }
 
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material.getVoxelMaterial());
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override

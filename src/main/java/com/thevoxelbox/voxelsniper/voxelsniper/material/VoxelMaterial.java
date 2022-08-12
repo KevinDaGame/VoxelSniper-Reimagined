@@ -1048,11 +1048,6 @@ public class VoxelMaterial implements IMaterial {
     }
 
     @Override
-    public VoxelMaterial getVoxelMaterial() {
-        return this;
-    }
-
-    @Override
     public boolean hasGravity() {
         return this.getIMaterial().hasGravity();
     }

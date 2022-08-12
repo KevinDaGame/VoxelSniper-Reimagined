@@ -5,11 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
 import org.bukkit.Material;
 
-public record BukkitMaterial(Material material, VoxelMaterial voxelMaterial) implements IMaterial {
-
-    public BukkitMaterial(Material mat) {
-        this(mat, BukkitMaterial.fromBukkitMaterial(mat));
-    }
+public record BukkitMaterial(Material material) implements IMaterial {
 
     public static VoxelMaterial fromBukkitMaterial(Material type) {
         return VoxelMaterial.getMaterial(type.getKey().getNamespace(), type.getKey().getKey());
@@ -53,11 +49,6 @@ public record BukkitMaterial(Material material, VoxelMaterial voxelMaterial) imp
     @Override
     public boolean isBlock() {
         return material.isBlock();
-    }
-
-    @Override
-    public VoxelMaterial getVoxelMaterial() {
-        return this.voxelMaterial;
     }
 
     @Override

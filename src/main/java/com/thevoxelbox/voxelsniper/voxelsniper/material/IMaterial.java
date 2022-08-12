@@ -15,8 +15,6 @@ public interface IMaterial extends Comparable<IMaterial> {
     boolean isTransparent();
     boolean isBlock();
 
-    VoxelMaterial getVoxelMaterial();
-
     boolean hasGravity();
 
     IBlockData createBlockData(String s);

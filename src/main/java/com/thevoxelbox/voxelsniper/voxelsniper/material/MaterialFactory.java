@@ -8,7 +8,7 @@ import org.bukkit.Material;
 public class MaterialFactory {
     public static IMaterial getMaterial(VoxelMaterial material) {
         if(VoxelSniper.voxelsniper.getEnvironment() == Environment.BUKKIT) {
-            return new BukkitMaterial(Material.matchMaterial(material.getKey()), material);
+            return new BukkitMaterial(Material.matchMaterial(material.getKey()));
         }
         return null;
     }
