@@ -4,20 +4,36 @@ import com.thevoxelbox.voxelsniper.brush.perform.pMaterial;
 import com.thevoxelbox.voxelsniper.brush.perform.vPerformer;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 public class PerformerTest {
+
+    @Before
+    public void setUp() {
+        var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
+        VoxelSniper.voxelsniper = main;
+    }
+
     @Test
     public void testBasePerformer() {
         vPerformer p = new vPerformer() {
@@ -26,7 +42,7 @@ public class PerformerTest {
             @Override
             public void init(SnipeData v) {}
             @Override
-            public void perform(Block b) {}
+            public void perform(IBlock b) {}
         };
 
         Assert.assertNull(p.getUndo());
@@ -40,23 +56,35 @@ public class PerformerTest {
 
     @Test
     public void testMatPerformer() {
-        try (MockedStatic<Bukkit> bukkit = Mockito.mockStatic(Bukkit.class)) {
-            // mock calls for Bukkit.createBlockData
-            BlockData diaBlockData = Mockito.mock(BlockData.class);
-            Mockito.when(diaBlockData.getMaterial()).thenReturn(Material.DIAMOND_BLOCK);
-            bukkit.when(() -> Bukkit.createBlockData(Material.DIAMOND_BLOCK)).thenReturn(diaBlockData);
-            BlockData airBlockData = Mockito.mock(BlockData.class);
-            Mockito.when(airBlockData.getMaterial()).thenReturn(Material.AIR);
-            bukkit.when(() -> Bukkit.createBlockData(Material.AIR)).thenReturn(airBlockData);
+        try (MockedStatic<MaterialFactory> factory = Mockito.mockStatic(MaterialFactory.class)) {
+            // mock calls for MaterialFactory.getMaterial
+            IBlockData diaBlockData = Mockito.mock(IBlockData.class);
+            Mockito.when(diaBlockData.getMaterial()).thenReturn(VoxelMaterial.DIAMOND_BLOCK);
+            IMaterial diaMat = Mockito.mock(IMaterial.class);
+            Mockito.when(diaMat.createBlockData()).thenReturn(diaBlockData);
+            factory.when(() -> MaterialFactory.getMaterial(VoxelMaterial.DIAMOND_BLOCK)).thenReturn(diaMat);
+            IBlockData airBlockData = Mockito.mock(IBlockData.class);
+            Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterial.AIR);
+            IMaterial airMat = Mockito.mock(IMaterial.class);
+            Mockito.when(airMat.createBlockData()).thenReturn(airBlockData);
+            factory.when(() -> MaterialFactory.getMaterial(VoxelMaterial.AIR)).thenReturn(airMat);
 
             // init Performer
+            IWorld world = Mockito.mock(BukkitWorld.class);
             SnipeData snipeData = Mockito.mock(SnipeData.class);
-            Mockito.when(snipeData.getVoxelMaterial()).thenReturn(Material.DIAMOND_BLOCK);
+            Mockito.when(snipeData.getVoxelMaterial()).thenReturn(VoxelMaterial.DIAMOND_BLOCK);
+            Mockito.when(snipeData.getWorld()).thenReturn(world);
             pMaterial p = new pMaterial();
 
             // test p.init()
             p.init(snipeData);
             Mockito.verify(snipeData).getVoxelMaterial();
+            try {
+                Assert.assertSame(p.getClass().getDeclaredField("voxelMaterial").get(p), VoxelMaterial.DIAMOND_BLOCK);
+                Assert.assertSame(p.getClass().getSuperclass().getDeclaredField("w").get(p), world);
+            } catch (NoSuchFieldException | IllegalAccessException ignored) {
+            }
+
 
             // test p.info(vm)
             VoxelMessage vm = Mockito.mock(VoxelMessage.class);
@@ -69,9 +97,8 @@ public class PerformerTest {
             Assert.assertFalse(p.isUsingReplaceMaterial());
 
             // test perform() - change block
-            World world = Mockito.mock(World.class);
-            Location loc = new Location(world, 100, 50, 200);
-            Block b = TestUtil.mockBlock(loc, Material.AIR);
+            ILocation loc = LocationFactory.getLocation(world, 100, 50, 200);
+            IBlock b = TestUtil.mockBlock(loc, VoxelMaterial.AIR);
 
             p.setUndo();
             p.perform(b);
@@ -79,7 +106,7 @@ public class PerformerTest {
             Assert.assertSame(p.getUndo().getSize(), 1);
 
             // test perform() noop, b.getType() == voxelMaterial
-            Block b2 = TestUtil.mockBlock(loc, Material.DIAMOND_BLOCK);
+            IBlock b2 = TestUtil.mockBlock(loc, VoxelMaterial.DIAMOND_BLOCK);
 
             p.setUndo();
             p.perform(b2);
