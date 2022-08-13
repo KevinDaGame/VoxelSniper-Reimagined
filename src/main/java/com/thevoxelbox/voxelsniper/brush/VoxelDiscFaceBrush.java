@@ -1,10 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Voxel_Disc_Face_Brush
@@ -20,7 +20,7 @@ public class VoxelDiscFaceBrush extends PerformerBrush {
         this.setName("Voxel Disc Face");
     }
 
-    private void disc(final SnipeData v, Block targetBlock) {
+    private void disc(final SnipeData v,  IBlock targetBlock) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, targetBlock.getY(), targetBlock.getZ() + y));
@@ -30,7 +30,7 @@ public class VoxelDiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void discNS(final SnipeData v, Block targetBlock) {
+    private void discNS(final SnipeData v,  IBlock  targetBlock) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, targetBlock.getY() + y, targetBlock.getZ()));
@@ -40,7 +40,7 @@ public class VoxelDiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void discEW(final SnipeData v, Block targetBlock) {
+    private void discEW(final SnipeData v,  IBlock  targetBlock) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 this.currentPerformer.perform(this.clampY(targetBlock.getX(), targetBlock.getY() + x, targetBlock.getZ() + y));
@@ -50,7 +50,7 @@ public class VoxelDiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void pre(final SnipeData v, final BlockFace bf, Block targetBlock) {
+    private void pre(final SnipeData v, final BlockFace bf, IBlock  targetBlock) {
         if (bf == null) {
             return;
         }

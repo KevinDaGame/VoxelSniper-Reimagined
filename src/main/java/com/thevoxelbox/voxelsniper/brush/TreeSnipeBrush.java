@@ -1,21 +1,26 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.base.Objects;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.TreeType;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+
+import org.bukkit.TreeType;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Tree_Brush
@@ -34,12 +39,12 @@ public class TreeSnipeBrush extends Brush {
     }
 
     @SuppressWarnings("deprecation")
-    private void single(final SnipeData v, Block targetBlock) {
+    private void single(final SnipeData v,  IBlock targetBlock) {
         UndoDelegate undoDelegate = new UndoDelegate(targetBlock.getWorld());
-        Block blockBelow = targetBlock.getRelative(BlockFace.DOWN);
-        BlockState currentState = blockBelow.getState();
+         IBlock  blockBelow = targetBlock.getRelative(BlockFace.DOWN);
+        IBlockState currentState = blockBelow.getState();
         undoDelegate.setBlock(blockBelow);
-        blockBelow.setType(Material.GRASS);
+        blockBelow.setMaterial(VoxelMaterial.GRASS);
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);
         Undo undo = undoDelegate.getUndo();
         blockBelow.setBlockData(currentState.getBlockData().getMaterial().createBlockData(), true);
@@ -50,7 +55,7 @@ public class TreeSnipeBrush extends Brush {
     private int getYOffset() {
         // getMaxHeight() is the same as getTargetBlock().getWorld().getMaxHeight()
         for (int i = 1; i < (getMaxHeight() - 1 - getTargetBlock().getY()); i++) {
-            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getType(), Material.AIR)) {
+            if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getMaterial(), VoxelMaterial.AIR)) {
                 return i;
             }
         }
@@ -58,24 +63,24 @@ public class TreeSnipeBrush extends Brush {
     }
 
     private void printTreeType(final VoxelMessage vm) {
-        StringBuilder printout = new StringBuilder();
+        TextComponent.Builder printout = Component.text();
 
         boolean delimiterHelper = true;
         for (final TreeType treeType : TreeType.values()) {
             if (delimiterHelper) {
                 delimiterHelper = false;
             } else {
-                printout.append(", ");
+                printout.append(Component.text(", ").color(NamedTextColor.WHITE));
             }
-            printout.append((treeType.equals(this.treeType)) ? ChatColor.GRAY + treeType.name().toLowerCase() : ChatColor.DARK_GRAY + treeType.name().toLowerCase()).append(ChatColor.WHITE);
+            printout.append(Component.text(treeType.name().toLowerCase()).color(treeType.equals(this.treeType) ? NamedTextColor.GRAY : NamedTextColor.DARK_GRAY));
         }
 
-        vm.custom(printout.toString());
+        vm.custom(printout);
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        Block targetBlock = getTargetBlock().getRelative(0, getYOffset(), 0);
+         IBlock  targetBlock = getTargetBlock().getRelative(0, getYOffset(), 0);
         this.single(v, targetBlock);
     }
 
@@ -93,8 +98,7 @@ public class TreeSnipeBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Tree Snipe Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [treeType]  -- Change tree type");
+            v.sendMessage(Messages.TREESNIPE_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -102,7 +106,7 @@ public class TreeSnipeBrush extends Brush {
             this.treeType = TreeType.valueOf(params[0].toUpperCase());
             this.printTreeType(v.getVoxelMessage());
         } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tree type does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.getVoxelMessage().brushMessage(Messages.TREESNIPE_BRUSH_MESSAGE.replace("%triggerHandle%", triggerHandle));
         }
     }
 

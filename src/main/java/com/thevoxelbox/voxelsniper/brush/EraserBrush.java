@@ -1,13 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import java.util.EnumSet;
 import java.util.Set;
 
 /**
@@ -16,16 +15,16 @@ import java.util.Set;
  * @author Voxel
  */
 public class EraserBrush extends Brush {
-
-    private static final Set<Material> EXCLUSIVE_MATERIALS = EnumSet.of(
-            Material.AIR, Material.STONE, Material.GRASS_BLOCK, Material.DIRT, Material.SAND, Material.GRAVEL, Material.SANDSTONE);
-    private static final Set<Material> EXCLUSIVE_LIQUIDS = EnumSet.of(
-            Material.WATER, Material.LAVA);
+    //todo This was enumset, should it still be?
+    private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
+           VoxelMaterial.AIR,VoxelMaterial.STONE,VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT,VoxelMaterial.SAND,VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE);
+    private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
+            VoxelMaterial.WATER, VoxelMaterial.LAVA);
 
     static {
         try {
             // 1.17+
-            EXCLUSIVE_MATERIALS.add(Material.DEEPSLATE);
+            EXCLUSIVE_MATERIALS.add(VoxelMaterial.DEEPSLATE);
         } catch(Throwable ignore) {
             // Don't add for older versions
         }
@@ -41,7 +40,7 @@ public class EraserBrush extends Brush {
     private void doErase(final SnipeData v, final boolean keepWater) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
-        World world = this.getTargetBlock().getWorld();
+        IWorld world = this.getTargetBlock().getWorld();
         final Undo undo = new Undo();
 
         for (int x = brushSizeDoubled; x >= 0; x--) {
@@ -50,13 +49,13 @@ public class EraserBrush extends Brush {
                 int currentY = this.getTargetBlock().getY() - brushSize + y;
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     int currentZ = this.getTargetBlock().getZ() - brushSize + z;
-                    Block currentBlock = world.getBlockAt(currentX, currentY, currentZ);
-                    if (EXCLUSIVE_MATERIALS.contains(currentBlock.getType())
-                            || (keepWater && EXCLUSIVE_LIQUIDS.contains(currentBlock.getType()))) {
+                    IBlock currentBlock = world.getBlock(currentX, currentY, currentZ);
+                    if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
+                            || (keepWater && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                         continue;
                     }
                     undo.put(currentBlock);
-                    currentBlock.setType(Material.AIR);
+                    currentBlock.setMaterial(VoxelMaterial.AIR);
                 }
             }
         }

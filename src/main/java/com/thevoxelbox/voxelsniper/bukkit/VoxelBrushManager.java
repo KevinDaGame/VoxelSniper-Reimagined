@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
@@ -6,7 +6,11 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Brush registration manager.
@@ -70,9 +74,8 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(MoveBrush.class, "mv", "move");
         brushManager.registerSniperBrush(OceanBrush.class, "o", "ocean");
         brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
-        brushManager.registerSniperBrush(PaintingBrush.class, "paint", "painting");
+        brushManager.registerSniperBrush(PaintingBrush.class, "painting");
         brushManager.registerSniperBrush(PullBrush.class, "pull");
-        brushManager.registerSniperBrush(PunishBrush.class, "p", "punish");
         //brushManager.registerSniperBrush(RandomErodeBrush.class, "re", "randomerode");
         brushManager.registerSniperBrush(RegenerateChunkBrush.class, "gc", "generatechunk");
         brushManager.registerSniperBrush(RingBrush.class, "ri", "ring");

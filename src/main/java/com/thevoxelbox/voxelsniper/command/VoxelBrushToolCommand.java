@@ -1,16 +1,18 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.bukkit.entity.Player;
 
 public class VoxelBrushToolCommand extends VoxelCommand {
 
@@ -23,18 +25,14 @@ public class VoxelBrushToolCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
 
         // Default command
         // Command: /btool, /btool help, /btool info
         if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " assign <arrow | powder> <label>");
-            player.sendMessage(ChatColor.YELLOW + "    Assign an action to your currently held item with the specified label.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " remove");
-            player.sendMessage(ChatColor.YELLOW + "    Removes the action that is bound to the currently held item.");
+            sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             // TODO: List all bound tools
-            // player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list"); 
+            // player.sendMessage(ChatColor.GOLD + "/" + "%alias%" + " list"); 
             // player.sendMessage(ChatColor.YELLOW + "    Lists all items that you have bound an action to.");
             return true;
         }
@@ -51,28 +49,28 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                Material itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+                VoxelMaterial itemInHand = (new BukkitPlayer(player).getItemInHand() != null) ? (new BukkitPlayer(player).getItemInHand()) : VoxelMaterial.AIR;
 
                 if (itemInHand == null) {
-                    player.sendMessage(ChatColor.RED + "Please hold an item to assign a tool action to.");
+                    sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM);
                     return true;
                 }
                 
                 if (itemInHand.isBlock()) {
-                    player.sendMessage(ChatColor.RED + "You can't assign an action to an item that can be placed as a block!");
+                    sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_CANT_ASSIGN);
                     return true;
                 }
 
                 String toolLabel = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
                 if (sniper.setTool(toolLabel, action, itemInHand)) {
-                    player.sendMessage(ChatColor.GOLD + itemInHand.name() + " has been assigned to '" + toolLabel + "' as action " + action.name() + ".");
+                    sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED.replace("%item%", itemInHand.getKey()).replace("%toolLabel%", toolLabel).replace("%action%", action.name()));
                 } else {
-                    player.sendMessage(ChatColor.RED + "Couldn't assign action to that tool.");
+                    sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_FAIL);
                 }
 
             } else {
-                player.sendMessage(ChatColor.DARK_AQUA + "Please assign your own label to the tool to identify it.");
+                sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_OWN);
             }
             return true;
         }
@@ -80,20 +78,20 @@ public class VoxelBrushToolCommand extends VoxelCommand {
         
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            Material itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+            VoxelMaterial itemInHand = (new BukkitPlayer(player).getItemInHand() != null) ? new BukkitPlayer(player).getItemInHand() : VoxelMaterial.AIR;
 
             if (itemInHand == null) {
-                player.sendMessage(ChatColor.RED + "Please hold an item to unassign a tool action.");
+                sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN);
                 return true;
             }
 
             if (sniper.getCurrentToolId() == null) {
-                player.sendMessage(ChatColor.RED + "You are not allowed to unassign the default tool!");
+                sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_NOT_ALLOWED_UNASSIGN);
                 return true;
             }
 
             sniper.removeTool(sniper.getCurrentToolId(), itemInHand);
-            player.sendMessage(ChatColor.GOLD + itemInHand.name() + " has been unassigned as a tool.");
+            sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED_AS_TOOL.replace("%item%", itemInHand.getKey()));
             return true;
         }
 

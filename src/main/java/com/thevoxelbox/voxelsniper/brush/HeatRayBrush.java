@@ -1,20 +1,22 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
-import org.bukkit.util.noise.PerlinNoiseGenerator;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import org.bukkit.util.noise.PerlinNoiseGenerator;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Heat_Ray
@@ -28,77 +30,77 @@ public class HeatRayBrush extends Brush {
     private static final double REQUIRED_FIRE_DENSITY = -0.25;
     private static final double REQUIRED_AIR_DENSITY = 0;
 
-    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<>();
+    private static final ArrayList<VoxelMaterial> FLAMMABLE_BLOCKS = new ArrayList<>();
 
     private int octaves = 5;
     private double amplitude = 0.3;
     private double frequency = 1;
 
     static {
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPONGE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.COBWEB);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.TALL_GRASS);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DEAD_BUSH);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHITE_WOOL);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DANDELION);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.POPPY);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BLUE_ORCHID);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ALLIUM);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.AZURE_BLUET);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.RED_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ORANGE_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHITE_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.PINK_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OXEYE_DAISY);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.TORCH);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.FIRE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_STAIRS);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHEAT);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_DOOR);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.LADDER);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_PRESSURE_PLATE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SNOW);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ICE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SUGAR_CANE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_FENCE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_TRAPDOOR);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.VINE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_FENCE_GATE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.LILY_PAD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ACACIA_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BIRCH_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DARK_OAK_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.JUNGLE_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SPRUCE_SAPLING);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ACACIA_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BIRCH_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DARK_OAK_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.JUNGLE_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SPRUCE_LEAVES);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ACACIA_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BIRCH_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DARK_OAK_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.JUNGLE_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SPRUCE_LOG);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ACACIA_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BIRCH_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DARK_OAK_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.JUNGLE_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SPRUCE_WOOD);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SPONGE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.COBWEB);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.TALL_GRASS);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DEAD_BUSH);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.WHITE_WOOL);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DANDELION);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.POPPY);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BLUE_ORCHID);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ALLIUM);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.AZURE_BLUET);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.RED_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ORANGE_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.WHITE_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.PINK_TULIP);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OXEYE_DAISY);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.TORCH);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.FIRE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_STAIRS);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.WHEAT);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ACACIA_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BIRCH_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DARK_OAK_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.JUNGLE_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ACACIA_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.BIRCH_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.JUNGLE_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_WALL_SIGN);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_DOOR);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.LADDER);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_PRESSURE_PLATE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SNOW);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.ICE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.SUGAR_CANE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_FENCE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_TRAPDOOR);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.VINE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.OAK_FENCE_GATE);
+        HeatRayBrush.FLAMMABLE_BLOCKS.add(VoxelMaterial.LILY_PAD);
     }
 
     /**
@@ -116,10 +118,10 @@ public class HeatRayBrush extends Brush {
     public final void heatRay(final SnipeData v) {
         final PerlinNoiseGenerator generator = new PerlinNoiseGenerator(new Random());
 
-        final Vector targetLocation = this.getTargetBlock().getLocation().toVector();
-        final Location currentLocation = new Location(this.getTargetBlock().getWorld(), 0, 0, 0);
+        final IVector targetLocation = this.getTargetBlock().getLocation().toVector();
+        final ILocation currentLocation = LocationFactory.getLocation(this.getTargetBlock().getWorld(), 0, 0, 0);
         final Undo undo = new Undo();
-        Block currentBlock;
+         IBlock currentBlock;
 
         for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
@@ -130,23 +132,23 @@ public class HeatRayBrush extends Brush {
 
                     if (currentLocation.toVector().isInSphere(targetLocation, v.getBrushSize())) {
                         currentBlock = currentLocation.getBlock();
-                        if (currentBlock == null || currentBlock.getType() == Material.CHEST) {
+                        if (currentBlock == null || currentBlock.getMaterial() == VoxelMaterial.CHEST) {
                             continue;
                         }
 
                         if (currentBlock.isLiquid()) {
                             undo.put(currentBlock);
-                            currentBlock.setType(Material.AIR);
+                            currentBlock.setMaterial(VoxelMaterial.AIR);
                             continue;
                         }
 
-                        if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getType())) {
+                        if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getMaterial())) {
                             undo.put(currentBlock);
-                            currentBlock.setType(Material.FIRE);
+                            currentBlock.setMaterial(VoxelMaterial.FIRE);
                             continue;
                         }
 
-                        if (!currentBlock.getType().equals(Material.AIR)) {
+                        if (!currentBlock.getMaterial().equals(VoxelMaterial.AIR)) {
                             final double airDensity = generator.noise(currentLocation.getX(), currentLocation.getY(), currentLocation.getZ(), this.octaves, this.frequency, this.amplitude);
                             final double fireDensity = generator.noise(currentLocation.getX(), currentLocation.getY(), currentLocation.getZ(), this.octaves, this.frequency, this.amplitude);
                             final double cobbleDensity = generator.noise(currentLocation.getX(), currentLocation.getY(), currentLocation.getZ(), this.octaves, this.frequency, this.amplitude);
@@ -154,23 +156,23 @@ public class HeatRayBrush extends Brush {
 
                             if (obsidianDensity >= HeatRayBrush.REQUIRED_OBSIDIAN_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.OBSIDIAN) {
-                                    currentBlock.setType(Material.OBSIDIAN);
+                                if (currentBlock.getMaterial() != VoxelMaterial.OBSIDIAN) {
+                                    currentBlock.setMaterial(VoxelMaterial.OBSIDIAN);
                                 }
                             } else if (cobbleDensity >= HeatRayBrush.REQUIRED_COBBLE_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.COBBLESTONE) {
-                                    currentBlock.setType(Material.COBBLESTONE);
+                                if (currentBlock.getMaterial() != VoxelMaterial.COBBLESTONE) {
+                                    currentBlock.setMaterial(VoxelMaterial.COBBLESTONE);
                                 }
                             } else if (fireDensity >= HeatRayBrush.REQUIRED_FIRE_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.FIRE) {
-                                    currentBlock.setType(Material.FIRE);
+                                if (currentBlock.getMaterial() != VoxelMaterial.FIRE) {
+                                    currentBlock.setMaterial(VoxelMaterial.FIRE);
                                 }
                             } else if (airDensity >= HeatRayBrush.REQUIRED_AIR_DENSITY) {
                                 undo.put(currentBlock);
-                                if (currentBlock.getType() != Material.AIR) {
-                                    currentBlock.setType(Material.AIR);
+                                if (currentBlock.getMaterial() != VoxelMaterial.AIR) {
+                                    currentBlock.setMaterial(VoxelMaterial.AIR);
                                 }
                             }
                         }
@@ -196,9 +198,7 @@ public class HeatRayBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Octaves: " + this.octaves);
-        vm.custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
-        vm.custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+        vm.custom(Messages.HEAT_RAY_BRUSH_INFO.replace("%octaves%",String.valueOf(this.octaves)).replace("%amplitude%",String.valueOf(this.amplitude)).replace("%frequency%",String.valueOf(this.frequency)));
         vm.size();
     }
 
@@ -206,11 +206,7 @@ public class HeatRayBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " octave [number]  -- Octaves for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " amplitude [number]  -- Amplitude for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " frequency [number]  -- Frequency for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Reset to default values.");
+            v.sendMessage(Messages.HEAT_RAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
@@ -218,31 +214,32 @@ public class HeatRayBrush extends Brush {
             this.octaves = 5;
             this.amplitude = 0.3;
             this.frequency = 1;
-            v.sendMessage(ChatColor.GOLD + "Values were set to default values.");
+            v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("octave")) {
                 this.octaves = Integer.parseInt(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Octave: " + this.octaves);
+                v.sendMessage(Messages.HEATRAY_OCTAVE.replace("%this.octaves%",String.valueOf(this.octaves)));
                 return;
             }
             if (params[0].equalsIgnoreCase("amplitude")) {
                 this.amplitude = Double.parseDouble(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
+                v.sendMessage(Messages.HEATRAY_AMPLITUDE.replace("%this.amplitude%",String.valueOf(this.amplitude)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("frequency")) {
                 this.frequency = Double.parseDouble(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+                v.sendMessage(Messages.HEATRAY_FREQ.replace("%this.frequency%",String.valueOf(this.frequency)));
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException temp) {
+temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
@@ -254,11 +251,11 @@ public class HeatRayBrush extends Brush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("octave", Lists.newArrayList("[number]"));
         argumentValues.put("amplitude", Lists.newArrayList("[number]"));
         argumentValues.put("frequency", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
     }
 

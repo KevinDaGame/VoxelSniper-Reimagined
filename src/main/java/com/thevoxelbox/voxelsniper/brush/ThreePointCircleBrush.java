@@ -1,16 +1,19 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bukkit.util.NumberConversions;
+import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Three-Point_Circle_Brush
@@ -19,9 +22,9 @@ import java.util.stream.Collectors;
  */
 public class ThreePointCircleBrush extends PerformerBrush {
 
-    private Vector coordsOne;
-    private Vector coordsTwo;
-    private Vector coordsThree;
+    private IVector coordsOne;
+    private IVector coordsTwo;
+    private IVector coordsThree;
     private Tolerance tolerance = Tolerance.DEFAULT;
 
     /**
@@ -35,18 +38,18 @@ public class ThreePointCircleBrush extends PerformerBrush {
     protected final void arrow(final SnipeData v) {
         if (this.coordsOne == null) {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "First Corner set.");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         } else if (this.coordsTwo == null) {
             this.coordsTwo = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "Second Corner set.");
+            v.sendMessage(Messages.SECOND_POINT_SELECTED);
         } else if (this.coordsThree == null) {
             this.coordsThree = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "Third Corner set.");
+            v.sendMessage(Messages.THIRD_POINT_SELECTED);
         } else {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
             this.coordsTwo = null;
             this.coordsThree = null;
-            v.sendMessage(ChatColor.GRAY + "First Corner set.");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
         }
     }
 
@@ -57,17 +60,17 @@ public class ThreePointCircleBrush extends PerformerBrush {
         }
 
         // Calculate triangle defining vectors
-        final Vector vectorOne = this.coordsTwo.clone();
+        final IVector vectorOne = this.coordsTwo.clone();
         vectorOne.subtract(this.coordsOne);
-        final Vector vectorTwo = this.coordsThree.clone();
+        final IVector vectorTwo = this.coordsThree.clone();
         vectorTwo.subtract(this.coordsOne);
-        final Vector vectorThree = this.coordsThree.clone();
+        final IVector vectorThree = this.coordsThree.clone();
         vectorThree.subtract(vectorTwo);
 
         // Redundant data check
         if (vectorOne.length() == 0 || vectorTwo.length() == 0 || vectorThree.length() == 0 || vectorOne.angle(vectorTwo) == 0 || vectorOne.angle(vectorThree) == 0 || vectorThree.angle(vectorTwo) == 0) {
 
-            v.sendMessage(ChatColor.RED + "ERROR: Invalid points, try again.");
+            v.sendMessage(Messages.ERROR_INVALID_POINTS);
             this.coordsOne = null;
             this.coordsTwo = null;
             this.coordsThree = null;
@@ -75,31 +78,31 @@ public class ThreePointCircleBrush extends PerformerBrush {
         }
 
         // Calculate normal vector of the plane.
-        final Vector normalVector = vectorOne.clone();
+        final IVector normalVector = vectorOne.clone();
         normalVector.crossProduct(vectorTwo);
 
         // Calculate constant term of the plane.
         final double planeConstant = normalVector.getX() * this.coordsOne.getX() + normalVector.getY() * this.coordsOne.getY() + normalVector.getZ() * this.coordsOne.getZ();
 
-        final Vector midpointOne = this.coordsOne.getMidpoint(this.coordsTwo);
-        final Vector midpointTwo = this.coordsOne.getMidpoint(this.coordsThree);
+        final IVector midpointOne = this.coordsOne.getMidpoint(this.coordsTwo);
+        final IVector midpointTwo = this.coordsOne.getMidpoint(this.coordsThree);
 
         // Find perpendicular vectors to two sides in the plane
-        final Vector perpendicularOne = normalVector.clone();
+        final IVector perpendicularOne = normalVector.clone();
         perpendicularOne.crossProduct(vectorOne);
-        final Vector perpendicularTwo = normalVector.clone();
+        final IVector perpendicularTwo = normalVector.clone();
         perpendicularTwo.crossProduct(vectorTwo);
 
         // determine value of parametric variable at intersection of two perpendicular bisectors
-        final Vector tNumerator = midpointTwo.clone();
+        final IVector tNumerator = midpointTwo.clone();
         tNumerator.subtract(midpointOne);
         tNumerator.crossProduct(perpendicularTwo);
-        final Vector tDenominator = perpendicularOne.clone();
+        final IVector tDenominator = perpendicularOne.clone();
         tDenominator.crossProduct(perpendicularTwo);
         final double t = tNumerator.length() / tDenominator.length();
 
         // Calculate Circumcenter and Brushcenter.
-        final Vector circumcenter = new Vector();
+        final IVector circumcenter = VectorFactory.getVector();
         circumcenter.copy(perpendicularOne);
         circumcenter.multiply(t);
         circumcenter.add(midpointOne);
@@ -107,7 +110,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
         final Vector brushCenter = new Vector(Math.round(circumcenter.getX()), Math.round(circumcenter.getY()), Math.round(circumcenter.getZ()));
 
         // Calculate radius of circumcircle and determine brushsize
-        final double radius = circumcenter.distance(new Vector(this.coordsOne.getX(), this.coordsOne.getY(), this.coordsOne.getZ()));
+        final double radius = circumcenter.distance(VectorFactory.getVector(this.coordsOne.getX(), this.coordsOne.getY(), this.coordsOne.getZ()));
         final int brushSize = NumberConversions.ceil(radius) + 1;
 
         for (int x = -brushSize; x <= brushSize; x++) {
@@ -124,14 +127,14 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
                     // Check if point is within sphere and on plane (some tolerance given)
                     if (tempDistance <= radius && (Math.abs(cornerConstant - planeConstant) < this.tolerance.getValue() || Math.abs(centerConstant - planeConstant) < this.tolerance.getValue())) {
-                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
+                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockX() + y, brushCenter.getBlockZ() + z));
                     }
 
                 }
             }
         }
 
-        v.sendMessage(ChatColor.GREEN + "Done.");
+        v.sendMessage(Messages.TRI_POINT_CIRCLE_DONE);
         v.owner().storeUndo(this.currentPerformer.getUndo());
 
         // Reset Brush
@@ -146,16 +149,16 @@ public class ThreePointCircleBrush extends PerformerBrush {
         vm.brushName(this.getName());
         switch (this.tolerance) {
             case ACCURATE:
-                vm.custom(ChatColor.GOLD + "Mode: Accurate");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_ACCURATE);
                 break;
             case DEFAULT:
-                vm.custom(ChatColor.GOLD + "Mode: Default");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_DEFAULT);
                 break;
             case SMOOTH:
-                vm.custom(ChatColor.GOLD + "Mode: Smooth");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_SMOOTH);
                 break;
             default:
-                vm.custom(ChatColor.GOLD + "Mode: Unknown");
+                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_UNKNOWN);
                 break;
         }
 
@@ -164,17 +167,15 @@ public class ThreePointCircleBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [mode]  -- Change mode to prioritize accuracy or smoothness");
-            v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
+            v.sendMessage(Messages.THREE_POINT_CIRCLE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         try {
             this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.GOLD + "Brush tolerance set to " + ChatColor.YELLOW + this.tolerance.name().toLowerCase() + ChatColor.GOLD + ".");
+            v.sendMessage(Messages.BRUSH_TOLERANCE_SET.replace("%tolerance%", this.tolerance.name().toLowerCase()));
         } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.sendMessage(Messages.TOLERANCE_SETTING_DOES_NOT_EXIST.replace("%triggerHandle%",triggerHandle));
             sendPerformerMessage(triggerHandle, v);
         }
     }

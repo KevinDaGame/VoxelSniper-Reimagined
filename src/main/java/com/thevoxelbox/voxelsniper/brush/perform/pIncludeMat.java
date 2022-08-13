@@ -4,10 +4,10 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
  * @author Voxel
@@ -15,7 +15,7 @@ import org.bukkit.block.Block;
 public class pIncludeMat extends vPerformer {
 
     private VoxelList includeList;
-    private Material voxelMaterial;
+    private VoxelMaterial voxelMaterial;
 
     public pIncludeMat() {
         name = "Include Material";
@@ -36,8 +36,8 @@ public class pIncludeMat extends vPerformer {
     }
 
     @Override
-    public void perform(Block b) {
-        if (includeList.contains(b.getType())) {
+    public void perform(IBlock b) {
+        if (includeList.contains(b.getMaterial())) {
             h.put(b);
             b.setBlockData(voxelMaterial.createBlockData());
         }

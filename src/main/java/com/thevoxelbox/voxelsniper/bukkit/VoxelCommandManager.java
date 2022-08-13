@@ -1,14 +1,15 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.command.*;
-import org.bukkit.command.PluginCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.bukkit.command.PluginCommand;
 
 /**
  *
@@ -58,7 +59,7 @@ public class VoxelCommandManager {
         commands.add(command);
 
         // Initializes the Bukkit-sided registration of the command
-        PluginCommand bukkitCommand = VoxelSniper.getInstance().getCommand(command.getIdentifier());
+        PluginCommand bukkitCommand = BukkitVoxelSniper.getInstance().getCommand(command.getIdentifier());
         argumentsMap.put(command.getIdentifier(), command.registerTabCompletion());
 
         bukkitCommand.setExecutor(command);
@@ -68,7 +69,7 @@ public class VoxelCommandManager {
 
         // Initializes command alternates that use the same executors
         command.getOtherIdentifiers().forEach((otherIdentifier) -> {
-            PluginCommand bukkitCommandAlt = VoxelSniper.getInstance().getCommand(otherIdentifier);
+            PluginCommand bukkitCommandAlt = BukkitVoxelSniper.getInstance().getCommand(otherIdentifier);
             argumentsMap.put(otherIdentifier, command.registerTabCompletion());
 
             bukkitCommandAlt.setExecutor(command);
@@ -85,7 +86,7 @@ public class VoxelCommandManager {
                 IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).newInstance();
 
                 if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle)) {
-                    VoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
+                    BukkitVoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
                     return;
                 }
 
@@ -93,7 +94,7 @@ public class VoxelCommandManager {
 
                 brush.registerArgumentValues().forEach((identifier, arguments) -> {
                     if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier)) {
-                        VoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
+                        BukkitVoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
                         return;
                     }
 

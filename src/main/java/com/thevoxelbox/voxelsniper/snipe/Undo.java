@@ -1,115 +1,124 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Sets;
-import org.bukkit.Material;
-import org.bukkit.block.*;
-import org.bukkit.block.data.type.NoteBlock;
-import org.bukkit.util.Vector;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import org.bukkit.block.BlockState;
+import org.bukkit.block.BrewingStand;
+import org.bukkit.block.Chest;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.block.Dispenser;
+import org.bukkit.block.Furnace;
+import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.NoteBlock;
 
 /**
  * Holds {@link BlockState}s that can be later on used to reset those block locations back to the recorded states.
  */
 public class Undo {
 
-    private static final Set<Material> FALLING_MATERIALS = EnumSet.of(
-            Material.WATER,
-            Material.LAVA);
-    private static final Set<Material> FALLOFF_MATERIALS = EnumSet.of(
-            Material.ACACIA_SAPLING,
-            Material.BIRCH_SAPLING,
-            Material.DARK_OAK_SAPLING,
-            Material.JUNGLE_SAPLING,
-            Material.OAK_SAPLING,
-            Material.WHITE_BED,
-            Material.ORANGE_BED,
-            Material.MAGENTA_BED,
-            Material.LIGHT_BLUE_BED,
-            Material.YELLOW_BED,
-            Material.LIME_BED,
-            Material.PINK_BED,
-            Material.GRAY_BED,
-            Material.LIGHT_GRAY_BED,
-            Material.CYAN_BED,
-            Material.PURPLE_BED,
-            Material.BLUE_BED,
-            Material.BROWN_BED,
-            Material.GREEN_BED,
-            Material.RED_BED,
-            Material.BLACK_BED,
-            Material.POWERED_RAIL,
-            Material.DETECTOR_RAIL,
-            Material.TALL_GRASS,
-            Material.DEAD_BUSH,
+    private static final List<VoxelMaterial> FALLING_MATERIALS = Arrays.asList(
+            VoxelMaterial.WATER,
+            VoxelMaterial.LAVA);
+    private static final List<VoxelMaterial> FALLOFF_MATERIALS = Arrays.asList(
+            VoxelMaterial.ACACIA_SAPLING,
+            VoxelMaterial.BIRCH_SAPLING,
+            VoxelMaterial.DARK_OAK_SAPLING,
+            VoxelMaterial.JUNGLE_SAPLING,
+            VoxelMaterial.OAK_SAPLING,
+            VoxelMaterial.WHITE_BED,
+            VoxelMaterial.ORANGE_BED,
+            VoxelMaterial.MAGENTA_BED,
+            VoxelMaterial.LIGHT_BLUE_BED,
+            VoxelMaterial.YELLOW_BED,
+            VoxelMaterial.LIME_BED,
+            VoxelMaterial.PINK_BED,
+            VoxelMaterial.GRAY_BED,
+            VoxelMaterial.LIGHT_GRAY_BED,
+            VoxelMaterial.CYAN_BED,
+            VoxelMaterial.PURPLE_BED,
+            VoxelMaterial.BLUE_BED,
+            VoxelMaterial.BROWN_BED,
+            VoxelMaterial.GREEN_BED,
+            VoxelMaterial.RED_BED,
+            VoxelMaterial.BLACK_BED,
+            VoxelMaterial.POWERED_RAIL,
+            VoxelMaterial.DETECTOR_RAIL,
+            VoxelMaterial.TALL_GRASS,
+            VoxelMaterial.DEAD_BUSH,
             // TODO Material.PISTON_EXTENSION,
-            Material.DANDELION,
-            Material.POPPY,
-            Material.BLUE_ORCHID,
-            Material.ALLIUM,
-            Material.AZURE_BLUET,
-            Material.RED_TULIP,
-            Material.ORANGE_TULIP,
-            Material.WHITE_TULIP,
-            Material.PINK_TULIP,
-            Material.OXEYE_DAISY,
-            Material.BROWN_MUSHROOM,
-            Material.RED_MUSHROOM,
-            Material.TORCH,
-            Material.FIRE,
-            Material.WHEAT,
-            Material.ACACIA_SIGN,
-            Material.BIRCH_SIGN,
-            Material.DARK_OAK_SIGN,
-            Material.JUNGLE_SIGN,
-            Material.OAK_SIGN,
-            Material.ACACIA_WALL_SIGN,
-            Material.BIRCH_WALL_SIGN,
-            Material.DARK_OAK_WALL_SIGN,
-            Material.JUNGLE_WALL_SIGN,
-            Material.OAK_WALL_SIGN,
-            Material.ACACIA_DOOR,
-            Material.BIRCH_DOOR,
-            Material.DARK_OAK_DOOR,
-            Material.JUNGLE_DOOR,
-            Material.OAK_DOOR,
-            Material.LADDER,
-            Material.RAIL,
-            Material.LEVER,
-            Material.STONE_PRESSURE_PLATE,
-            Material.IRON_DOOR,
-            Material.ACACIA_PRESSURE_PLATE,
-            Material.BIRCH_PRESSURE_PLATE,
-            Material.DARK_OAK_PRESSURE_PLATE,
-            Material.JUNGLE_PRESSURE_PLATE,
-            Material.OAK_PRESSURE_PLATE,
-            Material.REDSTONE_TORCH,
-            Material.REDSTONE_WALL_TORCH,
-            Material.REDSTONE_WIRE,
-            Material.STONE_BUTTON,
-            Material.SNOW,
-            Material.CACTUS,
-            Material.SUGAR_CANE,
-            Material.CAKE,
-            Material.REPEATER,
-            Material.ACACIA_TRAPDOOR,
-            Material.BIRCH_TRAPDOOR,
-            Material.DARK_OAK_TRAPDOOR,
-            Material.JUNGLE_TRAPDOOR,
-            Material.OAK_TRAPDOOR,
-            Material.IRON_TRAPDOOR,
-            Material.PUMPKIN_STEM,
-            Material.MELON_STEM,
-            Material.VINE,
-            Material.LILY_PAD,
-            Material.NETHER_WART);
-    private final Set<Vector> containing = Sets.newHashSet();
-    private final List<BlockState> all;
-    private final List<BlockState> falloff;
-    private final List<BlockState> dropdown;
+            VoxelMaterial.DANDELION,
+            VoxelMaterial.POPPY,
+            VoxelMaterial.BLUE_ORCHID,
+            VoxelMaterial.ALLIUM,
+            VoxelMaterial.AZURE_BLUET,
+            VoxelMaterial.RED_TULIP,
+            VoxelMaterial.ORANGE_TULIP,
+            VoxelMaterial.WHITE_TULIP,
+            VoxelMaterial.PINK_TULIP,
+            VoxelMaterial.OXEYE_DAISY,
+            VoxelMaterial.BROWN_MUSHROOM,
+            VoxelMaterial.RED_MUSHROOM,
+            VoxelMaterial.TORCH,
+            VoxelMaterial.FIRE,
+            VoxelMaterial.WHEAT,
+            VoxelMaterial.ACACIA_SIGN,
+            VoxelMaterial.BIRCH_SIGN,
+            VoxelMaterial.DARK_OAK_SIGN,
+            VoxelMaterial.JUNGLE_SIGN,
+            VoxelMaterial.OAK_SIGN,
+            VoxelMaterial.ACACIA_WALL_SIGN,
+            VoxelMaterial.BIRCH_WALL_SIGN,
+            VoxelMaterial.DARK_OAK_WALL_SIGN,
+            VoxelMaterial.JUNGLE_WALL_SIGN,
+            VoxelMaterial.OAK_WALL_SIGN,
+            VoxelMaterial.ACACIA_DOOR,
+            VoxelMaterial.BIRCH_DOOR,
+            VoxelMaterial.DARK_OAK_DOOR,
+            VoxelMaterial.JUNGLE_DOOR,
+            VoxelMaterial.OAK_DOOR,
+            VoxelMaterial.LADDER,
+            VoxelMaterial.RAIL,
+            VoxelMaterial.LEVER,
+            VoxelMaterial.STONE_PRESSURE_PLATE,
+            VoxelMaterial.IRON_DOOR,
+            VoxelMaterial.ACACIA_PRESSURE_PLATE,
+            VoxelMaterial.BIRCH_PRESSURE_PLATE,
+            VoxelMaterial.DARK_OAK_PRESSURE_PLATE,
+            VoxelMaterial.JUNGLE_PRESSURE_PLATE,
+            VoxelMaterial.OAK_PRESSURE_PLATE,
+            VoxelMaterial.REDSTONE_TORCH,
+            VoxelMaterial.REDSTONE_WALL_TORCH,
+            VoxelMaterial.REDSTONE_WIRE,
+            VoxelMaterial.STONE_BUTTON,
+            VoxelMaterial.SNOW,
+            VoxelMaterial.CACTUS,
+            VoxelMaterial.SUGAR_CANE,
+            VoxelMaterial.CAKE,
+            VoxelMaterial.REPEATER,
+            VoxelMaterial.ACACIA_TRAPDOOR,
+            VoxelMaterial.BIRCH_TRAPDOOR,
+            VoxelMaterial.DARK_OAK_TRAPDOOR,
+            VoxelMaterial.JUNGLE_TRAPDOOR,
+            VoxelMaterial.OAK_TRAPDOOR,
+            VoxelMaterial.IRON_TRAPDOOR,
+            VoxelMaterial.PUMPKIN_STEM,
+            VoxelMaterial.MELON_STEM,
+            VoxelMaterial.VINE,
+            VoxelMaterial.LILY_PAD,
+            VoxelMaterial.NETHER_WART);
+    private final Set<IVector> containing = Sets.newHashSet();
+    private final List<IBlockState> all;
+    private final List<IBlockState> falloff;
+    private final List<IBlockState> dropdown;
 
     /**
      * Default constructor of a Undo container.
@@ -134,15 +143,15 @@ public class Undo {
      *
      * @param block Block to be added
      */
-    public void put(Block block) {
-        Vector pos = block.getLocation().toVector();
+    public void put(IBlock block) {
+        IVector pos = block.getLocation().toVector();
         if (this.containing.contains(pos)) {
             return;
         }
         this.containing.add(pos);
-        if (Undo.FALLING_MATERIALS.contains(block.getType())) {
+        if (Undo.FALLING_MATERIALS.contains(block.getMaterial())) {
             dropdown.add(block.getState());
-        } else if (Undo.FALLOFF_MATERIALS.contains(block.getType())) {
+        } else if (Undo.FALLOFF_MATERIALS.contains(block.getMaterial())) {
             falloff.add(block.getState());
         } else {
             all.add(block.getState());
@@ -154,17 +163,17 @@ public class Undo {
      */
     public void undo() {
 
-        for (BlockState blockState : all) {
+        for (IBlockState blockState : all) {
             blockState.update(true, false);
             updateSpecialBlocks(blockState);
         }
 
-        for (BlockState blockState : falloff) {
+        for (IBlockState blockState : falloff) {
             blockState.update(true, false);
             updateSpecialBlocks(blockState);
         }
 
-        for (BlockState blockState : dropdown) {
+        for (IBlockState blockState : dropdown) {
             blockState.update(true, false);
             updateSpecialBlocks(blockState);
         }
@@ -173,8 +182,8 @@ public class Undo {
     /**
      * @param blockState
      */
-    private void updateSpecialBlocks(BlockState blockState) {
-        BlockState currentState = blockState.getBlock().getState();
+    private void updateSpecialBlocks(IBlockState blockState) {
+        IBlockState currentState = blockState.getBlock().getState();
         if (blockState instanceof BrewingStand && currentState instanceof BrewingStand) {
             ((BrewingStand) currentState).getInventory().setContents(((BrewingStand) blockState).getInventory().getContents());
         } else if (blockState instanceof Chest && currentState instanceof Chest) {

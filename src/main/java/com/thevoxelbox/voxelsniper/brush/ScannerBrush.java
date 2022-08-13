@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class ScannerBrush extends Brush {
     private static final int DEPTH_MAX = 64;
 
     private int depth = DEPTH_DEFAULT;
-    private Material checkFor = Material.AIR;
+    private VoxelMaterial checkFor = VoxelMaterial.AIR;
 
     /**
      *
@@ -45,45 +45,45 @@ public class ScannerBrush extends Brush {
             case NORTH:
                 // Scan south
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                    if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
+                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
-                v.sendMessage(ChatColor.GRAY + "Nope.");
+                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
                 break;
 
             case SOUTH:
                 // Scan north
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                    if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
+                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
-                v.sendMessage(ChatColor.GRAY + "Nope.");
+                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
                 break;
 
             case EAST:
                 // Scan west
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getMaterial() == this.checkFor) {
+                         v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
-                v.sendMessage(ChatColor.GRAY + "Nope.");
+                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
                 break;
 
             case WEST:
                 // Scan east
                 for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getMaterial() == this.checkFor) {
+                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
-                v.sendMessage(ChatColor.GRAY + "Nope.");
+                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
                 break;
 
             case UP:
@@ -92,12 +92,12 @@ public class ScannerBrush extends Brush {
                     if ((this.getTargetBlock().getY() - i) <= 0) {
                         break;
                     }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
+                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
-                v.sendMessage(ChatColor.GRAY + "Nope.");
+                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
                 break;
 
             case DOWN:
@@ -106,12 +106,12 @@ public class ScannerBrush extends Brush {
                     if ((this.getTargetBlock().getY() + i) >= this.getMaxHeight()) {
                         break;
                     }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(ChatColor.GREEN + "" + this.checkFor + " found after " + i + " blocks.");
+                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
+                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
                         return;
                     }
                 }
-                v.sendMessage(ChatColor.GRAY + "Nope.");
+                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
                 break;
 
             default:
@@ -128,27 +128,26 @@ public class ScannerBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Scanner depth set to " + this.depth);
-        vm.custom(ChatColor.GREEN + "Scanner scans for " + this.checkFor + " (change with /v #)");
+        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%",String.valueOf(this.depth)).replace("%checkFor%",String.valueOf(this.checkFor)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Scanner brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number] -- will set the search depth to #. Clamps to 1 - 64.");
+            v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         try {
             if (params[0].startsWith("depth")) {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
-                v.sendMessage(ChatColor.AQUA + "Scanner depth set to " + this.depth);
+                v.sendMessage(Messages.SCANNER_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException temp) {
+temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

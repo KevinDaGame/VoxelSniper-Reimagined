@@ -1,8 +1,8 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 
 import java.util.Map;
 import java.util.UUID;
@@ -25,13 +25,12 @@ public class VoxelProfileManager {
 
         if (profileManager == null) {
             instance = new VoxelProfileManager();
-            profileManager = getInstance();
         }
     }
 
-    public Sniper getSniperForPlayer(Player player) {
+    public Sniper getSniperForPlayer(AbstractPlayer player) {
         if (sniperInstances.get(player.getUniqueId()) == null) {
-            sniperInstances.put(player.getUniqueId(), new Sniper(VoxelSniper.getInstance(), player));
+            sniperInstances.put(player.getUniqueId(), new Sniper(player));
         }
         return sniperInstances.get(player.getUniqueId());
     }

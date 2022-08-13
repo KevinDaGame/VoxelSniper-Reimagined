@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper;
 import com.thevoxelbox.voxelsniper.brush.perform.pMaterial;
 import com.thevoxelbox.voxelsniper.brush.perform.vPerformer;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

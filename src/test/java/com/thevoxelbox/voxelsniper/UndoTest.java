@@ -1,11 +1,17 @@
 package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +27,10 @@ public class UndoTest
 
     @Before
     public void setUp() {
+        var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
+        VoxelSniper.voxelsniper = main;
         undo = new Undo();
     }
 
@@ -31,17 +41,17 @@ public class UndoTest
 
     @Test
     public void testGetSize() {
-        World world = Mockito.mock(World.class);
+        IWorld world = Mockito.mock(BukkitWorld.class);
         for (int i = 0; i < 5; i++)
         {
-            Location location = new Location(world, 0, 0, i);
-            Block block = TestUtil.mockBlock(location, Material.DIRT);
+            ILocation location = LocationFactory.getLocation(world, 0, 0, i);
+            IBlock block = TestUtil.mockBlock(location, VoxelMaterial.DIRT);
 
             undo.put(block);
         }
         Assert.assertEquals(5, undo.getSize());
-        Location location = new Location(world, 0, 0, 8);
-        Block block = TestUtil.mockBlock(location, Material.DIRT);
+        ILocation location = LocationFactory.getLocation(world, 0, 0, 8);
+        IBlock block = TestUtil.mockBlock(location, VoxelMaterial.DIRT);
         undo.put(block);
         Assert.assertEquals(6, undo.getSize());
         undo.put(block);
@@ -51,9 +61,9 @@ public class UndoTest
 
     @Test
     public void testPut() {
-        World world = Mockito.mock(World.class);
-        Location location = new Location(world, 0, 0, 0);
-        Block block = TestUtil.mockBlock(location, Material.DIRT);
+        IWorld world = Mockito.mock(BukkitWorld.class);
+        ILocation location = LocationFactory.getLocation(world, 0, 0, 0);
+        IBlock block = TestUtil.mockBlock(location, VoxelMaterial.DIRT);
 
         undo.put(block);
         Assert.assertEquals(1, undo.getSize());
@@ -61,19 +71,19 @@ public class UndoTest
 
     @Test
     public void testUndo() {
-        World world = Mockito.mock(World.class);
+        IWorld world = Mockito.mock(BukkitWorld.class);
 
-        Location normalBlockLocation = new Location(world, 0, 0, 0);
-        Block normalBlock = TestUtil.mockBlock(normalBlockLocation, Material.STONE);
-        BlockState normalBlockState = normalBlock.getState();
+        ILocation normalBlockLocation = LocationFactory.getLocation(world, 0, 0, 0);
+        IBlock normalBlock = TestUtil.mockBlock(normalBlockLocation, VoxelMaterial.STONE);
+        IBlockState normalBlockState = normalBlock.getState();
 
-        Location fragileBlockLocation = new Location(world, 0, 0, 1);
-        Block fragileBlock = TestUtil.mockBlock(fragileBlockLocation, Material.TORCH);
-        BlockState fragileBlockState = fragileBlock.getState();
+        ILocation fragileBlockLocation = LocationFactory.getLocation(world, 0, 0, 1);
+        IBlock fragileBlock = TestUtil.mockBlock(fragileBlockLocation, VoxelMaterial.TORCH);
+        IBlockState fragileBlockState = fragileBlock.getState();
 
-        Location waterBlockLocation = new Location(world, 0, 0, 2);
-        Block waterBlock = TestUtil.mockBlock(waterBlockLocation, Material.WATER);
-        BlockState waterBlockState = waterBlock.getState();
+        ILocation waterBlockLocation = LocationFactory.getLocation(world, 0, 0, 2);
+        IBlock waterBlock = TestUtil.mockBlock(waterBlockLocation, VoxelMaterial.WATER);
+        IBlockState waterBlockState = waterBlock.getState();
 
 
         undo.put(waterBlock);

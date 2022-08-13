@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
  * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
@@ -21,11 +21,11 @@ public class ShellVoxelBrush extends Brush {
         this.setName("Shell Voxel");
     }
 
-    private void vShell(final SnipeData v, Block targetBlock) {
+    private void vShell(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final int brushSizeSquared = 2 * brushSize;
-        final Material[][][] oldMaterials = new Material[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a  buffer
-        final Material[][][] newMaterials = new Material[2 * brushSize + 1][2 * brushSize + 1][2 * brushSize + 1]; // Array that holds the hollowed materials
+        final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a  buffer
+        final VoxelMaterial[][][] newMaterials = new VoxelMaterial[2 * brushSize + 1][2 * brushSize + 1][2 * brushSize + 1]; // Array that holds the hollowed materials
 
         int blockPositionX = targetBlock.getX();
         int blockPositionY = targetBlock.getY();
@@ -91,7 +91,7 @@ public class ShellVoxelBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.owner().getPlayer().sendMessage(ChatColor.AQUA + "Shell complete.");
+        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
     }
 
     @Override

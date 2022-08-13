@@ -1,13 +1,13 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +47,9 @@ public class Rot2DBrush extends Brush {
                 sy = this.getTargetBlock().getY() - this.bSize;
                 if (xSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
                     for (int z = 0; z < this.snap.length; z++) {
-                        final Block block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                        final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        block.setType(Material.AIR);
+                        block.setMaterial(VoxelMaterial.AIR);
                         sy++;
                     }
                 }
@@ -85,7 +85,7 @@ public class Rot2DBrush extends Brush {
                         final int yy = currentY - this.bSize;
                         final BlockWrapper block = this.snap[x][currentY][y];
 
-                        if (block.getMaterial() == Material.AIR) {
+                        if (block.getMaterial() == VoxelMaterial.AIR) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());
@@ -107,12 +107,12 @@ public class Rot2DBrush extends Brush {
                         for (int y = 0; y < this.snap.length; y++) {
                             final int fy = y + this.getTargetBlock().getY() - this.bSize;
 
-                            final BlockData a = this.getBlockDataAt(fx + 1, fy, fz);
-                            final BlockData d = this.getBlockDataAt(fx - 1, fy, fz);
-                            final BlockData c = this.getBlockDataAt(fx, fy, fz + 1);
-                            final BlockData b = this.getBlockDataAt(fx, fy, fz - 1);
+                            final IBlockData a = this.getBlockDataAt(fx + 1, fy, fz);
+                            final IBlockData d = this.getBlockDataAt(fx - 1, fy, fz);
+                            final IBlockData c = this.getBlockDataAt(fx, fy, fz + 1);
+                            final IBlockData b = this.getBlockDataAt(fx, fy, fz - 1);
 
-                            BlockData winner;
+                            IBlockData winner;
 
                             if (a.getMaterial() == b.getMaterial() || a.getMaterial() == c.getMaterial() || a.getMaterial() == d.getMaterial()) { // I figure that since we are already narrowing it down to ONLY the holes left behind, it
                                 // should
@@ -143,7 +143,7 @@ public class Rot2DBrush extends Brush {
                 break;
 
             default:
-                v.sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -159,7 +159,7 @@ public class Rot2DBrush extends Brush {
                 break;
 
             default:
-                v.sendMessage(ChatColor.RED + "Something went wrong.");
+                v.sendMessage(Messages.ERROR);
                 break;
         }
     }
@@ -172,18 +172,18 @@ public class Rot2DBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "2D Rotation Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [number]  -- Set angle in degrees");
+            v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
-            v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
-        } catch (NumberFormatException ignored) {
+            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(this.se)));
+        } catch (NumberFormatException temp) {
+            temp.printStackTrace();
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

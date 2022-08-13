@@ -1,20 +1,21 @@
 package com.thevoxelbox.voxelsniper;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+
 import org.mockito.Mockito;
 
 public class TestUtil {
-    static Block mockBlock(Location loc, Material t) {
-        Block block = Mockito.mock(Block.class);
-        BlockState normalBlockState = Mockito.mock(BlockState.class);
+    public static IBlock mockBlock(ILocation loc, VoxelMaterial t) {
+        IBlock block = Mockito.mock(IBlock.class);
+        IBlockState normalBlockState = Mockito.mock(IBlockState.class);
         Mockito.when(block.getLocation())
                 .thenReturn(loc);
         Mockito.when(block.getState())
                 .thenReturn(normalBlockState);
-        Mockito.when(block.getType())
+        Mockito.when(block.getMaterial())
                 .thenReturn(t);
 
         Mockito.when(normalBlockState.getLocation())

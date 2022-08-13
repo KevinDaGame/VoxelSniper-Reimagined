@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,10 @@ public class FillDownBrush extends PerformerBrush {
         this.setName("Fill Down");
     }
 
-    private void fillDown(final SnipeData v, final Block b) {
+    private void fillDown(final SnipeData v, final IBlock b) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-        final Block targetBlock = this.getTargetBlock();
+        final  IBlock  targetBlock = this.getTargetBlock();
         for (int x = -brushSize; x <= brushSize; x++) {
             final double currentXSquared = Math.pow(x, 2);
 
@@ -43,7 +43,7 @@ public class FillDownBrush extends PerformerBrush {
                     boolean found = false;
                     if (this.fromExisting) {
                         for (y = -v.getVoxelHeight(); y < v.getVoxelHeight(); y++) {
-                            final Block currentBlock = this.getWorld().getBlockAt(
+                            final  IBlock  currentBlock = this.getWorld().getBlock(
                                     targetBlock.getX() + x,
                                     targetBlock.getY() + y,
                                     targetBlock.getZ() + z);
@@ -58,7 +58,7 @@ public class FillDownBrush extends PerformerBrush {
                         y--;
                     }
                     for (; y >= -targetBlock.getY(); --y) {
-                        final Block currentBlock = this.getWorld().getBlockAt(
+                        final  IBlock  currentBlock = this.getWorld().getBlock(
                                 targetBlock.getX() + x,
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
@@ -94,32 +94,31 @@ public class FillDownBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Fill Down Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle use smooth circles (default: false)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " liquid  -- Toggle filling liquids (default: true)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " existing  -- Toggle filling existing blocks or all blocks. (Toggle)");
+            v.sendMessage(Messages.FILL_DOWN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("liquid")) {
             this.fillLiquid = !this.fillLiquid;
-            v.sendMessage(ChatColor.AQUA + "Now filling " + ((this.fillLiquid) ? "liquid and air" : "air only") + ".");
+            String mode = (this.fillLiquid) ? "liquid and air" : "air only";
+            v.sendMessage(Messages.FILL_DOWN_MODE.replace("%mode%",mode));
             return;
         }
 
         if (params[0].equalsIgnoreCase("existing")) {
             this.fromExisting = !this.fromExisting;
-            v.sendMessage(ChatColor.AQUA + "Now filling down from " + ((this.fromExisting) ? "existing" : "all") + " blocks.");
+            String mode = (this.fromExisting) ? "existing" : "all";
+            v.sendMessage(Messages.FILL_DOWN_FROM.replace("%mode%",mode));
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            v.sendMessage(Messages.BRUSH_SMOOTH_CIRCLE.replace("%smoothCircle%", String.valueOf(this.smoothCircle)));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
 

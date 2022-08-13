@@ -1,20 +1,22 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import com.thevoxelbox.voxelsniper.util.MaterialTranslator;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public class VoxelReplaceCommand extends VoxelCommand {
 
@@ -31,45 +33,37 @@ public class VoxelReplaceCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
         
         // Default command
         // Command: /vr info, /vr help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the block you are looking at as the active replace material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [material]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the specified block as the active replace material.");
+            sniper.sendMessage(Messages.VOXEL_REPLACE_COMMAND_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
             return true;
         }
 
         // Command: /vr          <- Sets the block user is looking at as voxel substance.
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            IBlock selectedBlock = new BlockHelper(new BukkitPlayer(player), new BukkitPlayer(player).getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 snipeData.setReplaceSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().replace();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to imitate replace material. No changes were made.");
+                sniper.sendMessage(Messages.REPLACE_NOTHING_TO_IMITATE);
             }
             return true;
         }
 
         // Command: /vr [material]       <- Sets the defined material as voxel substance.
-        Material material = Material.matchMaterial(args[0]); // TODO: Match old ID numbers to materials
-        
-        if (material == null) {
-            material = MaterialTranslator.resolveMaterial(args[0]);
-        }
-
+        VoxelMaterial material = VoxelMaterial.getMaterial(args[0]); // TODO: Match old ID numbers to materials
         if (material != null && material.isBlock()) {
             snipeData.setReplaceSubstance(material.createBlockData());
             snipeData.getVoxelMessage().replace();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Item ID.");
+            sniper.sendMessage(Messages.INVALID_ITEM_ID);
             return true;
         }
     }

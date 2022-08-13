@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Material;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,17 +29,17 @@ public class FlatOceanBrush extends Brush {
     }
 
     @SuppressWarnings("deprecation")
-    private void flatOcean(final Chunk chunk) {
+    private void flatOcean(final IChunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 // chunk.getWorld() == getWorld()
                 for (int y = this.getMinHeight(); y < this.getMaxHeight(); y++) {
                     if (y <= this.floorLevel) {
-                        chunk.getBlock(x, y, z).setType(Material.DIRT, false);
+                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.DIRT, false);
                     } else if (y <= this.waterLevel) {
-                        chunk.getBlock(x, y, z).setType(Material.WATER, false);
+                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.WATER, false);
                     } else {
-                        chunk.getBlock(x, y, z).setType(Material.AIR, false);
+                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.AIR, false);
                     }
                 }
             }
@@ -48,37 +48,35 @@ public class FlatOceanBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.flatOcean(this.getWorld().getChunkAt(this.getTargetBlock()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.flatOcean(this.getWorld().getChunkAt(this.getTargetBlock()));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ())));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() + CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ())));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() - CHUNK_SIZE)));
-        this.flatOcean(this.getWorld().getChunkAt(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE)));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.RED + "THIS BRUSH DOES NOT UNDO.");
-        vm.custom(ChatColor.GREEN + "Water level set to " + this.waterLevel);
-        vm.custom(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+        vm.custom(Messages.BRUSH_NO_UNDO);
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
+        vm.custom(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%",String.valueOf(this.floorLevel)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Set the y-level the water will rise to. (default: 29)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)");
-            v.sendMessage(ChatColor.RED + "BEWARE! THIS BRUSH DOES NOT UNDO.");
+            v.sendMessage(Messages.FLAT_OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.BRUSH_NO_UNDO);
             return;
         }
 
@@ -90,7 +88,7 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.waterLevel = newWaterLevel;
-            v.sendMessage(ChatColor.GREEN + "Water level set to " + this.waterLevel);
+            v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
             return;
         }
 
@@ -106,11 +104,11 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.floorLevel = newFloorLevel;
-            v.sendMessage(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+            v.sendMessage(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%", String.valueOf(floorLevel)));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

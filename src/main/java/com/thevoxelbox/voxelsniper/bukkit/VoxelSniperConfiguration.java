@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.bukkit;
 
 import org.bukkit.configuration.file.FileConfiguration;
 

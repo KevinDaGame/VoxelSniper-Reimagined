@@ -1,11 +1,15 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.*;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ClassToInstanceMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.MutableClassToInstanceMap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
-import org.bukkit.Material;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
  *
@@ -17,7 +21,7 @@ public class SnipeTool {
     VoxelMessage messageHelper;
     ClassToInstanceMap<IBrush> brushes = MutableClassToInstanceMap.create();
     private Class<? extends IBrush> previousBrush;
-    private final BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
+    private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
     SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
@@ -47,7 +51,7 @@ public class SnipeTool {
         return snipeData;
     }
 
-    public boolean hasToolAssigned(Material material) {
+    public boolean hasToolAssigned(VoxelMaterial material) {
         return actionTools.containsValue(material);
     }
 
@@ -62,7 +66,7 @@ public class SnipeTool {
         return setCurrentBrush(previousBrush);
     }
 
-    public void unassignAction(Material itemInHand) {
+    public void unassignAction(VoxelMaterial itemInHand) {
         actionTools.inverse().remove(itemInHand);
     }
 
@@ -87,15 +91,15 @@ public class SnipeTool {
         return null;
     }
 
-    public SnipeAction getActionAssigned(Material itemInHand) {
+    public SnipeAction getActionAssigned(VoxelMaterial itemInHand) {
         return actionTools.inverse().get(itemInHand);
     }
 
-    public Material getToolAssigned(SnipeAction action) {
+    public VoxelMaterial getToolAssigned(SnipeAction action) {
         return actionTools.get(action);
     }
 
-    public BiMap<SnipeAction, Material> getActionTools() {
+    public BiMap<SnipeAction, VoxelMaterial> getActionTools() {
         return ImmutableBiMap.copyOf(actionTools);
     }
 
@@ -107,7 +111,7 @@ public class SnipeTool {
         }
     }
 
-    public void assignAction(SnipeAction action, Material itemInHand) {
+    public void assignAction(SnipeAction action, VoxelMaterial itemInHand) {
         actionTools.forcePut(action, itemInHand);
     }
 

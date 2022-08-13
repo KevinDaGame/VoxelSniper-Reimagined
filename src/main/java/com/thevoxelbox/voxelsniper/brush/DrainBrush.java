@@ -1,12 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +42,10 @@ public class DrainBrush extends Brush {
                     if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dz : new int[]{-1, 1}) {
-                                Block b = this.clampY(this.getTargetBlock().getX() + (x*dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z*dz));
-                                if (b.getType() == Material.WATER || b.getType() == Material.LAVA) {
+                                IBlock b = this.clampY(this.getTargetBlock().getX() + (x*dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z*dz));
+                                if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
                                     undo.put(b);
-                                    b.setType(Material.AIR);
+                                    b.setMaterial(VoxelMaterial.AIR);
                                 }
                             }
                         }
@@ -61,10 +61,10 @@ public class DrainBrush extends Brush {
 
                     for (int y = (brushSize + 1) * 2; y >= 0; y--) {
                         if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
-                            Block b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
-                            if (b.getType() == Material.WATER || b.getType() == Material.LAVA) {
+                            IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
+                            if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
                                 undo.put(b);
-                                b.setType(Material.AIR);
+                                b.setMaterial(VoxelMaterial.AIR);
                             }
                         }
                     }
@@ -90,24 +90,23 @@ public class DrainBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
 
-        vm.custom(ChatColor.AQUA + ((this.trueCircle == 0.5) ? "True circle mode ON" : "True circle mode OFF"));
-        vm.custom(ChatColor.AQUA + ((this.disc) ? "Disc drain mode ON" : "Disc drain mode OFF"));
+        vm.custom(Messages.DRAIN_TRUE_CIRCLE_MODE.replace("%state%", (this.trueCircle == 0.5) ? "ON" : "OFF"));
+        vm.custom(Messages.DISC_DRAIN_MODE.replace("%state%", (this.disc) ? "ON" : "OFF"));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Drain Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " shape  -- Toggle between brush shapes (default: ball)");
+            v.sendMessage(Messages.DRAIN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
             return;
         }
         if (params[0].startsWith("shape")) {
             this.disc = !this.disc;
-            v.sendMessage(ChatColor.AQUA + "Drain Brush Shape: " + (this.disc ? "Disc" : "Ball"));
+            v.sendMessage(Messages.DRAIN_BRUSH_SHAPE.replace("%shape%", this.disc ? "Disc" : "Ball"));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

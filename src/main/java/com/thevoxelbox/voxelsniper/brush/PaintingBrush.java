@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 /**
  * Painting scrolling Brush. http://www.voxelwiki.com/minecraft/Voxelsniper#The_Painting_Picker_Brush
@@ -25,7 +25,7 @@ public class PaintingBrush extends Brush {
      */
     @Override
     protected final void arrow(final SnipeData v) {
-        BlockHelper.paint(v.owner().getPlayer(), true, false, 0);
+        BlockHelper.painting(v.owner().getPlayer(), true, false, 0);
     }
 
     /**
@@ -35,7 +35,7 @@ public class PaintingBrush extends Brush {
      */
     @Override
     protected final void powder(final SnipeData v) {
-        BlockHelper.paint(v.owner().getPlayer(), true, true, 0);
+        BlockHelper.painting(v.owner().getPlayer(), true, true, 0);
     }
 
     @Override

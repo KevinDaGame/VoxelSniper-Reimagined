@@ -1,10 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
+import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Canyon_Selection_Brush
@@ -25,16 +25,16 @@ public class CanyonSelectionBrush extends CanyonBrush {
     }
 
     private void execute(final SnipeData v) {
-        final Chunk chunk = getTargetBlock().getChunk();
+        final IChunk chunk = getTargetBlock().getChunk();
 
         if (this.first) {
             this.fx = chunk.getX();
             this.fz = chunk.getZ();
 
-            v.sendMessage(ChatColor.YELLOW + "First point selected!");
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
             this.first = !this.first;
         } else {
-            v.sendMessage(ChatColor.YELLOW + "Second point selected!");
+            v.sendMessage(Messages.SECOND_POINT_SELECTED);
             selection(Math.min(fx, chunk.getX()), Math.min(fz, chunk.getZ()), Math.max(fx, chunk.getX()), Math.max(fz, chunk.getZ()), v);
 
             this.first = !this.first;
@@ -46,7 +46,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
 
         for (int x = lowX; x <= highX; x++) {
             for (int z = lowZ; z <= highZ; z++) {
-                canyon(getWorld().getChunkAt(x, z), undo);
+                canyon(getWorld().getChunkAtLocation(x, z), undo);
             }
         }
 
@@ -66,7 +66,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Shift Level set to " + this.getYLevel());
+        vm.custom(Messages.SHIFT_LEVEL_SET.replace("%getYLevel%",String.valueOf(this.getYLevel())));
     }
 
     @Override

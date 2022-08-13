@@ -1,10 +1,16 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+
+import net.kyori.adventure.text.ComponentLike;
+
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.data.BlockData;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Piotr
@@ -15,8 +21,8 @@ public class SnipeData {
     public static final int DEFAULT_CYLINDER_CENTER = 0;
     public static final int DEFAULT_VOXEL_HEIGHT = 1;
     public static final int DEFAULT_BRUSH_SIZE = 3;
-    public static final BlockData DEFAULT_VOXEL_SUBSTANCE = Material.AIR.createBlockData();
-    public static final BlockData DEFAULT_TARGET_SUBSTANCE = Material.AIR.createBlockData();
+    public static final IBlockData DEFAULT_VOXEL_SUBSTANCE = VoxelMaterial.AIR.createBlockData();
+    public static final IBlockData DEFAULT_TARGET_SUBSTANCE = VoxelMaterial.AIR.createBlockData();
 
     // Sniper varaibles
     private final Sniper owner;
@@ -29,8 +35,9 @@ public class SnipeData {
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 
     // Voxel and ReplaceTarget Materials & BlockData
-    private BlockData voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
-    private BlockData replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
+    //todo abstract these variables
+    private IBlockData voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
+    private IBlockData replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
 
     // Others
     private int cCen = SnipeData.DEFAULT_CYLINDER_CENTER;
@@ -73,27 +80,27 @@ public class SnipeData {
         this.voxelHeight = voxelHeight;
     }
 
-    public BlockData getVoxelSubstance() {
+    public IBlockData getVoxelSubstance() {
         return voxelSubstance;
     }
 
-    public Material getVoxelMaterial() {
+    public VoxelMaterial getVoxelMaterial() {
         return voxelSubstance.getMaterial();
     }
 
-    public void setVoxelSubstance(BlockData voxelSubstance) {
+    public void setVoxelSubstance(IBlockData voxelSubstance) {
         this.voxelSubstance = voxelSubstance;
     }
 
-    public BlockData getReplaceSubstance() {
+    public IBlockData getReplaceSubstance() {
         return replaceSubstance;
     }
 
-    public Material getReplaceMaterial() {
+    public VoxelMaterial getReplaceMaterial() {
         return replaceSubstance.getMaterial();
     }
 
-    public void setReplaceSubstance(BlockData targetSubstance) {
+    public void setReplaceSubstance(IBlockData targetSubstance) {
         this.replaceSubstance = targetSubstance;
     }
 
@@ -125,7 +132,7 @@ public class SnipeData {
         return lightning;
     }
 
-    public final World getWorld() {
+    public final IWorld getWorld() {
         return this.owner.getPlayer().getWorld();
     }
 
@@ -147,7 +154,12 @@ public class SnipeData {
         this.voxelList = new VoxelList();
     }
 
+    @Deprecated
     public final void sendMessage(final String message) {
+        this.owner.getPlayer().sendMessage(message);
+    }
+
+    public final void sendMessage(final @NotNull ComponentLike message) {
         this.owner.getPlayer().sendMessage(message);
     }
 

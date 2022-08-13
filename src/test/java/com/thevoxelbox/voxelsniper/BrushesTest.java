@@ -4,17 +4,20 @@ import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelBrushManager;
+import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.Set;
 
 /**
  *
@@ -25,6 +28,9 @@ public class BrushesTest {
 
     @Before
     public void setUp() {
+        var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        VoxelSniper.voxelsniper = main;
         brushes = new VoxelBrushManager();
     }
 

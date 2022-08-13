@@ -1,16 +1,19 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.VoxelCommandManager;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
+import com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager;
+import com.thevoxelbox.voxelsniper.util.Messages;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 public abstract class VoxelCommand implements TabExecutor {
 
@@ -33,13 +36,13 @@ public abstract class VoxelCommand implements TabExecutor {
         this.activeAlias = label;   // This is the alias that was executed.
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can execute commands!");
+            BukkitVoxelSniper.getAdventure().sender(sender).sendMessage(Messages.ONLY_PLAYERS_CAN_EXECUTE_COMMANDS);
             return true;
         } else {
             if (command.getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) {
                 return doCommand((Player) sender, args);
             } else {
-                sender.sendMessage("You do not have the '" + getPermission() + "' permission node to do that.");
+                BukkitVoxelSniper.getAdventure().sender(sender).sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%",getPermission()));
                 return true;
             }
         }
@@ -51,10 +54,13 @@ public abstract class VoxelCommand implements TabExecutor {
     public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         this.activeIdentifier = command.getLabel(); // This is the root command.
         this.activeAlias = alias;   // This is the alias that was executed.
-        
-        // Return partial matches that only match the *beginning* of the string.
-        List<String> suggestions = doSuggestion((Player) sender, args); // MUST SPLIT DECLARATION AND ASSIGNMENT, OTHERWISE PARTIAL MATCHING WON'T WORK
-        return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
+
+        if (sender instanceof Player) {
+            // Return partial matches that only match the *beginning* of the string.
+            List<String> suggestions = doSuggestion((Player) sender, args); // MUST SPLIT DECLARATION AND ASSIGNMENT, OTHERWISE PARTIAL MATCHING WON'T WORK
+            return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
+        }
+        return new ArrayList<>();
     }
 
     public abstract List<String> doSuggestion(Player player, String[] args);

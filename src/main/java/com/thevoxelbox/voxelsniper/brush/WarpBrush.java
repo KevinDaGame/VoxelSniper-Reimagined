@@ -1,9 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
 
 /**
  * @author MikeMatrix
@@ -24,9 +24,9 @@ public class WarpBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        Player player = v.owner().getPlayer();
-        Location location = this.getLastBlock().getLocation();
-        Location playerLocation = player.getLocation();
+        AbstractPlayer player = v.owner().getPlayer();
+        ILocation location = this.getLastBlock().getLocation();
+        ILocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
 
@@ -35,9 +35,9 @@ public class WarpBrush extends Brush {
 
     @Override
     protected final void powder(final SnipeData v) {
-        Player player = v.owner().getPlayer();
-        Location location = this.getLastBlock().getLocation();
-        Location playerLocation = player.getLocation();
+        AbstractPlayer player = v.owner().getPlayer();
+        ILocation location = this.getLastBlock().getLocation();
+        ILocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
 

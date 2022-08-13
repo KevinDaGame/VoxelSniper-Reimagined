@@ -1,7 +1,11 @@
-package com.thevoxelbox.voxelsniper;
+package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.entity.Player;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -14,12 +18,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class VoxelSniperListener implements Listener {
 
     private static final String SNIPER_PERMISSION = "voxelsniper.sniper";
-    private final VoxelSniper plugin;
+    private final BukkitVoxelSniper plugin;
 
     /**
      * @param plugin
      */
-    public VoxelSniperListener(final VoxelSniper plugin) {
+    public VoxelSniperListener(final BukkitVoxelSniper plugin) {
         this.plugin = plugin;
     }
 
@@ -28,7 +32,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public final void onPlayerInteract(final PlayerInteractEvent event) {
-        Player player = event.getPlayer();
+        AbstractPlayer player = new BukkitPlayer(event.getPlayer());
 
         if (!player.hasPermission(SNIPER_PERMISSION)) {
             return;
@@ -36,10 +40,11 @@ public class VoxelSniperListener implements Listener {
 
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
-            if (sniper.isEnabled() && sniper.snipe(event.getAction(), event.getMaterial(), event.getClickedBlock(), event.getBlockFace())) {
+            if (sniper.isEnabled() && sniper.snipe(event.getAction(), VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()), event.getClickedBlock() == null ? null : new BukkitBlock(event.getClickedBlock()), event.getBlockFace())) {
                 event.setCancelled(true);
             }
-        } catch (final Exception ignored) {
+        } catch (final Exception temp) {
+temp.printStackTrace();
         }
     }
 
@@ -48,7 +53,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        AbstractPlayer player = new BukkitPlayer(event.getPlayer());
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
