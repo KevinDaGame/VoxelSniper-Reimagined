@@ -21,8 +21,8 @@ public class SnipeData {
     public static final int DEFAULT_CYLINDER_CENTER = 0;
     public static final int DEFAULT_VOXEL_HEIGHT = 1;
     public static final int DEFAULT_BRUSH_SIZE = 3;
-    public static final IBlockData DEFAULT_VOXEL_SUBSTANCE = new BukkitBlockData(Material.AIR.createBlockData());
-    public static final IBlockData DEFAULT_TARGET_SUBSTANCE = new BukkitBlockData(Material.AIR.createBlockData());
+    public static final IBlockData DEFAULT_VOXEL_SUBSTANCE = VoxelMaterial.AIR.createBlockData();
+    public static final IBlockData DEFAULT_TARGET_SUBSTANCE = VoxelMaterial.AIR.createBlockData();
 
     // Sniper varaibles
     private final Sniper owner;

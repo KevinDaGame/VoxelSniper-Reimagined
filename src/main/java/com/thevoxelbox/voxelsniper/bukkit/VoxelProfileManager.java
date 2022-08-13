@@ -25,7 +25,6 @@ public class VoxelProfileManager {
 
         if (profileManager == null) {
             instance = new VoxelProfileManager();
-            profileManager = getInstance();
         }
     }
 
