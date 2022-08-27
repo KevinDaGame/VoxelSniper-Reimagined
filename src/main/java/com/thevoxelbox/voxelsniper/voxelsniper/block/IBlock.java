@@ -7,6 +7,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
+import javax.annotation.Nullable;
+
 public interface IBlock {
     ILocation getLocation();
     VoxelMaterial getMaterial();
@@ -24,6 +26,7 @@ public interface IBlock {
     default int getZ() {
         return getLocation().getBlockZ();
     }
+    @Nullable
     BlockFace getFace(IBlock block);
     IBlock getRelative(int x, int y, int z);
     IBlock getRelative(BlockFace face);

@@ -11,6 +11,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
 import org.bukkit.block.Block;
 
+import javax.annotation.Nullable;
+
 public class BukkitBlock extends AbstractBlock {
 
     private final Block block;
@@ -44,8 +46,10 @@ public class BukkitBlock extends AbstractBlock {
 
     //todo test if this works
     @Override
+    @Nullable
     public BlockFace getFace(IBlock block) {
-        return BlockFace.valueOf(this.block.getFace(((BukkitBlock) block).block).toString());
+        var face = this.block.getFace(((BukkitBlock) block).block);
+        return face == null ? null : BlockFace.valueOf(face.toString());
     }
 
     @Override
