@@ -291,7 +291,7 @@ BLOCKS_COPIED_SUCCESSFULLY: <green>%amount%</green><aqua> blocks copied successf
 CLONE_STAMP_NO_AIR: '<aqua>Stamp Mode: No-Air'
 CLONE_STAMP_FILL: '<aqua>Stamp Mode: Fill'
 CLONE_STAMP_DEFAULT_MODE: '<aqua>StampMode: Default'
-COMET_SIZE: Your balls are <dark_red>%size%
+COMET_SIZE: Your fireballs are <dark_red>%size%
 BLOCKS_COPIED_COUNT: <aqua>%numBlocks% blocks copied.
 COPY_AREA_TOO_BIG: '<red>Copy area too big: %numBlocks%(Limit: %BLOCK_LIMIT%)'
 MUST_SELECT_2_POINTS: <red>You must select exactly two points.
