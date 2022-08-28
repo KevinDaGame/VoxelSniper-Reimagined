@@ -43,7 +43,7 @@ public record BukkitWorld(World world) implements IWorld {
 
     @Override
     public IChunk getChunkAtLocation(int x, int z) {
-        return new BukkitChunk(world.getChunkAt(x, z));
+        return new BukkitChunk(world.getChunkAt(x / 16, z / 16));
     }
 
     @Override
