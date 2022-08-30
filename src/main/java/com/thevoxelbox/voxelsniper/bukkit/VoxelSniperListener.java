@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
@@ -8,7 +9,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -43,7 +43,11 @@ public class VoxelSniperListener implements Listener {
 
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
-            if (sniper.isEnabled() && sniper.snipe(event.getAction(), VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()), event.getClickedBlock() == null ? null : new BukkitBlock(event.getClickedBlock()), event.getBlockFace())) {
+            if (sniper.isEnabled() && sniper.snipe(
+                    event.getAction(),
+                    VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()),
+                    event.getClickedBlock() == null ? null : new BukkitBlock(event.getClickedBlock()),
+                    BlockFace.valueOf(event.getBlockFace().name()))) {
                 event.setCancelled(true);
             }
         } catch (final Exception temp) {

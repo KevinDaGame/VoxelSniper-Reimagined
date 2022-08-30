@@ -9,6 +9,7 @@ import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
@@ -21,7 +22,6 @@ import java.util.UUID;
 import net.kyori.adventure.text.ComponentLike;
 
 import org.bukkit.Bukkit;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.Action;
 import org.jetbrains.annotations.NotNull;
 
@@ -109,6 +109,7 @@ public class Sniper {
 
         if (clickedBlock != null) {
             targetBlock = clickedBlock;
+            lastBlock = targetBlock.getRelative(clickedFace);
         } else {
             BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
             targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
