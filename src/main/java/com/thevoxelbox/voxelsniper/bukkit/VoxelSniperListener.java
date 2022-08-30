@@ -8,8 +8,10 @@ import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 
 /**
@@ -32,6 +34,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public final void onPlayerInteract(final PlayerInteractEvent event) {
+        if(event.getHand() != EquipmentSlot.HAND) return;
         AbstractPlayer player = new BukkitPlayer(event.getPlayer());
 
         if (!player.hasPermission(SNIPER_PERMISSION)) {
