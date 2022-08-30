@@ -45,11 +45,7 @@ public class VoxelSniperListener implements Listener {
         if(cooldown.contains(player.getUniqueId())) return;
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
-            if (sniper.isEnabled() && sniper.snipe(
-                    event.getAction(),
-                    VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()),
-                    event.getClickedBlock() != null ? new BukkitBlock(event.getClickedBlock()) : null,
-                    BlockFace.valueOf(event.getBlockFace().name()))) {
+            if (sniper.isEnabled() && sniper.snipe(event.getAction(), event.getMaterial(), event.getClickedBlock(), event.getBlockFace())) {
                 event.setCancelled(true);
                 cooldown.add(player.getUniqueId());
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()),1);
