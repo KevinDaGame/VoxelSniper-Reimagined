@@ -15,6 +15,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 /**
  * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
  *
@@ -273,10 +276,11 @@ public class SignOverwriteBrush extends Brush {
     private void displayBuffer(final SnipeData v) {
         v.sendMessage(Messages.SIGN_BUFFER_TEXT_SET);
         for (int i = 0; i < this.signTextLines.length; i++) {
+            TextComponent text = LegacyComponentSerializer.legacyAmpersand().deserialize(this.signTextLines[i]);
             if (this.signLinesEnabled[i]) {
-                v.sendMessage(Messages.SIGN_OVERWRITE_ENABLED.replace("%signTextLines%", this.signTextLines[i]));
+                v.sendMessage(Messages.SIGN_OVERWRITE_ENABLED.replace("%signTextLines%", text));
             } else {
-                v.sendMessage(Messages.SIGN_OVERWRITE_DISABLED.replace("%signTextLines%", this.signTextLines[i]));
+                v.sendMessage(Messages.SIGN_OVERWRITE_DISABLED.replace("%signTextLines%", text));
             }
         }
     }

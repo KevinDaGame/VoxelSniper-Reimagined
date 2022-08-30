@@ -5,9 +5,11 @@ import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import org.jetbrains.annotations.NotNull;
@@ -400,6 +402,10 @@ public enum Messages implements ComponentLike {
         return new Message(this.message).replace(pattern, replacement);
     }
 
+    @NotNull public final Component replace(String pattern, ComponentLike replacement) {
+        return new Message(this.message).replace(pattern, replacement);
+    }
+
     @NotNull public final Message append(String message) {
         return new Message(this.message).append(message);
     }
@@ -430,6 +436,13 @@ public enum Messages implements ComponentLike {
                 this.message = this.message.replace(target, String.valueOf(replacement));
 
             return this;
+        }
+
+        @NotNull public Component replace(String target, ComponentLike replacement) {
+            if (target != null && replacement != null)
+                return this.asComponent().replaceText(TextReplacementConfig.builder().match(Pattern.compile(target, Pattern.LITERAL)).replacement(replacement).build());
+
+            return this.asComponent();
         }
 
         @NotNull public Message append(String message) {
