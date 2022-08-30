@@ -266,8 +266,8 @@ OCEAN_BRUSH_USAGE: |-
   </aqua><aqua>/b %triggerHandle% floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)
 ELLIPSE_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X size modifier\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y size modifier\n</aqua><aqua>/b %triggerHandle% t [number]  -- Set time steps\n</aqua><aqua>/b %triggerHandle%fill  -- Toggles fill mode"
 SIGN_OVERWRITE_BRUSH_RANGE_MODE: <blue>Ranged mode is </blue><green>%rangedMode%
-SIGN_OVERWRITE_ENABLED: '<green>(E): </green><black>%signTextLines%'
-SIGN_OVERWRITE_DISABLED: '<red>(D): </red><black>%signTextLines%'
+SIGN_OVERWRITE_ENABLED: '<green>(E): </green><dark_gray>%signTextLines%'
+SIGN_OVERWRITE_DISABLED: '<red>(D): </red><dark_gray>%signTextLines%'
 SIGN_OVERWRITE_BUFFER_TEXT: '<blue>Buffer text: '
 FILE_LOAD_SUCCESSFUL: <blue>File loaded successfully.
 FILE_LOAD_FAIL: <red>Failed to load file. %exception.getMessage%
