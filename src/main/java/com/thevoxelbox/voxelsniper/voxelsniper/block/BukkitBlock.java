@@ -73,6 +73,7 @@ public class BukkitBlock extends AbstractBlock {
     }
 
     @Override
+    @Deprecated
     public byte getData() {
         return block.getData();
     }
@@ -89,7 +90,7 @@ public class BukkitBlock extends AbstractBlock {
 
     @Override
     public IBlockState getState() {
-        return new BukkitBlockState(block.getState());
+        return BukkitBlockState.fromBukkitState(block.getState());
     }
 
     @Override

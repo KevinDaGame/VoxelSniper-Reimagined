@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.BukkitSign;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
@@ -12,9 +13,10 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 
 public class BukkitBlockState implements IBlockState {
-    private final BlockState blockState;
+    protected final BlockState blockState;
 
     public BukkitBlockState(BlockState blockState) {
         this.blockState = blockState;
@@ -73,5 +75,11 @@ public class BukkitBlockState implements IBlockState {
     @Override
     public boolean update(boolean force, boolean applyPhysics) {
         return blockState.update(force, applyPhysics);
+    }
+
+    public static BukkitBlockState fromBukkitState(BlockState state) {
+        if (state instanceof Sign sign)
+            return new BukkitSign(sign);
+        return new BukkitBlockState(state);
     }
 }

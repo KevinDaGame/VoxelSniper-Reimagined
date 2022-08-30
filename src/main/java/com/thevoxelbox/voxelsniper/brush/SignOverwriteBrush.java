@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.ISign;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,9 +14,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-
-import org.bukkit.ChatColor;
-import org.bukkit.block.Sign;
 
 /**
  * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
@@ -50,7 +48,7 @@ public class SignOverwriteBrush extends Brush {
      *
      * @param sign
      */
-    private void setSignText(final Sign sign) {
+    private void setSignText(final ISign sign) {
         for (int i = 0; i < this.signTextLines.length; i++) {
             if (this.signLinesEnabled[i]) {
                 sign.setLine(i, this.signTextLines[i]);
@@ -66,8 +64,8 @@ public class SignOverwriteBrush extends Brush {
      * @param v
      */
     private void setSingle(final SnipeData v) {
-        if (this.getTargetBlock().getState() instanceof Sign) {
-            setSignText((Sign) this.getTargetBlock().getState());
+        if (this.getTargetBlock().getState() instanceof ISign) {
+            setSignText((ISign) this.getTargetBlock().getState());
         } else {
             v.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
         }
@@ -92,8 +90,8 @@ public class SignOverwriteBrush extends Brush {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
                     IBlockState blockState = this.getWorld().getBlock(x, y, z).getState();
-                    if (blockState instanceof Sign) {
-                        setSignText((Sign) blockState);
+                    if (blockState instanceof ISign) {
+                        setSignText((ISign) blockState);
                         signFound = true;
                     }
                 }
@@ -116,8 +114,7 @@ public class SignOverwriteBrush extends Brush {
 
     @Override
     protected final void powder(final SnipeData v) {
-        if (this.getTargetBlock().getState() instanceof Sign) {
-            Sign sign = (Sign) this.getTargetBlock().getState();
+        if (this.getTargetBlock().getState() instanceof ISign sign) {
 
             for (int i = 0; i < this.signTextLines.length; i++) {
                 if (this.signLinesEnabled[i]) {
@@ -251,7 +248,7 @@ public class SignOverwriteBrush extends Brush {
         }
 
         // TODO not entirely sure what to do here
-        newText = new StringBuilder(ChatColor.translateAlternateColorCodes('&', newText.toString()));
+        newText = new StringBuilder(newText.toString());
 
         // remove last space or return if the string is empty and the user just wanted to set the status
         if ((newText.length() > 0) && newText.toString().endsWith(" ")) {
