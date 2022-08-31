@@ -3,8 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import org.bukkit.entity.EntityType;
  */
 public class EntityBrush extends Brush {
 
-    private IEntityType entityType = new BukkitEntityType(EntityType.ZOMBIE);
+    private VoxelEntityType entityType = VoxelEntityType.ZOMBIE;
 
     /**
      *
@@ -49,7 +48,7 @@ public class EntityBrush extends Brush {
 
     @Override
     public final void info(final VoxelMessage vm) {
-        vm.brushMessage(Messages.ENTITY_BRUSH_MESSAGE.replace("%entity%", this.entityType.getName()));
+        vm.brushMessage(Messages.ENTITY_BRUSH_MESSAGE.replace("%entity%", this.entityType.getKey()));
         vm.size();
     }
 
@@ -61,8 +60,16 @@ public class EntityBrush extends Brush {
         }
 
         try {
-            this.entityType = new BukkitEntityType(EntityType.valueOf(params[0]));
-            v.sendMessage(Messages.ENTITYBRUSH_ENTITY_TYPE.replace("%type%", this.entityType.getName()));
+            if (params[0].contains(":")) {
+                String[] split = params[0].split(":");
+                this.entityType = VoxelEntityType.getEntityType(split[0], split[1]);
+            } else {
+                this.entityType = VoxelEntityType.getEntityType(params[0]);
+            }
+            if (entityType == null)
+                v.sendMessage(Messages.ENTITYBRUSH_UNKNOWN_ENTITY);
+            else
+                v.sendMessage(Messages.ENTITYBRUSH_ENTITY_TYPE.replace("%type%", this.entityType.getKey()));
         } catch (IllegalArgumentException e) {
             v.sendMessage(Messages.ENTITYBRUSH_UNKNOWN_ENTITY);
         }
@@ -72,9 +79,9 @@ public class EntityBrush extends Brush {
     public List<String> registerArguments() {
         List<String> entities = new ArrayList<>();
 
-        for (EntityType entity : EntityType.values()) {
-            if (entity != EntityType.UNKNOWN)
-                entities.add(entity.name());
+        for (VoxelEntityType entity : VoxelEntityType.ENTITYTYPES.values()) {
+            if (entity != null)
+                entities.add(entity.getKey());
         }
 
         return entities;

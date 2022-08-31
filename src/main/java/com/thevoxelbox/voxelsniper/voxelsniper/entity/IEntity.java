@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
@@ -8,7 +8,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 import java.util.List;
 
 public interface IEntity {
-    IEntityType getType();
+    VoxelEntityType getType();
 
     void remove();
 

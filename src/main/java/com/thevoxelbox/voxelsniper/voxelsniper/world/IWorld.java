@@ -4,7 +4,7 @@ import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 
 import org.bukkit.TreeType;
@@ -23,7 +23,7 @@ public interface IWorld {
     void strikeLightning(ILocation location);
 
     String getName();
-    void spawn(ILocation location, IEntityType entity);
+    void spawn(ILocation location, VoxelEntityType entity);
     void setBiome(int x, int z, VoxelBiome selectedBiome);
 
     int getHighestBlockYAt(int x, int z);

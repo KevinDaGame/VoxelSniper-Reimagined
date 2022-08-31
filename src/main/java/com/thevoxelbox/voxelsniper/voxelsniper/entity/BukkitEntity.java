@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
@@ -26,8 +25,8 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
-    public IEntityType getType() {
-        return new BukkitEntityType(entity.getType());
+    public VoxelEntityType getType() {
+        return VoxelEntityType.getEntityType(entity.getType().getKey().getKey());
     }
 
     @Override

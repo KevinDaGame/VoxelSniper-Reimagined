@@ -6,14 +6,16 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+
+import java.util.Locale;
 
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
 
 public record BukkitWorld(World world) implements IWorld {
 
@@ -68,9 +70,9 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void spawn(ILocation location, IEntityType entity) {
+    public void spawn(ILocation location, VoxelEntityType entity) {
         var bukkitloc = (BukkitLocation) location;
-        world.spawnEntity(bukkitloc.getLocation(), ((BukkitEntityType) entity).getType());
+        world.spawnEntity(bukkitloc.getLocation(), EntityType.valueOf(entity.getKey().toUpperCase(Locale.ROOT)));
     }
 
     @Override

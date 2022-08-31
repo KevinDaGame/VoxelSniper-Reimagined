@@ -146,7 +146,7 @@ public record VoxelEntityType(String namespace, String key, Version version) {
     String getNamespace() {
         return namespace;
     }
-    String getKey() {
+    public String getKey() {
         return key;
     }
     String getName() {

@@ -3,14 +3,13 @@ package com.thevoxelbox.voxelsniper.util;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.BukkitEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.Art;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 
 /**
@@ -301,11 +300,11 @@ public class BlockHelper {
     @SuppressWarnings(value = "deprecation")
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
         ILocation targetLocation = p.getTargetBlock(null, 4).getLocation();
-        IChunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
+        IChunk paintingChunk = targetLocation.getChunk();
         double bestDistanceMatch = 50.0;
         Painting bestMatch = null;
         for (IEntity entity : paintingChunk.getEntities()) {
-            if (((BukkitEntityType)entity.getType()).getType() == EntityType.PAINTING) {
+            if (entity.getType() == VoxelEntityType.PAINTING) {
                 double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;
