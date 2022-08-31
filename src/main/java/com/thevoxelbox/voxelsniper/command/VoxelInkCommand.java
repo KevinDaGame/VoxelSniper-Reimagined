@@ -52,21 +52,17 @@ public class VoxelInkCommand extends VoxelCommand {
         }
 
         // Command: /vi [material]      <- Sets the defined material as voxel substance.
-        if (args.length >= 1) {
-            try {
-                IBlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
-                IBlockData activeData = snipeData.getVoxelSubstance();
+        try {
+            IBlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
+            IBlockData activeData = snipeData.getVoxelSubstance();
 
-                snipeData.setVoxelSubstance(activeData.merge(newData));
-                snipeData.getVoxelMessage().data();
-            } catch (IllegalArgumentException e) {
-                sniper.sendMessage(Messages.VOXEL_INK_CANT_IMITATE_DATA);
-            }
-
-            return true;
+            snipeData.setVoxelSubstance(activeData.merge(newData));
+            snipeData.getVoxelMessage().data();
+        } catch (IllegalArgumentException e) {
+            sniper.sendMessage(Messages.VOXEL_INK_CANT_IMITATE_DATA);
         }
 
-        return false;
+        return true;
     }
 
     @Override

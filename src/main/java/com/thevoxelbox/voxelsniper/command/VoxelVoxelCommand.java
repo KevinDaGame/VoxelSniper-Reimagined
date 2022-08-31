@@ -61,11 +61,10 @@ public class VoxelVoxelCommand extends VoxelCommand {
         if (material != null && material.isBlock()) {
             snipeData.setVoxelSubstance(material.createBlockData());
             snipeData.getVoxelMessage().voxel();
-            return true;
         } else {
             sniper.sendMessage(Messages.INVALID_TYPE_ID);
-            return true;
         }
+        return true;
     }
 
     @Override

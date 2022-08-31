@@ -61,11 +61,10 @@ public class VoxelReplaceCommand extends VoxelCommand {
         if (material != null && material.isBlock()) {
             snipeData.setReplaceSubstance(material.createBlockData());
             snipeData.getVoxelMessage().replace();
-            return true;
         } else {
             sniper.sendMessage(Messages.INVALID_ITEM_ID);
-            return true;
         }
+        return true;
     }
 
     @Override

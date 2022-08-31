@@ -52,20 +52,16 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         }
 
         // Command: /vir [data]
-        if (args.length >= 1) {
-            try {
-                IBlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + String.join(",", args) + "]");
-                IBlockData activeData = snipeData.getReplaceSubstance();
+        try {
+            IBlockData newData = snipeData.getReplaceMaterial().createBlockData("[" + String.join(",", args) + "]");
+            IBlockData activeData = snipeData.getReplaceSubstance();
 
-                snipeData.setReplaceSubstance(activeData.merge(newData));
-                snipeData.getVoxelMessage().replaceData();
-            } catch (IllegalArgumentException e) {
-                sniper.sendMessage(Messages.VOXEL_INK_REPLACE_CANT_IMITATE_DATA);
-            }
-            return true;
+            snipeData.setReplaceSubstance(activeData.merge(newData));
+            snipeData.getVoxelMessage().replaceData();
+        } catch (IllegalArgumentException e) {
+            sniper.sendMessage(Messages.VOXEL_INK_REPLACE_CANT_IMITATE_DATA);
         }
-
-        return false;
+        return true;
     }
 
     @Override
