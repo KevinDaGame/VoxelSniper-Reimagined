@@ -3,14 +3,14 @@ package com.thevoxelbox.voxelsniper.util;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.IPainting;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.Art;
-import org.bukkit.entity.Painting;
 
 /**
  * @author Voxel
@@ -302,13 +302,13 @@ public class BlockHelper {
         ILocation targetLocation = p.getTargetBlock(null, 4).getLocation();
         IChunk paintingChunk = targetLocation.getChunk();
         double bestDistanceMatch = 50.0;
-        Painting bestMatch = null;
+        IPainting bestMatch = null;
         for (IEntity entity : paintingChunk.getEntities()) {
             if (entity.getType() == VoxelEntityType.PAINTING) {
                 double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;
-                    bestMatch = (Painting) entity;
+                    bestMatch = (IPainting) entity;
                 }
             }
         }
@@ -328,6 +328,7 @@ public class BlockHelper {
                 }
             } else {
                 try {
+                    // TODO abstract away Art
                     Art art = Art.getById(choice);
                     bestMatch.setArt(art);
                     p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));

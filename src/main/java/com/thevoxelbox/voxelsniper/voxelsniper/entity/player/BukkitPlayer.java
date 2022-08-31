@@ -80,7 +80,7 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
 
     @Override
     public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
-        Set<Material> materials = transparent.stream().map(m -> ((BukkitMaterial)m.getIMaterial()).material()).collect(Collectors.toSet());
+        Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((BukkitMaterial)m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
         return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
     }
 
