@@ -13,7 +13,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class Sniper {
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
-    public Sniper(AbstractPlayer player) {
+    public Sniper(IPlayer player) {
         this.player = player.getUniqueId();
         SnipeTool sniperTool = new SnipeTool(this);
         sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
@@ -60,7 +60,7 @@ public class Sniper {
         return null;
     }
 
-    public AbstractPlayer getPlayer() {
+    public IPlayer getPlayer() {
         return VoxelSniper.voxelsniper.getPlayer(this.player);
     }
 

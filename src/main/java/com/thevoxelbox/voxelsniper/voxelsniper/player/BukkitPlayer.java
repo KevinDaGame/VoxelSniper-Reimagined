@@ -5,20 +5,16 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.IEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
@@ -29,21 +25,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.jetbrains.annotations.NotNull;
 
-public class BukkitPlayer extends AbstractPlayer {
+public class BukkitPlayer extends BukkitEntity implements IPlayer {
     private final Player player;
 
     public BukkitPlayer(Player player) {
+        super(player);
         this.player = player;
-    }
-
-    @Override
-    public BukkitWorld getWorld() {
-        return new BukkitWorld(player.getWorld());
-    }
-
-    @Override
-    public void addPassenger(IEntity entity) {
-
     }
 
     @Override
@@ -54,11 +41,6 @@ public class BukkitPlayer extends AbstractPlayer {
     @Override
     public void sendMessage(String message) {
         player.sendMessage(message);
-    }
-
-    @Override
-    public BukkitLocation getLocation() {
-        return new BukkitLocation(player.getLocation());
     }
 
     @Override
@@ -77,21 +59,6 @@ public class BukkitPlayer extends AbstractPlayer {
     }
 
     @Override
-    public ILocation getEyeLocation() {
-        return new BukkitLocation(player.getEyeLocation());
-    }
-
-    @Override
-    public List<IEntity> getNearbyEntities(int x, int y, int z) {
-        var entities = player.getNearbyEntities(x, y, z);
-        var result = new ArrayList<IEntity>();
-        for (var entity : entities) {
-             result.add(new BukkitEntity(entity));
-        }
-        return result;
-    }
-
-    @Override
     public String getName() {
         return player.getName();
     }
@@ -102,23 +69,8 @@ public class BukkitPlayer extends AbstractPlayer {
     }
 
     @Override
-    public IEntityType getType() {
-        return null;
-    }
-
-    @Override
     public void remove() {
 
-    }
-
-    @Override
-    public int getEntityId() {
-        return 0;
-    }
-
-    @Override
-    public void eject() {
-        player.eject();
     }
 
     @Override
@@ -128,10 +80,7 @@ public class BukkitPlayer extends AbstractPlayer {
 
     @Override
     public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
-        Set<Material> materials = new HashSet<>(transparent.size());
-        for (VoxelMaterial material : transparent) {
-            materials.add(((BukkitMaterial)material.getIMaterial()).material());
-        }
+        Set<Material> materials = transparent.stream().map(m -> ((BukkitMaterial)m.getIMaterial()).material()).collect(Collectors.toSet());
         return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
     }
 

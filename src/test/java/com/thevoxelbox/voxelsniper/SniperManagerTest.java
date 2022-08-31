@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 
 import java.util.UUID;
 
@@ -22,12 +22,12 @@ import org.mockito.Mockito;
  */
 public class SniperManagerTest {
 
-    private AbstractPlayer absplayer;
+    private IPlayer absplayer;
 
     @Before
     public void setUp() {
         UUID uuid = UUID.randomUUID();
-        absplayer = Mockito.mock(AbstractPlayer.class);
+        absplayer = Mockito.mock(IPlayer.class);
         Mockito.when(absplayer.getUniqueId()).thenReturn(uuid);
         Mockito.when(absplayer.hasPermission(Mockito.any(String.class))).thenReturn(true);
 

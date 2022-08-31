@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 
 import java.util.Map;
 import java.util.UUID;
@@ -28,7 +28,7 @@ public class VoxelProfileManager {
         }
     }
 
-    public Sniper getSniperForPlayer(AbstractPlayer player) {
+    public Sniper getSniperForPlayer(IPlayer player) {
         if (sniperInstances.get(player.getUniqueId()) == null) {
             sniperInstances.put(player.getUniqueId(), new Sniper(player));
         }

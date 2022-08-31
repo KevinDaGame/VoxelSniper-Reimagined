@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.command;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.AbstractPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ temp.printStackTrace();
         // Command: /u [playerName]             <- Undo [playerName]'s changes.
         if (args.length == 1 || args.length == 2) {
             try {
-                AbstractPlayer targetPlayer = new BukkitPlayer(Bukkit.getPlayer(args[0]));
+                IPlayer targetPlayer = new BukkitPlayer(Bukkit.getPlayer(args[0]));
                 assert targetPlayer != null;
 
                 Sniper targetSniper = profileManager.getSniperForPlayer(targetPlayer);

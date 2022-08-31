@@ -6,9 +6,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Entity;
@@ -51,7 +51,7 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public IWorld getWorld() {
-        return null;
+        return new BukkitWorld(this.entity.getWorld());
     }
 
     @Override
@@ -66,12 +66,7 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public List<IEntity> getNearbyEntities(int x, int y, int z) {
-        var entities = entity.getNearbyEntities(x, y, z);
-        var result = new ArrayList<IEntity>();
-        for (var entity : entities) {
-            result.add(new BukkitEntity(entity));
-        }
-        return result;
+        return this.entity.getNearbyEntities(x, y, z).stream().map(e -> (IEntity)new BukkitEntity(e)).toList();
     }
 
     @Override
