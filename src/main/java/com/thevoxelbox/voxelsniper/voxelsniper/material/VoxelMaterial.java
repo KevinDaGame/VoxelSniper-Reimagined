@@ -1015,11 +1015,17 @@ public class VoxelMaterial implements IMaterial {
     public static VoxelMaterial getMaterial(String namespace, String key) {
         if (namespace.isEmpty() || key.isEmpty()) return null;
         var block = BLOCKS.get(namespace + ":" + key);
-        if(block == null) {
-            // TODO should we store this??
-            return new VoxelMaterial(namespace, key);
+        if (block == null) {
+            block = new VoxelMaterial(namespace, key);
+            if (block.getIMaterial() != null) {  // block exists
+                String mapKey = namespace + ":" + key;
+                BLOCKS.put(mapKey, block);
+                return block;
+            } else {
+                return null;
+            }
         }
-        if(VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())){
+        if (VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())){
             return block;
         }
         return null;
@@ -1044,7 +1050,7 @@ public class VoxelMaterial implements IMaterial {
     }
 
     public boolean isBlock() {
-        return getMaterial(this.getKey()) != null;
+        return this.getIMaterial().isBlock();
     }
 
     @Override
