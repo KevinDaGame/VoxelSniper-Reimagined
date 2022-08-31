@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.UUID;
 import java.util.logging.Level;

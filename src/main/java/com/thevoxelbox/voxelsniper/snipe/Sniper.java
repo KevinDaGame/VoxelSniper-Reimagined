@@ -13,7 +13,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.LinkedList;
 import java.util.Map;

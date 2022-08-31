@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.Map;
 import java.util.UUID;

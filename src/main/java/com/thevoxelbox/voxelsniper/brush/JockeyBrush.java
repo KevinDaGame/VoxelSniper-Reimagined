@@ -8,8 +8,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

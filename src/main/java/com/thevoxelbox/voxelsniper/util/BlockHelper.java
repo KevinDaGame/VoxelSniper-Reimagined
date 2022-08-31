@@ -6,7 +6,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.Art;

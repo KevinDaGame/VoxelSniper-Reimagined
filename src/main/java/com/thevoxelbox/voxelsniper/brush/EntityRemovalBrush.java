@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 
 /**
  *

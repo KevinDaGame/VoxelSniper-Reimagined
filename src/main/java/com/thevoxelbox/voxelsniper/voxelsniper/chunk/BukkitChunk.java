@@ -36,7 +36,7 @@ public class BukkitChunk implements IChunk {
         ArrayList<IEntity> entities = new ArrayList<>();
         var chunkEntities = chunk.getEntities();
         for (Entity entity : chunkEntities) {
-            entities.add(new BukkitEntity(entity));
+            entities.add(BukkitEntity.fromBukkitEntity(entity));
         }
         return entities;
     }

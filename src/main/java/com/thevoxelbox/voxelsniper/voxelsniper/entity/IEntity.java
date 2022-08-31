@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;

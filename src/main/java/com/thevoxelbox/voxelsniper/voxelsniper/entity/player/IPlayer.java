@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper.voxelsniper.player;
+package com.thevoxelbox.voxelsniper.voxelsniper.entity.player;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;

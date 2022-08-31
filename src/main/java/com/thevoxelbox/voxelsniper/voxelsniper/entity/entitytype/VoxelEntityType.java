@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper.voxelsniper.entitytype;
+package com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;

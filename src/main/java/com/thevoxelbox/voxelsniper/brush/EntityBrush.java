@@ -3,12 +3,10 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.entitytype.VoxelEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.entity.EntityType;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Entity_Brush

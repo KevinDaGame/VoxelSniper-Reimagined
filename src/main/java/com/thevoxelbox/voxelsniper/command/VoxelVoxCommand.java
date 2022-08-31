@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.command;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

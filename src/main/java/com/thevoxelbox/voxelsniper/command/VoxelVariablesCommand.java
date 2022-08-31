@@ -6,7 +6,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

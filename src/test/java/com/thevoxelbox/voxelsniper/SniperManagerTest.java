@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.UUID;
 

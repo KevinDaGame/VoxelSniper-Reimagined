@@ -4,8 +4,8 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.IPlayer;
-import com.thevoxelbox.voxelsniper.voxelsniper.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

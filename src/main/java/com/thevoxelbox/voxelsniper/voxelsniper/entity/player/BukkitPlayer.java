@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper.voxelsniper.player;
+package com.thevoxelbox.voxelsniper.voxelsniper.entity.player;
 
 import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
@@ -75,7 +75,7 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
 
     @Override
     public IEntity launchProjectile(Class<? extends Projectile> fireball) {
-        return new BukkitEntity(player.launchProjectile(fireball));
+        return BukkitEntity.fromBukkitEntity(player.launchProjectile(fireball));
     }
 
     @Override
