@@ -193,7 +193,7 @@ TOGGLE_RANGE: <gold>Distance Restriction toggled <dark_red>%state%</dark_red>, r
 MISSING_PARAMETER: <red>Missing parameter after %parameter%.
 BLOCKS_UNTIL_REPEATER_MESSAGE: '<aqua>Blocks until repeater needed: %blocks%'
 BRUSH_CENTER: '<dark_blue>Brush Center: <dark_red>%center%</dark_red></dark_blue>'
-FINAL_PAINTING: <red>This is the final painting, try scrolling to the other direction.
+UNKNOWN_PAINTING: '<red>Painting with id %id% was not found.'
 GEN_TREE_BRUSH_USAGE_2: |-
   <gold>Generate Tree Brush Parameters:         [2/2]
   </gold><aqua>/b %triggerHandle% rootMin [number]  -- minimum roots

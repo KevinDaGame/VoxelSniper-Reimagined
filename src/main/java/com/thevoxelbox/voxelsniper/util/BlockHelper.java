@@ -10,8 +10,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import org.bukkit.Art;
-
 /**
  * @author Voxel
  */
@@ -315,25 +313,20 @@ public class BlockHelper {
         if (bestMatch != null) {
             if (auto) {
                 try {
-                    final int i = (bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length) % Art.values().length;
-                    Art art = Art.getById(i);
-                    if (art == null) {
-                        p.sendMessage(Messages.FINAL_PAINTING);
-                        return;
+                    final int i = bestMatch.nextPaintingId(back);
+                    if (bestMatch.setArtId(i)) {
+                        p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
+                    } else {
+                        p.sendMessage(Messages.UNKNOWN_PAINTING.replace("%id%", i));
                     }
-                    bestMatch.setArt(art);
-                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
                 } catch (final Exception e) {
                     p.sendMessage(Messages.ERROR);
                 }
             } else {
-                try {
-                    // TODO abstract away Art
-                    Art art = Art.getById(choice);
-                    bestMatch.setArt(art);
+                if (bestMatch.setArtId(choice)) {
                     p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));
-                } catch (final Exception exception) {
-                    p.sendMessage(Messages.INVALID_INPUT);
+                } else {
+                    p.sendMessage(Messages.UNKNOWN_PAINTING.replace("%id%", choice));
                 }
             }
         }

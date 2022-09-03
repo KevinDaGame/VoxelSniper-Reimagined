@@ -69,7 +69,7 @@ public enum Messages implements ComponentLike {
     GOTO_INVALID_SYNTAX,
     GOTO_MSG,
     PAINTING_INVALID_SYNTAX,
-    FINAL_PAINTING,
+    UNKNOWN_PAINTING,
     PAINTING_SET,
     INVALID_INPUT,
     ERROR,

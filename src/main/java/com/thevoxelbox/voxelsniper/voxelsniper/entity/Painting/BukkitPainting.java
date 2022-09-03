@@ -11,12 +11,22 @@ public class BukkitPainting extends BukkitEntity implements IPainting {
     }
 
     @Override
-    public void setArt(Art art) {
+    public boolean setArtId(int id) {
+        Art art = Art.getById(id);
+        if (art == null) {
+            return false;
+        }
         ((Painting)this.getEntity()).setArt(art);
+        return true;
     }
 
     @Override
-    public Art getArt() {
-        return ((Painting)this.getEntity()).getArt();
+    public int getArtId() {
+        return ((Painting)this.getEntity()).getArt().getId();
+    }
+
+    @Override
+    public int nextPaintingId(boolean back) {
+        return (this.getArtId() + (back ? -1 : 1) + Art.values().length) % Art.values().length;
     }
 }
