@@ -77,7 +77,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(PaintingBrush.class, "painting");
         brushManager.registerSniperBrush(PullBrush.class, "pull");
         //brushManager.registerSniperBrush(RandomErodeBrush.class, "re", "randomerode");
-        brushManager.registerSniperBrush(RegenerateChunkBrush.class, "gc", "generatechunk");
+        brushManager.registerSniperBrush(RegenerateChunkBrush.class, "rc", "regeneratechunk");
         brushManager.registerSniperBrush(RingBrush.class, "ri", "ring");
         brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
         brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
