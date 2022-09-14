@@ -44,7 +44,7 @@ public class TreeSnipeBrush extends Brush {
          IBlock  blockBelow = targetBlock.getRelative(BlockFace.DOWN);
         IBlockState currentState = blockBelow.getState();
         undoDelegate.setBlock(blockBelow);
-        blockBelow.setMaterial(VoxelMaterial.GRASS);
+        blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK);
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);
         Undo undo = undoDelegate.getUndo();
         blockBelow.setBlockData(currentState.getBlockData().getMaterial().createBlockData(), true);
