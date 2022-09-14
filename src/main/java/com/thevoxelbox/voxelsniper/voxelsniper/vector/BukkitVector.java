@@ -9,6 +9,9 @@ import org.bukkit.util.Vector;
 
 public record BukkitVector(Vector vector) implements IVector {
 
+    public Vector getVector() {
+        return this.vector;
+    }
     @Override
     public ILocation getLocation(IWorld world) {
         return new BukkitLocation(vector.toLocation(((BukkitWorld) world).world()));
@@ -86,7 +89,7 @@ public record BukkitVector(Vector vector) implements IVector {
 
     @Override
     public void copy(IVector vector) {
-        vector.copy(vector);
+        this.vector.copy(((BukkitVector)vector).getVector());
     }
 
     @Override
