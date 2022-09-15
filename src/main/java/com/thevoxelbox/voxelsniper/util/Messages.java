@@ -357,6 +357,10 @@ public enum Messages implements ComponentLike {
     VOXEL_HEIGHT_MUST_NOT_BE_0,
     GENERATED_CHUNK,
     FILE_ALREADY_EXISTS,
+    BLOCK_ALREADY_ADDED_ENDPOINT,
+    BLOCK_ALREADY_ADDED_CONTROL,
+    ENDPOINT_SELECTION_FULL,
+    CONTROL_SELECTION_FULL,
     ;
     //</editor-fold>
 

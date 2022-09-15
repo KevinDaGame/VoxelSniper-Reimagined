@@ -9,6 +9,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * FOR ANY BRUSH THAT USES A SPLINE, EXTEND THAT BRUSH FROM THIS BRUSH!!! That way, the spline calculations are already there. Also, the UI for the splines will
@@ -18,12 +19,11 @@ import java.util.List;
  */
 public class SplineBrush extends PerformerBrush {
 
-    private final ArrayList<IBlock> endPts = new ArrayList<>();
-    private final ArrayList<IBlock> ctrlPts = new ArrayList<>();
+    private final ArrayList<Point> endPts = new ArrayList<>();
+    private final ArrayList<Point> ctrlPts = new ArrayList<>();
     protected ArrayList<Point> spline = new ArrayList<>();
     protected boolean set;
     protected boolean ctrl;
-    protected String[] sparams = {"ss", "sc", "clear"};
 
     public SplineBrush() {
         this.setName("Spline");
@@ -31,43 +31,55 @@ public class SplineBrush extends PerformerBrush {
 
     public final void addToSet(final SnipeData v, final boolean ep, IBlock targetBlock) {
         String pos = "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ";
+        Point point = new Point(targetBlock);
         if (ep) {
-            if (this.endPts.contains(targetBlock) || this.endPts.size() == 2) {
+            if (this.endPts.contains(point)) {
+                v.sendMessage(Messages.BLOCK_ALREADY_ADDED_ENDPOINT.replace("%pos%",pos));
+                return;
+            }
+            if (this.endPts.size() == 2) {
+                v.sendMessage(Messages.ENDPOINT_SELECTION_FULL);
                 return;
             }
 
-            this.endPts.add(targetBlock);
+            this.endPts.add(point);
             v.sendMessage(Messages.ADDED_BLOCK_ENDPOINT.replace("%pos%",pos));
             return;
         }
 
-        if (this.ctrlPts.contains(targetBlock) || this.ctrlPts.size() == 2) {
+        if (this.ctrlPts.contains(point)) {
+            v.sendMessage(Messages.BLOCK_ALREADY_ADDED_CONTROL.replace("%pos%",pos));
+            return;
+        }
+        if (this.ctrlPts.size() == 2) {
+            v.sendMessage(Messages.CONTROL_SELECTION_FULL);
             return;
         }
 
-        this.ctrlPts.add(targetBlock);
+        this.ctrlPts.add(point);
         v.sendMessage(Messages.ADDED_BLOCK_CONTROL.replace("%pos%",pos));
     }
 
     public final void removeFromSet(final SnipeData v, final boolean ep,  IBlock targetBlock) {
         String pos = "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ";
+        Point point = new Point(targetBlock);
         if (ep) {
-            if (!this.endPts.contains(targetBlock)) {
+            if (!this.endPts.contains(point)) {
                 v.sendMessage(Messages.BLOCK_NOT_IN_ENDPOINT_SELECTION);
                 return;
             }
 
-            this.endPts.add(targetBlock);
+            this.endPts.add(point);
             v.sendMessage(Messages.REMOVED_BLOCK_ENDPOINT.replace("%pos%",pos));
             return;
         }
 
-        if (!this.ctrlPts.contains(targetBlock)) {
+        if (!this.ctrlPts.contains(point)) {
             v.sendMessage(Messages.BLOCK_NOT_IN_CONTROL_POINT_SELECTION);
             return;
         }
 
-        this.ctrlPts.remove(targetBlock);
+        this.ctrlPts.remove(point);
         v.sendMessage(Messages.REMOVED_BLOCK_CONTROL.replace("%pos%",pos));
     }
 
@@ -80,9 +92,9 @@ public class SplineBrush extends PerformerBrush {
             final Point a = ((end.subtract(start)).subtract(c)).subtract(b);
 
             for (double t = 0.0; t < 1.0; t += 0.01) {
-                final int px = (int) Math.round((a.getX() * (t * t * t)) + (b.getX() * (t * t)) + (c.getX() * t) + this.endPts.get(0).getX());
-                final int py = (int) Math.round((a.getY() * (t * t * t)) + (b.getY() * (t * t)) + (c.getY() * t) + this.endPts.get(0).getY());
-                final int pz = (int) Math.round((a.getZ() * (t * t * t)) + (b.getZ() * (t * t)) + (c.getZ() * t) + this.endPts.get(0).getZ());
+                final int px = (int) Math.round((a.getX() * (t * t * t)) + (b.getX() * (t * t)) + (c.getX() * t) + start.getX());
+                final int py = (int) Math.round((a.getY() * (t * t * t)) + (b.getY() * (t * t)) + (c.getY() * t) + start.getY());
+                final int pz = (int) Math.round((a.getZ() * (t * t * t)) + (b.getZ() * (t * t)) + (c.getZ() * t) + start.getZ());
 
                 if (!this.spline.contains(new Point(px, py, pz))) {
                     this.spline.add(new Point(px, py, pz));
@@ -184,7 +196,11 @@ public class SplineBrush extends PerformerBrush {
         }
 
         if (params[0].equalsIgnoreCase("render")) {
-            if (this.spline(new Point(this.endPts.get(0)), new Point(this.endPts.get(1)), new Point(this.ctrlPts.get(0)), new Point(this.ctrlPts.get(1)), v)) {
+            if (this.endPts.size() < 2 || this.ctrlPts.size() < 2) {
+                v.sendMessage(Messages.SPLINE_BRUSH_NOT_ENOUGH_POINTS.replace("%endPts%", String.valueOf(this.endPts.size())).replace("%ctrlPts%", String.valueOf(this.ctrlPts.size())));
+                return;
+            }
+            if (this.spline(this.endPts.get(0), this.endPts.get(1), this.ctrlPts.get(0), this.ctrlPts.get(1), v)) {
                 this.render(v);
             }
             return;
@@ -204,7 +220,7 @@ public class SplineBrush extends PerformerBrush {
     }
 
     // Vector class for splines
-    protected class Point {
+    private static class Point {
 
         private int x;
         private int y;
@@ -256,6 +272,18 @@ public class SplineBrush extends PerformerBrush {
 
         public void setZ(int z) {
             this.z = z;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o instanceof Point point) return x == point.x && y == point.y && z == point.z;
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y, z);
         }
     }
 

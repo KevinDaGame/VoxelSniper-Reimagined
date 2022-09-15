@@ -574,9 +574,15 @@ NOTHING_TO_SET_SUBSTANCE: <gold>Nothing to set voxel substance. No changes were 
 INVALID_TYPE_ID: <red>You have entered an invalid Material ID.
 VOXEL_LIST_COULDNT_ADD: "<red>Couldn't add because item is non-existent or aren't blocks:- \n</red><gold>    %blocks%"
 UNDID_PLAYER_CHANGES: '<gold>Undid %player%''s changes: </gold><dark_aqua>%amountChanged% blocks replaced'
-SPLINE_BRUSH_NOT_ENOUGH_POINTS: <red>Not enough points selected; %endPts% endpoints, %ctrlPts% control points
+SPLINE_BRUSH_NOT_ENOUGH_POINTS: <red>Not enough points selected; %endPts% endpoints, %ctrlPts% control points, select at least two of points each
 ADDED_BLOCK_ENDPOINT: <gray>Added block </gray><red>%pos%</red><gray>to endpoint selection
 ADDED_BLOCK_CONTROL: <gray>Added block </gray><red>%pos%</red><gray>to control point selection
+
+BLOCK_ALREADY_ADDED_ENDPOINT: <gray>Block </gray><red>%pos%</red><gray>was already part of endpoint selection
+BLOCK_ALREADY_ADDED_CONTROL: <gray>Block </gray><red>%pos%</red><gray>was already part of control point selection
+ENDPOINT_SELECTION_FULL: <red>Endpoint selection is full, please remove a point first
+CONTROL_SELECTION_FULL: <red>Control point selection is full, please remove a point first
+
 REMOVED_BLOCK_CONTROL: <gray>Removed block </gray><red>%pos%</red><gray>from control point selection
 REMOVED_BLOCK_ENDPOINT: <gray>Removed block </gray><red>%pos%</red><gray>from endpoint selection
 MOVE_BRUSH_SELECTION: <blue>Move selection blockPositionY </blue><gold>x:%x% y:%y% z:%z%

@@ -295,7 +295,6 @@ public class BlockHelper {
      * @param back Scroll in reverse?
      * @param choice Chosen index to set the painting to
      */
-    @SuppressWarnings(value = "deprecation")
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
         ILocation targetLocation = p.getTargetBlock(null, 4).getLocation();
         IChunk paintingChunk = targetLocation.getChunk();
