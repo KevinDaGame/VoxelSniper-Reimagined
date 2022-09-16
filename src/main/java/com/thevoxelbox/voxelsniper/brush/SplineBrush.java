@@ -113,6 +113,7 @@ public class SplineBrush extends PerformerBrush {
             return;
         }
 
+        this.initP(v);
         for (final Point point : this.spline) {
             this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ()));
         }
