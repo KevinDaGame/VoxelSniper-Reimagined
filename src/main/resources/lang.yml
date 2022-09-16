@@ -424,6 +424,10 @@ HEATRAY_OCTAVE: '<green>Octave: %this.octaves%'
 HEATRAY_AMPLITUDE: '<green>Amplitude: %this.amplitude%'
 PULLBRUSH_PINCH: <aqua>Pinch %val%
 PULLBRUSH_BUBBLE: <aqua>Bubble %val%
+PULLBRUSH_USAGE: |-
+  <gold>Pull Brush Parameters:
+  </gold><aqua>/b %triggerHandle% pinch [decimal]  -- Set a pinch amount
+  </aqua><aqua>/b %triggerHandle% bubble [decimal]  -- Set a bubble amount
 RULER_BRUSH_POWDER: |
   <blue>Format = (second coord - first coord)
   </blue><aqua>X change: %x%

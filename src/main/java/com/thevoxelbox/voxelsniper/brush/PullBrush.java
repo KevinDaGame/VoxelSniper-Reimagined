@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.brush;
 
+import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
@@ -8,6 +9,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author Piotr
@@ -17,8 +19,8 @@ public class PullBrush extends Brush {
 
     private final HashSet<BlockWrapper> surface = new HashSet<>();
     private int vh;
-    private double c1 = 1;
-    private double c2 = 0;
+    private double pinch = 1;
+    private double bubble = 0;
 
     /**
      * Default Constructor.
@@ -32,20 +34,39 @@ public class PullBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
         vm.height();
-        vm.custom(Messages.PULLBRUSH_PINCH.replace("%val%",String.valueOf((-this.c1 + 1))));
-        vm.custom(Messages.PULLBRUSH_BUBBLE.replace("%val%",String.valueOf(this.c2)));
+        vm.custom(Messages.PULLBRUSH_PINCH.replace("%val%",String.valueOf((-this.pinch + 1))));
+        vm.custom(Messages.PULLBRUSH_BUBBLE.replace("%val%",String.valueOf(this.bubble)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
-        try {
-            final double pinch = Double.parseDouble(params[1]);
-            final double bubble = Double.parseDouble(params[2]);
-            this.c1 = 1 - pinch;
-            this.c2 = bubble;
-        } catch (final Exception exception) {
-            v.sendMessage(Messages.INVALID_BRUSH_PARAM);
+        if (params[0].equalsIgnoreCase("info")) {
+            v.sendMessage(Messages.PULLBRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            return;
         }
+
+        try {
+            if (params[0].startsWith("pinch")) {
+                final int pinch = ((int) Double.parseDouble(params[1]));
+                this.pinch = 1 - pinch;
+                v.sendMessage(Messages.PULLBRUSH_PINCH.replace("%val%",String.valueOf((-this.pinch + 1))));
+                return;
+            }
+
+            if (params[0].startsWith("bubble")) {
+                this.bubble = ((int) Double.parseDouble(params[1]));
+                v.sendMessage(Messages.PULLBRUSH_BUBBLE.replace("%val%",String.valueOf(this.bubble)));
+                return;
+            }
+        } catch (NumberFormatException ignored) {
+        }
+
+        v.sendMessage(Messages.PULLBRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
+    }
+
+    @Override
+    public List<String> registerArguments() {
+        return Lists.newArrayList("pinch", "bubble");
     }
 
     /**
@@ -54,7 +75,7 @@ public class PullBrush extends Brush {
      */
     private double getStr(final double t) {
         final double lt = 1 - t;
-        return (lt * lt * lt) + 3 * (lt * lt) * t * this.c1 + 3 * lt * (t * t) * this.c2; // My + (t * ((By + (t * ((c2 + (t * (0 - c2))) - By))) - My));
+        return (lt * lt * lt) + 3 * (lt * lt) * t * this.pinch + 3 * lt * (t * t) * this.bubble; // My + (t * ((By + (t * ((c2 + (t * (0 - c2))) - By))) - My));
     }
 
     /**
@@ -244,7 +265,7 @@ public class PullBrush extends Brush {
     /**
      * @author Piotr
      */
-    private final class BlockWrapper {
+    private static final class BlockWrapper {
 
         private final IBlockData blockData;
         private final double str;

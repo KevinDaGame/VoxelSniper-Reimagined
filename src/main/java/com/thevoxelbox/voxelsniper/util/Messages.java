@@ -361,6 +361,7 @@ public enum Messages implements ComponentLike {
     BLOCK_ALREADY_ADDED_CONTROL,
     ENDPOINT_SELECTION_FULL,
     CONTROL_SELECTION_FULL,
+    PULLBRUSH_USAGE,
     ;
     //</editor-fold>
 
