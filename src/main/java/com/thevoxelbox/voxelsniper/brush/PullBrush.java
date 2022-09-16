@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
@@ -130,49 +131,61 @@ public class PullBrush extends Brush {
 
     }
 
-    private void setBlock(final BlockWrapper block, int vh) {
+    private void setBlock(final BlockWrapper block, Undo undo, int vh) {
         final IBlock currentBlock = this.clampY(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
+        undo.put(currentBlock);
+        currentBlock.setBlockData(block.getBlockData());
+
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == VoxelMaterial.AIR) {
-            currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
-                this.setBlockMaterialAt(block.getX(), y, block.getZ(), VoxelMaterial.AIR);
+                IBlock b = this.clampY(block.getX(), y, block.getZ());
+                undo.put(b);
+                b.setBlockData(VoxelMaterial.AIR.createBlockData());
             }
         } else {
-            currentBlock.setBlockData(block.getBlockData());
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
                 final  IBlock  current = this.clampY(block.getX(), y, block.getZ());
+                undo.put(current);
                 current.setBlockData(block.getBlockData());
             }
         }
     }
 
-    private void setBlockDown(final BlockWrapper block, int vh) {
+    private void setBlockDown(final BlockWrapper block, Undo undo, int vh) {
         final  IBlock  currentBlock = this.clampY(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
+        undo.put(currentBlock);
         currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
-            this.setBlockMaterialAt(block.getX(), y, block.getZ(), VoxelMaterial.AIR);
+            IBlock b = this.clampY(block.getX(), y, block.getZ());
+            undo.put(b);
+            b.setBlockData(VoxelMaterial.AIR.createBlockData());
         }
-        // }
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
         int vh = v.getVoxelHeight();
         HashSet<BlockWrapper> surface = this.getSurface(v);
+        Undo undo = new Undo();
 
         if (vh > 0) {
             for (final BlockWrapper block : surface) {
-                this.setBlock(block, vh);
+                this.setBlock(block, undo, vh);
             }
         } else if (vh < 0) {
             for (final BlockWrapper block : surface) {
-                this.setBlockDown(block, vh);
+                this.setBlockDown(block, undo, vh);
             }
         }
+
+        if (undo.getSize() > 0)
+            v.owner().storeUndo(undo);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
+        Undo undo = new Undo();
+
         int vh = v.getVoxelHeight();
 
         int lastY;
@@ -210,7 +223,9 @@ public class PullBrush extends Brush {
                             lastStr = (int) (vh * str);
                             lastY = actualY + lastStr;
 
-                            this.clampY(actualX, lastY, actualZ).setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
+                            IBlock b = this.clampY(actualX, lastY, actualZ);
+                            undo.put(b);
+                            b.setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
 
                             if (str == 1) {
                                 str = 0.8;
@@ -224,7 +239,9 @@ public class PullBrush extends Brush {
                                 int newY = actualY + lastStr;
                                 VoxelMaterial material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
-                                    this.clampY(actualX, i, actualZ).setBlockData(material.createBlockData());
+                                    b = this.clampY(actualX, i, actualZ);
+                                    undo.put(b);
+                                    b.setBlockData(material.createBlockData());
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -246,14 +263,18 @@ public class PullBrush extends Brush {
                         if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial() != VoxelMaterial.AIR) {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (vh * this.getStr(volume / brushSizeSquared));
-                            this.clampY(actualX, lastY, actualZ).setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
+                            IBlock b = this.clampY(actualX, lastY, actualZ);
+                            undo.put(b);
+                            b.setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (vh * this.getStr(volume / brushSizeSquared));
                                 final VoxelMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
-                                    this.clampY(actualX, i, actualZ).setBlockData(blockMaterial.createBlockData());
+                                    b = this.clampY(actualX, i, actualZ);
+                                    undo.put(b);
+                                    b.setBlockData(blockMaterial.createBlockData());
                                 }
                                 lastY = blockY;
                                 y++;
@@ -265,6 +286,9 @@ public class PullBrush extends Brush {
                 }
             }
         }
+
+        if (undo.getSize() > 0)
+            v.owner().storeUndo(undo);
     }
 
     /**

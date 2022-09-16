@@ -76,7 +76,7 @@ public class StampBrush extends Brush {
     protected final boolean falling(final VoxelMaterial material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
-        return material.hasGravity();
+        return material.hasGravity() || material.isFluid();
     }
 
     /**

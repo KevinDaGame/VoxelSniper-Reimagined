@@ -15,7 +15,8 @@ import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 @SuppressWarnings("unused")
 public class VoxelMaterial implements IMaterial {
     private enum Tags {
-        FALLSOFF
+        FALLSOFF,
+        FLUIDS
     }
     public static final Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
 
@@ -46,8 +47,8 @@ public class VoxelMaterial implements IMaterial {
     public static final VoxelMaterial ACACIA_SAPLING = register("minecraft", "acacia_sapling", Tags.FALLSOFF);
     public static final VoxelMaterial DARK_OAK_SAPLING = register("minecraft", "dark_oak_sapling", Tags.FALLSOFF);
     public static final VoxelMaterial BEDROCK = register("minecraft", "bedrock");
-    public static final VoxelMaterial WATER = register("minecraft", "water");
-    public static final VoxelMaterial LAVA = register("minecraft", "lava");
+    public static final VoxelMaterial WATER = register("minecraft", "water", Tags.FLUIDS);
+    public static final VoxelMaterial LAVA = register("minecraft", "lava", Tags.FLUIDS);
     public static final VoxelMaterial SAND = register("minecraft", "sand");
     public static final VoxelMaterial RED_SAND = register("minecraft", "red_sand");
     public static final VoxelMaterial GRAVEL = register("minecraft", "gravel");
@@ -1079,6 +1080,10 @@ public class VoxelMaterial implements IMaterial {
 
     public boolean fallsOff() {
         return this.tags.contains(Tags.FALLSOFF);
+    }
+
+    public boolean isFluid() {
+        return this.tags.contains(Tags.FLUIDS);
     }
 
     public String getKey() {
