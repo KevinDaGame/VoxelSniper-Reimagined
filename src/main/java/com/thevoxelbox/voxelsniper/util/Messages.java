@@ -362,6 +362,7 @@ public enum Messages implements ComponentLike {
     ENDPOINT_SELECTION_FULL,
     CONTROL_SELECTION_FULL,
     PULLBRUSH_USAGE,
+    NUMBER_OUT_OF_RANGE,
     ;
     //</editor-fold>
 

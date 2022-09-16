@@ -424,6 +424,7 @@ HEATRAY_OCTAVE: '<green>Octave: %this.octaves%'
 HEATRAY_AMPLITUDE: '<green>Amplitude: %this.amplitude%'
 PULLBRUSH_PINCH: <aqua>Pinch %val%
 PULLBRUSH_BUBBLE: <aqua>Bubble %val%
+NUMBER_OUT_OF_RANGE: '<red>%arg% must be between %min% and %max%'
 PULLBRUSH_USAGE: |-
   <gold>Pull Brush Parameters:
   </gold><aqua>/b %triggerHandle% pinch [decimal]  -- Set a pinch amount
