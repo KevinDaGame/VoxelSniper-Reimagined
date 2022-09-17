@@ -1097,7 +1097,7 @@ public class VoxelMaterial implements IMaterial {
 
     @Override
     public String getName() {
-        return this.getIMaterial().getName();
+        return this.getKey();
     }
 
     @Override

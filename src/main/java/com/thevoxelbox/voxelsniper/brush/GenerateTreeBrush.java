@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Material;
-
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 
 /**
@@ -597,12 +595,12 @@ temp.printStackTrace();
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(VoxelMaterial.OAK_WOOD.getName(), Material.ACACIA_WOOD.name(), Material.SPRUCE_WOOD.name(), Material.JUNGLE_WOOD.name(),
-                Material.DARK_OAK_WOOD.name(), Material.BIRCH_WOOD.name()));
+        argumentValues.put("wood", Lists.newArrayList(VoxelMaterial.OAK_WOOD.getName(), VoxelMaterial.ACACIA_WOOD.getName(), VoxelMaterial.SPRUCE_WOOD.getName(), VoxelMaterial.JUNGLE_WOOD.getName(),
+                VoxelMaterial.DARK_OAK_WOOD.getName(), VoxelMaterial.BIRCH_WOOD.getName()));
 
         // Leaves material variables
-        argumentValues.put("leaves", Lists.newArrayList(VoxelMaterial.OAK_LEAVES.getName(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
-                Material.DARK_OAK_LEAVES.name(), Material.BIRCH_LEAVES.name()));
+        argumentValues.put("leaves", Lists.newArrayList(VoxelMaterial.OAK_LEAVES.getName(), VoxelMaterial.ACACIA_LEAVES.getName(), VoxelMaterial.SPRUCE_LEAVES.getName(), VoxelMaterial.JUNGLE_LEAVES.getName(),
+                VoxelMaterial.DARK_OAK_LEAVES.getName(), VoxelMaterial.BIRCH_LEAVES.getName()));
 
         return argumentValues;
     }
