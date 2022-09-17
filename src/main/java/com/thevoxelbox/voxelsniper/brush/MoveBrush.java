@@ -50,103 +50,6 @@ public class MoveBrush extends Brush {
     }
 
     /**
-     * Breakable Blocks to determine if no-physics should be used.
-     */
-    private static final Set<VoxelMaterial> BREAKABLE_MATERIALS = new TreeSet<>();
-
-    static {
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OAK_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACACIA_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BIRCH_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DARK_OAK_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.JUNGLE_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.SPRUCE_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BLACK_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BLUE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.LIGHT_BLUE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BROWN_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.CYAN_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.GRAY_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.GREEN_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.LIGHT_GRAY_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.LIME_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.MAGENTA_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ORANGE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.PINK_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.PURPLE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.RED_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.WHITE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.YELLOW_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.TALL_GRASS);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DEAD_BUSH);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.PISTON_HEAD);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DANDELION);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.POPPY);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BLUE_ORCHID);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ALLIUM);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.AZURE_BLUET);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.RED_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ORANGE_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.WHITE_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.PINK_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OXEYE_DAISY);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BROWN_MUSHROOM);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.RED_MUSHROOM);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.TORCH);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.FIRE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.WHEAT);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACACIA_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BIRCH_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DARK_OAK_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.JUNGLE_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OAK_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACACIA_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BIRCH_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.JUNGLE_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OAK_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OAK_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACACIA_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BIRCH_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DARK_OAK_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.JUNGLE_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.SPRUCE_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.LADDER);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACTIVATOR_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DETECTOR_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.POWERED_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.LEVER);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.STONE_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.IRON_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OAK_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACACIA_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BIRCH_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DARK_OAK_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.JUNGLE_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.SPRUCE_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.REDSTONE_TORCH);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.REDSTONE_WALL_TORCH);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.STONE_BUTTON);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.SNOW);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.CACTUS);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.SUGAR_CANE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.CAKE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.REPEATER);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.OAK_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.ACACIA_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.BIRCH_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.DARK_OAK_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.JUNGLE_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.SPRUCE_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.PUMPKIN_STEM);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.MELON_STEM);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.VINE);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.LILY_PAD);
-        MoveBrush.BREAKABLE_MATERIALS.add(VoxelMaterial.NETHER_WART);
-    }
-
-    /**
      * Saved direction.
      */
     private final int[] moveDirections = {0, 0, 0};
@@ -207,7 +110,7 @@ public class MoveBrush extends Brush {
             }
             for (final IBlockState blockState : selection.getBlockStates()) {
                 final  IBlock  affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
-                affectedBlock.setBlockData(blockState.getBlockData(), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getMaterial()));
+                affectedBlock.setBlockData(blockState.getBlockData(), !blockState.getMaterial().fallsOff());
             }
         }
     }
