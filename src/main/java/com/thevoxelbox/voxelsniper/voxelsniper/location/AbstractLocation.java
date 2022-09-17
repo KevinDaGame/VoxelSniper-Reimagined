@@ -21,6 +21,11 @@ public abstract class AbstractLocation implements ILocation{
     }
 
     @Override
+    public final ILocation clone() {
+        return LocationFactory.getLocation(getWorld(), getX(), getY(), getZ(), getYaw(), getPitch());
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(this.world, getX(), getY(), getZ());
     }

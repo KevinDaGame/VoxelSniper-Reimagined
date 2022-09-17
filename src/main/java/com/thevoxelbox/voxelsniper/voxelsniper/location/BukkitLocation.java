@@ -108,11 +108,6 @@ public class BukkitLocation extends AbstractLocation {
     }
 
     @Override
-    public ILocation clone() {
-        return new BukkitLocation(location.clone());
-    }
-
-    @Override
     public IChunk getChunk() {
         return new BukkitChunk(location.getChunk());
     }

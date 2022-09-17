@@ -51,6 +51,8 @@ public interface ILocation {
     void setPitch(float pitch);
     IWorld getWorld();
 
+    ILocation clone();
+
     IBlock getClampedBlock();
 
     IBlock getBlock();

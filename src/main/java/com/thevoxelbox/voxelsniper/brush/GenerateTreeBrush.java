@@ -6,10 +6,9 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
@@ -49,7 +47,6 @@ public class GenerateTreeBrush extends Brush {
     private int branchLength = 8;
     private int nodeMax = 4;
     private int nodeMin = 3;
-    private ILocation location;
 
     /**
      *
@@ -59,10 +56,8 @@ public class GenerateTreeBrush extends Brush {
     }
 
     // Branch Creation based on direction chosen from the parameters passed.
-    private void branchCreate(final int xDirection, final int zDirection) {
-
-        // Sets branch origin.
-        final ILocation origin = new BukkitLocation(((BukkitLocation)location).getLocation());
+    private void branchCreate(ILocation location, final int xDirection, final int zDirection) {
+        location = location.clone();
 
         // Sets direction preference.
         final int xPreference = this.random.nextInt(60) + 20;
@@ -93,12 +88,9 @@ public class GenerateTreeBrush extends Brush {
             location.getBlock().setBlockData(woodMaterial.createBlockData(), false);
             this.branchBlocks.add(location.getClampedBlock());
         }
-
-        // Resets the origin
-        location = new BukkitLocation(((BukkitLocation)origin).getLocation());
     }
 
-    private void leafNodeCreate() {
+    private void leafNodeCreate(final ILocation location) {
         // Generates the node size.
         final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
@@ -129,7 +121,7 @@ public class GenerateTreeBrush extends Brush {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dy : new int[]{-1, 1}) {
                                 for (int dz : new int[]{-1, 1}) {
-                                    this.createLeaf(x * dx, y * dy, z * dz);
+                                    this.createLeaf(location, x * dx, y * dy, z * dz);
                                 }
                             }
                         }
@@ -139,7 +131,7 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void createLeaf(int x, int y, int z) {
+    private void createLeaf(final ILocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial() == VoxelMaterial.AIR) {
             this.undo.put(location.getClampedBlock().getRelative(x, y, z));
             location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
@@ -149,12 +141,13 @@ public class GenerateTreeBrush extends Brush {
     /**
      * Code Concerning Root Generation.
      *
+     * @param location
      * @param xDirection
      * @param zDirection
      */
-    private void rootCreate(final int xDirection, final int zDirection) {
+    private void rootCreate(ILocation location, final int xDirection, final int zDirection) {
         // Sets Origin.
-        final ILocation origin = new BukkitLocation(((BukkitLocation)location).getLocation());
+        location = location.clone();
 
         // Generates the number of roots to create.
         final int roots = this.random.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
@@ -215,27 +208,24 @@ public class GenerateTreeBrush extends Brush {
                 }
             }
 
-            // Reset origin.
-            location = new BukkitLocation(((BukkitLocation)origin).getLocation());
-
         }
     }
 
-    private void rootGen() {
+    private void rootGen(final ILocation location) {
         // Quadrant 1
-        this.rootCreate(1, 1);
+        this.rootCreate(location, 1, 1);
 
         // Quadrant 2
-        this.rootCreate(-1, 1);
+        this.rootCreate(location, -1, 1);
 
         // Quadrant 3
-        this.rootCreate(1, -1);
+        this.rootCreate(location, 1, -1);
 
         // Quadrant 4
-        this.rootCreate(-1, -1);
+        this.rootCreate(location, -1, -1);
     }
 
-    private void trunkCreate() {
+    private void trunkCreate(final ILocation location) {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
 
@@ -246,7 +236,7 @@ public class GenerateTreeBrush extends Brush {
                 if ((xSquared + Math.pow(z, 2)) <= bSquared) {
                     for (int dx : new int[]{-1, 1}) {
                         for (int dz : new int[]{-1, 1}) {
-                            this.createTrunk(x * dx, z * dz);
+                            this.createTrunk(location, x * dx, z * dz);
                         }
 
                     }
@@ -255,7 +245,7 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void createTrunk(int x, int z) {
+    private void createTrunk(final ILocation location, int x, int z) {
         // If block is air, then create a block.
         if (location.getBlock().getRelative(x, 0, z).getMaterial() == VoxelMaterial.AIR) {
             // Adds block to undo function.
@@ -269,9 +259,9 @@ public class GenerateTreeBrush extends Brush {
      *
      * Code Concerning Trunk Generation
      */
-    private void trunkGen() {
+    private void trunkGen(final ILocation origin) {
         // Sets Origin
-        final ILocation origin = new BukkitLocation(((BukkitLocation)location).getLocation());
+        ILocation location = origin.clone();
 
         // ----------
         // Main Trunk
@@ -305,20 +295,20 @@ public class GenerateTreeBrush extends Brush {
             }
 
             // Creates trunk section
-            this.trunkCreate();
+            this.trunkCreate(location);
 
             // Mos up for next section
             location.addY(1);
         }
 
         // Generates branchs at top of trunk for each quadrant.
-        this.branchCreate(1, 1);
-        this.branchCreate(-1, 1);
-        this.branchCreate(1, -1);
-        this.branchCreate(-1, -1);
+        this.branchCreate(location, 1, 1);
+        this.branchCreate(location, -1, 1);
+        this.branchCreate(location, 1, -1);
+        this.branchCreate(location, -1, -1);
 
         // Reset Origin for next trunk.
-        location = new BukkitLocation(((BukkitLocation)origin).getLocation());
+        location = origin.clone();
         location.addY(4);
 
         // ---------------
@@ -329,15 +319,8 @@ public class GenerateTreeBrush extends Brush {
         zPreference = this.random.nextInt(this.slopeChance);
 
         // Sets direction.
-        xDirection = 1;
-        if (this.chance(50)) {
-            xDirection = -1;
-        }
-
-        zDirection = 1;
-        if (this.chance(50)) {
-            zDirection = -1;
-        }
+        xDirection = this.chance(50)? -1 : 1;
+        zDirection = this.chance(50)? -1 : 1;
 
         // Generates a height for trunk.
         height = this.random.nextInt(this.maximumHeight - this.minimumHeight + 1) + this.minimumHeight;
@@ -358,17 +341,17 @@ public class GenerateTreeBrush extends Brush {
                 }
 
                 // Creates a trunk section
-                this.trunkCreate();
+                this.trunkCreate(location);
 
                 // Mos up for next section
                 location.addY(1);
             }
 
             // Generates branchs at top of trunk for each quadrant.
-            this.branchCreate(1, 1);
-            this.branchCreate(-1, 1);
-            this.branchCreate(1, -1);
-            this.branchCreate(-1, -1);
+            this.branchCreate(location, 1, 1);
+            this.branchCreate(location, -1, 1);
+            this.branchCreate(location, 1, -1);
+            this.branchCreate(location, -1, -1);
         }
     }
 
@@ -380,18 +363,17 @@ public class GenerateTreeBrush extends Brush {
 
         // Sets the location variables.
 
-        location = new BukkitLocation(new Location(((BukkitWorld)this.getTargetBlock().getWorld()).world(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ()));
+        ILocation location = LocationFactory.getLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
 
         // Generates the roots.
-        this.rootGen();
+        this.rootGen(location);
         // Generates the trunk, which also generates branches.
-        this.trunkGen();
+        this.trunkGen(location);
 
         // Each branch block was saved in an array. This is now fed through an array.
         // This array takes each branch block and constructs a leaf node around it.
         for (final IBlock block : this.branchBlocks) {
-            location = new BukkitLocation(new Location(((BukkitWorld)block.getWorld()).world(), block.getX(), block.getY(), block.getZ()));
-            this.leafNodeCreate();
+            this.leafNodeCreate(block.getLocation());
         }
 
         // Ends the undo function and mos on.
