@@ -28,7 +28,7 @@ public record BukkitMaterial(Material material) implements IMaterial {
 
     @Override
     public IBlockData createBlockData() {
-        return new BukkitBlockData(material.createBlockData());
+        return BukkitBlockData.fromBukkitData(material.createBlockData());
     }
 
     @Override
@@ -58,6 +58,6 @@ public record BukkitMaterial(Material material) implements IMaterial {
 
     @Override
     public IBlockData createBlockData(String s) {
-        return new BukkitBlockData(material.createBlockData(s));
+        return BukkitBlockData.fromBukkitData(material.createBlockData(s));
     }
 }

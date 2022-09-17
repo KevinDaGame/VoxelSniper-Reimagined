@@ -191,7 +191,7 @@ INVALID_INPUT: <red>Your input was invalid somewhere.
 ELLIPSOID_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X radius\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y radius\n</aqua><aqua>/b %triggerHandle% z [number]  -- Set Z radius"
 TOGGLE_RANGE: <gold>Distance Restriction toggled <dark_red>%state%</dark_red>, range is <light_purple>%range%</light_purple></gold>
 MISSING_PARAMETER: <red>Missing parameter after %parameter%.
-BLOCKS_UNTIL_REPEATER_MESSAGE: '<aqua>Blocks until repeater needed: %blocks%'
+REDSTONE_POWER_LEVEL: '<aqua>Redstone level: %blocks%'
 BRUSH_CENTER: '<dark_blue>Brush Center: <dark_red>%center%</dark_red></dark_blue>'
 UNKNOWN_PAINTING: '<red>Painting with id %id% was not found.'
 GEN_TREE_BRUSH_USAGE_2: |-

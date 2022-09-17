@@ -36,8 +36,6 @@ public interface IBlock {
     IBlockData getBlockData();
     void setBlockData(IBlockData blockData);
     void setBlockData(IBlockData blockData, boolean applyPhysics);
-    @Deprecated
-    byte getData();
 
     boolean isEmpty();
 

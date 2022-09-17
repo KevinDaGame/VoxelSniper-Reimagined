@@ -59,7 +59,7 @@ public class BukkitBlock extends AbstractBlock {
 
     @Override
     public IBlockData getBlockData() {
-        return new BukkitBlockData(block.getBlockData());
+        return BukkitBlockData.fromBukkitData(block.getBlockData());
     }
 
     @Override
@@ -70,12 +70,6 @@ public class BukkitBlock extends AbstractBlock {
     @Override
     public void setBlockData(IBlockData blockData, boolean applyPhysics) {
         block.setBlockData(((BukkitBlockData) blockData).getBlockData(), applyPhysics);
-    }
-
-    @Override
-    @Deprecated
-    public byte getData() {
-        return block.getData();
     }
 
     @Override

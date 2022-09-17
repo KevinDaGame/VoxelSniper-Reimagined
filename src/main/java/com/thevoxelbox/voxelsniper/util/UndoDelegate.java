@@ -30,7 +30,7 @@ public class UndoDelegate implements BlockChangeDelegate {
     @Override
     public boolean setBlockData(int x, int y, int z, BlockData blockData) {
         this.currentUndo.put(targetWorld.getBlock(x, y, z));
-        this.targetWorld.getBlock(x, y, z).setBlockData(new BukkitBlockData(blockData), false);
+        this.targetWorld.getBlock(x, y, z).setBlockData(BukkitBlockData.fromBukkitData(blockData), false);
         return true;
     }
 

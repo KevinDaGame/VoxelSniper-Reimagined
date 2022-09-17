@@ -54,7 +54,7 @@ public class BukkitBlockState implements IBlockState {
 
     @Override
     public IBlockData getBlockData() {
-        return new BukkitBlockData(blockState.getBlockData());
+        return BukkitBlockData.fromBukkitData(blockState.getBlockData());
     }
 
     @Override
