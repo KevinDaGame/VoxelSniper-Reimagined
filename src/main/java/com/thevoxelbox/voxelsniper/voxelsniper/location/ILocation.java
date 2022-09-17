@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.location;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 public interface ILocation {
@@ -57,7 +57,7 @@ public interface ILocation {
 
     IBlock getBlock();
 
-    IVector toVector();
+    VoxelVector toVector();
 
     double distanceSquared(ILocation targetLocation);
 

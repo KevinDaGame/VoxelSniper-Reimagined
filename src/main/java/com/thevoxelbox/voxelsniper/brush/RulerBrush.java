@@ -5,8 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ruler_Brush
@@ -16,7 +15,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
 public class RulerBrush extends Brush {
 
     private boolean first = true;
-    private IVector coords = VectorFactory.getVector();
+    private VoxelVector coords = new VoxelVector();
 
     private final int xOff = 0;
     private final int yOff = 0;

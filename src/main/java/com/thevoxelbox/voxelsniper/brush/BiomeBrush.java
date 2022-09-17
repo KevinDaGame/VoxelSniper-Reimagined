@@ -6,11 +6,8 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.bukkit.block.Biome;
 
 /**
  *
@@ -87,7 +84,7 @@ public class BiomeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        return Arrays.stream(Biome.values()).map(Enum::name).collect(Collectors.toList());
+        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(Collectors.toList());
     }
 
     @Override

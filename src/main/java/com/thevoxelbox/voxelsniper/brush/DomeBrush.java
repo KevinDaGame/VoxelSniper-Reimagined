@@ -5,8 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -51,7 +50,7 @@ public class DomeBrush extends Brush {
         final int absoluteHeight = Math.abs(v.getVoxelHeight());
         final boolean negative = v.getVoxelHeight() < 0;
 
-        final Set<IVector> changeablePositions = new HashSet<>();
+        final Set<VoxelVector> changeablePositions = new HashSet<>();
 
         final Undo undo = new Undo();
 
@@ -73,15 +72,15 @@ public class DomeBrush extends Brush {
                 final int currentBlockZAdd = NumberConversions.floor(targetBlockZ + z);
                 final int currentBlockXSubtract = NumberConversions.floor(targetBlockX - x);
                 final int currentBlockZSubtract = NumberConversions.floor(targetBlockZ - z);
-                changeablePositions.add(VectorFactory.getVector(currentBlockXAdd, targetY, currentBlockZAdd));
-                changeablePositions.add(VectorFactory.getVector(currentBlockXSubtract, targetY, currentBlockZAdd));
-                changeablePositions.add(VectorFactory.getVector(currentBlockXAdd, targetY, currentBlockZSubtract));
-                changeablePositions.add(VectorFactory.getVector(currentBlockXSubtract, targetY, currentBlockZSubtract));
+                changeablePositions.add(new VoxelVector(currentBlockXAdd, targetY, currentBlockZAdd));
+                changeablePositions.add(new VoxelVector(currentBlockXSubtract, targetY, currentBlockZAdd));
+                changeablePositions.add(new VoxelVector(currentBlockXAdd, targetY, currentBlockZSubtract));
+                changeablePositions.add(new VoxelVector(currentBlockXSubtract, targetY, currentBlockZSubtract));
 
             }
         }
 
-        for (final IVector vector : changeablePositions) {
+        for (final VoxelVector vector : changeablePositions) {
             final IBlock currentTargetBlock = vector.getLocation(this.getTargetBlock().getWorld()).getBlock();
             // TODO: Check whether BlockData omission affects this or not.
             // if (currentTargetBlock.getMaterial() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {

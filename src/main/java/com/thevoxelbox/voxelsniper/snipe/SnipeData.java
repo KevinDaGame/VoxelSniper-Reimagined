@@ -2,14 +2,12 @@ package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.util.VoxelList;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import net.kyori.adventure.text.ComponentLike;
 
-import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
 /**

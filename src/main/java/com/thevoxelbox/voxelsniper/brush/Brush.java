@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.block.Block;
-
 
 /**
  * Abstract implementation of the {@link IBrush} interface.
@@ -47,7 +45,7 @@ public abstract class Brush implements IBrush {
      * @param x
      * @param y
      * @param z
-     * @return {@link Block}
+     * @return {@link IBlock}
      */
     public final IBlock clampY(final int x, final int y, final int z) {
         int clampedY = this.clampWorldHeight(y);

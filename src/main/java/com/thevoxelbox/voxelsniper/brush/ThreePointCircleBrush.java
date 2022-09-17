@@ -4,16 +4,12 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Three-Point_Circle_Brush
@@ -22,9 +18,9 @@ import org.bukkit.util.Vector;
  */
 public class ThreePointCircleBrush extends PerformerBrush {
 
-    private IVector coordsOne;
-    private IVector coordsTwo;
-    private IVector coordsThree;
+    private VoxelVector coordsOne;
+    private VoxelVector coordsTwo;
+    private VoxelVector coordsThree;
     private Tolerance tolerance = Tolerance.DEFAULT;
 
     /**
@@ -60,11 +56,11 @@ public class ThreePointCircleBrush extends PerformerBrush {
         }
 
         // Calculate triangle defining vectors
-        final IVector vectorOne = this.coordsTwo.clone();
+        final VoxelVector vectorOne = this.coordsTwo.clone();
         vectorOne.subtract(this.coordsOne);
-        final IVector vectorTwo = this.coordsThree.clone();
+        final VoxelVector vectorTwo = this.coordsThree.clone();
         vectorTwo.subtract(this.coordsOne);
-        final IVector vectorThree = this.coordsThree.clone();
+        final VoxelVector vectorThree = this.coordsThree.clone();
         vectorThree.subtract(vectorTwo);
 
         // Redundant data check
@@ -78,40 +74,40 @@ public class ThreePointCircleBrush extends PerformerBrush {
         }
 
         // Calculate normal vector of the plane.
-        final IVector normalVector = vectorOne.clone();
+        final VoxelVector normalVector = vectorOne.clone();
         normalVector.crossProduct(vectorTwo);
 
         // Calculate constant term of the plane.
         final double planeConstant = normalVector.getX() * this.coordsOne.getX() + normalVector.getY() * this.coordsOne.getY() + normalVector.getZ() * this.coordsOne.getZ();
 
-        final IVector midpointOne = this.coordsOne.getMidpoint(this.coordsTwo);
-        final IVector midpointTwo = this.coordsOne.getMidpoint(this.coordsThree);
+        final VoxelVector midpointOne = this.coordsOne.getMidpoint(this.coordsTwo);
+        final VoxelVector midpointTwo = this.coordsOne.getMidpoint(this.coordsThree);
 
         // Find perpendicular vectors to two sides in the plane
-        final IVector perpendicularOne = normalVector.clone();
+        final VoxelVector perpendicularOne = normalVector.clone();
         perpendicularOne.crossProduct(vectorOne);
-        final IVector perpendicularTwo = normalVector.clone();
+        final VoxelVector perpendicularTwo = normalVector.clone();
         perpendicularTwo.crossProduct(vectorTwo);
 
         // determine value of parametric variable at intersection of two perpendicular bisectors
-        final IVector tNumerator = midpointTwo.clone();
+        final VoxelVector tNumerator = midpointTwo.clone();
         tNumerator.subtract(midpointOne);
         tNumerator.crossProduct(perpendicularTwo);
-        final IVector tDenominator = perpendicularOne.clone();
+        final VoxelVector tDenominator = perpendicularOne.clone();
         tDenominator.crossProduct(perpendicularTwo);
         final double t = tNumerator.length() / tDenominator.length();
 
         // Calculate Circumcenter and Brushcenter.
-        final IVector circumcenter = VectorFactory.getVector();
+        final VoxelVector circumcenter = new VoxelVector();
         circumcenter.copy(perpendicularOne);
         circumcenter.multiply(t);
         circumcenter.add(midpointOne);
 
-        final Vector brushCenter = new Vector(Math.round(circumcenter.getX()), Math.round(circumcenter.getY()), Math.round(circumcenter.getZ()));
+        final VoxelVector brushCenter = new VoxelVector(Math.round(circumcenter.getX()), Math.round(circumcenter.getY()), Math.round(circumcenter.getZ()));
 
         // Calculate radius of circumcircle and determine brushsize
-        final double radius = circumcenter.distance(VectorFactory.getVector(this.coordsOne.getX(), this.coordsOne.getY(), this.coordsOne.getZ()));
-        final int brushSize = NumberConversions.ceil(radius) + 1;
+        final double radius = circumcenter.distance(new VoxelVector(this.coordsOne.getX(), this.coordsOne.getY(), this.coordsOne.getZ()));
+        final int brushSize = (int) Math.ceil(radius) + 1;
 
         for (int x = -brushSize; x <= brushSize; x++) {
             for (int y = -brushSize; y <= brushSize; y++) {

@@ -6,44 +6,50 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 public interface IVector {
     ILocation getLocation(IWorld world);
 
-    IVector getMidpoint(IVector coordsTwo);
+    VoxelVector getMidpoint(VoxelVector coordsTwo);
     double getX();
     double getY();
     double getZ();
-    int getBlockX();
-    int getBlockY();
-    int getBlockZ();
+    default int getBlockX() {
+        return (int) Math.floor(getX());
+    }
+    default int getBlockY() {
+        return (int) Math.floor(getY());
+    }
+    default int getBlockZ() {
+        return (int) Math.floor(getZ());
+    }
     void setX(double x);
     void setY(double y);
     void setZ(double z);
-    IVector clone();
-    default IVector add(IVector vector) {
+    VoxelVector clone();
+    default VoxelVector add(VoxelVector vector) {
         this.setX(this.getX() + vector.getX());
         this.setY(this.getY() + vector.getY());
         this.setZ(this.getZ() + vector.getZ());
-        return this;
+        return (VoxelVector) this;
     }
-    default IVector subtract(IVector vector) {
+    default VoxelVector subtract(VoxelVector vector) {
         this.setX(this.getX() - vector.getX());
         this.setY(this.getY() - vector.getY());
         this.setZ(this.getZ() - vector.getZ());
-        return this;
+        return (VoxelVector) this;
     }
-    double angle(IVector vector);
+    double angle(VoxelVector vector);
     double length();
-    IVector crossProduct(IVector vector);
+    VoxelVector crossProduct(VoxelVector vector);
 
-    void copy(IVector perpendicularOne);
+    void copy(VoxelVector perpendicularOne);
 
     void multiply(double t);
 
-    double distance(IVector vector);
+    double distance(VoxelVector vector);
 
-    IVector normalize();
+    VoxelVector normalize();
 
-    double distanceSquared(IVector currentPoint);
+    double distanceSquared(VoxelVector currentPoint);
 
-    boolean isInSphere(IVector target, int range);
+    boolean isInSphere(VoxelVector target, int range);
 
     double lengthSquared();
 }

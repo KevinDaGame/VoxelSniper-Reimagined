@@ -9,7 +9,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,7 +118,7 @@ public class HeatRayBrush extends Brush {
     public final void heatRay(final SnipeData v) {
         final PerlinNoiseGenerator generator = new PerlinNoiseGenerator(new Random());
 
-        final IVector targetLocation = this.getTargetBlock().getLocation().toVector();
+        final VoxelVector targetLocation = this.getTargetBlock().getLocation().toVector();
         final ILocation currentLocation = LocationFactory.getLocation(this.getTargetBlock().getWorld(), 0, 0, 0);
         final Undo undo = new Undo();
          IBlock currentBlock;

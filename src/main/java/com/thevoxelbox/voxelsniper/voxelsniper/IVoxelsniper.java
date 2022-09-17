@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.bukkit.VoxelSniperConfiguration;
-import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 
 import java.util.UUID;
 import java.util.logging.Logger;

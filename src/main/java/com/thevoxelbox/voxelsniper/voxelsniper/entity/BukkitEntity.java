@@ -5,8 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
@@ -16,6 +15,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class BukkitEntity implements IEntity {
     private final Entity entity;
@@ -48,8 +48,8 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
-    public void setVelocity(IVector velocity) {
-        entity.setVelocity(((BukkitVector)velocity).vector());
+    public void setVelocity(VoxelVector velocity) {
+        entity.setVelocity(new Vector(velocity.getX(), velocity.getY(), velocity.getZ()));
     }
 
     @Override

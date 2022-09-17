@@ -4,15 +4,12 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import org.bukkit.util.BlockIterator;
+import java.util.Iterator;
+
 import org.bukkit.util.NumberConversions;
 
 /**
@@ -24,9 +21,9 @@ import org.bukkit.util.NumberConversions;
  */
 public class LineBrush extends PerformerBrush {
 
-    private static final IVector HALF_BLOCK_OFFSET = VectorFactory.getVector(0.5, 0.5, 0.5);
-    private IVector originCoords = null;
-    private IVector targetCoords = VectorFactory.getVector();
+    private static final VoxelVector HALF_BLOCK_OFFSET = new VoxelVector(0.5, 0.5, 0.5);
+    private VoxelVector originCoords = null;
+    private VoxelVector targetCoords = new VoxelVector();
     private IWorld targetWorld;
 
     /**
@@ -53,18 +50,17 @@ public class LineBrush extends PerformerBrush {
     }
 
     private void linePowder(final SnipeData v) {
-        final IVector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
-        final IVector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
+        final VoxelVector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
+        final VoxelVector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
 
-        final IVector direction = targetClone.clone().subtract(originClone);
+        final VoxelVector direction = targetClone.clone().subtract(originClone);
         final double length = this.targetCoords.distance(this.originCoords);
 
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.targetWorld).getBlock());
         } else {
-            //TODO replace BlockIterator
-            for (final BlockIterator blockIterator = new BlockIterator(((BukkitWorld)this.targetWorld).world(), ((BukkitVector)originClone).vector(), ((BukkitVector)direction).vector(), 0, NumberConversions.round(length)); blockIterator.hasNext();) {
-                final IBlock currentBlock = new BukkitBlock(blockIterator.next());
+            for (final Iterator<IBlock> blockIterator = getWorld().getBlockIterator(originClone, direction, 0, (int )Math.round(length)); blockIterator.hasNext();) {
+                final IBlock currentBlock = blockIterator.next();
                 this.currentPerformer.perform(currentBlock);
             }
         }

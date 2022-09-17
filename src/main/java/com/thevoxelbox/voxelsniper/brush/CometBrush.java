@@ -5,8 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VectorFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +30,9 @@ public class CometBrush extends Brush {
     }
 
     private void doFireball(final SnipeData v) {
-        final IVector targetCoords = VectorFactory.getVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
+        final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
         final ILocation playerLocation = v.owner().getPlayer().getEyeLocation();
-        final IVector slope = targetCoords.subtract(playerLocation.toVector());
+        final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
 
         if (useBigBalls) {
             v.owner().getPlayer().launchProjectile(LargeFireball.class).setVelocity(slope.normalize());

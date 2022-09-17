@@ -6,7 +6,7 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +37,8 @@ public class DiscBrush extends PerformerBrush {
      */
     private void disc(final SnipeData v, final IBlock targetBlock) {
         final double radiusSquared = (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
-        final IVector centerPoint = targetBlock.getLocation().toVector();
-        final IVector currentPoint = centerPoint.clone();
+        final VoxelVector centerPoint = targetBlock.getLocation().toVector();
+        final VoxelVector currentPoint = centerPoint.clone();
 
         for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
             currentPoint.setX(centerPoint.getX() + x);

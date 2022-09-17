@@ -9,13 +9,17 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
+import java.util.Iterator;
 import java.util.Locale;
 
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 
 public record BukkitWorld(World world) implements IWorld {
 
@@ -96,5 +100,21 @@ public record BukkitWorld(World world) implements IWorld {
     public void generateTree(ILocation location, TreeType treeType, UndoDelegate undoDelegate) {
 
         world.generateTree(((BukkitLocation) location).getLocation(), treeType, undoDelegate);
+    }
+
+    @Override
+    public Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance) {
+        BlockIterator bukkitIterator = new BlockIterator(this.world, new Vector(origin.getX(), origin.getY(), origin.getZ()), new Vector(direction.getX(), direction.getY(), direction.getZ()), yOffset, maxDistance);
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return bukkitIterator.hasNext();
+            }
+
+            @Override
+            public IBlock next() {
+                return new BukkitBlock(bukkitIterator.next());
+            }
+        };
     }
 }

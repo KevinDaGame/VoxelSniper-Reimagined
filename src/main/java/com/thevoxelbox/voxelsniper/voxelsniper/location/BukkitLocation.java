@@ -3,8 +3,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.location;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.BukkitVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
 import org.bukkit.Location;
@@ -98,8 +97,8 @@ public class BukkitLocation extends AbstractLocation {
     }
 
     @Override
-    public IVector toVector() {
-        return new BukkitVector(location.toVector());
+    public VoxelVector toVector() {
+        return new VoxelVector(getX(), getY(), getZ());
     }
 
     @Override

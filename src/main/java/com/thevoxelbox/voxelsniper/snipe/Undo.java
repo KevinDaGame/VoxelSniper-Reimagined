@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.IVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,13 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.block.BlockState;
-import org.bukkit.block.BrewingStand;
-import org.bukkit.block.Chest;
-import org.bukkit.block.CreatureSpawner;
-import org.bukkit.block.Dispenser;
-import org.bukkit.block.Furnace;
-import org.bukkit.block.Sign;
-import org.bukkit.block.data.type.NoteBlock;
 
 /**
  * Holds {@link BlockState}s that can be later on used to reset those block locations back to the recorded states.
@@ -28,7 +21,7 @@ public class Undo {
     private static final List<VoxelMaterial> FALLING_MATERIALS = Arrays.asList(
             VoxelMaterial.WATER,
             VoxelMaterial.LAVA);
-    private final Set<IVector> containing = Sets.newHashSet();
+    private final Set<VoxelVector> containing = Sets.newHashSet();
     private final List<IBlockState> all;
     private final List<IBlockState> falloff;
     private final List<IBlockState> dropdown;
@@ -57,7 +50,7 @@ public class Undo {
      * @param block Block to be added
      */
     public void put(IBlock block) {
-        IVector pos = block.getLocation().toVector();
+        VoxelVector pos = block.getLocation().toVector();
         if (this.containing.contains(pos)) {
             return;
         }
