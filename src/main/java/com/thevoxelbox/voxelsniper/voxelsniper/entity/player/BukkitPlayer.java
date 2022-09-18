@@ -6,7 +6,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
@@ -64,8 +64,8 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
     }
 
     @Override
-    public void teleport(ILocation location) {
-        player.teleport(((BukkitLocation) location).getLocation());
+    public void teleport(VoxelLocation location) {
+        player.teleport(BukkitLocation.toBukkitLocation(location));
     }
 
     @Override

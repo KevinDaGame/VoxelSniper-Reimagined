@@ -6,8 +6,8 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class GenerateTreeBrush extends Brush {
     }
 
     // Branch Creation based on direction chosen from the parameters passed.
-    private void branchCreate(ILocation location, final int xDirection, final int zDirection) {
+    private void branchCreate(VoxelLocation location, final int xDirection, final int zDirection) {
         location = location.clone();
 
         // Sets direction preference.
@@ -88,7 +88,7 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void leafNodeCreate(final ILocation location) {
+    private void leafNodeCreate(final VoxelLocation location) {
         // Generates the node size.
         final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
@@ -129,7 +129,7 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void createLeaf(final ILocation location, int x, int y, int z) {
+    private void createLeaf(final VoxelLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial() == VoxelMaterial.AIR) {
             this.undo.put(location.getClampedBlock().getRelative(x, y, z));
             location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
@@ -143,7 +143,7 @@ public class GenerateTreeBrush extends Brush {
      * @param xDirection
      * @param zDirection
      */
-    private void rootCreate(ILocation location, final int xDirection, final int zDirection) {
+    private void rootCreate(VoxelLocation location, final int xDirection, final int zDirection) {
         // Sets Origin.
         location = location.clone();
 
@@ -209,7 +209,7 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void rootGen(final ILocation location) {
+    private void rootGen(final VoxelLocation location) {
         // Quadrant 1
         this.rootCreate(location, 1, 1);
 
@@ -223,7 +223,7 @@ public class GenerateTreeBrush extends Brush {
         this.rootCreate(location, -1, -1);
     }
 
-    private void trunkCreate(final ILocation location) {
+    private void trunkCreate(final VoxelLocation location) {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
 
@@ -243,7 +243,7 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void createTrunk(final ILocation location, int x, int z) {
+    private void createTrunk(final VoxelLocation location, int x, int z) {
         // If block is air, then create a block.
         if (location.getBlock().getRelative(x, 0, z).getMaterial() == VoxelMaterial.AIR) {
             // Adds block to undo function.
@@ -257,9 +257,9 @@ public class GenerateTreeBrush extends Brush {
      *
      * Code Concerning Trunk Generation
      */
-    private void trunkGen(final ILocation origin) {
+    private void trunkGen(final VoxelLocation origin) {
         // Sets Origin
-        ILocation location = origin.clone();
+        VoxelLocation location = origin.clone();
 
         // ----------
         // Main Trunk
@@ -361,7 +361,7 @@ public class GenerateTreeBrush extends Brush {
 
         // Sets the location variables.
 
-        ILocation location = LocationFactory.getLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
+        VoxelLocation location = new VoxelLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
 
         // Generates the roots.
         this.rootGen(location);

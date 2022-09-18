@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class CometBrush extends Brush {
 
     private void doFireball(final SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        final ILocation playerLocation = v.owner().getPlayer().getEyeLocation();
+        final VoxelLocation playerLocation = v.owner().getPlayer().getEyeLocation();
         final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
 
         if (useBigBalls) {

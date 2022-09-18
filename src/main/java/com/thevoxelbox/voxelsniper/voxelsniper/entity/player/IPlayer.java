@@ -2,7 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.entity.player;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.Set;
@@ -22,7 +22,7 @@ public interface IPlayer extends IEntity, Audience {
     boolean hasPermission(String permissionNode);
     boolean isSneaking();
     String getName();
-    void teleport(ILocation location);
+    void teleport(VoxelLocation location);
     void eject();
     IEntity launchProjectile(Class<? extends Projectile> projectile);
     IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);

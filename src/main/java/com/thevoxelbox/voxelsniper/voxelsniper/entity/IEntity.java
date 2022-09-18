@@ -1,7 +1,7 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
@@ -14,12 +14,12 @@ public interface IEntity {
 
     int getEntityId();
 
-    ILocation getLocation();
+    VoxelLocation getLocation();
     void setVelocity(VoxelVector velocity);
     IWorld getWorld();
 
     void addPassenger(IEntity entity);
-    ILocation getEyeLocation();
+    VoxelLocation getEyeLocation();
 
     List<IEntity> getNearbyEntities(int x, int y, int z);
 

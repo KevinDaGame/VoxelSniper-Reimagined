@@ -3,14 +3,14 @@ package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.BukkitPainting;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.List;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Painting;
@@ -43,8 +43,9 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
-    public ILocation getLocation() {
-        return new BukkitLocation(entity.getLocation());
+    public VoxelLocation getLocation() {
+        Location loc = entity.getLocation();
+        return new VoxelLocation(getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 
     @Override
@@ -63,8 +64,12 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
-    public ILocation getEyeLocation() {
-        return new BukkitLocation(((LivingEntity)entity).getEyeLocation());
+    public VoxelLocation getEyeLocation() {
+        if (entity instanceof LivingEntity living) {
+            Location loc = living.getEyeLocation();
+            return new VoxelLocation(getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        }
+        return this.getLocation();
     }
 
     @Override

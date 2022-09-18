@@ -1,13 +1,13 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.block;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 public abstract class AbstractBlock implements IBlock{
-    final ILocation location;
+    final VoxelLocation location;
     VoxelMaterial material;
 
-    public AbstractBlock(ILocation location, VoxelMaterial material) {
+    public AbstractBlock(VoxelLocation location, VoxelMaterial material) {
         this.location = location;
         this.material = material;
     }
@@ -15,6 +15,11 @@ public abstract class AbstractBlock implements IBlock{
     @Override
     public final VoxelMaterial getMaterial() {
         return this.material;
+    }
+
+    @Override
+    public final VoxelLocation getLocation() {
+        return location;
     }
 
     @Override

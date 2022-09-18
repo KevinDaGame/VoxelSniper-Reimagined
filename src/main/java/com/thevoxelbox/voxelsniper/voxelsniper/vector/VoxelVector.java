@@ -1,12 +1,11 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.vector;
 
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.LocationFactory;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.Objects;
 
-public class VoxelVector implements IVector {
+public class VoxelVector {
     private double x;
     private double y;
     private double z;
@@ -21,12 +20,10 @@ public class VoxelVector implements IVector {
         this(0, 0, 0);
     }
 
-    @Override
-    public ILocation getLocation(IWorld world) {
-        return LocationFactory.getLocation(world, getX(), getY(), getZ());
+    public VoxelLocation getLocation(IWorld world) {
+        return new VoxelLocation(world, getX(), getY(), getZ());
     }
 
-    @Override
     public VoxelVector getMidpoint(VoxelVector other) {
         x = (this.x + other.x) / 2;
         y = (this.y + other.y) / 2;
@@ -34,34 +31,51 @@ public class VoxelVector implements IVector {
         return this;
     }
 
-    @Override
     public double getX() {
         return this.x;
     }
 
-    @Override
     public double getY() {
         return this.y;
     }
 
-    @Override
     public double getZ() {
         return this.z;
     }
 
-    @Override
+    public int getBlockX() {
+        return (int) Math.floor(getX());
+    }
+    public int getBlockY() {
+        return (int) Math.floor(getY());
+    }
+    public int getBlockZ() {
+        return (int) Math.floor(getZ());
+    }
+
     public void setX(double x) {
         this.x = x;
     }
 
-    @Override
     public void setY(double y) {
         this.y = y;
     }
 
-    @Override
     public void setZ(double z) {
         this.z = z;
+    }
+
+    public VoxelVector add(VoxelVector vector) {
+        this.setX(this.getX() + vector.getX());
+        this.setY(this.getY() + vector.getY());
+        this.setZ(this.getZ() + vector.getZ());
+        return this;
+    }
+    public VoxelVector subtract(VoxelVector vector) {
+        this.setX(this.getX() - vector.getX());
+        this.setY(this.getY() - vector.getY());
+        this.setZ(this.getZ() - vector.getZ());
+        return this;
     }
 
     @Override
@@ -73,14 +87,12 @@ public class VoxelVector implements IVector {
         return x * other.x + y * other.y + z * other.z;
     }
 
-    @Override
     public double angle(VoxelVector vector) {
         double dot = Math.min(Math.max(dot(vector) / (length() * vector.length()), -1), 1);
 
         return (float) Math.acos(dot);
     }
 
-    @Override
     public VoxelVector crossProduct(VoxelVector o) {
         double newX = y * o.z - o.y * z;
         double newY = z * o.x - o.z * x;
@@ -92,21 +104,18 @@ public class VoxelVector implements IVector {
         return this;
     }
 
-    @Override
     public void copy(VoxelVector vec) {
         x = vec.x;
         y = vec.y;
         z = vec.z;
     }
 
-    @Override
     public void multiply(double m) {
         x *= m;
         y *= m;
         z *= m;
     }
 
-    @Override
     public VoxelVector normalize() {
         double length = length();
 
@@ -116,27 +125,22 @@ public class VoxelVector implements IVector {
         return this;
     }
 
-    @Override
     public boolean isInSphere(VoxelVector target, int range) {
         return this.distanceSquared(target) <= square(range);
     }
 
-    @Override
     public double distance(VoxelVector vector) {
         return Math.sqrt(this.distanceSquared(vector));
     }
 
-    @Override
     public double distanceSquared(VoxelVector currentPoint) {
         return square(x - currentPoint.x) + square(y - currentPoint.y) + square(z - currentPoint.z);
     }
 
-    @Override
     public double length() {
         return Math.sqrt(this.lengthSquared());
     }
 
-    @Override
     public double lengthSquared() {
         return square(x) + square(y) + square(z);
     }

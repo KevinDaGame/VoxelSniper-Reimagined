@@ -5,8 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.BukkitSign;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
@@ -58,8 +57,8 @@ public class BukkitBlockState implements IBlockState {
     }
 
     @Override
-    public ILocation getLocation() {
-        return new BukkitLocation(blockState.getLocation());
+    public VoxelLocation getLocation() {
+        return new VoxelLocation(getWorld(), getX(), getY(), getZ());
     }
 
     @Override

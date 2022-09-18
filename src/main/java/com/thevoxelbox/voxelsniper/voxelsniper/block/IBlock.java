@@ -3,19 +3,19 @@ package com.thevoxelbox.voxelsniper.voxelsniper.block;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import javax.annotation.Nullable;
 
 public interface IBlock {
-    ILocation getLocation();
+    VoxelLocation getLocation();
     VoxelMaterial getMaterial();
     void setMaterial(VoxelMaterial material);
     void setMaterial(VoxelMaterial material, boolean applyPhysics);
 
-    IWorld getWorld();
+    default IWorld getWorld() { return getLocation().getWorld(); }
 
     default int getX() {
         return getLocation().getBlockX();

@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
@@ -60,7 +60,7 @@ public class JockeyBrush extends Brush {
                         }
                     }
 
-                    final ILocation entityLocation = entity.getLocation();
+                    final VoxelLocation entityLocation = entity.getLocation();
                     final double entityDistance = entityLocation.distance(v.owner().getPlayer().getLocation());
 
                     if (entityDistance < range) {
@@ -73,7 +73,7 @@ public class JockeyBrush extends Brush {
 
         if (closest != null) {
             final IPlayer player = v.owner().getPlayer();
-            final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(((BukkitPlayer)player).getPlayer(), ((BukkitLocation)player.getLocation()).getLocation(), ((BukkitLocation)closest.getLocation()).getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+            final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(((BukkitPlayer)player).getPlayer(), BukkitLocation.toBukkitLocation(player.getLocation()), BukkitLocation.toBukkitLocation(closest.getLocation()), PlayerTeleportEvent.TeleportCause.PLUGIN);
 
             Bukkit.getPluginManager().callEvent(playerTeleportEvent);
 

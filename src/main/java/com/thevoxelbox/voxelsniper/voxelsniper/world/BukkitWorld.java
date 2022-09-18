@@ -8,7 +8,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.Iterator;
@@ -24,7 +24,7 @@ import org.bukkit.util.Vector;
 public record BukkitWorld(World world) implements IWorld {
 
     @Override
-    public IBlock getBlock(ILocation location) {
+    public IBlock getBlock(VoxelLocation location) {
         return new BukkitBlock(world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
@@ -44,7 +44,7 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void setBlock(ILocation location, IBlock block) {
+    public void setBlock(VoxelLocation location, IBlock block) {
     }
 
     @Override
@@ -53,7 +53,7 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public IChunk getChunkAtLocation(ILocation location) {
+    public IChunk getChunkAtLocation(VoxelLocation location) {
         return new BukkitChunk(world.getChunkAt(((int)Math.floor(location.getBlockX() / 16f)), ((int)Math.floor(location.getBlockZ() / 16f))));
     }
 
@@ -63,9 +63,8 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void strikeLightning(ILocation location) {
-        var bukkitloc = (BukkitLocation) location;
-        world.strikeLightning(bukkitloc.getLocation());
+    public void strikeLightning(VoxelLocation location) {
+        world.strikeLightning(BukkitLocation.toBukkitLocation(location));
     }
 
     @Override
@@ -74,9 +73,8 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void spawn(ILocation location, VoxelEntityType entity) {
-        var bukkitloc = (BukkitLocation) location;
-        world.spawnEntity(bukkitloc.getLocation(), EntityType.valueOf(entity.getKey().toUpperCase(Locale.ROOT)));
+    public void spawn(VoxelLocation location, VoxelEntityType entity) {
+        world.spawnEntity(BukkitLocation.toBukkitLocation(location), EntityType.valueOf(entity.getKey().toUpperCase(Locale.ROOT)));
     }
 
     @Override
@@ -97,9 +95,9 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void generateTree(ILocation location, TreeType treeType, UndoDelegate undoDelegate) {
+    public void generateTree(VoxelLocation location, TreeType treeType, UndoDelegate undoDelegate) {
 
-        world.generateTree(((BukkitLocation) location).getLocation(), treeType, undoDelegate);
+        world.generateTree(BukkitLocation.toBukkitLocation(location), treeType, undoDelegate);
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
@@ -79,9 +79,9 @@ public class MoveBrush extends Brush {
             final HashSet<IBlock> undoSet = new HashSet<>();
 
             final Selection newSelection = new Selection();
-            final ILocation movedLocation1 = selection.getLocation1();
+            final VoxelLocation movedLocation1 = selection.getLocation1();
             movedLocation1.add(direction[0], direction[1], direction[2]);
-            final ILocation movedLocation2 = selection.getLocation2();
+            final VoxelLocation movedLocation2 = selection.getLocation2();
             movedLocation2.add(direction[0], direction[1], direction[2]);
             newSelection.setLocation1(movedLocation1);
             newSelection.setLocation2(movedLocation2);
@@ -230,11 +230,11 @@ temp.printStackTrace();
         /**
          *
          */
-        private ILocation location1 = null;
+        private VoxelLocation location1 = null;
         /**
          *
          */
-        private ILocation location2 = null;
+        private VoxelLocation location2 = null;
 
         /**
          * Calculates region, then saves all Blocks as BlockState.
@@ -278,28 +278,28 @@ temp.printStackTrace();
         /**
          * @return Location
          */
-        public ILocation getLocation1() {
+        public VoxelLocation getLocation1() {
             return this.location1;
         }
 
         /**
          * @param location1
          */
-        public void setLocation1(final ILocation location1) {
+        public void setLocation1(final VoxelLocation location1) {
             this.location1 = location1;
         }
 
         /**
          * @return Location
          */
-        public ILocation getLocation2() {
+        public VoxelLocation getLocation2() {
             return this.location2;
         }
 
         /**
          * @param location2
          */
-        public void setLocation2(final ILocation location2) {
+        public void setLocation2(final VoxelLocation location2) {
             this.location2 = location2;
         }
     }

@@ -5,7 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.IPainting;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.ILocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
@@ -20,7 +20,7 @@ public class BlockHelper {
     private static final double DEFAULT_STEP = 0.2;
     private static final int DEFAULT_RANGE = 250;
 
-    private ILocation playerLoc;
+    private VoxelLocation playerLoc;
     private double rotX, rotY, viewHeight, rotXSin, rotXCos, rotYSin, rotYCos;
     private double length, hLength, step;
     private double range;
@@ -37,7 +37,7 @@ public class BlockHelper {
      *
      * @param location
      */
-    public BlockHelper(final ILocation location) {
+    public BlockHelper(final VoxelLocation location) {
         this.init(location, BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
     }
 
@@ -48,7 +48,7 @@ public class BlockHelper {
      * @param range
      * @param step
      */
-    public BlockHelper(final ILocation location, final int range, final double step) {
+    public BlockHelper(final VoxelLocation location, final int range, final double step) {
         this.world = location.getWorld();
         this.init(location, range, step, BlockHelper.DEFAULT_LOCATION_VIEW_HEIGHT);
     }
@@ -260,7 +260,7 @@ public class BlockHelper {
         }
     }
 
-    private void init(final ILocation location, final double range, final double step, final double viewHeight) {
+    private void init(final VoxelLocation location, final double range, final double step, final double viewHeight) {
         this.maxWorldHeight = world.getMaxWorldHeight();
         this.minWorldHeight = world.getMinWorldHeight();
         this.playerLoc = location;
@@ -296,7 +296,7 @@ public class BlockHelper {
      * @param choice Chosen index to set the painting to
      */
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
-        ILocation targetLocation = p.getTargetBlock(null, 4).getLocation();
+        VoxelLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
         IChunk paintingChunk = targetLocation.getChunk();
         double bestDistanceMatch = 50.0;
         IPainting bestMatch = null;
