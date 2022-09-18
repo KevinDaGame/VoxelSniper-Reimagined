@@ -177,13 +177,12 @@ public class Rot2DBrush extends Brush {
         }
 
         try {
-            this.se = Math.toRadians(Double.parseDouble(params[0]));
-            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(this.se)));
+            double degrees = Double.parseDouble(params[0]);
+            this.se = Math.toRadians(degrees);
+            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(degrees)));
         } catch (NumberFormatException temp) {
-            temp.printStackTrace();
+            v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         }
-
-        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override
