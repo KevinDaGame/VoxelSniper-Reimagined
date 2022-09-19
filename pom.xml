@@ -4,7 +4,7 @@
 
     <groupId>com.thevoxelbox</groupId>
     <artifactId>VoxelSniper</artifactId>
-    <version>8.1.1</version>
+    <version>8.1.2</version>
     <packaging>jar</packaging>
 
     <name>VoxelSniper</name>
@@ -72,6 +72,12 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
             <version>4.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.30</version>
         </dependency>
 
         <dependency>
@@ -178,6 +184,10 @@
                                 <relocation>
                                     <pattern>net.kyori</pattern>
                                     <shadedPattern>com.thevoxelbox.voxelsniper.libs.net.kyori</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.yaml.snakeyaml</pattern>
+                                    <shadedPattern>com.thevoxelbox.voxelsniper.libs.org.yaml.snakeyaml</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
