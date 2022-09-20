@@ -149,21 +149,24 @@ public class Sniper implements Audience {
                     break;
             }
         }
+        switch(action) {
+            case RIGHT_CLICK_AIR:
+            case RIGHT_CLICK_BLOCK:
+                if (clickedBlock == null) {
+                    if (targetBlock == null || lastBlock == null) {
+                        sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
+                        return true;
+                    }
+                }
 
-        if (clickedBlock == null) {
-            if (targetBlock == null || lastBlock == null) {
-                sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
-                return true;
-            }
+                if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
+                    PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
+                    performerBrush.initP(snipeData);
+                }
+
+                return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
         }
-
-        if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
-            PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
-            performerBrush.initP(snipeData);
-        }
-
-        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-
+        return false;
     }
 
 
