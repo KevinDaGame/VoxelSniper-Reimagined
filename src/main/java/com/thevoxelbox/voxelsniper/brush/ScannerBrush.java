@@ -21,7 +21,6 @@ public class ScannerBrush extends Brush {
     private static final int DEPTH_MAX = 64;
 
     private int depth = DEPTH_DEFAULT;
-    private VoxelMaterial checkFor = VoxelMaterial.AIR;
 
     /**
      *
@@ -40,95 +39,32 @@ public class ScannerBrush extends Brush {
         if (bf == null) {
             return;
         }
+        System.out.println(this.getTargetBlock().getLocation()); // seems to change based on player location/view
+        VoxelMaterial checkFor = v.getVoxelMaterial();
 
-        switch (bf) {
-            case NORTH:
-                // Scan south
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
+        for (int i = 1; i < this.depth + 1; i++) {
+            int y = this.getTargetBlock().getY() + (bf.getModY() * i * -1);
+            if (y >= this.getMaxHeight() || y < this.getMinHeight()) {
                 break;
-
-            case SOUTH:
-                // Scan north
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case EAST:
-                // Scan west
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getMaterial() == this.checkFor) {
-                         v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case WEST:
-                // Scan east
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getMaterial() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case UP:
-                // Scan down
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if ((this.getTargetBlock().getY() - i) <= 0) {
-                        break;
-                    }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case DOWN:
-                // Scan up
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if ((this.getTargetBlock().getY() + i) >= this.getMaxHeight()) {
-                        break;
-                    }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getMaterial() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            default:
-                break;
+            }
+            VoxelMaterial mat = this.clampY(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
+            if (mat == checkFor) {
+                v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getName()).replace("%i%", Integer.toString(i)));
+                return;
+            }
         }
+        v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.checkFor = v.getVoxelMaterial();
         this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%",String.valueOf(this.depth)).replace("%checkFor%",String.valueOf(this.checkFor)));
+        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%",String.valueOf(this.depth)).replace("%checkFor%",vm.snipeData().getVoxelMaterial()));
     }
 
     @Override

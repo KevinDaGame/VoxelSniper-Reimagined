@@ -7,21 +7,13 @@ import java.util.stream.Collectors;
 import net.kyori.adventure.text.ComponentLike;
 
 /**
- *  Messaging handler for various Voxel functions.
- *  // TODO: Rewrite messaging to builder functions.
- *  // TODO: Standardize message colors.
+ * Messaging handler for various Voxel functions.
+ * // TODO: Rewrite messaging to builder functions.
+ * // TODO: Standardize message colors.
  */
-public class VoxelMessage {
+public record VoxelMessage(SnipeData snipeData) {
 
     private static final int BRUSH_SIZE_WARNING_THRESHOLD = 20;
-    private final SnipeData snipeData;
-
-    /**
-     * @param snipeData
-     */
-    public VoxelMessage(SnipeData snipeData) {
-        this.snipeData = snipeData;
-    }
 
     /**
      * Send a brush message styled message to the player.

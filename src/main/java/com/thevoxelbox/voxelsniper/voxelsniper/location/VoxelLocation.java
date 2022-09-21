@@ -145,6 +145,17 @@ public class VoxelLocation {
     }
 
     @Override
+    public String toString() {
+        return "VoxelLocation{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                ", yaw=" + yaw +
+                ", pitch=" + pitch +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(world, x, y, z, yaw, pitch);
     }
