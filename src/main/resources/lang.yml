@@ -359,20 +359,6 @@ OVERLAY_BRUSH_VOXELLIST_EMPTY: |-
   </dark_aqua><gold>Please use /vv list to see how to populate the list.
 INVALID_BRUSH_PARAM: <red>Invalid brush parameters!
 INVALID_BRUSH_PARAM_ANGLE: <red>Invalid brush parameters! Angles must be from 1-359
-PUNISH_BRUSH_USAGE: |-
-  <gold>Punish Brush Options:
-  </gold><blue>Punishment level can be set with /vc [level]
-  </blue><blue>Punishment duration in seconds can be set with /vh [duration]
-  </blue><aqua>/b %triggerHandle% [punishment]  -- Sets the punishment
-  </aqua><aqua>/b %triggerHandle% -hypno  -- Toggle whether Hypno will affect landscape only
-  </aqua><aqua>/b %triggerHandle% -player [playername]  -- Target specific player, clear with empty playername
-  </aqua><aqua>/b %triggerHandle% -self  -- Toggle whether you will be affected
-  </aqua><aqua>Available Punishment Options:
-NO_LONGER_TARGETING_A_SPECIFIC_PLAYER: No longer targeting a specific player.
-NOW_TARGETING_A_SPECIFIC_PLAYER: 'Now targeting a specific player: '
-PUNISHMENT_APPLIED_NUMBER: <dark_red>Punishment applied to %numPunishApps% living entities.
-PUNISHMENT_NAME: '<green>Punishment: %punishment%'
-PUNISHMENT_DOES_NOT_EXIST: <gold>That punishment does not exist! Use </gold><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
 INNER_RADIUS_INFO: <aqua>The inner radius is </aqua><red>%innerSize%
 INNER_RADIUS_SET: <aqua>The inner radius has been set to </aqua><red>%innerSize%</red><aqua>.
 ANGLE_SET: <green>Angle set to %se%
@@ -418,7 +404,6 @@ RULER_BRUSH_POWDER: |
   Z change: %z%
   Euclidean distance = %distance%
   Block distance = %blockDistance%
-PUNISHMENT_SELECTED: <yellow>%punishment%</yellow><gold> punishment selected.
 VOXEL_BRUSH_COMMAND_USAGE: |-
   <dark_aqua>%name% Command Syntax:
   </dark_aqua><gold>/%alias% [brushHandle] [arguments...]
