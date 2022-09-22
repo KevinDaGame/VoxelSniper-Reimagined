@@ -10,8 +10,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.Iterator;
 
-import org.bukkit.util.NumberConversions;
-
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Line_Brush
  *

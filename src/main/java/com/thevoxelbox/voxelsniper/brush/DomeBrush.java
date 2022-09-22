@@ -10,8 +10,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.util.NumberConversions;
-
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Dome_Brush
  *
@@ -67,11 +65,11 @@ public class DomeBrush extends Brush {
 
                 final double targetBlockX = targetBlock.getX() + 0.5;
                 final double targetBlockZ = targetBlock.getZ() + 0.5;
-                final int targetY = NumberConversions.floor(targetBlock.getY() + (negative ? -y : y));
-                final int currentBlockXAdd = NumberConversions.floor(targetBlockX + x);
-                final int currentBlockZAdd = NumberConversions.floor(targetBlockZ + z);
-                final int currentBlockXSubtract = NumberConversions.floor(targetBlockX - x);
-                final int currentBlockZSubtract = NumberConversions.floor(targetBlockZ - z);
+                final int targetY = ((int)Math.floor(targetBlock.getY() + (negative ? -y : y)));
+                final int currentBlockXAdd = ((int)Math.floor(targetBlockX + x));
+                final int currentBlockZAdd = ((int)Math.floor(targetBlockZ + z));
+                final int currentBlockXSubtract = ((int)Math.floor(targetBlockX - x));
+                final int currentBlockZSubtract = ((int)Math.floor(targetBlockZ - z));
                 changeablePositions.add(new VoxelVector(currentBlockXAdd, targetY, currentBlockZAdd));
                 changeablePositions.add(new VoxelVector(currentBlockXSubtract, targetY, currentBlockZAdd));
                 changeablePositions.add(new VoxelVector(currentBlockXAdd, targetY, currentBlockZSubtract));

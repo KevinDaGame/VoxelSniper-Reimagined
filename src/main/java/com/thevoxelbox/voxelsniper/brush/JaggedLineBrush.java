@@ -14,8 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.util.NumberConversions;
-
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush
  *
@@ -55,7 +53,7 @@ public class JaggedLineBrush extends PerformerBrush {
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.getWorld()).getBlock());
         } else {
-            for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, NumberConversions.round(length)); iterator.hasNext();) {
+            for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, ((int)Math.round(length))); iterator.hasNext();) {
                 final IBlock block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
                     this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
