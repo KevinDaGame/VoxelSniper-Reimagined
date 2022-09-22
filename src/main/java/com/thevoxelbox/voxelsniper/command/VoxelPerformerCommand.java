@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
-import com.thevoxelbox.voxelsniper.bukkit.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;

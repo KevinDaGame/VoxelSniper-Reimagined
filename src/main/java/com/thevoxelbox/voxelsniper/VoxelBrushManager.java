@@ -1,9 +1,10 @@
-package com.thevoxelbox.voxelsniper.bukkit;
+package com.thevoxelbox.voxelsniper;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+
 import com.thevoxelbox.voxelsniper.brush.*;
 
 import java.util.ArrayList;

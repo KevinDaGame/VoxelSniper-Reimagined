@@ -1,5 +1,7 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
+import com.thevoxelbox.voxelsniper.VoxelBrushManager;
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;

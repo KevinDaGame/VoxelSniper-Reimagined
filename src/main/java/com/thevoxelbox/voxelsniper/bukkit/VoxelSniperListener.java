@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;

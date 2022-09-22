@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.bukkit;
 
+import com.thevoxelbox.voxelsniper.VoxelBrushManager;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.command.*;
 
