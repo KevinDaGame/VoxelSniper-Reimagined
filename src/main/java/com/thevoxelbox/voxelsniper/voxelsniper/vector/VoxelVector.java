@@ -25,10 +25,10 @@ public class VoxelVector {
     }
 
     public VoxelVector getMidpoint(VoxelVector other) {
-        x = (this.x + other.x) / 2;
-        y = (this.y + other.y) / 2;
-        z = (this.x + other.z) / 2;
-        return this;
+        double x = (this.x + other.x) / 2.00;
+        double y = (this.y + other.y) / 2.00;
+        double z = (this.z + other.z) / 2.00;
+        return new VoxelVector(x, y, z);
     }
 
     public double getX() {
