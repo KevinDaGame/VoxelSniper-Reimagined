@@ -177,7 +177,7 @@ temp.printStackTrace();
                         // after all three, though.
 
                         final BlockWrapper block = this.snap[x][y][z];
-                        if (block.getMaterial() == VoxelMaterial.AIR) {
+                        if (block.getMaterial().isAir()) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ, block.getBlockData());

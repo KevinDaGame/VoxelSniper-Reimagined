@@ -44,7 +44,7 @@ public class CleanSnowBrush extends Brush {
                     if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                         IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
                         IBlock blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
-                        if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial() == VoxelMaterial.AIR))) {
+                        if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {
                             setBlockType(b, VoxelMaterial.AIR, undo);
                         }
 

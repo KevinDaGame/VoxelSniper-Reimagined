@@ -322,7 +322,7 @@ public class ErodeBrush extends Brush {
          * @return if the block is Empty.
          */
         public boolean isEmpty() {
-            return this.getMaterial() == VoxelMaterial.AIR;
+            return this.getMaterial().isAir();
         }
 
     }

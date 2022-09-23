@@ -84,7 +84,7 @@ public class Rot2DvertBrush extends Brush {
                         final int yy = y - bSize;
 
                         final BlockWrapper block = this.snap[y][x][z];
-                        if (block.getMaterial() == VoxelMaterial.AIR) {
+                        if (block.getMaterial().isAir()) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());

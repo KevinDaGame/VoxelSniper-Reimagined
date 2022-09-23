@@ -121,13 +121,13 @@ public class PullBrush extends Brush {
      * @return boolean
      */
     private boolean isSurface(final int x, final int y, final int z) {
-        return this.getBlockMaterialAt(x, y, z) != VoxelMaterial.AIR
-                && ((this.getBlockMaterialAt(x, y - 1, z) == VoxelMaterial.AIR)
-                || (this.getBlockMaterialAt(x, y + 1, z) == VoxelMaterial.AIR)
-                || (this.getBlockMaterialAt(x + 1, y, z) == VoxelMaterial.AIR)
-                || (this.getBlockMaterialAt(x - 1, y, z) == VoxelMaterial.AIR)
-                || (this.getBlockMaterialAt(x, y, z + 1) == VoxelMaterial.AIR)
-                || (this.getBlockMaterialAt(x, y, z - 1) == VoxelMaterial.AIR));
+        return (!this.getBlockMaterialAt(x, y, z).isAir())
+                && ((this.getBlockMaterialAt(x, y - 1, z).isAir())
+                || (this.getBlockMaterialAt(x, y + 1, z).isAir())
+                || (this.getBlockMaterialAt(x + 1, y, z).isAir())
+                || (this.getBlockMaterialAt(x - 1, y, z).isAir())
+                || (this.getBlockMaterialAt(x, y, z + 1).isAir())
+                || (this.getBlockMaterialAt(x, y, z - 1).isAir()));
 
     }
 
@@ -136,7 +136,7 @@ public class PullBrush extends Brush {
         undo.put(currentBlock);
         currentBlock.setBlockData(block.getBlockData());
 
-        if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()) == VoxelMaterial.AIR) {
+        if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
                 IBlock b = this.clampY(block.getX(), y, block.getZ());
                 undo.put(b);
@@ -214,7 +214,7 @@ public class PullBrush extends Brush {
                         final double volume = zSquared + xSquared + (y * y);
 
                         // Is this in the range of the brush?
-                        if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial() != VoxelMaterial.AIR) {
+                        if (volume <= brushSizeSquared && !this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial().isAir()) {
 
                             int actualY = this.getTargetBlock().getY() + y;
 
@@ -260,7 +260,7 @@ public class PullBrush extends Brush {
                     final int actualX = this.getTargetBlock().getX() + x;
                     for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                         double volume = (xSquared + Math.pow(y, 2) + zSquared);
-                        if (volume <= brushSizeSquared && this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial() != VoxelMaterial.AIR) {
+                        if (volume <= brushSizeSquared && !this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial().isAir()) {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (vh * this.getStr(volume / brushSizeSquared));
                             IBlock b = this.clampY(actualX, lastY, actualZ);

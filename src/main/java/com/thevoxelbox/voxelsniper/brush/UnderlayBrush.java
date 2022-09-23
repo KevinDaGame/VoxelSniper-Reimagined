@@ -45,7 +45,7 @@ public class UnderlayBrush extends PerformerBrush {
                             final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = 0; (d < this.depth); d++) {
-                                    if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getMaterial() != VoxelMaterial.AIR) {
+                                    if (!this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                                         this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                         // parameters
                                         memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
@@ -93,7 +93,7 @@ public class UnderlayBrush extends PerformerBrush {
             return list.contains(material);
         }
 
-        if (allBlocks && !(material == VoxelMaterial.AIR)) {
+        if (allBlocks && !material.isAir()) {
             return true;
         }
 

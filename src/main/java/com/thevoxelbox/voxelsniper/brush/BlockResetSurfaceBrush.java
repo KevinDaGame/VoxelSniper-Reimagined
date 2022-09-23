@@ -56,6 +56,8 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.VOID_AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CAVE_AIR);
     }
 
     /**
@@ -80,37 +82,37 @@ public class BlockResetSurfaceBrush extends Brush {
 
                     boolean airFound = false;
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
+                    if (world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                         block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
+                    if (world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                         block = world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial(), VoxelMaterial.AIR)) {
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial(), VoxelMaterial.AIR)) {
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial().isAir()) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
                         resetBlock(block);
                         airFound = true;
                     }
 
-                    if (Objects.equals(world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial(), VoxelMaterial.AIR)) {
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial().isAir()) {
                         block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
                         resetBlock(block);
                         airFound = true;

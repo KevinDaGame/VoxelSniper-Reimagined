@@ -107,7 +107,7 @@ public class GenerateTreeBrush extends Brush {
                         // Chance to skip creation of a block.
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
-                            if (location.getBlock().getRelative(x, y, z).getMaterial() == VoxelMaterial.AIR) {
+                            if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
                                 // Adds block to undo function.
                                 if (location.getBlock().getRelative(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
                                     this.undo.put(location.getBlock().getRelative(x, y, z));
@@ -130,7 +130,7 @@ public class GenerateTreeBrush extends Brush {
     }
 
     private void createLeaf(final VoxelLocation location, int x, int y, int z) {
-        if (location.getBlock().getRelative(x, y, z).getMaterial() == VoxelMaterial.AIR) {
+        if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
             this.undo.put(location.getClampedBlock().getRelative(x, y, z));
             location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
         }
@@ -245,7 +245,7 @@ public class GenerateTreeBrush extends Brush {
 
     private void createTrunk(final VoxelLocation location, int x, int z) {
         // If block is air, then create a block.
-        if (location.getBlock().getRelative(x, 0, z).getMaterial() == VoxelMaterial.AIR) {
+        if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
             // Adds block to undo function.
             this.undo.put(location.getClampedBlock().getRelative(x, 0, z));
             // Creates block.

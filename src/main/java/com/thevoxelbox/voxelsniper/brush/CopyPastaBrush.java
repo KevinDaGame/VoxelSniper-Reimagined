@@ -96,7 +96,7 @@ public class CopyPastaBrush extends Brush {
                             break;
                     }
 
-                    if (!(this.substanceArray[currentPosition].getMaterial() == VoxelMaterial.AIR && !this.pasteAir)) {
+                    if (!(this.substanceArray[currentPosition].getMaterial().isAir() && !this.pasteAir)) {
                         if (block.getMaterial() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
                             undo.put(block);
                         }

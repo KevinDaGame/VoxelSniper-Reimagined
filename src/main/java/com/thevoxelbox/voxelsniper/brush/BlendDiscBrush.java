@@ -63,7 +63,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
                 // Find most common neighboring material.
                 for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == VoxelMaterial.AIR) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
+                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey().isAir()) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
                         highestMaterialCount = e.getValue();
                         highestMaterial = e.getKey();
                     }
@@ -71,7 +71,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
                 // Make sure that there's no tie in highest material
                 for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == VoxelMaterial.AIR) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
+                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey().isAir()) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
                         if (e.getKey() == highestMaterial) {
                             continue;
                         }
@@ -95,7 +95,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
             for (int z = brushSizeDoubled; z >= 0; z--) {
                 if (xSquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                    if (!(this.excludeAir && newMaterials[x][z] == VoxelMaterial.AIR) && !(this.excludeWater && newMaterials[x][z] == VoxelMaterial.WATER)) {
+                    if (!(this.excludeAir && newMaterials[x][z].isAir()) && !(this.excludeWater && newMaterials[x][z] == VoxelMaterial.WATER)) {
                         this.setBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY(), this.getTargetBlock().getZ() - brushSize + z, newMaterials[x][z], undo);
                     }
                 }

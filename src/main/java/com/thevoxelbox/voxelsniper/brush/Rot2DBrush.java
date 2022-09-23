@@ -81,7 +81,7 @@ public class Rot2DBrush extends Brush {
                         final int yy = currentY - bSize;
                         final BlockWrapper block = this.snap[x][currentY][y];
 
-                        if (block.getMaterial() == VoxelMaterial.AIR) {
+                        if (block.getMaterial().isAir()) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());

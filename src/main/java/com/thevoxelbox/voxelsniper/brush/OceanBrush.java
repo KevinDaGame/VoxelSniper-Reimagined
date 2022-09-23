@@ -29,6 +29,8 @@ public class OceanBrush extends Brush {
 
     static {
         EXCLUDED_MATERIALS.add(VoxelMaterial.AIR);
+        EXCLUDED_MATERIALS.add(VoxelMaterial.CAVE_AIR);
+        EXCLUDED_MATERIALS.add(VoxelMaterial.VOID_AIR);
         EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_SAPLING);
         EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_SAPLING);
         EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_SAPLING);
@@ -124,7 +126,7 @@ public class OceanBrush extends Brush {
                 // go down from highest Y block down to new sea floor
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
-                    if (!block.getMaterial().equals(VoxelMaterial.AIR)) {
+                    if (!block.getMaterial().isAir()) {
                         undo.put(block);
                         block.setMaterial(VoxelMaterial.AIR);
                     }
@@ -135,7 +137,7 @@ public class OceanBrush extends Brush {
                     final  IBlock  block = world.getBlock(x, y, z);
                     if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
                         // do not put blocks into the undo we already put into
-                        if (!block.getMaterial().equals(VoxelMaterial.AIR)) {
+                        if (!block.getMaterial().isAir()) {
                             undo.put(block);
                         }
                         block.setMaterial(VoxelMaterial.WATER);
