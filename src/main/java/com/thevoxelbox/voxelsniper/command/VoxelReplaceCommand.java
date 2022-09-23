@@ -1,6 +1,5 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
@@ -10,20 +9,12 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class VoxelReplaceCommand extends VoxelCommand {
+public class VoxelReplaceCommand extends MaterialCommand {
 
     public VoxelReplaceCommand() {
         super("VoxelReplace");
         setIdentifier("vr");
         setPermission("voxelsniper.sniper");
-    }
-
-    @Override
-    public List<String> registerTabCompletion() {
-        return VoxelMaterial.getMaterials().stream().filter(VoxelMaterial::isBlock).map(VoxelMaterial::getKey).toList();
     }
 
     @Override
@@ -60,25 +51,5 @@ public class VoxelReplaceCommand extends VoxelCommand {
             sniper.sendMessage(Messages.INVALID_ITEM_ID);
         }
         return true;
-    }
-
-    @Override
-    public List<String> doSuggestion(IPlayer player, String[] args) {
-        if (args.length == 1) {
-            // Preprocess the string for partial matching
-            args[0] = args[0].toLowerCase();
-
-            if (!args[0].startsWith("minecraft:")) {
-                if (args[0].startsWith("mi")) {
-                    return Lists.newArrayList("minecraft:");
-                }
-
-                args[0] = "minecraft:" + args[0];
-            }
-
-            return getTabCompletion(1);
-        }
-
-        return new ArrayList<>();
     }
 }

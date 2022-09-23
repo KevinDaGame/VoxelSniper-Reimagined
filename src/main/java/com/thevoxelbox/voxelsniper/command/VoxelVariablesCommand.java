@@ -16,17 +16,12 @@ import java.util.List;
  *
  * @author ervinnnc
  */
-public class VoxelVariablesCommand extends VoxelCommand {
+public class VoxelVariablesCommand extends MaterialCommand {
 
     public VoxelVariablesCommand() {
         super("Voxel Variables");
         setIdentifier("vv");
         setPermission("voxelsniper.sniper");
-    }
-
-    @Override
-    public List<String> registerTabCompletion() {
-        return VoxelMaterial.getMaterials().stream().filter(VoxelMaterial::isBlock).map(VoxelMaterial::getKey).toList();
     }
 
     @Override
@@ -162,19 +157,11 @@ public class VoxelVariablesCommand extends VoxelCommand {
             }
         }
 
-        if (getActiveAlias().equalsIgnoreCase("vl")) {
+        if (getActiveAlias().equalsIgnoreCase("vl") && args.length == 2) {
             // Preprocess the string for partial matching, strip the '-' if there's one
             args[0] = args[0].toLowerCase().replace("-", "");
 
-            if (!args[0].startsWith("minecraft:")) {
-                if (args[0].startsWith("mi")) {
-                    return Lists.newArrayList("minecraft:");
-                }
-
-                args[0] = "minecraft:" + args[0];
-            }
-
-            return getTabCompletion(1);
+            return super.doSuggestion(player, args);
         }
 
         if (getActiveIdentifier().equalsIgnoreCase(getIdentifier())) {
@@ -188,19 +175,11 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 }
             }
 
-            if (args[0].equalsIgnoreCase("list")) {
+            if (args[0].equalsIgnoreCase("list") && args.length == 2) {
                 // Preprocess the string for partial matching, strip the '-' if there's one
-                args[0] = args[0].toLowerCase().replace("-", "");
+                args[1] = args[1].toLowerCase().replace("-", "");
 
-                if (!args[0].startsWith("minecraft:")) {
-                    if (args[0].startsWith("mi")) {
-                        return Lists.newArrayList("minecraft:");
-                    }
-
-                    args[0] = "minecraft:" + args[0];
-                }
-
-                return getTabCompletion(1);
+                return super.doSuggestion(player, new String[]{args[1]});
             }
         }
 

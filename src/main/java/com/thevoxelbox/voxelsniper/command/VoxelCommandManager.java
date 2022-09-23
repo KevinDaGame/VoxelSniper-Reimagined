@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelBrushManager;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ public abstract class VoxelCommandManager {
                 IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).newInstance();
 
                 if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle)) {
-                    BukkitVoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
+                    VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
                     return;
                 }
 
@@ -60,7 +60,7 @@ public abstract class VoxelCommandManager {
 
                 brush.registerArgumentValues().forEach((identifier, arguments) -> {
                     if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier)) {
-                        BukkitVoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
+                        VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
                         return;
                     }
 
