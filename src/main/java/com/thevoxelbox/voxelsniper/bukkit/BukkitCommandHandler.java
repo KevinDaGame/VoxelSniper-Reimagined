@@ -25,7 +25,6 @@ public class BukkitCommandHandler implements TabExecutor {
         this.command.setActiveIdentifier(command.getLabel()); // This is the root command.
         this.command.setActiveAlias(label);   // This is the alias that was executed.
 
-        System.out.println("getPermission" + command.getPermission());
         if (sender instanceof Player player) {
             return this.command.execute(BukkitVoxelSniper.getInstance().getPlayer(player), args);
         } else {

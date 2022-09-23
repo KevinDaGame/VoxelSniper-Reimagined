@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 
 import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.BukkitPainting;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;

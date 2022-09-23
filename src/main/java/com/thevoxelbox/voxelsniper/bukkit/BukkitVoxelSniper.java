@@ -79,7 +79,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         getLogger().info("Registered Sniper Listener.");
 
         // Initialize commands
-        VoxelCommandManager.initialize();
+        BukkitCommandManager.initialize();
     }
 
     @Override

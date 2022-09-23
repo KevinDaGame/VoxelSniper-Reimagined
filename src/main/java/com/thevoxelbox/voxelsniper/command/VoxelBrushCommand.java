@@ -17,8 +17,8 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 
-import static com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
-import static com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
+import static com.thevoxelbox.voxelsniper.command.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
+import static com.thevoxelbox.voxelsniper.command.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
 
 public class VoxelBrushCommand extends VoxelCommand {
 
