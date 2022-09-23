@@ -24,4 +24,6 @@ public interface IEntity {
     List<IEntity> getNearbyEntities(int x, int y, int z);
 
     void eject();
+
+    boolean teleport(IEntity player);
 }

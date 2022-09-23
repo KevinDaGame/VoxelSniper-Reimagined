@@ -6,20 +6,13 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
-
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Jockey_Brush
  *
  * @author Voxel
  * @author Monofraps
@@ -55,7 +48,7 @@ public class JockeyBrush extends Brush {
                     }
 
                     if (jockeyType == JockeyType.NORMAL_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_PLAYER_ONLY) {
-                        if (!(entity instanceof Player)) {
+                        if (!(entity instanceof IPlayer)) {
                             continue;
                         }
                     }
@@ -73,19 +66,17 @@ public class JockeyBrush extends Brush {
 
         if (closest != null) {
             final IPlayer player = v.owner().getPlayer();
-            final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(((BukkitPlayer)player).getPlayer(), BukkitLocation.toBukkitLocation(player.getLocation()), BukkitLocation.toBukkitLocation(closest.getLocation()), PlayerTeleportEvent.TeleportCause.PLUGIN);
 
-            Bukkit.getPluginManager().callEvent(playerTeleportEvent);
-
-            if (!playerTeleportEvent.isCancelled()) {
-                if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
+            if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
+                if (closest.teleport(player))
                     player.addPassenger(closest);
-                } else {
+            } else {
+                if (player.teleport(closest)) {
                     closest.addPassenger(player);
                     jockeyedEntity = closest;
                 }
-                v.sendMessage(Messages.SITTING_ON_CLOSEST_ENTITY);
             }
+            v.sendMessage(Messages.SITTING_ON_CLOSEST_ENTITY);
         } else {
             if (playerOnly) {
                 v.sendMessage(Messages.NO_PLAYERS_FOUND_TO_SIT_ON);
@@ -109,7 +100,7 @@ public class JockeyBrush extends Brush {
                     lastEntity = entity;
                     stackHeight++;
                 } else if (jockeyType == JockeyType.STACK_PLAYER_ONLY) {
-                    if (entity instanceof Player) {
+                    if (entity instanceof IPlayer) {
                         lastEntity.addPassenger(entity);
                         lastEntity = entity;
                         stackHeight++;

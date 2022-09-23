@@ -64,6 +64,11 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
+    public boolean teleport(IEntity player) {
+        return this.entity.teleport(((BukkitEntity)entity).getEntity());
+    }
+
+    @Override
     public VoxelLocation getEyeLocation() {
         if (entity instanceof LivingEntity living) {
             Location loc = living.getEyeLocation();
