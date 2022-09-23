@@ -80,7 +80,11 @@ public class VoxelVector {
 
     @Override
     public VoxelVector clone() {
-        return new VoxelVector(x, y, z);
+        try {
+            return (VoxelVector) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return new VoxelVector(x, y, z);
+        }
     }
 
     private double dot(VoxelVector other) {

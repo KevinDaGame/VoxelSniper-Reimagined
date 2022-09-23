@@ -39,7 +39,6 @@ public class ScannerBrush extends Brush {
         if (bf == null) {
             return;
         }
-        System.out.println(this.getTargetBlock().getLocation()); // seems to change based on player location/view
         VoxelMaterial checkFor = v.getVoxelMaterial();
 
         for (int i = 1; i < this.depth + 1; i++) {

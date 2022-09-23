@@ -115,7 +115,11 @@ public class VoxelLocation {
 
     @Override
     public VoxelLocation clone() {
-        return new VoxelLocation(world, getBlockX(), getBlockY(), getBlockZ(), this.yaw, this.pitch);
+        try {
+            return (VoxelLocation) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return new VoxelLocation(world, this.x, this.y, this.z, this.yaw, this.pitch);
+        }
     }
 
     public IBlock getClampedBlock() {
