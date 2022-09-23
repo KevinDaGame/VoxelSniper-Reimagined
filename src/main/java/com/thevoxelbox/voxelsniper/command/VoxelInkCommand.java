@@ -35,7 +35,7 @@ public class VoxelInkCommand extends VoxelCommand {
 
         // Command: /vi          <- Sets the block user is looking at as voxel data values.
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            Block selectedBlock = new BlockHelper(player).getTargetBlock();
             if (selectedBlock != null) {
                 if (selectedBlock.getType() != snipeData.getVoxelMaterial()) {
                     sniper.sendMessage(Messages.VOXEL_INK_DIFFERENT_TYPE);

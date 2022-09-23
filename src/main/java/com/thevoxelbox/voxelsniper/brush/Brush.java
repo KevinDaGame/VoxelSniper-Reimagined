@@ -140,10 +140,10 @@ public abstract class Brush implements IBrush {
         } else {
             BlockHelper rangeBlockHelper;
             if (v.owner().getSnipeData(v.owner().getCurrentToolId()).isRanged()) {
-                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld(), v.owner().getSnipeData(v.owner().getCurrentToolId()).getRange());
+                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getSnipeData(v.owner().getCurrentToolId()).getRange());
                 this.setTargetBlock(rangeBlockHelper.getRangeBlock());
             } else {
-                rangeBlockHelper = new BlockHelper(v.owner().getPlayer(), v.owner().getPlayer().getWorld());
+                rangeBlockHelper = new BlockHelper(v.owner().getPlayer());
                 this.setTargetBlock(rangeBlockHelper.getTargetBlock());
             }
             if (this.getTargetBlock() != null) {

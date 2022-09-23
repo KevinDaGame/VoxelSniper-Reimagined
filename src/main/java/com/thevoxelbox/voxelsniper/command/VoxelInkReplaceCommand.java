@@ -35,7 +35,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
 
         // Command: /vir
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            Block selectedBlock = new BlockHelper(player).getTargetBlock();
             if (selectedBlock != null) {
                 if (selectedBlock.getType() != snipeData.getReplaceMaterial()) {
                     sniper.sendMessage(Messages.VOXEL_INK_REPLACE_DIFFERENT_TYPE);

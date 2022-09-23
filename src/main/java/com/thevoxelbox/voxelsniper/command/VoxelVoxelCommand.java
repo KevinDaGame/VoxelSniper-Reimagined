@@ -44,7 +44,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
 
         // Command: /v          <- Sets the block user is looking at as voxel substance.
         if (args.length == 0) {
-            Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
+            Block selectedBlock = new BlockHelper(player).getTargetBlock();
             if (selectedBlock != null) {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();
