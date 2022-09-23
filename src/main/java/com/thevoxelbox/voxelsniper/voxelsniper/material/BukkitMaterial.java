@@ -8,6 +8,7 @@ import org.bukkit.Material;
 public record BukkitMaterial(Material material) implements IMaterial {
 
     public static VoxelMaterial fromBukkitMaterial(Material type) {
+        if (type == null || type.isAir()) return VoxelMaterial.AIR;
         return VoxelMaterial.getMaterial(type.getKey().getNamespace(), type.getKey().getKey());
     }
 

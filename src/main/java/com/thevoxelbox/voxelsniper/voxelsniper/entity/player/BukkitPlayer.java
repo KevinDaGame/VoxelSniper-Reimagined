@@ -87,7 +87,8 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
     @Override
     public VoxelMaterial getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
-        return new VoxelMaterial(item.getType().getKey().getKey());
+        VoxelMaterial mat = VoxelMaterial.getMaterial(item.getType().getKey().getKey());
+        return mat != null ? mat : VoxelMaterial.AIR;
     }
 
     @Override

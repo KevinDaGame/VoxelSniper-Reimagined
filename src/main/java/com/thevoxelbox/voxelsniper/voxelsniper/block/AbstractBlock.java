@@ -14,6 +14,7 @@ public abstract class AbstractBlock implements IBlock{
 
     @Override
     public final VoxelMaterial getMaterial() {
+        if (this.material.isAir()) return VoxelMaterial.AIR;
         return this.material;
     }
 
