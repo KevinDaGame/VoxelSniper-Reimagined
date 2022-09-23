@@ -78,11 +78,11 @@ public class VoxelSniperCommand extends VoxelCommand {
 
     @Override
     public List<String> doSuggestion(IPlayer player, String[] args) {
-        if (args.length == 0) {
+        if (args.length == 1) {
             return Lists.newArrayList("enable", "disable", "range");
         }
 
-        if (args.length == 1) {
+        if (args.length == 2) {
             if (args[0].equalsIgnoreCase("range")) {
                 return Lists.newArrayList("[number]");
             }
