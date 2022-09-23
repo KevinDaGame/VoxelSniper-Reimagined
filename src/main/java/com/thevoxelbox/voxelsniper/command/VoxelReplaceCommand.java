@@ -46,7 +46,7 @@ public class VoxelReplaceCommand extends VoxelCommand {
 
         // Command: /vr          <- Sets the block user is looking at as voxel substance.
         if (args.length == 0) {
-            IBlock selectedBlock = new BlockHelper(new BukkitPlayer(player), new BukkitPlayer(player).getWorld()).getTargetBlock();
+            IBlock selectedBlock = new BlockHelper(sniper.getPlayer()).getTargetBlock();
             if (selectedBlock != null) {
                 snipeData.setReplaceSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().replace();

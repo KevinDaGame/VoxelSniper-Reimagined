@@ -45,7 +45,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
 
         // Command: /v          <- Sets the block user is looking at as voxel substance.
         if (args.length == 0) {
-            IBlock selectedBlock = new BlockHelper(new BukkitPlayer(player), new BukkitPlayer(player).getWorld()).getTargetBlock();
+            IBlock selectedBlock = new BlockHelper(sniper.getPlayer()).getTargetBlock();
             if (selectedBlock != null) {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();

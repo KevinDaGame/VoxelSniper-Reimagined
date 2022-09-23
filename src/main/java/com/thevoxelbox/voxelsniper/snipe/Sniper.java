@@ -111,7 +111,7 @@ public class Sniper {
             targetBlock = clickedBlock;
             lastBlock = targetBlock.getRelative(clickedFace);
         } else {
-            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
+            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), snipeData.getRange()) : new BlockHelper(getPlayer());
             targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
             lastBlock = rangeBlockHelper.getLastBlock();
         }

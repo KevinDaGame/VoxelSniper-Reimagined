@@ -1,13 +1,10 @@
 
-VoxelSniper
+VoxelSniper Reimagined
 ============
-The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), and most Bukkit-based server distributions. The plugin is fully functional (according to our limited usage), and should be able to snipe most blocks. Please submit an issue if something is not working and I'll try my best to work it out.
-
-I'm thinking of renaming the project to prevent confusion with the already existing VoxelSniper. Please suggest any in the issues section!
+The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), and most Bukkit-based server distributions. 
 
 Discord 
 -------
-
 We have a discord server!
 https://discord.com/invite/YDjykYsAFF
 
@@ -39,7 +36,7 @@ Issue Tracker Notes
 
 How do I create a ticket the right way?
 
-- Seperate your reports. You think there is something wrong, but also want this new brush? Make life easier for us and create two tickets. We'd appriciate it big times.
+- Seperate your reports. You think there is something wrong, but also want this new brush? Make life easier for us and create two tickets. We'd appreciate it big time.
 - Don't tell us your story of life. We want facts and information. The more information about `the Problem` you give us, the easier it is for us to figure out what's wrong.
 - Check the closed tickets first. Maybe someone created a similiar ticket already. If you think it's unresolved, then give us more information on there instead.
 

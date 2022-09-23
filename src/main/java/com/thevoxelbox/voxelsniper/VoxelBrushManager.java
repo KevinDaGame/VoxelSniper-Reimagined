@@ -67,7 +67,6 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(FillDownBrush.class, "fd", "filldown");
         brushManager.registerSniperBrush(FlatOceanBrush.class, "fo", "flatocean");
         brushManager.registerSniperBrush(GenerateTreeBrush.class, "gt", "generatetree");
-        brushManager.registerSniperBrush(HeatRayBrush.class, "hr", "heatray");
         brushManager.registerSniperBrush(JaggedLineBrush.class, "j", "jagged");
         brushManager.registerSniperBrush(JockeyBrush.class, "jockey");
         brushManager.registerSniperBrush(LightningBrush.class, "light", "lightning");

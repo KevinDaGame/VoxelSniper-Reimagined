@@ -83,12 +83,6 @@ BALL_BLEND_BRUSH_USAGE: |-
   <gold>Blend Ball Parameters:
   </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
 TARGET_MUST_BE_VISIBLE: <red>Snipe target block must be visible.
-HEAT_RAY_BRUSH_USAGE: |-
-  <gold>Heat Ray brush Parameters:
-  </gold><aqua>/b %triggerHandle% octave [number]  -- Octaves for the noise generator.
-  </aqua><aqua>/b %triggerHandle% amplitude [number]  -- Amplitude for the noise generator.
-  </aqua><aqua>/b %triggerHandle% frequency [number]  -- Frequency for the noise generator.
-  </aqua><aqua>/b %triggerHandle% default  -- Reset to default values.
 BLEND_DISC_BRUSH_USAGE: |-
   <gold>Blend Disc Parameters:
   </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
@@ -346,10 +340,6 @@ MAX_HEIGHT_BELOW_MIN: <red>Maximum height can't be lower than minimum height, ha
 MAX_HEIGHT_SET: <blue>Maximum height set to %maximumHeight%
 LEAF_THICKNESS_MAX_SET: <blue>Leaf thickness set to %nodeMax%
 LEAF_THICKNESS_MIN_SET: <blue>Leaf thickness set to %nodeMin%
-HEAT_RAY_BRUSH_INFO: |-
-  <green>Octaves: %octaves%
-  Amplitude: %amplitude%
-  Frequency: %frequency%
 SITTING_ON_CLOSEST_ENTITY: <gold>You are now sitting on the most nearby entity!
 NO_PLAYERS_FOUND_TO_SIT_ON: <red>Could not find any players to sit on :(
 NO_ENTITIES_FOUND_TO_SIT_ON: <red>Could not find any entities to sit on :(
@@ -369,20 +359,6 @@ OVERLAY_BRUSH_VOXELLIST_EMPTY: |-
   </dark_aqua><gold>Please use /vv list to see how to populate the list.
 INVALID_BRUSH_PARAM: <red>Invalid brush parameters!
 INVALID_BRUSH_PARAM_ANGLE: <red>Invalid brush parameters! Angles must be from 1-359
-PUNISH_BRUSH_USAGE: |-
-  <gold>Punish Brush Options:
-  </gold><blue>Punishment level can be set with /vc [level]
-  </blue><blue>Punishment duration in seconds can be set with /vh [duration]
-  </blue><aqua>/b %triggerHandle% [punishment]  -- Sets the punishment
-  </aqua><aqua>/b %triggerHandle% -hypno  -- Toggle whether Hypno will affect landscape only
-  </aqua><aqua>/b %triggerHandle% -player [playername]  -- Target specific player, clear with empty playername
-  </aqua><aqua>/b %triggerHandle% -self  -- Toggle whether you will be affected
-  </aqua><aqua>Available Punishment Options:
-NO_LONGER_TARGETING_A_SPECIFIC_PLAYER: No longer targeting a specific player.
-NOW_TARGETING_A_SPECIFIC_PLAYER: 'Now targeting a specific player: '
-PUNISHMENT_APPLIED_NUMBER: <dark_red>Punishment applied to %numPunishApps% living entities.
-PUNISHMENT_NAME: '<green>Punishment: %punishment%'
-PUNISHMENT_DOES_NOT_EXIST: <gold>That punishment does not exist! Use </gold><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
 INNER_RADIUS_INFO: <aqua>The inner radius is </aqua><red>%innerSize%
 INNER_RADIUS_SET: <aqua>The inner radius has been set to </aqua><red>%innerSize%</red><aqua>.
 ANGLE_SET: <green>Angle set to %se%
@@ -419,9 +395,6 @@ TRI_POINT_CIRCLE_MODE_UNKNOWN: '<gold>Mode: Unknown'
 TRI_POINT_CIRCLE_DONE: <green>Done.
 BRUSH_TOLERANCE_SET: <gold>Brush tolerance set to </gold><yellow>%tolerance%</yellow><gold>.
 TRIANGLE_BRUSH_INFO: '<blue>Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.'
-HEATRAY_FREQ: '<green>Frequency: %this.frequency%'
-HEATRAY_OCTAVE: '<green>Octave: %this.octaves%'
-HEATRAY_AMPLITUDE: '<green>Amplitude: %this.amplitude%'
 PULLBRUSH_PINCH: <aqua>Pinch %val%
 PULLBRUSH_BUBBLE: <aqua>Bubble %val%
 NUMBER_OUT_OF_RANGE: '<red>%arg% must be between %min% and %max%'
@@ -436,7 +409,6 @@ RULER_BRUSH_POWDER: |
   Z change: %z%
   Euclidean distance = %distance%
   Block distance = %blockDistance%
-PUNISHMENT_SELECTED: <yellow>%punishment%</yellow><gold> punishment selected.
 VOXEL_BRUSH_COMMAND_USAGE: |-
   <dark_aqua>%name% Command Syntax:
   </dark_aqua><gold>/%alias% [brushHandle] [arguments...]

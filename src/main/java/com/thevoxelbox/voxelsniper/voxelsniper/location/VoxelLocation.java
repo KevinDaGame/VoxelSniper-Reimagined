@@ -102,6 +102,12 @@ public class VoxelLocation {
         this.addY(location.getY());
         this.addZ(location.getZ());
     }
+
+    public void add(VoxelVector direction) {
+        this.addX(direction.getX());
+        this.addY(direction.getY());
+        this.addZ(direction.getZ());
+    }
     
     public IWorld getWorld() {
         return this.world;
@@ -162,5 +168,21 @@ public class VoxelLocation {
 
     private static double square(double num) {
         return num * num;
+    }
+
+    public VoxelVector getDirection() {
+        VoxelVector vector = new VoxelVector();
+
+        double rotX = this.getYaw();
+        double rotY = this.getPitch();
+
+        vector.setY(-Math.sin(Math.toRadians(rotY)));
+
+        double xz = Math.cos(Math.toRadians(rotY));
+
+        vector.setX(-xz * Math.sin(Math.toRadians(rotX)));
+        vector.setZ(xz * Math.cos(Math.toRadians(rotX)));
+
+        return vector;
     }
 }

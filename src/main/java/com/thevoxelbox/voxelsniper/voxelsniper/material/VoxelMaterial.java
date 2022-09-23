@@ -16,12 +16,13 @@ import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 public class VoxelMaterial implements IMaterial {
     private enum Tags {
         FALLSOFF,
-        FLUIDS
+        FLUIDS,
+        AIR
     }
     public static final Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
 
     //<editor-fold defaultstate="collapsed" desc="Blocks">
-    public static final VoxelMaterial AIR = register("minecraft", "air");
+    public static final VoxelMaterial AIR = register("minecraft", "air", Tags.AIR);
     public static final VoxelMaterial STONE = register("minecraft", "stone");
     public static final VoxelMaterial GRANITE = register("minecraft", "granite");
     public static final VoxelMaterial POLISHED_GRANITE = register("minecraft", "polished_granite");
@@ -659,8 +660,8 @@ public class VoxelMaterial implements IMaterial {
     public static final VoxelMaterial BAMBOO_SAPLING = register("minecraft", "bamboo_sapling", Tags.FALLSOFF);
     public static final VoxelMaterial BAMBOO = register("minecraft", "bamboo", Tags.FALLSOFF);
     public static final VoxelMaterial POTTED_BAMBOO = register("minecraft", "potted_bamboo");
-    public static final VoxelMaterial VOID_AIR = register("minecraft", "void_air");
-    public static final VoxelMaterial CAVE_AIR = register("minecraft", "cave_air");
+    public static final VoxelMaterial VOID_AIR = register("minecraft", "void_air", Tags.AIR);
+    public static final VoxelMaterial CAVE_AIR = register("minecraft", "cave_air", Tags.AIR);
     public static final VoxelMaterial BUBBLE_COLUMN = register("minecraft", "bubble_column");
     public static final VoxelMaterial POLISHED_GRANITE_STAIRS = register("minecraft", "polished_granite_stairs");
     public static final VoxelMaterial SMOOTH_RED_SANDSTONE_STAIRS = register("minecraft", "smooth_red_sandstone_stairs");
@@ -1084,6 +1085,10 @@ public class VoxelMaterial implements IMaterial {
 
     public boolean isFluid() {
         return this.tags.contains(Tags.FLUIDS);
+    }
+
+    public boolean isAir() {
+        return this.tags.contains(Tags.AIR);
     }
 
     public String getKey() {
