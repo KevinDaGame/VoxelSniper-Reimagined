@@ -26,7 +26,7 @@ Pre-compiled JARs are available in [Releases](https://github.com/KevinDaGame/Vox
 We use Maven to handle dependencies.
 
 - Install [Maven 3][Maven]
-- Check out this repository.
+- Clone this repository.
 - Run `mvn clean package`
 
 Alternatively, use a Java IDE that supports Maven. We recommend Intellij IDEA
