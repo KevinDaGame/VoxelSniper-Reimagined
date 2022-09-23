@@ -1,19 +1,16 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.entity.Player;
 
 public class VoxelInkCommand extends VoxelCommand {
 
@@ -24,8 +21,7 @@ public class VoxelInkCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player bukkitPlayer, String[] args) {
-        BukkitPlayer player = BukkitVoxelSniper.getInstance().getPlayer(bukkitPlayer);
+    public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
@@ -67,9 +63,9 @@ public class VoxelInkCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         // TODO: Very hacky parsing, find a more elegant solution.
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         String[] a = snipeData.getVoxelSubstance().getAsString().split("\\[");

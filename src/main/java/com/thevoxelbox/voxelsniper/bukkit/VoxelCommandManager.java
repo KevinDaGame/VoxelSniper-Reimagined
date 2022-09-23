@@ -63,20 +63,25 @@ public class VoxelCommandManager {
         PluginCommand bukkitCommand = BukkitVoxelSniper.getInstance().getCommand(command.getIdentifier());
         argumentsMap.put(command.getIdentifier(), command.registerTabCompletion());
 
-        bukkitCommand.setExecutor(command);
-        bukkitCommand.getAliases().stream().forEach(e -> {
-            argumentsMap.put(e, command.registerTabCompletion());
-        });
+        BukkitCommandHandler executor = new BukkitCommandHandler(command);
+        if (bukkitCommand != null) {
+            bukkitCommand.setExecutor(executor);
+            bukkitCommand.getAliases().forEach(e -> {
+                argumentsMap.put(e, command.registerTabCompletion());
+            });
+        }
 
         // Initializes command alternates that use the same executors
         command.getOtherIdentifiers().forEach((otherIdentifier) -> {
             PluginCommand bukkitCommandAlt = BukkitVoxelSniper.getInstance().getCommand(otherIdentifier);
             argumentsMap.put(otherIdentifier, command.registerTabCompletion());
 
-            bukkitCommandAlt.setExecutor(command);
-            bukkitCommand.getAliases().stream().forEach(e -> {
-                argumentsMap.put(e, command.registerTabCompletion());
-            });
+            if (bukkitCommandAlt != null) {
+                bukkitCommandAlt.setExecutor(executor);
+                bukkitCommandAlt.getAliases().forEach(e -> {
+                    argumentsMap.put(e, command.registerTabCompletion());
+                });
+            }
         });
     }
 

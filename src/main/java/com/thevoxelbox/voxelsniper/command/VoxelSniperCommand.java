@@ -2,16 +2,13 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.entity.Player;
 
 public class VoxelSniperCommand extends VoxelCommand {
 
@@ -23,8 +20,8 @@ public class VoxelSniperCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
+    public boolean doCommand(IPlayer player, String[] args) {
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         // Default command
@@ -43,47 +40,44 @@ public class VoxelSniperCommand extends VoxelCommand {
             return true;
         }
 
-        if (args.length >= 1) {
-            if (args[0].equalsIgnoreCase("range")) {
-                // Command: /sniper range
-                if (args.length == 1) {
-                    snipeData.setRanged(!snipeData.isRanged());
-                    snipeData.getVoxelMessage().toggleRange();
-                }
-
-                // Command: /sniper range [number]
-                if (args.length == 2) {
-                    try {
-                        int range = Integer.parseInt(args[1]);
-                        if (range < 0) {
-                            sniper.sendMessage(Messages.NEGATIVE_VALUES_ARE_NOT_ALLOWED);
-                        } else {
-                            snipeData.setRange(range);
-                            snipeData.setRanged(true);
-                            snipeData.getVoxelMessage().toggleRange();
-                        }
-                    } catch (NumberFormatException exception) {
-                        sniper.sendMessage(Messages.CAN_T_PARSE_NUMBER);
-                    }
-                }
-                return true;
-            } else if (args[0].equalsIgnoreCase("enable")) {
-                sniper.setEnabled(true);
-                sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU);
-                return true;
-            } else if (args[0].equalsIgnoreCase("disable")) {
-                sniper.setEnabled(false);
-                sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU);
-                return true;
-            } else {
-                return false;
+        if (args[0].equalsIgnoreCase("range")) {
+            // Command: /sniper range
+            if (args.length == 1) {
+                snipeData.setRanged(!snipeData.isRanged());
+                snipeData.getVoxelMessage().toggleRange();
             }
+
+            // Command: /sniper range [number]
+            if (args.length == 2) {
+                try {
+                    int range = Integer.parseInt(args[1]);
+                    if (range < 0) {
+                        sniper.sendMessage(Messages.NEGATIVE_VALUES_ARE_NOT_ALLOWED);
+                    } else {
+                        snipeData.setRange(range);
+                        snipeData.setRanged(true);
+                        snipeData.getVoxelMessage().toggleRange();
+                    }
+                } catch (NumberFormatException exception) {
+                    sniper.sendMessage(Messages.CAN_T_PARSE_NUMBER);
+                }
+            }
+            return true;
+        } else if (args[0].equalsIgnoreCase("enable")) {
+            sniper.setEnabled(true);
+            sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU);
+            return true;
+        } else if (args[0].equalsIgnoreCase("disable")) {
+            sniper.setEnabled(false);
+            sniper.sendMessage(Messages.VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU);
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 0) {
             return Lists.newArrayList("enable", "disable", "range");
         }

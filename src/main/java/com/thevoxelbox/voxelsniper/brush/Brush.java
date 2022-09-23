@@ -25,8 +25,6 @@ import java.util.List;
  */
 public abstract class Brush implements IBrush {
 
-    protected static final String BRUSH_ARGUMENT_PREFIX = VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
-
     protected static final int CHUNK_SIZE = 16;
     /**
      * Targeted Block.

@@ -1,21 +1,15 @@
 package com.thevoxelbox.voxelsniper.command;
 
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelCommandManager;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
-
-public abstract class VoxelCommand implements TabExecutor {
+public abstract class VoxelCommand {
 
     private final String name;
     private String description = "";
@@ -30,40 +24,18 @@ public abstract class VoxelCommand implements TabExecutor {
         this.name = name;
     }
 
-    @Override
-    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        this.activeIdentifier = command.getLabel(); // This is the root command.
-        this.activeAlias = label;   // This is the alias that was executed.
-
-        if (!(sender instanceof Player)) {
-            BukkitVoxelSniper.getAdventure().sender(sender).sendMessage(Messages.ONLY_PLAYERS_CAN_EXECUTE_COMMANDS);
-            return true;
+    public boolean execute(IPlayer player, String[] args) {
+        if (getPermission() == null || getPermission().isEmpty() || player.hasPermission(getPermission())) {
+            return doCommand(player, args);
         } else {
-            if (command.getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) {
-                return doCommand((Player) sender, args);
-            } else {
-                BukkitVoxelSniper.getAdventure().sender(sender).sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%",getPermission()));
-                return true;
-            }
+            player.sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%",getPermission()));
+            return true;
         }
     }
 
-    public abstract boolean doCommand(Player player, String[] args);
+    public abstract boolean doCommand(IPlayer player, String[] args);
 
-    @Override
-    public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        this.activeIdentifier = command.getLabel(); // This is the root command.
-        this.activeAlias = alias;   // This is the alias that was executed.
-
-        if (sender instanceof Player) {
-            // Return partial matches that only match the *beginning* of the string.
-            List<String> suggestions = doSuggestion((Player) sender, args); // MUST SPLIT DECLARATION AND ASSIGNMENT, OTHERWISE PARTIAL MATCHING WON'T WORK
-            return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
-        }
-        return new ArrayList<>();
-    }
-
-    public abstract List<String> doSuggestion(Player player, String[] args);
+    public abstract List<String> doSuggestion(IPlayer player, String[] args);
 
     public final String getDescription() {
         return description;
@@ -109,8 +81,16 @@ public abstract class VoxelCommand implements TabExecutor {
         return this.activeIdentifier;
     }
 
+    public void setActiveIdentifier(String activeIdentifier) {
+        this.activeIdentifier = activeIdentifier;
+    }
+
     public final String getActiveAlias() {
         return this.activeAlias;
+    }
+
+    public void setActiveAlias(String activeAlias) {
+        this.activeAlias = activeAlias;
     }
 
     public List<String> registerTabCompletion() {

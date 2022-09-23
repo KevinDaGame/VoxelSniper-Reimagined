@@ -2,20 +2,15 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -31,12 +26,12 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
     @Override
     public List<String> registerTabCompletion() {
-        return Arrays.stream(Material.values()).filter(e -> e.isBlock()).map(e -> e.getKey().toString()).collect(Collectors.toList());
+        return VoxelMaterial.getMaterials().stream().filter(VoxelMaterial::isBlock).map(VoxelMaterial::getKey).toList();
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
+    public boolean doCommand(IPlayer player, String[] args) {
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         if (getActiveAlias().equalsIgnoreCase("vc")) {
@@ -62,7 +57,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
         }
 
         if (getActiveAlias().equalsIgnoreCase("vl")) {
-            if (args.length == 0 && args[0].equalsIgnoreCase("clear")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
                 snipeData.getVoxelList().clear();
                 snipeData.getVoxelMessage().voxelList();
                 return true;
@@ -160,7 +155,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (getActiveAlias().equalsIgnoreCase("vc") || getActiveAlias().equals("vh")) {
             if (args.length == 1) {
                 return Lists.newArrayList("[number]");
@@ -172,7 +167,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             args[0] = args[0].toLowerCase().replace("-", "");
 
             if (!args[0].startsWith("minecraft:")) {
-                if (args[0].startsWith("mi") && !args[0].equals("minecraft:")) {
+                if (args[0].startsWith("mi")) {
                     return Lists.newArrayList("minecraft:");
                 }
 
@@ -188,7 +183,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             }
 
             if (args[0].equalsIgnoreCase("center") || args[0].equals("height")) {
-                if (args.length == 1) {
+                if (args.length == 2) {
                     return Lists.newArrayList("[number]");
                 }
             }
@@ -198,7 +193,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 args[0] = args[0].toLowerCase().replace("-", "");
 
                 if (!args[0].startsWith("minecraft:")) {
-                    if (args[0].startsWith("mi") && !args[0].equals("minecraft:")) {
+                    if (args[0].startsWith("mi")) {
                         return Lists.newArrayList("minecraft:");
                     }
 

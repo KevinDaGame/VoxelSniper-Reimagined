@@ -2,18 +2,15 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.entity.Player;
 
 public class VoxelBrushToolCommand extends VoxelCommand {
 
@@ -25,8 +22,8 @@ public class VoxelBrushToolCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
+    public boolean doCommand(IPlayer player, String[] args) {
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         // Default command
         // Command: /btool, /btool help, /btool info
@@ -50,7 +47,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                VoxelMaterial itemInHand = (BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand() != null) ? (BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand()) : VoxelMaterial.AIR;
+                VoxelMaterial itemInHand = (player.getItemInHand() != null) ? (player.getItemInHand()) : VoxelMaterial.AIR;
 
                 if (itemInHand == null) {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM);
@@ -79,7 +76,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
         
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            VoxelMaterial itemInHand = (BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand() != null) ? BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand() : VoxelMaterial.AIR;
+            VoxelMaterial itemInHand = (player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR;
 
             if (itemInHand == null) {
                 sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN);
@@ -100,7 +97,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
             return Lists.newArrayList("assign", "remove");
         }

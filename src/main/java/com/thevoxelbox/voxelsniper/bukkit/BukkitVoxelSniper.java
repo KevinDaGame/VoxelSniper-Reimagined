@@ -15,6 +15,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -29,6 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Bukkit extension point.
@@ -55,11 +57,6 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return BukkitVoxelSniper.adventure;
     }
 
-    /**
-     * Returns object for accessing global VoxelSniper options.
-     *
-     * @return {@link VoxelSniperConfiguration} object for accessing global VoxelSniper options.
-     */
     @Override
     public void onEnable() {
         VoxelSniper.voxelsniper = this;
@@ -98,6 +95,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         this.players.remove(event.getPlayer().getUniqueId());
     }
 
+    @NotNull
     public BukkitPlayer getPlayer(Player player) {
         if (this.players.get(player.getUniqueId()) != null) return this.players.get(player.getUniqueId());
         BukkitPlayer res = new BukkitPlayer(player);
@@ -105,12 +103,28 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return res;
     }
 
-    @Override
+    @Override @Nullable
     public IPlayer getPlayer(UUID uuid) {
         if (this.players.get(uuid) != null) return this.players.get(uuid);
-        BukkitPlayer res = new BukkitPlayer(Bukkit.getPlayer(uuid));
+        Player bukkitPlayer = Bukkit.getPlayer(uuid);
+        if (bukkitPlayer == null) return null;
+        BukkitPlayer res = new BukkitPlayer(bukkitPlayer);
         this.players.put(uuid, res);
         return res;
+    }
+
+    @Override @Nullable
+    public IPlayer getPlayer(String name) {
+        Player bukkitPlayer = Bukkit.getPlayer(name);
+        if (bukkitPlayer == null) return null;
+        BukkitPlayer res = new BukkitPlayer(bukkitPlayer);
+        this.players.put(bukkitPlayer.getUniqueId(), res);
+        return res;
+    }
+
+    @Override
+    public List<String> getOnlinePlayerNames() {
+        return getServer().getOnlinePlayers().stream().map(Player::getName).toList();
     }
 
     @Override
@@ -125,6 +139,11 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return Version.valueOf(version);
     }
 
+    /**
+     * Returns object for accessing global VoxelSniper options.
+     *
+     * @return {@link VoxelSniperConfiguration} object for accessing global VoxelSniper options.
+     */
     @Override
     public VoxelSniperConfiguration getVoxelSniperConfiguration() {
         return voxelSniperConfiguration;
@@ -135,6 +154,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return fileHandler;
     }
 
+    @NotNull
     public IWorld getWorld(@NotNull World world) {
         if (this.worlds.get(world.getName()) != null) return this.worlds.get(world.getName());
         BukkitWorld res = new BukkitWorld(world);

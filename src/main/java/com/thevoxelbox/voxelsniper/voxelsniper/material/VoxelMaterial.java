@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1031,6 +1032,10 @@ public class VoxelMaterial implements IMaterial {
             return block;
         }
         return null;
+    }
+
+    public static Collection<VoxelMaterial> getMaterials() {
+        return BLOCKS.values();
     }
 
     @Override
