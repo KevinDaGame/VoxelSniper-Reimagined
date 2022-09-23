@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
@@ -20,7 +21,7 @@ public class VoxelDefaultCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
 
         // Default command
         // Command: /d info, /d help

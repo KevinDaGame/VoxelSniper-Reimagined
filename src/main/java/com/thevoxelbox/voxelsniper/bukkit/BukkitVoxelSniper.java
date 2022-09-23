@@ -7,28 +7,41 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Bukkit extension point.
  */
-public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
+public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Listener {
 
     private static BukkitVoxelSniper instance;
     private static BukkitAudiences adventure;
     
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
     private VoxelSniperConfiguration voxelSniperConfiguration;
+    private final Map<String, IWorld> worlds = new HashMap<>();
+    private final Map<UUID, BukkitPlayer> players = new HashMap<>();
     private IFileHandler fileHandler;
 
     /**
@@ -65,6 +78,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
         voxelSniperConfiguration = new VoxelSniperConfiguration(getConfig());
 
         Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
+        Bukkit.getPluginManager().registerEvents(this, this);
         getLogger().info("Registered Sniper Listener.");
 
         // Initialize commands
@@ -79,9 +93,24 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
         }
     }
 
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event) {
+        this.players.remove(event.getPlayer().getUniqueId());
+    }
+
+    public BukkitPlayer getPlayer(Player player) {
+        if (this.players.get(player.getUniqueId()) != null) return this.players.get(player.getUniqueId());
+        BukkitPlayer res = new BukkitPlayer(player);
+        this.players.put(player.getUniqueId(), res);
+        return res;
+    }
+
     @Override
-    public BukkitPlayer getPlayer(UUID uuid) {
-        return new BukkitPlayer(Bukkit.getPlayer(uuid));
+    public IPlayer getPlayer(UUID uuid) {
+        if (this.players.get(uuid) != null) return this.players.get(uuid);
+        BukkitPlayer res = new BukkitPlayer(Bukkit.getPlayer(uuid));
+        this.players.put(uuid, res);
+        return res;
     }
 
     @Override
@@ -104,5 +133,12 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper {
     @Override
     public IFileHandler getFileHandler() {
         return fileHandler;
+    }
+
+    public IWorld getWorld(@NotNull World world) {
+        if (this.worlds.get(world.getName()) != null) return this.worlds.get(world.getName());
+        BukkitWorld res = new BukkitWorld(world);
+        this.worlds.put(world.getName(), res);
+        return res;
     }
 }

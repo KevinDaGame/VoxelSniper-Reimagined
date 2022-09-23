@@ -4,6 +4,7 @@ import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.VoxelBrushManager;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
@@ -39,7 +40,7 @@ public class VoxelBrushCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
         String currentToolId = sniper.getCurrentToolId();
         SnipeData snipeData = sniper.getSnipeData(currentToolId);
 

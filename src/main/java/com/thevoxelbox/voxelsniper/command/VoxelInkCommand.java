@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
@@ -24,7 +25,7 @@ public class VoxelInkCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player bukkitPlayer, String[] args) {
-        BukkitPlayer player = new BukkitPlayer(bukkitPlayer);
+        BukkitPlayer player = BukkitVoxelSniper.getInstance().getPlayer(bukkitPlayer);
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
@@ -68,7 +69,7 @@ public class VoxelInkCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(Player player, String[] args) {
         // TODO: Very hacky parsing, find a more elegant solution.
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         String[] a = snipeData.getVoxelSubstance().getAsString().split("\\[");

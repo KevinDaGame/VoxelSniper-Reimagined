@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.block;
 
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
@@ -7,7 +8,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 
 import org.bukkit.block.Block;
 
@@ -18,7 +18,7 @@ public class BukkitBlock extends AbstractBlock {
     private final Block block;
 
     public BukkitBlock(Block block) {
-        super(new VoxelLocation(new BukkitWorld(block.getWorld()), block.getX(), block.getY(), block.getZ()), BukkitMaterial.fromBukkitMaterial(block.getType()));
+        super(new VoxelLocation(BukkitVoxelSniper.getInstance().getWorld(block.getWorld()), block.getX(), block.getY(), block.getZ()), BukkitMaterial.fromBukkitMaterial(block.getType()));
         this.block = block;
     }
 

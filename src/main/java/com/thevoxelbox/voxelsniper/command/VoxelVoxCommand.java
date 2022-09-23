@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
@@ -25,17 +26,17 @@ public class VoxelVoxCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
+        BukkitPlayer bukkitPlayer = BukkitVoxelSniper.getInstance().getPlayer(player);
         // Command: /painting
         if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 0) {
-                BlockHelper.painting(new BukkitPlayer(player), true, false, 0);
+                BlockHelper.painting(BukkitVoxelSniper.getInstance().getPlayer(player), true, false, 0);
                 return true;
             }
 
             if (args.length == 1) {
                 try {
-                    BlockHelper.painting(new BukkitPlayer(player), false, false, Integer.parseInt(args[0]));
+                    BlockHelper.painting(BukkitVoxelSniper.getInstance().getPlayer(player), false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
                     bukkitPlayer.sendMessage(Messages.PAINTING_INVALID_SYNTAX);
                 }
@@ -74,14 +75,14 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vox painting
         if (args[0].equalsIgnoreCase("painting")) {
             if (args.length == 1) {
-                BlockHelper.painting(new BukkitPlayer(player), true, false, 0);
+                BlockHelper.painting(BukkitVoxelSniper.getInstance().getPlayer(player), true, false, 0);
                 return true;
             }
 
             // Command: /vox painting [number]
             if (args.length == 2) {
                 try {
-                    BlockHelper.painting(new BukkitPlayer(player), false, false, Integer.parseInt(args[1]));
+                    BlockHelper.painting(BukkitVoxelSniper.getInstance().getPlayer(player), false, false, Integer.parseInt(args[1]));
                 } catch (NumberFormatException e) {
                     bukkitPlayer.sendMessage(Messages.VOX_PAINTING_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 }

@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
@@ -25,7 +26,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(Player player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(new BukkitPlayer(player));
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(BukkitVoxelSniper.getInstance().getPlayer(player));
 
         // Default command
         // Command: /btool, /btool help, /btool info
@@ -49,7 +50,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                VoxelMaterial itemInHand = (new BukkitPlayer(player).getItemInHand() != null) ? (new BukkitPlayer(player).getItemInHand()) : VoxelMaterial.AIR;
+                VoxelMaterial itemInHand = (BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand() != null) ? (BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand()) : VoxelMaterial.AIR;
 
                 if (itemInHand == null) {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM);
@@ -78,7 +79,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
         
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            VoxelMaterial itemInHand = (new BukkitPlayer(player).getItemInHand() != null) ? new BukkitPlayer(player).getItemInHand() : VoxelMaterial.AIR;
+            VoxelMaterial itemInHand = (BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand() != null) ? BukkitVoxelSniper.getInstance().getPlayer(player).getItemInHand() : VoxelMaterial.AIR;
 
             if (itemInHand == null) {
                 sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN);

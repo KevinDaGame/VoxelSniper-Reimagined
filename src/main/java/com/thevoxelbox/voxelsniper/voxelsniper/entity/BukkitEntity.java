@@ -1,11 +1,11 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.entity;
 
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.BukkitPainting;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public IWorld getWorld() {
-        return new BukkitWorld(this.entity.getWorld());
+        return BukkitVoxelSniper.getInstance().getWorld(this.entity.getWorld());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class BukkitEntity implements IEntity {
         if (entity instanceof Painting p)
             return new BukkitPainting(p);
         if (entity instanceof Player p)
-            return new BukkitPlayer(p);
+            return BukkitVoxelSniper.getInstance().getPlayer(p);
         return new BukkitEntity(entity);
     }
 }

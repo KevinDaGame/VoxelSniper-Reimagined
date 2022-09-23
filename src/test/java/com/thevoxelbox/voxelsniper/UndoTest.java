@@ -8,7 +8,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.junit.Assert;
@@ -58,7 +57,7 @@ public class UndoTest
 
     @Test
     public void testGetSize() {
-        IWorld world = Mockito.mock(BukkitWorld.class);
+        IWorld world = Mockito.mock(IWorld.class);
         for (int i = 0; i < 5; i++)
         {
             VoxelLocation location = new VoxelLocation(world, 0, 0, i);
@@ -78,7 +77,7 @@ public class UndoTest
 
     @Test
     public void testPut() {
-        IWorld world = Mockito.mock(BukkitWorld.class);
+        IWorld world = Mockito.mock(IWorld.class);
         VoxelLocation location = new VoxelLocation(world, 0, 0, 0);
         IBlock block = mockBlock(location, VoxelMaterial.DIRT);
 
@@ -88,7 +87,7 @@ public class UndoTest
 
     @Test
     public void testUndo() {
-        IWorld world = Mockito.mock(BukkitWorld.class);
+        IWorld world = Mockito.mock(IWorld.class);
 
         VoxelLocation normalBlockLocation = new VoxelLocation(world, 0, 0, 0);
         IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE);

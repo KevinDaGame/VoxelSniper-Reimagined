@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.blockstate;
 
+import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
@@ -8,7 +9,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.BukkitSign;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.block.BlockState;
@@ -28,7 +28,7 @@ public class BukkitBlockState implements IBlockState {
 
     @Override
     public IWorld getWorld() {
-        return new BukkitWorld(blockState.getWorld());
+        return BukkitVoxelSniper.getInstance().getWorld(blockState.getWorld());
     }
 
     @Override

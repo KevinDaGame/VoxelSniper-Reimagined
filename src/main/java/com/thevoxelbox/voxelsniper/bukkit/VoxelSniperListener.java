@@ -43,7 +43,7 @@ public class VoxelSniperListener implements Listener {
     @EventHandler(ignoreCancelled = false)
     public final void onPlayerInteract(final PlayerInteractEvent event) {
         if(event.getHand() != EquipmentSlot.HAND) return;
-        IPlayer player = new BukkitPlayer(event.getPlayer());
+        IPlayer player = BukkitVoxelSniper.getInstance().getPlayer(event.getPlayer());
 
         if (!player.hasPermission(SNIPER_PERMISSION)) return;
         if(cooldown.contains(player.getUniqueId())) return;
@@ -68,7 +68,7 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
-        IPlayer player = new BukkitPlayer(event.getPlayer());
+        IPlayer player = BukkitVoxelSniper.getInstance().getPlayer(event.getPlayer());
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
