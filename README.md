@@ -97,9 +97,9 @@ We do accept pull requests and enhancements from third parties. Guidelines how t
 Some rough guidelines for now:
 
 - Keep the number of commits to a minimum. We want to look over the commit and basically see what you've done.
-- Coding guidelines should try to comply to the checkstyle rules (checkstyle.xml) but not blindly. Use your mind to make smart decissions.
 - Give us a good description to what you've done.
 - Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
+- Code should adhere to the [Google java style guide ](https://google.github.io/styleguide/javaguide.html)
 
 [VoxelSniperWiki]: http://voxelwiki.com/minecraft/VoxelSniper/
 [JenkinsJob]: http://ci.thevoxelbox.com/job/VoxelSniper/
