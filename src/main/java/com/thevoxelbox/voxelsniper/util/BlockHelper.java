@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BlockHelper {
 
-    private static final double DEFAULT_STEP = 0.1;
+    private static final double DEFAULT_STEP = 0.2;
     private static final int DEFAULT_RANGE = 250;
     private final World world;
     private Location startPoint;
