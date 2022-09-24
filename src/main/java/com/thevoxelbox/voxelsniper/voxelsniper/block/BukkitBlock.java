@@ -69,7 +69,7 @@ public class BukkitBlock extends AbstractBlock {
 
     @Override
     public IBlockState getState() {
-        return BukkitBlockState.fromBukkitState(block.getState());
+        return BukkitBlockState.fromBukkitState(this, block.getState());
     }
 
     @Override

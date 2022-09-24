@@ -1,49 +1,22 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.blockstate;
 
-import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.BukkitBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.BukkitSign;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 
-public class BukkitBlockState implements IBlockState {
+public class BukkitBlockState extends AbstractBlockState {
     protected final BlockState blockState;
 
-    public BukkitBlockState(BlockState blockState) {
+    public BukkitBlockState(IBlock block, BlockState blockState) {
+        super(block);
         this.blockState = blockState;
-    }
-
-    @Override
-    public IBlock getBlock() {
-        return new BukkitBlock(blockState.getBlock());
-    }
-
-    @Override
-    public IWorld getWorld() {
-        return BukkitVoxelSniper.getInstance().getWorld(blockState.getWorld());
-    }
-
-    @Override
-    public int getX() {
-        return blockState.getX();
-    }
-
-    @Override
-    public int getY() {
-        return blockState.getY();
-    }
-
-    @Override
-    public int getZ() {
-        return blockState.getZ();
     }
 
     @Override
@@ -54,11 +27,6 @@ public class BukkitBlockState implements IBlockState {
     @Override
     public IBlockData getBlockData() {
         return BukkitBlockData.fromBukkitData(blockState.getBlockData());
-    }
-
-    @Override
-    public VoxelLocation getLocation() {
-        return new VoxelLocation(getWorld(), getX(), getY(), getZ());
     }
 
     @Override
@@ -76,9 +44,13 @@ public class BukkitBlockState implements IBlockState {
         return blockState.update(force, applyPhysics);
     }
 
-    public static BukkitBlockState fromBukkitState(BlockState state) {
+    public static BukkitBlockState fromBukkitState(IBlock block, BlockState state) {
         if (state instanceof Sign sign)
-            return new BukkitSign(sign);
-        return new BukkitBlockState(state);
+            return new BukkitSign(block, sign);
+        return new BukkitBlockState(block, state);
+    }
+
+    public static IBlockState fromBukkitState(BlockState state) {
+        return fromBukkitState(new BukkitBlock(state.getBlock()), state);
     }
 }

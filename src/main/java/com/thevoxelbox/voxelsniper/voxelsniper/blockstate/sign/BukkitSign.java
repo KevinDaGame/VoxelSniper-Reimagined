@@ -1,5 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign;
 
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
 
 import org.bukkit.ChatColor;
@@ -9,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class BukkitSign extends BukkitBlockState implements ISign {
     private static final char DEFAULT_LEGACY_CHAR = '&';
 
-    public BukkitSign(Sign blockState) {
-        super(blockState);
+    public BukkitSign(IBlock block, Sign blockState) {
+        super(block, blockState);
     }
 
     private Sign getSign() {
