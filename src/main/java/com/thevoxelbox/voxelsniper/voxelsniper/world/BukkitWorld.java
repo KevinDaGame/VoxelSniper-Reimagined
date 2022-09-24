@@ -9,6 +9,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.treeType.VoxelTreeType;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.Iterator;
@@ -95,9 +96,12 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void generateTree(VoxelLocation location, TreeType treeType, Undo undo) {
-        BukkitUndoDelegate undoDelegate = new BukkitUndoDelegate(world, undo);
-        world.generateTree(BukkitLocation.toBukkitLocation(location), treeType, undoDelegate);
+    public void generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo) {
+        if (treeType.isSupported()) {
+            BukkitUndoDelegate undoDelegate = new BukkitUndoDelegate(world, undo);
+            TreeType bukkitType = TreeType.valueOf(treeType.name());
+            world.generateTree(BukkitLocation.toBukkitLocation(location), bukkitType, undoDelegate);
+        }
     }
 
     @Override

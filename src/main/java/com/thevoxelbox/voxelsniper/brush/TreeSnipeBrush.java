@@ -8,17 +8,14 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.treeType.VoxelTreeType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-
-import org.bukkit.TreeType;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Tree_Brush
@@ -27,7 +24,7 @@ import org.bukkit.TreeType;
  */
 public class TreeSnipeBrush extends Brush {
 
-    private TreeType treeType = TreeType.TREE;
+    private VoxelTreeType treeType = VoxelTreeType.TREE;
 
     /**
      *
@@ -65,13 +62,15 @@ public class TreeSnipeBrush extends Brush {
         TextComponent.Builder printout = Component.text();
 
         boolean delimiterHelper = true;
-        for (final TreeType treeType : TreeType.values()) {
-            if (delimiterHelper) {
-                delimiterHelper = false;
-            } else {
-                printout.append(Component.text(", ").color(NamedTextColor.WHITE));
+        for (final VoxelTreeType treeType : VoxelTreeType.values()) {
+            if (treeType.isSupported()) {
+                if (delimiterHelper) {
+                    delimiterHelper = false;
+                } else {
+                    printout.append(Component.text(", ").color(NamedTextColor.WHITE));
+                }
+                printout.append(Component.text(treeType.name().toLowerCase()).color(treeType.equals(this.treeType) ? NamedTextColor.GRAY : NamedTextColor.DARK_GRAY));
             }
-            printout.append(Component.text(treeType.name().toLowerCase()).color(treeType.equals(this.treeType) ? NamedTextColor.GRAY : NamedTextColor.DARK_GRAY));
         }
 
         vm.custom(printout);
@@ -102,8 +101,11 @@ public class TreeSnipeBrush extends Brush {
         }
 
         try {
-            this.treeType = TreeType.valueOf(params[0].toUpperCase());
-            this.printTreeType(v.getVoxelMessage());
+            this.treeType = VoxelTreeType.valueOf(params[0].toUpperCase());
+            if (treeType.isSupported())
+                this.printTreeType(v.getVoxelMessage());
+            else
+                throw new IllegalArgumentException("Not supported");
         } catch (Exception e) {
             v.getVoxelMessage().brushMessage(Messages.TREESNIPE_BRUSH_MESSAGE.replace("%triggerHandle%", triggerHandle));
         }
@@ -112,7 +114,7 @@ public class TreeSnipeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        return Arrays.stream(TreeType.values()).map(Enum::name).toList();
+        return Arrays.stream(VoxelTreeType.values()).filter(VoxelTreeType::isSupported).map(Enum::name).toList();
     }
 
     @Override

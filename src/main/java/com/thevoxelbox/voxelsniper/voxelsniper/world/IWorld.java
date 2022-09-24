@@ -6,11 +6,10 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.treeType.VoxelTreeType;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.Iterator;
-
-import org.bukkit.TreeType;
 
 public interface IWorld {
     IBlock getBlock(VoxelLocation location);
@@ -33,7 +32,7 @@ public interface IWorld {
 
     void regenerateChunk(int x, int z);
 
-    void generateTree(VoxelLocation location, TreeType treeType, Undo undo);
+    void generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo);
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 }
