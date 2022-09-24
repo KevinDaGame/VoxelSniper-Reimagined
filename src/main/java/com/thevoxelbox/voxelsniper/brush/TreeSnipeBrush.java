@@ -36,13 +36,14 @@ public class TreeSnipeBrush extends Brush {
         this.setName("Tree Snipe");
     }
 
-    @SuppressWarnings("deprecation")
     private void single(final SnipeData v,  IBlock targetBlock) {
+        Undo undo = new Undo();
+
         IBlock blockBelow = targetBlock.getRelative(BlockFace.DOWN);
         IBlockState currentState = blockBelow.getState();
+        undo.put(currentState);
         blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK, false);
 
-        Undo undo = new Undo();
         this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undo);
 
         blockBelow.setBlockData(currentState.getBlockData(), false);
@@ -111,7 +112,7 @@ public class TreeSnipeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
+        return Arrays.stream(TreeType.values()).map(Enum::name).toList();
     }
 
     @Override
