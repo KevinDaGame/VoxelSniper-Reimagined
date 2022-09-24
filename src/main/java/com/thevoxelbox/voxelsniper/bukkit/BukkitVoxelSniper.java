@@ -8,6 +8,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.events.IEventManager;
+import com.thevoxelbox.voxelsniper.voxelsniper.events.bukkit.BukkitEventManager;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
@@ -49,6 +51,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     private final Map<String, IWorld> worlds = new HashMap<>();
     private final Map<UUID, BukkitPlayer> players = new HashMap<>();
     private IFileHandler fileHandler;
+    private IEventManager eventManager;
 
     /**
      * @return {@link BukkitVoxelSniper}
@@ -66,6 +69,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         VoxelSniper.voxelsniper = this;
         BukkitVoxelSniper.instance = this;
         this.fileHandler = new BukkitFileHandler(this);
+        this.eventManager = new BukkitEventManager();
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize();
 
@@ -163,6 +167,11 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @Override
     public IFileHandler getFileHandler() {
         return fileHandler;
+    }
+
+    @Override
+    public IEventManager getEventManager() {
+        return this.eventManager;
     }
 
     @NotNull

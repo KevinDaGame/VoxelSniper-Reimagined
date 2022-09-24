@@ -1,11 +1,10 @@
 package com.thevoxelbox.voxelsniper.command;
 
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.VoxelBrushManager;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
-import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
-import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
@@ -14,8 +13,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.Bukkit;
 
 import static com.thevoxelbox.voxelsniper.command.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
 import static com.thevoxelbox.voxelsniper.command.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
@@ -61,8 +58,7 @@ public class VoxelBrushCommand extends VoxelCommand {
             int originalSize = snipeData.getBrushSize();
             snipeData.setBrushSize(Integer.parseInt(args[0]));
 
-            SniperBrushSizeChangedEvent event = new SniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
-            Bukkit.getPluginManager().callEvent(event);
+            VoxelSniper.voxelsniper.getEventManager().callSniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
 
             snipeData.getVoxelMessage().size();
             return true;
@@ -101,7 +97,7 @@ public class VoxelBrushCommand extends VoxelCommand {
                 }
                 return true;
             }
-            SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
+            VoxelSniper.voxelsniper.getEventManager().callSniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
             sniper.displayInfo();
         }
 

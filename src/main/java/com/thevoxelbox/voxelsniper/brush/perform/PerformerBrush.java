@@ -5,8 +5,8 @@
 package com.thevoxelbox.voxelsniper.brush.perform;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.Brush;
-import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
@@ -14,8 +14,6 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Bukkit;
 
 /**
  * @author Voxel
@@ -40,8 +38,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
         } else {
             currentPerformer = newPerfomer;
 
-            SniperBrushChangedEvent event = new SniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
-            Bukkit.getPluginManager().callEvent(event);
+            VoxelSniper.voxelsniper.getEventManager().callSniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
 
             info(v.getVoxelMessage());
             currentPerformer.info(v.getVoxelMessage());

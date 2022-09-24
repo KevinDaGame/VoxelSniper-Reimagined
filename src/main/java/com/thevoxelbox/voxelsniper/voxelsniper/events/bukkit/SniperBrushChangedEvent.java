@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper.event;
+package com.thevoxelbox.voxelsniper.voxelsniper.events.bukkit;
 
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;

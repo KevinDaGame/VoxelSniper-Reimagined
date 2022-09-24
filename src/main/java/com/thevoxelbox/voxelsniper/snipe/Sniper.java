@@ -5,8 +5,6 @@ import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
-import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
@@ -21,7 +19,6 @@ import java.util.UUID;
 
 import net.kyori.adventure.text.ComponentLike;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.block.Action;
 import org.jetbrains.annotations.NotNull;
 
@@ -126,7 +123,7 @@ public class Sniper {
                             oldSubstance = snipeData.getReplaceSubstance();
                             snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
                             newSubstance = snipeData.getReplaceSubstance();
-                            Bukkit.getPluginManager().callEvent(new SniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance));
+                            VoxelSniper.voxelsniper.getEventManager().callSniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
 
                             snipeData.getVoxelMessage().replace();
                             return true;
@@ -134,7 +131,7 @@ public class Sniper {
                             oldSubstance = snipeData.getVoxelSubstance();
                             snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
                             newSubstance = snipeData.getVoxelSubstance();
-                            Bukkit.getPluginManager().callEvent(new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance));
+                            VoxelSniper.voxelsniper.getEventManager().callSniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                             snipeData.getVoxelMessage().voxel();
                             return true;
                         default:
