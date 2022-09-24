@@ -23,13 +23,9 @@ Compilation
 -----------
 Pre-compiled JARs are available in [Releases](https://github.com/KevinDaGame/VoxelSniper/releases).
 
-We use Maven to handle dependencies.
-
-- Install [Maven 3][Maven]
-- Clone this repository.
-- Run `mvn clean package`
-
-Alternatively, use a Java IDE that supports Maven. We recommend Intellij IDEA
+Alternatively, you can compile the project yourself
+We strongly recommend that you use Intellij to compile the project
+Other methods of compiling are at your own risk.
 
 Issue Tracker Notes
 -------------------
@@ -52,4 +48,4 @@ Here are some guidelines for pull requests:
 - Keep the number of commits to a minimum. We want to look over the commit and basically see what you've done.
 - Give us a good description to what you've done.
 - Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
-- Code should adhere to the [Google java style guide ](https://google.github.io/styleguide/javaguide.html)
+- Code should be formatted using the intellij formatter to insure a consistent style throughout the project
