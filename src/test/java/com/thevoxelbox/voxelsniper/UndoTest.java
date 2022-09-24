@@ -46,6 +46,8 @@ public class UndoTest
                 .thenReturn(loc);
         Mockito.when(normalBlockState.getBlock())
                 .thenReturn(block);
+        Mockito.when(normalBlockState.getMaterial())
+                .thenReturn(t);
 
         return block;
     }
