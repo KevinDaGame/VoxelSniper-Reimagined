@@ -5,12 +5,14 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +23,11 @@ import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class BukkitPlayer extends BukkitEntity implements IPlayer {
@@ -41,11 +46,6 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
     @Override
     public void sendMessage(String message) {
         player.sendMessage(message);
-    }
-
-    @Override
-    public void setVelocity(VoxelVector velocity) {
-
     }
 
     @Override
@@ -74,8 +74,14 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
     }
 
     @Override
-    public IEntity launchProjectile(Class<? extends Projectile> fireball) {
-        return BukkitEntity.fromBukkitEntity(player.launchProjectile(fireball));
+    public IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity) {
+        Class<? extends Entity> clazz = EntityType.valueOf(type.getKey().toUpperCase(Locale.ROOT)).getEntityClass();
+        if (clazz != null && Projectile.class.isAssignableFrom(clazz)) {
+            Class<? extends Projectile> projectile = clazz.asSubclass(Projectile.class);
+            Vector vector = new Vector(velocity.getX(), velocity.getY(), velocity.getZ());
+            return BukkitEntity.fromBukkitEntity(player.launchProjectile(projectile, vector));
+        }
+        return null;
     }
 
     @Override

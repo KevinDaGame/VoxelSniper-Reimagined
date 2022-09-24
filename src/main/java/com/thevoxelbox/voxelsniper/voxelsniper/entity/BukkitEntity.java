@@ -48,11 +48,6 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
-    public void setVelocity(VoxelVector velocity) {
-        entity.setVelocity(new Vector(velocity.getX(), velocity.getY(), velocity.getZ()));
-    }
-
-    @Override
     public IWorld getWorld() {
         return BukkitVoxelSniper.getInstance().getWorld(this.entity.getWorld());
     }

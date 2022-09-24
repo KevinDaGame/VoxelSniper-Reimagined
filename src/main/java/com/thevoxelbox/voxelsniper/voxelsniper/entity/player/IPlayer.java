@@ -2,8 +2,10 @@ package com.thevoxelbox.voxelsniper.voxelsniper.entity.player;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.Set;
 import java.util.UUID;
@@ -13,7 +15,6 @@ import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 
-import org.bukkit.entity.Projectile;
 import org.jetbrains.annotations.NotNull;
 
 public interface IPlayer extends IEntity, Audience {
@@ -24,7 +25,7 @@ public interface IPlayer extends IEntity, Audience {
     String getName();
     void teleport(VoxelLocation location);
     void eject();
-    IEntity launchProjectile(Class<? extends Projectile> projectile);
+    IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
     IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);
     VoxelMaterial getItemInHand();
 
