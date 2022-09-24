@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -28,19 +27,19 @@ public class VoxelSniperListener implements Listener {
 
     private static final String SNIPER_PERMISSION = "voxelsniper.sniper";
     private final BukkitVoxelSniper plugin;
-    private List<UUID> cooldown = new ArrayList<>();
+    private final List<UUID> cooldown = new ArrayList<>();
 
     /**
-     * @param plugin
+     * @param plugin The plugin
      */
     public VoxelSniperListener(final BukkitVoxelSniper plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * @param event
+     * @param event PlayerInteractEvent
      */
-    @EventHandler(ignoreCancelled = false)
+    @EventHandler
     public final void onPlayerInteract(final PlayerInteractEvent event) {
         if(event.getHand() != EquipmentSlot.HAND) return;
         IPlayer player = BukkitVoxelSniper.getInstance().getPlayer(event.getPlayer());
@@ -50,7 +49,7 @@ public class VoxelSniperListener implements Listener {
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
             if (sniper.isEnabled() && sniper.snipe(
-                    event.getAction(),
+                    Sniper.Action.valueOf(event.getAction().name()),
                     VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()),
                     event.getClickedBlock() != null ? new BukkitBlock(event.getClickedBlock()) : null,
                     BlockFace.valueOf(event.getBlockFace().name()))) {
@@ -64,7 +63,7 @@ public class VoxelSniperListener implements Listener {
     }
 
     /**
-     * @param event
+     * @param event PlayerJoinEvent
      */
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {

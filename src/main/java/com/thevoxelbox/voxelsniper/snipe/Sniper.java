@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import net.kyori.adventure.text.ComponentLike;
 
-import org.bukkit.event.block.Action;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -151,8 +150,7 @@ public class Sniper {
                     }
                 }
 
-                if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
-                    PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
+                if (sniperTool.getCurrentBrush() instanceof PerformerBrush performerBrush) {
                     performerBrush.initP(snipeData);
                 }
 
@@ -295,5 +293,13 @@ public class Sniper {
 
     public final void sendMessage(final @NotNull ComponentLike message) {
         this.getPlayer().sendMessage(message);
+    }
+
+    public enum Action {
+        LEFT_CLICK_BLOCK,
+        RIGHT_CLICK_BLOCK,
+        LEFT_CLICK_AIR,
+        RIGHT_CLICK_AIR,
+        PHYSICAL,
     }
 }
