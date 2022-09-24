@@ -1035,7 +1035,7 @@ public class VoxelMaterial implements IMaterial {
     }
 
     public static Collection<VoxelMaterial> getMaterials() {
-        return BLOCKS.values();
+        return BLOCKS.values().stream().filter((m) -> VoxelSniper.voxelsniper.getVersion().isSupported(m.getVersion())).toList();
     }
 
     @Override
