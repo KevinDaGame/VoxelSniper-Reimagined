@@ -1,4 +1,4 @@
-package com.thevoxelbox.voxelsniper.util;
+package com.thevoxelbox.voxelsniper.voxelsniper.fileHandler;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 
@@ -55,10 +55,10 @@ public class YamlConfiguration {
         }
     }
 
-    public String getString(String name) {
+    public String getString(String path) {
         // head:a.b.c
         Object head = contents;
-        String[] steps = name.split("\\.");
+        String[] steps = path.split("\\.");
         for (String step : steps) {
             if (head instanceof Map) {
                 head = ((Map<?, ?>)head).get(step);
@@ -67,6 +67,34 @@ public class YamlConfiguration {
             }
         }
         return (head instanceof String) ? (String) head : null;
+    }
+
+    public int getInt(String path, int defaultValue) {
+        // head:a.b.c
+        Object head = contents;
+        String[] steps = path.split("\\.");
+        for (String step : steps) {
+            if (head instanceof Map) {
+                head = ((Map<?, ?>)head).get(step);
+            } else {
+                return defaultValue;
+            }
+        }
+        return (head instanceof Number) ? ((Number) head).intValue() : defaultValue;
+    }
+
+    public boolean getBoolean(String path, boolean defaultValue) {
+        // head:a.b.c
+        Object head = contents;
+        String[] steps = path.split("\\.");
+        for (String step : steps) {
+            if (head instanceof Map) {
+                head = ((Map<?, ?>)head).get(step);
+            } else {
+                return defaultValue;
+            }
+        }
+        return (head instanceof Boolean) ? (Boolean) head : defaultValue;
     }
 
     public void set(String name, Object value) {

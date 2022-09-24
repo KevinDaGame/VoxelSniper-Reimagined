@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper;
 
-import com.thevoxelbox.voxelsniper.bukkit.VoxelSniperConfiguration;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.events.IEventManager;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;

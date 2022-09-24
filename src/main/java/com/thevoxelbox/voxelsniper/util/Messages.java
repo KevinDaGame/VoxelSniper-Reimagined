@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;

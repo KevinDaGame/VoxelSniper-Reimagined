@@ -13,6 +13,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.events.bukkit.BukkitEventManager;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
@@ -80,7 +81,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
 
         saveDefaultConfig();
-        voxelSniperConfiguration = new VoxelSniperConfiguration(getConfig());
+        voxelSniperConfiguration = new VoxelSniperConfiguration(this);
 
         Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
         Bukkit.getPluginManager().registerEvents(this, this);

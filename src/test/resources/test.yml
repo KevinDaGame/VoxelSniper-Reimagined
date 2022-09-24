@@ -1,0 +1,6 @@
+test:
+  testText: 'Hello World!'
+  testInt: 15
+  bool:
+    testFalse: false
+    testTrue: true
