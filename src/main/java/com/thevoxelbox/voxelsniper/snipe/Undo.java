@@ -11,10 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.block.BlockState;
-
 /**
- * Holds {@link BlockState}s that can be later on used to reset those block locations back to the recorded states.
+ * Holds BlockStates that can be later on used to reset those block locations back to the recorded states.
  */
 public class Undo {
 
@@ -50,17 +48,26 @@ public class Undo {
      * @param block Block to be added
      */
     public void put(IBlock block) {
-        VoxelVector pos = block.getLocation().toVector();
+        this.put(block.getState());
+    }
+
+    /**
+     * Adds a Block to the collection.
+     *
+     * @param state BlockState to be added
+     */
+    public void put(IBlockState state) {
+        VoxelVector pos = state.getLocation().toVector();
         if (this.containing.contains(pos)) {
             return;
         }
         this.containing.add(pos);
-        if (Undo.FALLING_MATERIALS.contains(block.getMaterial())) {
-            dropdown.add(block.getState());
-        } else if (block.getMaterial().fallsOff()) {
-            falloff.add(block.getState());
+        if (Undo.FALLING_MATERIALS.contains(state.getMaterial())) {
+            dropdown.add(state);
+        } else if (state.getMaterial().fallsOff()) {
+            falloff.add(state);
         } else {
-            all.add(block.getState());
+            all.add(state);
         }
     }
 

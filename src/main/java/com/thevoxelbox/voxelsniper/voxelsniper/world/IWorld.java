@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
-import com.thevoxelbox.voxelsniper.util.UndoDelegate;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
@@ -33,7 +33,7 @@ public interface IWorld {
 
     void regenerateChunk(int x, int z);
 
-    void generateTree(VoxelLocation location, TreeType treeType, UndoDelegate undoDelegate);
+    void generateTree(VoxelLocation location, TreeType treeType, Undo undo);
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 }

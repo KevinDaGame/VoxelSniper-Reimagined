@@ -43,11 +43,6 @@ public class BukkitBlock extends AbstractBlock {
     }
 
     @Override
-    public IBlock getRelative(BlockFace face) {
-        return getWorld().getBlock(getX() + face.getModX(), getY() + face.getModY(), getZ() + face.getModZ());
-    }
-
-    @Override
     public IBlockData getBlockData() {
         return BukkitBlockData.fromBukkitData(block.getBlockData());
     }

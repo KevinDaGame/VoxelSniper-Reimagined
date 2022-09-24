@@ -1,6 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
-import com.thevoxelbox.voxelsniper.util.UndoDelegate;
+import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
@@ -95,8 +95,8 @@ public record BukkitWorld(World world) implements IWorld {
     }
 
     @Override
-    public void generateTree(VoxelLocation location, TreeType treeType, UndoDelegate undoDelegate) {
-
+    public void generateTree(VoxelLocation location, TreeType treeType, Undo undo) {
+        BukkitUndoDelegate undoDelegate = new BukkitUndoDelegate(world, undo);
         world.generateTree(BukkitLocation.toBukkitLocation(location), treeType, undoDelegate);
     }
 

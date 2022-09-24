@@ -28,4 +28,8 @@ public abstract class AbstractBlock implements IBlock{
         return getWorld().getBlock(getX() + x, getY() + y, getZ() + z);
     }
 
+    @Override
+    public IBlock getRelative(BlockFace face) {
+        return getWorld().getBlock(getX() + face.getModX(), getY() + face.getModY(), getZ() + face.getModZ());
+    }
 }

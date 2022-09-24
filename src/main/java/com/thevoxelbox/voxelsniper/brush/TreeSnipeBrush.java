@@ -1,10 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
-import com.thevoxelbox.voxelsniper.util.UndoDelegate;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
@@ -40,15 +38,15 @@ public class TreeSnipeBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void single(final SnipeData v,  IBlock targetBlock) {
-        UndoDelegate undoDelegate = new UndoDelegate(targetBlock.getWorld());
-         IBlock  blockBelow = targetBlock.getRelative(BlockFace.DOWN);
+        IBlock blockBelow = targetBlock.getRelative(BlockFace.DOWN);
         IBlockState currentState = blockBelow.getState();
-        undoDelegate.setBlock(blockBelow);
-        blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK);
-        this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undoDelegate);
-        Undo undo = undoDelegate.getUndo();
-        blockBelow.setBlockData(currentState.getBlockData().getMaterial().createBlockData(), true);
-        undo.put(blockBelow);
+        blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK, false);
+
+        Undo undo = new Undo();
+        this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undo);
+
+        blockBelow.setBlockData(currentState.getBlockData(), false);
+
         v.owner().storeUndo(undo);
     }
 
