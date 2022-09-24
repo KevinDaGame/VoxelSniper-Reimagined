@@ -16,7 +16,6 @@ public interface IWorld {
     IBlock getBlock(int x, int y, int z);
     int getMinWorldHeight();
     int getMaxWorldHeight();
-    void setBlock(VoxelLocation location, IBlock block);
 
     IChunk getChunkAtLocation(int x, int z);
     IChunk getChunkAtLocation(VoxelLocation location);
