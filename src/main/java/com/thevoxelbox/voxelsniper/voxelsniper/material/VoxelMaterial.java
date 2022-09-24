@@ -1126,7 +1126,7 @@ public class VoxelMaterial implements IMaterial {
 
     public IMaterial getIMaterial() {
         if (material == null) {
-            this.material = MaterialFactory.getMaterial(this);
+            this.material = VoxelSniper.voxelsniper.getMaterial(this);
         }
         return material;
     }

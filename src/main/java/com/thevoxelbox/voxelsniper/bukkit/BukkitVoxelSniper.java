@@ -11,6 +11,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
@@ -23,6 +26,7 @@ import java.util.logging.Level;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -125,6 +129,13 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @Override
     public List<String> getOnlinePlayerNames() {
         return getServer().getOnlinePlayers().stream().map(Player::getName).toList();
+    }
+
+    @Override
+    public IMaterial getMaterial(VoxelMaterial material) {
+        Material mat = Material.matchMaterial(material.getKey());
+        if (mat != null) return new BukkitMaterial(mat);
+        return null;
     }
 
     @Override

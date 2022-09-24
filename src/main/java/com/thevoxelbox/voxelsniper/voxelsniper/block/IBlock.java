@@ -7,7 +7,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public interface IBlock {
     VoxelLocation getLocation();

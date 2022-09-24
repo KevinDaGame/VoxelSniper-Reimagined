@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.MaterialFactory;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
@@ -13,7 +12,6 @@ import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -32,6 +30,14 @@ public class SniperManagerTest {
 
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getPlayer(uuid)).thenReturn(absplayer);
+
+        IBlockData airBlockData = Mockito.mock(IBlockData.class);
+        Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterial.AIR);
+        IMaterial mat = Mockito.mock(IMaterial.class);
+        Mockito.when(mat.createBlockData()).thenReturn(airBlockData);
+
+        Mockito.when(main.getMaterial(VoxelMaterial.AIR)).thenReturn(mat);
+
         VoxelSniper.voxelsniper = main;
         VoxelProfileManager.initialize();
 
@@ -39,17 +45,9 @@ public class SniperManagerTest {
 
     @Test
     public void testGetSniperForPlayer() {
-        try (MockedStatic<MaterialFactory> factory = Mockito.mockStatic(MaterialFactory.class)) {
-            IBlockData airBlockData = Mockito.mock(IBlockData.class);
-            Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterial.AIR);
-            IMaterial mat = Mockito.mock(IMaterial.class);
-            Mockito.when(mat.createBlockData()).thenReturn(airBlockData);
-            factory.when(() -> MaterialFactory.getMaterial(VoxelMaterial.AIR)).thenReturn(mat);
+        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(absplayer);
 
-            Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(absplayer);
-
-            Assert.assertSame(absplayer, sniper.getPlayer());
-            Assert.assertSame(sniper, VoxelProfileManager.getInstance().getSniperForPlayer(absplayer));
-        }
+        Assert.assertSame(absplayer, sniper.getPlayer());
+        Assert.assertSame(sniper, VoxelProfileManager.getInstance().getSniperForPlayer(absplayer));
     }
 }

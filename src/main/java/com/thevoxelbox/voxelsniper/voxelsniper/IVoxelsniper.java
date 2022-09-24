@@ -3,12 +3,14 @@ package com.thevoxelbox.voxelsniper.voxelsniper;
 import com.thevoxelbox.voxelsniper.bukkit.VoxelSniperConfiguration;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public interface IVoxelsniper {
     @Nullable IPlayer getPlayer(UUID uuid);
@@ -23,4 +25,7 @@ public interface IVoxelsniper {
     Logger getLogger();
 
     List<String> getOnlinePlayerNames();
+
+    @Nullable
+    IMaterial getMaterial(VoxelMaterial material);
 }
