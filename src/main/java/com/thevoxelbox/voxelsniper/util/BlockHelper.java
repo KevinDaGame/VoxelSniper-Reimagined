@@ -5,8 +5,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.IPainting;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
@@ -75,6 +75,50 @@ public class BlockHelper {
      */
     public BlockHelper(final IPlayer player, final double range) {
         this(player, range, BlockHelper.DEFAULT_STEP);
+    }
+
+    /**
+     * The painting method used to scroll or set a painting to a specific type.
+     *
+     * @param p      The player executing the method
+     * @param auto   Scroll automatically? If false will use 'choice' to try and set the painting
+     * @param back   Scroll in reverse?
+     * @param choice Chosen index to set the painting to
+     */
+    public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
+        VoxelLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
+        IChunk paintingChunk = targetLocation.getChunk();
+        double bestDistanceMatch = 50.0;
+        IPainting bestMatch = null;
+        for (IEntity entity : paintingChunk.getEntities()) {
+            if (entity.getType() == VoxelEntityType.PAINTING) {
+                double distance = targetLocation.distanceSquared(entity.getLocation());
+                if (distance <= 4 && distance < bestDistanceMatch) {
+                    bestDistanceMatch = distance;
+                    bestMatch = (IPainting) entity;
+                }
+            }
+        }
+        if (bestMatch != null) {
+            if (auto) {
+                try {
+                    final int i = bestMatch.nextPaintingId(back);
+                    if (bestMatch.setArtId(i)) {
+                        p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
+                    } else {
+                        p.sendMessage(Messages.UNKNOWN_PAINTING.replace("%id%", i));
+                    }
+                } catch (final Exception e) {
+                    p.sendMessage(Messages.ERROR);
+                }
+            } else {
+                if (bestMatch.setArtId(choice)) {
+                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));
+                } else {
+                    p.sendMessage(Messages.UNKNOWN_PAINTING.replace("%id%", choice));
+                }
+            }
+        }
     }
 
     /**
@@ -181,50 +225,6 @@ public class BlockHelper {
         this.direction.normalize();
         this.direction.multiply(step);
 
-        this.rangeSquared = range*range;
-    }
-
-    /**
-     * The painting method used to scroll or set a painting to a specific type.
-     *
-     * @param p The player executing the method
-     * @param auto Scroll automatically? If false will use 'choice' to try and set the painting
-     * @param back Scroll in reverse?
-     * @param choice Chosen index to set the painting to
-     */
-    public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
-        VoxelLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
-        IChunk paintingChunk = targetLocation.getChunk();
-        double bestDistanceMatch = 50.0;
-        IPainting bestMatch = null;
-        for (IEntity entity : paintingChunk.getEntities()) {
-            if (entity.getType() == VoxelEntityType.PAINTING) {
-                double distance = targetLocation.distanceSquared(entity.getLocation());
-                if (distance <= 4 && distance < bestDistanceMatch) {
-                    bestDistanceMatch = distance;
-                    bestMatch = (IPainting) entity;
-                }
-            }
-        }
-        if (bestMatch != null) {
-            if (auto) {
-                try {
-                    final int i = bestMatch.nextPaintingId(back);
-                    if (bestMatch.setArtId(i)) {
-                        p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(i)));
-                    } else {
-                        p.sendMessage(Messages.UNKNOWN_PAINTING.replace("%id%", i));
-                    }
-                } catch (final Exception e) {
-                    p.sendMessage(Messages.ERROR);
-                }
-            } else {
-                if (bestMatch.setArtId(choice)) {
-                    p.sendMessage(Messages.PAINTING_SET.replace("%id%", String.valueOf(choice)));
-                } else {
-                    p.sendMessage(Messages.UNKNOWN_PAINTING.replace("%id%", choice));
-                }
-            }
-        }
+        this.rangeSquared = range * range;
     }
 }

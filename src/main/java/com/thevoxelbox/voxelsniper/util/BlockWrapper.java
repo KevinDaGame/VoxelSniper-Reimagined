@@ -35,6 +35,13 @@ public class BlockWrapper {
     }
 
     /**
+     * @param blockData the data to set
+     */
+    public final void setBlockData(final IBlockData blockData) {
+        this.blockData = blockData;
+    }
+
+    /**
      * @return the id
      */
     public final VoxelMaterial getMaterial() {
@@ -49,38 +56,17 @@ public class BlockWrapper {
     }
 
     /**
-     * @return the x
-     */
-    public final int getX() {
-        return this.x;
-    }
-
-    /**
-     * @return the y
-     */
-    public final int getY() {
-        return this.y;
-    }
-
-    /**
-     * @return the z
-     */
-    public final int getZ() {
-        return this.z;
-    }
-
-    /**
-     * @param blockData the data to set
-     */
-    public final void setBlockData(final IBlockData blockData) {
-        this.blockData = blockData;
-    }
-
-    /**
      * @param world the world to set
      */
     public final void setWorld(final IWorld world) {
         this.world = world;
+    }
+
+    /**
+     * @return the x
+     */
+    public final int getX() {
+        return this.x;
     }
 
     /**
@@ -91,10 +77,24 @@ public class BlockWrapper {
     }
 
     /**
+     * @return the y
+     */
+    public final int getY() {
+        return this.y;
+    }
+
+    /**
      * @param y the y to set
      */
     public final void setY(final int y) {
         this.y = y;
+    }
+
+    /**
+     * @return the z
+     */
+    public final int getZ() {
+        return this.z;
     }
 
     /**

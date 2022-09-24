@@ -14,9 +14,11 @@ public interface IEntity {
     int getEntityId();
 
     VoxelLocation getLocation();
+
     IWorld getWorld();
 
     void addPassenger(IEntity entity);
+
     VoxelLocation getEyeLocation();
 
     List<IEntity> getNearbyEntities(int x, int y, int z);

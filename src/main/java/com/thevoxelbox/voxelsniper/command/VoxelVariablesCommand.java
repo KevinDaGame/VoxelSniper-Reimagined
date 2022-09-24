@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * @author ervinnnc
  */
 public class VoxelVariablesCommand extends MaterialCommand {
@@ -57,7 +56,7 @@ public class VoxelVariablesCommand extends MaterialCommand {
                 snipeData.getVoxelMessage().voxelList();
                 return true;
             }
-            
+
             if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("help")))) {
                 sniper.sendMessage(Messages.VOXEL_LIST_CLEAR_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 return true;

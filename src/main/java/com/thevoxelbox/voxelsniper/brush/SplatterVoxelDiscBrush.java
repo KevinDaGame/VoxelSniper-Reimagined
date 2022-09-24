@@ -28,10 +28,10 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
     private static final int SPLATREC_PERCENT_MIN = 1;
     private static final int SPLATREC_PERCENT_DEFAULT = 3;
     private static final int SPLATREC_PERCENT_MAX = 10;
+    private final Random generator = new Random();
     private int seedPercent; // Chance block on first pass is made active
     private int growPercent; // chance block on recursion pass is made active
     private int splatterRecursions; // How many times you grow the seeds
-    private final Random generator = new Random();
 
     /**
      *
@@ -40,7 +40,7 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
         this.setName("Splatter Voxel Disc");
     }
 
-    private void vSplatterDisc(final SnipeData v,  IBlock targetBlock) {
+    private void vSplatterDisc(final SnipeData v, IBlock targetBlock) {
         if (this.seedPercent < SEED_PERCENT_MIN || this.seedPercent > SEED_PERCENT_MAX) {
             v.sendMessage(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", "10"));
             this.seedPercent = SEED_PERCENT_DEFAULT;
@@ -147,14 +147,14 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
         vm.size();
         vm.custom(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(this.seedPercent / 100)));
         vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
-        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(this.splatterRecursions)));
+        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%", String.valueOf(this.splatterRecursions)));
 
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.SPLATTER_VOXEL_DISC_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SPLATTER_VOXEL_DISC_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -195,7 +195,7 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
                 final int temp = Integer.parseInt(params[1]);
 
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(temp)));
+                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%", String.valueOf(temp)));
                     this.splatterRecursions = temp;
                 } else {
                     v.sendMessage(Messages.SPLATTER_BALL_BRUSH_RECURSION_RANGE);
@@ -203,7 +203,7 @@ public class SplatterVoxelDiscBrush extends PerformerBrush {
                 return;
             }
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

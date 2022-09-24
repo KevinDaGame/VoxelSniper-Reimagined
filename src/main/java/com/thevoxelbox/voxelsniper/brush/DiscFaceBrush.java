@@ -133,7 +133,7 @@ public class DiscFaceBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.DISC_FACE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.DISC_FACE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

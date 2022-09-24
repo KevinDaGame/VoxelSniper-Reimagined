@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
-
 import org.bukkit.Art;
 import org.bukkit.entity.Painting;
 
@@ -16,13 +15,13 @@ public class BukkitPainting extends BukkitEntity implements IPainting {
         if (art == null) {
             return false;
         }
-        ((Painting)this.getEntity()).setArt(art);
+        ((Painting) this.getEntity()).setArt(art);
         return true;
     }
 
     @Override
     public int getArtId() {
-        return ((Painting)this.getEntity()).getArt().getId();
+        return ((Painting) this.getEntity()).getArt().getId();
     }
 
     @Override

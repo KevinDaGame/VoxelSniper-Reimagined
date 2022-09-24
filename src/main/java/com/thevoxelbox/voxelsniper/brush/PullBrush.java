@@ -33,14 +33,14 @@ public class PullBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
         vm.height();
-        vm.custom(Messages.PULLBRUSH_PINCH.replace("%val%",String.valueOf((-this.pinch + 1))));
-        vm.custom(Messages.PULLBRUSH_BUBBLE.replace("%val%",String.valueOf(this.bubble)));
+        vm.custom(Messages.PULLBRUSH_PINCH.replace("%val%", String.valueOf((-this.pinch + 1))));
+        vm.custom(Messages.PULLBRUSH_BUBBLE.replace("%val%", String.valueOf(this.bubble)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.PULLBRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.PULLBRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -48,10 +48,10 @@ public class PullBrush extends Brush {
             if (params[0].startsWith("pinch")) {
                 final double d = Double.parseDouble(params[1]);
                 if (d < 0.0 || d > 1.0) {
-                    v.sendMessage(Messages.NUMBER_OUT_OF_RANGE.replace("%arg%",params[0]).replace("%min%","0.0").replace("%max%","1.0"));
+                    v.sendMessage(Messages.NUMBER_OUT_OF_RANGE.replace("%arg%", params[0]).replace("%min%", "0.0").replace("%max%", "1.0"));
                 } else {
                     this.pinch = 1 - d;
-                    v.sendMessage(Messages.PULLBRUSH_PINCH.replace("%val%",String.valueOf((-this.pinch + 1))));
+                    v.sendMessage(Messages.PULLBRUSH_PINCH.replace("%val%", String.valueOf((-this.pinch + 1))));
                 }
 
                 return;
@@ -60,7 +60,7 @@ public class PullBrush extends Brush {
             if (params[0].startsWith("bubble")) {
                 double d = Double.parseDouble(params[1]);
                 if (d < 0.0 || d > 1.0) {
-                    v.sendMessage(Messages.NUMBER_OUT_OF_RANGE.replace("%arg%",params[0]).replace("%min%","0.0").replace("%max%","1.0"));
+                    v.sendMessage(Messages.NUMBER_OUT_OF_RANGE.replace("%arg%", params[0]).replace("%min%", "0.0").replace("%max%", "1.0"));
                 } else {
                     this.bubble = d;
                     v.sendMessage(Messages.PULLBRUSH_BUBBLE.replace("%val%", String.valueOf(this.bubble)));
@@ -144,7 +144,7 @@ public class PullBrush extends Brush {
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
-                final  IBlock  current = this.clampY(block.getX(), y, block.getZ());
+                final IBlock current = this.clampY(block.getX(), y, block.getZ());
                 undo.put(current);
                 current.setBlockData(block.getBlockData());
             }
@@ -152,7 +152,7 @@ public class PullBrush extends Brush {
     }
 
     private void setBlockDown(final BlockWrapper block, Undo undo, int vh) {
-        final  IBlock  currentBlock = this.clampY(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
+        final IBlock currentBlock = this.clampY(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
         undo.put(currentBlock);
         currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
@@ -291,6 +291,11 @@ public class PullBrush extends Brush {
             v.owner().storeUndo(undo);
     }
 
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.pull";
+    }
+
     /**
      * @author Piotr
      */
@@ -306,7 +311,7 @@ public class PullBrush extends Brush {
          * @param block
          * @param st
          */
-        public BlockWrapper(final  IBlock  block, final double st) {
+        public BlockWrapper(final IBlock block, final double st) {
             this.blockData = block.getBlockData();
             this.x = block.getX();
             this.y = block.getY();
@@ -355,10 +360,5 @@ public class PullBrush extends Brush {
         public int getZ() {
             return this.z;
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.pull";
     }
 }

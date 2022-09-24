@@ -32,7 +32,7 @@ public class VoxelDefaultCommand extends VoxelCommand {
             sniper.sendMessage(Messages.BRUSH_SETTINGS_RESET);
             return true;
         }
-        
+
         return false;
     }
 

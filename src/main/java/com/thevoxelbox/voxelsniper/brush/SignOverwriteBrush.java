@@ -6,17 +6,11 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.ISign;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
+import java.io.*;
+import java.util.Arrays;
 
 /**
  * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
@@ -171,8 +165,8 @@ public class SignOverwriteBrush extends Brush {
                     rangedMode = (params[++i].equalsIgnoreCase("on") || params[++i].equalsIgnoreCase("yes"));
                     v.sendMessage(Messages.SIGN_OVERWRITE_BRUSH_RANGE_MODE.replace("%rangedMode%", (rangedMode ? "enabled" : "disabled")));
                     if (this.rangedMode) {
-                        v.sendMessage(Messages.BRUSH_SIZE_SET.replace("%getBrushSize%",String.valueOf(v.getBrushSize())));
-                        v.sendMessage(Messages.BRUSH_HEIGHT_SET.replace("%getVoxelHeight%",String.valueOf(v.getVoxelHeight())));
+                        v.sendMessage(Messages.BRUSH_SIZE_SET.replace("%getBrushSize%", String.valueOf(v.getBrushSize())));
+                        v.sendMessage(Messages.BRUSH_HEIGHT_SET.replace("%getVoxelHeight%", String.valueOf(v.getVoxelHeight())));
                     }
                 } else if (parameter.equalsIgnoreCase("-save") || parameter.equalsIgnoreCase("-s")) {
                     if ((i + 1) >= params.length) {
@@ -292,7 +286,7 @@ public class SignOverwriteBrush extends Brush {
      * @param v
      */
     private void saveBufferToFile(final String fileName, final SnipeData v) {
-        final File store = VoxelSniper.voxelsniper.getFileHandler().getDataFile( "/" + fileName + ".vsign");
+        final File store = VoxelSniper.voxelsniper.getFileHandler().getDataFile("/" + fileName + ".vsign");
 
         if (store.exists()) {
             v.sendMessage(Messages.FILE_ALREADY_EXISTS);
@@ -312,9 +306,9 @@ public class SignOverwriteBrush extends Brush {
             outStream.close();
             outFile.close();
 
-                v.sendMessage(Messages.FILE_SAVE_SUCCESSFUL);
+            v.sendMessage(Messages.FILE_SAVE_SUCCESSFUL);
         } catch (IOException exception) {
-            v.sendMessage(Messages.FILE_SAVE_FAIL.replace("%exception.getMessage%",String.valueOf(exception.getMessage())));
+            v.sendMessage(Messages.FILE_SAVE_FAIL.replace("%exception.getMessage%", String.valueOf(exception.getMessage())));
             exception.printStackTrace();
         }
     }
@@ -327,7 +321,7 @@ public class SignOverwriteBrush extends Brush {
      * @param v
      */
     private void loadBufferFromFile(final String fileName, final String userDomain, final SnipeData v) {
-        final File store = VoxelSniper.voxelsniper.getFileHandler().getDataFile( "/" + fileName + ".vsign");
+        final File store = VoxelSniper.voxelsniper.getFileHandler().getDataFile("/" + fileName + ".vsign");
         if (!store.exists()) {
             v.sendMessage(Messages.THIS_FILE_DOES_NOT_EXIST);
             return;
@@ -347,7 +341,7 @@ public class SignOverwriteBrush extends Brush {
 
             v.sendMessage(Messages.FILE_LOAD_SUCCESSFUL);
         } catch (IOException exception) {
-            v.sendMessage(Messages.FILE_LOAD_FAIL.replace("%exception.getMessage%",String.valueOf(exception.getMessage())));
+            v.sendMessage(Messages.FILE_LOAD_FAIL.replace("%exception.getMessage%", String.valueOf(exception.getMessage())));
             exception.printStackTrace();
         }
     }

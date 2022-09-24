@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ShellSetBrush extends Brush {
 
     private static final int MAX_SIZE = 5000000;
-    private  IBlock  block = null;
+    private IBlock block = null;
 
     /**
      *
@@ -25,7 +25,7 @@ public class ShellSetBrush extends Brush {
         this.setName("Shell Set");
     }
 
-    private boolean set(final  IBlock  bl, final SnipeData v) {
+    private boolean set(final IBlock bl, final SnipeData v) {
         if (this.block == null) {
             this.block = bl;
             return true;

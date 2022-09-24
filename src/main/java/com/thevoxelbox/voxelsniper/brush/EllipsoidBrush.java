@@ -13,14 +13,13 @@ import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipsoid_Brush
- *
  */
 public class EllipsoidBrush extends PerformerBrush {
 
+    private final boolean istrue = false;
     private double xRad;
     private double yRad;
     private double zRad;
-    private final boolean istrue = false;
 
     /**
      *
@@ -87,7 +86,7 @@ public class EllipsoidBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ELLIPSOID_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ELLIPSOID_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
         try {
@@ -109,7 +108,7 @@ public class EllipsoidBrush extends PerformerBrush {
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -128,7 +127,7 @@ temp.printStackTrace();
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("x", Lists.newArrayList("[number]"));
         argumentValues.put("y", Lists.newArrayList("[number]"));
         argumentValues.put("z", Lists.newArrayList("[number]"));

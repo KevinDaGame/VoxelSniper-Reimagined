@@ -12,7 +12,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 public interface IPerformerBrush {
 
     boolean parsePerformer(String performerHandle, com.thevoxelbox.voxelsniper.snipe.SnipeData v);
-    
+
     void parsePerformer(String triggerHandle, String[] args, com.thevoxelbox.voxelsniper.snipe.SnipeData v);
 
     void showInfo(VoxelMessage vm);

@@ -163,7 +163,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.THREE_POINT_CIRCLE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.THREE_POINT_CIRCLE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -171,7 +171,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
             this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
             v.sendMessage(Messages.BRUSH_TOLERANCE_SET.replace("%tolerance%", this.tolerance.name().toLowerCase()));
         } catch (Exception e) {
-            v.sendMessage(Messages.TOLERANCE_SETTING_DOES_NOT_EXIST.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.TOLERANCE_SETTING_DOES_NOT_EXIST.replace("%triggerHandle%", triggerHandle));
             sendPerformerMessage(triggerHandle, v);
         }
     }
@@ -179,11 +179,16 @@ public class ThreePointCircleBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        
+
         arguments.addAll(Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
 
         arguments.addAll(super.registerArguments());
         return arguments;
+    }
+
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.threepointcircle";
     }
 
     /**
@@ -202,10 +207,5 @@ public class ThreePointCircleBrush extends PerformerBrush {
         public int getValue() {
             return this.value;
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.threepointcircle";
     }
 }

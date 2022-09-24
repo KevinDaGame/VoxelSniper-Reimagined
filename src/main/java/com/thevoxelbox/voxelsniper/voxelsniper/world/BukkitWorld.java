@@ -11,16 +11,15 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.treeType.VoxelTreeType;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
-
-import java.util.Iterator;
-import java.util.Locale;
-
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
+
+import java.util.Iterator;
+import java.util.Locale;
 
 public record BukkitWorld(World world) implements IWorld {
 
@@ -51,7 +50,7 @@ public record BukkitWorld(World world) implements IWorld {
 
     @Override
     public IChunk getChunkAtLocation(VoxelLocation location) {
-        return new BukkitChunk(world.getChunkAt(((int)Math.floor(location.getBlockX() / 16f)), ((int)Math.floor(location.getBlockZ() / 16f))));
+        return new BukkitChunk(world.getChunkAt(((int) Math.floor(location.getBlockX() / 16f)), ((int) Math.floor(location.getBlockZ() / 16f))));
     }
 
     @Override

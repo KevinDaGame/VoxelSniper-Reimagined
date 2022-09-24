@@ -7,7 +7,6 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign.BukkitSign;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 
@@ -17,6 +16,16 @@ public class BukkitBlockState extends AbstractBlockState {
     public BukkitBlockState(IBlock block, BlockState blockState) {
         super(block);
         this.blockState = blockState;
+    }
+
+    public static BukkitBlockState fromBukkitState(IBlock block, BlockState state) {
+        if (state instanceof Sign sign)
+            return new BukkitSign(block, sign);
+        return new BukkitBlockState(block, state);
+    }
+
+    public static IBlockState fromBukkitState(BlockState state) {
+        return fromBukkitState(new BukkitBlock(state.getBlock()), state);
     }
 
     @Override
@@ -42,15 +51,5 @@ public class BukkitBlockState extends AbstractBlockState {
     @Override
     public boolean update(boolean force, boolean applyPhysics) {
         return blockState.update(force, applyPhysics);
-    }
-
-    public static BukkitBlockState fromBukkitState(IBlock block, BlockState state) {
-        if (state instanceof Sign sign)
-            return new BukkitSign(block, sign);
-        return new BukkitBlockState(block, state);
-    }
-
-    public static IBlockState fromBukkitState(BlockState state) {
-        return fromBukkitState(new BukkitBlock(state.getBlock()), state);
     }
 }

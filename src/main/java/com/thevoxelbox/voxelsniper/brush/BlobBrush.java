@@ -223,7 +223,7 @@ public class BlobBrush extends PerformerBrush {
             String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
             String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
             String def = String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100));
-            v.sendMessage(Messages.BLOB_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle).replace("%min%", min).replace("%max%", max).replace("%default%", def));
+            v.sendMessage(Messages.BLOB_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle).replace("%min%", min).replace("%max%", max).replace("%default%", def));
             return;
         }
 
@@ -247,7 +247,7 @@ public class BlobBrush extends PerformerBrush {
                 }
                 return;
             } catch (NumberFormatException temp) {
-temp.printStackTrace();
+                temp.printStackTrace();
             }
         }
 
@@ -268,7 +268,7 @@ temp.printStackTrace();
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("growth", Lists.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());

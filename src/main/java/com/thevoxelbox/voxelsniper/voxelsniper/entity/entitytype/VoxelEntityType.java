@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype;
 
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -128,9 +129,14 @@ public record VoxelEntityType(String namespace, String key, Version version) {
     public static VoxelEntityType LIGHTNING = register("lightning_bolt");
     public static VoxelEntityType PLAYER = register("player");
 
+    public VoxelEntityType(String key) {
+        this(DEFAULT_NAMESPACE, key, Version.V1_16);
+    }
+
     private static VoxelEntityType register(String key) {
         return register(key, Version.V1_16);
     }
+
     private static VoxelEntityType register(String key, Version version) {
         var entityType = new VoxelEntityType("minecraft", key, version);
         if (ENTITYTYPES == null) {
@@ -140,27 +146,28 @@ public record VoxelEntityType(String namespace, String key, Version version) {
         return entityType;
     }
 
-    public VoxelEntityType(String key) {
-        this(DEFAULT_NAMESPACE, key, Version.V1_16);
-    }
-    String getNamespace() {
-        return namespace;
-    }
-    public String getKey() {
-        return key;
-    }
-    String getName() {
-        return namespace + ":" + key;
-    }
     public static VoxelEntityType getEntityType(String key) {
         return getEntityType("minecraft", key.toLowerCase(Locale.ROOT));
     }
+
     public static VoxelEntityType getEntityType(String namespace, String key) {
         var entityType = ENTITYTYPES.get(namespace + ":" + key);
-        if(VoxelSniper.voxelsniper.getVersion().isSupported(entityType.getVersion())){
+        if (VoxelSniper.voxelsniper.getVersion().isSupported(entityType.getVersion())) {
             return entityType;
         }
         return null;
+    }
+
+    String getNamespace() {
+        return namespace;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    String getName() {
+        return namespace + ":" + key;
     }
 
     private Version getVersion() {

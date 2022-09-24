@@ -1,10 +1,9 @@
 package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import net.kyori.adventure.text.ComponentLike;
 
 import java.util.stream.Collectors;
-
-import net.kyori.adventure.text.ComponentLike;
 
 /**
  * Messaging handler for various Voxel functions.

@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Brush Interface.
- *
  */
 public interface IBrush {
 
@@ -23,8 +22,8 @@ public interface IBrush {
      * Handles parameters passed to brushes.
      *
      * @param triggerHandle the handle that triggered this brush
-     * @param params Array of string containing parameters
-     * @param v Snipe Data
+     * @param params        Array of string containing parameters
+     * @param v             Snipe Data
      */
     void parseParameters(String triggerHandle, String[] params, SnipeData v);
 

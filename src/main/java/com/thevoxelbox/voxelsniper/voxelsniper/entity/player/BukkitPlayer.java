@@ -11,17 +11,9 @@ import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -29,6 +21,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class BukkitPlayer extends BukkitEntity implements IPlayer {
     private final Player player;
@@ -86,7 +84,7 @@ public class BukkitPlayer extends BukkitEntity implements IPlayer {
 
     @Override
     public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
-        Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((BukkitMaterial)m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
+        Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((BukkitMaterial) m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
         return new BukkitBlock(player.getTargetBlock(materials, maxDistance));
     }
 

@@ -2,18 +2,16 @@ package com.thevoxelbox.voxelsniper.util;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.YamlConfiguration;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.regex.Pattern;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.TextReplacementConfig;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-
-import org.jetbrains.annotations.NotNull;
 
 public enum Messages implements ComponentLike {
     //<editor-fold defaultstate="collapsed" desc="Messages">
@@ -393,15 +391,18 @@ public enum Messages implements ComponentLike {
         }
     }
 
-    @NotNull public final Message replace(String pattern, Object replacement) {
+    @NotNull
+    public final Message replace(String pattern, Object replacement) {
         return new Message(this.message).replace(pattern, replacement);
     }
 
-    @NotNull public final Component replace(String pattern, ComponentLike replacement) {
+    @NotNull
+    public final Component replace(String pattern, ComponentLike replacement) {
         return new Message(this.message).replace(pattern, replacement);
     }
 
-    @NotNull public final Message append(String message) {
+    @NotNull
+    public final Message append(String message) {
         return new Message(this.message).append(message);
     }
 
@@ -420,27 +421,31 @@ public enum Messages implements ComponentLike {
     }
 
     public static final class Message implements ComponentLike {
-        @NotNull private String message;
+        @NotNull
+        private String message;
 
         private Message(@NotNull String message) {
             this.message = message;
         }
 
-        @NotNull public Message replace(String target, Object replacement) {
+        @NotNull
+        public Message replace(String target, Object replacement) {
             if (target != null && replacement != null)
                 this.message = this.message.replace(target, String.valueOf(replacement));
 
             return this;
         }
 
-        @NotNull public Component replace(String target, ComponentLike replacement) {
+        @NotNull
+        public Component replace(String target, ComponentLike replacement) {
             if (target != null && replacement != null)
                 return this.asComponent().replaceText(TextReplacementConfig.builder().match(Pattern.compile(target, Pattern.LITERAL)).replacement(replacement).build());
 
             return this.asComponent();
         }
 
-        @NotNull public Message append(String message) {
+        @NotNull
+        public Message append(String message) {
             if (message != null) this.message += message;
             return this;
         }

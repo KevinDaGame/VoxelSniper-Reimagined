@@ -68,14 +68,14 @@ public class FlatOceanBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(Messages.BRUSH_NO_UNDO);
-        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
-        vm.custom(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%",String.valueOf(this.floorLevel)));
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%", String.valueOf(waterLevel)));
+        vm.custom(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%", String.valueOf(this.floorLevel)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.FLAT_OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.FLAT_OCEAN_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             v.sendMessage(Messages.BRUSH_NO_UNDO);
             return;
         }
@@ -88,7 +88,7 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.waterLevel = newWaterLevel;
-            v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel)));
+            v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%", String.valueOf(waterLevel)));
             return;
         }
 
@@ -120,10 +120,10 @@ public class FlatOceanBrush extends Brush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("water", Lists.newArrayList("[number]"));
         argumentValues.put("floor", Lists.newArrayList("[number]"));
-        
+
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
     }

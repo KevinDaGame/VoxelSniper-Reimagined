@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 
 import java.util.HashMap;
 import java.util.Map;
+
 //todo: backwards compatibility
 @SuppressWarnings("unused")
 public record VoxelBiome(String namespace, String key, Version version) {
@@ -74,9 +75,14 @@ public record VoxelBiome(String namespace, String key, Version version) {
     public static VoxelBiome JAGGED_PEAKS = register("jagged_peaks", Version.V1_18);
     public static VoxelBiome STONY_PEAKS = register("stony_peaks", Version.V1_18);
 
+    public VoxelBiome(String key) {
+        this(DEFAULT_NAMESPACE, key, Version.V1_16);
+    }
+
     private static VoxelBiome register(String key) {
         return register(key, Version.V1_16);
     }
+
     private static VoxelBiome register(String key, Version version) {
         var biome = new VoxelBiome("minecraft", key, version);
         if (BIOMES == null) {
@@ -86,27 +92,28 @@ public record VoxelBiome(String namespace, String key, Version version) {
         return biome;
     }
 
-    public VoxelBiome(String key) {
-        this(DEFAULT_NAMESPACE, key, Version.V1_16);
-    }
-    String getNamespace() {
-        return namespace;
-    }
-    public String getKey() {
-        return key;
-    }
-    String getName() {
-        return namespace + ":" + key;
-    }
     public static VoxelBiome getBiome(String key) {
         return getBiome("minecraft", key);
     }
+
     public static VoxelBiome getBiome(String namespace, String key) {
         var biome = BIOMES.get(namespace + ":" + key);
-        if(VoxelSniper.voxelsniper.getVersion().isSupported(biome.getVersion())){
+        if (VoxelSniper.voxelsniper.getVersion().isSupported(biome.getVersion())) {
             return biome;
         }
         return null;
+    }
+
+    String getNamespace() {
+        return namespace;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    String getName() {
+        return namespace + ":" + key;
     }
 
     private Version getVersion() {

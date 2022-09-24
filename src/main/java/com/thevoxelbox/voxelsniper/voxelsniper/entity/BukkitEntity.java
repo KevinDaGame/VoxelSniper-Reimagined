@@ -4,23 +4,28 @@ import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.Painting.BukkitPainting;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
+
+import java.util.List;
 
 public class BukkitEntity implements IEntity {
     private final Entity entity;
 
     protected BukkitEntity(Entity entity) {
         this.entity = entity;
+    }
+
+    public static BukkitEntity fromBukkitEntity(Entity entity) {
+        if (entity instanceof Painting p)
+            return new BukkitPainting(p);
+        if (entity instanceof Player p)
+            return BukkitVoxelSniper.getInstance().getPlayer(p);
+        return new BukkitEntity(entity);
     }
 
     public Entity getEntity() {
@@ -36,6 +41,7 @@ public class BukkitEntity implements IEntity {
     public void remove() {
         entity.remove();
     }
+
     @Override
     public int getEntityId() {
         return entity.getEntityId();
@@ -54,12 +60,12 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public void addPassenger(IEntity entity) {
-        this.entity.addPassenger(((BukkitEntity)entity).getEntity());
+        this.entity.addPassenger(((BukkitEntity) entity).getEntity());
     }
 
     @Override
     public boolean teleport(IEntity player) {
-        return this.entity.teleport(((BukkitEntity)entity).getEntity());
+        return this.entity.teleport(((BukkitEntity) entity).getEntity());
     }
 
     @Override
@@ -73,19 +79,11 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public List<IEntity> getNearbyEntities(int x, int y, int z) {
-        return this.entity.getNearbyEntities(x, y, z).stream().map(e -> (IEntity)BukkitEntity.fromBukkitEntity(e)).toList();
+        return this.entity.getNearbyEntities(x, y, z).stream().map(e -> (IEntity) BukkitEntity.fromBukkitEntity(e)).toList();
     }
 
     @Override
     public void eject() {
         entity.eject();
-    }
-
-    public static BukkitEntity fromBukkitEntity(Entity entity) {
-        if (entity instanceof Painting p)
-            return new BukkitPainting(p);
-        if (entity instanceof Player p)
-            return BukkitVoxelSniper.getInstance().getPlayer(p);
-        return new BukkitEntity(entity);
     }
 }

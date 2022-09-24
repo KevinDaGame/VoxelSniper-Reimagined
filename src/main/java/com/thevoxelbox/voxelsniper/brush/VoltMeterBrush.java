@@ -31,16 +31,16 @@ public class VoltMeterBrush extends Brush {
     }
 
     private void volt(final SnipeData v) {
-        final  IBlock  block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        final IBlock block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
         final boolean indirect = block.isBlockIndirectlyPowered();
         final boolean direct = block.isBlockPowered();
         v.sendMessage(Messages.BLOCK_POWER_MESSAGE.replace("%direct%", String.valueOf(direct)).replace("%indirect%", String.valueOf(indirect)));
-        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "Top").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.UP)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.UP)));
-        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "Bottom").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.DOWN)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.DOWN)));
-        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "East").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.EAST)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.EAST)));
-        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "West").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.WEST)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.WEST)));
-        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "North").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.NORTH)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.NORTH)));
-        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "South").replace("%direct%", ""+block.isBlockFacePowered(BlockFace.SOUTH)).replace("%indirect%", ""+block.isBlockFaceIndirectlyPowered(BlockFace.SOUTH)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "Top").replace("%direct%", "" + block.isBlockFacePowered(BlockFace.UP)).replace("%indirect%", "" + block.isBlockFaceIndirectlyPowered(BlockFace.UP)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "Bottom").replace("%direct%", "" + block.isBlockFacePowered(BlockFace.DOWN)).replace("%indirect%", "" + block.isBlockFaceIndirectlyPowered(BlockFace.DOWN)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "East").replace("%direct%", "" + block.isBlockFacePowered(BlockFace.EAST)).replace("%indirect%", "" + block.isBlockFaceIndirectlyPowered(BlockFace.EAST)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "West").replace("%direct%", "" + block.isBlockFacePowered(BlockFace.WEST)).replace("%indirect%", "" + block.isBlockFaceIndirectlyPowered(BlockFace.WEST)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "North").replace("%direct%", "" + block.isBlockFacePowered(BlockFace.NORTH)).replace("%indirect%", "" + block.isBlockFaceIndirectlyPowered(BlockFace.NORTH)));
+        v.sendMessage(Messages.FACE_POWER_MESSAGE.replace("%face%", "South").replace("%direct%", "" + block.isBlockFacePowered(BlockFace.SOUTH)).replace("%indirect%", "" + block.isBlockFaceIndirectlyPowered(BlockFace.SOUTH)));
     }
 
     @Override

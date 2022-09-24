@@ -33,7 +33,7 @@ public class FillDownBrush extends PerformerBrush {
     private void fillDown(final SnipeData v, final IBlock b) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-        final  IBlock  targetBlock = this.getTargetBlock();
+        final IBlock targetBlock = this.getTargetBlock();
         for (int x = -brushSize; x <= brushSize; x++) {
             final double currentXSquared = Math.pow(x, 2);
 
@@ -43,7 +43,7 @@ public class FillDownBrush extends PerformerBrush {
                     boolean found = false;
                     if (this.fromExisting) {
                         for (y = -v.getVoxelHeight(); y < v.getVoxelHeight(); y++) {
-                            final  IBlock  currentBlock = this.getWorld().getBlock(
+                            final IBlock currentBlock = this.getWorld().getBlock(
                                     targetBlock.getX() + x,
                                     targetBlock.getY() + y,
                                     targetBlock.getZ() + z);
@@ -58,7 +58,7 @@ public class FillDownBrush extends PerformerBrush {
                         y--;
                     }
                     for (; y >= -targetBlock.getY(); --y) {
-                        final  IBlock  currentBlock = this.getWorld().getBlock(
+                        final IBlock currentBlock = this.getWorld().getBlock(
                                 targetBlock.getX() + x,
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
@@ -94,21 +94,21 @@ public class FillDownBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.FILL_DOWN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.FILL_DOWN_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("liquid")) {
             this.fillLiquid = !this.fillLiquid;
             String mode = (this.fillLiquid) ? "liquid and air" : "air only";
-            v.sendMessage(Messages.FILL_DOWN_MODE.replace("%mode%",mode));
+            v.sendMessage(Messages.FILL_DOWN_MODE.replace("%mode%", mode));
             return;
         }
 
         if (params[0].equalsIgnoreCase("existing")) {
             this.fromExisting = !this.fromExisting;
             String mode = (this.fromExisting) ? "existing" : "all";
-            v.sendMessage(Messages.FILL_DOWN_FROM.replace("%mode%",mode));
+            v.sendMessage(Messages.FILL_DOWN_FROM.replace("%mode%", mode));
             return;
         }
 

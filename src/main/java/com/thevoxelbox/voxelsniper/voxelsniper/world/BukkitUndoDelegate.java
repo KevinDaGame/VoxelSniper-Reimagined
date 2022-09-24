@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.voxelsniper.world;
 
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
-
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;

@@ -4,9 +4,8 @@ import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
-
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,11 +40,11 @@ public class VoxelSniperListener implements Listener {
      */
     @EventHandler
     public final void onPlayerInteract(final PlayerInteractEvent event) {
-        if(event.getHand() != EquipmentSlot.HAND) return;
+        if (event.getHand() != EquipmentSlot.HAND) return;
         IPlayer player = BukkitVoxelSniper.getInstance().getPlayer(event.getPlayer());
 
         if (!player.hasPermission(SNIPER_PERMISSION)) return;
-        if(cooldown.contains(player.getUniqueId())) return;
+        if (cooldown.contains(player.getUniqueId())) return;
         try {
             Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
             if (sniper.isEnabled() && sniper.snipe(
@@ -55,7 +54,7 @@ public class VoxelSniperListener implements Listener {
                     BlockFace.valueOf(event.getBlockFace().name()))) {
                 event.setCancelled(true);
                 cooldown.add(player.getUniqueId());
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()),1);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 1);
             }
         } catch (final Exception temp) {
             temp.printStackTrace();
@@ -74,6 +73,7 @@ public class VoxelSniperListener implements Listener {
             sniper.displayInfo();
         }
     }
+
     @EventHandler
     public final void onPlayerLeave(final PlayerQuitEvent event) {
         cooldown.remove(event.getPlayer().getUniqueId());

@@ -258,9 +258,9 @@ public abstract class Brush implements IBrush {
     /**
      * Sets the VoxelMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
+     * @param x        X coordinate
+     * @param y        Y coordinate
+     * @param z        Z coordinate
      * @param material the material to set this block to
      */
     protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material) {
@@ -271,9 +271,9 @@ public abstract class Brush implements IBrush {
      * Sets the BlockData value of the block at the passed coordinate. Will use the exact BlockData that is passed into the function and NOT the default
      * BlockData of the Material.
      *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
+     * @param x         X coordinate
+     * @param y         Y coordinate
+     * @param z         Z coordinate
      * @param blockData The blockData to set this block to
      */
     protected final void setBlockMaterialAndDataAt(int x, int y, int z, IBlockData blockData) {
@@ -283,11 +283,11 @@ public abstract class Brush implements IBrush {
     /**
      * Sets the type of the passed block, and appends the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
      *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
+     * @param x        X coordinate
+     * @param y        Y coordinate
+     * @param z        Z coordinate
      * @param material the material to set this block to
-     * @param undo The Undo container to store the change
+     * @param undo     The Undo container to store the change
      */
     protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material, Undo undo) {
         IBlock b = this.clampY(x, y, z);
@@ -300,9 +300,9 @@ public abstract class Brush implements IBrush {
     /**
      * Sets the type of the passed block, and adds the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
      *
-     * @param b The block to change
+     * @param b        The block to change
      * @param material the material to set this block to
-     * @param undo The Undo container to store the change
+     * @param undo     The Undo container to store the change
      */
     protected final void setBlockType(IBlock b, VoxelMaterial material, Undo undo) {
         int clampedY = this.clampWorldHeight(b.getY());

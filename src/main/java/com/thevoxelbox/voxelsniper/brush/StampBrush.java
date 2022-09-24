@@ -16,48 +16,13 @@ import java.util.HashSet;
  */
 public class StampBrush extends Brush {
 
-    /**
-     * @author Voxel
-     */
-    protected class BlockWrapper {
-
-        private final IWorld world;
-        public IBlockData blockData;
-        public int x;
-        public int y;
-        public int z;
-
-        /**
-         * @param b
-         * @param blx
-         * @param bly
-         * @param blz
-         */
-        public BlockWrapper(final IBlock b, final int blx, final int bly, final int blz, final IWorld world) {
-            this.blockData = b.getBlockData();
-            this.x = blx;
-            this.y = bly;
-            this.z = blz;
-            this.world = world;
-        }
-    }
-
-    /**
-     * @author Monofraps
-     */
-    protected enum StampType {
-        NO_AIR, FILL, DEFAULT
-    }
-
     protected HashSet<BlockWrapper> clone = new HashSet<>();
     protected HashSet<BlockWrapper> fall = new HashSet<>();
     protected HashSet<BlockWrapper> drop = new HashSet<>();
     protected HashSet<BlockWrapper> solid = new HashSet<>();
     protected Undo undo;
     protected boolean sorted = false;
-
     protected StampType stamp = StampType.DEFAULT;
-
     /**
      *
      */
@@ -72,7 +37,6 @@ public class StampBrush extends Brush {
         this.sorted = false;
     }
 
-
     protected final boolean falling(final VoxelMaterial material) {
         // TODO: Translate this
         // return (id > 7 && id < 14);
@@ -83,7 +47,7 @@ public class StampBrush extends Brush {
      * @param cb
      */
     protected final void setBlock(final BlockWrapper cb) {
-        final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
+        final IBlock block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
         block.setBlockData(cb.blockData);
     }
@@ -92,7 +56,7 @@ public class StampBrush extends Brush {
      * @param cb
      */
     protected final void setBlockFill(final BlockWrapper cb) {
-        final  IBlock  block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
+        final IBlock block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         if (block.getMaterial().isAir()) {
             this.undo.put(block);
             block.setBlockData(cb.blockData);
@@ -268,5 +232,38 @@ public class StampBrush extends Brush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.stamp";
+    }
+
+    /**
+     * @author Monofraps
+     */
+    protected enum StampType {
+        NO_AIR, FILL, DEFAULT
+    }
+
+    /**
+     * @author Voxel
+     */
+    protected class BlockWrapper {
+
+        private final IWorld world;
+        public IBlockData blockData;
+        public int x;
+        public int y;
+        public int z;
+
+        /**
+         * @param b
+         * @param blx
+         * @param bly
+         * @param blz
+         */
+        public BlockWrapper(final IBlock b, final int blx, final int bly, final int blz, final IWorld world) {
+            this.blockData = b.getBlockData();
+            this.x = blx;
+            this.y = bly;
+            this.z = blz;
+            this.world = world;
+        }
     }
 }

@@ -1,10 +1,9 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.fileHandler;
 
 import com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-
-import org.jetbrains.annotations.NotNull;
 
 public class BukkitFileHandler implements IFileHandler {
     private final BukkitVoxelSniper voxelSniper;

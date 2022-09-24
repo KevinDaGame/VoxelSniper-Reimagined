@@ -91,7 +91,7 @@ public class CylinderBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.CYLINDER_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CYLINDER_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -107,7 +107,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.getVoxelMessage().height();
                 return;
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-temp.printStackTrace();
+                temp.printStackTrace();
             }
         }
 
@@ -117,7 +117,7 @@ temp.printStackTrace();
                 v.sendMessage(Messages.CYLINDER_SHIFT_Y.replace("%count%", String.valueOf(v.getcCen())));
                 return;
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-temp.printStackTrace();
+                temp.printStackTrace();
             }
         }
 
@@ -138,9 +138,9 @@ temp.printStackTrace();
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("shift", Lists.newArrayList("[number]"));
-        
+
         argumentValues.put("height", Lists.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());

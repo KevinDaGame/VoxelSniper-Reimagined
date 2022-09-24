@@ -66,7 +66,7 @@ public abstract class BlendBrushBase extends Brush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("water", Lists.newArrayList("true", "false"));
 
         return argumentValues;

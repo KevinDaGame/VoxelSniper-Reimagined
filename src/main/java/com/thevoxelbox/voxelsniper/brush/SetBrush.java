@@ -24,7 +24,8 @@ public class SetBrush extends PerformerBrush {
     }
 
     /**
-     *  NOTE: TRUE when first point was selected, or second point is in different world
+     * NOTE: TRUE when first point was selected, or second point is in different world
+     *
      * @param bl block
      * @param v  data
      * @return TRUE when first point was selected, or second point is in different world

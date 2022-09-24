@@ -11,20 +11,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author ervinnnc
  */
 public abstract class VoxelCommandManager {
 
-    protected static VoxelCommandManager instance = null;
-
     public static final String BRUSH_SUBCOMMAND_PREFIX = "brush-";
     public static final String BRUSH_SUBCOMMAND_SUFFIX = "-";
+    protected static VoxelCommandManager instance = null;
     protected final HashMap<String, List<String>> argumentsMap = new HashMap<>();
-
-    public static VoxelCommandManager getInstance() {
-        return instance;
-    }
 
     public VoxelCommandManager() {
         this.registerCommand(new VoxelBrushCommand());
@@ -41,6 +35,10 @@ public abstract class VoxelCommandManager {
         this.registerCommand(new VoxelVoxelCommand());
 
         this.registerBrushSubcommands();
+    }
+
+    public static VoxelCommandManager getInstance() {
+        return instance;
     }
 
     public abstract void registerCommand(VoxelCommand command);

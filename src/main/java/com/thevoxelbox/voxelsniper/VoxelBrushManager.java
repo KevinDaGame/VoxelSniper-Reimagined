@@ -4,14 +4,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-
 import com.thevoxelbox.voxelsniper.brush.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Brush registration manager.
@@ -110,14 +105,14 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(VoxelDiscBrush.class, "vd", "voxeldisc");
         brushManager.registerSniperBrush(VoxelDiscFaceBrush.class, "vdf", "voxeldiscface");
         brushManager.registerSniperBrush(WarpBrush.class, "w", "warp");
-        
+
         return getInstance();
     }
 
     /**
      * Register a brush for VoxelSniper to be able to use.
      *
-     * @param clazz Brush implementing IBrush interface.
+     * @param clazz   Brush implementing IBrush interface.
      * @param handles Handles under which the brush can be accessed ingame.
      */
     public void registerSniperBrush(Class<? extends IBrush> clazz, String... handles) {
@@ -163,7 +158,6 @@ public class VoxelBrushManager {
     }
 
     /**
-     *
      * @param clazz Brush class
      * @return All Sniper registered handles for the brush.
      */

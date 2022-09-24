@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import junit.framework.TestCase;
-
 import org.junit.Assert;
 import org.mockito.Mockito;
 
@@ -38,6 +37,6 @@ public class VoxelBiomeTest extends TestCase {
     }
 
     public void testTestGetBiome() {
-        Assert.assertEquals(VoxelBiome.getBiome("minecraft","plains"), VoxelBiome.PLAINS);
+        Assert.assertEquals(VoxelBiome.getBiome("minecraft", "plains"), VoxelBiome.PLAINS);
     }
 }

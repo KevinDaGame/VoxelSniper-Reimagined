@@ -7,27 +7,19 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
 import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.events.IEventManager;
 import com.thevoxelbox.voxelsniper.voxelsniper.events.bukkit.BukkitEventManager;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.BukkitFileHandler;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.IFileHandler;
-import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.BukkitPlayer;
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.IMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.BukkitWorld;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.logging.Level;
-
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -39,6 +31,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.logging.Level;
+
 /**
  * Bukkit extension point.
  */
@@ -46,11 +44,11 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     private static BukkitVoxelSniper instance;
     private static BukkitAudiences adventure;
-    
+
     private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
-    private VoxelSniperConfiguration voxelSniperConfiguration;
     private final Map<String, IWorld> worlds = new HashMap<>();
     private final Map<UUID, BukkitPlayer> players = new HashMap<>();
+    private VoxelSniperConfiguration voxelSniperConfiguration;
     private IFileHandler fileHandler;
     private IEventManager eventManager;
 
@@ -93,7 +91,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     @Override
     public void onDisable() {
-        if(BukkitVoxelSniper.adventure != null) {
+        if (BukkitVoxelSniper.adventure != null) {
             BukkitVoxelSniper.adventure.close();
             BukkitVoxelSniper.adventure = null;
         }
@@ -112,7 +110,8 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return res;
     }
 
-    @Override @Nullable
+    @Override
+    @Nullable
     public IPlayer getPlayer(UUID uuid) {
         if (this.players.get(uuid) != null) return this.players.get(uuid);
         Player bukkitPlayer = Bukkit.getPlayer(uuid);
@@ -122,7 +121,8 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return res;
     }
 
-    @Override @Nullable
+    @Override
+    @Nullable
     public IPlayer getPlayer(String name) {
         Player bukkitPlayer = Bukkit.getPlayer(name);
         if (bukkitPlayer == null) return null;
@@ -151,7 +151,7 @@ public class BukkitVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @Override
     public Version getVersion() {
         //todo: Does this work?
-        String version = "V" + Bukkit.getBukkitVersion().substring(0, 4).replace('.' , '_');
+        String version = "V" + Bukkit.getBukkitVersion().substring(0, 4).replace('.', '_');
         return Version.valueOf(version);
     }
 

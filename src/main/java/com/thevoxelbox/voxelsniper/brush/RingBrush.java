@@ -32,7 +32,7 @@ public class RingBrush extends PerformerBrush {
         this.setName("Ring");
     }
 
-    private void ring(final SnipeData v,  IBlock targetBlock) {
+    private void ring(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double outerSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         final double innerSquared = Math.pow(this.innerSize, 2);
@@ -67,13 +67,13 @@ public class RingBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(Messages.INNER_RADIUS_INFO.replace("%innerSize%",String.valueOf(this.innerSize)));
+        vm.custom(Messages.INNER_RADIUS_INFO.replace("%innerSize%", String.valueOf(this.innerSize)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.RING_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.RING_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -86,11 +86,11 @@ public class RingBrush extends PerformerBrush {
         try {
             if (params[0].startsWith("inner")) {
                 this.innerSize = Double.parseDouble(params[1]);
-                v.sendMessage(Messages.INNER_RADIUS_SET.replace("%innerSize%",String.valueOf(this.innerSize)));
+                v.sendMessage(Messages.INNER_RADIUS_SET.replace("%innerSize%", String.valueOf(this.innerSize)));
                 return;
             }
         } catch (final NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -110,7 +110,7 @@ temp.printStackTrace();
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("inner", Lists.newArrayList("[decimal]"));
 
         argumentValues.putAll(super.registerArgumentValues());

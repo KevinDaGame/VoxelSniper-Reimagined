@@ -1,28 +1,23 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ClassToInstanceMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.MutableClassToInstanceMap;
+import com.google.common.collect.*;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
- *
  * @author ervinnnc
  */
 public class SnipeTool {
 
+    private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
     Class<? extends IBrush> currentBrush;
     VoxelMessage messageHelper;
     ClassToInstanceMap<IBrush> brushes = MutableClassToInstanceMap.create();
-    private Class<? extends IBrush> previousBrush;
-    private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
     SnipeData snipeData;
+    private Class<? extends IBrush> previousBrush;
 
     protected SnipeTool(Sniper owner) {
         this(SnipeBrush.class, new SnipeData(owner));

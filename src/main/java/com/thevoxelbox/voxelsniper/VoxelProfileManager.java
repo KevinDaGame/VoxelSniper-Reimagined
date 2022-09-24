@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper;
 
 import com.google.common.collect.Maps;
-
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 

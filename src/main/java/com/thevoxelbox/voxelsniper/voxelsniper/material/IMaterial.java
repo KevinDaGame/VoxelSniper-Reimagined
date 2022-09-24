@@ -4,8 +4,11 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
 public interface IMaterial extends Comparable<IMaterial> {
     boolean isSolid();
+
     String getKey();
+
     boolean equals(String key);
+
     IBlockData createBlockData();
 
     String getName();
@@ -13,6 +16,7 @@ public interface IMaterial extends Comparable<IMaterial> {
     boolean equals(VoxelMaterial material);
 
     boolean isTransparent();
+
     boolean isBlock();
 
     boolean hasGravity();

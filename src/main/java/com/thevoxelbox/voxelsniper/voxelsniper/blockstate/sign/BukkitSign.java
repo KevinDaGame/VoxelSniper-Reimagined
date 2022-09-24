@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.voxelsniper.blockstate.sign;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.BukkitBlockState;
-
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.jetbrains.annotations.NotNull;
@@ -12,20 +11,6 @@ public class BukkitSign extends BukkitBlockState implements ISign {
 
     public BukkitSign(IBlock block, Sign blockState) {
         super(block, blockState);
-    }
-
-    private Sign getSign() {
-        return (Sign)this.blockState;
-    }
-
-    @Override
-    public void setLine(int line, String signText) {
-        this.getSign().setLine(line, ChatColor.translateAlternateColorCodes(DEFAULT_LEGACY_CHAR, signText));
-    }
-
-    @Override
-    public String getLine(int line) {
-        return translateColorCodesToAmpersand(this.getSign().getLine(line));
     }
 
     @NotNull
@@ -38,5 +23,19 @@ public class BukkitSign extends BukkitBlockState implements ISign {
             }
         }
         return new String(b);
+    }
+
+    private Sign getSign() {
+        return (Sign) this.blockState;
+    }
+
+    @Override
+    public void setLine(int line, String signText) {
+        this.getSign().setLine(line, ChatColor.translateAlternateColorCodes(DEFAULT_LEGACY_CHAR, signText));
+    }
+
+    @Override
+    public String getLine(int line) {
+        return translateColorCodesToAmpersand(this.getSign().getLine(line));
     }
 }

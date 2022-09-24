@@ -11,12 +11,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -159,14 +154,14 @@ public class ErodeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(Messages.ACTIVE_BRUSH_PRESET.replace("%this.presetName%",this.presetName));
+        vm.custom(Messages.ACTIVE_BRUSH_PRESET.replace("%this.presetName%", this.presetName));
     }
 
     @Override
     // TODO: Implement changing of individual variables | fill erode fillrecursion eroderecursion
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ERODE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ERODE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -174,7 +169,7 @@ public class ErodeBrush extends Brush {
             Preset preset = Preset.valueOf(params[0].toUpperCase());
             this.currentPreset = preset.getPreset();
             this.presetName = preset.name();
-            v.sendMessage(Messages.BRUSH_PRESET_CHANGED.replace("%this.presetName%",this.presetName));
+            v.sendMessage(Messages.BRUSH_PRESET_CHANGED.replace("%this.presetName%", this.presetName));
         } catch (IllegalArgumentException e) {
             v.sendMessage(Messages.PRESET_DOES_NOT_EXIST);
         }
@@ -184,6 +179,11 @@ public class ErodeBrush extends Brush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
+    }
+
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.erode";
     }
 
     /**
@@ -389,10 +389,5 @@ public class ErodeBrush extends Brush {
         public ErosionPreset getInverted() {
             return new ErosionPreset(this.fillFaces, this.fillRecursion, this.erosionFaces, this.erosionRecursion);
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.erode";
     }
 }

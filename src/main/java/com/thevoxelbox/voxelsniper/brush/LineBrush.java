@@ -57,7 +57,7 @@ public class LineBrush extends PerformerBrush {
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.targetWorld).getBlock());
         } else {
-            for (final Iterator<IBlock> blockIterator = getWorld().getBlockIterator(originClone, direction, 0, (int )Math.round(length)); blockIterator.hasNext();) {
+            for (final Iterator<IBlock> blockIterator = getWorld().getBlockIterator(originClone, direction, 0, (int) Math.round(length)); blockIterator.hasNext(); ) {
                 final IBlock currentBlock = blockIterator.next();
                 this.currentPerformer.perform(currentBlock);
             }

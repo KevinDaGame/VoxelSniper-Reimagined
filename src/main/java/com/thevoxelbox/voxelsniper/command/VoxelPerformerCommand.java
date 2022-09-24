@@ -1,10 +1,10 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
+import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
-import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
@@ -30,7 +30,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
     public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
-        
+
         // Default command
         // Command: /p info, /p help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
@@ -70,7 +70,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
         if (args.length == 1) {
             return getTabCompletion(args.length);
         }
-        
+
         return new ArrayList<>();
     }
 }

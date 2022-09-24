@@ -1,11 +1,10 @@
 package com.thevoxelbox.voxelsniper;
 
 import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.YamlConfiguration;
-
-import java.io.File;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.File;
 
 public class YamlTest {
     private final File resourcesDirectory = new File("src/test/resources");

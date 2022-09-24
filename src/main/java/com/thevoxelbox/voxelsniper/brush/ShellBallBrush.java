@@ -22,7 +22,7 @@ public class ShellBallBrush extends Brush {
     }
 
     // parameters isn't an abstract method, gilt. You can just leave it out if there are none.
-    private void bShell(final SnipeData v,  IBlock targetBlock) {
+    private void bShell(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer

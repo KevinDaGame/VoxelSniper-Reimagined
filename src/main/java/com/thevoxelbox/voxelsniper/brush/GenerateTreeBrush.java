@@ -7,14 +7,9 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 
@@ -28,6 +23,7 @@ public class GenerateTreeBrush extends Brush {
     // Tree Variables.
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
+    private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
@@ -39,7 +35,6 @@ public class GenerateTreeBrush extends Brush {
     private int minRoots = 1;
     private int thickness = 1;
     private int slopeChance = 40;
-    private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     private int minimumHeight = 14;
     private int maximumHeight = 18;
     private int branchLength = 8;
@@ -317,8 +312,8 @@ public class GenerateTreeBrush extends Brush {
         zPreference = this.random.nextInt(this.slopeChance);
 
         // Sets direction.
-        xDirection = this.chance(50)? -1 : 1;
-        zDirection = this.chance(50)? -1 : 1;
+        xDirection = this.chance(50) ? -1 : 1;
+        zDirection = this.chance(50) ? -1 : 1;
 
         // Generates a height for trunk.
         height = this.random.nextInt(this.maximumHeight - this.minimumHeight + 1) + this.minimumHeight;
@@ -406,9 +401,9 @@ public class GenerateTreeBrush extends Brush {
 
         if (params[0].equalsIgnoreCase("info")) {
             if (params.length == 1 || params[1].equals("1")) {
-                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_1.replace("%triggerHandle%",triggerHandle));
+                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_1.replace("%triggerHandle%", triggerHandle));
             } else if (params[1].equals("2")) {
-                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_2.replace("%triggerHandle%",triggerHandle));
+                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_2.replace("%triggerHandle%", triggerHandle));
             }
             return;
         }
@@ -420,7 +415,7 @@ public class GenerateTreeBrush extends Brush {
                 if (material == VoxelMaterial.OAK_LEAVES || material == VoxelMaterial.ACACIA_LEAVES || material == VoxelMaterial.SPRUCE_LEAVES
                         || material == VoxelMaterial.JUNGLE_LEAVES || material == VoxelMaterial.DARK_OAK_LEAVES || material == VoxelMaterial.BIRCH_LEAVES) {
                     this.leavesMaterial = material;
-                    v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%",String.valueOf(this.leavesMaterial.getName())));
+                    v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -434,51 +429,51 @@ public class GenerateTreeBrush extends Brush {
                 if (material == VoxelMaterial.OAK_WOOD || material == VoxelMaterial.ACACIA_WOOD || material == VoxelMaterial.SPRUCE_WOOD
                         || material == VoxelMaterial.JUNGLE_WOOD || material == VoxelMaterial.DARK_OAK_WOOD || material == VoxelMaterial.BIRCH_WOOD) {
                     this.woodMaterial = material;
-                    v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%",String.valueOf(this.woodMaterial.getName())));
+                    v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
                 } else {
                     throw new IllegalArgumentException();
                 }
                 return;
             }
         } catch (IllegalArgumentException e) {
-                v.sendMessage(Messages.INVALID_TYPE);
+            v.sendMessage(Messages.INVALID_TYPE);
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("thickness")) { // Tree Thickness
                 this.thickness = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.THICKNESS_SET.replace("%thickness%",String.valueOf(this.thickness)));
+                v.sendMessage(Messages.THICKNESS_SET.replace("%thickness%", String.valueOf(this.thickness)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("startHeight")) { // Starting Height
                 this.startHeight = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.START_HEIGHT_SET.replace("%startHeight%",String.valueOf(this.startHeight)));
+                v.sendMessage(Messages.START_HEIGHT_SET.replace("%startHeight%", String.valueOf(this.startHeight)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("slope")) { // Trunk Slope Chance
                 this.slopeChance = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.TRUNK_SLOPE_SET.replace("%this.slopeChance%",String.valueOf(this.slopeChance)));
+                v.sendMessage(Messages.TRUNK_SLOPE_SET.replace("%this.slopeChance%", String.valueOf(this.slopeChance)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("branchLength")) { // Branch Length
                 this.branchLength = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.BRANCH_LENGTH_SET.replace("%branchLength%",String.valueOf(this.branchLength)));
+                v.sendMessage(Messages.BRANCH_LENGTH_SET.replace("%branchLength%", String.valueOf(this.branchLength)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("rootLength")) { // Root Length
                 this.rootLength = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.ROOT_LENGTH_SET.replace("%rootLength%",String.valueOf(this.rootLength)));
+                v.sendMessage(Messages.ROOT_LENGTH_SET.replace("%rootLength%", String.valueOf(this.rootLength)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("rootFloat")) { // Root Float
                 this.rootFloat = Boolean.parseBoolean(params[1]);
-                v.sendMessage(Messages.FLOATING_ROOTS_SET.replace("%rootFloat%",String.valueOf(this.rootFloat)));
+                v.sendMessage(Messages.FLOATING_ROOTS_SET.replace("%rootFloat%", String.valueOf(this.rootFloat)));
                 return;
             }
 
@@ -486,9 +481,9 @@ public class GenerateTreeBrush extends Brush {
                 this.minRoots = Integer.parseInt(params[1]);
                 if (this.minRoots > this.maxRoots) {
                     this.minRoots = this.maxRoots;
-                    v.sendMessage(Messages.MIN_ROOTS_ABOVE_MAX.replace("%this.minRoots%",String.valueOf(this.minRoots)));
+                    v.sendMessage(Messages.MIN_ROOTS_ABOVE_MAX.replace("%this.minRoots%", String.valueOf(this.minRoots)));
                 } else {
-                    v.sendMessage(Messages.MIN_ROOTS_SET.replace("%minRoots%",String.valueOf(this.minRoots)));
+                    v.sendMessage(Messages.MIN_ROOTS_SET.replace("%minRoots%", String.valueOf(this.minRoots)));
                 }
                 return;
             }
@@ -497,9 +492,9 @@ public class GenerateTreeBrush extends Brush {
                 this.maxRoots = Integer.parseInt(params[1]);
                 if (this.minRoots > this.maxRoots) {
                     this.maxRoots = this.minRoots;
-                    v.sendMessage(Messages.MAX_ROOTS_BELOW_MIN.replace("%this.minRoots%",String.valueOf(this.minRoots)));
+                    v.sendMessage(Messages.MAX_ROOTS_BELOW_MIN.replace("%this.minRoots%", String.valueOf(this.minRoots)));
                 } else {
-                    v.sendMessage(Messages.MAX_ROOTS_SET.replace("%maxRoots%",String.valueOf(this.maxRoots)));
+                    v.sendMessage(Messages.MAX_ROOTS_SET.replace("%maxRoots%", String.valueOf(this.maxRoots)));
                 }
                 return;
             }
@@ -508,9 +503,9 @@ public class GenerateTreeBrush extends Brush {
                 this.minimumHeight = Integer.parseInt(params[1]);
                 if (this.minimumHeight > this.maximumHeight) {
                     this.minimumHeight = this.maximumHeight;
-                    v.sendMessage(Messages.MIN_HEIGHT_ABOVE_MAX.replace("%this.minimumHeight%",String.valueOf(this.minimumHeight)));
+                    v.sendMessage(Messages.MIN_HEIGHT_ABOVE_MAX.replace("%this.minimumHeight%", String.valueOf(this.minimumHeight)));
                 } else {
-                    v.sendMessage(Messages.MIN_HEIGHT_SET.replace("%minimumHeight%",String.valueOf(this.minimumHeight)));
+                    v.sendMessage(Messages.MIN_HEIGHT_SET.replace("%minimumHeight%", String.valueOf(this.minimumHeight)));
                 }
                 return;
             }
@@ -519,26 +514,26 @@ public class GenerateTreeBrush extends Brush {
                 this.maximumHeight = Integer.parseInt(params[1]);
                 if (this.minimumHeight > this.maximumHeight) {
                     this.maximumHeight = this.minimumHeight;
-                    v.sendMessage(Messages.MAX_HEIGHT_BELOW_MIN.replace("%this.maximumHeight%",String.valueOf(this.maximumHeight)));
+                    v.sendMessage(Messages.MAX_HEIGHT_BELOW_MIN.replace("%this.maximumHeight%", String.valueOf(this.maximumHeight)));
                 } else {
-                    v.sendMessage(Messages.MAX_HEIGHT_SET.replace("%maximumHeight%",String.valueOf(this.maximumHeight)));
+                    v.sendMessage(Messages.MAX_HEIGHT_SET.replace("%maximumHeight%", String.valueOf(this.maximumHeight)));
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("leavesMax")) { // Leaf Node Max Size
                 this.nodeMax = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.LEAF_THICKNESS_MAX_SET.replace("%nodeMax%",String.valueOf(this.nodeMax)));
+                v.sendMessage(Messages.LEAF_THICKNESS_MAX_SET.replace("%nodeMax%", String.valueOf(this.nodeMax)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("leavesMin")) { // Leaf Node Min Size
                 this.nodeMin = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.LEAF_THICKNESS_MIN_SET.replace("%nodeMin%",String.valueOf(this.nodeMin)));
+                v.sendMessage(Messages.LEAF_THICKNESS_MIN_SET.replace("%nodeMin%", String.valueOf(this.nodeMin)));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
 
         }
 

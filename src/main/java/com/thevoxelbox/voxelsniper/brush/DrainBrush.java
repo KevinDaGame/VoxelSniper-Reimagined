@@ -42,7 +42,7 @@ public class DrainBrush extends Brush {
                     if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dz : new int[]{-1, 1}) {
-                                IBlock b = this.clampY(this.getTargetBlock().getX() + (x*dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z*dz));
+                                IBlock b = this.clampY(this.getTargetBlock().getX() + (x * dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z * dz));
                                 if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
                                     undo.put(b);
                                     b.setMaterial(VoxelMaterial.AIR);
@@ -97,7 +97,7 @@ public class DrainBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.DRAIN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.DRAIN_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
         if (params[0].startsWith("shape")) {

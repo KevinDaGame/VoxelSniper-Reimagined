@@ -9,13 +9,12 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.treeType.VoxelTreeType;
-
-import java.util.Arrays;
-import java.util.List;
-
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Tree_Brush
@@ -33,7 +32,7 @@ public class TreeSnipeBrush extends Brush {
         this.setName("Tree Snipe");
     }
 
-    private void single(final SnipeData v,  IBlock targetBlock) {
+    private void single(final SnipeData v, IBlock targetBlock) {
         Undo undo = new Undo();
 
         IBlock blockBelow = targetBlock.getRelative(BlockFace.DOWN);
@@ -78,7 +77,7 @@ public class TreeSnipeBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-         IBlock  targetBlock = getTargetBlock().getRelative(0, getYOffset(), 0);
+        IBlock targetBlock = getTargetBlock().getRelative(0, getYOffset(), 0);
         this.single(v, targetBlock);
     }
 

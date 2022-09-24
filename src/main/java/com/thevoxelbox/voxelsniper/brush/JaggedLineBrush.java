@@ -8,11 +8,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush
@@ -53,7 +49,7 @@ public class JaggedLineBrush extends PerformerBrush {
         if (length == 0) {
             this.currentPerformer.perform(this.targetCoords.getLocation(this.getWorld()).getBlock());
         } else {
-            for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, ((int)Math.round(length))); iterator.hasNext();) {
+            for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, ((int) Math.round(length))); iterator.hasNext(); ) {
                 final IBlock block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
                     this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
@@ -95,7 +91,7 @@ public class JaggedLineBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.JAGGED_LINE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.JAGGED_LINE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -118,7 +114,7 @@ public class JaggedLineBrush extends PerformerBrush {
                 return;
             }
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

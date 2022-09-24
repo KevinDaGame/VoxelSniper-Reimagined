@@ -17,7 +17,7 @@ import java.util.Set;
 public class EraserBrush extends Brush {
     //todo This was enumset, should it still be?
     private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
-            VoxelMaterial.AIR,VoxelMaterial.CAVE_AIR,VoxelMaterial.VOID_AIR,VoxelMaterial.STONE,VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT,VoxelMaterial.SAND,VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE);
+            VoxelMaterial.AIR, VoxelMaterial.CAVE_AIR, VoxelMaterial.VOID_AIR, VoxelMaterial.STONE, VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT, VoxelMaterial.SAND, VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE);
     private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
             VoxelMaterial.WATER, VoxelMaterial.LAVA);
 
@@ -25,7 +25,7 @@ public class EraserBrush extends Brush {
         try {
             // 1.17+
             EXCLUSIVE_MATERIALS.add(VoxelMaterial.DEEPSLATE);
-        } catch(Throwable ignore) {
+        } catch (Throwable ignore) {
             // Don't add for older versions
         }
     }

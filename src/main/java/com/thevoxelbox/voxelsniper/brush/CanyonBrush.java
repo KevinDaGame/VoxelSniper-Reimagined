@@ -58,7 +58,7 @@ public class CanyonBrush extends Brush {
                 undo.put(block);
                 block.setMaterial(VoxelMaterial.BEDROCK);
 
-                for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
+                for (int y = this.getMinHeight() + 1; y < this.getMinHeight() + SHIFT_LEVEL_MIN; y++) {
                     final IBlock currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
                     currentBlock.setMaterial(VoxelMaterial.STONE);
@@ -99,7 +99,7 @@ public class CanyonBrush extends Brush {
     @Override
     public final void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.CANYON_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CANYON_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -115,7 +115,7 @@ public class CanyonBrush extends Brush {
 
                 this.yLevel = yLevel;
 
-                v.sendMessage(Messages.LAND_WILL_BE_SHIFTED_TO_Y.replace("%yLevel%",String.valueOf(this.yLevel)));
+                v.sendMessage(Messages.LAND_WILL_BE_SHIFTED_TO_Y.replace("%yLevel%", String.valueOf(this.yLevel)));
             } catch (NumberFormatException e) {
                 v.sendMessage(Messages.INPUT_NO_NUMBER);
             }
@@ -133,7 +133,7 @@ public class CanyonBrush extends Brush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("y", Lists.newArrayList("[number]"));
 
         return argumentValues;

@@ -63,23 +63,23 @@ public class ScannerBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%",String.valueOf(this.depth)).replace("%checkFor%",vm.snipeData().getVoxelMaterial()));
+        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%", String.valueOf(this.depth)).replace("%checkFor%", vm.snipeData().getVoxelMaterial()));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
             if (params[0].startsWith("depth")) {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
-                v.sendMessage(Messages.SCANNER_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
+                v.sendMessage(Messages.SCANNER_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
             }
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -95,9 +95,9 @@ temp.printStackTrace();
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("depth", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
     }
 

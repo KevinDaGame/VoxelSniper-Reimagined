@@ -10,16 +10,14 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
-import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import net.kyori.adventure.text.ComponentLike;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
-
-import net.kyori.adventure.text.ComponentLike;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -27,9 +25,9 @@ import org.jetbrains.annotations.NotNull;
 public class Sniper {
 
     private final UUID player;
-    private boolean enabled = true;
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
+    private boolean enabled = true;
 
     public Sniper(IPlayer player) {
         this.player = player.getUniqueId();
@@ -94,7 +92,7 @@ public class Sniper {
 
         String permissionNode = sniperTool.getCurrentBrush().getPermissionNode();
         if (!getPlayer().hasPermission(permissionNode)) {
-            sendMessage(Messages.NO_PERMISSION_BRUSH.replace("%permissionNode%",permissionNode));
+            sendMessage(Messages.NO_PERMISSION_BRUSH.replace("%permissionNode%", permissionNode));
             return true;
         }
 
@@ -140,7 +138,7 @@ public class Sniper {
                     break;
             }
         }
-        switch(action) {
+        switch (action) {
             case RIGHT_CLICK_AIR:
             case RIGHT_CLICK_BLOCK:
                 if (clickedBlock == null) {
@@ -253,7 +251,8 @@ public class Sniper {
                 }
             }
 
-            sendMessage(Messages.UNDO_SUCCESSFUL.replace("%changedBlocks%", String.valueOf(changedBlocks)));;
+            sendMessage(Messages.UNDO_SUCCESSFUL.replace("%changedBlocks%", String.valueOf(changedBlocks)));
+            ;
         }
         return changedBlocks;
     }

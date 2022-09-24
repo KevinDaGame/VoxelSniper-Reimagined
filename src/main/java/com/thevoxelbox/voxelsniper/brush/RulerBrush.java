@@ -14,12 +14,11 @@ import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
  */
 public class RulerBrush extends Brush {
 
-    private boolean first = true;
-    private VoxelVector coords = new VoxelVector();
-
     private final int xOff = 0;
     private final int yOff = 0;
     private final int zOff = 0;
+    private boolean first = true;
+    private VoxelVector coords = new VoxelVector();
 
     /**
      *
@@ -56,7 +55,7 @@ public class RulerBrush extends Brush {
         final double distance = (double) (Math.round(this.getTargetBlock().getLocation().toVector().subtract(this.coords).length() * 100) / 100);
         final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z))) + 1) * 100) / 100);
 
-        v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%",String.valueOf(x)).replace("%y%",String.valueOf(y)).replace("%z%",String.valueOf(z)).replace("%distance%",String.valueOf(distance)).replace("%blockDistance%",String.valueOf(blockDistance)));
+        v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%distance%", String.valueOf(distance)).replace("%blockDistance%", String.valueOf(blockDistance)));
     }
 
     @Override

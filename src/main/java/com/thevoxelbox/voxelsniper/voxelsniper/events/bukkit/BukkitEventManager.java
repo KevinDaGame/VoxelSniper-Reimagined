@@ -4,7 +4,6 @@ import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.events.IEventManager;
-
 import org.bukkit.Bukkit;
 
 public class BukkitEventManager implements IEventManager {

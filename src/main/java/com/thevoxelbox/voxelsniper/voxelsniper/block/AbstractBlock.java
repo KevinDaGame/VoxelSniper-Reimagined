@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelsniper.voxelsniper.block;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
-public abstract class AbstractBlock implements IBlock{
+public abstract class AbstractBlock implements IBlock {
     final VoxelLocation location;
     VoxelMaterial material;
 

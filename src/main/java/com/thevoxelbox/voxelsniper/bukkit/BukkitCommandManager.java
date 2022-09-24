@@ -2,7 +2,6 @@ package com.thevoxelbox.voxelsniper.bukkit;
 
 import com.thevoxelbox.voxelsniper.command.VoxelCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelCommandManager;
-
 import org.bukkit.command.PluginCommand;
 
 public final class BukkitCommandManager extends VoxelCommandManager {
@@ -15,6 +14,7 @@ public final class BukkitCommandManager extends VoxelCommandManager {
             instance = new BukkitCommandManager();
         }
     }
+
     @Override
     public void registerCommand(VoxelCommand command) {
         // Add to local command map for persistence

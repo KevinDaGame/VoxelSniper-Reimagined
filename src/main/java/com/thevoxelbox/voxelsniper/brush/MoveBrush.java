@@ -10,17 +10,15 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Moves a selection blockPositionY a certain amount. http://www.voxelwiki.com/minecraft/Voxelsniper#Move_Brush
@@ -28,24 +26,6 @@ import org.jetbrains.annotations.NotNull;
  * @author MikeMatrix
  */
 public class MoveBrush extends Brush {
-
-    private static class ComponentException extends Exception implements ComponentLike {
-        private final ComponentLike component;
-
-        ComponentException(ComponentLike component) {
-            this.component = component;
-        }
-
-        @Override
-        public String getMessage() {
-            return LegacyComponentSerializer.legacySection().serialize(this.asComponent());
-        }
-
-        @Override
-        public @NotNull Component asComponent() {
-            return component.asComponent();
-        }
-    }
 
     /**
      * Saved direction.
@@ -55,7 +35,6 @@ public class MoveBrush extends Brush {
      * Saved selection.
      */
     private Selection selection = null;
-
     /**
      *
      */
@@ -107,7 +86,7 @@ public class MoveBrush extends Brush {
                 blockState.getBlock().setMaterial(VoxelMaterial.AIR);
             }
             for (final IBlockState blockState : selection.getBlockStates()) {
-                final  IBlock  affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
+                final IBlock affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
                 affectedBlock.setBlockData(blockState.getBlockData(), !blockState.getMaterial().fallsOff());
             }
         }
@@ -158,7 +137,7 @@ public class MoveBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -189,7 +168,7 @@ public class MoveBrush extends Brush {
                 return;
             }
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -208,8 +187,31 @@ temp.printStackTrace();
         argumentValues.put("x", Lists.newArrayList("[number]"));
         argumentValues.put("y", Lists.newArrayList("[number]"));
         argumentValues.put("z", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
+    }
+
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.move";
+    }
+
+    private static class ComponentException extends Exception implements ComponentLike {
+        private final ComponentLike component;
+
+        ComponentException(ComponentLike component) {
+            this.component = component;
+        }
+
+        @Override
+        public String getMessage() {
+            return LegacyComponentSerializer.legacySection().serialize(this.asComponent());
+        }
+
+        @Override
+        public @NotNull Component asComponent() {
+            return component.asComponent();
+        }
     }
 
     /**
@@ -302,10 +304,5 @@ temp.printStackTrace();
         public void setLocation2(final VoxelLocation location2) {
             this.location2 = location2;
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.move";
     }
 }

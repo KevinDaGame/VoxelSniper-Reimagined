@@ -66,7 +66,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.SHIFT_LEVEL_SET.replace("%getYLevel%",String.valueOf(this.getYLevel())));
+        vm.custom(Messages.SHIFT_LEVEL_SET.replace("%getYLevel%", String.valueOf(this.getYLevel())));
     }
 
     @Override

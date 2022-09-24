@@ -4,24 +4,13 @@ import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.voxelsniper.Version;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.thevoxelbox.voxelsniper.voxelsniper.Version.*;
 
 @SuppressWarnings("unused")
 public class VoxelMaterial implements IMaterial {
-    private enum Tags {
-        FALLSOFF,
-        FLUIDS,
-        AIR
-    }
     public static final Map<String, VoxelMaterial> BLOCKS = new HashMap<>();
-
     //<editor-fold defaultstate="collapsed" desc="Blocks">
     public static final VoxelMaterial AIR = register("minecraft", "air", Tags.AIR);
     public static final VoxelMaterial STONE = register("minecraft", "stone");
@@ -220,6 +209,23 @@ public class VoxelMaterial implements IMaterial {
     public static final VoxelMaterial SNOW_BLOCK = register("minecraft", "snow_block");
     public static final VoxelMaterial CACTUS = register("minecraft", "cactus", Tags.FALLSOFF);
     public static final VoxelMaterial CLAY = register("minecraft", "clay");
+    public static List<VoxelMaterial> OVERRIDABLE_MATERIALS = Arrays.asList(VoxelMaterial.STONE,
+            VoxelMaterial.ANDESITE,
+            VoxelMaterial.DIORITE,
+            VoxelMaterial.GRANITE,
+            VoxelMaterial.GRASS_BLOCK,
+            VoxelMaterial.DIRT,
+            VoxelMaterial.COARSE_DIRT,
+            VoxelMaterial.PODZOL,
+            VoxelMaterial.SAND,
+            VoxelMaterial.RED_SAND,
+            VoxelMaterial.GRAVEL,
+            VoxelMaterial.SANDSTONE,
+            VoxelMaterial.MOSSY_COBBLESTONE,
+            VoxelMaterial.CLAY,
+            VoxelMaterial.SNOW,
+            VoxelMaterial.OBSIDIAN
+    );
     public static final VoxelMaterial SUGAR_CANE = register("minecraft", "sugar_cane", Tags.FALLSOFF);
     public static final VoxelMaterial JUKEBOX = register("minecraft", "jukebox");
     public static final VoxelMaterial OAK_FENCE = register("minecraft", "oak_fence");
@@ -957,32 +963,25 @@ public class VoxelMaterial implements IMaterial {
     public static final VoxelMaterial STRIPPED_MANGROVE_WOOD = register("minecraft", "stripped_mangrove_wood", V1_19);
     public static final VoxelMaterial VERDANT_FROGLIGHT = register("minecraft", "verdant_froglight", V1_19);
     //</editor-fold>
-
-    public static List<VoxelMaterial> OVERRIDABLE_MATERIALS = Arrays.asList(VoxelMaterial.STONE,
-            VoxelMaterial.ANDESITE,
-            VoxelMaterial.DIORITE,
-            VoxelMaterial.GRANITE,
-            VoxelMaterial.GRASS_BLOCK,
-            VoxelMaterial.DIRT,
-            VoxelMaterial.COARSE_DIRT,
-            VoxelMaterial.PODZOL,
-            VoxelMaterial.SAND,
-            VoxelMaterial.RED_SAND,
-            VoxelMaterial.GRAVEL,
-            VoxelMaterial.SANDSTONE,
-            VoxelMaterial.MOSSY_COBBLESTONE,
-            VoxelMaterial.CLAY,
-            VoxelMaterial.SNOW,
-            VoxelMaterial.OBSIDIAN
-    );
-
-
-
     private final Version version;
     private final String key;
     private final String namespace;
     private final List<Tags> tags;
     private IMaterial material = null;
+    public VoxelMaterial(String namespace, String key, Version version, Tags... tags) {
+        this.namespace = namespace;
+        this.key = key;
+        this.version = version;
+        this.tags = Arrays.stream(tags).toList();
+    }
+
+    public VoxelMaterial(String namespace, String key) {
+        this(namespace, key, V1_16);
+    }
+
+    public VoxelMaterial(String key) {
+        this("minecraft", key);
+    }
 
     private static VoxelMaterial register(String namespace, String key, Version version, Tags... tags) {
 
@@ -995,19 +994,7 @@ public class VoxelMaterial implements IMaterial {
     private static VoxelMaterial register(String namespace, String key, Tags... tags) {
         return register(namespace, key, V1_16, tags);
     }
-    
-    public VoxelMaterial(String namespace, String key, Version version, Tags... tags) {
-        this.namespace = namespace;
-        this.key = key;
-        this.version = version;
-        this.tags = Arrays.stream(tags).toList();
-    }
-    public VoxelMaterial(String namespace, String key) {
-        this(namespace, key, V1_16);
-    }
-    public VoxelMaterial(String key) {
-        this("minecraft", key);
-    }
+
     public static VoxelMaterial getMaterial(String key) {
         if (key.contains(":")) {
             String[] components = key.split(":");
@@ -1015,6 +1002,7 @@ public class VoxelMaterial implements IMaterial {
         }
         return getMaterial("minecraft", key);
     }
+
     public static VoxelMaterial getMaterial(String namespace, String key) {
         if (namespace.isEmpty() || key.isEmpty()) return null;
         var block = BLOCKS.get(namespace + ":" + key);
@@ -1028,7 +1016,7 @@ public class VoxelMaterial implements IMaterial {
                 return null;
             }
         }
-        if (VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())){
+        if (VoxelSniper.voxelsniper.getVersion().isSupported(block.getVersion())) {
             return block;
         }
         return null;
@@ -1129,5 +1117,11 @@ public class VoxelMaterial implements IMaterial {
             this.material = VoxelSniper.voxelsniper.getMaterial(this);
         }
         return material;
+    }
+
+    private enum Tags {
+        FALLSOFF,
+        FLUIDS,
+        AIR
     }
 }

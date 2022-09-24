@@ -29,50 +29,56 @@ public class VoxelLocation {
         this(world, x, y, z, 0, 0);
     }
 
+    private static double square(double num) {
+        return num * num;
+    }
+
     public double getX() {
         return this.x;
-    }
-
-    public double getY() {
-        return this.y;
-    }
-
-    public double getZ() {
-        return this.z;
-    }
-
-    public int getBlockX() {
-        return (int) Math.floor(getX());
-    }
-    public int getBlockY() {
-        return (int) Math.floor(getY());
-    }
-    public int getBlockZ() {
-        return (int) Math.floor(getZ());
     }
 
     public void setX(double x) {
         this.x = x;
     }
 
+    public double getY() {
+        return this.y;
+    }
+
     public void setY(double y) {
         this.y = y;
+    }
+
+    public double getZ() {
+        return this.z;
     }
 
     public void setZ(double z) {
         this.z = z;
     }
 
+    public int getBlockX() {
+        return (int) Math.floor(getX());
+    }
+
+    public int getBlockY() {
+        return (int) Math.floor(getY());
+    }
+
+    public int getBlockZ() {
+        return (int) Math.floor(getZ());
+    }
+
     public float getYaw() {
         return this.yaw;
     }
 
-    public float getPitch() {
-        return this.pitch;
-    }
-
     public void setYaw(float yaw) {
         this.yaw = yaw;
+    }
+
+    public float getPitch() {
+        return this.pitch;
     }
 
     public void setPitch(float pitch) {
@@ -90,13 +96,13 @@ public class VoxelLocation {
     public void addZ(double z) {
         this.setZ(this.getZ() + z);
     }
-    
+
     public void add(int x, int y, int z) {
         this.addX(x);
         this.addY(y);
         this.addZ(z);
     }
-    
+
     public void add(VoxelLocation location) {
         this.addX(location.getX());
         this.addY(location.getY());
@@ -108,7 +114,7 @@ public class VoxelLocation {
         this.addY(direction.getY());
         this.addZ(direction.getZ());
     }
-    
+
     public IWorld getWorld() {
         return this.world;
     }
@@ -168,10 +174,6 @@ public class VoxelLocation {
     @Override
     public int hashCode() {
         return Objects.hash(world, x, y, z, yaw, pitch);
-    }
-
-    private static double square(double num) {
-        return num * num;
     }
 
     public VoxelVector getDirection() {

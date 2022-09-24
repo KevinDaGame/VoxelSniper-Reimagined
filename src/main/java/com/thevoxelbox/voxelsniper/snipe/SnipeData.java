@@ -5,9 +5,7 @@ import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
-
 import net.kyori.adventure.text.ComponentLike;
-
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,12 +22,10 @@ public class SnipeData {
 
     // Sniper varaibles
     private final Sniper owner;
+    private final boolean lightning = false;
     private VoxelMessage voxelMessage;
-
     private int range = 0;
     private boolean ranged = false;
-    private final boolean lightning = false;
-
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 
     // Voxel and ReplaceTarget Materials & BlockData
@@ -82,24 +78,24 @@ public class SnipeData {
         return voxelSubstance;
     }
 
-    public VoxelMaterial getVoxelMaterial() {
-        return voxelSubstance.getMaterial();
-    }
-
     public void setVoxelSubstance(IBlockData voxelSubstance) {
         this.voxelSubstance = voxelSubstance;
+    }
+
+    public VoxelMaterial getVoxelMaterial() {
+        return voxelSubstance.getMaterial();
     }
 
     public IBlockData getReplaceSubstance() {
         return replaceSubstance;
     }
 
-    public VoxelMaterial getReplaceMaterial() {
-        return replaceSubstance.getMaterial();
-    }
-
     public void setReplaceSubstance(IBlockData targetSubstance) {
         this.replaceSubstance = targetSubstance;
+    }
+
+    public VoxelMaterial getReplaceMaterial() {
+        return replaceSubstance.getMaterial();
     }
 
     public int getcCen() {

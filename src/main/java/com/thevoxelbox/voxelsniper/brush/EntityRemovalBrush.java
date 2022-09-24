@@ -70,7 +70,7 @@ public class EntityRemovalBrush extends Brush {
             }
         } catch (final PatternSyntaxException pse) {
             pse.printStackTrace();
-            v.sendMessage(Messages.ENTITY_REMOVAL_REGEX_ERROR.replace("%pattern%",String.valueOf(pse.getPattern())).replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
+            v.sendMessage(Messages.ENTITY_REMOVAL_REGEX_ERROR.replace("%pattern%", String.valueOf(pse.getPattern())).replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
         }
         v.sendMessage(Messages.ENTITY_REMOVE_COUNT.replace("%chunkCount%", String.valueOf(chunkCount)).replace("%entityCount%", String.valueOf(entityCount)).replace("%multiple%", (chunkCount == 1 ? " chunk." : " chunks.")));
     }
@@ -111,7 +111,7 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ENTITY_REMOVAL_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ENTITY_REMOVAL_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -152,7 +152,7 @@ public class EntityRemovalBrush extends Brush {
 
                 return;
             } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException temp) {
-temp.printStackTrace();
+                temp.printStackTrace();
             }
         }
 

@@ -134,7 +134,7 @@ public class OceanBrush extends Brush {
 
                 // go down from water level to new sea level
                 for (int y = this.waterLevel; y > newSeaFloorLevel; y--) {
-                    final  IBlock  block = world.getBlock(x, y, z);
+                    final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
                         // do not put blocks into the undo we already put into
                         if (!block.getMaterial().isAir()) {
@@ -146,7 +146,7 @@ public class OceanBrush extends Brush {
 
                 // cover the sea floor of required
                 if (this.coverFloor && (newSeaFloorLevel < this.waterLevel)) {
-                     IBlock  block = world.getBlock(x, newSeaFloorLevel, z);
+                    IBlock block = world.getBlock(x, newSeaFloorLevel, z);
                     if (block.getMaterial() != v.getVoxelMaterial()) {
                         undo.put(block);
                         block.setBlockData(v.getVoxelMaterial().createBlockData());
@@ -171,7 +171,7 @@ public class OceanBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.OCEAN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.OCEAN_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
         try {
@@ -184,7 +184,7 @@ public class OceanBrush extends Brush {
                 }
 
                 this.waterLevel = temp - 1;
-                v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel+1)));
+                v.sendMessage(Messages.WATER_LEVEL_SET.replace("%waterLevel%", String.valueOf(waterLevel + 1)));
                 return;
             }
 
@@ -194,7 +194,7 @@ public class OceanBrush extends Brush {
                 return;
             }
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -222,7 +222,7 @@ temp.printStackTrace();
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%",String.valueOf(waterLevel+1))); // +1 since we are working with 0-based array indices
+        vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%", String.valueOf(waterLevel + 1))); // +1 since we are working with 0-based array indices
         vm.custom(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
     }
 

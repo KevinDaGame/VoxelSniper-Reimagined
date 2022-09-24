@@ -13,18 +13,25 @@ import java.util.Iterator;
 
 public interface IWorld {
     IBlock getBlock(VoxelLocation location);
+
     IBlock getBlock(int x, int y, int z);
+
     int getMinWorldHeight();
+
     int getMaxWorldHeight();
 
     IChunk getChunkAtLocation(int x, int z);
+
     IChunk getChunkAtLocation(VoxelLocation location);
+
     void refreshChunk(int x, int z);
 
     void strikeLightning(VoxelLocation location);
 
     String getName();
+
     void spawn(VoxelLocation location, VoxelEntityType entity);
+
     void setBiome(int x, int z, VoxelBiome selectedBiome);
 
     int getHighestBlockYAt(int x, int z);

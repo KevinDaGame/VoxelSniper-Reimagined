@@ -6,14 +6,13 @@ import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
-import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Voxel
  * @author Monofraps
  */
@@ -142,13 +141,13 @@ public class JockeyBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%",String.valueOf(jockeyType.toString())));
+        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", String.valueOf(jockeyType.toString())));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -208,6 +207,11 @@ public class JockeyBrush extends Brush {
         return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal", "player"));
     }
 
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.jockey";
+    }
+
     /**
      * Available types of jockey modes.
      */
@@ -229,10 +233,5 @@ public class JockeyBrush extends Brush {
         public String toString() {
             return this.name;
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.jockey";
     }
 }

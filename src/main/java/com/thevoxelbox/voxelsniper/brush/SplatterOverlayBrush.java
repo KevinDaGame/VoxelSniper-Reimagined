@@ -29,12 +29,12 @@ public class SplatterOverlayBrush extends PerformerBrush {
     private static final int SPLATREC_PERCENT_MIN = 1;
     private static final int SPLATREC_PERCENT_DEFAULT = 3;
     private static final int SPLATREC_PERCENT_MAX = 10;
-    private int seedPercent; // Chance block on first pass is made active
-    private int growPercent; // chance block on recursion pass is made active
-    private int splatterRecursions; // How many times you grow the seeds
     private final int yOffset = 0;
     private final boolean randomizeHeight = false;
     private final Random generator = new Random();
+    private int seedPercent; // Chance block on first pass is made active
+    private int growPercent; // chance block on recursion pass is made active
+    private int splatterRecursions; // How many times you grow the seeds
     private int depth = 3;
 
     private boolean allBlocks = false;
@@ -262,14 +262,14 @@ public class SplatterOverlayBrush extends PerformerBrush {
         vm.size();
         vm.custom(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(this.seedPercent / 100)));
         vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
-        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(this.splatterRecursions)));
-        vm.custom(Messages.Y_OFFSET_SET.replace("%yOffset%",String.valueOf(this.yOffset)));
+        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%", String.valueOf(this.splatterRecursions)));
+        vm.custom(Messages.Y_OFFSET_SET.replace("%yOffset%", String.valueOf(this.yOffset)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.SPLATTER_OVERLAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SPLATTER_OVERLAY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -295,7 +295,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 this.useVoxelList = false;
             }
             String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
-            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%",String.valueOf(this.depth)).replace("%mode%",mode));
+            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%", String.valueOf(this.depth)).replace("%mode%", mode));
             return;
         }
 
@@ -307,7 +307,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
+                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
                 return;
             }
 
@@ -339,7 +339,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = Integer.parseInt(params[1]);
 
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(temp)));
+                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%", String.valueOf(temp)));
                     this.splatterRecursions = temp;
                 } else {
                     v.sendMessage(Messages.SPLATTER_BALL_BRUSH_RECURSION_RANGE);
@@ -347,7 +347,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 return;
             }
         } catch (NumberFormatException temp) {
-temp.printStackTrace();
+            temp.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

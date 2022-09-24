@@ -11,11 +11,10 @@ import java.util.List;
 public abstract class VoxelCommand {
 
     private final String name;
+    private final List<String> otherIdentifiers = new ArrayList<>();
     private String description = "";
     private String permission = "";
     private String identifier = "";
-    private final List<String> otherIdentifiers = new ArrayList<>();
-
     private String activeIdentifier = "";
     private String activeAlias = "";
 
@@ -27,7 +26,7 @@ public abstract class VoxelCommand {
         if (getPermission() == null || getPermission().isEmpty() || player.hasPermission(getPermission())) {
             return doCommand(player, args);
         } else {
-            player.sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%",getPermission()));
+            player.sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%", getPermission()));
             return true;
         }
     }
@@ -40,8 +39,16 @@ public abstract class VoxelCommand {
         return description;
     }
 
+    protected final void setDescription(String description) {
+        this.description = description;
+    }
+
     public final String getPermission() {
         return this.permission;
+    }
+
+    protected final void setPermission(String permission) {
+        this.permission = permission;
     }
 
     public final String getName() {
@@ -50,14 +57,6 @@ public abstract class VoxelCommand {
 
     public final String getIdentifier() {
         return this.identifier;
-    }
-
-    protected final void setDescription(String description) {
-        this.description = description;
-    }
-
-    protected final void setPermission(String permission) {
-        this.permission = permission;
     }
 
     protected final void setIdentifier(String identifier) {

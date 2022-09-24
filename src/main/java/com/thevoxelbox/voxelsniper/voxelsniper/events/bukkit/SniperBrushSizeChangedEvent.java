@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper.voxelsniper.events.bukkit;
 
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

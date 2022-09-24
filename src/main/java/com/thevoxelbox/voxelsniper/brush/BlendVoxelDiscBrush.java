@@ -103,7 +103,7 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.BALL_BLEND_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.BALL_BLEND_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

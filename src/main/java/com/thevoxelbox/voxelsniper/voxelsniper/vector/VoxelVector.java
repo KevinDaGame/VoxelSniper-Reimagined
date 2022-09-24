@@ -20,6 +20,10 @@ public class VoxelVector {
         this(0, 0, 0);
     }
 
+    private static double square(double num) {
+        return num * num;
+    }
+
     public VoxelLocation getLocation(IWorld world) {
         return new VoxelLocation(world, getX(), getY(), getZ());
     }
@@ -35,34 +39,36 @@ public class VoxelVector {
         return this.x;
     }
 
-    public double getY() {
-        return this.y;
-    }
-
-    public double getZ() {
-        return this.z;
-    }
-
-    public int getBlockX() {
-        return (int) Math.floor(getX());
-    }
-    public int getBlockY() {
-        return (int) Math.floor(getY());
-    }
-    public int getBlockZ() {
-        return (int) Math.floor(getZ());
-    }
-
     public void setX(double x) {
         this.x = x;
+    }
+
+    public double getY() {
+        return this.y;
     }
 
     public void setY(double y) {
         this.y = y;
     }
 
+    public double getZ() {
+        return this.z;
+    }
+
     public void setZ(double z) {
         this.z = z;
+    }
+
+    public int getBlockX() {
+        return (int) Math.floor(getX());
+    }
+
+    public int getBlockY() {
+        return (int) Math.floor(getY());
+    }
+
+    public int getBlockZ() {
+        return (int) Math.floor(getZ());
     }
 
     public VoxelVector add(VoxelVector vector) {
@@ -71,6 +77,7 @@ public class VoxelVector {
         this.setZ(this.getZ() + vector.getZ());
         return this;
     }
+
     public VoxelVector subtract(VoxelVector vector) {
         this.setX(this.getX() - vector.getX());
         this.setY(this.getY() - vector.getY());
@@ -147,10 +154,6 @@ public class VoxelVector {
 
     public double lengthSquared() {
         return square(x) + square(y) + square(z);
-    }
-
-    private static double square(double num) {
-        return num * num;
     }
 
     @Override

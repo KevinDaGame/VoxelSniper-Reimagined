@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Dissect this
+
 /**
  * @author Gavjenks, hack job from the other 2d rotation brush blockPositionY piotr
  */
@@ -153,14 +154,14 @@ public class Rot2DvertBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
             double degrees = Double.parseDouble(params[0]);
             this.se = Math.toRadians(degrees);
-            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(degrees)));
+            v.sendMessage(Messages.ANGLE_SET.replace("%se%", String.valueOf(degrees)));
         } catch (NumberFormatException temp) {
             v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         }

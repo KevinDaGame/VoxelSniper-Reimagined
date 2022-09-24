@@ -8,9 +8,7 @@ import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.BukkitMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
-
 import org.bukkit.block.Block;
-
 import org.jetbrains.annotations.Nullable;
 
 public class BukkitBlock extends AbstractBlock {
@@ -25,13 +23,13 @@ public class BukkitBlock extends AbstractBlock {
     @Override
     public void setMaterial(VoxelMaterial material) {
         this.material = material;
-        block.setType(((BukkitMaterial)material.getIMaterial()).material());
+        block.setType(((BukkitMaterial) material.getIMaterial()).material());
     }
 
     @Override
     public void setMaterial(VoxelMaterial material, boolean applyPhysics) {
         this.material = material;
-        block.setType(((BukkitMaterial)material.getIMaterial()).material(), applyPhysics);
+        block.setType(((BukkitMaterial) material.getIMaterial()).material(), applyPhysics);
     }
 
     //todo test if this works

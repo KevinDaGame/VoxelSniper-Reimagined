@@ -19,7 +19,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         setIdentifier("vir");
         setPermission("voxelsniper.sniper");
     }
-    
+
     @Override
     public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
@@ -71,7 +71,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
 
         if (a.length == 2) {
             List<String> possibleDataValues = new ArrayList<>();
-            
+
             String values = a[1].replace("]", "");
 
             for (String value : values.split(",")) {

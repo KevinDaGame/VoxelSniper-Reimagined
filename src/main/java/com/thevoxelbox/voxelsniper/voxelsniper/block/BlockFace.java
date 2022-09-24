@@ -35,6 +35,7 @@ public enum BlockFace {
         this.modY = face1.getModY() + face2.getModY();
         this.modZ = face1.getModZ() + face2.getModZ();
     }
+
     public int getModX() {
         return this.modX;
     }
