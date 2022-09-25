@@ -114,6 +114,8 @@ public class UnderlayBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
+        String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
+        vm.custom(Messages.UNDERLAY_MODE.replace("%mode%", mode));
     }
 
     @Override
@@ -131,7 +133,7 @@ public class UnderlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
+                v.sendMessage(Messages.UNDERLAY_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
                 return;
             } catch (NumberFormatException temp) {
                 temp.printStackTrace();
@@ -139,18 +141,18 @@ public class UnderlayBrush extends PerformerBrush {
         }
 
         if (params[0].startsWith("mode")) {
-            if (!this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = true;
-                this.useVoxelList = false;
-            } else if (this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = false;
-                this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            if (!this.useVoxelList) {
+                if (!this.allBlocks) {
+                    this.allBlocks = true;
+                } else {
+                    this.allBlocks = false;
+                    this.useVoxelList = true;
+                }
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
-            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%", String.valueOf(this.depth)).replace("%mode%", mode));
+            v.sendMessage(Messages.UNDERLAY_ON_MODE_DEPTH.replace("%depth%", String.valueOf(this.depth)).replace("%mode%", mode));
 
             return;
         }

@@ -350,6 +350,9 @@ public enum Messages implements ComponentLike {
     CONTROL_SELECTION_FULL,
     PULLBRUSH_USAGE,
     NUMBER_OUT_OF_RANGE,
+    UNDERLAY_DEPTH_SET,
+    UNDERLAY_MODE,
+    UNDERLAY_ON_MODE_DEPTH,
     ;
     //</editor-fold>
 

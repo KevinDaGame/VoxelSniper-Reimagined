@@ -579,3 +579,6 @@ NO_PERMISSION_MESSAGE: You do not have the '%permission%' permission node to do 
 VOXEL_HEIGHT_MUST_NOT_BE_0: VoxelHeight must not be 0.
 GENERATED_CHUNK: Generate that chunk! %chunk.getX% %chunk.getZ%
 FILE_ALREADY_EXISTS: This file already exists.
+UNDERLAY_DEPTH_SET: <aqua>Underlay depth set to %depth%
+UNDERLAY_MODE: <gold>Underlaying on %mode% blocks
+UNDERLAY_ON_MODE_DEPTH: <blue>Will underlay on %mode% blocks, %depth% blocks deep.

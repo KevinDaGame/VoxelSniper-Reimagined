@@ -155,14 +155,14 @@ public class OverlayBrush extends PerformerBrush {
         }
 
         if (params[0].startsWith("mode")) {
-            if (!this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = true;
-                this.useVoxelList = false;
-            } else if (this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = false;
-                this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            if (!this.useVoxelList) {
+                if (!this.allBlocks) {
+                    this.allBlocks = true;
+                } else {
+                    this.allBlocks = false;
+                    this.useVoxelList = true;
+                }
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
