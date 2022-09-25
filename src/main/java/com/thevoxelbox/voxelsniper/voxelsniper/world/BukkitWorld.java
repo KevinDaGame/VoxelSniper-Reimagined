@@ -6,6 +6,8 @@ import com.thevoxelbox.voxelsniper.voxelsniper.block.BukkitBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.BukkitChunk;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.BukkitEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.BukkitLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
@@ -19,6 +21,7 @@ import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 public record BukkitWorld(World world) implements IWorld {
@@ -45,12 +48,12 @@ public record BukkitWorld(World world) implements IWorld {
 
     @Override
     public IChunk getChunkAtLocation(int x, int z) {
-        return new BukkitChunk(world.getChunkAt(x / 16, z / 16));
+        return new BukkitChunk(world.getChunkAt(x, z));
     }
 
     @Override
-    public IChunk getChunkAtLocation(VoxelLocation location) {
-        return new BukkitChunk(world.getChunkAt(((int) Math.floor(location.getBlockX() / 16f)), ((int) Math.floor(location.getBlockZ() / 16f))));
+    public List<IEntity> getNearbyEntities(VoxelLocation location, double x, double y, double z) {
+        return this.world.getNearbyEntities(BukkitLocation.toBukkitLocation(location), x, y, z).stream().map(BukkitEntity::fromBukkitEntity).toList();
     }
 
     @Override

@@ -3,9 +3,13 @@ package com.thevoxelbox.voxelsniper.voxelsniper.block;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
 public interface IBlock {
@@ -63,4 +67,8 @@ public interface IBlock {
     boolean isBlockIndirectlyPowered();
 
     boolean isBlockPowered();
+
+    default List<IEntity> getNearbyEntities(double x, double y, double z) {
+        return this.getWorld().getNearbyEntities(this.getLocation(), x, y, z);
+    }
 }

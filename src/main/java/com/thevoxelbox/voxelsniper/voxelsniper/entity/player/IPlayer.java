@@ -28,8 +28,6 @@ public interface IPlayer extends IEntity, Audience {
 
     void teleport(VoxelLocation location);
 
-    void eject();
-
     IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
 
     IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);

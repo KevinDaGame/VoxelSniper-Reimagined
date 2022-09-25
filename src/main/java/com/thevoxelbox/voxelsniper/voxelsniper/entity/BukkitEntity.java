@@ -20,7 +20,7 @@ public class BukkitEntity implements IEntity {
         this.entity = entity;
     }
 
-    public static BukkitEntity fromBukkitEntity(Entity entity) {
+    public static IEntity fromBukkitEntity(Entity entity) {
         if (entity instanceof Painting p)
             return new BukkitPainting(p);
         if (entity instanceof Player p)
@@ -64,8 +64,13 @@ public class BukkitEntity implements IEntity {
     }
 
     @Override
-    public boolean teleport(IEntity player) {
-        return this.entity.teleport(((BukkitEntity) entity).getEntity());
+    public List<IEntity> getPassengers() {
+        return this.entity.getPassengers().stream().map(BukkitEntity::fromBukkitEntity).toList();
+    }
+
+    @Override
+    public boolean teleport(IEntity other) {
+        return this.entity.teleport(((BukkitEntity)other).getEntity());
     }
 
     @Override

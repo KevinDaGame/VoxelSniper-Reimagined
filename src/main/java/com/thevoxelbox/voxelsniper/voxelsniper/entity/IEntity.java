@@ -18,6 +18,7 @@ public interface IEntity {
     IWorld getWorld();
 
     void addPassenger(IEntity entity);
+    List<IEntity> getPassengers();
 
     VoxelLocation getEyeLocation();
 
@@ -25,5 +26,5 @@ public interface IEntity {
 
     void eject();
 
-    boolean teleport(IEntity player);
+    boolean teleport(IEntity other);
 }

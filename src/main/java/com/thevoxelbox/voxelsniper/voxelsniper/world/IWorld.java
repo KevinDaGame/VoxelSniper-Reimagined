@@ -4,12 +4,14 @@ import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
 import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
 import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 import com.thevoxelbox.voxelsniper.voxelsniper.treeType.VoxelTreeType;
 import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.Iterator;
+import java.util.List;
 
 public interface IWorld {
     IBlock getBlock(VoxelLocation location);
@@ -20,9 +22,35 @@ public interface IWorld {
 
     int getMaxWorldHeight();
 
+    /**
+     * Note: Uses chunk coordinates (block coordinate/16)
+     *
+     * @param x coordinate
+     * @param z coordinate
+     * @return The Chunk
+     */
     IChunk getChunkAtLocation(int x, int z);
 
-    IChunk getChunkAtLocation(VoxelLocation location);
+    default IChunk getChunkAtLocation(VoxelLocation location) {
+        return getChunkAtLocation(((int) Math.floor(location.getBlockX() / 16f)), ((int) Math.floor(location.getBlockZ() / 16f)));
+    }
+
+    /**
+     * Returns a list of entities within a bounding box centered around a
+     * Location.
+     * <p>
+     * This may not consider entities in currently unloaded chunks. Some
+     * implementations may impose artificial restrictions on the size of the
+     * search bounding box.
+     *
+     * @param location The center of the bounding box
+     * @param x 1/2 the size of the box along x axis
+     * @param y 1/2 the size of the box along y axis
+     * @param z 1/2 the size of the box along z axis
+     * @return the collection of entities near location. This will always be a
+     *      non-null collection.
+     */
+    List<IEntity> getNearbyEntities(VoxelLocation location, double x, double y, double z);
 
     void refreshChunk(int x, int z);
 
