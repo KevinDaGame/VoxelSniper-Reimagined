@@ -47,21 +47,17 @@ public class CanyonBrush extends Brush {
                     undo.put(block);
                     undo.put(currentYLevelBlock);
 
-                    currentYLevelBlock.setMaterial(block.getMaterial(), false);
-                    block.setMaterial(VoxelMaterial.AIR);
+                    currentYLevelBlock.setBlockData(block.getBlockData(), false);
 
                     currentYLevel++;
+                }
+                for (int y = currentYLevel; y < this.getMaxHeight(); y++) {
+                    chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.AIR);
                 }
 
                 final IBlock block = chunk.getBlock(x, this.getMinHeight(), z);
                 undo.put(block);
                 block.setMaterial(VoxelMaterial.BEDROCK);
-
-                for (int y = this.getMinHeight() + 1; y < this.getMinHeight() + SHIFT_LEVEL_MIN; y++) {
-                    final IBlock currentBlock = chunk.getBlock(x, y, z);
-                    undo.put(currentBlock);
-                    currentBlock.setMaterial(VoxelMaterial.STONE);
-                }
             }
         }
     }
