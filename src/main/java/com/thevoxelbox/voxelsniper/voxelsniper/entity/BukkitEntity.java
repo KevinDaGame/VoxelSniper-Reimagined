@@ -84,7 +84,7 @@ public class BukkitEntity implements IEntity {
 
     @Override
     public List<IEntity> getNearbyEntities(int x, int y, int z) {
-        return this.entity.getNearbyEntities(x, y, z).stream().map(e -> (IEntity) BukkitEntity.fromBukkitEntity(e)).toList();
+        return this.entity.getNearbyEntities(x, y, z).stream().map(BukkitEntity::fromBukkitEntity).toList();
     }
 
     @Override

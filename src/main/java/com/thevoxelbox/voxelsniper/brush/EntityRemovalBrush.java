@@ -59,7 +59,7 @@ public class EntityRemovalBrush extends Brush {
         try {
             entityCount += removeEntities(targetChunk);
 
-            int radius = Math.round(v.getBrushSize() / 16);
+            int radius = v.getBrushSize() / 16;
 
             for (int x = targetChunk.getX() - radius; x <= targetChunk.getX() + radius; x++) {
                 for (int z = targetChunk.getZ() - radius; z <= targetChunk.getZ() + radius; z++) {
@@ -79,7 +79,7 @@ public class EntityRemovalBrush extends Brush {
         int entityCount = 0;
 
         for (IEntity entity : chunk.getEntities()) {
-            if (exclusionList.contains(VoxelEntityType.getEntityType(entity.getType().getKey()))) {
+            if (exclusionList.contains(entity.getType())) {
                 continue;
             }
 
@@ -103,7 +103,7 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void info(VoxelMessage vm) {
         vm.brushName(getName());
-        String exclusionList = this.exclusionList.stream().map(e -> e.key()).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
+        String exclusionList = this.exclusionList.stream().map(VoxelEntityType::key).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
         vm.custom(Messages.ENTITY_REMOVAL_EXCLUSIONS.replace("%exclusionList%", exclusionList));
         vm.size();
     }
@@ -129,7 +129,7 @@ public class EntityRemovalBrush extends Brush {
         }
 
         if (params[0].equalsIgnoreCase("list")) {
-            String exclusionList = this.exclusionList.stream().map(e -> e.key()).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
+            String exclusionList = this.exclusionList.stream().map(VoxelEntityType::key).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
             v.sendMessage(Messages.ENTITY_REMOVAL_EXCLUSIONS.replace("%exclusionList%", exclusionList));
             return;
         }

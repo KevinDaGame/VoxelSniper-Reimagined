@@ -32,13 +32,11 @@ public class CanyonSelectionBrush extends CanyonBrush {
             this.fz = chunk.getZ();
 
             v.sendMessage(Messages.FIRST_POINT_SELECTED);
-            this.first = !this.first;
         } else {
             v.sendMessage(Messages.SECOND_POINT_SELECTED);
             selection(Math.min(fx, chunk.getX()), Math.min(fz, chunk.getZ()), Math.max(fx, chunk.getX()), Math.max(fz, chunk.getZ()), v);
-
-            this.first = !this.first;
         }
+        this.first = !this.first;
     }
 
     private void selection(final int lowX, final int lowZ, final int highX, final int highZ, final SnipeData v) {

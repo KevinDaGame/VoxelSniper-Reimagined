@@ -33,11 +33,6 @@ public class BukkitChunk implements IChunk {
 
     @Override
     public Iterable<? extends IEntity> getEntities() {
-        ArrayList<IEntity> entities = new ArrayList<>();
-        var chunkEntities = chunk.getEntities();
-        for (Entity entity : chunkEntities) {
-            entities.add(BukkitEntity.fromBukkitEntity(entity));
-        }
-        return entities;
+        return Arrays.stream(chunk.getEntities()).map(BukkitEntity::fromBukkitEntity).toList();
     }
 }

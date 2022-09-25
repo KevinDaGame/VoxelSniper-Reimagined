@@ -35,7 +35,6 @@ public class CanyonBrush extends Brush {
      * @param chunk
      * @param undo
      */
-    @SuppressWarnings("deprecation")
     protected final void canyon(final IChunk chunk, final Undo undo) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
