@@ -13,3 +13,9 @@ dependencies {
 }
 
 description = "VoxelSniperBukkit"
+
+tasks {
+    shadowJar {
+        archiveFileName.set("VoxelSniper-${version}-spigot.jar")
+    }
+}

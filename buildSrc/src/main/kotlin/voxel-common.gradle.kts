@@ -55,6 +55,10 @@ tasks {
     }
 
     shadowJar {
+        destinationDirectory.set(File("../target"))
+        relocate("com.google.common", "com.thevoxelbox.voxelsniper.libs.com.google.common")
+        relocate("net.kyori", "com.thevoxelbox.voxelsniper.libs.net.kyori")
+        relocate("org.yaml.snakeyaml", "com.thevoxelbox.voxelsniper.libs.org.yaml.snakeyaml")
     }
 
     build {
