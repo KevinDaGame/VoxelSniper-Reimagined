@@ -43,7 +43,7 @@ public class DrainBrush extends Brush {
                         for (int dx : new int[]{-1, 1}) {
                             for (int dz : new int[]{-1, 1}) {
                                 IBlock b = this.clampY(this.getTargetBlock().getX() + (x * dx), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + (z * dz));
-                                if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
+                                if (b.getMaterial().isFluid()) {
                                     undo.put(b);
                                     b.setMaterial(VoxelMaterial.AIR);
                                 }
@@ -62,7 +62,7 @@ public class DrainBrush extends Brush {
                     for (int y = (brushSize + 1) * 2; y >= 0; y--) {
                         if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
                             IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
-                            if (b.getMaterial() == VoxelMaterial.WATER || b.getMaterial() == VoxelMaterial.LAVA) {
+                            if (b.getMaterial().isFluid()) {
                                 undo.put(b);
                                 b.setMaterial(VoxelMaterial.AIR);
                             }
