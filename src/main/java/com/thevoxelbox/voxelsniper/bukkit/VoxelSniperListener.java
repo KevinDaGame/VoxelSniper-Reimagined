@@ -56,8 +56,8 @@ public class VoxelSniperListener implements Listener {
                 cooldown.add(player.getUniqueId());
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 1);
             }
-        } catch (final Exception temp) {
-            temp.printStackTrace();
+        } catch (final Exception e) {
+            e.printStackTrace();
         }
     }
 

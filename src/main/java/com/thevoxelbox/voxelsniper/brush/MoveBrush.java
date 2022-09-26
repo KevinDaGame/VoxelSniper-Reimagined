@@ -167,8 +167,8 @@ public class MoveBrush extends Brush {
                 v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "Z").replace("%val%", String.valueOf(this.moveDirections[2])));
                 return;
             }
-        } catch (NumberFormatException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

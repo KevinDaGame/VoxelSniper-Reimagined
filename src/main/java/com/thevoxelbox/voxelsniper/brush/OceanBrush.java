@@ -193,8 +193,8 @@ public class OceanBrush extends Brush {
                 v.sendMessage(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
                 return;
             }
-        } catch (NumberFormatException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

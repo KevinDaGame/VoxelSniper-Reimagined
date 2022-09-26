@@ -184,8 +184,8 @@ public class JockeyBrush extends Brush {
                 jockeyType = JockeyType.NORMAL;
             }
             v.sendMessage(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName(this.playerOnly)));
-        } catch (ArrayIndexOutOfBoundsException temp) {
-            temp.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
     }
 

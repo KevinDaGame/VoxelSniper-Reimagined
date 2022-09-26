@@ -532,8 +532,8 @@ public class GenerateTreeBrush extends Brush {
                 v.sendMessage(Messages.LEAF_THICKNESS_MIN_SET.replace("%nodeMin%", String.valueOf(this.nodeMin)));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
 
         }
 

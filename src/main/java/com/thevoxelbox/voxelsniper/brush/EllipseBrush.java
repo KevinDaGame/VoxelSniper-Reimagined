@@ -235,8 +235,8 @@ public class EllipseBrush extends PerformerBrush {
                 v.sendMessage(Messages.RENDER_STEP_NUMBER_SET.replace("%steps%", String.valueOf(this.steps)));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

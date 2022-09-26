@@ -107,8 +107,8 @@ public class EllipsoidBrush extends PerformerBrush {
                 v.sendMessage(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "Z").replace("%value%", String.valueOf(this.zRad)));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

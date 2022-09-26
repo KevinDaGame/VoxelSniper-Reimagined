@@ -78,8 +78,8 @@ public class ScannerBrush extends Brush {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
                 v.sendMessage(Messages.SCANNER_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
             }
-        } catch (NumberFormatException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

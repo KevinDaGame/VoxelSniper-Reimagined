@@ -89,8 +89,8 @@ public class RingBrush extends PerformerBrush {
                 v.sendMessage(Messages.INNER_RADIUS_SET.replace("%innerSize%", String.valueOf(this.innerSize)));
                 return;
             }
-        } catch (final NumberFormatException temp) {
-            temp.printStackTrace();
+        } catch (final NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

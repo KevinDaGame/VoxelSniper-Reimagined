@@ -219,8 +219,8 @@ public class SplatterVoxelBrush extends PerformerBrush {
                 }
                 return;
             }
-        } catch (NumberFormatException temp) {
-            temp.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
