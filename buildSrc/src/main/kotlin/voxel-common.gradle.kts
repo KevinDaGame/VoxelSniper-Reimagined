@@ -56,7 +56,7 @@ tasks {
 
     shadowJar {
         minimize()
-        destinationDirectory.set(File("../target"))
+        destinationDirectory.set(File("../output"))
         relocate("com.google.common", "com.thevoxelbox.voxelsniper.libs.com.google.common")
         relocate("net.kyori", "com.thevoxelbox.voxelsniper.libs.net.kyori")
         relocate("org.yaml.snakeyaml", "com.thevoxelbox.voxelsniper.libs.org.yaml.snakeyaml")
@@ -64,5 +64,9 @@ tasks {
 
     build {
         dependsOn(shadowJar)
+    }
+
+    clean {
+        delete("../output")
     }
 }
