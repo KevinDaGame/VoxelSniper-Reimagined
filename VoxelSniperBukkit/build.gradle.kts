@@ -15,7 +15,11 @@ dependencies {
 description = "VoxelSniperBukkit"
 
 tasks {
-    shadowJar {
-        archiveFileName.set("VoxelSniper-${version}-spigot.jar")
+    processResources {
+        // replace stuff in plugin.yml, nothing else
+        filesMatching("plugin.yml") {
+            // replace version
+            expand("projectName" to rootProject.name, "version" to version)
+        }
     }
 }

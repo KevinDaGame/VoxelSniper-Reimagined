@@ -1,10 +1,10 @@
-name: ${project.artifactId}
+name: ${projectName}
 main: com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper
-version: ${project.build.version}
+version: ${version}
 api-version: 1.15
-website: ${project.url}
+website: http://www.voxelwiki.com/minecraft/VoxelSniper
 authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev, Lennart99]
-description: ${project.description}
+description: World editing from ingame using 3D brushes.
 softdepend: [VoxelModPackPlugin]
 commands:
   u:
