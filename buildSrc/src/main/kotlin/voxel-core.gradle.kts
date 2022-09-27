@@ -25,6 +25,7 @@ dependencies {
 
     implementation("net.kyori:adventure-api:4.11.0")
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
+    implementation("net.kyori:adventure-text-serializer-legacy:4.11.0")
 
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.yaml:snakeyaml:1.31")
