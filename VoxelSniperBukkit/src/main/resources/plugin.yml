@@ -4,7 +4,7 @@ version: ${version}
 api-version: 1.15
 website: http://www.voxelwiki.com/minecraft/VoxelSniper
 authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev, Lennart99]
-description: World editing from ingame using 3D brushes.
+description: The premier long-distance brush editor for Minecraft, reimagined!
 softdepend: [VoxelModPackPlugin]
 commands:
   u:
