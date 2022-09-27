@@ -40,7 +40,7 @@ java {
     }
 }
 
-group = "com.thevoxelbox"
+group = "com.github.kevindagame"
 version = "8.1.3"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
@@ -56,9 +56,9 @@ tasks {
 
     shadowJar {
         minimize()
-        relocate("com.google.common", "com.thevoxelbox.voxelsniper.libs.com.google.common")
-        relocate("net.kyori", "com.thevoxelbox.voxelsniper.libs.net.kyori")
-        relocate("org.yaml.snakeyaml", "com.thevoxelbox.voxelsniper.libs.org.yaml.snakeyaml")
+        relocate("com.google.common", "com.github.kevindagame.voxelsniper.libs.com.google.common")
+        relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
+        relocate("org.yaml.snakeyaml", "com.github.kevindagame.voxelsniper.libs.org.yaml.snakeyaml")
     }
 
     build {
