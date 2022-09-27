@@ -6,11 +6,6 @@
 # netbeans
 nbproject
 
-# maven
-/*/target/
-target/
-dependency-reduced-pom.xml
-
 # gradle
 .gradle/
 build/
