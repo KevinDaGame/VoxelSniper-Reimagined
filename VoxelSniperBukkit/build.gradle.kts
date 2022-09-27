@@ -1,5 +1,5 @@
 plugins {
-    id("voxel-common")
+    id("voxel-implementation")
 }
 
 
@@ -13,6 +13,7 @@ dependencies {
 }
 
 description = "VoxelSniperBukkit"
+val platform by extra("spigot")
 
 tasks {
     processResources {

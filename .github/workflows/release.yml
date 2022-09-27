@@ -24,6 +24,6 @@ jobs:
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
-          files: output/VoxelSniperBukkit*.jar
+          files: output/voxelsniper-*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

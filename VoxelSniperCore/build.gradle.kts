@@ -1,5 +1,5 @@
 plugins {
-    id("voxel-common")
+    id("voxel-core")
 }
 
 description = "VoxelSniperCore"
