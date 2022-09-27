@@ -2,7 +2,7 @@ name: ${projectName}
 main: com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper
 version: ${version}
 api-version: 1.15
-website: http://www.voxelwiki.com/minecraft/VoxelSniper
+website: https://github.com/KevinDaGame/VoxelSniper-Reimagined
 authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev, Lennart99]
 description: The premier long-distance brush editor for Minecraft, reimagined!
 softdepend: [VoxelModPackPlugin]
