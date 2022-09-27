@@ -12,4 +12,4 @@ pluginManagement {
 }
 
 include("VoxelSniperCore")
-include("VoxelSniperBukkit")
+include("VoxelSniperSpigot")

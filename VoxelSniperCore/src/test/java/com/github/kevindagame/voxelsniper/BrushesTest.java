@@ -6,8 +6,6 @@ import com.google.common.collect.Multimap;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
-import com.github.kevindagame.voxelsniper.Environment;
-import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +23,7 @@ public class BrushesTest {
     @Before
     public void setUp() {
         var main = Mockito.mock(IVoxelsniper.class);
-        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.SPIGOT);
         VoxelSniper.voxelsniper = main;
         brushes = new VoxelBrushManager();
     }

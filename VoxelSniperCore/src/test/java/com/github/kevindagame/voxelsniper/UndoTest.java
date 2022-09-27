@@ -2,9 +2,6 @@ package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.voxelsniper.Environment;
-import com.github.kevindagame.voxelsniper.IVoxelsniper;
-import com.github.kevindagame.voxelsniper.Version;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
@@ -25,7 +22,7 @@ public class UndoTest {
     @Before
     public void setUp() {
         var main = Mockito.mock(IVoxelsniper.class);
-        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.SPIGOT);
         Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
         VoxelSniper.voxelsniper = main;
         undo = new Undo();
