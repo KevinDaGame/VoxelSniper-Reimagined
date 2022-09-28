@@ -22,9 +22,9 @@ VoxelSniper is being built against the Spigot 1.19 API.
 Compilation
 -----------
 Pre-compiled JARs are available in [Releases](https://github.com/KevinDaGame/VoxelSniper/releases).
-
 Alternatively, you can compile the project yourself using Gradle.
 We strongly recommend that you use Intellij to compile the project.
+
 Other methods of compiling are at your own risk.
 
 Issue Tracker Notes
