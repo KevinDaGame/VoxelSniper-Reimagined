@@ -1,23 +1,20 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.biome.VoxelBiome;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
 
 /**
  *
  */
 public class BiomeBrush extends Brush {
 
-    private Biome selectedBiome = Biome.PLAINS;
+    private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
     public BiomeBrush() {
         this.setName("Biome");
@@ -37,8 +34,8 @@ public class BiomeBrush extends Brush {
             }
         }
 
-        final Block block1 = this.getWorld().getBlockAt(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
-        final Block block2 = this.getWorld().getBlockAt(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
+        final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
+        final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
 
         final int lowChunkX = (block1.getX() <= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
         final int lowChunkZ = (block1.getZ() <= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
@@ -66,7 +63,7 @@ public class BiomeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.name()));
+        vm.custom(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
     }
 
     @Override
@@ -77,8 +74,8 @@ public class BiomeBrush extends Brush {
         }
 
         try {
-            this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
-            v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.name()));
+            this.selectedBiome = VoxelBiome.getBiome(params[0].toLowerCase());
+            v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
         } catch (IllegalArgumentException e) {
             v.sendMessage(Messages.BIOME_DOES_NOT_EXIST);
         }
@@ -87,7 +84,7 @@ public class BiomeBrush extends Brush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
+        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(Collectors.toList());
     }
 
     @Override

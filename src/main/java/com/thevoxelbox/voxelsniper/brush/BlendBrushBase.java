@@ -1,9 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +45,11 @@ public abstract class BlendBrushBase extends Brush {
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("water")) {
-            this.excludeWater = !this.excludeWater;
+            if (params.length >= 2) {
+                this.excludeWater = !Boolean.parseBoolean(params[1].toLowerCase());
+            } else {
+                this.excludeWater = !this.excludeWater;
+            }
             v.sendMessage(Messages.BLEND_BRUSH_WATER_MODE.replace("%excludeWater%", (this.excludeWater ? "exclude" : "include")));
             return;
         }
@@ -62,7 +66,7 @@ public abstract class BlendBrushBase extends Brush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("water", Lists.newArrayList("true", "false"));
 
         return argumentValues;

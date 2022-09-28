@@ -8,11 +8,10 @@ import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.entity.Player;
 
 public class VoxelPerformerCommand extends VoxelCommand {
 
@@ -28,10 +27,10 @@ public class VoxelPerformerCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
-        
+
         // Default command
         // Command: /p info, /p help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
@@ -67,11 +66,11 @@ public class VoxelPerformerCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
             return getTabCompletion(args.length);
         }
-        
+
         return new ArrayList<>();
     }
 }

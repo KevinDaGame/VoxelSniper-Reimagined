@@ -3,12 +3,11 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
@@ -26,8 +25,8 @@ public class BlendDiscBrush extends BlendBrushBase {
     protected final void blend(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
-        final Material[][] oldMaterials = new Material[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
-        final Material[][] newMaterials = new Material[brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the blended materials
+        final VoxelMaterial[][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
+        final VoxelMaterial[][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the blended materials
 
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {
@@ -44,14 +43,14 @@ public class BlendDiscBrush extends BlendBrushBase {
         // Blend materials
         for (int x = 0; x <= brushSizeDoubled; x++) {
             for (int z = 0; z <= brushSizeDoubled; z++) {
-                Map<Material, Integer> materialFrequency = new HashMap<>();
+                Map<VoxelMaterial, Integer> materialFrequency = new HashMap<>();
 
                 boolean tiecheck = true;
 
                 for (int m = -1; m <= 1; m++) {
                     for (int n = -1; n <= 1; n++) {
                         if (!(m == 0 && n == 0)) {
-                            Material currentMaterial = oldMaterials[x + 1 + m][z + 1 + n];
+                            VoxelMaterial currentMaterial = oldMaterials[x + 1 + m][z + 1 + n];
                             int currentFrequency = materialFrequency.getOrDefault(currentMaterial, 0) + 1;
 
                             materialFrequency.put(currentMaterial, currentFrequency);
@@ -60,19 +59,19 @@ public class BlendDiscBrush extends BlendBrushBase {
                 }
 
                 int highestMaterialCount = 0;
-                Material highestMaterial = Material.AIR;
+                VoxelMaterial highestMaterial = VoxelMaterial.AIR;
 
                 // Find most common neighboring material.
-                for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
+                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey().isAir()) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
                         highestMaterialCount = e.getValue();
                         highestMaterial = e.getKey();
                     }
                 }
 
                 // Make sure that there's no tie in highest material
-                for (Entry<Material, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey() == Material.AIR) && !(this.excludeWater && e.getKey() == Material.WATER)) {
+                for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
+                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey().isAir()) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
                         if (e.getKey() == highestMaterial) {
                             continue;
                         }
@@ -96,7 +95,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
             for (int z = brushSizeDoubled; z >= 0; z--) {
                 if (xSquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                    if (!(this.excludeAir && newMaterials[x][z] == Material.AIR) && !(this.excludeWater && newMaterials[x][z] == Material.WATER)) {
+                    if (!(this.excludeAir && newMaterials[x][z].isAir()) && !(this.excludeWater && newMaterials[x][z] == VoxelMaterial.WATER)) {
                         this.setBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY(), this.getTargetBlock().getZ() - brushSize + z, newMaterials[x][z], undo);
                     }
                 }
@@ -108,7 +107,7 @@ public class BlendDiscBrush extends BlendBrushBase {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.BLEND_DISC_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.BLEND_DISC_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

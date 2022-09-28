@@ -1,9 +1,9 @@
 name: ${project.artifactId}
-main: com.thevoxelbox.voxelsniper.VoxelSniper
+main: com.thevoxelbox.voxelsniper.bukkit.BukkitVoxelSniper
 version: ${project.build.version}
 api-version: 1.15
 website: ${project.url}
-authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev]
+authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev, Lennart99]
 description: ${project.description}
 softdepend: [VoxelModPackPlugin]
 commands:

@@ -4,17 +4,14 @@ import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import com.thevoxelbox.voxelsniper.voxelsniper.Environment;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -25,6 +22,9 @@ public class BrushesTest {
 
     @Before
     public void setUp() {
+        var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getEnvironment()).thenReturn(Environment.BUKKIT);
+        VoxelSniper.voxelsniper = main;
         brushes = new VoxelBrushManager();
     }
 
@@ -102,7 +102,7 @@ public class BrushesTest {
             if (brush instanceof PerformerBrush) {
                 List<String> arguments = brush.registerArguments();
                 Assert.assertTrue("PERFORMER ARGUMENTS TEST: Please see the HINT A above. Failing at: " + clazz.getName(), arguments.contains("p"));
-                
+
                 Assert.assertEquals("PERFORMER ARGUMENTS TEST: Duplicate argument 'p'. Please see the HINT Z above. Failing at: " + clazz.getName(), 1, Collections.frequency(arguments, "p"));
             }
         }

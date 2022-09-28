@@ -1,10 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -223,7 +223,7 @@ public class BlobBrush extends PerformerBrush {
             String min = String.format("%.2f", ((float) GROW_PERCENT_MIN / 100));
             String max = String.format("%.2f", ((float) GROW_PERCENT_MAX / 100));
             String def = String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100));
-            v.sendMessage(Messages.BLOB_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle).replace("%min%", min).replace("%max%", max).replace("%default%", def));
+            v.sendMessage(Messages.BLOB_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle).replace("%min%", min).replace("%max%", max).replace("%default%", def));
             return;
         }
 
@@ -246,7 +246,8 @@ public class BlobBrush extends PerformerBrush {
                     v.sendMessage(Messages.GROWTH_PERCENT_RANGE.replace("%min%", min).replace("%max%", max));
                 }
                 return;
-            } catch (NumberFormatException ignored) {
+            } catch (NumberFormatException temp) {
+                temp.printStackTrace();
             }
         }
 
@@ -267,7 +268,7 @@ public class BlobBrush extends PerformerBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("growth", Lists.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());

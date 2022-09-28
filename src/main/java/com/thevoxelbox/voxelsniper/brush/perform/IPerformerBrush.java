@@ -4,7 +4,7 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 /**
  * @author Voxel
@@ -12,7 +12,7 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 public interface IPerformerBrush {
 
     boolean parsePerformer(String performerHandle, com.thevoxelbox.voxelsniper.snipe.SnipeData v);
-    
+
     void parsePerformer(String triggerHandle, String[] args, com.thevoxelbox.voxelsniper.snipe.SnipeData v);
 
     void showInfo(VoxelMessage vm);

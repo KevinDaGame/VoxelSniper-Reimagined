@@ -1,15 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 /**
  * @author Voxel
@@ -31,10 +30,10 @@ public class FillDownBrush extends PerformerBrush {
         this.setName("Fill Down");
     }
 
-    private void fillDown(final SnipeData v, final Block b) {
+    private void fillDown(final SnipeData v, final IBlock b) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-        final Block targetBlock = this.getTargetBlock();
+        final IBlock targetBlock = this.getTargetBlock();
         for (int x = -brushSize; x <= brushSize; x++) {
             final double currentXSquared = Math.pow(x, 2);
 
@@ -44,7 +43,7 @@ public class FillDownBrush extends PerformerBrush {
                     boolean found = false;
                     if (this.fromExisting) {
                         for (y = -v.getVoxelHeight(); y < v.getVoxelHeight(); y++) {
-                            final Block currentBlock = this.getWorld().getBlockAt(
+                            final IBlock currentBlock = this.getWorld().getBlock(
                                     targetBlock.getX() + x,
                                     targetBlock.getY() + y,
                                     targetBlock.getZ() + z);
@@ -59,7 +58,7 @@ public class FillDownBrush extends PerformerBrush {
                         y--;
                     }
                     for (; y >= -targetBlock.getY(); --y) {
-                        final Block currentBlock = this.getWorld().getBlockAt(
+                        final IBlock currentBlock = this.getWorld().getBlock(
                                 targetBlock.getX() + x,
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
@@ -95,21 +94,21 @@ public class FillDownBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.FILL_DOWN_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.FILL_DOWN_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("liquid")) {
             this.fillLiquid = !this.fillLiquid;
             String mode = (this.fillLiquid) ? "liquid and air" : "air only";
-            v.sendMessage(Messages.FILL_DOWN_MODE.replace("%mode%",mode));
+            v.sendMessage(Messages.FILL_DOWN_MODE.replace("%mode%", mode));
             return;
         }
 
         if (params[0].equalsIgnoreCase("existing")) {
             this.fromExisting = !this.fromExisting;
             String mode = (this.fromExisting) ? "existing" : "all";
-            v.sendMessage(Messages.FILL_DOWN_FROM.replace("%mode%",mode));
+            v.sendMessage(Messages.FILL_DOWN_FROM.replace("%mode%", mode));
             return;
         }
 

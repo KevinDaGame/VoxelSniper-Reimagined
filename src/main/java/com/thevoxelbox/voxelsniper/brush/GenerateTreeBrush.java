@@ -1,20 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import com.thevoxelbox.voxelsniper.util.LocationWrapper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import java.util.*;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 
@@ -27,11 +22,12 @@ public class GenerateTreeBrush extends Brush {
 
     // Tree Variables.
     private final Random random = new Random();
-    private final ArrayList<Block> branchBlocks = new ArrayList<>();
+    private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
+    private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
-    private Material leavesMaterial = Material.OAK_LEAVES;
-    private Material woodMaterial = Material.OAK_WOOD;
+    private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
+    private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD;
     private boolean rootFloat = false;
     private int startHeight = 0;
     private int rootLength = 9;
@@ -39,13 +35,11 @@ public class GenerateTreeBrush extends Brush {
     private int minRoots = 1;
     private int thickness = 1;
     private int slopeChance = 40;
-    private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     private int minimumHeight = 14;
     private int maximumHeight = 18;
     private int branchLength = 8;
     private int nodeMax = 4;
     private int nodeMin = 3;
-    private LocationWrapper location;
 
     /**
      *
@@ -55,10 +49,8 @@ public class GenerateTreeBrush extends Brush {
     }
 
     // Branch Creation based on direction chosen from the parameters passed.
-    private void branchCreate(final int xDirection, final int zDirection) {
-
-        // Sets branch origin.
-        final LocationWrapper origin = new LocationWrapper(location);
+    private void branchCreate(VoxelLocation location, final int xDirection, final int zDirection) {
+        location = location.clone();
 
         // Sets direction preference.
         final int xPreference = this.random.nextInt(60) + 20;
@@ -81,7 +73,7 @@ public class GenerateTreeBrush extends Brush {
             }
 
             // Add block to undo function.
-            if (this.getBlockMaterialAt(location) != woodMaterial) {
+            if (location.getBlock().getMaterial() != woodMaterial) {
                 this.undo.put(location.getClampedBlock());
             }
 
@@ -89,12 +81,9 @@ public class GenerateTreeBrush extends Brush {
             location.getBlock().setBlockData(woodMaterial.createBlockData(), false);
             this.branchBlocks.add(location.getClampedBlock());
         }
-
-        // Resets the origin
-        location = new LocationWrapper(origin);
     }
 
-    private void leafNodeCreate() {
+    private void leafNodeCreate(final VoxelLocation location) {
         // Generates the node size.
         final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
@@ -113,19 +102,19 @@ public class GenerateTreeBrush extends Brush {
                         // Chance to skip creation of a block.
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
-                            if (location.getOffsetBlock(x, y, z).getType() == Material.AIR) {
+                            if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
                                 // Adds block to undo function.
-                                if (location.getOffsetBlock(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
-                                    this.undo.put(location.getOffsetBlock(x, y, z));
+                                if (location.getBlock().getRelative(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
+                                    this.undo.put(location.getBlock().getRelative(x, y, z));
                                 }
                                 // Creates block.
-                                location.getOffsetClampedBlock(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
+                                location.getClampedBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
                             }
                         }
                         for (int dx : new int[]{-1, 1}) {
                             for (int dy : new int[]{-1, 1}) {
                                 for (int dz : new int[]{-1, 1}) {
-                                    this.createLeaf(x * dx, y * dy, z * dz);
+                                    this.createLeaf(location, x * dx, y * dy, z * dz);
                                 }
                             }
                         }
@@ -135,22 +124,23 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void createLeaf(int x, int y, int z) {
-        if (location.getOffsetBlock(x, y, z).getType() == Material.AIR) {
-            this.undo.put(location.getOffsetClampedBlock(x, y, z));
-            location.getOffsetBlock(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
+    private void createLeaf(final VoxelLocation location, int x, int y, int z) {
+        if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
+            this.undo.put(location.getClampedBlock().getRelative(x, y, z));
+            location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
         }
     }
 
     /**
      * Code Concerning Root Generation.
      *
+     * @param location
      * @param xDirection
      * @param zDirection
      */
-    private void rootCreate(final int xDirection, final int zDirection) {
+    private void rootCreate(VoxelLocation location, final int xDirection, final int zDirection) {
         // Sets Origin.
-        final LocationWrapper origin = new LocationWrapper(location);
+        location = location.clone();
 
         // Generates the number of roots to create.
         final int roots = this.random.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
@@ -173,19 +163,19 @@ public class GenerateTreeBrush extends Brush {
 
                 // If not solid then...
                 // Save for undo function
-                if (this.getBlockMaterialAt(location) != woodMaterial) {
+                if (location.getBlock().getMaterial() != woodMaterial) {
                     this.undo.put(location.getClampedBlock());
 
                     // Place log block.
-                    location.setBlockData(woodMaterial.createBlockData(), false);
+                    location.getClampedBlock().setBlockData(woodMaterial.createBlockData(), false);
                 } else {
                     // If solid then...
                     // End loop
                     break;
                 }
-                List<Material> blocks = Arrays.asList(Material.WATER, Material.SNOW, Material.OAK_LOG, Material.BIRCH_LOG, Material.ACACIA_LOG, Material.DARK_OAK_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG);
+                List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
                 // Checks is block below is solid
-                if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getType())) {
+                if (blocks.contains(location.getClampedBlock().getRelative(0, -1, 0).getMaterial())) {
                     // Move down if solid.
                     location.addY(-1);
                     if (this.rootFloat) {
@@ -205,33 +195,30 @@ public class GenerateTreeBrush extends Brush {
                         location.addZ(zDirection);
                     }
                     // Checks if new location is solid, if not then move down.
-                    if (blocks.contains(location.getOffsetClampedBlock(0, -1, 0).getType())) {
+                    if (blocks.contains(location.getClampedBlock().getRelative(0, -1, 0).getMaterial())) {
                         location.addY(-1);
                     }
                 }
             }
 
-            // Reset origin.
-            location = new LocationWrapper(origin);
-
         }
     }
 
-    private void rootGen() {
+    private void rootGen(final VoxelLocation location) {
         // Quadrant 1
-        this.rootCreate(1, 1);
+        this.rootCreate(location, 1, 1);
 
         // Quadrant 2
-        this.rootCreate(-1, 1);
+        this.rootCreate(location, -1, 1);
 
         // Quadrant 3
-        this.rootCreate(1, -1);
+        this.rootCreate(location, 1, -1);
 
         // Quadrant 4
-        this.rootCreate(-1, -1);
+        this.rootCreate(location, -1, -1);
     }
 
-    private void trunkCreate() {
+    private void trunkCreate(final VoxelLocation location) {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
 
@@ -242,7 +229,7 @@ public class GenerateTreeBrush extends Brush {
                 if ((xSquared + Math.pow(z, 2)) <= bSquared) {
                     for (int dx : new int[]{-1, 1}) {
                         for (int dz : new int[]{-1, 1}) {
-                            this.createTrunk(x * dx, z * dz);
+                            this.createTrunk(location, x * dx, z * dz);
                         }
 
                     }
@@ -251,13 +238,13 @@ public class GenerateTreeBrush extends Brush {
         }
     }
 
-    private void createTrunk(int x, int z) {
+    private void createTrunk(final VoxelLocation location, int x, int z) {
         // If block is air, then create a block.
-        if (location.getOffsetBlock(x, 0, z).getType() == Material.AIR) {
+        if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
             // Adds block to undo function.
-            this.undo.put(location.getOffsetClampedBlock(x, 0, z));
+            this.undo.put(location.getClampedBlock().getRelative(x, 0, z));
             // Creates block.
-            location.getOffsetClampedBlock(x, 0, z).setBlockData(woodMaterial.createBlockData(), false);
+            location.getClampedBlock().getRelative(x, 0, z).setBlockData(woodMaterial.createBlockData(), false);
         }
     }
 
@@ -265,9 +252,9 @@ public class GenerateTreeBrush extends Brush {
      *
      * Code Concerning Trunk Generation
      */
-    private void trunkGen() {
+    private void trunkGen(final VoxelLocation origin) {
         // Sets Origin
-        final LocationWrapper origin = new LocationWrapper(location);
+        VoxelLocation location = origin.clone();
 
         // ----------
         // Main Trunk
@@ -301,20 +288,20 @@ public class GenerateTreeBrush extends Brush {
             }
 
             // Creates trunk section
-            this.trunkCreate();
+            this.trunkCreate(location);
 
             // Mos up for next section
             location.addY(1);
         }
 
         // Generates branchs at top of trunk for each quadrant.
-        this.branchCreate(1, 1);
-        this.branchCreate(-1, 1);
-        this.branchCreate(1, -1);
-        this.branchCreate(-1, -1);
+        this.branchCreate(location, 1, 1);
+        this.branchCreate(location, -1, 1);
+        this.branchCreate(location, 1, -1);
+        this.branchCreate(location, -1, -1);
 
         // Reset Origin for next trunk.
-        location = new LocationWrapper(origin);
+        location = origin.clone();
         location.addY(4);
 
         // ---------------
@@ -325,15 +312,8 @@ public class GenerateTreeBrush extends Brush {
         zPreference = this.random.nextInt(this.slopeChance);
 
         // Sets direction.
-        xDirection = 1;
-        if (this.chance(50)) {
-            xDirection = -1;
-        }
-
-        zDirection = 1;
-        if (this.chance(50)) {
-            zDirection = -1;
-        }
+        xDirection = this.chance(50) ? -1 : 1;
+        zDirection = this.chance(50) ? -1 : 1;
 
         // Generates a height for trunk.
         height = this.random.nextInt(this.maximumHeight - this.minimumHeight + 1) + this.minimumHeight;
@@ -354,17 +334,17 @@ public class GenerateTreeBrush extends Brush {
                 }
 
                 // Creates a trunk section
-                this.trunkCreate();
+                this.trunkCreate(location);
 
                 // Mos up for next section
                 location.addY(1);
             }
 
             // Generates branchs at top of trunk for each quadrant.
-            this.branchCreate(1, 1);
-            this.branchCreate(-1, 1);
-            this.branchCreate(1, -1);
-            this.branchCreate(-1, -1);
+            this.branchCreate(location, 1, 1);
+            this.branchCreate(location, -1, 1);
+            this.branchCreate(location, 1, -1);
+            this.branchCreate(location, -1, -1);
         }
     }
 
@@ -376,18 +356,17 @@ public class GenerateTreeBrush extends Brush {
 
         // Sets the location variables.
 
-        location = new LocationWrapper(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
+        VoxelLocation location = new VoxelLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
 
         // Generates the roots.
-        this.rootGen();
+        this.rootGen(location);
         // Generates the trunk, which also generates branches.
-        this.trunkGen();
+        this.trunkGen(location);
 
         // Each branch block was saved in an array. This is now fed through an array.
         // This array takes each branch block and constructs a leaf node around it.
-        for (final Block block : this.branchBlocks) {
-            location = new LocationWrapper(block.getWorld(), block.getX(), block.getY(), block.getZ());
-            this.leafNodeCreate();
+        for (final IBlock block : this.branchBlocks) {
+            this.leafNodeCreate(block.getLocation());
         }
 
         // Ends the undo function and mos on.
@@ -422,20 +401,21 @@ public class GenerateTreeBrush extends Brush {
 
         if (params[0].equalsIgnoreCase("info")) {
             if (params.length == 1 || params[1].equals("1")) {
-                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_1.replace("%triggerHandle%",triggerHandle));
+                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_1.replace("%triggerHandle%", triggerHandle));
             } else if (params[1].equals("2")) {
-                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_2.replace("%triggerHandle%",triggerHandle));
+                v.sendMessage(Messages.GEN_TREE_BRUSH_USAGE_2.replace("%triggerHandle%", triggerHandle));
             }
             return;
         }
         try {
             if (params[0].equalsIgnoreCase("leaves")) {
-                Material material = Material.valueOf(params[1]);
+                VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
+                if (material == null) throw new IllegalArgumentException();
 
-                if (material == Material.OAK_LEAVES || material == Material.ACACIA_LEAVES || material == Material.SPRUCE_LEAVES
-                        || material == Material.JUNGLE_LEAVES || material == Material.DARK_OAK_LEAVES || material == Material.BIRCH_LEAVES) {
+                if (material == VoxelMaterial.OAK_LEAVES || material == VoxelMaterial.ACACIA_LEAVES || material == VoxelMaterial.SPRUCE_LEAVES
+                        || material == VoxelMaterial.JUNGLE_LEAVES || material == VoxelMaterial.DARK_OAK_LEAVES || material == VoxelMaterial.BIRCH_LEAVES) {
                     this.leavesMaterial = material;
-                    v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%",String.valueOf(this.leavesMaterial.name())));
+                    v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -443,56 +423,57 @@ public class GenerateTreeBrush extends Brush {
             }
 
             if (params[0].equalsIgnoreCase("wood")) {
-                Material material = Material.valueOf(params[1]);
+                VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
+                if (material == null) throw new IllegalArgumentException();
 
-                if (material == Material.OAK_WOOD || material == Material.ACACIA_WOOD || material == Material.SPRUCE_WOOD
-                        || material == Material.JUNGLE_WOOD || material == Material.DARK_OAK_WOOD || material == Material.BIRCH_WOOD) {
+                if (material == VoxelMaterial.OAK_WOOD || material == VoxelMaterial.ACACIA_WOOD || material == VoxelMaterial.SPRUCE_WOOD
+                        || material == VoxelMaterial.JUNGLE_WOOD || material == VoxelMaterial.DARK_OAK_WOOD || material == VoxelMaterial.BIRCH_WOOD) {
                     this.woodMaterial = material;
-                    v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%",String.valueOf(this.woodMaterial.name())));
+                    v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
                 } else {
                     throw new IllegalArgumentException();
                 }
                 return;
             }
         } catch (IllegalArgumentException e) {
-                v.sendMessage(Messages.INVALID_TYPE);
+            v.sendMessage(Messages.INVALID_TYPE);
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("thickness")) { // Tree Thickness
                 this.thickness = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.THICKNESS_SET.replace("%thickness%",String.valueOf(this.thickness)));
+                v.sendMessage(Messages.THICKNESS_SET.replace("%thickness%", String.valueOf(this.thickness)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("startHeight")) { // Starting Height
                 this.startHeight = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.START_HEIGHT_SET.replace("%startHeight%",String.valueOf(this.startHeight)));
+                v.sendMessage(Messages.START_HEIGHT_SET.replace("%startHeight%", String.valueOf(this.startHeight)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("slope")) { // Trunk Slope Chance
                 this.slopeChance = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.TRUNK_SLOPE_SET.replace("%this.slopeChance%",String.valueOf(this.slopeChance)));
+                v.sendMessage(Messages.TRUNK_SLOPE_SET.replace("%this.slopeChance%", String.valueOf(this.slopeChance)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("branchLength")) { // Branch Length
                 this.branchLength = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.BRANCH_LENGTH_SET.replace("%branchLength%",String.valueOf(this.branchLength)));
+                v.sendMessage(Messages.BRANCH_LENGTH_SET.replace("%branchLength%", String.valueOf(this.branchLength)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("rootLength")) { // Root Length
                 this.rootLength = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.ROOT_LENGTH_SET.replace("%rootLength%",String.valueOf(this.rootLength)));
+                v.sendMessage(Messages.ROOT_LENGTH_SET.replace("%rootLength%", String.valueOf(this.rootLength)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("rootFloat")) { // Root Float
                 this.rootFloat = Boolean.parseBoolean(params[1]);
-                v.sendMessage(Messages.FLOATING_ROOTS_SET.replace("%rootFloat%",String.valueOf(this.rootFloat)));
+                v.sendMessage(Messages.FLOATING_ROOTS_SET.replace("%rootFloat%", String.valueOf(this.rootFloat)));
                 return;
             }
 
@@ -500,9 +481,9 @@ public class GenerateTreeBrush extends Brush {
                 this.minRoots = Integer.parseInt(params[1]);
                 if (this.minRoots > this.maxRoots) {
                     this.minRoots = this.maxRoots;
-                    v.sendMessage(Messages.MIN_ROOTS_ABOVE_MAX.replace("%this.minRoots%",String.valueOf(this.minRoots)));
+                    v.sendMessage(Messages.MIN_ROOTS_ABOVE_MAX.replace("%this.minRoots%", String.valueOf(this.minRoots)));
                 } else {
-                    v.sendMessage(Messages.MIN_ROOTS_SET.replace("%minRoots%",String.valueOf(this.minRoots)));
+                    v.sendMessage(Messages.MIN_ROOTS_SET.replace("%minRoots%", String.valueOf(this.minRoots)));
                 }
                 return;
             }
@@ -511,9 +492,9 @@ public class GenerateTreeBrush extends Brush {
                 this.maxRoots = Integer.parseInt(params[1]);
                 if (this.minRoots > this.maxRoots) {
                     this.maxRoots = this.minRoots;
-                    v.sendMessage(Messages.MAX_ROOTS_BELOW_MIN.replace("%this.minRoots%",String.valueOf(this.minRoots)));
+                    v.sendMessage(Messages.MAX_ROOTS_BELOW_MIN.replace("%this.minRoots%", String.valueOf(this.minRoots)));
                 } else {
-                    v.sendMessage(Messages.MAX_ROOTS_SET.replace("%maxRoots%",String.valueOf(this.maxRoots)));
+                    v.sendMessage(Messages.MAX_ROOTS_SET.replace("%maxRoots%", String.valueOf(this.maxRoots)));
                 }
                 return;
             }
@@ -522,9 +503,9 @@ public class GenerateTreeBrush extends Brush {
                 this.minimumHeight = Integer.parseInt(params[1]);
                 if (this.minimumHeight > this.maximumHeight) {
                     this.minimumHeight = this.maximumHeight;
-                    v.sendMessage(Messages.MIN_HEIGHT_ABOVE_MAX.replace("%this.minimumHeight%",String.valueOf(this.minimumHeight)));
+                    v.sendMessage(Messages.MIN_HEIGHT_ABOVE_MAX.replace("%this.minimumHeight%", String.valueOf(this.minimumHeight)));
                 } else {
-                    v.sendMessage(Messages.MIN_HEIGHT_SET.replace("%minimumHeight%",String.valueOf(this.minimumHeight)));
+                    v.sendMessage(Messages.MIN_HEIGHT_SET.replace("%minimumHeight%", String.valueOf(this.minimumHeight)));
                 }
                 return;
             }
@@ -533,31 +514,32 @@ public class GenerateTreeBrush extends Brush {
                 this.maximumHeight = Integer.parseInt(params[1]);
                 if (this.minimumHeight > this.maximumHeight) {
                     this.maximumHeight = this.minimumHeight;
-                    v.sendMessage(Messages.MAX_HEIGHT_BELOW_MIN.replace("%this.maximumHeight%",String.valueOf(this.maximumHeight)));
+                    v.sendMessage(Messages.MAX_HEIGHT_BELOW_MIN.replace("%this.maximumHeight%", String.valueOf(this.maximumHeight)));
                 } else {
-                    v.sendMessage(Messages.MAX_HEIGHT_SET.replace("%maximumHeight%",String.valueOf(this.maximumHeight)));
+                    v.sendMessage(Messages.MAX_HEIGHT_SET.replace("%maximumHeight%", String.valueOf(this.maximumHeight)));
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("leavesMax")) { // Leaf Node Max Size
                 this.nodeMax = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.LEAF_THICKNESS_MAX_SET.replace("%nodeMax%",String.valueOf(this.nodeMax)));
+                v.sendMessage(Messages.LEAF_THICKNESS_MAX_SET.replace("%nodeMax%", String.valueOf(this.nodeMax)));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("leavesMin")) { // Leaf Node Min Size
                 this.nodeMin = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.LEAF_THICKNESS_MIN_SET.replace("%nodeMin%",String.valueOf(this.nodeMin)));
+                v.sendMessage(Messages.LEAF_THICKNESS_MIN_SET.replace("%nodeMin%", String.valueOf(this.nodeMin)));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
 
         }
 
         if (params[0].equalsIgnoreCase("default")) { // Default settings.
-            this.leavesMaterial = Material.OAK_LEAVES;
-            this.woodMaterial = Material.OAK_WOOD;
+            this.leavesMaterial = VoxelMaterial.OAK_LEAVES;
+            this.woodMaterial = VoxelMaterial.OAK_WOOD;
             this.rootFloat = false;
             this.startHeight = 0;
             this.rootLength = 9;
@@ -608,12 +590,12 @@ public class GenerateTreeBrush extends Brush {
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(Material.OAK_WOOD.name(), Material.ACACIA_WOOD.name(), Material.SPRUCE_WOOD.name(), Material.JUNGLE_WOOD.name(),
-                Material.DARK_OAK_WOOD.name(), Material.BIRCH_WOOD.name()));
+        argumentValues.put("wood", Lists.newArrayList(VoxelMaterial.OAK_WOOD.getName(), VoxelMaterial.ACACIA_WOOD.getName(), VoxelMaterial.SPRUCE_WOOD.getName(), VoxelMaterial.JUNGLE_WOOD.getName(),
+                VoxelMaterial.DARK_OAK_WOOD.getName(), VoxelMaterial.BIRCH_WOOD.getName()));
 
         // Leaves material variables
-        argumentValues.put("leaves", Lists.newArrayList(Material.OAK_LEAVES.name(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
-                Material.DARK_OAK_LEAVES.name(), Material.BIRCH_LEAVES.name()));
+        argumentValues.put("leaves", Lists.newArrayList(VoxelMaterial.OAK_LEAVES.getName(), VoxelMaterial.ACACIA_LEAVES.getName(), VoxelMaterial.SPRUCE_LEAVES.getName(), VoxelMaterial.JUNGLE_LEAVES.getName(),
+                VoxelMaterial.DARK_OAK_LEAVES.getName(), VoxelMaterial.BIRCH_LEAVES.getName()));
 
         return argumentValues;
     }

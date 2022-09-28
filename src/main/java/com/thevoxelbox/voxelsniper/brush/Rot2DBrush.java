@@ -1,26 +1,21 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 
 /**
  * @author Piotr
  */
 public class Rot2DBrush extends Brush {
-
-    private final int mode = 0;
-    private int bSize;
-    private int brushSize;
     private BlockWrapper[][][] snap;
     private double se;
 
@@ -31,26 +26,26 @@ public class Rot2DBrush extends Brush {
         this.setName("2D Rotation");
     }
 
-    private void getMatrix() {
-        this.brushSize = (this.bSize * 2) + 1;
+    private void getMatrix(final int bSize) {
+        int brushSize = (bSize * 2) + 1;
 
-        this.snap = new BlockWrapper[this.brushSize][this.brushSize][this.brushSize];
+        this.snap = new BlockWrapper[brushSize][brushSize][brushSize];
 
-        final double brushSizeSquared = Math.pow(this.bSize + 0.5, 2);
-        int sx = this.getTargetBlock().getX() - this.bSize;
-        int sy = this.getTargetBlock().getY() - this.bSize;
-        int sz = this.getTargetBlock().getZ() - this.bSize;
+        final double brushSizeSquared = Math.pow(bSize + 0.5, 2);
+        int sx = this.getTargetBlock().getX() - bSize;
+        int sy = this.getTargetBlock().getY() - bSize;
+        int sz = this.getTargetBlock().getZ() - bSize;
 
         for (int x = 0; x < this.snap.length; x++) {
-            sz = this.getTargetBlock().getZ() - this.bSize;
-            final double xSquared = Math.pow(x - this.bSize, 2);
+            sz = this.getTargetBlock().getZ() - bSize;
+            final double xSquared = Math.pow(x - bSize, 2);
             for (int y = 0; y < this.snap.length; y++) {
-                sy = this.getTargetBlock().getY() - this.bSize;
-                if (xSquared + Math.pow(y - this.bSize, 2) <= brushSizeSquared) {
+                sy = this.getTargetBlock().getY() - bSize;
+                if (xSquared + Math.pow(y - bSize, 2) <= brushSizeSquared) {
                     for (int z = 0; z < this.snap.length; z++) {
-                        final Block block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                        final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        block.setType(Material.AIR);
+                        block.setMaterial(VoxelMaterial.AIR);
                         sy++;
                     }
                 }
@@ -60,8 +55,8 @@ public class Rot2DBrush extends Brush {
         }
     }
 
-    private void rotate(final SnipeData v) {
-        final double brushSiyeSquared = Math.pow(this.bSize + 0.5, 2);
+    private void rotate(final int bSize, final SnipeData v) {
+        final double brushSiyeSquared = Math.pow(bSize + 0.5, 2);
         final double cos = Math.cos(this.se);
         final double sin = Math.sin(this.se);
         final boolean[][] doNotFill = new boolean[this.snap.length][this.snap.length];
@@ -70,23 +65,23 @@ public class Rot2DBrush extends Brush {
         // do a targeted filling of only those columns later that were left out.
 
         for (int x = 0; x < this.snap.length; x++) {
-            final int xx = x - this.bSize;
+            final int xx = x - bSize;
             final double xSquared = Math.pow(xx, 2);
 
             for (int y = 0; y < this.snap.length; y++) {
-                final int zz = y - this.bSize;
+                final int zz = y - bSize;
 
                 if (xSquared + Math.pow(zz, 2) <= brushSiyeSquared) {
                     final double newX = (xx * cos) - (zz * sin);
                     final double newZ = (xx * sin) + (zz * cos);
 
-                    doNotFill[(int) newX + this.bSize][(int) newZ + this.bSize] = true;
+                    doNotFill[(int) newX + bSize][(int) newZ + bSize] = true;
 
                     for (int currentY = 0; currentY < this.snap.length; currentY++) {
-                        final int yy = currentY - this.bSize;
+                        final int yy = currentY - bSize;
                         final BlockWrapper block = this.snap[x][currentY][y];
 
-                        if (block.getMaterial() == Material.AIR) {
+                        if (block.getMaterial().isAir()) {
                             continue;
                         }
                         this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());
@@ -95,25 +90,25 @@ public class Rot2DBrush extends Brush {
             }
         }
         for (int x = 0; x < this.snap.length; x++) {
-            final double xSquared = Math.pow(x - this.bSize, 2);
-            final int fx = x + this.getTargetBlock().getX() - this.bSize;
+            final double xSquared = Math.pow(x - bSize, 2);
+            final int fx = x + this.getTargetBlock().getX() - bSize;
 
             for (int z = 0; z < this.snap.length; z++) {
-                if (xSquared + Math.pow(z - this.bSize, 2) <= brushSiyeSquared) {
-                    final int fz = z + this.getTargetBlock().getZ() - this.bSize;
+                if (xSquared + Math.pow(z - bSize, 2) <= brushSiyeSquared) {
+                    final int fz = z + this.getTargetBlock().getZ() - bSize;
 
                     if (!doNotFill[x][z]) {
                         // smart fill stuff
 
                         for (int y = 0; y < this.snap.length; y++) {
-                            final int fy = y + this.getTargetBlock().getY() - this.bSize;
+                            final int fy = y + this.getTargetBlock().getY() - bSize;
 
-                            final BlockData a = this.getBlockDataAt(fx + 1, fy, fz);
-                            final BlockData d = this.getBlockDataAt(fx - 1, fy, fz);
-                            final BlockData c = this.getBlockDataAt(fx, fy, fz + 1);
-                            final BlockData b = this.getBlockDataAt(fx, fy, fz - 1);
+                            final IBlockData a = this.getBlockDataAt(fx + 1, fy, fz);
+                            final IBlockData d = this.getBlockDataAt(fx - 1, fy, fz);
+                            final IBlockData c = this.getBlockDataAt(fx, fy, fz + 1);
+                            final IBlockData b = this.getBlockDataAt(fx, fy, fz - 1);
 
-                            BlockData winner;
+                            IBlockData winner;
 
                             if (a.getMaterial() == b.getMaterial() || a.getMaterial() == c.getMaterial() || a.getMaterial() == d.getMaterial()) { // I figure that since we are already narrowing it down to ONLY the holes left behind, it
                                 // should
@@ -135,34 +130,17 @@ public class Rot2DBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.bSize = v.getBrushSize();
+        int bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
+        this.getMatrix(bSize);
+        this.rotate(bSize, v);
 
-            default:
-                v.sendMessage(Messages.ERROR);
-                break;
-        }
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.bSize = v.getBrushSize();
+        this.arrow(v);
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.sendMessage(Messages.ERROR);
-                break;
-        }
     }
 
     @Override
@@ -173,17 +151,17 @@ public class Rot2DBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
-            this.se = Math.toRadians(Double.parseDouble(params[0]));
-            v.sendMessage(Messages.ANGLE_SET.replace("%se%",String.valueOf(this.se)));
-        } catch (NumberFormatException ignored) {
+            double degrees = Double.parseDouble(params[0]);
+            this.se = Math.toRadians(degrees);
+            v.sendMessage(Messages.ANGLE_SET.replace("%se%", String.valueOf(degrees)));
+        } catch (NumberFormatException temp) {
+            v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         }
-
-        v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
     @Override

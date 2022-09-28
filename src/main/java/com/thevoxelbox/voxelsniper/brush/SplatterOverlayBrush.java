@@ -1,18 +1,17 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Splatter_Overlay_Brush
@@ -30,12 +29,12 @@ public class SplatterOverlayBrush extends PerformerBrush {
     private static final int SPLATREC_PERCENT_MIN = 1;
     private static final int SPLATREC_PERCENT_DEFAULT = 3;
     private static final int SPLATREC_PERCENT_MAX = 10;
-    private int seedPercent; // Chance block on first pass is made active
-    private int growPercent; // chance block on recursion pass is made active
-    private int splatterRecursions; // How many times you grow the seeds
     private final int yOffset = 0;
     private final boolean randomizeHeight = false;
     private final Random generator = new Random();
+    private int seedPercent; // Chance block on first pass is made active
+    private int growPercent; // chance block on recursion pass is made active
+    private int splatterRecursions; // How many times you grow the seeds
     private int depth = 3;
 
     private boolean allBlocks = false;
@@ -111,16 +110,16 @@ public class SplatterOverlayBrush extends PerformerBrush {
                         // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) {
                             // if inside of the column && if to be splattered
-                            final Material check = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
-                            if (check == Material.AIR || check == Material.WATER) {
+                            final VoxelMaterial check = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
+                            if (check.isAir() || check == VoxelMaterial.WATER) {
                                 // must start at surface... this prevents it filling stuff in if you click in a wall
                                 // and it starts out below surface.
-                                final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                 if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                     final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
-                                        if (this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
+                                        if (!this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                                             // fills down as many layers as you specify in parameters
                                             this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z));
                                             // stop it from checking any other blocks in this vertical 1x1 column.
@@ -200,9 +199,9 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) { // if inside of the column...&& if to be splattered
-                            if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z) != Material.AIR) { // if not a floating block (like one of Notch'world pools)
-                                if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z) == Material.AIR) { // must start at surface... this prevents it filling stuff in if
-                                    final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            if (!this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z).isAir()) { // if not a floating block (like one of Notch'world pools)
+                                if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z).isAir()) { // must start at surface... this prevents it filling stuff in if
+                                    final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
@@ -222,41 +221,20 @@ public class SplatterOverlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private boolean isIgnoredBlock(Material material) {
-        return material == Material.WATER || material.isTransparent() || material == Material.CACTUS;
+    private boolean isIgnoredBlock(VoxelMaterial material) {
+        return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material.equals(VoxelMaterial.CACTUS);
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, Material material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
 
-        if (allBlocks && !(material == Material.AIR)) {
+        if (allBlocks && !material.isAir()) {
             return true;
         }
 
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override
@@ -284,14 +262,14 @@ public class SplatterOverlayBrush extends PerformerBrush {
         vm.size();
         vm.custom(Messages.BRUSH_SEED_PERCENT_SET.replace("%val%", String.valueOf(this.seedPercent / 100)));
         vm.custom(Messages.GROWTH_PERCENT_SET.replace("%growPercent%", String.valueOf(this.growPercent / 100)));
-        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(this.splatterRecursions)));
-        vm.custom(Messages.Y_OFFSET_SET.replace("%yOffset%",String.valueOf(this.yOffset)));
+        vm.custom(Messages.BRUSH_RECURSION_SET.replace("%val%", String.valueOf(this.splatterRecursions)));
+        vm.custom(Messages.Y_OFFSET_SET.replace("%yOffset%", String.valueOf(this.yOffset)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.SPLATTER_OVERLAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SPLATTER_OVERLAY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -306,18 +284,18 @@ public class SplatterOverlayBrush extends PerformerBrush {
         }
 
         if (params[0].startsWith("mode")) {
-            if (!this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = true;
-                this.useVoxelList = false;
-            } else if (this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = false;
-                this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            if (!this.useVoxelList) {
+                if (!this.allBlocks) {
+                    this.allBlocks = true;
+                } else {
+                    this.allBlocks = false;
+                    this.useVoxelList = true;
+                }
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
-            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%",String.valueOf(this.depth)).replace("%mode%",mode));
+            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%", String.valueOf(this.depth)).replace("%mode%", mode));
             return;
         }
 
@@ -329,7 +307,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
+                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
                 return;
             }
 
@@ -361,14 +339,15 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 final int temp = Integer.parseInt(params[1]);
 
                 if (temp >= SPLATREC_PERCENT_MIN && temp <= SPLATREC_PERCENT_MAX) {
-                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%",String.valueOf(temp)));
+                    v.sendMessage(Messages.BRUSH_RECURSION_SET.replace("%val%", String.valueOf(temp)));
                     this.splatterRecursions = temp;
                 } else {
                     v.sendMessage(Messages.SPLATTER_BALL_BRUSH_RECURSION_RANGE);
                 }
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

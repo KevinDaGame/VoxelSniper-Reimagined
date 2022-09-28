@@ -5,13 +5,12 @@ import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 public class VoxelBrushToolCommand extends VoxelCommand {
 
@@ -23,7 +22,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         // Default command
@@ -48,13 +47,13 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                Material itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+                VoxelMaterial itemInHand = (player.getItemInHand() != null) ? (player.getItemInHand()) : VoxelMaterial.AIR;
 
                 if (itemInHand == null) {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM);
                     return true;
                 }
-                
+
                 if (itemInHand.isBlock()) {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_CANT_ASSIGN);
                     return true;
@@ -63,7 +62,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                 String toolLabel = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
                 if (sniper.setTool(toolLabel, action, itemInHand)) {
-                    sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED.replace("%item%", itemInHand.name()).replace("%toolLabel%", toolLabel).replace("%action%", action.name()));
+                    sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED.replace("%item%", itemInHand.getKey()).replace("%toolLabel%", toolLabel).replace("%action%", action.name()));
                 } else {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_FAIL);
                 }
@@ -74,10 +73,10 @@ public class VoxelBrushToolCommand extends VoxelCommand {
             return true;
         }
 
-        
+
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            Material itemInHand = (player.getInventory().getItemInMainHand() != null) ? player.getInventory().getItemInMainHand().getType() : null;
+            VoxelMaterial itemInHand = (player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR;
 
             if (itemInHand == null) {
                 sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN);
@@ -90,7 +89,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
             }
 
             sniper.removeTool(sniper.getCurrentToolId(), itemInHand);
-            sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED_AS_TOOL.replace("%item%", itemInHand.name()));
+            sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED_AS_TOOL.replace("%item%", itemInHand.getKey()));
             return true;
         }
 
@@ -98,7 +97,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
             return Lists.newArrayList("assign", "remove");
         }
@@ -110,7 +109,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
         }
 
         if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("assign"))  {
+            if (args[0].equalsIgnoreCase("assign")) {
                 return Lists.newArrayList("[label]");
             }
         }

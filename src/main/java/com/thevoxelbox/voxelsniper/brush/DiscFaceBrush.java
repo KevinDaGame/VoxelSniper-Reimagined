@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Disc_Face_Brush
@@ -31,7 +30,7 @@ public class DiscFaceBrush extends PerformerBrush {
         this.setName("Disc Face");
     }
 
-    private void discUD(final SnipeData v, Block targetBlock) {
+    private void discUD(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
 
@@ -51,7 +50,7 @@ public class DiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void discNS(final SnipeData v, Block targetBlock) {
+    private void discNS(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
 
@@ -70,7 +69,7 @@ public class DiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void discEW(final SnipeData v, Block targetBlock) {
+    private void discEW(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
 
@@ -89,7 +88,7 @@ public class DiscFaceBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void pre(final SnipeData v, Block targetBlock) {
+    private void pre(final SnipeData v, IBlock targetBlock) {
         BlockFace blockFace = getTargetBlock().getFace(this.getLastBlock());
         if (blockFace == null) {
             return;
@@ -134,7 +133,7 @@ public class DiscFaceBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.DISC_FACE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.DISC_FACE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

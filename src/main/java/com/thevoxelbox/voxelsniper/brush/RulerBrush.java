@@ -1,12 +1,11 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
-
-import org.bukkit.Material;
-import org.bukkit.util.Vector;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ruler_Brush
@@ -15,12 +14,11 @@ import org.bukkit.util.Vector;
  */
 public class RulerBrush extends Brush {
 
-    private boolean first = true;
-    private Vector coords = new Vector(0, 0, 0);
-
     private final int xOff = 0;
     private final int yOff = 0;
     private final int zOff = 0;
+    private boolean first = true;
+    private VoxelVector coords = new VoxelVector();
 
     /**
      *
@@ -31,7 +29,7 @@ public class RulerBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        final Material voxelMaterial = v.getVoxelMaterial();
+        final VoxelMaterial voxelMaterial = v.getVoxelMaterial();
         this.coords = this.getTargetBlock().getLocation().toVector();
 
         if (this.xOff == 0 && this.yOff == 0 && this.zOff == 0) {
@@ -57,7 +55,7 @@ public class RulerBrush extends Brush {
         final double distance = (double) (Math.round(this.getTargetBlock().getLocation().toVector().subtract(this.coords).length() * 100) / 100);
         final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z))) + 1) * 100) / 100);
 
-        v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%",String.valueOf(x)).replace("%y%",String.valueOf(y)).replace("%z%",String.valueOf(z)).replace("%distance%",String.valueOf(distance)).replace("%blockDistance%",String.valueOf(blockDistance)));
+        v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%distance%", String.valueOf(distance)).replace("%blockDistance%", String.valueOf(blockDistance)));
     }
 
     @Override

@@ -1,31 +1,28 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import java.util.Set;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Jockey_Brush
- *
  * @author Voxel
  * @author Monofraps
  */
 public class JockeyBrush extends Brush {
 
     private static final int ENTITY_STACK_LIMIT = 50;
-    private JockeyType jockeyType = JockeyType.NORMAL_ALL_ENTITIES;
-    private Entity jockeyedEntity = null;
+    private JockeyType jockeyType = JockeyType.NORMAL;
+    private IEntity jockeyedEntity = null;
 
     private boolean playerOnly = false;
 
@@ -37,29 +34,28 @@ public class JockeyBrush extends Brush {
     }
 
     private void sitOn(final SnipeData v) {
-        final Chunk targetChunk = this.getWorld().getChunkAt(this.getTargetBlock().getLocation());
+        VoxelLocation location = this.getLastBlock().getLocation();
+        IChunk targetChunk = location.getChunk();
         final int targetChunkX = targetChunk.getX();
         final int targetChunkZ = targetChunk.getZ();
 
         double range = Double.MAX_VALUE;
-        Entity closest = null;
+        IEntity closest = null;
 
         for (int x = targetChunkX - 1; x <= targetChunkX + 1; x++) {
             for (int y = targetChunkZ - 1; y <= targetChunkZ + 1; y++) {
-                for (final Entity entity : this.getWorld().getChunkAt(x, y).getEntities()) {
+                for (final IEntity entity : this.getWorld().getChunkAtLocation(x, y).getEntities()) {
                     if (entity.getEntityId() == v.owner().getPlayer().getEntityId()) {
                         continue;
                     }
 
-                    if (jockeyType == JockeyType.NORMAL_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_PLAYER_ONLY) {
-                        if (!(entity instanceof Player)) {
+                    if (this.playerOnly) {
+                        if (!(entity instanceof IPlayer)) {
                             continue;
                         }
                     }
 
-                    final Location entityLocation = entity.getLocation();
-                    final double entityDistance = entityLocation.distance(v.owner().getPlayer().getLocation());
-
+                    final double entityDistance = entity.getLocation().distance(location);
                     if (entityDistance < range) {
                         range = entityDistance;
                         closest = entity;
@@ -69,20 +65,18 @@ public class JockeyBrush extends Brush {
         }
 
         if (closest != null) {
-            final Player player = v.owner().getPlayer();
-            final PlayerTeleportEvent playerTeleportEvent = new PlayerTeleportEvent(player, player.getLocation(), closest.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+            final IPlayer player = v.owner().getPlayer();
 
-            Bukkit.getPluginManager().callEvent(playerTeleportEvent);
-
-            if (!playerTeleportEvent.isCancelled()) {
-                if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
+            if (jockeyType == JockeyType.INVERSE) {
+                if (closest.teleport(player))
                     player.addPassenger(closest);
-                } else {
+            } else {
+                if (player.teleport(closest)) {
                     closest.addPassenger(player);
                     jockeyedEntity = closest;
                 }
-                v.sendMessage(Messages.SITTING_ON_CLOSEST_ENTITY);
             }
+            v.sendMessage(Messages.SITTING_ON_CLOSEST_ENTITY);
         } else {
             if (playerOnly) {
                 v.sendMessage(Messages.NO_PLAYERS_FOUND_TO_SIT_ON);
@@ -93,29 +87,26 @@ public class JockeyBrush extends Brush {
     }
 
     private void stack(final SnipeData v) {
-        final int brushSizeDoubled = v.getBrushSize() * 2;
+        final int brushSize = Math.max(1, v.getBrushSize());
 
-        List<Entity> nearbyEntities = v.owner().getPlayer().getNearbyEntities(brushSizeDoubled, brushSizeDoubled, brushSizeDoubled);
-        Entity lastEntity = v.owner().getPlayer();
+        List<IEntity> nearbyEntities = this.getLastBlock().getNearbyEntities(brushSize, brushSize, brushSize);
+        IPlayer player = v.owner().getPlayer();
+        IEntity lastEntity = player;
         int stackHeight = 0;
 
-        for (Entity entity : nearbyEntities) {
-            if (!(stackHeight >= ENTITY_STACK_LIMIT)) {
-                if (jockeyType == JockeyType.STACK_ALL_ENTITIES) {
-                    lastEntity.addPassenger(entity);
-                    lastEntity = entity;
-                    stackHeight++;
-                } else if (jockeyType == JockeyType.STACK_PLAYER_ONLY) {
-                    if (entity instanceof Player) {
+        for (IEntity entity : nearbyEntities) {
+            if (stackHeight >= ENTITY_STACK_LIMIT) {
+                return;
+            } else if (entity.getEntityId() != player.getEntityId()) {
+                if (!(this.playerOnly && entity instanceof IPlayer)) {
+                    if (jockeyType == JockeyType.STACK) {
                         lastEntity.addPassenger(entity);
                         lastEntity = entity;
                         stackHeight++;
+                    } else {
+                        v.sendMessage(Messages.YOU_BROKE_THE_STACK);
                     }
-                } else {
-                    v.sendMessage(Messages.YOU_BROKE_THE_STACK);
                 }
-            } else {
-                return;
             }
         }
 
@@ -123,7 +114,7 @@ public class JockeyBrush extends Brush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        if (jockeyType == JockeyType.STACK_ALL_ENTITIES || jockeyType == JockeyType.STACK_PLAYER_ONLY) {
+        if (jockeyType == JockeyType.STACK) {
             stack(v);
         } else {
             this.sitOn(v);
@@ -132,9 +123,22 @@ public class JockeyBrush extends Brush {
 
     @Override
     protected final void powder(final SnipeData v) {
-        if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
-            v.owner().getPlayer().eject();
-            v.sendMessage(Messages.ENTITY_EJECTED);
+        // invers || stack: remove passenger(s) from player
+        // normal: remove player from pasenger (jockeyedEntity)
+        if (jockeyType == JockeyType.INVERSE || jockeyType == JockeyType.STACK) {
+            Set<IEntity> foundPassengers = new HashSet<>();
+            foundPassengers.add(v.owner().getPlayer());
+            while (foundPassengers.size() > 0) {
+                Set<IEntity> entities = foundPassengers;
+                foundPassengers = new HashSet<>();
+                for (IEntity e : entities) {
+                    List<IEntity> passengers = e.getPassengers();
+                    if (passengers.size() > 0) {
+                        foundPassengers.addAll(passengers);
+                        e.eject();
+                    }
+                }
+            }
         } else {
             if (jockeyedEntity != null) {
                 jockeyedEntity.eject();
@@ -148,13 +152,13 @@ public class JockeyBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%",String.valueOf(jockeyType.toString())));
+        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName(this.playerOnly)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -163,17 +167,9 @@ public class JockeyBrush extends Brush {
 
             if (playerOnly) {
                 jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_PLAYER_ONLY");
-            } else {
-                jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_ALL_ENTITIES");
-            }
-            if (playerOnly) {
-                v.sendMessage(Messages.NO_PLAYERS_FOUND_TO_SIT_ON);
-            } else {
-                v.sendMessage(Messages.NO_ENTITIES_FOUND_TO_SIT_ON);
-            }
-            if (playerOnly) {
                 v.sendMessage(Messages.JOCKEY_TARGETING_PLAYERS);
             } else {
+                jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_ALL_ENTITIES");
                 v.sendMessage(Messages.JOCKEY_TARGETING_ENTITIES);
             }
             return;
@@ -181,29 +177,15 @@ public class JockeyBrush extends Brush {
 
         try {
             if (params[0].equalsIgnoreCase("inverse")) {
-                if (playerOnly) {
-                    jockeyType = JockeyType.INVERSE_PLAYER_ONLY;
-                } else {
-                    jockeyType = JockeyType.INVERSE_ALL_ENTITIES;
-                }
-                return;
+                jockeyType = JockeyType.INVERSE;
+            } else if (params[0].equalsIgnoreCase("stack")) {
+                jockeyType = JockeyType.STACK;
+            } else if (params[0].equalsIgnoreCase("normal")) {
+                jockeyType = JockeyType.NORMAL;
             }
-            if (params[0].equalsIgnoreCase("stack")) {
-                if (playerOnly) {
-                    jockeyType = JockeyType.STACK_PLAYER_ONLY;
-                } else {
-                    jockeyType = JockeyType.STACK_ALL_ENTITIES;
-                }
-            }
-            if (params[0].equalsIgnoreCase("normal")) {
-                if (playerOnly) {
-                    v.sendMessage(Messages.JOCKEY_TARGETING_PLAYERS);
-                } else {
-                    v.sendMessage(Messages.JOCKEY_TARGETING_ENTITIES);
-                }
-            }
-            v.sendMessage(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.toString()));
-        } catch (ArrayIndexOutOfBoundsException ignored) {
+            v.sendMessage(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName(this.playerOnly)));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
     }
 
@@ -213,16 +195,18 @@ public class JockeyBrush extends Brush {
         return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal", "player"));
     }
 
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.jockey";
+    }
+
     /**
      * Available types of jockey modes.
      */
     private enum JockeyType {
-        NORMAL_ALL_ENTITIES("Normal (All)"),
-        NORMAL_PLAYER_ONLY("Normal (Player only)"),
-        INVERSE_ALL_ENTITIES("Inverse (All)"),
-        INVERSE_PLAYER_ONLY("Inverse (Player only)"),
-        STACK_ALL_ENTITIES("Stack (All)"),
-        STACK_PLAYER_ONLY("Stack (Player only)");
+        NORMAL("Normal"),
+        INVERSE("Inverse"),
+        STACK("Stack");
 
         private final String name;
 
@@ -234,10 +218,9 @@ public class JockeyBrush extends Brush {
         public String toString() {
             return this.name;
         }
-    }
 
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.jockey";
+        public String getName(boolean playerOnly) {
+            return this.name + (playerOnly ? " (Player only)" : " (All)");
+        }
     }
 }

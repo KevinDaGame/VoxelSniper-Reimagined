@@ -1,15 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
+import java.util.Iterator;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Line_Brush
@@ -20,10 +19,10 @@ import org.bukkit.util.Vector;
  */
 public class LineBrush extends PerformerBrush {
 
-    private static final Vector HALF_BLOCK_OFFSET = new Vector(0.5, 0.5, 0.5);
-    private Vector originCoords = null;
-    private Vector targetCoords = new Vector();
-    private World targetWorld;
+    private static final VoxelVector HALF_BLOCK_OFFSET = new VoxelVector(0.5, 0.5, 0.5);
+    private VoxelVector originCoords = null;
+    private VoxelVector targetCoords = new VoxelVector();
+    private IWorld targetWorld;
 
     /**
      *
@@ -49,17 +48,17 @@ public class LineBrush extends PerformerBrush {
     }
 
     private void linePowder(final SnipeData v) {
-        final Vector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
-        final Vector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
+        final VoxelVector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
+        final VoxelVector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
 
-        final Vector direction = targetClone.clone().subtract(originClone);
+        final VoxelVector direction = targetClone.clone().subtract(originClone);
         final double length = this.targetCoords.distance(this.originCoords);
 
         if (length == 0) {
-            this.currentPerformer.perform(this.targetCoords.toLocation(this.targetWorld).getBlock());
+            this.currentPerformer.perform(this.targetCoords.getLocation(this.targetWorld).getBlock());
         } else {
-            for (final BlockIterator blockIterator = new BlockIterator(this.targetWorld, originClone, direction, 0, NumberConversions.round(length)); blockIterator.hasNext();) {
-                final Block currentBlock = blockIterator.next();
+            for (final Iterator<IBlock> blockIterator = getWorld().getBlockIterator(originClone, direction, 0, (int) Math.round(length)); blockIterator.hasNext(); ) {
+                final IBlock currentBlock = blockIterator.next();
                 this.currentPerformer.perform(currentBlock);
             }
         }

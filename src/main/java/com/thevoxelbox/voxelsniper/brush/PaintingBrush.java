@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
 
 /**
  * Painting scrolling Brush. http://www.voxelwiki.com/minecraft/Voxelsniper#The_Painting_Picker_Brush

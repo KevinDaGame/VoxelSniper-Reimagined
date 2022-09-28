@@ -1,18 +1,20 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.IVoxelsniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.fileHandler.YamlConfiguration;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-
-import org.jetbrains.annotations.NotNull;
+import java.util.regex.Pattern;
 
 public enum Messages implements ComponentLike {
+    //<editor-fold defaultstate="collapsed" desc="Messages">
     BRUSH_MESSAGE_PREFIX,
     BRUSH_NAME,
     BRUSH_CENTER,
@@ -30,7 +32,7 @@ public enum Messages implements ComponentLike {
     TOGGLE_PRINTOUT,
     TOGGLE_RANGE,
     PERFORMER_MESSAGE,
-    BLOCKS_UNTIL_REPEATER_MESSAGE,
+    REDSTONE_POWER_LEVEL,
     BLOCK_POWER_MESSAGE,
     FACE_POWER_MESSAGE,
     TREESNIPE_USAGE,
@@ -66,7 +68,7 @@ public enum Messages implements ComponentLike {
     GOTO_INVALID_SYNTAX,
     GOTO_MSG,
     PAINTING_INVALID_SYNTAX,
-    FINAL_PAINTING,
+    UNKNOWN_PAINTING,
     PAINTING_SET,
     INVALID_INPUT,
     ERROR,
@@ -342,18 +344,28 @@ public enum Messages implements ComponentLike {
     VOXEL_HEIGHT_MUST_NOT_BE_0,
     GENERATED_CHUNK,
     FILE_ALREADY_EXISTS,
+    BLOCK_ALREADY_ADDED_ENDPOINT,
+    BLOCK_ALREADY_ADDED_CONTROL,
+    ENDPOINT_SELECTION_FULL,
+    CONTROL_SELECTION_FULL,
+    PULLBRUSH_USAGE,
+    NUMBER_OUT_OF_RANGE,
+    UNDERLAY_DEPTH_SET,
+    UNDERLAY_MODE,
+    UNDERLAY_ON_MODE_DEPTH,
     ;
+    //</editor-fold>
 
 
     private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
 
-    public static void load(VoxelSniper voxelSniper) {
-        File langFile = new File(voxelSniper.getDataFolder(), "lang.yml");
+    public static void load(IVoxelsniper voxelSniper) {
+        File langFile = new File(voxelSniper.getFileHandler().getDataFolder(), "lang.yml");
         if (!langFile.exists()) {
-            voxelSniper.saveResource("lang.yml", false);
+            voxelSniper.getFileHandler().saveResource("lang.yml", false);
         }
         YamlConfiguration lang = new YamlConfiguration(langFile);
-        YamlConfiguration fallBackLang = new YamlConfiguration(Messages.class.getClassLoader(), "lang.yml", voxelSniper);
+        YamlConfiguration fallBackLang = new YamlConfiguration(Messages.class.getClassLoader(), "lang.yml");
         boolean changedFile = false;
 
         for (Messages message : values()) {
@@ -382,11 +394,18 @@ public enum Messages implements ComponentLike {
         }
     }
 
-    @NotNull public final Message replace(String pattern, Object replacement) {
+    @NotNull
+    public final Message replace(String pattern, Object replacement) {
         return new Message(this.message).replace(pattern, replacement);
     }
 
-    @NotNull public final Message append(String message) {
+    @NotNull
+    public final Component replace(String pattern, ComponentLike replacement) {
+        return new Message(this.message).replace(pattern, replacement);
+    }
+
+    @NotNull
+    public final Message append(String message) {
         return new Message(this.message).append(message);
     }
 
@@ -405,20 +424,31 @@ public enum Messages implements ComponentLike {
     }
 
     public static final class Message implements ComponentLike {
-        @NotNull private String message;
+        @NotNull
+        private String message;
 
         private Message(@NotNull String message) {
             this.message = message;
         }
 
-        @NotNull public Message replace(String target, Object replacement) {
+        @NotNull
+        public Message replace(String target, Object replacement) {
             if (target != null && replacement != null)
                 this.message = this.message.replace(target, String.valueOf(replacement));
 
             return this;
         }
 
-        @NotNull public Message append(String message) {
+        @NotNull
+        public Component replace(String target, ComponentLike replacement) {
+            if (target != null && replacement != null)
+                return this.asComponent().replaceText(TextReplacementConfig.builder().match(Pattern.compile(target, Pattern.LITERAL)).replacement(replacement).build());
+
+            return this.asComponent();
+        }
+
+        @NotNull
+        public Message append(String message) {
             if (message != null) this.message += message;
             return this;
         }

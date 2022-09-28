@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Clean_Snow_Brush
@@ -43,10 +42,10 @@ public class CleanSnowBrush extends Brush {
 
                 for (int y = (brushSize + 1) * 2; y >= 0; y--) {
                     if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
-                        Block b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
-                        Block blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
-                        if ((b.getType() == Material.SNOW) && ((blockDown.getType() == Material.SNOW) || (blockDown.getType() == Material.AIR))) {
-                            setBlockType(b, Material.AIR, undo);
+                        IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
+                        IBlock blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
+                        if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {
+                            setBlockType(b, VoxelMaterial.AIR, undo);
                         }
 
                     }
@@ -76,7 +75,7 @@ public class CleanSnowBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.CLEAN_SNOW_BURSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CLEAN_SNOW_BURSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

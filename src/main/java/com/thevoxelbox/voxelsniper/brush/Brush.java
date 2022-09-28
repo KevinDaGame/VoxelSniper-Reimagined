@@ -1,42 +1,38 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelCommandManager;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeAction;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import com.thevoxelbox.voxelsniper.util.LocationWrapper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
 
 /**
  * Abstract implementation of the {@link IBrush} interface.
  */
 public abstract class Brush implements IBrush {
 
-    protected static final String BRUSH_ARGUMENT_PREFIX = VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
-
     protected static final int CHUNK_SIZE = 16;
     /**
      * Targeted Block.
      */
-    private Block targetBlock;
+    private IBlock targetBlock;
     /**
      * Last Block before targeted Block.
      */
-    private Block lastBlock;
+    private IBlock lastBlock;
     /**
      * Brush name.
      */
@@ -46,14 +42,14 @@ public abstract class Brush implements IBrush {
      * @param x
      * @param y
      * @param z
-     * @return {@link Block}
+     * @return {@link IBlock}
      */
-    public final Block clampY(final int x, final int y, final int z) {
+    public final IBlock clampY(final int x, final int y, final int z) {
         int clampedY = this.clampWorldHeight(y);
-        return this.getWorld().getBlockAt(x, clampedY, z);
+        return this.getWorld().getBlock(x, clampedY, z);
     }
 
-    private boolean preparePerform(final SnipeData v, final Block clickedBlock, final BlockFace clickedFace) {
+    private boolean preparePerform(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (this.getTarget(v, clickedBlock, clickedFace)) {
             if (this instanceof PerformerBrush) {
                 ((PerformerBrush) this).initP(v);
@@ -65,7 +61,7 @@ public abstract class Brush implements IBrush {
     }
 
     @Override
-    public boolean perform(SnipeAction action, SnipeData data, Block targetBlock, Block lastBlock) {
+    public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
         switch (action) {
@@ -125,7 +121,7 @@ public abstract class Brush implements IBrush {
      * @param clickedFace
      * @return boolean
      */
-    protected final boolean getTarget(final SnipeData v, final Block clickedBlock, final BlockFace clickedFace) {
+    protected final boolean getTarget(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (clickedBlock != null) {
             this.setTargetBlock(clickedBlock);
             this.setLastBlock(clickedBlock.getRelative(clickedFace));
@@ -181,30 +177,30 @@ public abstract class Brush implements IBrush {
     /**
      * @return the targetBlock
      */
-    protected final Block getTargetBlock() {
+    protected final IBlock getTargetBlock() {
         return this.targetBlock;
     }
 
     /**
      * @param targetBlock the targetBlock to set
      */
-    protected final void setTargetBlock(final Block targetBlock) {
+    protected final void setTargetBlock(final IBlock targetBlock) {
         this.targetBlock = targetBlock;
     }
 
     /**
      * @return the world
      */
-    protected final World getWorld() {
+    protected final IWorld getWorld() {
         return targetBlock.getWorld();
     }
 
     protected final int getMinHeight() {
-        return getWorld().getMinHeight();
+        return getWorld().getMinWorldHeight();
     }
 
     protected final int getMaxHeight() {
-        return getWorld().getMaxHeight();
+        return getWorld().getMaxWorldHeight();
     }
 
     protected final int clampWorldHeight(int height) {
@@ -219,12 +215,8 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    protected Material getBlockMaterialAt(int x, int y, int z) {
-        return clampY(x, y, z).getBlockData().getMaterial();
-    }
-
-    protected Material getBlockMaterialAt(LocationWrapper l) {
-        return l.getBlock().getBlockData().getMaterial();
+    protected VoxelMaterial getBlockMaterialAt(int x, int y, int z) {
+        return clampY(x, y, z).getMaterial();
     }
 
     /**
@@ -235,21 +227,21 @@ public abstract class Brush implements IBrush {
      * @param z Z coordinate
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
-    protected BlockData getBlockDataAt(int x, int y, int z) {
+    protected IBlockData getBlockDataAt(int x, int y, int z) {
         return this.clampY(x, y, z).getBlockData();
     }
 
     /**
      * @return Block before target Block.
      */
-    protected final Block getLastBlock() {
+    protected final IBlock getLastBlock() {
         return this.lastBlock;
     }
 
     /**
      * @param lastBlock Last Block before target Block.
      */
-    protected final void setLastBlock(Block lastBlock) {
+    protected final void setLastBlock(IBlock lastBlock) {
         this.lastBlock = lastBlock;
     }
 
@@ -264,14 +256,14 @@ public abstract class Brush implements IBrush {
     }
 
     /**
-     * Sets the Material of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
+     * Sets the VoxelMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
+     * @param x        X coordinate
+     * @param y        Y coordinate
+     * @param z        Z coordinate
      * @param material the material to set this block to
      */
-    protected final void setBlockMaterialAt(int x, int y, int z, Material material) {
+    protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material) {
         this.clampY(x, y, z).setBlockData(material.createBlockData());
     }
 
@@ -279,47 +271,47 @@ public abstract class Brush implements IBrush {
      * Sets the BlockData value of the block at the passed coordinate. Will use the exact BlockData that is passed into the function and NOT the default
      * BlockData of the Material.
      *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
+     * @param x         X coordinate
+     * @param y         Y coordinate
+     * @param z         Z coordinate
      * @param blockData The blockData to set this block to
      */
-    protected final void setBlockMaterialAndDataAt(int x, int y, int z, BlockData blockData) {
+    protected final void setBlockMaterialAndDataAt(int x, int y, int z, IBlockData blockData) {
         this.clampY(x, y, z).setBlockData(blockData, true);
     }
 
     /**
      * Sets the type of the passed block, and appends the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
      *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
+     * @param x        X coordinate
+     * @param y        Y coordinate
+     * @param z        Z coordinate
      * @param material the material to set this block to
-     * @param undo The Undo container to store the change
+     * @param undo     The Undo container to store the change
      */
-    protected final void setBlockMaterialAt(int x, int y, int z, Material material, Undo undo) {
-        Block b = this.clampY(x, y, z);
-        if (b.getType() != material) {
+    protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material, Undo undo) {
+        IBlock b = this.clampY(x, y, z);
+        if (b.getMaterial() != material) {
             undo.put(b);
         }
-        b.setType(material);
+        b.setMaterial(material);
     }
 
     /**
      * Sets the type of the passed block, and adds the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
      *
-     * @param b The block to change
+     * @param b        The block to change
      * @param material the material to set this block to
-     * @param undo The Undo container to store the change
+     * @param undo     The Undo container to store the change
      */
-    protected final void setBlockType(Block b, Material material, Undo undo) {
+    protected final void setBlockType(IBlock b, VoxelMaterial material, Undo undo) {
         int clampedY = this.clampWorldHeight(b.getY());
         if (clampedY != b.getY()) {
-            b = getWorld().getBlockAt(b.getX(), clampedY, b.getX());
+            b = getWorld().getBlock(b.getX(), clampedY, b.getX());
         }
-        if (b.getType() != material) {
+        if (b.getMaterial() != material) {
             undo.put(b);
         }
-        b.setType(material);
+        b.setMaterial(material);
     }
 }

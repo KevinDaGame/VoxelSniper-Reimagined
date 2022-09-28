@@ -1,16 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.bukkit.block.Block;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Dome_Brush
@@ -40,7 +38,7 @@ public class DomeBrush extends Brush {
      * @param targetBlock
      */
     @SuppressWarnings("deprecation")
-    private void generateDome(final SnipeData v, final Block targetBlock) {
+    private void generateDome(final SnipeData v, final IBlock targetBlock) {
 
         if (v.getVoxelHeight() == 0) {
             v.sendMessage(Messages.VOXEL_HEIGHT_MUST_NOT_BE_0);
@@ -50,7 +48,7 @@ public class DomeBrush extends Brush {
         final int absoluteHeight = Math.abs(v.getVoxelHeight());
         final boolean negative = v.getVoxelHeight() < 0;
 
-        final Set<Vector> changeablePositions = new HashSet<>();
+        final Set<VoxelVector> changeablePositions = new HashSet<>();
 
         final Undo undo = new Undo();
 
@@ -67,24 +65,24 @@ public class DomeBrush extends Brush {
 
                 final double targetBlockX = targetBlock.getX() + 0.5;
                 final double targetBlockZ = targetBlock.getZ() + 0.5;
-                final int targetY = NumberConversions.floor(targetBlock.getY() + (negative ? -y : y));
-                final int currentBlockXAdd = NumberConversions.floor(targetBlockX + x);
-                final int currentBlockZAdd = NumberConversions.floor(targetBlockZ + z);
-                final int currentBlockXSubtract = NumberConversions.floor(targetBlockX - x);
-                final int currentBlockZSubtract = NumberConversions.floor(targetBlockZ - z);
-                changeablePositions.add(new Vector(currentBlockXAdd, targetY, currentBlockZAdd));
-                changeablePositions.add(new Vector(currentBlockXSubtract, targetY, currentBlockZAdd));
-                changeablePositions.add(new Vector(currentBlockXAdd, targetY, currentBlockZSubtract));
-                changeablePositions.add(new Vector(currentBlockXSubtract, targetY, currentBlockZSubtract));
+                final int targetY = ((int) Math.floor(targetBlock.getY() + (negative ? -y : y)));
+                final int currentBlockXAdd = ((int) Math.floor(targetBlockX + x));
+                final int currentBlockZAdd = ((int) Math.floor(targetBlockZ + z));
+                final int currentBlockXSubtract = ((int) Math.floor(targetBlockX - x));
+                final int currentBlockZSubtract = ((int) Math.floor(targetBlockZ - z));
+                changeablePositions.add(new VoxelVector(currentBlockXAdd, targetY, currentBlockZAdd));
+                changeablePositions.add(new VoxelVector(currentBlockXSubtract, targetY, currentBlockZAdd));
+                changeablePositions.add(new VoxelVector(currentBlockXAdd, targetY, currentBlockZSubtract));
+                changeablePositions.add(new VoxelVector(currentBlockXSubtract, targetY, currentBlockZSubtract));
 
             }
         }
 
-        for (final Vector vector : changeablePositions) {
-            final Block currentTargetBlock = vector.toLocation(this.getTargetBlock().getWorld()).getBlock();
+        for (final VoxelVector vector : changeablePositions) {
+            final IBlock currentTargetBlock = vector.getLocation(this.getTargetBlock().getWorld()).getBlock();
             // TODO: Check whether BlockData omission affects this or not.
-            // if (currentTargetBlock.getType() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
-            if (currentTargetBlock.getType() != v.getVoxelMaterial()) {
+            // if (currentTargetBlock.getMaterial() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
+            if (currentTargetBlock.getMaterial() != v.getVoxelMaterial()) {
                 undo.put(currentTargetBlock);
                 currentTargetBlock.setBlockData(v.getVoxelMaterial().createBlockData(), true);
             }

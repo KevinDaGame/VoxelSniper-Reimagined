@@ -1,32 +1,31 @@
 package com.thevoxelbox.voxelsniper.util;
 
 import com.google.common.collect.ImmutableList;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * Container class for multiple ID/Datavalue pairs.
  */
 public class VoxelList {
 
-    private final List<Material> materials = new ArrayList<>();
+    private final List<VoxelMaterial> materials = new ArrayList<>();
 
-    public void add(Material material) {
+    public void add(VoxelMaterial material) {
         if (!materials.contains(material)) {
             this.materials.add(material);
         }
     }
 
-    public void remove(Material material) {
+    public void remove(VoxelMaterial material) {
         if (materials.contains(material)) {
             this.materials.remove(material);
         }
     }
 
-    public boolean contains(Material material) {
+    public boolean contains(VoxelMaterial material) {
         return this.materials.contains(material);
     }
 
@@ -51,7 +50,7 @@ public class VoxelList {
      *
      * @return defensive copy of the List with pairs
      */
-    public List<Material> getList() {
+    public List<VoxelMaterial> getList() {
         return ImmutableList.copyOf(materials);
     }
 

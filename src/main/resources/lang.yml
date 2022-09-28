@@ -185,9 +185,9 @@ INVALID_INPUT: <red>Your input was invalid somewhere.
 ELLIPSOID_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X radius\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y radius\n</aqua><aqua>/b %triggerHandle% z [number]  -- Set Z radius"
 TOGGLE_RANGE: <gold>Distance Restriction toggled <dark_red>%state%</dark_red>, range is <light_purple>%range%</light_purple></gold>
 MISSING_PARAMETER: <red>Missing parameter after %parameter%.
-BLOCKS_UNTIL_REPEATER_MESSAGE: '<aqua>Blocks until repeater needed: %blocks%'
+REDSTONE_POWER_LEVEL: '<aqua>Redstone level: %blocks%'
 BRUSH_CENTER: '<dark_blue>Brush Center: <dark_red>%center%</dark_red></dark_blue>'
-FINAL_PAINTING: <red>This is the final painting, try scrolling to the other direction.
+UNKNOWN_PAINTING: '<red>Painting with id %id% was not found.'
 GEN_TREE_BRUSH_USAGE_2: |-
   <gold>Generate Tree Brush Parameters:         [2/2]
   </gold><aqua>/b %triggerHandle% rootMin [number]  -- minimum roots
@@ -285,7 +285,7 @@ BLOCKS_COPIED_SUCCESSFULLY: <green>%amount%</green><aqua> blocks copied successf
 CLONE_STAMP_NO_AIR: '<aqua>Stamp Mode: No-Air'
 CLONE_STAMP_FILL: '<aqua>Stamp Mode: Fill'
 CLONE_STAMP_DEFAULT_MODE: '<aqua>StampMode: Default'
-COMET_SIZE: Your balls are <dark_red>%size%
+COMET_SIZE: Your fireballs are <dark_red>%size%
 BLOCKS_COPIED_COUNT: <aqua>%numBlocks% blocks copied.
 COPY_AREA_TOO_BIG: '<red>Copy area too big: %numBlocks%(Limit: %BLOCK_LIMIT%)'
 MUST_SELECT_2_POINTS: <red>You must select exactly two points.
@@ -397,6 +397,11 @@ BRUSH_TOLERANCE_SET: <gold>Brush tolerance set to </gold><yellow>%tolerance%</ye
 TRIANGLE_BRUSH_INFO: '<blue>Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.'
 PULLBRUSH_PINCH: <aqua>Pinch %val%
 PULLBRUSH_BUBBLE: <aqua>Bubble %val%
+NUMBER_OUT_OF_RANGE: '<red>%arg% must be between %min% and %max%'
+PULLBRUSH_USAGE: |-
+  <gold>Pull Brush Parameters:
+  </gold><aqua>/b %triggerHandle% pinch [decimal]  -- Set a pinch amount
+  </aqua><aqua>/b %triggerHandle% bubble [decimal]  -- Set a bubble amount
 RULER_BRUSH_POWDER: |
   <blue>Format = (second coord - first coord)
   </blue><aqua>X change: %x%
@@ -546,9 +551,15 @@ NOTHING_TO_SET_SUBSTANCE: <gold>Nothing to set voxel substance. No changes were 
 INVALID_TYPE_ID: <red>You have entered an invalid Material ID.
 VOXEL_LIST_COULDNT_ADD: "<red>Couldn't add because item is non-existent or aren't blocks:- \n</red><gold>    %blocks%"
 UNDID_PLAYER_CHANGES: '<gold>Undid %player%''s changes: </gold><dark_aqua>%amountChanged% blocks replaced'
-SPLINE_BRUSH_NOT_ENOUGH_POINTS: <red>Not enough points selected; %endPts% endpoints, %ctrlPts% control points
+SPLINE_BRUSH_NOT_ENOUGH_POINTS: <red>Not enough points selected; %endPts% endpoints, %ctrlPts% control points, select at least two of points each
 ADDED_BLOCK_ENDPOINT: <gray>Added block </gray><red>%pos%</red><gray>to endpoint selection
 ADDED_BLOCK_CONTROL: <gray>Added block </gray><red>%pos%</red><gray>to control point selection
+
+BLOCK_ALREADY_ADDED_ENDPOINT: <gray>Block </gray><red>%pos%</red><gray>was already part of endpoint selection
+BLOCK_ALREADY_ADDED_CONTROL: <gray>Block </gray><red>%pos%</red><gray>was already part of control point selection
+ENDPOINT_SELECTION_FULL: <red>Endpoint selection is full, please remove a point first
+CONTROL_SELECTION_FULL: <red>Control point selection is full, please remove a point first
+
 REMOVED_BLOCK_CONTROL: <gray>Removed block </gray><red>%pos%</red><gray>from control point selection
 REMOVED_BLOCK_ENDPOINT: <gray>Removed block </gray><red>%pos%</red><gray>from endpoint selection
 MOVE_BRUSH_SELECTION: <blue>Move selection blockPositionY </blue><gold>x:%x% y:%y% z:%z%
@@ -568,3 +579,6 @@ NO_PERMISSION_MESSAGE: You do not have the '%permission%' permission node to do 
 VOXEL_HEIGHT_MUST_NOT_BE_0: VoxelHeight must not be 0.
 GENERATED_CHUNK: Generate that chunk! %chunk.getX% %chunk.getZ%
 FILE_ALREADY_EXISTS: This file already exists.
+UNDERLAY_DEPTH_SET: <aqua>Underlay depth set to %depth%
+UNDERLAY_MODE: <gold>Underlaying on %mode% blocks
+UNDERLAY_ON_MODE_DEPTH: <blue>Will underlay on %mode% blocks, %depth% blocks deep.

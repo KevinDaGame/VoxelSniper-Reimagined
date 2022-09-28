@@ -4,18 +4,17 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 /**
  * @author Voxel
  */
 public class pMatMatNoPhysics extends vPerformer {
 
-    private Material voxelMaterial;
-    private Material targetMaterial;
+    private VoxelMaterial voxelMaterial;
+    private VoxelMaterial targetMaterial;
 
     public pMatMatNoPhysics() {
         name = "Mat-Mat, No Physics";
@@ -36,8 +35,8 @@ public class pMatMatNoPhysics extends vPerformer {
     }
 
     @Override
-    public void perform(Block b) {
-        if (b.getType() == targetMaterial) {
+    public void perform(IBlock b) {
+        if (b.getMaterial() == targetMaterial) {
             h.put(b);
             b.setBlockData(voxelMaterial.createBlockData(), false);
         }

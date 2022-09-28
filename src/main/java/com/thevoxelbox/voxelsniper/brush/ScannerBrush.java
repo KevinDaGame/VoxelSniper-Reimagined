@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.BlockFace;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 
 /**
  * @author DivineRage
@@ -22,7 +21,6 @@ public class ScannerBrush extends Brush {
     private static final int DEPTH_MAX = 64;
 
     private int depth = DEPTH_DEFAULT;
-    private Material checkFor = Material.AIR;
 
     /**
      *
@@ -41,110 +39,47 @@ public class ScannerBrush extends Brush {
         if (bf == null) {
             return;
         }
+        VoxelMaterial checkFor = v.getVoxelMaterial();
 
-        switch (bf) {
-            case NORTH:
-                // Scan south
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
+        for (int i = 1; i < this.depth + 1; i++) {
+            int y = this.getTargetBlock().getY() + (bf.getModY() * i * -1);
+            if (y >= this.getMaxHeight() || y < this.getMinHeight()) {
                 break;
-
-            case SOUTH:
-                // Scan north
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case EAST:
-                // Scan west
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getType() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case WEST:
-                // Scan east
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getType() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case UP:
-                // Scan down
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if ((this.getTargetBlock().getY() - i) <= 0) {
-                        break;
-                    }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() - i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            case DOWN:
-                // Scan up
-                for (int i = 1; i < this.depth + 1; i++) {
-                    if ((this.getTargetBlock().getY() + i) >= this.getMaxHeight()) {
-                        break;
-                    }
-                    if (this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY() + i, this.getTargetBlock().getZ()).getType() == this.checkFor) {
-                        v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", this.checkFor.toString()).replace("%i%", Integer.toString(i)));
-                        return;
-                    }
-                }
-                v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
-                break;
-
-            default:
-                break;
+            }
+            VoxelMaterial mat = this.clampY(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
+            if (mat == checkFor) {
+                v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getName()).replace("%i%", Integer.toString(i)));
+                return;
+            }
         }
+        v.sendMessage(Messages.SCANNER_FOUND_NO_BLOCKS);
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.checkFor = v.getVoxelMaterial();
         this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%",String.valueOf(this.depth)).replace("%checkFor%",String.valueOf(this.checkFor)));
+        vm.custom(Messages.SCANNER_BRUSH_INFO.replace("%depth%", String.valueOf(this.depth)).replace("%checkFor%", vm.snipeData().getVoxelMaterial()));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         try {
             if (params[0].startsWith("depth")) {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
-                v.sendMessage(Messages.SCANNER_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
+                v.sendMessage(Messages.SCANNER_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -160,9 +95,9 @@ public class ScannerBrush extends Brush {
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("depth", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
     }
 

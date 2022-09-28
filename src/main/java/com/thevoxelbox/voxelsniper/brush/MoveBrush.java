@@ -1,28 +1,24 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockstate.IBlockState;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Moves a selection blockPositionY a certain amount. http://www.voxelwiki.com/minecraft/Voxelsniper#Move_Brush
@@ -30,121 +26,6 @@ import org.jetbrains.annotations.NotNull;
  * @author MikeMatrix
  */
 public class MoveBrush extends Brush {
-
-    private static class ComponentException extends Exception implements ComponentLike {
-        private final ComponentLike component;
-
-        ComponentException(ComponentLike component) {
-            this.component = component;
-        }
-
-        @Override
-        public String getMessage() {
-            return LegacyComponentSerializer.legacySection().serialize(this.asComponent());
-        }
-
-        @Override
-        public @NotNull Component asComponent() {
-            return component.asComponent();
-        }
-    }
-
-    /**
-     * Breakable Blocks to determine if no-physics should be used.
-     */
-    private static final Set<Material> BREAKABLE_MATERIALS = new TreeSet<>();
-
-    static {
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_SAPLING);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BLACK_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BLUE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.LIGHT_BLUE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BROWN_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.CYAN_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.GRAY_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.GREEN_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.LIGHT_GRAY_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.LIME_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.MAGENTA_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ORANGE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.PINK_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.PURPLE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.RED_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.WHITE_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.YELLOW_BED);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.TALL_GRASS);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DEAD_BUSH);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.PISTON_HEAD);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DANDELION);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.POPPY);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BLUE_ORCHID);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ALLIUM);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.AZURE_BLUET);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.RED_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ORANGE_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.WHITE_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.PINK_TULIP);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OXEYE_DAISY);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BROWN_MUSHROOM);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.RED_MUSHROOM);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.TORCH);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.FIRE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.WHEAT);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_WALL_SIGN);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.LADDER);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACTIVATOR_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DETECTOR_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.POWERED_RAIL);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.LEVER);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.STONE_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.IRON_DOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_PRESSURE_PLATE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.REDSTONE_TORCH);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.REDSTONE_WALL_TORCH);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.STONE_BUTTON);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SNOW);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.CACTUS);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SUGAR_CANE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.CAKE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.REPEATER);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_TRAPDOOR);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.PUMPKIN_STEM);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.MELON_STEM);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.VINE);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.LILY_PAD);
-        MoveBrush.BREAKABLE_MATERIALS.add(Material.NETHER_WART);
-    }
 
     /**
      * Saved direction.
@@ -154,7 +35,6 @@ public class MoveBrush extends Brush {
      * Saved selection.
      */
     private Selection selection = null;
-
     /**
      *
      */
@@ -172,15 +52,15 @@ public class MoveBrush extends Brush {
     @SuppressWarnings("deprecation")
     private void moveSelection(final SnipeData v, final Selection selection, final int[] direction) {
         if (selection.getBlockStates().size() > 0) {
-            final World world = selection.getBlockStates().get(0).getWorld();
+            final IWorld world = selection.getBlockStates().get(0).getWorld();
 
             final Undo undo = new Undo();
-            final HashSet<Block> undoSet = new HashSet<>();
+            final HashSet<IBlock> undoSet = new HashSet<>();
 
             final Selection newSelection = new Selection();
-            final Location movedLocation1 = selection.getLocation1();
+            final VoxelLocation movedLocation1 = selection.getLocation1();
             movedLocation1.add(direction[0], direction[1], direction[2]);
-            final Location movedLocation2 = selection.getLocation2();
+            final VoxelLocation movedLocation2 = selection.getLocation2();
             movedLocation2.add(direction[0], direction[1], direction[2]);
             newSelection.setLocation1(movedLocation1);
             newSelection.setLocation2(movedLocation2);
@@ -190,24 +70,24 @@ public class MoveBrush extends Brush {
                 v.sendMessage(exception);
             }
 
-            for (final BlockState blockState : selection.getBlockStates()) {
+            for (final IBlockState blockState : selection.getBlockStates()) {
                 undoSet.add(blockState.getBlock());
             }
-            for (final BlockState blockState : newSelection.getBlockStates()) {
+            for (final IBlockState blockState : newSelection.getBlockStates()) {
                 undoSet.add(blockState.getBlock());
             }
 
-            for (final Block block : undoSet) {
+            for (final IBlock block : undoSet) {
                 undo.put(block);
             }
             v.owner().storeUndo(undo);
 
-            for (final BlockState blockState : selection.getBlockStates()) {
-                blockState.getBlock().setType(Material.AIR);
+            for (final IBlockState blockState : selection.getBlockStates()) {
+                blockState.getBlock().setMaterial(VoxelMaterial.AIR);
             }
-            for (final BlockState blockState : selection.getBlockStates()) {
-                final Block affectedBlock = world.getBlockAt(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
-                affectedBlock.setBlockData(blockState.getBlockData(), !MoveBrush.BREAKABLE_MATERIALS.contains(blockState.getType()));
+            for (final IBlockState blockState : selection.getBlockStates()) {
+                final IBlock affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
+                affectedBlock.setBlockData(blockState.getBlockData(), !blockState.getMaterial().fallsOff());
             }
         }
     }
@@ -257,7 +137,7 @@ public class MoveBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -287,7 +167,8 @@ public class MoveBrush extends Brush {
                 v.getVoxelMessage().custom(Messages.MOVE_DIRECTION_SET.replace("%dir%", "Z").replace("%val%", String.valueOf(this.moveDirections[2])));
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -306,8 +187,31 @@ public class MoveBrush extends Brush {
         argumentValues.put("x", Lists.newArrayList("[number]"));
         argumentValues.put("y", Lists.newArrayList("[number]"));
         argumentValues.put("z", Lists.newArrayList("[number]"));
-        
+
         return argumentValues;
+    }
+
+    @Override
+    public String getPermissionNode() {
+        return "voxelsniper.brush.move";
+    }
+
+    private static class ComponentException extends Exception implements ComponentLike {
+        private final ComponentLike component;
+
+        ComponentException(ComponentLike component) {
+            this.component = component;
+        }
+
+        @Override
+        public String getMessage() {
+            return LegacyComponentSerializer.legacySection().serialize(this.asComponent());
+        }
+
+        @Override
+        public @NotNull Component asComponent() {
+            return component.asComponent();
+        }
     }
 
     /**
@@ -324,15 +228,15 @@ public class MoveBrush extends Brush {
         /**
          * Calculated BlockStates of the selection.
          */
-        private final ArrayList<BlockState> blockStates = new ArrayList<>();
+        private final ArrayList<IBlockState> blockStates = new ArrayList<>();
         /**
          *
          */
-        private Location location1 = null;
+        private VoxelLocation location1 = null;
         /**
          *
          */
-        private Location location2 = null;
+        private VoxelLocation location2 = null;
 
         /**
          * Calculates region, then saves all Blocks as BlockState.
@@ -352,11 +256,11 @@ public class MoveBrush extends Brush {
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
                         throw new ComponentException(Messages.SELECTION_SIZE_ABOVE_LIMIT);
                     }
-                    final World world = this.location1.getWorld();
+                    final IWorld world = this.location1.getWorld();
                     for (int y = lowY; y <= highY; y++) {
                         for (int x = lowX; x <= highX; x++) {
                             for (int z = lowZ; z <= highZ; z++) {
-                                this.blockStates.add(world.getBlockAt(x, y, z).getState());
+                                this.blockStates.add(world.getBlock(x, y, z).getState());
                             }
                         }
                     }
@@ -369,41 +273,36 @@ public class MoveBrush extends Brush {
         /**
          * @return ArrayList<BlockState> calculated BlockStates of defined region.
          */
-        public ArrayList<BlockState> getBlockStates() {
+        public ArrayList<IBlockState> getBlockStates() {
             return this.blockStates;
         }
 
         /**
          * @return Location
          */
-        public Location getLocation1() {
+        public VoxelLocation getLocation1() {
             return this.location1;
         }
 
         /**
          * @param location1
          */
-        public void setLocation1(final Location location1) {
+        public void setLocation1(final VoxelLocation location1) {
             this.location1 = location1;
         }
 
         /**
          * @return Location
          */
-        public Location getLocation2() {
+        public VoxelLocation getLocation2() {
             return this.location2;
         }
 
         /**
          * @param location2
          */
-        public void setLocation2(final Location location2) {
+        public void setLocation2(final VoxelLocation location2) {
             this.location2 = location2;
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.move";
     }
 }

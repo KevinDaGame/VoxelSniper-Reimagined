@@ -2,11 +2,10 @@ package com.thevoxelbox.voxelsniper;
 
 import com.google.common.collect.Maps;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.Map;
 import java.util.UUID;
-
-import org.bukkit.entity.Player;
 
 /**
  * Profile manager for Sniper instances. Each SniperProfile object represents a single player.
@@ -26,13 +25,12 @@ public class VoxelProfileManager {
 
         if (profileManager == null) {
             instance = new VoxelProfileManager();
-            profileManager = getInstance();
         }
     }
 
-    public Sniper getSniperForPlayer(Player player) {
+    public Sniper getSniperForPlayer(IPlayer player) {
         if (sniperInstances.get(player.getUniqueId()) == null) {
-            sniperInstances.put(player.getUniqueId(), new Sniper(VoxelSniper.getInstance(), player));
+            sniperInstances.put(player.getUniqueId(), new Sniper(player));
         }
         return sniperInstances.get(player.getUniqueId());
     }

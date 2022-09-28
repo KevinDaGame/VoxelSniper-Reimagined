@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ring_Brush
@@ -33,7 +32,7 @@ public class RingBrush extends PerformerBrush {
         this.setName("Ring");
     }
 
-    private void ring(final SnipeData v, Block targetBlock) {
+    private void ring(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double outerSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         final double innerSquared = Math.pow(this.innerSize, 2);
@@ -68,13 +67,13 @@ public class RingBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(Messages.INNER_RADIUS_INFO.replace("%innerSize%",String.valueOf(this.innerSize)));
+        vm.custom(Messages.INNER_RADIUS_INFO.replace("%innerSize%", String.valueOf(this.innerSize)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.RING_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.RING_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -87,10 +86,11 @@ public class RingBrush extends PerformerBrush {
         try {
             if (params[0].startsWith("inner")) {
                 this.innerSize = Double.parseDouble(params[1]);
-                v.sendMessage(Messages.INNER_RADIUS_SET.replace("%innerSize%",String.valueOf(this.innerSize)));
+                v.sendMessage(Messages.INNER_RADIUS_SET.replace("%innerSize%", String.valueOf(this.innerSize)));
                 return;
             }
-        } catch (final NumberFormatException ignored) {
+        } catch (final NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -110,7 +110,7 @@ public class RingBrush extends PerformerBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("inner", Lists.newArrayList("[decimal]"));
 
         argumentValues.putAll(super.registerArgumentValues());

@@ -1,14 +1,13 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 public class VoxelUndoCommand extends VoxelCommand {
 
@@ -20,7 +19,7 @@ public class VoxelUndoCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(IPlayer player, String[] args) {
         VoxelProfileManager profileManager = VoxelProfileManager.getInstance();
         Sniper sniper = profileManager.getSniperForPlayer(player);
 
@@ -44,7 +43,8 @@ public class VoxelUndoCommand extends VoxelCommand {
             try {
                 sniper.undo(Integer.parseInt(args[0]));
                 return true;
-            } catch (NumberFormatException ignored) {
+            } catch (NumberFormatException temp) {
+                temp.printStackTrace();
             }
         }
 
@@ -55,13 +55,13 @@ public class VoxelUndoCommand extends VoxelCommand {
 
         // Command: /u [playerName]             <- Undo [playerName]'s changes.
         if (args.length == 1 || args.length == 2) {
-            Player targetPlayer = Bukkit.getPlayer(args[0]);
+            IPlayer targetPlayer = VoxelSniper.voxelsniper.getPlayer(args[0]);
             if (targetPlayer == null) {
                 sniper.sendMessage(Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
                 return true;
             }
 
-            sniper = profileManager.getSniperForPlayer(targetPlayer);
+            Sniper targetSniper = profileManager.getSniperForPlayer(targetPlayer);
             int undoAmount = 1;
 
             // Command: /u [playerName] [amount]    <- Undo the previous [amount] changes made by [playerName].
@@ -74,9 +74,8 @@ public class VoxelUndoCommand extends VoxelCommand {
                 }
             }
 
-            Sniper targetSniper = profileManager.getSniperForPlayer(targetPlayer);
             targetSniper.sendMessage(Messages.CHANGES_UNDONE_BY_OTHER);
-            int amountChanged = sniper.undo(undoAmount);
+            int amountChanged = targetSniper.undo(undoAmount);
             sniper.sendMessage(Messages.UNDID_PLAYER_CHANGES.replace("%player%", sniper.getPlayer().getName()).replace("%amountChanged%", String.valueOf(amountChanged)));
             return true;
         }
@@ -85,7 +84,7 @@ public class VoxelUndoCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         List<String> suggestions = new ArrayList<>();
 
         if (args.length == 1 || args.length == 2) {
@@ -93,7 +92,7 @@ public class VoxelUndoCommand extends VoxelCommand {
         }
 
         if (args.length == 1) {
-            Bukkit.getOnlinePlayers().stream().map(e -> e.getName()).forEach(suggestions::add);
+            return VoxelSniper.voxelsniper.getOnlinePlayerNames();
         }
 
         return suggestions;

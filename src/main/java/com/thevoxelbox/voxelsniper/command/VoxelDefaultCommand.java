@@ -3,11 +3,10 @@ package com.thevoxelbox.voxelsniper.command;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.entity.Player;
 
 public class VoxelDefaultCommand extends VoxelCommand {
 
@@ -18,7 +17,7 @@ public class VoxelDefaultCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
 
         // Default command
@@ -33,12 +32,12 @@ public class VoxelDefaultCommand extends VoxelCommand {
             sniper.sendMessage(Messages.BRUSH_SETTINGS_RESET);
             return true;
         }
-        
+
         return false;
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         return new ArrayList<>();
     }
 }

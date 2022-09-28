@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Disc_Brush
@@ -36,10 +35,10 @@ public class DiscBrush extends PerformerBrush {
      *
      * @param v
      */
-    private void disc(final SnipeData v, final Block targetBlock) {
+    private void disc(final SnipeData v, final IBlock targetBlock) {
         final double radiusSquared = (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
-        final Vector centerPoint = targetBlock.getLocation().toVector();
-        final Vector currentPoint = centerPoint.clone();
+        final VoxelVector centerPoint = targetBlock.getLocation().toVector();
+        final VoxelVector currentPoint = centerPoint.clone();
 
         for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
             currentPoint.setX(centerPoint.getX() + x);
@@ -72,7 +71,7 @@ public class DiscBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.DISC_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.DISC_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

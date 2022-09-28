@@ -1,18 +1,16 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.blockdata.IBlockData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#CopyPasta_Brush
@@ -22,19 +20,16 @@ import org.bukkit.block.data.BlockData;
 public class CopyPastaBrush extends Brush {
 
     private static final int BLOCK_LIMIT = 10000;
-
+    private final int[] pastePoint = new int[3];
+    private final int[] minPoint = new int[3];
+    private final int[] offsetPoint = new int[3];
+    private final int[] arraySize = new int[3];
     private boolean pasteAir = true; // False = no air, true = air
     private int points = 0; //
     private int numBlocks = 0;
     private int[] firstPoint = new int[3];
     private int[] secondPoint = new int[3];
-    private final int[] pastePoint = new int[3];
-    private final int[] minPoint = new int[3];
-    private final int[] offsetPoint = new int[3];
-
-    private BlockData[] substanceArray;
-
-    private final int[] arraySize = new int[3];
+    private IBlockData[] substanceArray;
     private int pivot = 0; // ccw degrees    
 
     /**
@@ -55,20 +50,20 @@ public class CopyPastaBrush extends Brush {
         this.numBlocks = (this.arraySize[0]) * (this.arraySize[1]) * (this.arraySize[2]);
 
         if (this.numBlocks > 0 && this.numBlocks < CopyPastaBrush.BLOCK_LIMIT) {
-            this.substanceArray = new BlockData[this.numBlocks];
+            this.substanceArray = new IBlockData[this.numBlocks];
 
             for (int i = 0; i < this.arraySize[0]; i++) {
                 for (int j = 0; j < this.arraySize[1]; j++) {
                     for (int k = 0; k < this.arraySize[2]; k++) {
                         final int currentPosition = i + this.arraySize[0] * j + this.arraySize[0] * this.arraySize[1] * k;
-                        this.substanceArray[currentPosition] = this.getWorld().getBlockAt(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k).getBlockData();
+                        this.substanceArray[currentPosition] = this.getWorld().getBlock(this.minPoint[0] + i, this.minPoint[1] + j, this.minPoint[2] + k).getBlockData();
                     }
                 }
             }
 
-            v.sendMessage(Messages.BLOCKS_COPIED_COUNT.replace("%numBlocks%",String.valueOf(this.numBlocks)));
+            v.sendMessage(Messages.BLOCKS_COPIED_COUNT.replace("%numBlocks%", String.valueOf(this.numBlocks)));
         } else {
-            v.sendMessage(Messages.COPY_AREA_TOO_BIG.replace("%numBlocks%", String.valueOf(this.numBlocks)).replace("%BLOCK_LIMIT%",String.valueOf(CopyPastaBrush.BLOCK_LIMIT)));
+            v.sendMessage(Messages.COPY_AREA_TOO_BIG.replace("%numBlocks%", String.valueOf(this.numBlocks)).replace("%BLOCK_LIMIT%", String.valueOf(CopyPastaBrush.BLOCK_LIMIT)));
         }
     }
 
@@ -80,7 +75,7 @@ public class CopyPastaBrush extends Brush {
             for (int j = 0; j < this.arraySize[1]; j++) {
                 for (int k = 0; k < this.arraySize[2]; k++) {
                     final int currentPosition = i + this.arraySize[0] * j + this.arraySize[0] * this.arraySize[1] * k;
-                    Block block;
+                    IBlock block;
 
                     switch (this.pivot) {
                         case 180:
@@ -97,8 +92,8 @@ public class CopyPastaBrush extends Brush {
                             break;
                     }
 
-                    if (!(this.substanceArray[currentPosition].getMaterial() == Material.AIR && !this.pasteAir)) {
-                        if (block.getType() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
+                    if (!(this.substanceArray[currentPosition].getMaterial().isAir() && !this.pasteAir)) {
+                        if (block.getMaterial() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
                             undo.put(block);
                         }
                         block.setBlockData(this.substanceArray[currentPosition], true);
@@ -106,7 +101,7 @@ public class CopyPastaBrush extends Brush {
                 }
             }
         }
-        v.sendMessage(Messages.BLOCKS_PASTED_COUNT.replace("%numBlocks%",String.valueOf(this.numBlocks)));
+        v.sendMessage(Messages.BLOCKS_PASTED_COUNT.replace("%numBlocks%", String.valueOf(this.numBlocks)));
 
         v.owner().storeUndo(undo);
     }
@@ -132,7 +127,7 @@ public class CopyPastaBrush extends Brush {
                 this.firstPoint = new int[3];
                 this.secondPoint = new int[3];
                 this.numBlocks = 0;
-                this.substanceArray = new BlockData[1];
+                this.substanceArray = new IBlockData[1];
                 this.points = 0;
                 v.sendMessage(Messages.POINTS_CLEARED);
                 break;
@@ -160,28 +155,28 @@ public class CopyPastaBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.PASTE_AIR_STATE.replace("%pasteAir%",String.valueOf(this.pasteAir)));
-        vm.custom(Messages.PIVOT_ANGLE.replace("%pivot%",String.valueOf(this.pivot)));
+        vm.custom(Messages.PASTE_AIR_STATE.replace("%pasteAir%", String.valueOf(this.pasteAir)));
+        vm.custom(Messages.PIVOT_ANGLE.replace("%pivot%", String.valueOf(this.pivot)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.COPYPASTA_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.COPYPASTA_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
         if (params[0].equalsIgnoreCase("air")) {
             this.pasteAir = !this.pasteAir;
 
-            v.sendMessage(Messages.PASTE_AIR_STATE.replace("%pasteAir%",String.valueOf(this.pasteAir)));
+            v.sendMessage(Messages.PASTE_AIR_STATE.replace("%pasteAir%", String.valueOf(this.pasteAir)));
             return;
         }
 
         if (params[0].equalsIgnoreCase("rotate")) {
             if (params[1].equalsIgnoreCase("90") || params[1].equalsIgnoreCase("180") || params[1].equalsIgnoreCase("270") || params[1].equalsIgnoreCase("0")) {
                 this.pivot = Integer.parseInt(params[1]);
-                v.sendMessage(Messages.PIVOT_ANGLE.replace("%pivot%",String.valueOf(this.pivot)));
+                v.sendMessage(Messages.PIVOT_ANGLE.replace("%pivot%", String.valueOf(this.pivot)));
                 return;
             }
         }
@@ -199,7 +194,7 @@ public class CopyPastaBrush extends Brush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("rotate", Lists.newArrayList("0", "90", "180", "270"));
 
         return argumentValues;

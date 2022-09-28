@@ -1,13 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
+import com.thevoxelbox.voxelsniper.voxelsniper.world.IWorld;
 
 import java.util.ArrayList;
-
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 
 /**
  * This brush only looks for solid blocks, and then changes those plus any air blocks touching them. If it works, this brush should be faster than the original
@@ -26,36 +25,38 @@ import org.bukkit.block.Block;
  */
 public class BlockResetSurfaceBrush extends Brush {
 
-    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<>();
+    private static final ArrayList<VoxelMaterial> DENIED_UPDATES = new ArrayList<>();
 
     static {
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CHEST);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.FURNACE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REDSTONE_TORCH);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REDSTONE_WIRE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REPEATER);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.IRON_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CHEST);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.FURNACE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_TORCH);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WIRE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REPEATER);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.IRON_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.VOID_AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CAVE_AIR);
     }
 
     /**
@@ -67,72 +68,65 @@ public class BlockResetSurfaceBrush extends Brush {
 
     @SuppressWarnings("deprecation")
     private void applyBrush(final SnipeData v) {
-        final World world = this.getWorld();
+        final IWorld world = this.getWorld();
 
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     // TODO clampY
-                    Block block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getType())) {
+                    IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                    if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
                     }
 
                     boolean airFound = false;
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                    if (world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                        resetBlock(block);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                    if (world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                        resetBlock(block);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
+                        resetBlock(block);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getType() == Material.AIR) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
+                        resetBlock(block);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getType() == Material.AIR) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial().isAir()) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
+                        resetBlock(block);
                         airFound = true;
                     }
 
-                    if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getType() == Material.AIR) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial().isAir()) {
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (airFound) {
-                        block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+                        resetBlock(block);
                     }
                 }
             }
         }
     }
 
-    private void resetBlock(Block block, final byte oldData) {
+    private void resetBlock(IBlock block) {
         // Resets the block state to initial state by creating a new BlockData with default values.
         block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
     }

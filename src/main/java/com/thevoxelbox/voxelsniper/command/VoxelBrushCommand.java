@@ -2,23 +2,20 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelBrushManager;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.IPerformerBrush;
-import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
-import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
-import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
-import static com.thevoxelbox.voxelsniper.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
+import static com.thevoxelbox.voxelsniper.command.VoxelCommandManager.BRUSH_SUBCOMMAND_PREFIX;
+import static com.thevoxelbox.voxelsniper.command.VoxelCommandManager.BRUSH_SUBCOMMAND_SUFFIX;
 
 public class VoxelBrushCommand extends VoxelCommand {
 
@@ -37,7 +34,7 @@ public class VoxelBrushCommand extends VoxelCommand {
     }
 
     @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(IPlayer player, final String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         String currentToolId = sniper.getCurrentToolId();
         SnipeData snipeData = sniper.getSnipeData(currentToolId);
@@ -57,65 +54,59 @@ public class VoxelBrushCommand extends VoxelCommand {
         }
 
         // Command: /b <number> -- Change brush size
-        if (args.length > 0) {
-            try {
-                int originalSize = snipeData.getBrushSize();
-                snipeData.setBrushSize(Integer.parseInt(args[0]));
+        try {
+            int originalSize = snipeData.getBrushSize();
+            snipeData.setBrushSize(Integer.parseInt(args[0]));
 
-                SniperBrushSizeChangedEvent event = new SniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
-                Bukkit.getPluginManager().callEvent(event);
+            VoxelSniper.voxelsniper.getEventManager().callSniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
 
-                snipeData.getVoxelMessage().size();
-                return true;
-            } catch (NumberFormatException ignored) {
-            }
+            snipeData.getVoxelMessage().size();
+            return true;
+        } catch (NumberFormatException ignored) {
         }
 
-        if (args.length > 0) {
-            // Command: /b list -- list all brushes
-            if (args[0].equals("list")) {
-                // TODO: LIST BRUSHES
-                return true;
-            }
-
-            // Command: /b <brush> -- change brush to <brush>
-            Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
-
-            if (brush == null) {
-                snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
-            } else {
-                IBrush oldBrush = sniper.getBrush(currentToolId);
-                IBrush newBrush = sniper.setBrush(currentToolId, brush);
-
-                if (newBrush == null) {
-                    snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
-                    return true;
-                }
-
-                // Command: /b <brush> <...> -- Handles additional variables
-                if (args.length > 1) {
-                    String[] additionalParameters = Arrays.copyOfRange(args, 1, args.length);
-
-                    // Parse performer if the brush is a performer
-                    if (newBrush instanceof IPerformerBrush) {
-                        ((IPerformerBrush) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
-                    } else {
-                        newBrush.parseParameters(args[0], additionalParameters, snipeData);
-                    }
-                    return true;
-                }
-                SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
-                sniper.displayInfo();
-            }
-
+        // Command: /b list -- list all brushes
+        if (args[0].equals("list")) {
+            // TODO: LIST BRUSHES
             return true;
         }
 
-        return false;
+        // Command: /b <brush> -- change brush to <brush>
+        Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
+
+        if (brush == null) {
+            snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
+        } else {
+            IBrush oldBrush = sniper.getBrush(currentToolId);
+            IBrush newBrush = sniper.setBrush(currentToolId, brush);
+
+            if (newBrush == null) {
+                snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
+                return true;
+            }
+
+            // Command: /b <brush> <...> -- Handles additional variables
+            if (args.length > 1) {
+                String[] additionalParameters = Arrays.copyOfRange(args, 1, args.length);
+
+                // Parse performer if the brush is a performer
+                if (newBrush instanceof IPerformerBrush) {
+                    ((IPerformerBrush) newBrush).parsePerformer(args[0], additionalParameters, snipeData);
+                } else {
+                    newBrush.parseParameters(args[0], additionalParameters, snipeData);
+                }
+                return true;
+            }
+            VoxelSniper.voxelsniper.getEventManager().callSniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
+            sniper.displayInfo();
+        }
+
+        return true;
+
     }
 
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
             return getTabCompletion(args.length);
         }

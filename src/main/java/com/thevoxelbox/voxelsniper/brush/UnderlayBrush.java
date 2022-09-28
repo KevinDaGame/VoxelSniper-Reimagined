@@ -1,17 +1,16 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Material;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Underlay_Brush
@@ -43,10 +42,10 @@ public class UnderlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y < this.getTargetBlock().getY() + this.depth; y++) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
-                            final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = 0; (d < this.depth); d++) {
-                                    if (this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getType() != Material.AIR) {
+                                    if (!this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                                         this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                         // parameters
                                         memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
@@ -72,7 +71,7 @@ public class UnderlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y < this.getTargetBlock().getY() + this.depth; y++) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
-                            final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = -1; (d < this.depth - 1); d++) {
                                     this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
@@ -89,37 +88,16 @@ public class UnderlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, Material material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
 
-        if (allBlocks && !(material == Material.AIR)) {
+        if (allBlocks && !material.isAir()) {
             return true;
         }
 
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override
@@ -136,12 +114,14 @@ public class UnderlayBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
+        String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
+        vm.custom(Messages.UNDERLAY_MODE.replace("%mode%", mode));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.UNDERLAY_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.UNDERLAY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -153,25 +133,26 @@ public class UnderlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(Messages.OVERLAY_DEPTH_SET.replace("%depth%",String.valueOf(this.depth)));
+                v.sendMessage(Messages.UNDERLAY_DEPTH_SET.replace("%depth%", String.valueOf(this.depth)));
                 return;
-            } catch (NumberFormatException ignored) {
+            } catch (NumberFormatException temp) {
+                temp.printStackTrace();
             }
         }
 
         if (params[0].startsWith("mode")) {
-            if (!this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = true;
-                this.useVoxelList = false;
-            } else if (this.allBlocks && !this.useVoxelList) {
-                this.allBlocks = false;
-                this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            if (!this.useVoxelList) {
+                if (!this.allBlocks) {
+                    this.allBlocks = true;
+                } else {
+                    this.allBlocks = false;
+                    this.useVoxelList = true;
+                }
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             String mode = this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural");
-            v.sendMessage(Messages.OVERLAY_ON_MODE_DEPTH.replace("%depth%",String.valueOf(this.depth)).replace("%mode%",mode));
+            v.sendMessage(Messages.UNDERLAY_ON_MODE_DEPTH.replace("%depth%", String.valueOf(this.depth)).replace("%mode%", mode));
 
             return;
         }

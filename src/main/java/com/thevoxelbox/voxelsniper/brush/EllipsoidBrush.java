@@ -1,27 +1,25 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.block.Block;
-
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipsoid_Brush
- *
  */
 public class EllipsoidBrush extends PerformerBrush {
 
+    private final boolean istrue = false;
     private double xRad;
     private double yRad;
     private double zRad;
-    private final boolean istrue = false;
 
     /**
      *
@@ -30,7 +28,7 @@ public class EllipsoidBrush extends PerformerBrush {
         this.setName("Ellipsoid");
     }
 
-    private void execute(final SnipeData v, Block targetBlock) {
+    private void execute(final SnipeData v, IBlock targetBlock) {
         this.currentPerformer.perform(targetBlock);
         double istrueoffset = istrue ? 0.5 : 0;
         int blockPositionX = targetBlock.getX();
@@ -88,7 +86,7 @@ public class EllipsoidBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ELLIPSOID_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ELLIPSOID_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
         try {
@@ -109,7 +107,8 @@ public class EllipsoidBrush extends PerformerBrush {
                 v.sendMessage(Messages.AXIS_SET_TO_VALUE.replace("%axis%", "Z").replace("%value%", String.valueOf(this.zRad)));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -128,7 +127,7 @@ public class EllipsoidBrush extends PerformerBrush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("x", Lists.newArrayList("[number]"));
         argumentValues.put("y", Lists.newArrayList("[number]"));
         argumentValues.put("z", Lists.newArrayList("[number]"));

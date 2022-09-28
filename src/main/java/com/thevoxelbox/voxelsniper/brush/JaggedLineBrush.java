@@ -1,20 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
-import org.bukkit.block.Block;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
+import java.util.*;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush
@@ -24,7 +18,7 @@ import org.bukkit.util.Vector;
  */
 public class JaggedLineBrush extends PerformerBrush {
 
-    private static final Vector HALF_BLOCK_OFFSET = new Vector(0.5, 0.5, 0.5);
+    private static final VoxelVector HALF_BLOCK_OFFSET = new VoxelVector(0.5, 0.5, 0.5);
     private static final int timesUsed = 0;
 
     private static final int RECURSION_MIN = 1;
@@ -33,8 +27,8 @@ public class JaggedLineBrush extends PerformerBrush {
     private static final int SPREAD_DEFAULT = 3;
 
     private final Random random = new Random();
-    private Vector originCoords = null;
-    private Vector targetCoords = new Vector();
+    private VoxelVector originCoords = null;
+    private VoxelVector targetCoords = new VoxelVector();
     private int recursion = RECURSION_DEFAULT;
     private int spread = SPREAD_DEFAULT;
 
@@ -46,17 +40,17 @@ public class JaggedLineBrush extends PerformerBrush {
     }
 
     private void jaggedP(final SnipeData v) {
-        final Vector originClone = this.originCoords.clone().add(JaggedLineBrush.HALF_BLOCK_OFFSET);
-        final Vector targetClone = this.targetCoords.clone().add(JaggedLineBrush.HALF_BLOCK_OFFSET);
+        final VoxelVector originClone = this.originCoords.clone().add(JaggedLineBrush.HALF_BLOCK_OFFSET);
+        final VoxelVector targetClone = this.targetCoords.clone().add(JaggedLineBrush.HALF_BLOCK_OFFSET);
 
-        final Vector direction = targetClone.clone().subtract(originClone);
+        final VoxelVector direction = targetClone.clone().subtract(originClone);
         final double length = this.targetCoords.distance(this.originCoords);
 
         if (length == 0) {
-            this.currentPerformer.perform(this.targetCoords.toLocation(this.getWorld()).getBlock());
+            this.currentPerformer.perform(this.targetCoords.getLocation(this.getWorld()).getBlock());
         } else {
-            for (final BlockIterator iterator = new BlockIterator(this.getWorld(), originClone, direction, 0, NumberConversions.round(length)); iterator.hasNext();) {
-                final Block block = iterator.next();
+            for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, ((int) Math.round(length))); iterator.hasNext(); ) {
+                final IBlock block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
                     this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
                 }
@@ -69,7 +63,7 @@ public class JaggedLineBrush extends PerformerBrush {
     @Override
     public final void arrow(final SnipeData v) {
         if (originCoords == null) {
-            originCoords = new Vector();
+            originCoords = new VoxelVector();
         }
         this.originCoords = this.getTargetBlock().getLocation().toVector();
         v.sendMessage(Messages.FIRST_POINT_SELECTED);
@@ -97,7 +91,7 @@ public class JaggedLineBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.JAGGED_LINE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.JAGGED_LINE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -119,7 +113,8 @@ public class JaggedLineBrush extends PerformerBrush {
                 v.sendMessage(Messages.JAGGED_LINE_BRUSH_SET_SPREAD.replace("%spread%", String.valueOf(this.spread)));
                 return;
             }
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));

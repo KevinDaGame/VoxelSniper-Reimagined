@@ -1,10 +1,9 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Voxel_Disc_Brush
@@ -20,7 +19,7 @@ public class VoxelDiscBrush extends PerformerBrush {
         this.setName("Voxel Disc");
     }
 
-    private void disc(final SnipeData v, Block targetBlock) {
+    private void disc(final SnipeData v, IBlock targetBlock) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
                 currentPerformer.perform(targetBlock.getRelative(x, 0, z));

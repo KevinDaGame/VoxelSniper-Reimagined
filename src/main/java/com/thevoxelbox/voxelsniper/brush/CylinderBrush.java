@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 /**
  * @author Kavutop
@@ -29,7 +28,7 @@ public class CylinderBrush extends PerformerBrush {
         this.setName("Cylinder");
     }
 
-    private void cylinder(final SnipeData v, Block targetBlock) {
+    private void cylinder(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         int yStartingPoint = targetBlock.getY() + v.getcCen();
         int yEndPoint = targetBlock.getY() + v.getVoxelHeight() + v.getcCen();
@@ -92,7 +91,7 @@ public class CylinderBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.CYLINDER_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CYLINDER_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -107,7 +106,8 @@ public class CylinderBrush extends PerformerBrush {
                 v.setVoxelHeight(Integer.parseInt(params[1]));
                 v.getVoxelMessage().height();
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
+                temp.printStackTrace();
             }
         }
 
@@ -116,7 +116,8 @@ public class CylinderBrush extends PerformerBrush {
                 v.setcCen(Integer.parseInt(params[1]));
                 v.sendMessage(Messages.CYLINDER_SHIFT_Y.replace("%count%", String.valueOf(v.getcCen())));
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException temp) {
+                temp.printStackTrace();
             }
         }
 
@@ -137,9 +138,9 @@ public class CylinderBrush extends PerformerBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        
+
         argumentValues.put("shift", Lists.newArrayList("[number]"));
-        
+
         argumentValues.put("height", Lists.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());

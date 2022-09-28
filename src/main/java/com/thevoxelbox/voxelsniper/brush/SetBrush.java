@@ -1,11 +1,10 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
-
-import org.bukkit.block.Block;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Set_Brush
@@ -15,7 +14,7 @@ import org.bukkit.block.Block;
 public class SetBrush extends PerformerBrush {
 
     private static final int SELECTION_SIZE_MAX = 5000000;
-    private Block block = null;
+    private IBlock block = null;
 
     /**
      *
@@ -25,12 +24,13 @@ public class SetBrush extends PerformerBrush {
     }
 
     /**
-     *  NOTE: TRUE when first point was selected, or second point is in different world
+     * NOTE: TRUE when first point was selected, or second point is in different world
+     *
      * @param bl block
      * @param v  data
      * @return TRUE when first point was selected, or second point is in different world
      */
-    private boolean set(final Block bl, final SnipeData v) {
+    private boolean set(final IBlock bl, final SnipeData v) {
         if (this.block == null) {
             this.block = bl;
             return true;

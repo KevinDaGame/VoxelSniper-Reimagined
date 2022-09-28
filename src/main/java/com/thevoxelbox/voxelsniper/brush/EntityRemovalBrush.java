@@ -1,9 +1,12 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.IEntity;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,16 +14,12 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
-import org.bukkit.Chunk;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-
 /**
  *
  */
 public class EntityRemovalBrush extends Brush {
 
-    private final List<EntityType> exclusionList = new ArrayList<>();
+    private final List<VoxelEntityType> exclusionList = new ArrayList<>();
 
     /**
      *
@@ -33,53 +32,53 @@ public class EntityRemovalBrush extends Brush {
     private void defaultValues() {
         exclusionList.clear();
 
-        exclusionList.add(EntityType.ARMOR_STAND);
-        exclusionList.add(EntityType.BOAT);
-        exclusionList.add(EntityType.DROPPED_ITEM);
-        exclusionList.add(EntityType.ITEM_FRAME);
-        exclusionList.add(EntityType.LEASH_HITCH);
-        exclusionList.add(EntityType.MINECART);
-        exclusionList.add(EntityType.MINECART_CHEST);
-        exclusionList.add(EntityType.MINECART_COMMAND);
-        exclusionList.add(EntityType.MINECART_FURNACE);
-        exclusionList.add(EntityType.MINECART_HOPPER);
-        exclusionList.add(EntityType.MINECART_MOB_SPAWNER);
-        exclusionList.add(EntityType.MINECART_TNT);
-        exclusionList.add(EntityType.PAINTING);
-        exclusionList.add(EntityType.PLAYER);
-        exclusionList.add(EntityType.VILLAGER);
-        exclusionList.add(EntityType.WANDERING_TRADER);
+        exclusionList.add(VoxelEntityType.ARMOR_STAND);
+        exclusionList.add(VoxelEntityType.BOAT);
+        exclusionList.add(VoxelEntityType.DROPPED_ITEM);
+        exclusionList.add(VoxelEntityType.ITEM_FRAME);
+        exclusionList.add(VoxelEntityType.LEASH_HITCH);
+        exclusionList.add(VoxelEntityType.MINECART);
+        exclusionList.add(VoxelEntityType.MINECART_CHEST);
+        exclusionList.add(VoxelEntityType.MINECART_COMMAND);
+        exclusionList.add(VoxelEntityType.MINECART_FURNACE);
+        exclusionList.add(VoxelEntityType.MINECART_HOPPER);
+        exclusionList.add(VoxelEntityType.MINECART_MOB_SPAWNER);
+        exclusionList.add(VoxelEntityType.MINECART_TNT);
+        exclusionList.add(VoxelEntityType.PAINTING);
+        exclusionList.add(VoxelEntityType.PLAYER);
+        exclusionList.add(VoxelEntityType.VILLAGER);
+        exclusionList.add(VoxelEntityType.WANDERING_TRADER);
 
     }
 
     private void radialRemoval(SnipeData v) {
-        final Chunk targetChunk = getTargetBlock().getChunk();
+        final IChunk targetChunk = getTargetBlock().getChunk();
         int entityCount = 0;
         int chunkCount = 0;
 
         try {
             entityCount += removeEntities(targetChunk);
 
-            int radius = Math.round(v.getBrushSize() / 16);
+            int radius = v.getBrushSize() / 16;
 
             for (int x = targetChunk.getX() - radius; x <= targetChunk.getX() + radius; x++) {
                 for (int z = targetChunk.getZ() - radius; z <= targetChunk.getZ() + radius; z++) {
-                    entityCount += removeEntities(getWorld().getChunkAt(x, z));
+                    entityCount += removeEntities(getWorld().getChunkAtLocation(x, z));
 
                     chunkCount++;
                 }
             }
         } catch (final PatternSyntaxException pse) {
             pse.printStackTrace();
-            v.sendMessage(Messages.ENTITY_REMOVAL_REGEX_ERROR.replace("%pattern%",String.valueOf(pse.getPattern())).replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
+            v.sendMessage(Messages.ENTITY_REMOVAL_REGEX_ERROR.replace("%pattern%", String.valueOf(pse.getPattern())).replace("%desc%", pse.getDescription()).replace("%idx%", String.valueOf(pse.getIndex())));
         }
         v.sendMessage(Messages.ENTITY_REMOVE_COUNT.replace("%chunkCount%", String.valueOf(chunkCount)).replace("%entityCount%", String.valueOf(entityCount)).replace("%multiple%", (chunkCount == 1 ? " chunk." : " chunks.")));
     }
 
-    private int removeEntities(Chunk chunk) throws PatternSyntaxException {
+    private int removeEntities(IChunk chunk) throws PatternSyntaxException {
         int entityCount = 0;
 
-        for (Entity entity : chunk.getEntities()) {
+        for (IEntity entity : chunk.getEntities()) {
             if (exclusionList.contains(entity.getType())) {
                 continue;
             }
@@ -104,7 +103,7 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void info(VoxelMessage vm) {
         vm.brushName(getName());
-        String exclusionList = this.exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
+        String exclusionList = this.exclusionList.stream().map(VoxelEntityType::key).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
         vm.custom(Messages.ENTITY_REMOVAL_EXCLUSIONS.replace("%exclusionList%", exclusionList));
         vm.size();
     }
@@ -112,7 +111,7 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ENTITY_REMOVAL_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ENTITY_REMOVAL_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -124,34 +123,36 @@ public class EntityRemovalBrush extends Brush {
 
         if (params[0].equalsIgnoreCase("clear")) {
             exclusionList.clear();
+            exclusionList.add(VoxelEntityType.PLAYER);
             v.sendMessage(Messages.ENTITY_REMOVAL_CLEAR);
             return;
         }
 
         if (params[0].equalsIgnoreCase("list")) {
-            String exclusionList = this.exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
+            String exclusionList = this.exclusionList.stream().map(VoxelEntityType::key).collect(Collectors.joining(Messages.ENTITY_REMOVAL_EXCLUSION_LIST.toString()));
             v.sendMessage(Messages.ENTITY_REMOVAL_EXCLUSIONS.replace("%exclusionList%", exclusionList));
             return;
         }
 
         if (params[0].equalsIgnoreCase("+") || params[0].equalsIgnoreCase("-")) {
             try {
-                EntityType entity = EntityType.valueOf(params[1]);
+                VoxelEntityType entity = VoxelEntityType.getEntityType(params[1]);
 
                 if (params[0].equals("+")) {
                     exclusionList.add(entity);
-                    v.sendMessage(Messages.ENTITY_REMOVAL_ADD.replace("%name%", String.valueOf(entity.getName())));
+                    v.sendMessage(Messages.ENTITY_REMOVAL_ADD.replace("%name%", entity.key()));
                 } else {
                     if (exclusionList.contains(entity)) {
                         exclusionList.remove(entity);
-                        v.sendMessage(Messages.ENTITY_REMOVAL_REMOVE.replace("%name%", String.valueOf(entity.getName())));
+                        v.sendMessage(Messages.ENTITY_REMOVAL_REMOVE.replace("%name%", String.valueOf(entity.key())));
                     } else {
-                        v.sendMessage(Messages.ENTITY_REMOVAL_NOT_IN_LIST.replace("%name%", String.valueOf(entity.getName())));
+                        v.sendMessage(Messages.ENTITY_REMOVAL_NOT_IN_LIST.replace("%name%", String.valueOf(entity.key())));
                     }
                 }
 
                 return;
-            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException ignored) {
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException temp) {
+                temp.printStackTrace();
             }
         }
 
@@ -170,8 +171,9 @@ public class EntityRemovalBrush extends Brush {
 
         List<String> entities = new ArrayList<>();
 
-        for (EntityType entity : EntityType.values()) {
-            entities.add(entity.name());
+        for (VoxelEntityType entity : VoxelEntityType.ENTITYTYPES.values()) {
+            //TODO How to add compatibility for modded entities? Right now it won't handle namepaces
+            entities.add(entity.key());
         }
 
 

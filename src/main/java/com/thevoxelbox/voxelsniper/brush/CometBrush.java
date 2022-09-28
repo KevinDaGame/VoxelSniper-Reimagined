@@ -1,17 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.entitytype.VoxelEntityType;
+import com.thevoxelbox.voxelsniper.voxelsniper.location.VoxelLocation;
+import com.thevoxelbox.voxelsniper.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Location;
-import org.bukkit.entity.LargeFireball;
-import org.bukkit.entity.SmallFireball;
-import org.bukkit.util.Vector;
 
 /**
  * @author Gavjenks Heavily revamped from ruler brush blockPositionY
@@ -30,21 +28,19 @@ public class CometBrush extends Brush {
     }
 
     private void doFireball(final SnipeData v) {
-        final Vector targetCoords = new Vector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        final Location playerLocation = v.owner().getPlayer().getEyeLocation();
-        final Vector slope = targetCoords.subtract(playerLocation.toVector());
+        final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
+        final VoxelLocation playerLocation = v.owner().getPlayer().getEyeLocation();
+        final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
 
-        if (useBigBalls) {
-            v.owner().getPlayer().launchProjectile(LargeFireball.class).setVelocity(slope.normalize());
-        } else {
-            v.owner().getPlayer().launchProjectile(SmallFireball.class).setVelocity(slope.normalize());
-        }
+        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
+        v.owner().getPlayer().launchProjectile(type, slope.normalize());
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.COMET_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.COMET_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
+            return;
         }
 
         if (params[0].equalsIgnoreCase("big")) {

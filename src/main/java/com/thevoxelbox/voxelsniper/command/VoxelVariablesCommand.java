@@ -5,20 +5,17 @@ import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.voxelsniper.entity.player.IPlayer;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 /**
- *
  * @author ervinnnc
  */
-public class VoxelVariablesCommand extends VoxelCommand {
+public class VoxelVariablesCommand extends MaterialCommand {
 
     public VoxelVariablesCommand() {
         super("Voxel Variables");
@@ -27,12 +24,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
     }
 
     @Override
-    public List<String> registerTabCompletion() {
-        return Arrays.stream(Material.values()).filter(e -> e.isBlock()).map(e -> e.getKey().toString()).collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean doCommand(Player player, String[] args) {
+    public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
@@ -59,12 +51,12 @@ public class VoxelVariablesCommand extends VoxelCommand {
         }
 
         if (getActiveAlias().equalsIgnoreCase("vl")) {
-            if (args.length == 0 && args[0].equalsIgnoreCase("clear")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
                 snipeData.getVoxelList().clear();
                 snipeData.getVoxelMessage().voxelList();
                 return true;
             }
-            
+
             if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("help")))) {
                 sniper.sendMessage(Messages.VOXEL_LIST_CLEAR_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
                 return true;
@@ -72,19 +64,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
             List<String> invalidMaterials = new ArrayList<>();
             for (final String string : args) {
-                boolean remove = string.contains("-");
-                Material material = Material.matchMaterial(string.toLowerCase().replace("-", ""));
-
-                if (material == null || !material.isBlock()) {
-                    invalidMaterials.add(string.replace("-", ""));
-                    continue;
-                }
-
-                if (!remove) {
-                    snipeData.getVoxelList().add(material);
-                } else {
-                    snipeData.getVoxelList().remove(material);
-                }
+                checkMaterial(string, invalidMaterials, snipeData);
             }
 
             snipeData.getVoxelMessage().voxelList();
@@ -137,19 +117,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
                 List<String> invalidMaterials = new ArrayList<>();
                 for (final String materialString : Arrays.copyOfRange(args, 1, args.length)) {
-                    boolean remove = materialString.contains("-");
-                    Material material = Material.matchMaterial(materialString.toLowerCase().replace("-", ""));
-
-                    if (material == null || !material.isBlock()) {
-                        invalidMaterials.add(materialString.replace("-", ""));
-                        continue;
-                    }
-
-                    if (!remove) {
-                        snipeData.getVoxelList().add(material);
-                    } else {
-                        snipeData.getVoxelList().remove(material);
-                    }
+                    checkMaterial(materialString, invalidMaterials, snipeData);
                 }
 
                 snipeData.getVoxelMessage().voxelList();
@@ -164,27 +132,35 @@ public class VoxelVariablesCommand extends VoxelCommand {
         return false;
     }
 
+    private void checkMaterial(String string, List<String> invalidMaterials, SnipeData snipeData) {
+        boolean remove = string.contains("-");
+        VoxelMaterial material = new VoxelMaterial(string.toLowerCase().replace("-", ""));
+        //if the material is not yet defined in VoxelMaterial means that it is an item and not a block
+        if (VoxelMaterial.getMaterial(material.getKey()) == null) {
+            invalidMaterials.add(string.replace("-", ""));
+            return;
+        }
+
+        if (!remove) {
+            snipeData.getVoxelList().add(material);
+        } else {
+            snipeData.getVoxelList().remove(material);
+        }
+    }
+
     @Override
-    public List<String> doSuggestion(Player player, String[] args) {
+    public List<String> doSuggestion(IPlayer player, String[] args) {
         if (getActiveAlias().equalsIgnoreCase("vc") || getActiveAlias().equals("vh")) {
             if (args.length == 1) {
                 return Lists.newArrayList("[number]");
             }
         }
 
-        if (getActiveAlias().equalsIgnoreCase("vl")) {
+        if (getActiveAlias().equalsIgnoreCase("vl") && args.length == 2) {
             // Preprocess the string for partial matching, strip the '-' if there's one
             args[0] = args[0].toLowerCase().replace("-", "");
 
-            if (!args[0].startsWith("minecraft:")) {
-                if (args[0].startsWith("mi") && !args[0].equals("minecraft:")) {
-                    return Lists.newArrayList("minecraft:");
-                }
-
-                args[0] = "minecraft:" + args[0];
-            }
-
-            return getTabCompletion(1);
+            return super.doSuggestion(player, args);
         }
 
         if (getActiveIdentifier().equalsIgnoreCase(getIdentifier())) {
@@ -193,24 +169,16 @@ public class VoxelVariablesCommand extends VoxelCommand {
             }
 
             if (args[0].equalsIgnoreCase("center") || args[0].equals("height")) {
-                if (args.length == 1) {
+                if (args.length == 2) {
                     return Lists.newArrayList("[number]");
                 }
             }
 
-            if (args[0].equalsIgnoreCase("list")) {
+            if (args[0].equalsIgnoreCase("list") && args.length == 2) {
                 // Preprocess the string for partial matching, strip the '-' if there's one
-                args[0] = args[0].toLowerCase().replace("-", "");
+                args[1] = args[1].toLowerCase().replace("-", "");
 
-                if (!args[0].startsWith("minecraft:")) {
-                    if (args[0].startsWith("mi") && !args[0].equals("minecraft:")) {
-                        return Lists.newArrayList("minecraft:");
-                    }
-
-                    args[0] = "minecraft:" + args[0];
-                }
-
-                return getTabCompletion(1);
+                return super.doSuggestion(player, new String[]{args[1]});
             }
         }
 

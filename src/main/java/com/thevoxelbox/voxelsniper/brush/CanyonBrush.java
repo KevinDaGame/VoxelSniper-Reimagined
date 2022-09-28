@@ -1,18 +1,17 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
+import com.thevoxelbox.voxelsniper.voxelsniper.chunk.IChunk;
+import com.thevoxelbox.voxelsniper.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_CANYONATOR
@@ -21,9 +20,9 @@ import org.bukkit.block.Block;
  */
 public class CanyonBrush extends Brush {
 
-    private static final int SHIFT_LEVEL_MIN = 10;
+    private static final int SHIFT_LEVEL_MIN = -60;
     private static final int SHIFT_LEVEL_MAX = 60;
-    private int yLevel = 10;
+    private int yLevel = -53;
 
     /**
      *
@@ -36,34 +35,29 @@ public class CanyonBrush extends Brush {
      * @param chunk
      * @param undo
      */
-    @SuppressWarnings("deprecation")
-    protected final void canyon(final Chunk chunk, final Undo undo) {
+    protected final void canyon(final IChunk chunk, final Undo undo) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 int currentYLevel = this.yLevel;
 
                 for (int y = 63; y < this.getMaxHeight(); y++) {
-                    final Block block = chunk.getBlock(x, y, z);
-                    final Block currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
+                    final IBlock block = chunk.getBlock(x, y, z);
+                    final IBlock currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
 
                     undo.put(block);
                     undo.put(currentYLevelBlock);
 
-                    currentYLevelBlock.setType(block.getType(), false);
-                    block.setType(Material.AIR);
+                    currentYLevelBlock.setBlockData(block.getBlockData(), false);
 
                     currentYLevel++;
                 }
-
-                final Block block = chunk.getBlock(x, this.getMinHeight(), z);
-                undo.put(block);
-                block.setType(Material.BEDROCK);
-
-                for (int y = this.getMinHeight()+1; y < this.getMinHeight()+SHIFT_LEVEL_MIN; y++) {
-                    final Block currentBlock = chunk.getBlock(x, y, z);
-                    undo.put(currentBlock);
-                    currentBlock.setType(Material.STONE);
+                for (int y = currentYLevel; y < this.getMaxHeight(); y++) {
+                    chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.AIR);
                 }
+
+                final IBlock block = chunk.getBlock(x, this.getMinHeight(), z);
+                undo.put(block);
+                block.setMaterial(VoxelMaterial.BEDROCK);
             }
         }
     }
@@ -81,10 +75,10 @@ public class CanyonBrush extends Brush {
     protected void powder(final SnipeData v) {
         final Undo undo = new Undo();
 
-        Chunk targetChunk = getTargetBlock().getChunk();
+        IChunk targetChunk = getTargetBlock().getChunk();
         for (int x = targetChunk.getX() - 1; x <= targetChunk.getX() + 1; x++) {
             for (int z = targetChunk.getZ() - 1; z <= targetChunk.getZ() + 1; z++) {
-                canyon(getWorld().getChunkAt(x, z), undo);
+                canyon(getWorld().getChunkAtLocation(x, z), undo);
             }
         }
 
@@ -100,7 +94,7 @@ public class CanyonBrush extends Brush {
     @Override
     public final void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.CANYON_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CANYON_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -116,7 +110,7 @@ public class CanyonBrush extends Brush {
 
                 this.yLevel = yLevel;
 
-                v.sendMessage(Messages.LAND_WILL_BE_SHIFTED_TO_Y.replace("%yLevel%",String.valueOf(this.yLevel)));
+                v.sendMessage(Messages.LAND_WILL_BE_SHIFTED_TO_Y.replace("%yLevel%", String.valueOf(this.yLevel)));
             } catch (NumberFormatException e) {
                 v.sendMessage(Messages.INPUT_NO_NUMBER);
             }
@@ -134,7 +128,7 @@ public class CanyonBrush extends Brush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("y", Lists.newArrayList("[number]"));
 
         return argumentValues;

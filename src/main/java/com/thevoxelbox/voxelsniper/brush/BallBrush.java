@@ -1,15 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 /**
  * A brush that creates a solid ball. http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ball_Brush
@@ -30,7 +29,7 @@ public class BallBrush extends PerformerBrush {
         this.setName("Ball");
     }
 
-    private void ball(final SnipeData v, Block targetBlock) {
+    private void ball(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (this.smoothSphere ? SMOOTH_SPHERE_VALUE : VOXEL_SPHERE_VALUE), 2);
 

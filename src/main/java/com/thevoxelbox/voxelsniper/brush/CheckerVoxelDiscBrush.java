@@ -1,15 +1,14 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 /**
  * @author MikeMatrix
@@ -29,7 +28,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
      * @param v
      * @param target
      */
-    private void applyBrush(final SnipeData v, final Block target) {
+    private void applyBrush(final SnipeData v, final IBlock target) {
         for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
             for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
                 final int sum = this.useWorldCoordinates ? target.getX() + x + target.getZ() + y : x + y;
@@ -61,7 +60,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equals("info")) {
-            v.sendMessage(Messages.CHECKER_DISC_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.CHECKER_DISC_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 

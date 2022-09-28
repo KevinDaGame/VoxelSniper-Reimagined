@@ -1,16 +1,15 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
-import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.Messages;
+import com.thevoxelbox.voxelsniper.util.VoxelMessage;
+import com.thevoxelbox.voxelsniper.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipse_Brush
@@ -39,7 +38,7 @@ public class EllipseBrush extends PerformerBrush {
         this.setName("Ellipse");
     }
 
-    private void ellipse(final SnipeData v, Block targetBlock) {
+    private void ellipse(final SnipeData v, IBlock targetBlock) {
         try {
             for (double steps = 0; (steps <= TWO_PI); steps += stepSize) {
                 final int x = (int) Math.round(this.xscl * Math.cos(steps));
@@ -72,7 +71,7 @@ public class EllipseBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void ellipsefill(final SnipeData v, Block targetBlock) {
+    private void ellipsefill(final SnipeData v, IBlock targetBlock) {
         int ix = this.xscl;
         int iy = this.yscl;
 
@@ -143,7 +142,7 @@ public class EllipseBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
-    private void execute(final SnipeData v, Block targetBlock) {
+    private void execute(final SnipeData v, IBlock targetBlock) {
         this.stepSize = (TWO_PI / this.steps);
 
         if (this.fill) {
@@ -178,16 +177,16 @@ public class EllipseBrush extends PerformerBrush {
         }
 
         vm.brushName(this.getName());
-        vm.custom(Messages.X_SIZE_SET.replace("%xscl%",String.valueOf(this.xscl)));
-        vm.custom(Messages.Y_SIZE_SET.replace("%yscl%",String.valueOf(this.yscl)));
-        vm.custom(Messages.ELLIPSE_RENDER_STEP_NUMBER.replace("%steps%",String.valueOf(this.steps)));
+        vm.custom(Messages.X_SIZE_SET.replace("%xscl%", String.valueOf(this.xscl)));
+        vm.custom(Messages.Y_SIZE_SET.replace("%yscl%", String.valueOf(this.yscl)));
+        vm.custom(Messages.ELLIPSE_RENDER_STEP_NUMBER.replace("%steps%", String.valueOf(this.steps)));
         vm.custom(Messages.ELLIPSEBRUSH_FILL_MODE.replace("%state%", this.fill ? "enabled" : "disabled"));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.ELLIPSE_BRUSH_USAGE.replace("%triggerHandle%",triggerHandle));
+            v.sendMessage(Messages.ELLIPSE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
@@ -207,7 +206,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
 
                 this.xscl = xValue;
-                v.sendMessage(Messages.X_SCALE_MODIFIER_SET.replace("%xscl%",String.valueOf(this.xscl)));
+                v.sendMessage(Messages.X_SCALE_MODIFIER_SET.replace("%xscl%", String.valueOf(this.xscl)));
                 return;
             }
 
@@ -220,7 +219,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
 
                 this.yscl = yValue;
-                v.sendMessage(Messages.Y_SCALE_MODIFIER_SET.replace("%yscl%",String.valueOf(this.yscl)));
+                v.sendMessage(Messages.Y_SCALE_MODIFIER_SET.replace("%yscl%", String.valueOf(this.yscl)));
                 return;
             }
 
@@ -233,10 +232,11 @@ public class EllipseBrush extends PerformerBrush {
                 }
 
                 this.steps = stepValue;
-                v.sendMessage(Messages.RENDER_STEP_NUMBER_SET.replace("%steps%",String.valueOf(this.steps)));
+                v.sendMessage(Messages.RENDER_STEP_NUMBER_SET.replace("%steps%", String.valueOf(this.steps)));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
@@ -255,7 +255,7 @@ public class EllipseBrush extends PerformerBrush {
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
-        
+
         argumentValues.put("x", Lists.newArrayList("[number]"));
         argumentValues.put("y", Lists.newArrayList("[number]"));
         argumentValues.put("t", Lists.newArrayList("[number]"));
