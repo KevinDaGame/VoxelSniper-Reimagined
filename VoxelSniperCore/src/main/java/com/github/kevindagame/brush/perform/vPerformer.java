@@ -4,6 +4,7 @@
  */
 package com.github.kevindagame.brush.perform;
 
+import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -20,7 +21,7 @@ public abstract class vPerformer {
 
     public abstract void info(VoxelMessage vm);
 
-    public abstract void init(com.github.kevindagame.snipe.SnipeData v);
+    public abstract void init(SnipeData v);
 
     public void setUndo() {
         h = new Undo();

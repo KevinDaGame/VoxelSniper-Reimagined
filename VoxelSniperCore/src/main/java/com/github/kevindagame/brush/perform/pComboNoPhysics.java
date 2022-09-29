@@ -4,6 +4,7 @@
  */
 package com.github.kevindagame.brush.perform;
 
+import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
@@ -27,7 +28,7 @@ public class pComboNoPhysics extends vPerformer {
     }
 
     @Override
-    public void init(com.github.kevindagame.snipe.SnipeData v) {
+    public void init(SnipeData v) {
         w = v.getWorld();
         voxelSubstance = v.getVoxelSubstance();
     }
