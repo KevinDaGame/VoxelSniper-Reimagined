@@ -5,7 +5,8 @@ plugins {
 
 group = 'com.github.kevindagame'
 version = '1.0-SNAPSHOT'
-
+description='VoxelSniperForge'
+def platform = "forge"
 java {
     archivesBaseName = 'VoxelSniperForge'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
