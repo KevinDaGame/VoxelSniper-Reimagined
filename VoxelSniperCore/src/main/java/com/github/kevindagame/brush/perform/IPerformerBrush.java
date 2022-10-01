@@ -4,6 +4,7 @@
  */
 package com.github.kevindagame.brush.perform;
 
+import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 
 /**
@@ -11,9 +12,9 @@ import com.github.kevindagame.util.VoxelMessage;
  */
 public interface IPerformerBrush {
 
-    boolean parsePerformer(String performerHandle, com.github.kevindagame.snipe.SnipeData v);
+    boolean parsePerformer(String performerHandle, SnipeData v);
 
-    void parsePerformer(String triggerHandle, String[] args, com.github.kevindagame.snipe.SnipeData v);
+    void parsePerformer(String triggerHandle, String[] args, SnipeData v);
 
     void showInfo(VoxelMessage vm);
 }

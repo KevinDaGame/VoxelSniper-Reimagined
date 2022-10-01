@@ -84,7 +84,7 @@ public class EllipsoidBrush extends PerformerBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final com.github.kevindagame.snipe.SnipeData v) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ELLIPSOID_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;

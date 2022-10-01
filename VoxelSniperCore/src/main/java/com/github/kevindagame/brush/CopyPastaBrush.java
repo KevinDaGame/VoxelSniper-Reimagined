@@ -107,7 +107,7 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    protected final void arrow(final com.github.kevindagame.snipe.SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         switch (this.points) {
             case 0:
                 this.firstPoint[0] = this.getTargetBlock().getX();
@@ -135,7 +135,7 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    protected final void powder(final com.github.kevindagame.snipe.SnipeData v) {
+    protected final void powder(final SnipeData v) {
         if (this.points == 2) {
             if (this.numBlocks == 0) {
                 this.doCopy(v);
@@ -160,7 +160,7 @@ public class CopyPastaBrush extends Brush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final com.github.kevindagame.snipe.SnipeData v) {
+    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.COPYPASTA_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;

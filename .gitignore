@@ -36,3 +36,4 @@ output/
 # Testfiles
 test.sh
 /bin/
+VoxelSniperSpigot/run/*

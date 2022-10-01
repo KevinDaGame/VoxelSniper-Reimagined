@@ -2,6 +2,10 @@ plugins {
     id("voxel-core")
 }
 
+dependencies {
+    implementation(project(":VoxelSniperCore"))
+}
+
 
 val platform by extra("PLATFORM")
 
