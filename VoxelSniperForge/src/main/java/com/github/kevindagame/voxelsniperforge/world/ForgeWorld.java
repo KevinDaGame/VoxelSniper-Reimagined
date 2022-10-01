@@ -13,12 +13,15 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+
 
 import java.util.Iterator;
 import java.util.List;
 
-public record ForgeWorld(Level level) implements IWorld {
+public record ForgeWorld(ServerLevel level) implements IWorld {
     @Override
     public IBlock getBlock(VoxelLocation location) {
         return new ForgeBlock(level.getBlockState(new BlockPos(location.getX(), location.getY(), location.getZ())).getBlock());
@@ -26,7 +29,7 @@ public record ForgeWorld(Level level) implements IWorld {
 
     @Override
     public IBlock getBlock(int x, int y, int z) {
-        return return new ForgeBlock(level.getBlockState(new BlockPos(x, y, z)).getBlock());
+        return new ForgeBlock(level.getBlockState(new BlockPos(x, y, z)).getBlock());
     }
 
     @Override
@@ -57,7 +60,9 @@ public record ForgeWorld(Level level) implements IWorld {
 
     @Override
     public void strikeLightning(VoxelLocation location) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, level);
+        bolt.setPos(location.getX(), location.getY(), location.getZ());
+        level.addFreshEntity(bolt);
     }
 
     @Override
