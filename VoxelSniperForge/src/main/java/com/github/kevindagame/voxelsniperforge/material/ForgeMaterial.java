@@ -14,46 +14,46 @@ public record ForgeMaterial(Material material) implements IMaterial {
 
     @Override
     public String getKey() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean equals(String key) {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public IBlockData createBlockData() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public String getName() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean equals(VoxelMaterial material) {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isTransparent() {
-        return material.;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isBlock() {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean hasGravity() {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public IBlockData createBlockData(String s) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

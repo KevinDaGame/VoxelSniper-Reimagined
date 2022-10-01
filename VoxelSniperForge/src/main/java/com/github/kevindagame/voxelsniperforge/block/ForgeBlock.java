@@ -7,74 +7,79 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgeBlock extends AbstractBlock {
 
+    public ForgeBlock(Block block) {
+        super(block.);
+    }
 
     @Override
     public void setMaterial(VoxelMaterial material) {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public void setMaterial(VoxelMaterial material, boolean applyPhysics) {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Nullable
     @Override
     public BlockFace getFace(IBlock block) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public IBlockData getBlockData() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public void setBlockData(IBlockData blockData) {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public void setBlockData(IBlockData blockData, boolean applyPhysics) {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isLiquid() {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public IBlockState getState() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isBlockFacePowered(BlockFace face) {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isBlockFaceIndirectlyPowered(BlockFace face) {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isBlockIndirectlyPowered() {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public boolean isBlockPowered() {
-        return false;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
