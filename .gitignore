@@ -6,13 +6,10 @@
 # netbeans
 nbproject
 
-# maven
-/*/target/
-target/
-dependency-reduced-pom.xml
-
 # gradle
 .gradle/
+build/
+output/
 
 # vim
 .*.sw[a-p]
@@ -39,3 +36,4 @@ dependency-reduced-pom.xml
 # Testfiles
 test.sh
 /bin/
+VoxelSniperSpigot/run/*

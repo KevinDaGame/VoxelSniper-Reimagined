@@ -1,10 +1,10 @@
-name: maven-build
+name: gradle-build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -17,6 +17,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-          cache: maven
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots package
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
