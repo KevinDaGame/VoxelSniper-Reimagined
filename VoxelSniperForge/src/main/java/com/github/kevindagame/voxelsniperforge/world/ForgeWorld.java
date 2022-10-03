@@ -13,7 +13,9 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 
@@ -22,6 +24,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public record ForgeWorld(ServerLevel level) implements IWorld {
+
+    public ServerLevel getLevel() {
+        return level;
+    }
     @Override
     public IBlock getBlock(VoxelLocation location) {
         return new ForgeBlock(level.getBlockState(new BlockPos(location.getX(), location.getY(), location.getZ())).getBlock());
@@ -72,7 +78,17 @@ public record ForgeWorld(ServerLevel level) implements IWorld {
 
     @Override
     public void spawn(VoxelLocation location, VoxelEntityType entity) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        //TODO test this
+        var tag = EntityType.byString(entity.getKey());
+        if (tag.isPresent()){
+            Entity created = tag.get().create(level);
+            assert created != null;
+            created.setPos(location.getX(), location.getY(), location.getZ());
+            level.addFreshEntity(created);
+        }
+        else{
+            throw new IllegalArgumentException("Invalid entity type");
+        }
     }
 
     @Override
