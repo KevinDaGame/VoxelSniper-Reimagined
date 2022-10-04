@@ -28,7 +28,7 @@ public class ForgeChunk implements IChunk {
 
     @Override
     public IWorld getWorld() {
-        return new ForgeWorld(getLevel());
+        return level;
     }
 
     public LevelChunk getChunk() {
