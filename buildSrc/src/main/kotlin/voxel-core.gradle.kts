@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow")
@@ -23,17 +25,19 @@ repositories {
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
 
-    implementation("net.kyori:adventure-api:4.11.0")
-    implementation("net.kyori:adventure-text-minimessage:4.11.0")
-    implementation("net.kyori:adventure-text-serializer-legacy:4.11.0")
+    shadow("net.kyori:adventure-api:4.11.0")
+    shadow("net.kyori:adventure-text-minimessage:4.11.0")
+    shadow("net.kyori:adventure-text-serializer-legacy:4.11.0")
 
-    implementation("com.google.guava:guava:31.1-jre")
-    implementation("org.yaml:snakeyaml:1.31")
+    shadow("com.google.guava:guava:31.1-jre")
+    shadow("org.yaml:snakeyaml:1.31")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.5.1")
     testImplementation("org.mockito:mockito-inline:4.5.1")
 }
+
+configurations.testImplementation.extendsFrom(configurations.shadow.get())
 
 java {
     toolchain {
@@ -56,6 +60,7 @@ tasks {
     }
 
     shadowJar {
+        configurations = listOf(project.configurations.shadow.get())
         minimize()
         relocate("com.google.common", "com.github.kevindagame.voxelsniper.libs.com.google.common")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
