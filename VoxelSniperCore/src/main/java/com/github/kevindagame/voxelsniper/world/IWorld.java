@@ -60,7 +60,13 @@ public interface IWorld {
 
     void spawn(VoxelLocation location, VoxelEntityType entity);
 
-    void setBiome(int x, int z, VoxelBiome selectedBiome);
+    default void setBiome(int x, int z, VoxelBiome selectedBiome) {
+        setBiome(x, 0, z, selectedBiome);
+    }
+    default void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
+        setBiome(new VoxelLocation(this, x, y, z), selectedBiome);
+    }
+    void setBiome(VoxelLocation location, VoxelBiome selectedBiome);
 
     int getHighestBlockYAt(int x, int z);
 

@@ -8,6 +8,11 @@ import net.minecraft.world.level.chunk.LevelChunk;
 
 public class ForgeChunk implements IChunk {
     private final LevelChunk chunk;
+
+    public LevelChunk getChunk() {
+        return chunk;
+    }
+
     public ForgeChunk(LevelChunk chunkAt) {
         this.chunk = chunkAt;
     }

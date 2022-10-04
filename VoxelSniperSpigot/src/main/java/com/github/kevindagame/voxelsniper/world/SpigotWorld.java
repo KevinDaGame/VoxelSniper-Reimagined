@@ -77,9 +77,11 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    @Deprecated
-    public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
+    public void setBiome(VoxelLocation location, VoxelBiome selectedBiome) {
+        if(!this.equals(location.getWorld())) {
+            throw new IllegalArgumentException("Location is not in this world");
+        }
+        world.setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
 
     @Override
@@ -116,5 +118,20 @@ public record SpigotWorld(World world) implements IWorld {
                 return new SpigotBlock(bukkitIterator.next());
             }
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SpigotWorld that = (SpigotWorld) o;
+
+        return world.equals(that.world);
+    }
+
+    @Override
+    public int hashCode() {
+        return world.hashCode();
     }
 }

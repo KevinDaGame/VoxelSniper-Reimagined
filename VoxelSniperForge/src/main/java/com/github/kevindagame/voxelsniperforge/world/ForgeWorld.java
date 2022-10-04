@@ -13,11 +13,18 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.PalettedContainer;
 
 
 import java.util.Iterator;
@@ -92,8 +99,17 @@ public record ForgeWorld(ServerLevel level) implements IWorld {
     }
 
     @Override
-    public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void setBiome(VoxelLocation location, VoxelBiome selectedBiome) {
+        //TODO test this
+        var chunk = ((ForgeChunk)getChunkAtLocation(location.getBlockX(), location.getBlockZ())).getChunk();
+        var biomes = (PalettedContainer<Holder<Biome>>) chunk.getSection(chunk.getSectionIndex(location.getBlockY())).getBiomes();
+        biomes.getAndSetUnchecked(
+                location.getBlockX() & 3, location.getBlockY() & 3, location.getBlockZ() & 3,
+                level().registryAccess().registry(Registry.BIOME_REGISTRY)
+                        .orElseThrow()
+                        .getHolderOrThrow(ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(selectedBiome.getKey())))
+        );
+        chunk.setUnsaved(true);
     }
 
     @Override
