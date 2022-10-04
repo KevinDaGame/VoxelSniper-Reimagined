@@ -59,7 +59,7 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
 
     @Override
     public IChunk getChunkAtLocation(int x, int z) {
-        return new ForgeChunk(level.getChunkAt(new BlockPos(x, 0, z)));
+        return new ForgeChunk(level.getChunkAt(new BlockPos(x, 0, z)), this);
     }
 
     @Override
