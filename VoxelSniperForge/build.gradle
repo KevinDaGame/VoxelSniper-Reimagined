@@ -5,7 +5,10 @@ plugins {
 
 
 description='VoxelSniperForge'
-def platform = "forge"
+ext {
+    platform = "forge"
+}
+
 java {
     archivesBaseName = 'VoxelSniperForge'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
