@@ -23,14 +23,17 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
 
@@ -39,12 +42,13 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     }
     @Override
     public IBlock getBlock(VoxelLocation location) {
-        return new ForgeBlock(level.getBlockState(new BlockPos(location.getX(), location.getY(), location.getZ())).getBlock());
+        var blockState = level.getBlockState(new BlockPos(location.getX(), location.getY(), location.getZ())).getBlock();
+        return new ForgeBlock(location, Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(blockState.defaultBlockState().getBlock())));
     }
 
     @Override
     public IBlock getBlock(int x, int y, int z) {
-        return new ForgeBlock(level.getBlockState(new BlockPos(x, y, z)).getBlock());
+        return getBlock(new VoxelLocation(this, x, y, z));
     }
 
     @Override

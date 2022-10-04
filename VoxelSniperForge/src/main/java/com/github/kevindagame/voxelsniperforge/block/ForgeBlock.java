@@ -7,14 +7,20 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgeBlock extends AbstractBlock {
 
-    public ForgeBlock(Block block) {
-        super(block.);
+    private final Block block;
+
+    public ForgeBlock(VoxelLocation location, ResourceLocation material) {
+        super(location, VoxelMaterial.getMaterial(material.getNamespace(), material.getPath()));
+        this.block = ForgeRegistries.BLOCKS.getValue(material);
     }
 
     @Override
