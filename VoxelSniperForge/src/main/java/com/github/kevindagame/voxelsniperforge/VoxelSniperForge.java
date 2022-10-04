@@ -13,8 +13,14 @@ import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
+import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -36,12 +42,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(VoxelSniperForge.MODID)
@@ -74,7 +83,7 @@ public class VoxelSniperForge implements IVoxelsniper {
         VoxelSniper.voxelsniper = this;
         VoxelSniperForge.instance = this;
 //        this.fileHandler = new ForgeFileHandler(this);
-//        this.eventManager = new ForgeEventManager();
+        MinecraftForge.EVENT_BUS.register(new VoxelSniperListener(this));
         VoxelProfileManager.initialize();
 //        Messages.load(this);
 //        SpigotVoxelSniper.adventure = BukkitAudiences.create(this);
@@ -102,13 +111,13 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public IPlayer getPlayer(UUID uuid) {
-        return null;
+        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid);
     }
 
     @Nullable
     @Override
     public IPlayer getPlayer(String name) {
-        return null;
+        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name);
     }
 
     @Override
@@ -133,18 +142,21 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     @Override
     public java.util.logging.Logger getLogger() {
-        return null;
+        return LogManager.getLogManager().getLogger(MODID);
     }
 
     @Override
     public List<String> getOnlinePlayerNames() {
-        return null;
+        //get online player names
+        return Arrays.stream(ServerLifecycleHooks.getCurrentServer().getPlayerNames()).toList();
     }
 
     @Nullable
     @Override
     public IMaterial getMaterial(VoxelMaterial material) {
-        return null;
+        var block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(material.getNamespace(), material.getKey()));
+        assert block != null;
+        return new ForgeMaterial(block.defaultBlockState().getMaterial());
     }
 
     @Override

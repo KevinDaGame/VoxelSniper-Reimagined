@@ -54,7 +54,7 @@ public class VoxelSniperListener implements Listener {
                     BlockFace.valueOf(event.getBlockFace().name()))) {
                 event.setCancelled(true);
                 cooldown.add(player.getUniqueId());
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 1);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 10);
             }
         } catch (final Exception e) {
             e.printStackTrace();
