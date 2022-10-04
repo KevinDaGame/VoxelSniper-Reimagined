@@ -7,16 +7,19 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.Version;
+import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.IEventManager;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -61,6 +64,10 @@ public class VoxelSniperForge implements IVoxelsniper {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
     private static VoxelSniperForge instance;
+
+    public static VoxelSniperForge getInstance() {
+        return instance;
+    }
 
     public VoxelSniperForge() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -111,13 +118,18 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public IPlayer getPlayer(UUID uuid) {
-        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid);
+        return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid));
     }
 
     @Nullable
     @Override
     public IPlayer getPlayer(String name) {
-        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name);
+        return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name));
+    }
+
+    public IPlayer getPlayer(ServerPlayer p) {
+        // TODO keep track of players
+        return new ForgePlayer(p);
     }
 
     @Override
