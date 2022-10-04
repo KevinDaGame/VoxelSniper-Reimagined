@@ -25,12 +25,14 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.PalettedContainer;
+import net.minecraft.world.level.levelgen.Heightmap;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Iterator;
 import java.util.List;
 
-public record ForgeWorld(ServerLevel level) implements IWorld {
+public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
 
     public ServerLevel getLevel() {
         return level;
@@ -52,7 +54,7 @@ public record ForgeWorld(ServerLevel level) implements IWorld {
 
     @Override
     public int getMaxWorldHeight() {
-        return level().getMaxBuildHeight();
+        return level.getMaxBuildHeight();
     }
 
     @Override
@@ -105,7 +107,7 @@ public record ForgeWorld(ServerLevel level) implements IWorld {
         var biomes = (PalettedContainer<Holder<Biome>>) chunk.getSection(chunk.getSectionIndex(location.getBlockY())).getBiomes();
         biomes.getAndSetUnchecked(
                 location.getBlockX() & 3, location.getBlockY() & 3, location.getBlockZ() & 3,
-                level().registryAccess().registry(Registry.BIOME_REGISTRY)
+                level.registryAccess().registry(Registry.BIOME_REGISTRY)
                         .orElseThrow()
                         .getHolderOrThrow(ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(selectedBiome.getKey())))
         );
@@ -114,7 +116,8 @@ public record ForgeWorld(ServerLevel level) implements IWorld {
 
     @Override
     public int getHighestBlockYAt(int x, int z) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        //TODO test this
+        return level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY();
     }
 
     @Override
