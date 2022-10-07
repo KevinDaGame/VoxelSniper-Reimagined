@@ -3,7 +3,6 @@ package com.github.kevindagame.voxelsniperforge;
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
-import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.Version;
@@ -13,44 +12,25 @@ import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
-import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.PlayerList;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(VoxelSniperForge.MODID)
@@ -58,11 +38,11 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     // Define mod id in a common place for everything to reference
     public static final String MODID = "voxelsniperforge";
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private final Logger LOGGER;
     private static VoxelSniperForge instance;
 
     public VoxelSniperForge() {
+        LOGGER = Logger.getLogger(MODID);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
@@ -111,13 +91,13 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public IPlayer getPlayer(UUID uuid) {
-        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid);
+        return null;
     }
 
     @Nullable
     @Override
     public IPlayer getPlayer(String name) {
-        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name);
+        return null;
     }
 
     @Override
@@ -141,8 +121,8 @@ public class VoxelSniperForge implements IVoxelsniper {
     }
 
     @Override
-    public java.util.logging.Logger getLogger() {
-        return LogManager.getLogManager().getLogger(MODID);
+    public Logger getLogger() {
+        return LOGGER;
     }
 
     @Override
