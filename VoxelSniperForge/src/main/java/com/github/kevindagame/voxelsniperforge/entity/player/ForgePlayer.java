@@ -1,43 +1,33 @@
 package com.github.kevindagame.voxelsniperforge.entity.player;
 
 import com.github.kevindagame.VoxelSniper;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
-import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class ForgePlayer extends ForgeEntity implements IPlayer {
     private final ServerPlayer player;
@@ -90,16 +80,10 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     @Override
     public boolean teleport(IEntity other) {
-        var relativeArguments = java.util.EnumSet.noneOf(net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket.RelativeArgument.class);
-
         var location = other.getLocation();
         Preconditions.checkArgument(location.getWorld() != null, "location.world");
 
         if (this.player.getHealth() == 0 || this.player.isRemoved()) {
-            return false;
-        }
-
-        if (this.player.connection == null) {
             return false;
         }
 
@@ -116,7 +100,6 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
         }
 
         // Grab the To and From World Handles.
-        ServerLevel fromWorld = this.player.getLevel();
         ServerLevel toWorld = (ServerLevel) ((ForgeEntity) other).getEntity().getLevel();
 
         // Close any foreign inventory
@@ -147,18 +130,10 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
     }
 
     @Override
-    public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
-        Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((ForgeMaterial) m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
-
-        return new ForgeBlock(player.getTargetBlock(materials, maxDistance));
-    }
-
-    @Override
     public VoxelMaterial getItemInHand() {
-        var inv = player.getInventory();
-        var item = inv.getItem(inv.selected);
-        VoxelMaterial mat = VoxelMaterial.getMaterial(item.getItem());
-        return mat != null ? mat : VoxelMaterial.AIR;
+        var itemStack = player.getMainHandItem();
+        ResourceLocation item = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
+        return item != null ? VoxelMaterial.getMaterial(item.getNamespace(), item.getPath()) : VoxelMaterial.AIR;
     }
 
     @Override

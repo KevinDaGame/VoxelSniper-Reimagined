@@ -30,8 +30,6 @@ public interface IPlayer extends IEntity, Audience {
 
     IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
 
-    IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);
-
     VoxelMaterial getItemInHand();
 
     @Override

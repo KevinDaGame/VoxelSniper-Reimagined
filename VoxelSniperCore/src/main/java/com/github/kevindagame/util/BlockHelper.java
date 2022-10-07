@@ -86,7 +86,7 @@ public class BlockHelper {
      * @param choice Chosen index to set the painting to
      */
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
-        VoxelLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
+        VoxelLocation targetLocation = new BlockHelper(p).getTargetBlock().getLocation();
         IChunk paintingChunk = targetLocation.getChunk();
         double bestDistanceMatch = 50.0;
         IPainting bestMatch = null;

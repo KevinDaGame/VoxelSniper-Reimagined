@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.Painting;
-import net.minecraft.world.entity.player.Player;
 
 public class ForgeEntity implements IEntity {
     private final Entity entity;
