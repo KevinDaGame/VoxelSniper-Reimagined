@@ -1,6 +1,5 @@
 package com.github.kevindagame.voxelsniperforge.entity.player;
 
-import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -25,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,7 +47,6 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     @Override
     public void sendMessage(String message) {
-        VoxelSniper.voxelsniper.getLogger().info("player.sendMessage plainText");
         this.player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
     }
 
@@ -58,14 +57,13 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     @Override
     public void sendMessage(@NotNull Identity source, @NotNull Component message, @NotNull MessageType type) {
-        VoxelSniper.voxelsniper.getLogger().info("player.sendMessage Component");
         this.player.sendSystemMessage(toNative(message));
     }
 
     @Override
     public boolean hasPermission(String permissionNode) {
-        VoxelSniper.voxelsniper.getLogger().warning("player.hasPermission needs implementation");
-        return true;
+//        return PermissionAPI.getPermission(this.player, getPermissionNode(permissionNode));
+        return ServerLifecycleHooks.getCurrentServer().getPlayerList().isOp(player.getGameProfile());
     }
 
     @Override
