@@ -16,7 +16,7 @@ import java.util.List;
  * @author Giltwist
  * @author Monofraps (Merged Meteor brush)
  */
-public class CometBrush extends Brush {
+public class CometBrush extends AbstractBrush {
 
     private boolean useBigBalls = false;
 

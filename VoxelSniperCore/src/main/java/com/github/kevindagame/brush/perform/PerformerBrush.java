@@ -6,7 +6,7 @@ package com.github.kevindagame.brush.perform;
 
 import com.google.common.collect.Lists;
 import com.github.kevindagame.VoxelSniper;
-import com.github.kevindagame.brush.Brush;
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Voxel
  */
-public abstract class PerformerBrush extends Brush implements IPerformerBrush {
+public abstract class PerformerBrush extends AbstractBrush implements IPerformerBrush {
 
     protected vPerformer currentPerformer = new pMaterial();
 

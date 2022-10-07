@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author GavJenks
  */
-public class FlatOceanBrush extends Brush {
+public class FlatOceanBrush extends AbstractBrush {
 
     private static final int DEFAULT_WATER_LEVEL = 29;
     private static final int DEFAULT_FLOOR_LEVEL = 8;

@@ -12,7 +12,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
  *
  * @author Voxel
  */
-public class ShellBallBrush extends Brush {
+public class ShellBallBrush extends AbstractBrush {
 
     /**
      *

@@ -7,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 /**
  * @author Gavjenks
  */
-public class LightningBrush extends Brush {
+public class LightningBrush extends AbstractBrush {
 
     /**
      *

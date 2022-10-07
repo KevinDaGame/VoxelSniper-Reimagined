@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Abstract implementation of the {@link IBrush} interface.
  */
-public abstract class Brush implements IBrush {
+public abstract class AbstractBrush implements IBrush {
 
     protected static final int CHUNK_SIZE = 16;
     /**

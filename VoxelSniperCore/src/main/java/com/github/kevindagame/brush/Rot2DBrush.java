@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Piotr
  */
-public class Rot2DBrush extends Brush {
+public class Rot2DBrush extends AbstractBrush {
     private BlockWrapper[][][] snap;
     private double se;
 
