@@ -10,11 +10,12 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 import com.google.common.base.Preconditions;
+import com.google.gson.Gson;
 
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +32,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ForgePlayer extends ForgeEntity implements IPlayer {
+    private static final Gson GSON = new Gson();
     private final ServerPlayer player;
 
     public ForgePlayer(ServerPlayer player) {
@@ -45,13 +47,19 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     @Override
     public void sendMessage(String message) {
+        VoxelSniper.voxelsniper.getLogger().info("player.sendMessage plainText");
         this.player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
+    }
+
+    private MutableComponent toNative(@NotNull Component component) {
+        if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
+        return net.minecraft.network.chat.Component.Serializer.fromJson(GSON.toJsonTree(component));
     }
 
     @Override
     public void sendMessage(@NotNull Identity source, @NotNull Component message, @NotNull MessageType type) {
-        VoxelSniper.voxelsniper.getLogger().warning("player.sendMessage needs implementation to support color");
-        sendMessage(PlainTextComponentSerializer.plainText().serialize(message));
+        VoxelSniper.voxelsniper.getLogger().info("player.sendMessage Component");
+        this.player.sendSystemMessage(toNative(message));
     }
 
     @Override
