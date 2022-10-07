@@ -14,6 +14,7 @@ import com.google.common.base.Preconditions;
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -44,12 +45,13 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     @Override
     public void sendMessage(String message) {
-        VoxelSniper.voxelsniper.getLogger().warning("player.sendMessage needs implementation");
+        this.player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
     }
 
     @Override
     public void sendMessage(@NotNull Identity source, @NotNull Component message, @NotNull MessageType type) {
-        VoxelSniper.voxelsniper.getLogger().warning("player.sendMessage needs implementation");
+        VoxelSniper.voxelsniper.getLogger().warning("player.sendMessage needs implementation to support color");
+        sendMessage(PlainTextComponentSerializer.plainText().serialize(message));
     }
 
     @Override
