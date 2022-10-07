@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author MikeMatrix
  */
-public class MoveBrush extends Brush {
+public class MoveBrush extends AbstractBrush {
 
     /**
      * Saved direction.

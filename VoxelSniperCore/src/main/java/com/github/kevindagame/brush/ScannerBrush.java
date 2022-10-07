@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author DivineRage
  */
-public class ScannerBrush extends Brush {
+public class ScannerBrush extends AbstractBrush {
 
     private static final int DEPTH_MIN = 1;
     private static final int DEPTH_DEFAULT = 24;

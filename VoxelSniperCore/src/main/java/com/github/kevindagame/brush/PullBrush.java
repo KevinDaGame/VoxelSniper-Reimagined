@@ -16,7 +16,7 @@ import java.util.List;
  * @author Piotr
  */
 // TODO: Figure out what this does
-public class PullBrush extends Brush {
+public class PullBrush extends AbstractBrush {
 
     private double pinch = 1;
     private double bubble = 0;

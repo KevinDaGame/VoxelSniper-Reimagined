@@ -14,7 +14,7 @@ import java.util.HashSet;
 /**
  *
  */
-public class StampBrush extends Brush {
+public class StampBrush extends AbstractBrush {
 
     protected HashSet<BlockWrapper> clone = new HashSet<>();
     protected HashSet<BlockWrapper> fall = new HashSet<>();

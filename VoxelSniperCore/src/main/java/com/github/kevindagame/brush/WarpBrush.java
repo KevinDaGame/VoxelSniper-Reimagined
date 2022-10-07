@@ -8,7 +8,7 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 /**
  * @author MikeMatrix
  */
-public class WarpBrush extends Brush {
+public class WarpBrush extends AbstractBrush {
 
     /**
      *

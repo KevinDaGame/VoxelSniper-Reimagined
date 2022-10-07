@@ -12,7 +12,7 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
  *
  * @author Gavjenks
  */
-public class RulerBrush extends Brush {
+public class RulerBrush extends AbstractBrush {
 
     private final int xOff = 0;
     private final int yOff = 0;

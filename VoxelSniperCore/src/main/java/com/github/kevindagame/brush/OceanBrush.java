@@ -20,7 +20,7 @@ import java.util.List;
  * @author Voxel
  */
 // TODO: FIX (not working?)
-public class OceanBrush extends Brush {
+public class OceanBrush extends AbstractBrush {
 
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
     private static final int WATER_LEVEL_MIN = 12;

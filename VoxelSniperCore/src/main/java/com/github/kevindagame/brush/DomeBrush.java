@@ -16,7 +16,7 @@ import java.util.Set;
  * @author Gavjenks
  * @author MikeMatrix
  */
-public class DomeBrush extends Brush {
+public class DomeBrush extends AbstractBrush {
 
     /**
      *
