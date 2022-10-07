@@ -24,20 +24,22 @@ repositories {
 
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
+    compileOnly("com.google.guava:guava:31.1-jre")
 
     shadow("net.kyori:adventure-api:4.11.0")
     shadow("net.kyori:adventure-text-minimessage:4.11.0")
     shadow("net.kyori:adventure-text-serializer-legacy:4.11.0")
 
-    shadow("com.google.guava:guava:31.1-jre")
     shadow("org.yaml:snakeyaml:1.31")
 
+    testImplementation("com.google.guava:guava:31.1-jre")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.5.1")
     testImplementation("org.mockito:mockito-inline:4.5.1")
 }
 
 configurations.testImplementation.extendsFrom(configurations.shadow.get())
+configurations.runtimeClasspath.extendsFrom(configurations.shadow.get())
 
 java {
     toolchain {
