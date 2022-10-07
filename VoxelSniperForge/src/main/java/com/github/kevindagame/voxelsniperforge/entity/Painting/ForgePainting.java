@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 
 public class ForgePainting extends ForgeEntity implements IPainting {
-    private final List<ResourceLocation> paintingVariants = ForgeRegistries.PAINTING_VARIANTS.getKeys().stream().toList();
+    private static final List<ResourceLocation> paintingVariants = ForgeRegistries.PAINTING_VARIANTS.getKeys().stream().toList();
 
     public ForgePainting(Painting entity) {
         super(entity);
