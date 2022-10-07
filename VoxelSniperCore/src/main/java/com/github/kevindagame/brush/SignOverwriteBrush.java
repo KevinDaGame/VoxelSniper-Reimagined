@@ -17,7 +17,7 @@ import java.util.Arrays;
  *
  * @author Monofraps
  */
-public class SignOverwriteBrush extends Brush {
+public class SignOverwriteBrush extends AbstractBrush {
 
     private static final int MAX_SIGN_LINE_LENGTH = 15;
     private static final int NUM_SIGN_LINES = 4;

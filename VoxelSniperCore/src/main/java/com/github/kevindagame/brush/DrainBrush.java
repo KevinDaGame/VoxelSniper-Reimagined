@@ -17,7 +17,7 @@ import java.util.List;
  * @author Gavjenks
  * @author psanker
  */
-public class DrainBrush extends Brush {
+public class DrainBrush extends AbstractBrush {
 
     private final double trueCircle = 0.5;
     private boolean disc = false;

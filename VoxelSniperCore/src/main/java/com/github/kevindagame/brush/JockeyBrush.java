@@ -18,7 +18,7 @@ import java.util.Set;
  * @author Voxel
  * @author Monofraps
  */
-public class JockeyBrush extends Brush {
+public class JockeyBrush extends AbstractBrush {
 
     private static final int ENTITY_STACK_LIMIT = 50;
     private JockeyType jockeyType = JockeyType.NORMAL;

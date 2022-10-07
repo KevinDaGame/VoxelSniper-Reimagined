@@ -9,7 +9,7 @@ import com.github.kevindagame.util.VoxelMessage;
  *
  * @author Voxel
  */
-public class PaintingBrush extends Brush {
+public class PaintingBrush extends AbstractBrush {
 
     /**
      *
