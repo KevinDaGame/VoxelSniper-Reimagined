@@ -22,7 +22,7 @@ public final class PermissionLoader {
     }
 
     public void addPermission(Permission perm) {
-        permissionMap.put(perm.name(), perm);
+        permissionMap.put(perm.getName(), perm);
     }
 
     @Nullable
@@ -38,34 +38,41 @@ public final class PermissionLoader {
         if (loaded) return;
         YamlConfiguration yaml = new YamlConfiguration(PermissionLoader.class.getClassLoader(), "permissions.yml");
 
-        var data = yaml.getStringList("permissions");
-        data.forEach(this::addPermissionIfNotExists);
+        var data = yaml.getMapList("permissions");
+        data.forEach(e -> {
+            var name = e.get("name");
+            var desc = e.get("description");
+            if (name == null) throw new IllegalArgumentException("Permission name must not be null");
+            addPermissionIfNotExists(e.get("name").toString(), desc != null ? desc.toString() : null);
+        });
         loaded = true;
     }
 
-    private Permission addPermissionIfNotExists(final String name) {
+    private Permission addPermissionIfNotExists(final String name, String description) {
         var countPoints = name.split("\\.").length - 1;
         String nameWithoutWildcard = name;
         if (countPoints > 1 && name.endsWith(".*")) {
-            // remove wildcard at end
+            // Remove wildcard at end
             nameWithoutWildcard = name.substring(0, name.length() - 2);
         }
         if (countPoints > 0 && !name.endsWith(".*")) {
-            // remove last part of the permission
+            // Remove last part of the permission
             String wildcard = nameWithoutWildcard.substring(0, name.lastIndexOf('.')) + ".*";
-            // we recursively generate the wildcard permissions
-            Permission parent = addPermissionIfNotExists(wildcard);
-            return addPermissionIfNotExists(name, parent);
+            // Recursively generate the wildcard permissions
+            Permission parent = addPermissionIfNotExists(wildcard, null);
+            return addPermissionIfNotExists(name, description, parent);
         }
-        return addPermissionIfNotExists(name, null);
+        return addPermissionIfNotExists(name, description, null);
     }
 
-    private Permission addPermissionIfNotExists(String name, Permission parent) {
+    private Permission addPermissionIfNotExists(String name, String description, Permission parent) {
         Permission permission = getPermission(name);
         if (permission == null) {
             permission = new Permission(name, parent);
             addPermission(permission);
         }
+        if (description != null)
+            permission.description(description);
         return permission;
     }
 }

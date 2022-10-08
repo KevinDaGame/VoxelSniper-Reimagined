@@ -1,83 +1,91 @@
 permissions:
-- voxelsniper.sniper
-- voxelsniper.ignorelimitations
-- voxelsniper.goto
-- voxelsniper.undouser
-- voxelsniper.brush.ball
-- voxelsniper.brush.biome
-- voxelsniper.brush.blendball
-- voxelsniper.brush.blenddisc
-- voxelsniper.brush.blendvoxel
-- voxelsniper.brush.blendvoxeldisc
-- voxelsniper.brush.blob
-- voxelsniper.brush.blockreset
-- voxelsniper.brush.blockresetsurface
-- voxelsniper.brush.canyon
-- voxelsniper.brush.canyonselection
-- voxelsniper.brush.checkervoxeldisc
-- voxelsniper.brush.cleansnow
-- voxelsniper.brush.clonestamp
-- voxelsniper.brush.comet
-- voxelsniper.brush.copypasta
-- voxelsniper.brush.cylinder
-- voxelsniper.brush.disc
-- voxelsniper.brush.discface
-- voxelsniper.brush.dome
-- voxelsniper.brush.drain
-- voxelsniper.brush.ellipse
-- voxelsniper.brush.ellipsoid
-- voxelsniper.brush.entity
-- voxelsniper.brush.entityremoval
-- voxelsniper.brush.eraser
-- voxelsniper.brush.erode
-- voxelsniper.brush.extrude
-- voxelsniper.brush.filldown
-- voxelsniper.brush.flatocean
-- voxelsniper.brush.generatetree
-- voxelsniper.brush.heatray
-- voxelsniper.brush.jaggedline
-- voxelsniper.brush.jockey
-- voxelsniper.brush.lightning
-- voxelsniper.brush.line
-- voxelsniper.brush.move
-- voxelsniper.brush.ocean
-- voxelsniper.brush.overlay
-- voxelsniper.brush.painting
-- voxelsniper.brush.pull
-- voxelsniper.brush.punish
-- voxelsniper.brush.randomerode
-- voxelsniper.brush.regeneratechunk
-- voxelsniper.brush.ring
-- voxelsniper.brush.rot2d
-- voxelsniper.brush.rot2dvert
-- voxelsniper.brush.rot3d
-- voxelsniper.brush.ruler
-- voxelsniper.brush.scanner
-- voxelsniper.brush.set
-- voxelsniper.brush.setredstoneflip
-- voxelsniper.brush.setredstonerotate
-- voxelsniper.brush.shellball
-- voxelsniper.brush.shellset
-- voxelsniper.brush.shellvoxel
-- voxelsniper.brush.signoverwrite
-- voxelsniper.brush.snipe
-- voxelsniper.brush.snowcone
-- voxelsniper.brush.spiralstaircase
-- voxelsniper.brush.splatterball
-- voxelsniper.brush.splatterdisc
-- voxelsniper.brush.splatteroverlay
-- voxelsniper.brush.splattervoxel
-- voxelsniper.brush.splattervoxeldisc
-- voxelsniper.brush.spline
-- voxelsniper.brush.stamp
-- voxelsniper.brush.stencil
-- voxelsniper.brush.stencillist
-- voxelsniper.brush.threepointcircle
-- voxelsniper.brush.treesnipe
-- voxelsniper.brush.triangle
-- voxelsniper.brush.underlay
-- voxelsniper.brush.voltmeter
-- voxelsniper.brush.voxel
-- voxelsniper.brush.voxeldisc
-- voxelsniper.brush.voxeldiscface
-- voxelsniper.brush.warp
+- name: voxelsniper.sniper
+  description: Allows acces to snipe commands
+- name: voxelsniper.ignorelimitations
+  description: Allows player to ignore brush limitations
+- name: voxelsniper.goto
+  description: Allows player to use the goto command
+- name: voxelsniper.undouser
+  description: Allows player to use the undouser command
+- name: voxelsniper.brush.ball
+- name: voxelsniper.brush.biome
+- name: voxelsniper.brush.blendball
+- name: voxelsniper.brush.blenddisc
+- name: voxelsniper.brush.blendvoxel
+- name: voxelsniper.brush.blendvoxeldisc
+- name: voxelsniper.brush.blob
+- name: voxelsniper.brush.blockreset
+- name: voxelsniper.brush.blockresetsurface
+- name: voxelsniper.brush.canyon
+- name: voxelsniper.brush.canyonselection
+- name: voxelsniper.brush.checkervoxeldisc
+- name: voxelsniper.brush.cleansnow
+- name: voxelsniper.brush.clonestamp
+- name: voxelsniper.brush.comet
+- name: voxelsniper.brush.copypasta
+- name: voxelsniper.brush.cylinder
+- name: voxelsniper.brush.disc
+- name: voxelsniper.brush.discface
+- name: voxelsniper.brush.dome
+- name: voxelsniper.brush.drain
+- name: voxelsniper.brush.ellipse
+- name: voxelsniper.brush.ellipsoid
+- name: voxelsniper.brush.entity
+- name: voxelsniper.brush.entityremoval
+- name: voxelsniper.brush.eraser
+- name: voxelsniper.brush.erode
+- name: voxelsniper.brush.extrude
+- name: voxelsniper.brush.filldown
+- name: voxelsniper.brush.flatocean
+- name: voxelsniper.brush.generatetree
+- name: voxelsniper.brush.heatray
+- name: voxelsniper.brush.jaggedline
+- name: voxelsniper.brush.jockey
+- name: voxelsniper.brush.lightning
+- name: voxelsniper.brush.line
+- name: voxelsniper.brush.move
+- name: voxelsniper.brush.ocean
+- name: voxelsniper.brush.overlay
+- name: voxelsniper.brush.painting
+- name: voxelsniper.brush.pull
+- name: voxelsniper.brush.punish
+- name: voxelsniper.brush.randomerode
+- name: voxelsniper.brush.regeneratechunk
+- name: voxelsniper.brush.ring
+- name: voxelsniper.brush.rot2d
+- name: voxelsniper.brush.rot2dvert
+- name: voxelsniper.brush.rot3d
+- name: voxelsniper.brush.ruler
+- name: voxelsniper.brush.scanner
+- name: voxelsniper.brush.set
+- name: voxelsniper.brush.setredstoneflip
+- name: voxelsniper.brush.setredstonerotate
+- name: voxelsniper.brush.shellball
+- name: voxelsniper.brush.shellset
+- name: voxelsniper.brush.shellvoxel
+- name: voxelsniper.brush.signoverwrite
+- name: voxelsniper.brush.snipe
+- name: voxelsniper.brush.snowcone
+- name: voxelsniper.brush.spiralstaircase
+- name: voxelsniper.brush.splatterball
+- name: voxelsniper.brush.splatterdisc
+- name: voxelsniper.brush.splatteroverlay
+- name: voxelsniper.brush.splattervoxel
+- name: voxelsniper.brush.splattervoxeldisc
+- name: voxelsniper.brush.spline
+- name: voxelsniper.brush.stamp
+- name: voxelsniper.brush.stencil
+- name: voxelsniper.brush.stencillist
+- name: voxelsniper.brush.threepointcircle
+- name: voxelsniper.brush.treesnipe
+- name: voxelsniper.brush.triangle
+- name: voxelsniper.brush.underlay
+- name: voxelsniper.brush.voltmeter
+- name: voxelsniper.brush.voxel
+- name: voxelsniper.brush.voxeldisc
+- name: voxelsniper.brush.voxeldiscface
+- name: voxelsniper.brush.warp
+- name: voxelsniper.brush.*
+  description: Allows player to use all brushes
+- name: voxelsniper.*
+  description: Allows access to all VoxelSniper commands.

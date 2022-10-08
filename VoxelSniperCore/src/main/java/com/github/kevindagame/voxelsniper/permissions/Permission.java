@@ -6,7 +6,11 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public record Permission(String name, Permission parent) {
+public final class Permission {
+    private final @NotNull String name;
+    private final @Nullable Permission parent;
+    private @Nullable String description;
+
     public Permission(@NotNull String name, @Nullable Permission parent) {
         this.name = name;
         this.parent = parent;
@@ -27,5 +31,24 @@ public record Permission(String name, Permission parent) {
 
     public List<Permission> getChildren() {
         return PermissionLoader.getInstance().getAllPermissions().stream().filter(p -> this.equals(p.parent)).toList();
+    }
+
+    void description(String description) {
+        this.description = description;
+    }
+
+    @Nullable
+    public String getDescription() {
+        return description;
+    }
+
+    @NotNull
+    public String getName() {
+        return name;
+    }
+
+    @Nullable
+    public Permission getParent() {
+        return parent;
     }
 }

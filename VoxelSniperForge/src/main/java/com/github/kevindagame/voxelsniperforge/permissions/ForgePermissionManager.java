@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.server.permission.PermissionAPI;
@@ -24,12 +25,19 @@ public class ForgePermissionManager {
 
     private static PermissionNode<Boolean> createNode(Permission permission) {
         PermissionNode.PermissionResolver<Boolean> defaultResolver = new ForgePermissionResolver(permission);
-        var split = permission.name().split("\\.");
+        var split = permission.getName().split("\\.");
+        PermissionNode<Boolean> res;
         if (split.length > 1) {
-            var remaining = permission.name().substring((split[0] + ".").length());
-            return new PermissionNode<>(split[0], remaining, PermissionTypes.BOOLEAN, defaultResolver);
+            var remaining = permission.getName().substring((split[0] + ".").length());
+            res = new PermissionNode<>(split[0], remaining, PermissionTypes.BOOLEAN, defaultResolver);
+        } else {
+            res = new PermissionNode<>(PERMISSION_PREFIX, split[0], PermissionTypes.BOOLEAN, defaultResolver);
         }
-        return new PermissionNode<>(PERMISSION_PREFIX, split[0], PermissionTypes.BOOLEAN, defaultResolver);
+
+        var name = Component.literal(permission.getName());
+        var desc = Component.literal(permission.getDescription() != null ? permission.getDescription() : "");
+        res.setInformation(name, desc);
+        return res;
     }
 
     public static void register(PermissionGatherEvent.Nodes event) {
@@ -50,8 +58,8 @@ public class ForgePermissionManager {
     private record ForgePermissionResolver(Permission permission) implements PermissionNode.PermissionResolver<Boolean> {
         @Override
         public Boolean resolve(@Nullable ServerPlayer player, UUID playerUUID, PermissionDynamicContext<?>... context) {
-            if (permission.parent() != null) {
-                var parentNode = getPermissionNode(permission.parent().name());
+            if (permission.getParent() != null) {
+                var parentNode = getPermissionNode(permission.getParent().getName());
                 if (player != null) {
                     return PermissionAPI.getPermission(player, parentNode);
                 }
