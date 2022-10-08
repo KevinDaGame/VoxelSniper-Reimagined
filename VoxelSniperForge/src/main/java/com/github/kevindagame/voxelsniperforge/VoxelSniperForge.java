@@ -13,6 +13,7 @@ import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,7 +30,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -134,9 +134,9 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public IMaterial getMaterial(VoxelMaterial material) {
-        var block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(material.getNamespace(), material.getKey()));
-        assert block != null;
-        return new ForgeMaterial(block.defaultBlockState().getMaterial());
+        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(material.getNamespace(), material.getKey()));
+        assert item != null;
+        return new ForgeMaterial(item);
     }
 
     @Override
