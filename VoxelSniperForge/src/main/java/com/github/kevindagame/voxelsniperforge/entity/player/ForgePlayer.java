@@ -8,6 +8,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
+import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 
@@ -24,7 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -62,8 +63,8 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     @Override
     public boolean hasPermission(String permissionNode) {
-//        return PermissionAPI.getPermission(this.player, getPermissionNode(permissionNode));
-        return ServerLifecycleHooks.getCurrentServer().getPlayerList().isOp(player.getGameProfile());
+        return PermissionAPI.getPermission(this.player, ForgePermissionManager.getPermissionNode(permissionNode));
+//        return ServerLifecycleHooks.getCurrentServer().getPlayerList().isOp(player.getGameProfile());
     }
 
     @Override
