@@ -1,0 +1,584 @@
+BRUSH_INVALID_PARAM: <red>Invalid parameter! Use </red><light_purple>'/b %triggerHandle% info'</light_purple><red> to display valid parameters.
+TREESNIPE_USAGE: |-
+  <gold>Tree Snipe Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [treeType]  -- Change tree type
+SPLATTER_VOXEL_DISC_BRUSH_USAGE: |-
+  <gold>Splatter Voxel Disc Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+CHECKER_USING_WORLD_CORDS: '<aqua>Using world coordinates: %useWorldCoordinates%'
+EXTRUDE_BRUSH_USAGE: |-
+  <gold>Extrude Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+SPLATTER_FOXEL_BRUSH_USAGE: |-
+  <gold>Splatter Voxel Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+JAGGED_LINE_BRUSH_RECURSION_RANGE: <red>Recursion must be between %RECURSION_MIN% - %RECURSION_MAX%
+BLEND_VOXEL_BRUSH_USAGE: |-
+  <gold>Voxel blend Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+BIOME_DOES_NOT_EXIST: <red>That biome does not exist.
+ERROR: <red>Oops. Something went wrong.
+FLAT_OCEAN_BRUSH_USAGE: |-
+  <gold>Flat Ocean Brush Parameters:
+  </gold><aqua>/b %triggerHandle% water [number]  -- Set the y-level the water will rise to. (default: 29)
+  </aqua><aqua>/b %triggerHandle% floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)
+ENTITY_REMOVAL_BRUSH_USAGE: |-
+  <gold>Entity Brush Parameters:
+  </gold><aqua>/b %triggerHandle% + [entityType]  -- Add entity to exception list
+  </aqua><aqua>/b %triggerHandle% - [entityType]  -- Remove entity from exception list
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets exception list to defaults
+  </aqua><aqua>/b %triggerHandle% clear  -- Clear exception list
+  </aqua><aqua>/b %triggerHandle% list  -- Shows entities in exception list
+BRUSH_SMOOTH_CIRCLE: <gold>Using smooth circles mode
+OFF_WORLD_END_POS: '<dark_purple>Warning: off-world end position.'
+INPUT_NO_NUMBER: <red>Invalid input, please enter a valid number!
+ROTATION_3D_BRUSH_USAGE: |-
+  <gold>3D Rotation Brush Parameters:
+  </gold><aqua>/b %triggerHandle% pitch [0-359] -- Set pitch rotation (rotation about the Z axis).
+  </aqua><aqua>/b %triggerHandle% roll [0-359] -- Set roll rotation (rotation about the X axis).
+  </aqua><aqua>/b %triggerHandle% yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).
+DISC_BRUSH_USAGE: |-
+  <gold>Disc Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+REPLACEMENT_DATA: '<dark_gray>Replace Target Data Value: <dark_aqua>%data%</dark_aqua></dark_gray>'
+PERFORMER_MESSAGE: <dark_aqua>You can use </dark_aqua><yellow>'/b %triggerHandle% p [performer]'</yellow><dark_aqua> to change performers now.
+BIOME_BRUSH_USAGE: |-
+  <gold>Biome Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [biomeType] -- Change brush to the specified biome
+REFRESHED_CHUNK: Refreshed the chunk that you are standing in.
+BLEND_BALL_BRUSH_USAGE: |-
+  <gold>Blend Ball Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+FIRST_POINT_SELECTED: <dark_purple>First point selected.
+SECOND_POINT_SELECTED: <dark_purple>Second point selected.
+THIRD_POINT_SELECTED: <dark_purple>Third point selected.
+POINTS_CLEARED: <dark_purple>Points cleared
+FACE_POWER_MESSAGE: <blue>%face% Direct? %direct% %face% Indirect? %indirect%
+AXIS_SET_TO_VALUE: '<aqua>%axis% radius set to: </aqua><dark_aqua>%value%'
+PARAMETER_PARSE_ERROR: <red>Error while parsing parameter %parameter%
+CHECKER_DISC_BRUSH_USAGE: |-
+  <gold>Checker Voxel Disc Parameters:
+  </gold><aqua>/b %triggerHandle% worldcoords -- Toggle to use World Coordinates or not (default: true)
+COMET_BRUSH_USAGE: |-
+  <gold>Comet Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [big|small]  -- Sets your ball size
+GOTO_INVALID_SYNTAX: <red>Invalid syntax. Command:</red><gold>/goto \<x> \<z>
+OFF_WORLD_START_POS: '<dark_purple>Warning: off-world start position.'
+FILL_DOWN_BRUSH_USAGE: |-
+  <gold>Fill Down Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle use smooth circles (default: false)
+  </aqua><aqua>/b %triggerHandle% liquid  -- Toggle filling liquids (default: true)
+  </aqua><aqua>/b %triggerHandle% existing  -- Toggle filling existing blocks or all blocks. (Toggle)
+ROTATE_2D_BRUSH_USAGE: |-
+  <gold>2D Rotation Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [number]  -- Set angle in degrees
+FILL_STAMP: Fill Stamp
+BALL_BLEND_BRUSH_USAGE: |-
+  <gold>Blend Ball Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+TARGET_MUST_BE_VISIBLE: <red>Snipe target block must be visible.
+BLEND_DISC_BRUSH_USAGE: |-
+  <gold>Blend Disc Parameters:
+  </gold><aqua>/b %triggerHandle% water -- toggle include water (default: exclude)
+TOGGLE_PRINTOUT: <gold>Brush info printout mode has been toggled <dark_red>%state%</dark_red></gold>
+NO_AIR_STAMP: No-Air Stamp
+VOXEL_LIST_EMPTY: <dark_green>No blocks selected!</dark_green>
+VOLTMETER_BRUSH_MESSAGE: Right click with arrow to see if blocks/faces are powered. Powder measures wire current.
+SCANNER_BRUSH_USAGE: |-
+  <gold>Scanner brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number] -- will set the search depth to #. Clamps to 1 - 64.
+SPLINE_BRUSH_USAGE: |-
+  <gold>Spline Brush Parameters:
+  </gold><aqua>/b %triggerHandle% ss  -- Enable endpoint selection mode for desired curve
+  </aqua><aqua>/b %triggerHandle% sc  -- Enable control point selection mode for desired curve
+  </aqua><aqua>/b %triggerHandle% clear  -- Clear out the curve selection
+  </aqua><aqua>/b %triggerHandle% render  -- Render curve from control points
+ENTITY_BRUSH_MESSAGE: <light_purple>Entity Brush (%entity%)
+REPLACEMENT_MAT: '<aqua>Replace Target Material: <red>%mat%</red></aqua>'
+BRUSH_MESSAGE_PREFIX: <light_purple>
+PAINTING_SET: '<green>Painting set to ID: %id%'
+OVERLAY_BRUSH_USAGE: |-
+  <gold>Overlay Brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
+  </aqua><aqua>/b %triggerHandle% mode  -- Change target blocks to natural, custom defined or all blocks.
+POINT_1_SET: Point 1 set.
+SMOOTHSPHERE_ALGORITHM: '<aqua>Smooth sphere algorithm: %smoothSphere%'
+COPYPASTA_BRUSH_USAGE: |-
+  <gold>CopyPasta Brush Parameters:
+  </gold><aqua>/b %triggerHandle% air  -- Toggle include air during paste (default: true)
+  </aqua><aqua>/b %triggerHandle% rotate [number]  -- Set rotation pivot (default: 0)
+ERODE_BRUSH_USAGE: |-
+  <gold>Erode Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [preset]  -- Change active erode brush preset
+PERFORMER: '<dark_purple>Performer: <dark_green>%performer%</dark_green></dark_purple>'
+BRUSH_SIZE_LARGE: '<red>WARNING: Large brush size selected!</red>'
+TOGGLE_LIGHTNING: <gold>Lightning mode has been toggled <dark_red>%state%</dark_red></gold>
+ENTITYBRUSH_ENTITY_TYPE: '<gold>Entity type: </gold><dark_green>%type%'
+FIRST_COORDINATE_NOT_SET: '<red>Warning: You did not select a first coordinate with the arrow'
+ENTITYBRUSH_UNKNOWN_ENTITY: <red>That entity type does not exist.
+ENTITYBRUSH_USAGE: |-
+  <gold>Entity Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [entityType] -- Change brush to the specified entity type
+ENTITY_REMOVE_COUNT: <green>Removed </green><red>%entityCount%</red><green> entities out of </green><blue>%chunkCount%</blue><green>%multiple%
+BRUSH_SIZE: '<green>Brush Size: <dark_red>%size%</dark_red></green>'
+RING_BRUSH_USAGE: |-
+  <gold>Ring Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+  </aqua><aqua>/b %triggerHandle% inner [decimal]  -- Set inner radius to specified value
+SIGN_BRUSH_USAGE: |-
+  <aqua>Sign Overwrite Brush Powder/Arrow:
+  </aqua><blue>The arrow writes the internal line buffer to the tearget sign.
+  </blue><blue>The powder reads the text of the target sign into the internal buffer.
+  </blue><aqua>Sign Overwrite Brush Parameters:
+  </aqua><green>-1[:(enabled|disabled)] ... </green><blue>-- Sets the text of the first sign line. (e.g. -1 Blah Blah)
+  </blue><green>-2[:(enabled|disabled)] ... </green><blue>-- Sets the text of the second sign line. (e.g. -2 Blah Blah)
+  </blue><green>-3[:(enabled|disabled)] ... </green><blue>-- Sets the text of the third sign line. (e.g. -3 Blah Blah)
+  </blue><green>-4[:(enabled|disabled)] ... </green><blue>-- Sets the text of the fourth sign line. (e.g. -4 Blah Blah)
+  </blue><green>-clear </green><blue>-- Clears the line buffer. (Alias: -c)
+  </blue><green>-clearall </green><blue>-- Clears the line buffer and sets all lines back to enabled. (Alias: -ca)
+  </blue><green>-multiple [on|off] </green><blue>-- Enables or disables ranged mode. (Alias: -m) (see Wiki for more information)
+  </blue><green>-save (name) </green><blue>-- Save your buffer to a file named [name]. (Alias: -s)
+  </blue><green>-open (name) </green><blue>-- Loads a buffer from a file named [name]. (Alias: -o)
+SELECTION_SIZE_ABOVE_LIMIT: <red>Selection size above hardcoded limit, please use a smaller selection.
+ENTITYBRUSH_SPAWN_FAIL: <red>Cannot spawn entity!
+NOTHING_TO_UNDO: <green>There's nothing to undo.
+PAINTING_INVALID_SYNTAX: '<red>Invalid syntax. Command: /painting \<number>'
+JOCKEY_BRUSH_USAGE: "<gold>Jockey Brush Parameters: \n</gold><aqua>/b %triggerHandle% [inverse, stack, normal] -- Switch between modes\n</aqua><aqua>/b %triggerHandle% player  -- Toggle target players or all entities (default: players only)\n</aqua><blue>Inverse Mode: Target sits on you  |  Stack Mode: Entities stack on top of each other "
+GROWTH_PERCENT_RANGE: <red>Growth percent must be a number between %min% and %%max!
+SELECTED_BIOME_TYPE: '<gold>Currently selected biome type: </gold><dark_green>%selectedBiome%'
+MOVE_BRUSH_USAGE: |-
+  <gold>Move Brush Parameters:
+  </gold><aqua>/b %triggerHandle% x [number]  -- Set the x direction (positive => east)
+  </aqua><aqua>/b %triggerHandle% y [number]  -- Set the y direction (positive => up)
+  </aqua><aqua>/b %triggerHandle% z [number]  -- Set the z direction (positive => south)
+  </aqua><aqua>/b %triggerHandle% reset  -- Reset brush to default values
+  </aqua><blue>Instructions: Use arrow and gunpowder to define two points.
+UNDERLAY_BRUSH_USAGE: |-
+  <gold>Underlay (Reverse Overlay) Brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
+  </aqua><aqua>/b %triggerHandle% mode  -- Toggle between overlaying natural blocks or all blocks.
+CYLINDER_BRUSH_USAGE: |-
+  <gold>Cylinder Brush Parameters:
+  </gold><aqua>/b %triggerHandle% height [number]  -- Set voxel height (default: 1)
+  </aqua><aqua>/b %triggerHandle% shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)
+  </aqua><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+SIGN_BRUSH_EMPTY_LINE: '<red>Warning: No text after -%lineNumber%. Setting buffer text to "" (empty string)'
+BLOB_BRUSH_SET_DEFAULT: '<aqua>Growth percent set to default value: %default%%'
+CLONE_STAMP_BRUSH_USAGE: "<gold>Clone / Stamp Cylinder Brush Parameters: \n</gold><aqua>/b %triggerHandle% fill  -- Change to Fill mode\n</aqua><aqua>/b %triggerHandle% air  -- Change to No-Air mode\n</aqua><aqua>/b %triggerHandle% default  -- Change to Default mode"
+VOXEL_MAT: '<gold>Voxel Material: <red>%mat%</red></gold>'
+CANYON_BRUSH_USAGE: |-
+  <gold>Canyon Parameters:
+  </gold><aqua>/b %triggerHandle% y [number] -- Set the y-coordinate where the land will be shifted to
+GROWTH_PERCENT_SET: '<blue>Growth percent set to: %growPercent%%'
+DISC_FACE_BRUSH_USAGE: |-
+  <gold>Disc Face Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
+JAGGED_LINE_BRUSH_SET_SPREAD: '<green>Spread set to: %spread%'
+BRUSH_NO_PARAMS_ACCEPTED: <red>This brush does not accept additional parameters.
+INVALID_INPUT: <red>Your input was invalid somewhere.
+ELLIPSOID_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X radius\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y radius\n</aqua><aqua>/b %triggerHandle% z [number]  -- Set Z radius"
+TOGGLE_RANGE: <gold>Distance Restriction toggled <dark_red>%state%</dark_red>, range is <light_purple>%range%</light_purple></gold>
+MISSING_PARAMETER: <red>Missing parameter after %parameter%.
+REDSTONE_POWER_LEVEL: '<aqua>Redstone level: %blocks%'
+BRUSH_CENTER: '<dark_blue>Brush Center: <dark_red>%center%</dark_red></dark_blue>'
+UNKNOWN_PAINTING: '<red>Painting with id %id% was not found.'
+GEN_TREE_BRUSH_USAGE_2: |-
+  <gold>Generate Tree Brush Parameters:         [2/2]
+  </gold><aqua>/b %triggerHandle% rootMin [number]  -- minimum roots
+  </aqua><aqua>/b %triggerHandle% rootMax [number]  -- maximum roots
+  </aqua><aqua>/b %triggerHandle% minHeight [number]  -- minimum height
+  </aqua><aqua>/b %triggerHandle% maxHeight [number]  -- maximum height
+  </aqua><aqua>/b %triggerHandle% leavesMin [number]  -- minimum leaf node size
+  </aqua><aqua>/b %triggerHandle% leavesMax [number]  -- maximum leaf node size
+  </aqua><aqua>/b %triggerHandle% default  -- restore default params
+GEN_TREE_BRUSH_USAGE_1: "<gold>Generate Tree Brush Parameters:         [1/2]\n</gold><aqua>/b %triggerHandle% leaves [material]  -- leaves type\n</aqua><aqua>/b %triggerHandle% wood [material]  -- wood type\n</aqua><aqua>/b %triggerHandle%thickness [number]  -- tree thickness\n</aqua><aqua>/b %triggerHandle% startHeight [number] -- starting height\n</aqua><aqua>/b %triggerHandle% slope [0 - 100]  -- trunk slope chance\n</aqua><aqua>/b %triggerHandle% branchLength [number]  -- branch length\n</aqua><aqua>/b %triggerHandle% rootLength [number]  -- root length\n</aqua><aqua>/b %triggerHandle% rootFloat [true/false]  -- root float \n</aqua><aqua>/b %triggerHandle% info 2  -- next page"
+BLOB_BRUSH_USAGE: |-
+  <gold>Blob Brush Parameters:
+  </gold><aqua>/b %triggerHandle% growth [number] -- Set growth percentage (between %min% and %max%).  Default is %default%
+DRAIN_BRUSH_USAGE: |-
+  <gold>Drain Brush Parameters:
+  </gold><aqua>/b %triggerHandle% shape  -- Toggle between brush shapes (default: ball)
+CANYON_BRUSH_SHIFT_LEVEL: <green>Shift Level set to %yLevel%
+SPLATTER_OVERLAY_BRUSH_USAGE: |-
+  <gold>Splatter Overlay Brush Parameters:
+  </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
+  </aqua><aqua>/b %triggerHandle% mode  -- Toggle between overlaying natural blocks or all blocks.
+  </aqua><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+ROT3D_BRUSH_MESSAGE: Rotates Yaw (XZ), then Pitch(XY), then Roll(ZY), in order.
+LIGHTNING_BRUSH_MESSAGE: Lightning Brush!  Please use in moderation.
+JAGGED_LINE_BRUSH_RECURSION_SET: '<green>Recursion set to: %recursion%'
+UNDO_SUCCESSFUL: '<green>Undo successful: </green><red>%changedBlocks%</red><green> blocks have been replaced.'
+BALLBRUSH_USAGE: |-
+  <gold>Ball Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth -- Toggle using smooth sphere algorithm (default: false)
+ELLIPSEBRUSH_FILL_MODE: <aqua>Fill mode is %state%
+SPLATTER_DISC_BRUSH_USAGE: |-
+  <gold>Splatter Disc Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+DEFAULT_STAMP: Default Stamp
+CLEAN_SNOW_BURSH_USAGE: |-
+  <gold>Clean Snow Brush Parameters:
+  </gold><aqua>/b %triggerHandle% smooth -- Toggle using smooth sphere algorithm (default: false)
+VOXEL_LIST: '<dark_green>Block Types Selected: <aqua>%blocks%</aqua></dark_green>'
+GOTO_MSG: <dark_purple>Whoosh!
+BRUSH_HEIGHT: '<dark_aqua>Brush Height: <dark_red>%height%</dark_red></dark_aqua>'
+JAGGED_LINE_BRUSH_USAGE: "<gold>Jagged Line Brush Parameters: \n</gold><aqua>/b %triggerHandle% recursion [number] - sets the number of recursions (default 3, must be 1-10)\n/b %triggerHandle% spread [number] - sets the spread (default 3, must be 1-10)\n</aqua><blue>Instructions: Right click first point with the arrow. Right click with powder to draw a jagged line to set the second point."
+BLOCK_POWER_MESSAGE: <aqua>Direct Power? %direct% Indirect Power? %indirect%
+BLEND_BRUSH_WATER_MODE: '<aqua>Water Mode: %excludeWater%'
+REGENERATE_CHUNK_MESSAGE: Tread lightly, This brush will melt your spleen and sell your kidneys.
+TREESNIPE_BRUSH_MESSAGE: <red>That tree type does not exist. Use </red><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
+VOXEL_DATA: '<blue>Voxel Data Value: <dark_red>%data%</dark_red></blue>'
+STAMP_ERROR: <dark_red>Error while stamping! Report
+BRUSH_NO_UNDO: <red>THIS BRUSH DOES NOT UNDO.
+SPLATTER_BALL_BRUSH_USAGE: |-
+  <gold>Splatter Ball Brush Parameters:
+  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
+  </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
+BRUSH_NAME: '<aqua>Brush Type: <light_purple>%name%</light_purple></aqua>'
+THREE_POINT_CIRCLE_BRUSH_USAGE: |-
+  <gold>three Point Circle Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [mode]  -- Change mode to prioritize accuracy or smoothness
+  </aqua><blue>Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.
+POINT_2_SET: Point 2 set.
+OCEAN_BRUSH_USAGE: |-
+  <gold>Parameters:
+  </gold><aqua>/b %triggerHandle% water [number]  -- Sets the water level
+  </aqua><aqua>/b %triggerHandle% floor [true/false]  -- Toggle sea floor cover (Cover material will be your voxel material)
+ELLIPSE_BRUSH_USAGE: "<gold>Ellipse Brush Parameters: \n</gold><aqua>/b %triggerHandle% x [number]  -- Set X size modifier\n</aqua><aqua>/b %triggerHandle% y [number]  -- Set Y size modifier\n</aqua><aqua>/b %triggerHandle% t [number]  -- Set time steps\n</aqua><aqua>/b %triggerHandle%fill  -- Toggles fill mode"
+SIGN_OVERWRITE_BRUSH_RANGE_MODE: <blue>Ranged mode is </blue><green>%rangedMode%
+SIGN_OVERWRITE_ENABLED: '<green>(E): </green><dark_gray>%signTextLines%'
+SIGN_OVERWRITE_DISABLED: '<red>(D): </red><dark_gray>%signTextLines%'
+SIGN_OVERWRITE_BUFFER_TEXT: '<blue>Buffer text: '
+FILE_LOAD_SUCCESSFUL: <blue>File loaded successfully.
+FILE_LOAD_FAIL: <red>Failed to load file. %exception.getMessage%
+THIS_FILE_DOES_NOT_EXIST: This file does not exist.
+FILE_SAVE_SUCCESSFUL: <blue>File saved successfully.
+FILE_SAVE_FAIL: <red>Failed to save file. %exception.getMessage%
+SIGN_OVERWRITE_EXCEED_CHAR_LIMIT: '<red>Warning: Text on line %lineNumber% exceeds the maximum line length of %MAX_SIGN_LINE_LENGTH% characters. Your text will be cut.'
+SIGN_BUFFER_TEXT_SET: '<blue>Buffer text set to: '
+SIGN_LINE_ENABLED_DISABLED: <blue>Line %lineNumber% is </blue><green>%state%
+TARGET_BLOCK_NO_SIGN: <red>Target block is not a sign.
+SIGN_BUFFER_CLEARED: <blue>Internal text buffer cleared.
+SIGN_BUFFER_CLEARED_ENABLED: <blue>Internal text buffer cleared and states back to enabled.
+BRUSH_SIZE_SET: <green>Brush size set to </green><red>%getBrushSize%
+BRUSH_HEIGHT_SET: <aqua>Brush height set to </aqua><red>%getVoxelHeight%
+NO_SIGN_FOUND: <red>Did not found any sign in selection box.
+BRUSH_RESET_DEFAULT: <gold>Values are reset to default values.
+OVERLAY_DEPTH_SET: <aqua>Overlay depth set to %depth%
+SHIFT_LEVEL_SET: <green>Shift Level set to %getYLevel%
+LAND_WILL_BE_SHIFTED_TO_Y: <green>Land will be shifted to y-coordinate of %yLevel%
+BLOCKS_COPIED_SUCCESSFULLY: <green>%amount%</green><aqua> blocks copied successfully.
+CLONE_STAMP_NO_AIR: '<aqua>Stamp Mode: No-Air'
+CLONE_STAMP_FILL: '<aqua>Stamp Mode: Fill'
+CLONE_STAMP_DEFAULT_MODE: '<aqua>StampMode: Default'
+COMET_SIZE: Your fireballs are <dark_red>%size%
+BLOCKS_COPIED_COUNT: <aqua>%numBlocks% blocks copied.
+COPY_AREA_TOO_BIG: '<red>Copy area too big: %numBlocks%(Limit: %BLOCK_LIMIT%)'
+MUST_SELECT_2_POINTS: <red>You must select exactly two points.
+PASTE_AIR_STATE: '<gold>Air included in paste: %pasteAir%'
+PIVOT_ANGLE: '<gold>Pivot angle: %pivot% degrees'
+BLOCKS_PASTED_COUNT: <aqua>%numBlocks% blocks pasted.
+CYLINDER_SHIFT_Y: <aqua>Cylinder will shift by %count% blocks on y-axis
+DRAIN_TRUE_CIRCLE_MODE: <aqua>True circle mode %state%
+DISC_DRAIN_MODE: <aqua>Disc drain mode %state%
+DRAIN_BRUSH_SHAPE: '<aqua>Drain Brush Shape: %shape%'
+INVALID_TARGET: <red>Invalid target.
+X_SIZE_SET: '<aqua>X-size set to: </aqua><dark_aqua>%xscl%'
+Y_SIZE_SET: '<aqua>Y-size set to: </aqua><dark_aqua>%yscl%'
+ELLIPSE_RENDER_STEP_NUMBER: '<aqua>Render step number set to: </aqua><dark_aqua>%steps%'
+INVALID_X_SCALE: <red>Invalid X scale, must be between %SCL_MIN% - %SCL_MAX%
+X_SCALE_MODIFIER_SET: '<aqua>X-scale modifier set to: %xscl%'
+INVALID_Y_SCALE: <red>Invalid Y scale, must be between %SCL_MIN% - %SCL_MAX%
+Y_SCALE_MODIFIER_SET: '<aqua>Y-scale modifier set to: %yscl%'
+INVALID_STEP_AMOUNT: <red>Invalid step amount, must be between %STEPS_MIN% - %STEPS_MAX%
+RENDER_STEP_NUMBER_SET: '<aqua>Render step number set to: %steps%'
+ENTITY_REMOVAL_REGEX_ERROR: |-
+  <red>Error in RegEx: </red><light_purple>%pattern%
+  </light_purple><red>%desc% (Index: %idx%)
+ENTITY_REMOVAL_EXCLUSIONS: '<green>Exclusions: </green><dark_green>%exclusionList%'
+ENTITY_REMOVAL_EXCLUSION_LIST: <aqua>, </aqua><dark_green>
+ENTITY_REMOVAL_RESET: <gold>Reset exclusions list to default values.
+ENTITY_REMOVAL_CLEAR: <gold>Cleared the exclusions list.</gold><red> WARNING! </red><dark_red>All</dark_red><red> entities can now be removed by the brush. BE CAREFUL!
+ENTITY_REMOVAL_ADD: <gold>Added %name% to exclusion list.
+ENTITY_REMOVAL_REMOVE: <gold>Removed %name% from exclusion list.
+ENTITY_REMOVAL_NOT_IN_LIST: <gold>%name% wasn't in exclusion list. Nothing happened.
+PRESET_DOES_NOT_EXIST: <red>That preset does not exist.
+ACTIVE_BRUSH_PRESET: <gold>Active brush preset is </gold><yellow>%this.presetName%</yellow><gold>.
+BRUSH_PRESET_CHANGED: <gold>Brush preset changed to </gold><yellow>%this.presetName%</yellow><gold>.
+WATER_LEVEL_SET: <green>Water level set to %waterLevel%
+OCEAN_FLOOR_LEVEL_SET: <green>Ocean floor level set to %floorLevel%
+LEAVES_MAT_SET: <blue>Leaves material set to %leavesMaterial.name%
+WOOD_LOG_MAT_SET: <blue>Wood log material set to %woodMaterial.name%
+INVALID_TYPE: <red>Not a valid material type.
+THICKNESS_SET: <blue>Thickness set to %thickness%
+START_HEIGHT_SET: <blue>Starting height set to %startHeight%
+TRUNK_SLOPE_SET: <blue>Trunk slope set to %this.slopeChance%% chance
+BRANCH_LENGTH_SET: <blue>Branch length set to %branchLength%
+ROOT_LENGTH_SET: <blue>Root length set to %rootLength%
+FLOATING_ROOTS_SET: <blue>Floating roots set to %rootFloat%
+MIN_ROOTS_SET: <blue>Minimum roots set to %minRoots%
+MIN_ROOTS_ABOVE_MAX: <red>Minimum roots can't exceed maximum roots, has  been set to %this.minRoots% instead!
+MAX_ROOTS_BELOW_MIN: <red>Maximum roots can't be lower than minimum roots, has been set to %this.minRoots% instead!
+MAX_ROOTS_SET: <blue>Maximum roots set to %maxRoots%
+MIN_HEIGHT_SET: <blue>Minimum height set to %minimumHeight%
+MIN_HEIGHT_ABOVE_MAX: <red>Minimum height exceed than maximum height, has been set to %this.minimumHeight% instead!
+MAX_HEIGHT_BELOW_MIN: <red>Maximum height can't be lower than minimum height, has been set to %this.maximumHeight% instead!
+MAX_HEIGHT_SET: <blue>Maximum height set to %maximumHeight%
+LEAF_THICKNESS_MAX_SET: <blue>Leaf thickness set to %nodeMax%
+LEAF_THICKNESS_MIN_SET: <blue>Leaf thickness set to %nodeMin%
+SITTING_ON_CLOSEST_ENTITY: <gold>You are now sitting on the most nearby entity!
+NO_PLAYERS_FOUND_TO_SIT_ON: <red>Could not find any players to sit on :(
+NO_ENTITIES_FOUND_TO_SIT_ON: <red>Could not find any entities to sit on :(
+YOU_BROKE_THE_STACK: You broke the stack! :O
+ENTITY_EJECTED: <gold>The entity on top of you has been ejected!
+YOU_HAVE_BEEN_EJECTED: <gold>You have been ejected!
+CURRENT_JOCKEY_MODE: 'Current Jockey Mode: <green>%mode%'
+JOCKEY_TARGETING_PLAYERS: <green>Now targeting players only.
+JOCKEY_TARGETING_ENTITIES: <green>Now targeting all entities.
+LINE_BRUSH_INFO: '<blue>Instructions: Right click first point with the arrow. Right click with powder to draw a line to set the second point.'
+MOVE_BRUSH_RESET: <aqua>X, Y, Z direction set to 0. No movement will occur.
+MOVE_DIRECTION_SET: '<aqua>%dir% direction set to: %val%'
+OCEAN_LEVEL_AT_LEAST_12: <red>The water level must be at least 12.
+OCEAN_FLOOR_COVER: <blue>Floor cover </blue><green>%state%
+OVERLAY_BRUSH_VOXELLIST_EMPTY: |-
+  <dark_aqua>Overlay mode is set to custom defined blocks, but the VoxelList is empty.
+  </dark_aqua><gold>Please use /vv list to see how to populate the list.
+INVALID_BRUSH_PARAM: <red>Invalid brush parameters!
+INVALID_BRUSH_PARAM_ANGLE: <red>Invalid brush parameters! Angles must be from 1-359
+INNER_RADIUS_INFO: <aqua>The inner radius is </aqua><red>%innerSize%
+INNER_RADIUS_SET: <aqua>The inner radius has been set to </aqua><red>%innerSize%</red><aqua>.
+ANGLE_SET: <green>Angle set to %se%
+RULER_BRUSH_USAGE: '<blue>Instructions: Right click first point with the arrow. Right click with powder for distances from that block (can repeat without getting a new first block.)'
+SCANNER_FOUND_BLOCKS: <green>%checkFor% found after %i% blocks.
+SCANNER_FOUND_NO_BLOCKS: <gray>Nope.
+SCANNER_BRUSH_INFO: |-
+  <green>Scanner scans for %checkFor% (change with /v #)
+  </green><green>Scanner depth set to %depth%
+SCANNER_DEPTH_SET: <aqua>Scanner depth set to %depth%
+SELECTED_POINTS_DIFFERENT_WORLD: <red>You selected points in different worlds!
+SELECTION_SIZE_LIMIT: <red>Selection size above hardcoded limit, please use a smaller selection.
+ANGLE_AROUND_AXIS_SET: <aqua>Around %axis%-axis degrees set to %angle%
+SHELL_BRUSH_COMPLETE: <aqua>Shell complete.
+BRUSH_SEED_PERCENT_SET: '<blue>Seed percent set to: %val%%'
+BRUSH_RECURSION_SET: '<blue>Recursions set to: %val%'
+SPLATTER_BALL_BRUSH_RECURSION_RANGE: <red>Recursions must be an number between 1 - 10!
+SEED_PERCENT_RANGE: <red>Seed percent must be a decimal between 0.01 - 99.99!
+Y_OFFSET_SET: '<blue>Y-Offset set to: %yOffset%'
+BLOCK_NOT_IN_ENDPOINT_SELECTION: <red>That block is not in the endpoint selection set.
+BLOCK_NOT_IN_CONTROL_POINT_SELECTION: <red>That block is not in the control point selection set.
+BEZIER_CURVE_CLEARED: <gray>Bezier curve cleared.
+ENDPOINT_SELECTION_MODE_ENABLED: <gray>Endpoint selection mode ENABLED.
+CONTROL_POINT_SELECTION_MODE_ENABLED: <gray>Control point selection mode ENABLED.
+NO_SELECTION_MODE: <aqua>No selection mode enabled.
+CONTROL_POINT_SELECTION_MODE_DISABLED: <aqua>Control point selection mode disabled.
+ENDPOINT_SELECTION_MODE_DISABLED: <aqua>Endpoint selection mode disabled.
+ERROR_INVALID_POINTS: '<red>ERROR: Invalid points, try again.'
+TOLERANCE_SETTING_DOES_NOT_EXIST: <red>That tolerance setting does not exist. Use </red><light_purple> /b %triggerHandle% info </light_purple><gold> to see brush parameters.
+TRI_POINT_CIRCLE_MODE_ACCURATE: '<gold>Mode: Accurate'
+TRI_POINT_CIRCLE_MODE_DEFAULT: '<gold>Mode: Default'
+TRI_POINT_CIRCLE_MODE_SMOOTH: '<gold>Mode: Smooth'
+TRI_POINT_CIRCLE_MODE_UNKNOWN: '<gold>Mode: Unknown'
+TRI_POINT_CIRCLE_DONE: <green>Done.
+BRUSH_TOLERANCE_SET: <gold>Brush tolerance set to </gold><yellow>%tolerance%</yellow><gold>.
+TRIANGLE_BRUSH_INFO: '<blue>Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.'
+PULLBRUSH_PINCH: <aqua>Pinch %val%
+PULLBRUSH_BUBBLE: <aqua>Bubble %val%
+NUMBER_OUT_OF_RANGE: '<red>%arg% must be between %min% and %max%'
+PULLBRUSH_USAGE: |-
+  <gold>Pull Brush Parameters:
+  </gold><aqua>/b %triggerHandle% pinch [decimal]  -- Set a pinch amount
+  </aqua><aqua>/b %triggerHandle% bubble [decimal]  -- Set a bubble amount
+RULER_BRUSH_POWDER: |
+  <blue>Format = (second coord - first coord)
+  </blue><aqua>X change: %x%
+  Y change: %y%
+  Z change: %z%
+  Euclidean distance = %distance%
+  Block distance = %blockDistance%
+VOXEL_BRUSH_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% [brushHandle] [arguments...]
+  </gold><yellow>    Changes to the brush with the specified brush handle, with the specified arguments.
+  </yellow><gold>/%alias% p [performerHandle]
+  </gold><yellow>    Changes to the brush with the specified brush handle and the specified performer.
+  </yellow><gold>/%alias% [brushSize]
+  </gold><yellow>    Sets the brush size of the active brush.
+VOXEL_BRUSH_COMMAND_SETTINGS: '<dark_red>VoxelSniper - Current Brush Settings:'
+BRUSH_HANDLE_NOT_FOUND: <red>No brush exists with the brush handle '%arg%'.
+VOXEL_BRUSH_NO_PERMISSION: <red>You do not have the required permissions to use that brush.
+VOXEL_BRUSH_TOOL_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% assign \<arrow | powder> \<label>
+  </gold><yellow>    Assign an action to your currently held item with the specified label.
+  </yellow><gold>/%alias% remove
+  </gold><yellow>    Removes the action that is bound to the currently held item.
+VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM: <red>Please hold an item to assign a tool action to.
+VOXEL_BRUSH_TOOL_COMMAND_CANT_ASSIGN: <red>You can't assign an action to an item that can be placed as a block!
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_FAIL: <red>Couldn't assign action to that tool.
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED: <gold>%item% has been assigned to '%toolLabel%' as action %action%.
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGN_OWN: <dark_aqua>Please assign your own label to the tool to identify it.
+VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN: <red>Please hold an item to unassign a tool action.
+VOXEL_BRUSH_TOOL_COMMAND_NOT_ALLOWED_UNASSIGN: <red>You are not allowed to unassign the default tool!
+VOXEL_BRUSH_TOOL_COMMAND_ASSIGNED_AS_TOOL: <gold>%item% has been unassigned as a tool.
+VOXEL_DEFAULT_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Resets tool to default values.
+BRUSH_SETTINGS_RESET: <aqua>Brush settings reset to their default values.
+VOXEL_INK_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Copy data value of the block you are looking at into the active voxel material.
+  </yellow><gold>/%alias% [dataValue]
+  </gold><yellow>    Set specified data value to the active voxel material.
+  </yellow><dark_aqua>    Example: /%alias% snowy=true,age=7
+VOXEL_INK_REPLACE_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Copy data value of the block you are looking at into the active replace material.
+  </yellow><gold>/%alias% [dataValue]
+  </gold><yellow>    Set specified data value to the active replace material.
+  </yellow><dark_aqua>    Example: /%alias%rotation=3 waterlogged=false
+VOXEL_PERFORMER_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Sets the performer to the default performer; Material performer.
+  </yellow><gold>/%alias% [performerHandle]
+  </gold><yellow>    Sets the performer to the specified performer.
+VOXEL_REPLACE_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Sets the block you are looking at as the active replace material.
+  </yellow><gold>/%alias% [material]
+  </gold><yellow>    Sets the specified block as the active replace material.
+VOXELSNIPER_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% \<enable | disable>
+  </gold><yellow>    Activates or deactivates VoxelSniper for yourself.
+  </yellow><gold>/%alias% range
+  </gold><yellow>    Toggles whether range limit is enabled or not.
+  </yellow><gold>/%alias% range [number]
+  </gold><yellow>    Sets and enables the range limitation.
+VOXEL_UNDO_COMMAND_USAGE_START: '<dark_aqua>%name% Command Syntax:'
+VOXEL_UNDO_COMMAND_USAGE_UNDO: |-
+  <gold>/%alias%
+  </gold><yellow>    Undo latest changes for yourself.
+  </yellow><gold>/%alias% [changes]
+  </gold><yellow>    Undo previous [amount] changes for yourself.
+VOXEL_UNDO_COMMAND_USAGE_END: |-
+  <gold>/%alias% [player]
+  </gold><yellow>    Undo the latest changes for specified player.
+  </yellow><gold>/%alias% [player] [amount]
+  </gold><yellow>    Undo the previous [amount] changes for specified player.
+VOXEL_CENTER_USAGE: |-
+  <gold>/%alias% \<number>
+  </gold><yellow>    Changes the voxel center parameter of the brush to the specified number.
+VOXEL_LIST_USAGE: |-
+  <dark_aqua>Using Voxel List:
+  </dark_aqua><gold>/%alias% list \<material>[-]...
+  </gold><yellow>    Adds or removes the specified material into the voxel list.
+  </yellow><dark_aqua>    Example: /%alias% list acacia_log stone- grass_block
+  </dark_aqua><aqua>      Adds acacia_log, removes stone, adds grass_block; in order
+  </aqua><dark_aqua>    Example: /%alias% list dirt- grass_block
+  </dark_aqua><aqua>      Removes dirt, adds grass_block; in order
+VOXEL_HEIGHT_USAGE: |-
+  <gold>/%alias% height \<number>
+  </gold><yellow>    Changes the voxel height parameter of the brush to the specified number.
+VOXEL_LIST_CLEAR_USAGE: |-
+  <dark_aqua>Using Voxel List:
+  </dark_aqua><gold>/%alias% clear
+  </gold><yellow>    Clears the contents of the VoxelList.
+  </yellow><gold>/%alias% \<material>[-]...
+  </gold><yellow>    Adds or removes the specified material into the voxel list.
+  </yellow><dark_aqua>    Example: /%alias% list dirt stone- wheat
+  </dark_aqua><aqua>      Adds dirt, removes stone, adds wheat; in order
+  </aqua><dark_aqua>    Example: /%alias% list dirt- grass_block
+  </dark_aqua><aqua>      Removes dirt, adds grass_block; in order
+VOXEL_VARIABLE_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% height \<number>
+  </gold><yellow>    Changes the voxel height parameter of the brush to the specified number.
+  </yellow><gold>/%alias% center \<number>
+  </gold><yellow>    Changes the voxel center parameter of the brush to the specified number.
+  </yellow><gold>/%alias% list
+  </gold><yellow>    Shows you how to use voxel list.
+VOX_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias% chunk
+  </gold><yellow>    Force refreshes the chunk that you are standing in.
+  </yellow><gold>/%alias% painting
+  </gold><yellow>    Changes the painting you are looking at.
+  </yellow><gold>/%alias% painting [number]
+  </gold><yellow>    Changes the painting you are looking at to a specified ID.
+VOX_PAINTING_USAGE: '<red>Invalid syntax. Command: /%alias% painting [number]'
+VOX_GOTO_USAGE: <red>Invalid syntax. Command:</red><gold>/%alias% goto \<x> \<z>
+VOXEL_COMMAND_USAGE: |-
+  <dark_aqua>%name% Command Syntax:
+  </dark_aqua><gold>/%alias%
+  </gold><yellow>    Sets the block you are looking at as the active voxel material.
+  </yellow><gold>/%alias% [material]
+  </gold><yellow>    Sets the specified block as the active voxel material.
+VOXEL_INK_DIFFERENT_TYPE: <red>That block is not the same as your active voxel material.
+VOXEL_INK_NO_BLOCK_TO_IMITATE_DATA: <gold>No block to imitate voxel material data values. No changes were made.
+VOXEL_INK_CANT_IMITATE_DATA: <red>The data value(s) cannot be imitated to the active voxel material.
+VOXEL_INK_REPLACE_DIFFERENT_TYPE: <red>That block is not the same as your active replace material.
+VOXEL_INK_REPLACE_NO_BLOCK_TO_IMITATE_DATA: <gold>No block to imitate replace material data values. No changes were made.
+VOXEL_INK_REPLACE_CANT_IMITATE_DATA: <red>The data value(s) cannot be imitated to the active replace material.
+NO_SUCH_PERFORMER: <red>No such performer with the handle </red><dark_red>'%arg%'</dark_red><dark_red> exists.
+THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH: The active brush is not a performer brush.
+REPLACE_NOTHING_TO_IMITATE: <gold>Nothing to imitate replace material. No changes were made.
+INVALID_ITEM_ID: <red>You have entered an invalid Item ID.
+CURRENT_BRUSH_SETTINGS: '<dark_red>VoxelSniper - Current Brush Settings:'
+UNDO_USER_PERMISSION: <red>You need the 'voxelsniper.undouser' permission to undo other user's changes.
+INVALID_UNDO_AMOUNT: <red>Please enter a valid amount to undo. Value must be a number.
+CHANGES_UNDONE_BY_OTHER: <light_purple>Your changes were undone by someone else.
+PLAYER_NOT_FOUND: <red>Could not find the player </red><gold>'%player%'</gold><red>.
+NOTHING_TO_SET_SUBSTANCE: <gold>Nothing to set voxel substance. No changes were made.
+INVALID_TYPE_ID: <red>You have entered an invalid Material ID.
+VOXEL_LIST_COULDNT_ADD: "<red>Couldn't add because item is non-existent or aren't blocks:- \n</red><gold>    %blocks%"
+UNDID_PLAYER_CHANGES: '<gold>Undid %player%''s changes: </gold><dark_aqua>%amountChanged% blocks replaced'
+SPLINE_BRUSH_NOT_ENOUGH_POINTS: <red>Not enough points selected; %endPts% endpoints, %ctrlPts% control points, select at least two of points each
+ADDED_BLOCK_ENDPOINT: <gray>Added block </gray><red>%pos%</red><gray>to endpoint selection
+ADDED_BLOCK_CONTROL: <gray>Added block </gray><red>%pos%</red><gray>to control point selection
+
+BLOCK_ALREADY_ADDED_ENDPOINT: <gray>Block </gray><red>%pos%</red><gray>was already part of endpoint selection
+BLOCK_ALREADY_ADDED_CONTROL: <gray>Block </gray><red>%pos%</red><gray>was already part of control point selection
+ENDPOINT_SELECTION_FULL: <red>Endpoint selection is full, please remove a point first
+CONTROL_SELECTION_FULL: <red>Control point selection is full, please remove a point first
+
+REMOVED_BLOCK_CONTROL: <gray>Removed block </gray><red>%pos%</red><gray>from control point selection
+REMOVED_BLOCK_ENDPOINT: <gray>Removed block </gray><red>%pos%</red><gray>from endpoint selection
+MOVE_BRUSH_SELECTION: <blue>Move selection blockPositionY </blue><gold>x:%x% y:%y% z:%z%
+FILL_DOWN_MODE: <aqua>Now filling %mode%.
+FILL_DOWN_FROM: <aqua>Now filling down from %mode% blocks.
+OVERLAY_MODE: <gold>Overlaying on %mode% blocks
+OVERLAY_ON_MODE_DEPTH: <blue>Will overlay on %mode% blocks, %depth% blocks deep.
+ONLY_PLAYERS_CAN_EXECUTE_COMMANDS: Only players can execute commands!
+NEGATIVE_VALUES_ARE_NOT_ALLOWED: Negative values are not allowed.
+CAN_T_PARSE_NUMBER: Can't parse number.
+VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU: VoxelSniper is now enabled for you.
+VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU: VoxelSniper is now disabled for you.
+NO_BRUSH_SELECTED: No Brush selected.
+CURRENT_TOOL: 'Current Tool: %tool%'
+NO_PERMISSION_BRUSH: You are not allowed to use this brush. You're missing the permission node '%permissionNode%'
+NO_PERMISSION_MESSAGE: You do not have the '%permission%' permission node to do that.
+VOXEL_HEIGHT_MUST_NOT_BE_0: VoxelHeight must not be 0.
+GENERATED_CHUNK: Generate that chunk! %chunk.getX% %chunk.getZ%
+FILE_ALREADY_EXISTS: This file already exists.
+UNDERLAY_DEPTH_SET: <aqua>Underlay depth set to %depth%
+UNDERLAY_MODE: <gold>Underlaying on %mode% blocks
+UNDERLAY_ON_MODE_DEPTH: <blue>Will underlay on %mode% blocks, %depth% blocks deep.
