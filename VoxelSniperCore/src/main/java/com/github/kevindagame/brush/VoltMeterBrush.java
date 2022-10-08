@@ -13,7 +13,7 @@ import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.IRedstoneWire;
  *
  * @author Gavjenks
  */
-public class VoltMeterBrush extends Brush {
+public class VoltMeterBrush extends AbstractBrush {
 
     /**
      *

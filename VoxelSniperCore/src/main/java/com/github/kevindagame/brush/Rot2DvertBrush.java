@@ -19,7 +19,7 @@ import java.util.List;
  */
 // The X Y and Z variable names in this file do NOT MAKE ANY SENSE. Do not attempt to actually figure out what on earth is going on here. Just go to the
 // original 2d horizontal brush if you wish to make anything similar to this, and start there. I didn't bother renaming everything.
-public class Rot2DvertBrush extends Brush {
+public class Rot2DvertBrush extends AbstractBrush {
 
     private BlockWrapper[][][] snap;
     private double se;

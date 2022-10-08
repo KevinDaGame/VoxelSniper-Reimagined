@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author psanker
  */
-public class CleanSnowBrush extends Brush {
+public class CleanSnowBrush extends AbstractBrush {
 
     public static final double SMOOTH_SPHERE_VALUE = 0.5;
     public static final int VOXEL_SPHERE_VALUE = 0;

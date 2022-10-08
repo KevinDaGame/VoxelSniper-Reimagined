@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
-public class EntityRemovalBrush extends Brush {
+public class EntityRemovalBrush extends AbstractBrush {
 
     private final List<VoxelEntityType> exclusionList = new ArrayList<>();
 

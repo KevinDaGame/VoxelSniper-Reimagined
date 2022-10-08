@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author giltwist
  */
-public class CopyPastaBrush extends Brush {
+public class CopyPastaBrush extends AbstractBrush {
 
     private static final int BLOCK_LIMIT = 10000;
     private final int[] pastePoint = new int[3];

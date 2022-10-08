@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Mick
  */
-public class TreeSnipeBrush extends Brush {
+public class TreeSnipeBrush extends AbstractBrush {
 
     private VoxelTreeType treeType = VoxelTreeType.TREE;
 

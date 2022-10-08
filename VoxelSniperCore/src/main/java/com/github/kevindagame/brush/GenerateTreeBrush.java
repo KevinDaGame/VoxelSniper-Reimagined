@@ -18,7 +18,7 @@ import java.util.*;
  *
  * @author Ghost8700 @ Voxel
  */
-public class GenerateTreeBrush extends Brush {
+public class GenerateTreeBrush extends AbstractBrush {
 
     // Tree Variables.
     private final Random random = new Random();

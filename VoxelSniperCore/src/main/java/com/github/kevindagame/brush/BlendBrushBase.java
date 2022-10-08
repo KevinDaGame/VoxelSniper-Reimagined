@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Monofraps
  */
-public abstract class BlendBrushBase extends Brush {
+public abstract class BlendBrushBase extends AbstractBrush {
 
     protected boolean excludeAir = true;
     protected boolean excludeWater = true;

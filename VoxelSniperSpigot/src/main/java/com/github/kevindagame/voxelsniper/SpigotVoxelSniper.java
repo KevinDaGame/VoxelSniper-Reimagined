@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.voxelsniper.bstats.Metrics;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.IEventManager;
@@ -63,6 +64,8 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     @Override
     public void onEnable() {
+        Metrics metrics = new Metrics(this, 16602);
+
         VoxelSniper.voxelsniper = this;
         SpigotVoxelSniper.instance = this;
         this.fileHandler = new SpigotFileHandler(this);

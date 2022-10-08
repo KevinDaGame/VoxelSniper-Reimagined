@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Piotr
  */
-public class EntityBrush extends Brush {
+public class EntityBrush extends AbstractBrush {
 
     private VoxelEntityType entityType = VoxelEntityType.ZOMBIE;
 
