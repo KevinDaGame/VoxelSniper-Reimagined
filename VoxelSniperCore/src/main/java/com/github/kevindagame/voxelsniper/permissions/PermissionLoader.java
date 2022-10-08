@@ -43,15 +43,17 @@ public final class PermissionLoader {
         loaded = true;
     }
 
-    private Permission addPermissionIfNotExists(String name) {
+    private Permission addPermissionIfNotExists(final String name) {
         var countPoints = name.split("\\.").length - 1;
+        String nameWithoutWildcard = name;
         if (countPoints > 1 && name.endsWith(".*")) {
             // remove wildcard at end
-            name = name.substring(0, name.length() - 2);
+            nameWithoutWildcard = name.substring(0, name.length() - 2);
         }
-        if (countPoints > 0) {
-            String wildcard = name.substring(0, name.lastIndexOf('.')) + ".*";
-            // we recursively generate wildcard permissions
+        if (countPoints > 0 && !name.endsWith(".*")) {
+            // remove last part of the permission
+            String wildcard = nameWithoutWildcard.substring(0, name.lastIndexOf('.')) + ".*";
+            // we recursively generate the wildcard permissions
             Permission parent = addPermissionIfNotExists(wildcard);
             return addPermissionIfNotExists(name, parent);
         }
