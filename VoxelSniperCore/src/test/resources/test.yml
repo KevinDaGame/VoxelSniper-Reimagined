@@ -4,3 +4,8 @@ test:
   bool:
     testFalse: false
     testTrue: true
+  testList:
+    - test
+    - test5
+    - test42
+    - 5
