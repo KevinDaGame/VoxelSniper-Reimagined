@@ -69,18 +69,17 @@ commands:
 permissions:
   voxelsniper.*:
     description: Allows access to all VoxelSniper commands.
-    default: op
     children:
       voxelsniper.sniper:
-        default: op
+        description: Allows acces to snipe commands
       voxelsniper.ignorelimitations:
-        default: op
+        description: Allows player to ignore brush limitations
       voxelsniper.goto:
-        default: op
+        description: Allows player to use the goto command
       voxelsniper.undouser:
-        default: op
+        description: Allows player to use the undouser command
       voxelsniper.brush.*:
-        default: op
+        description: Allows player to use all brushes
         children:
           voxelsniper.brush.ball: true
           voxelsniper.brush.biome: true
