@@ -9,3 +9,8 @@ test:
     - test5
     - test42
     - 5
+  testObjectList:
+  - name: Hello World!
+    description: testDesc
+  - name: Hello World!
+    description: testDesc2

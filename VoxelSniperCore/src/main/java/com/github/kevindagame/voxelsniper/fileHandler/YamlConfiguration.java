@@ -105,6 +105,22 @@ public class YamlConfiguration {
     }
 
     public List<String> getStringList(String path) {
+        var lst = getList(path);
+        return lst.stream().filter(this::isPrimitiveWrapperOrString).map(String::valueOf).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<Map<?, ?>> getMapList(String path) {
+        var lst = getList(path);
+        List<Map<?, ?>> res = new ArrayList<>();
+        for (Object o : lst) {
+            if (o instanceof Map<?, ?> m) {
+                res.add(m);
+            }
+        }
+        return res;
+    }
+
+    public List<?> getList(String path) {
         // head:a.b.c
         Object head = contents;
         String[] steps = path.split("\\.");
@@ -116,7 +132,7 @@ public class YamlConfiguration {
             }
         }
         if (head instanceof List<?> lst) {
-            return lst.stream().filter(this::isPrimitiveWrapperOrString).map(String::valueOf).collect(Collectors.toCollection(ArrayList::new));
+            return lst;
         } else {
             return new ArrayList<>();
         }
