@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Voxel
  */
-public class CanyonBrush extends Brush {
+public class CanyonBrush extends AbstractBrush {
 
     private static final int SHIFT_LEVEL_MIN = -60;
     private static final int SHIFT_LEVEL_MAX = 60;

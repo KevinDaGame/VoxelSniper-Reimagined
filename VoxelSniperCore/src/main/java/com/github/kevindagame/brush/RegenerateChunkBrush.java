@@ -11,7 +11,7 @@ import com.github.kevindagame.voxelsniper.chunk.IChunk;
  *
  * @author Mick
  */
-public class RegenerateChunkBrush extends Brush {
+public class RegenerateChunkBrush extends AbstractBrush {
 
     /**
      *

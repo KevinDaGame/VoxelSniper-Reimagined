@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * @author MikeMatrix
  */
-public class BlockResetBrush extends Brush {
+public class BlockResetBrush extends AbstractBrush {
 
     private static final ArrayList<VoxelMaterial> DENIED_UPDATES = new ArrayList<>();
 

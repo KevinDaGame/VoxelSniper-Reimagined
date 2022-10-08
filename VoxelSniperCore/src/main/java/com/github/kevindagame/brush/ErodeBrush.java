@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @author Piotr
  * @author MikeMatrix
  */
-public class ErodeBrush extends Brush {
+public class ErodeBrush extends AbstractBrush {
 
     private static final VoxelVector[] FACES_TO_CHECK = {new VoxelVector(0, 0, 1), new VoxelVector(0, 0, -1), new VoxelVector(0, 1, 0), new VoxelVector(0, -1, 0), new VoxelVector(1, 0, 0), new VoxelVector(-1, 0, 0)};
     private String presetName = "NONE";

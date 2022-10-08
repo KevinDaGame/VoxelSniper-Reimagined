@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Piotr
  */
-public class ShellSetBrush extends Brush {
+public class ShellSetBrush extends AbstractBrush {
 
     private static final int MAX_SIZE = 5000000;
     private IBlock block = null;

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
-public class BiomeBrush extends Brush {
+public class BiomeBrush extends AbstractBrush {
 
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 

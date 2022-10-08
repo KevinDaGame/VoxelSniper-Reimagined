@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author psanker
  */
-public class ExtrudeBrush extends Brush {
+public class ExtrudeBrush extends AbstractBrush {
 
     private static final double SMOOTH_CIRCLE_VALUE = 0.5;
     private static final double VOXEL_CIRCLE_VALUE = 0.0;
