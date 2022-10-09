@@ -7,7 +7,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.Objects;
 
-public class VoxelLocation {
+public class VoxelLocation implements Cloneable{
 
     private final IWorld world;
     private double x;
@@ -124,7 +124,7 @@ public class VoxelLocation {
         try {
             return (VoxelLocation) super.clone();
         } catch (CloneNotSupportedException e) {
-            return new VoxelLocation(world, this.x, this.y, this.z, this.yaw, this.pitch);
+            throw new Error(e);
         }
     }
 
