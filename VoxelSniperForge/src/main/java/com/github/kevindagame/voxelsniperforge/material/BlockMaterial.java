@@ -1,6 +1,8 @@
 package com.github.kevindagame.voxelsniperforge.material;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
 
 import java.util.Objects;
 
@@ -13,8 +15,18 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class BlockMaterial extends AbstractForgeMaterial {
     private final Block block;
 
+    public static VoxelMaterial fromForgeBlock(Block block) {
+        var tag = ForgeRegistries.BLOCKS.getKey(block);
+        if (tag == null || block.defaultBlockState().isAir()) return VoxelMaterial.AIR;
+        return VoxelMaterial.getMaterial(tag.getNamespace(), tag.getPath());
+    }
+
     public BlockMaterial(Block block) {
         this.block = block;
+    }
+
+    public Block getBlock() {
+        return block;
     }
 
     private Material getMaterial() {
@@ -44,13 +56,12 @@ public final class BlockMaterial extends AbstractForgeMaterial {
 
     @Override
     public IBlockData createBlockData(String s) {
-        throw new UnsupportedOperationException("Not implemented yet");
+       return ForgeBlockData.createNewData(this, s);
     }
 
     @Override
     public IBlockData createBlockData() {
-        var key = getResourceLocation();
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.createBlockData(null);
     }
 
     @Override
