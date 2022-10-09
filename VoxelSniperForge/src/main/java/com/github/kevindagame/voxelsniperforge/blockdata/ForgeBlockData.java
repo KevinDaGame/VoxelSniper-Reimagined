@@ -2,6 +2,7 @@ package com.github.kevindagame.voxelsniperforge.blockdata;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniperforge.blockdata.redstoneWire.ForgeRedstoneWire;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.google.common.base.Preconditions;
 import com.mojang.brigadier.StringReader;
@@ -12,15 +13,16 @@ import java.util.Map;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ForgeBlockData implements IBlockData, Cloneable {
-    private BlockState state;
+    protected BlockState state;
     private Map<Property<?>, Comparable<?>> parsedStates;
 
-    private ForgeBlockData(BlockState state) {
+    protected ForgeBlockData(BlockState state) {
         this.state = state;
     }
 
@@ -127,8 +129,19 @@ public class ForgeBlockData implements IBlockData, Cloneable {
         return craft;
     }
 
+    protected <T extends Comparable<T>> T get(Property<T> ibs) {
+        return this.state.getValue(ibs);
+    }
+
+    public <T extends Comparable<T>, V extends T> void set(Property<T> ibs, V v) {
+        this.parsedStates = null;
+        this.state = this.state.setValue(ibs, v);
+    }
+
     private static ForgeBlockData fromData(BlockState blockData) {
-        // TODO subtypes
+        Block b = blockData.getBlock();
+        if (b instanceof RedStoneWireBlock)
+            return new ForgeRedstoneWire(blockData);
         return new ForgeBlockData(blockData);
     }
 }
