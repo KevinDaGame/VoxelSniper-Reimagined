@@ -83,12 +83,6 @@ public class SpigotPlayer extends SpigotEntity implements IPlayer {
     }
 
     @Override
-    public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
-        Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((SpigotMaterial) m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
-        return new SpigotBlock(player.getTargetBlock(materials, maxDistance));
-    }
-
-    @Override
     public VoxelMaterial getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
         VoxelMaterial mat = VoxelMaterial.getMaterial(item.getType().getKey().getKey());

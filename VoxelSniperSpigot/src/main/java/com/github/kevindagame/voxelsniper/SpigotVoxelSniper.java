@@ -15,6 +15,7 @@ import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.permissions.SpigotPermissionManager;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -71,6 +72,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         this.eventManager = new SpigotEventManager();
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize();
+        SpigotPermissionManager.register();
 
         Messages.load(this);
         SpigotVoxelSniper.adventure = BukkitAudiences.create(this);

@@ -1,6 +1,8 @@
 package com.github.kevindagame.voxelsniper.fileHandler;
 
 import com.github.kevindagame.VoxelSniper;
+
+import org.jetbrains.annotations.Nullable;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -13,8 +15,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class YamlConfiguration {
     private final Map<String, Object> contents;
@@ -55,6 +60,9 @@ public class YamlConfiguration {
     }
 
     public String getString(String path) {
+        return getString(path, null);
+    }
+    public String getString(String path, String def) {
         // head:a.b.c
         Object head = contents;
         String[] steps = path.split("\\.");
@@ -62,10 +70,10 @@ public class YamlConfiguration {
             if (head instanceof Map) {
                 head = ((Map<?, ?>) head).get(step);
             } else {
-                return null;
+                return def;
             }
         }
-        return (head instanceof String) ? (String) head : null;
+        return (head instanceof String) ? (String) head : def;
     }
 
     public int getInt(String path, int defaultValue) {
@@ -94,6 +102,47 @@ public class YamlConfiguration {
             }
         }
         return (head instanceof Boolean) ? (Boolean) head : defaultValue;
+    }
+
+    public List<String> getStringList(String path) {
+        var lst = getList(path);
+        return lst.stream().filter(this::isPrimitiveWrapperOrString).map(String::valueOf).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<Map<?, ?>> getMapList(String path) {
+        var lst = getList(path);
+        List<Map<?, ?>> res = new ArrayList<>();
+        for (Object o : lst) {
+            if (o instanceof Map<?, ?> m) {
+                res.add(m);
+            }
+        }
+        return res;
+    }
+
+    public List<?> getList(String path) {
+        // head:a.b.c
+        Object head = contents;
+        String[] steps = path.split("\\.");
+        for (String step : steps) {
+            if (head instanceof Map) {
+                head = ((Map<?, ?>) head).get(step);
+            } else {
+                return null;
+            }
+        }
+        if (head instanceof List<?> lst) {
+            return lst;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    private boolean isPrimitiveWrapperOrString(@Nullable Object input) {
+        return input instanceof Integer || input instanceof Boolean
+                || input instanceof Character || input instanceof Byte
+                || input instanceof Short || input instanceof Double
+                || input instanceof Long || input instanceof Float || input instanceof String;
     }
 
     public void set(String name, Object value) {

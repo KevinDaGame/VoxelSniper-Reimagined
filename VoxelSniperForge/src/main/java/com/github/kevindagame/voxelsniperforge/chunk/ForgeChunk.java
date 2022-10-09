@@ -4,7 +4,6 @@ import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 public class ForgeChunk implements IChunk {
@@ -33,10 +32,6 @@ public class ForgeChunk implements IChunk {
 
     public LevelChunk getChunk() {
         return chunk;
-    }
-
-    public ServerLevel getLevel() {
-        return level.getLevel();
     }
 
     @Override

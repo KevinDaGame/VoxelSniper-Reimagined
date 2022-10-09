@@ -12,9 +12,11 @@ import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
 import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,6 +27,7 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
+
 import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +43,10 @@ public class VoxelSniperForge implements IVoxelsniper {
     public static final String MODID = "voxelsniperforge";
     private final Logger LOGGER;
     private static VoxelSniperForge instance;
+
+    public static VoxelSniperForge getInstance() {
+        return instance;
+    }
 
     public VoxelSniperForge() {
         LOGGER = Logger.getLogger(MODID);
@@ -91,13 +98,18 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public IPlayer getPlayer(UUID uuid) {
-        return null;
+        return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid));
     }
 
     @Nullable
     @Override
     public IPlayer getPlayer(String name) {
-        return null;
+        return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name));
+    }
+
+    public IPlayer getPlayer(ServerPlayer p) {
+        // TODO keep track of players
+        return new ForgePlayer(p);
     }
 
     @Override

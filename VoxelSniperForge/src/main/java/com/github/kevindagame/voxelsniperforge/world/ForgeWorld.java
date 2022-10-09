@@ -22,6 +22,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -35,9 +36,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
+public record ForgeWorld(@NotNull Level level) implements IWorld {
 
-    public ServerLevel getLevel() {
+    public Level getLevel() {
         return level;
     }
     @Override
