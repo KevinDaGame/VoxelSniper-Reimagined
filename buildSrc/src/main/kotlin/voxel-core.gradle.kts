@@ -42,7 +42,7 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.2.0"
+version = "8.2.1"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile>() {
