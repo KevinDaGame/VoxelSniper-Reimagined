@@ -39,11 +39,6 @@ public class VoxelSniperListener {
         this.main = main;
     }
 
-    @SubscribeEvent
-    public final void onPermissionGatherEvent(final PermissionGatherEvent.Nodes event) {
-        ForgePermissionManager.register(event);
-    }
-
     /**
      * @param event PlayerInteractEvent
      */

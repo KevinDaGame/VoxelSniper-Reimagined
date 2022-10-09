@@ -15,6 +15,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
+import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +29,7 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import net.minecraftforge.server.permission.events.PermissionGatherEvent;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
@@ -55,6 +57,7 @@ public class VoxelSniperForge implements IVoxelsniper {
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        MinecraftForge.EVENT_BUS.addListener(this::registerPermissionNodes);
 
 
         // Register ourselves for server and other game events we are interested in
@@ -63,6 +66,10 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
 
+    }
+
+    public final void registerPermissionNodes(final PermissionGatherEvent.Nodes event) {
+        ForgePermissionManager.register(event);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
