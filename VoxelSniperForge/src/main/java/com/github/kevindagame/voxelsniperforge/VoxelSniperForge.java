@@ -13,7 +13,8 @@ import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
-import com.github.kevindagame.voxelsniperforge.material.ForgeMaterial;
+import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
+import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -146,9 +147,16 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public IMaterial getMaterial(VoxelMaterial material) {
-        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(material.getNamespace(), material.getKey()));
-        assert item != null;
-        return new ForgeMaterial(item);
+        var key = new ResourceLocation(material.getNamespace(), material.getKey());
+        if (ForgeRegistries.BLOCKS.containsKey(key)) {
+            var item = ForgeRegistries.BLOCKS.getValue(key);
+            return new BlockMaterial(item);
+        }
+        if (ForgeRegistries.ITEMS.containsKey(key)) {
+            var item = ForgeRegistries.ITEMS.getValue(key);
+            return new ItemMaterial(item);
+        }
+        throw new IllegalArgumentException("Requested material does not exist");
     }
 
     @Override
