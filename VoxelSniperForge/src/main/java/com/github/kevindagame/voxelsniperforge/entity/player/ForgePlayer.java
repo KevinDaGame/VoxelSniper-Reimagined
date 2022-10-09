@@ -101,22 +101,18 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
         }
 
         // If this player is riding another entity, we must dismount before teleporting.
-        this.player.stopRiding(); // Paper - Teleport API
+        this.player.stopRiding();
 
-        // SPIGOT-5509: Wakeup, similar to riding
         if (this.player.isSleeping()) {
             this.player.stopSleepInBed(true, false);
         }
-
-        // Grab the To and From World Handles.
-        ServerLevel toWorld = (ServerLevel) ((ForgeEntity) other).getEntity().getLevel();
 
         // Close any foreign inventory
         if (this.player.containerMenu != this.player.inventoryMenu) {
             this.player.closeContainer();
         }
 
-        // Check if the fromWorld and toWorld are the same.
+        ServerLevel toWorld = (ServerLevel) ((ForgeEntity) other).getEntity().getLevel();
         this.player.teleportTo(toWorld, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
         return true;
     }

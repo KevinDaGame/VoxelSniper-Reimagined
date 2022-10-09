@@ -81,9 +81,7 @@ public class ForgeEntity implements IEntity {
         // If this entity is riding another entity, we must dismount before teleporting.
         this.entity.stopRiding();
 
-        // entity.setLocation() throws no event, and so cannot be cancelled
         entity.moveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()); // Paper - use proper moveTo, as per vanilla teleporting
-        // SPIGOT-619: Force sync head rotation also
         this.entity.setYHeadRot(location.getYaw());
         return true;
     }
