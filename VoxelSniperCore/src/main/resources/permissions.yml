@@ -38,7 +38,6 @@ permissions:
 - name: voxelsniper.brush.filldown
 - name: voxelsniper.brush.flatocean
 - name: voxelsniper.brush.generatetree
-- name: voxelsniper.brush.heatray
 - name: voxelsniper.brush.jaggedline
 - name: voxelsniper.brush.jockey
 - name: voxelsniper.brush.lightning
