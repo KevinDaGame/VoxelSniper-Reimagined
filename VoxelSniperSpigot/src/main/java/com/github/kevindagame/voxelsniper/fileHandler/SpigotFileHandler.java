@@ -13,17 +13,12 @@ public class SpigotFileHandler implements IFileHandler {
     }
 
     @Override
-    public File getDataFile(String path) {
-        return new File(voxelSniper.getDataFolder() + path);
-    }
-
-    @Override
     public File getDataFolder() {
         return voxelSniper.getDataFolder();
     }
 
     @Override
-    public void saveResource(@NotNull String resourcePath, boolean replace) {
+    public void saveResource(@NotNull ClassLoader loader, @NotNull String resourcePath, boolean replace) {
         voxelSniper.saveResource(resourcePath, replace);
     }
 }

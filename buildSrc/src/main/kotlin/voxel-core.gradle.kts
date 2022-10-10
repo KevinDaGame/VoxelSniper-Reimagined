@@ -22,6 +22,10 @@ repositories {
     }
 }
 
+val shadowNoRuntime by configurations.creating {
+    extendsFrom(configurations.shadow.get())
+}
+
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
     compileOnly("com.google.guava:guava:31.1-jre")
@@ -31,6 +35,8 @@ dependencies {
     shadow("net.kyori:adventure-text-serializer-legacy:4.11.0")
 
     shadow("org.yaml:snakeyaml:1.31")
+    // include in output jar, but not on runtime classpath, since this causes issues with the Forge runClient task
+    shadowNoRuntime("com.google.guava:guava:31.1-jre")
 
     testImplementation("com.google.guava:guava:31.1-jre")
     testImplementation("junit:junit:4.13.2")
@@ -38,7 +44,7 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:4.5.1")
 }
 
-configurations.testImplementation.extendsFrom(configurations.shadow.get())
+configurations.testImplementation.extendsFrom(shadowNoRuntime)
 configurations.runtimeClasspath.extendsFrom(configurations.shadow.get())
 
 java {
@@ -62,7 +68,7 @@ tasks {
     }
 
     shadowJar {
-        configurations = listOf(project.configurations.shadow.get())
+        configurations = listOf(shadowNoRuntime)
         minimize()
         relocate("com.google.common", "com.github.kevindagame.voxelsniper.libs.com.google.common")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")

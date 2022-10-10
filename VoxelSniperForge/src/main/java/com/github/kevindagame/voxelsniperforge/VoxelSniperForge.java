@@ -3,16 +3,19 @@ package com.github.kevindagame.voxelsniperforge;
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
+import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.Version;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.DummyEventManager;
 import com.github.kevindagame.voxelsniper.events.IEventManager;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
+import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
@@ -45,6 +48,9 @@ public class VoxelSniperForge implements IVoxelsniper {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "voxelsniperforge";
     private final Logger LOGGER;
+    private ForgeFileHandler fileHandler;
+    private VoxelSniperConfiguration voxelSniperConfiguration;
+    private final DummyEventManager eventManager = new DummyEventManager();
     private static VoxelSniperForge instance;
 
     public static VoxelSniperForge getInstance() {
@@ -77,15 +83,14 @@ public class VoxelSniperForge implements IVoxelsniper {
     public void onServerStarting(ServerStartingEvent event) {
         VoxelSniper.voxelsniper = this;
         VoxelSniperForge.instance = this;
-//        this.fileHandler = new ForgeFileHandler(this);
+        this.fileHandler = new ForgeFileHandler(this);
         MinecraftForge.EVENT_BUS.register(new VoxelSniperListener(this));
         VoxelProfileManager.initialize();
-//        Messages.load(this);
-//        SpigotVoxelSniper.adventure = BukkitAudiences.create(this);
+        Messages.load(this);
+
         VoxelBrushManager brushManager = VoxelBrushManager.initialize();
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
-//        saveDefaultConfig();
-//        voxelSniperConfiguration = new VoxelSniperConfiguration(this);
+        voxelSniperConfiguration = new VoxelSniperConfiguration(this);
 //        Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
 //        Bukkit.getPluginManager().registerEvents(this, this);
 //        getLogger().info("Registered Sniper Listener.");
@@ -127,17 +132,17 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     @Override
     public Version getVersion() {
-        return null;
+        return Version.V1_19; // TODO is this always 1.19?
     }
 
     @Override
     public VoxelSniperConfiguration getVoxelSniperConfiguration() {
-        return null;
+        return this.voxelSniperConfiguration;
     }
 
     @Override
     public IFileHandler getFileHandler() {
-        return null;
+        return this.fileHandler;
     }
 
     @Override
@@ -168,6 +173,6 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     @Override
     public IEventManager getEventManager() {
-        return null;
+        return eventManager;
     }
 }

@@ -6,7 +6,6 @@ import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 import net.minecraft.server.level.ServerLevel;
@@ -16,7 +15,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.permission.events.PermissionGatherEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

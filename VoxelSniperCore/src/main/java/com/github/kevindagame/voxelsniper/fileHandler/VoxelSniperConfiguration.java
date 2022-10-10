@@ -19,7 +19,11 @@ public class VoxelSniperConfiguration {
      * @param voxelSniper {@link IVoxelsniper} reference
      */
     public VoxelSniperConfiguration(IVoxelsniper voxelSniper) {
-        this.configuration = new YamlConfiguration(new File(voxelSniper.getFileHandler().getDataFolder(), "config.yml"));
+        var file = new File(voxelSniper.getFileHandler().getDataFolder(), "config.yml");
+        if (!file.exists()) {
+            voxelSniper.getFileHandler().saveResource(VoxelSniperConfiguration.class.getClassLoader(), "config.yml", false);
+        }
+        this.configuration = new YamlConfiguration(file);
     }
 
     /**

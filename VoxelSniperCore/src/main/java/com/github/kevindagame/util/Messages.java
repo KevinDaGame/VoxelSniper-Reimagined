@@ -362,7 +362,7 @@ public enum Messages implements ComponentLike {
     public static void load(IVoxelsniper voxelSniper) {
         File langFile = new File(voxelSniper.getFileHandler().getDataFolder(), "lang.yml");
         if (!langFile.exists()) {
-            voxelSniper.getFileHandler().saveResource("lang.yml", false);
+            voxelSniper.getFileHandler().saveResource(Messages.class.getClassLoader(), "lang.yml", false);
         }
         YamlConfiguration lang = new YamlConfiguration(langFile);
         YamlConfiguration fallBackLang = new YamlConfiguration(Messages.class.getClassLoader(), "lang.yml");

@@ -8,7 +8,6 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
 
     shadow("net.kyori:adventure-platform-bukkit:4.1.1")
-    shadow("com.google.guava:guava:31.1-jre")
 
     testImplementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
 }
