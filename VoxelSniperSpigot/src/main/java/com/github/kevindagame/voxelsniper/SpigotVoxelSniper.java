@@ -8,7 +8,7 @@ import com.github.kevindagame.voxelsniper.bstats.Metrics;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.IEventManager;
-import com.github.kevindagame.voxelsniper.events.bukkit.SpigotEventManager;
+import com.github.kevindagame.voxelsniper.events.SpigotEventManager;
 import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;

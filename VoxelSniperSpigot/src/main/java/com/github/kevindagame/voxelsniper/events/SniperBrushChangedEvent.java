@@ -1,4 +1,4 @@
-package com.github.kevindagame.voxelsniper.events.bukkit;
+package com.github.kevindagame.voxelsniper.events;
 
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.snipe.Sniper;

@@ -1,24 +1,25 @@
-package com.github.kevindagame.voxelsniper.events.bukkit;
+package com.github.kevindagame.voxelsniper.events;
 
 import com.github.kevindagame.snipe.Sniper;
+import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
  *
  */
-public class SniperBrushSizeChangedEvent extends Event {
+public class SniperMaterialChangedEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final Sniper sniper;
-    private final int originalSize;
-    private final int newSize;
+    private final IBlockData originalMaterial;
+    private final IBlockData newMaterial;
     private final String toolId;
 
-    public SniperBrushSizeChangedEvent(Sniper sniper, String toolId, int originalSize, int newSize) {
+    public SniperMaterialChangedEvent(Sniper sniper, String toolId, IBlockData originalMaterial, IBlockData newMaterial) {
         this.sniper = sniper;
-        this.originalSize = originalSize;
-        this.newSize = newSize;
+        this.originalMaterial = originalMaterial;
+        this.newMaterial = newMaterial;
         this.toolId = toolId;
     }
 
@@ -26,12 +27,12 @@ public class SniperBrushSizeChangedEvent extends Event {
         return handlers;
     }
 
-    public int getOriginalSize() {
-        return originalSize;
+    public IBlockData getOriginalMaterial() {
+        return originalMaterial;
     }
 
-    public int getNewSize() {
-        return newSize;
+    public IBlockData getNewMaterial() {
+        return newMaterial;
     }
 
     public Sniper getSniper() {
