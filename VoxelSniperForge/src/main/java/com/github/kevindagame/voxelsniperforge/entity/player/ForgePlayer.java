@@ -10,11 +10,11 @@ import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 import com.google.common.base.Preconditions;
-import com.google.gson.Gson;
 
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +33,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ForgePlayer extends ForgeEntity implements IPlayer {
-    private static final Gson GSON = new Gson();
     private final ServerPlayer player;
 
     public ForgePlayer(ServerPlayer player) {
@@ -53,7 +52,7 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     private MutableComponent toNative(@NotNull Component component) {
         if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
-        return net.minecraft.network.chat.Component.Serializer.fromJson(GSON.toJsonTree(component));
+        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
     }
 
     @Override
@@ -64,7 +63,6 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
     @Override
     public boolean hasPermission(String permissionNode) {
         return PermissionAPI.getPermission(this.player, ForgePermissionManager.getPermissionNode(permissionNode));
-//        return ServerLifecycleHooks.getCurrentServer().getPlayerList().isOp(player.getGameProfile());
     }
 
     @Override
