@@ -106,10 +106,10 @@ public class VoxelSniperListener {
         if (event instanceof PlayerInteractEvent.LeftClickEmpty) {
             return Sniper.Action.LEFT_CLICK_AIR;
         }
-        if (event instanceof PlayerInteractEvent.RightClickEmpty) {
+        if (event instanceof PlayerInteractEvent.RightClickEmpty || event instanceof PlayerInteractEvent.RightClickItem) {
             return Sniper.Action.RIGHT_CLICK_AIR;
         }
-        throw new IllegalArgumentException("Unknown action type");
+        throw new IllegalArgumentException("Unknown action type: " + event.getClass().getCanonicalName());
 
     }
 
