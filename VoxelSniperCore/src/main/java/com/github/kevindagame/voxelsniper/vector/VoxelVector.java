@@ -5,7 +5,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.Objects;
 
-public class VoxelVector {
+public class VoxelVector implements Cloneable {
     private double x;
     private double y;
     private double z;
@@ -90,7 +90,7 @@ public class VoxelVector {
         try {
             return (VoxelVector) super.clone();
         } catch (CloneNotSupportedException e) {
-            return new VoxelVector(x, y, z);
+            throw new Error(e);
         }
     }
 

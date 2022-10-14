@@ -71,17 +71,9 @@ public class Sniper {
         String toolId = getToolId(itemInHand);
         SnipeTool sniperTool = tools.get(toolId);
 
-        //Confirm that action is a left or right click
-        switch (action) {
-            case LEFT_CLICK_AIR:
-            case LEFT_CLICK_BLOCK:
-            case RIGHT_CLICK_AIR:
-            case RIGHT_CLICK_BLOCK:
-                break;
-            default:
-                return false;
+        if (action == Action.PHYSICAL) {
+            return false;
         }
-
         if (!sniperTool.hasToolAssigned(itemInHand)) {
             return false;
         }
@@ -98,8 +90,7 @@ public class Sniper {
 
         SnipeData snipeData = sniperTool.getSnipeData();
         SnipeAction snipeAction = sniperTool.getActionAssigned(itemInHand);
-        IBlock targetBlock;
-        IBlock lastBlock = null;
+        IBlock targetBlock, lastBlock;
 
         if (clickedBlock != null) {
             targetBlock = clickedBlock;
@@ -110,51 +101,55 @@ public class Sniper {
             lastBlock = rangeBlockHelper.getLastBlock();
         }
 
-        if (getPlayer().isSneaking()) {
-            switch (action) {
-                case LEFT_CLICK_AIR:
-                case LEFT_CLICK_BLOCK:
-                    IBlockData oldSubstance, newSubstance;
-                    switch (snipeAction) {
-                        case GUNPOWDER:
-                            oldSubstance = snipeData.getReplaceSubstance();
-                            snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                            newSubstance = snipeData.getReplaceSubstance();
-                            VoxelSniper.voxelsniper.getEventManager().callSniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
-
-                            snipeData.getVoxelMessage().replace();
-                            return true;
-                        case ARROW:
-                            oldSubstance = snipeData.getVoxelSubstance();
-                            snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                            newSubstance = snipeData.getVoxelSubstance();
-                            VoxelSniper.voxelsniper.getEventManager().callSniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
-                            snipeData.getVoxelMessage().voxel();
-                            return true;
-                        default:
-                            return false;
-                    }
-                default:
-                    break;
-            }
-        }
         switch (action) {
+            case LEFT_CLICK_AIR:
+            case LEFT_CLICK_BLOCK:
+                if (getPlayer().isSneaking()) {
+                    return handleSneakLeftClick(toolId, snipeData, snipeAction, targetBlock);
+                }
             case RIGHT_CLICK_AIR:
             case RIGHT_CLICK_BLOCK:
-                if (clickedBlock == null) {
-                    if (targetBlock == null || lastBlock == null) {
-                        sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
-                        return true;
-                    }
-                }
-
-                if (sniperTool.getCurrentBrush() instanceof PerformerBrush performerBrush) {
-                    performerBrush.initP(snipeData);
-                }
-
-                return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+                return handleRightClick(clickedBlock, sniperTool, snipeData, snipeAction, targetBlock, lastBlock);
         }
         return false;
+    }
+
+    private boolean handleRightClick(IBlock clickedBlock, SnipeTool sniperTool, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock, IBlock lastBlock) {
+        if (clickedBlock == null) {
+            if (targetBlock == null || lastBlock == null) {
+                sendMessage(Messages.TARGET_MUST_BE_VISIBLE);
+                return true;
+            }
+        }
+
+        if (sniperTool.getCurrentBrush() instanceof PerformerBrush performerBrush) {
+            performerBrush.initP(snipeData);
+        }
+
+        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+    }
+
+    private boolean handleSneakLeftClick(String toolId, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock) {
+        IBlockData oldSubstance, newSubstance;
+        switch (snipeAction) {
+            case GUNPOWDER:
+                oldSubstance = snipeData.getReplaceSubstance();
+                snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                newSubstance = snipeData.getReplaceSubstance();
+                VoxelSniper.voxelsniper.getEventManager().callSniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
+
+                snipeData.getVoxelMessage().replace();
+                return true;
+            case ARROW:
+                oldSubstance = snipeData.getVoxelSubstance();
+                snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                newSubstance = snipeData.getVoxelSubstance();
+                VoxelSniper.voxelsniper.getEventManager().callSniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
+                snipeData.getVoxelMessage().voxel();
+                return true;
+            default:
+                return false;
+        }
     }
 
 

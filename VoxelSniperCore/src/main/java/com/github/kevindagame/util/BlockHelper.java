@@ -121,13 +121,18 @@ public class BlockHelper {
         }
     }
 
+    private boolean isOutsideBuildHeight(VoxelLocation loc) {
+        // above worldHeight and going up, or below worldHeight and going down
+        return (loc.getBlockY() >= maxWorldHeight && direction.getY() >= 0) || (loc.getBlockY() < minWorldHeight && direction.getY() <= 0);
+    }
+
     /**
      * Returns the current block along the line of vision.
      *
      * @return IBlock
      */
     public final IBlock getCurBlock() {
-        if (this.current.distanceSquared(this.startPoint) > this.rangeSquared || this.current.getBlockY() >= maxWorldHeight || this.current.getBlockY() < minWorldHeight) {
+        if (this.current.distanceSquared(this.startPoint) > this.rangeSquared || isOutsideBuildHeight(this.current)) {
             return null;
         }
 
@@ -140,7 +145,7 @@ public class BlockHelper {
      * @return IBlock
      */
     public final IBlock getLastBlock() {
-        if (this.current.distanceSquared(this.startPoint) > this.rangeSquared || this.last.getBlockY() >= maxWorldHeight || this.last.getBlockY() < minWorldHeight) {
+        if (this.current.distanceSquared(this.startPoint) > this.rangeSquared || isOutsideBuildHeight(this.last)) {
             return null;
         }
         return this.world.getBlock(this.last);
@@ -162,7 +167,7 @@ public class BlockHelper {
 
         } while (((this.current.getBlockX() == lastX) && (this.current.getBlockY() == lastY) && (this.current.getBlockZ() == lastZ)));
 
-        if (this.current.distanceSquared(this.startPoint) > this.rangeSquared || this.current.getBlockY() >= maxWorldHeight || this.current.getBlockY() < minWorldHeight) {
+        if (this.current.distanceSquared(this.startPoint) > this.rangeSquared || isOutsideBuildHeight(this.current)) {
             return null;
         }
 
