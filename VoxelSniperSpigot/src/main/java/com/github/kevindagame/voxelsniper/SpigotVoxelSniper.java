@@ -44,7 +44,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     private static SpigotVoxelSniper instance;
     private static BukkitAudiences adventure;
 
-    private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
+    private final SpigotVoxelSniperListener voxelSniperListener = new SpigotVoxelSniperListener(this);
     private final Map<String, IWorld> worlds = new HashMap<>();
     private final Map<UUID, SpigotPlayer> players = new HashMap<>();
     private VoxelSniperConfiguration voxelSniperConfiguration;

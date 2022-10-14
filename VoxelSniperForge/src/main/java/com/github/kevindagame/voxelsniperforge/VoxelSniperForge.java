@@ -92,7 +92,7 @@ public class VoxelSniperForge implements IVoxelsniper {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         this.fileHandler = new ForgeFileHandler(this);
-        MinecraftForge.EVENT_BUS.register(new VoxelSniperListener(this));
+        MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
         VoxelProfileManager.initialize();
         Messages.load(this);
 

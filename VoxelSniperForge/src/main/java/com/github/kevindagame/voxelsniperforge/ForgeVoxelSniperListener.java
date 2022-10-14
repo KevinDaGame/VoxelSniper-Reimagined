@@ -24,7 +24,7 @@ import java.util.UUID;
 /**
  * @author KevinDaGame
  */
-public class VoxelSniperListener {
+public class ForgeVoxelSniperListener {
 
     private static final String SNIPER_PERMISSION = "voxelsniper.sniper";
     private final VoxelSniperForge main;
@@ -33,7 +33,7 @@ public class VoxelSniperListener {
     /**
      * @param main The main
      */
-    public VoxelSniperListener(final VoxelSniperForge main) {
+    public ForgeVoxelSniperListener(final VoxelSniperForge main) {
         this.main = main;
     }
 
