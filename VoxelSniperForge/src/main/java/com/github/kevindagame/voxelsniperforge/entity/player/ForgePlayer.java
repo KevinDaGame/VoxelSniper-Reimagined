@@ -50,7 +50,7 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
         this.player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
     }
 
-    private MutableComponent toNative(@NotNull Component component) {
+    public static MutableComponent toNative(@NotNull Component component) {
         if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
         return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
     }

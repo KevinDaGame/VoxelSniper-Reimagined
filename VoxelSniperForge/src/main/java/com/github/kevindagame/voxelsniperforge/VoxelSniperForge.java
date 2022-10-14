@@ -23,6 +23,7 @@ import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManage
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -59,12 +60,15 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     public VoxelSniperForge() {
         LOGGER = Logger.getLogger(MODID);
+        VoxelSniper.voxelsniper = this;
+        VoxelSniperForge.instance = this;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-        MinecraftForge.EVENT_BUS.addListener(this::registerPermissionNodes);
 
+        VoxelBrushManager brushManager = VoxelBrushManager.initialize();
+        getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -74,6 +78,12 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     }
 
+    @SubscribeEvent
+    public final void registerCommands(final RegisterCommandsEvent event) {
+        ForgeCommandManager.initialize(event.getDispatcher());
+    }
+
+    @SubscribeEvent
     public final void registerPermissionNodes(final PermissionGatherEvent.Nodes event) {
         ForgePermissionManager.register(event);
     }
@@ -81,21 +91,15 @@ public class VoxelSniperForge implements IVoxelsniper {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        VoxelSniper.voxelsniper = this;
-        VoxelSniperForge.instance = this;
         this.fileHandler = new ForgeFileHandler(this);
         MinecraftForge.EVENT_BUS.register(new VoxelSniperListener(this));
         VoxelProfileManager.initialize();
         Messages.load(this);
 
-        VoxelBrushManager brushManager = VoxelBrushManager.initialize();
-        getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
         voxelSniperConfiguration = new VoxelSniperConfiguration(this);
 //        Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
 //        Bukkit.getPluginManager().registerEvents(this, this);
 //        getLogger().info("Registered Sniper Listener.");
-        // Initialize commands
-//        SpigotCommandManager.initialize();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
