@@ -1,5 +1,6 @@
 package com.github.kevindagame.voxelsniper;
 
+import com.github.kevindagame.voxelsniper.fileHandler.ConfigurationSection;
 import com.github.kevindagame.voxelsniper.fileHandler.YamlConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,7 +8,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class YamlTest {
     private final File resourcesDirectory = new File("src/test/resources");
@@ -38,17 +38,21 @@ public class YamlTest {
         }
 
         {
-            List<Map<?, ?>> lst = config.getMapList("test.testObjectList");
-            Assert.assertSame(2, lst.size());
+            List<ConfigurationSection> lst = config.getSectionList("test.testObjectList");
+            Assert.assertSame(3, lst.size());
 
-            Assert.assertTrue(lst.get(0) instanceof Map);
-            Assert.assertTrue(lst.get(1) instanceof Map);
+            Assert.assertTrue(lst.get(0) instanceof ConfigurationSection);
+            Assert.assertTrue(lst.get(1) instanceof ConfigurationSection);
+            Assert.assertTrue(lst.get(2) instanceof ConfigurationSection);
 
-            Assert.assertEquals("Hello World!", lst.get(0).get("name"));
-            Assert.assertEquals("testDesc", lst.get(0).get("description"));
+            Assert.assertEquals("Hello World!", lst.get(0).getString("name"));
+            Assert.assertEquals("testDesc", lst.get(0).getString("description"));
 
-            Assert.assertEquals("Hello World!", lst.get(1).get("name"));
-            Assert.assertEquals("testDesc2", lst.get(1).get("description"));
+            Assert.assertEquals("Hello World!", lst.get(1).getString("name"));
+            Assert.assertEquals("testDesc2", lst.get(1).getString("description"));
+
+            Assert.assertEquals("third", lst.get(2).getString("name"));
+            Assert.assertNull(lst.get(2).getString("description"));
         }
     }
 }

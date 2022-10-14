@@ -38,12 +38,12 @@ public final class PermissionLoader {
         if (loaded) return;
         YamlConfiguration yaml = new YamlConfiguration(PermissionLoader.class.getClassLoader(), "permissions.yml");
 
-        var data = yaml.getMapList("permissions");
+        var data = yaml.getSectionList("permissions");
         data.forEach(e -> {
-            var name = e.get("name");
-            var desc = e.get("description");
+            var name = e.getString("name");
+            var desc = e.getString("description");
             if (name == null) throw new IllegalArgumentException("Permission name must not be null");
-            addPermissionIfNotExists(e.get("name").toString(), desc != null ? desc.toString() : null);
+            addPermissionIfNotExists(name, desc);
         });
         loaded = true;
     }

@@ -14,3 +14,4 @@ test:
     description: testDesc
   - name: Hello World!
     description: testDesc2
+  - name: third
