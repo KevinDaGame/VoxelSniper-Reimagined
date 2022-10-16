@@ -127,7 +127,9 @@ public class Sniper {
             performerBrush.initP(snipeData);
         }
 
-        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+        var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+        VoxelSniper.voxelsniper.getEventManager().callSniperSnipeEvent(this, sniperTool.getCurrentBrush());
+        return success;
     }
 
     private boolean handleSneakLeftClick(String toolId, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock) {
