@@ -107,6 +107,7 @@ public class Sniper {
                 if (getPlayer().isSneaking()) {
                     return handleSneakLeftClick(toolId, snipeData, snipeAction, targetBlock);
                 }
+                break;
             case RIGHT_CLICK_AIR:
             case RIGHT_CLICK_BLOCK:
                 return handleRightClick(clickedBlock, sniperTool, snipeData, snipeAction, targetBlock, lastBlock);
