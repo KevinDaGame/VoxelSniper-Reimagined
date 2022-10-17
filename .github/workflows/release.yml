@@ -1,10 +1,10 @@
-name: maven-release
+name: gradle-release
 on:
   release:
     types: [published]
 
 jobs:
-  create-zip:
+  create-build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -15,12 +15,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-          cache: maven
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots package
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
-          files: target/VoxelSniper*.jar
+          files: output/voxelsniper-*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
