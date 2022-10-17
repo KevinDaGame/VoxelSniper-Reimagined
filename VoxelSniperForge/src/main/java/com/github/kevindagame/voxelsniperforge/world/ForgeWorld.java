@@ -15,26 +15,20 @@ import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public record ForgeWorld(@NotNull Level level) implements IWorld {
 
@@ -43,8 +37,9 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
     }
     @Override
     public IBlock getBlock(VoxelLocation location) {
-        var blockState = level.getBlockState(new BlockPos(location.getX(), location.getY(), location.getZ())).getBlock();
-        return new ForgeBlock(location, Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(blockState.defaultBlockState().getBlock())));
+        if (location.getWorld() != this)
+            throw new IllegalArgumentException("location doesn't belong to this World");
+        return new ForgeBlock(location, new BlockPos(location.getX(), location.getY(), location.getZ()));
     }
 
     @Override

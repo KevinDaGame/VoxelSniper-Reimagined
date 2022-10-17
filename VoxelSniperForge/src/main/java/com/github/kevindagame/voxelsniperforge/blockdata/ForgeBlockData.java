@@ -129,16 +129,20 @@ public class ForgeBlockData implements IBlockData, Cloneable {
         return craft;
     }
 
-    protected <T extends Comparable<T>> T get(Property<T> ibs) {
+    public BlockState getState() {
+        return state;
+    }
+
+    protected final <T extends Comparable<T>> T get(Property<T> ibs) {
         return this.state.getValue(ibs);
     }
 
-    public <T extends Comparable<T>, V extends T> void set(Property<T> ibs, V v) {
+    protected final <T extends Comparable<T>, V extends T> void set(Property<T> ibs, V v) {
         this.parsedStates = null;
         this.state = this.state.setValue(ibs, v);
     }
 
-    private static ForgeBlockData fromData(BlockState blockData) {
+    public static ForgeBlockData fromData(BlockState blockData) {
         Block b = blockData.getBlock();
         if (b instanceof RedStoneWireBlock)
             return new ForgeRedstoneWire(blockData);

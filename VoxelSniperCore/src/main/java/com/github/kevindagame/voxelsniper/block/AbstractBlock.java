@@ -4,8 +4,8 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 public abstract class AbstractBlock implements IBlock {
-    final VoxelLocation location;
-    VoxelMaterial material;
+    protected final VoxelLocation location;
+    protected VoxelMaterial material;
 
     public AbstractBlock(VoxelLocation location, VoxelMaterial material) {
         this.location = location;
