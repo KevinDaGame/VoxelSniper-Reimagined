@@ -30,8 +30,8 @@ public class SpigotEventManager implements IEventManager {
         Bukkit.getPluginManager().callEvent(event);
     }
     @Override
-    public void callSniperSnipeEvent(Sniper owner, IBrush brush) {
-        SniperSnipeEvent event = new SniperSnipeEvent(owner, brush);
+    public void callSniperSnipeEvent(Sniper owner, IBrush brush, boolean success) {
+        SniperSnipeEvent event = new SniperSnipeEvent(owner, brush, success);
         Bukkit.getPluginManager().callEvent(event);
     }
 }

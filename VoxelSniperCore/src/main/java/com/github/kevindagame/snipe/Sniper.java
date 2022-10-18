@@ -128,7 +128,7 @@ public class Sniper {
         }
 
         var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-        VoxelSniper.voxelsniper.getEventManager().callSniperSnipeEvent(this, sniperTool.getCurrentBrush());
+        VoxelSniper.voxelsniper.getEventManager().callSniperSnipeEvent(this, sniperTool.getCurrentBrush(), success);
         return success;
     }
 

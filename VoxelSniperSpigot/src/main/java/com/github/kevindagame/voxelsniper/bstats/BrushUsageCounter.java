@@ -13,7 +13,8 @@ public class BrushUsageCounter implements Listener {
 
     @EventHandler
     private void onBrushUse(SniperSnipeEvent event) {
-        String brushName = event.getBrush().getName();
+        if(!event.getSuccess()) return;
+//        String brushName = event.getBrush().getName();
 //        perBrushCounter.put(brushName, perBrushCounter.getOrDefault(brushName, 0) + 1);
         counter++;
     }
