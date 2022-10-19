@@ -107,6 +107,7 @@ public class Sniper {
                 if (getPlayer().isSneaking()) {
                     return handleSneakLeftClick(toolId, snipeData, snipeAction, targetBlock);
                 }
+                break;
             case RIGHT_CLICK_AIR:
             case RIGHT_CLICK_BLOCK:
                 return handleRightClick(clickedBlock, sniperTool, snipeData, snipeAction, targetBlock, lastBlock);
@@ -126,7 +127,9 @@ public class Sniper {
             performerBrush.initP(snipeData);
         }
 
-        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+        var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+        VoxelSniper.voxelsniper.getEventManager().callSniperSnipeEvent(this, sniperTool.getCurrentBrush(), success);
+        return success;
     }
 
     private boolean handleSneakLeftClick(String toolId, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock) {
