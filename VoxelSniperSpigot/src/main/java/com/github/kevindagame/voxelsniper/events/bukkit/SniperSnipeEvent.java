@@ -27,7 +27,7 @@ public class SniperSnipeEvent extends Event {
         return brush;
     }
 
-    public boolean getSuccess() {
+    public boolean isSuccessful() {
         return success;
     }
 
