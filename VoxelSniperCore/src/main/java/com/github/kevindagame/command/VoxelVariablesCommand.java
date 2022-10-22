@@ -85,7 +85,7 @@ public class VoxelVariablesCommand extends MaterialCommand {
         if (args.length >= 1) {
             if (args[0].equalsIgnoreCase("center")) {
                 try {
-                    snipeData.setcCen(Integer.parseInt(args[0]));
+                    snipeData.setcCen(Integer.parseInt(args[1]));
                     snipeData.getVoxelMessage().center();
                     return true;
                 } catch (NumberFormatException exception) {
@@ -95,7 +95,7 @@ public class VoxelVariablesCommand extends MaterialCommand {
 
             if (args[0].equalsIgnoreCase("height")) {
                 try {
-                    snipeData.setVoxelHeight(Integer.parseInt(args[0]));
+                    snipeData.setVoxelHeight(Integer.parseInt(args[1]));
                     snipeData.getVoxelMessage().height();
                     return true;
                 } catch (NumberFormatException exception) {
