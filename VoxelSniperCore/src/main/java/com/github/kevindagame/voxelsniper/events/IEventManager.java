@@ -13,4 +13,6 @@ public interface IEventManager {
     void callSniperBrushChangedEvent(Sniper owner, String currentToolId, IBrush originalBrush, IBrush newBrush);
 
     void callSniperBrushSizeChangedEvent(Sniper sniper, String currentToolId, int originalSize, int newSize);
+
+    void callSniperSnipeEvent(Sniper sniper, IBrush brush, boolean success);
 }

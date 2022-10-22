@@ -29,4 +29,9 @@ public class SpigotEventManager implements IEventManager {
         SniperBrushSizeChangedEvent event = new SniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, newSize);
         Bukkit.getPluginManager().callEvent(event);
     }
+    @Override
+    public void callSniperSnipeEvent(Sniper owner, IBrush brush, boolean success) {
+        SniperSnipeEvent event = new SniperSnipeEvent(owner, brush, success);
+        Bukkit.getPluginManager().callEvent(event);
+    }
 }

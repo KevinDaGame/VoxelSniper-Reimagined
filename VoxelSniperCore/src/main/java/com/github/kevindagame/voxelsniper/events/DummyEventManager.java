@@ -20,4 +20,8 @@ public class DummyEventManager implements IEventManager {
     @Override
     public void callSniperBrushSizeChangedEvent(Sniper sniper, String currentToolId, int originalSize, int newSize) {
     }
+
+    @Override
+    public void callSniperSnipeEvent(Sniper sniper, IBrush brush, boolean success) {
+    }
 }
