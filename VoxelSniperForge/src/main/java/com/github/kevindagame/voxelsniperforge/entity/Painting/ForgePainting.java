@@ -22,7 +22,6 @@ public class ForgePainting extends ForgeEntity implements IPainting {
     public boolean setArtId(int id) {
         if (id < 0 || id >= paintingVariants.size())
             return false;
-        System.out.println("setArtId: " + id);
         var key = paintingVariants.get(id);
         Painting p = (Painting) this.getEntity();
         // Painting::setVariant is private, try doing it through the NBT data
@@ -36,7 +35,6 @@ public class ForgePainting extends ForgeEntity implements IPainting {
     @Override
     public int getArtId() {
         String[] values = paintingVariants.stream().map(Objects::toString).toArray(String[]::new);
-        System.out.println(String.join(", ", values));
 
         var variant =  ((Painting) this.getEntity()).getVariant().get();
         var key = ForgeRegistries.PAINTING_VARIANTS.getKey(variant);

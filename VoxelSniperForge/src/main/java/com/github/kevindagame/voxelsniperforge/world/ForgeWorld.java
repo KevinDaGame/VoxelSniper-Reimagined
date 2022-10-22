@@ -12,6 +12,8 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
+import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -24,6 +26,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.AABB;
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -82,7 +86,8 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
 
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        var str = this.level.toString();
+        return str.substring("ServerLevel[".length(), str.length() - 1);
     }
 
     @Override

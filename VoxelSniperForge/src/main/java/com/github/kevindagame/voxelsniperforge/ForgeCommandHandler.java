@@ -42,8 +42,6 @@ public class ForgeCommandHandler implements Predicate<CommandSourceStack>, Comma
         this.command.setActiveIdentifier(context.getRootNode().getName()); // This is the root command.
         this.command.setActiveAlias(input[0]);   // This is the alias that was executed.
 
-        VoxelSniper.voxelsniper.getLogger().info("input: '" + context.getInput() + "'");
-        VoxelSniper.voxelsniper.getLogger().info("input: " + Arrays.toString(input));
         if (context.getSource().isPlayer()) {
             IPlayer p = VoxelSniperForge.getInstance().getPlayer(context.getSource().getPlayer());
             var args = getArguments(inputString);
