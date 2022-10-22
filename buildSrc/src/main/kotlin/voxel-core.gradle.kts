@@ -70,7 +70,7 @@ tasks {
     shadowJar {
         configurations = listOf(shadowNoRuntime)
         minimize()
-        relocate("com.google.common", "com.github.kevindagame.voxelsniper.libs.com.google.common")
+        relocate("com.google", "com.github.kevindagame.voxelsniper.libs.com.google")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
         relocate("org.yaml.snakeyaml", "com.github.kevindagame.voxelsniper.libs.org.yaml.snakeyaml")
     }
