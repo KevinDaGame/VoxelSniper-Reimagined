@@ -8,6 +8,7 @@ import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
+import com.github.kevindagame.voxelsniperforge.blockstate.ForgeBlockState;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 
@@ -88,7 +89,7 @@ public class ForgeBlock extends AbstractBlock {
 
     @Override
     public IBlockState getState() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return ForgeBlockState.fromForgeBlock(this);
     }
 
     @Nullable
