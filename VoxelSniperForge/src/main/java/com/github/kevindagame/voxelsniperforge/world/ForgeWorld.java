@@ -106,12 +106,12 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
     }
 
     @Override
-    public void setBiome(VoxelLocation location, VoxelBiome selectedBiome) {
+    public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
         //TODO test this
-        var chunk = ((ForgeChunk)getChunkAtLocation(location.getBlockX(), location.getBlockZ())).getChunk();
-        var biomes = (PalettedContainer<Holder<Biome>>) chunk.getSection(chunk.getSectionIndex(location.getBlockY())).getBiomes();
+        var chunk = ((ForgeChunk)getChunkAtLocation(x, z)).getChunk();
+        var biomes = (PalettedContainer<Holder<Biome>>) chunk.getSection(chunk.getSectionIndex(y)).getBiomes();
         biomes.getAndSetUnchecked(
-                location.getBlockX() & 3, location.getBlockY() & 3, location.getBlockZ() & 3,
+                x & 3, y & 3, z & 3,
                 level.registryAccess().registry(Registry.BIOME_REGISTRY)
                         .orElseThrow()
                         .getHolderOrThrow(ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(selectedBiome.getKey())))

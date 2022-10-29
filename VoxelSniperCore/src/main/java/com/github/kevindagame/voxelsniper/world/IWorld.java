@@ -61,12 +61,10 @@ public interface IWorld {
     void spawn(VoxelLocation location, VoxelEntityType entity);
 
     default void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        setBiome(x, 0, z, selectedBiome);
+        for (int y = this.getMinWorldHeight(); y < this.getMaxWorldHeight(); y++) {
+            setBiome(x, y, z, selectedBiome);
+        }
     }
-    default void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
-        setBiome(new VoxelLocation(this, x, y, z), selectedBiome);
-    }
-    void setBiome(VoxelLocation location, VoxelBiome selectedBiome);
 
     void setBiome(int x, int y, int z, VoxelBiome selectedBiome);
 

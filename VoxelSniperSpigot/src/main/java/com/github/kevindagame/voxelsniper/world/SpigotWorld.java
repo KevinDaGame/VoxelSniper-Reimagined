@@ -77,12 +77,10 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public void setBiome(VoxelLocation location, VoxelBiome selectedBiome) {
-        if(!this.equals(location.getWorld())) {
-            throw new IllegalArgumentException("Location is not in this world");
-        }
-        world.setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), Biome.valueOf(selectedBiome.key().toUpperCase()));
+    public void setBiome(int x, int z, VoxelBiome selectedBiome) {
+        world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
+
     @Override
     public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
         world.setBiome(x, y, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
