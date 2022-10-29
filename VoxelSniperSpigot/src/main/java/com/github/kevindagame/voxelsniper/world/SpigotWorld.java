@@ -83,6 +83,10 @@ public record SpigotWorld(World world) implements IWorld {
         }
         world.setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
+    @Override
+    public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
+        world.setBiome(x, y, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
+    }
 
     @Override
     public int getHighestBlockYAt(int x, int z) {

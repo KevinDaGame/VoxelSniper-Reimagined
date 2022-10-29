@@ -51,6 +51,9 @@ PERFORMER_MESSAGE: <dark_aqua>You can use </dark_aqua><yellow>'/b %triggerHandle
 BIOME_BRUSH_USAGE: |-
   <gold>Biome Brush Parameters:
   </gold><aqua>/b %triggerHandle% [biomeType] -- Change brush to the specified biome
+BIOMEBALL_BRUSH_USAGE: |-
+  <gold>Biome Ball Brush Parameters:
+  </gold><aqua>/b %triggerHandle% [biomeType] -- Change brush to the specified biome
 REFRESHED_CHUNK: Refreshed the chunk that you are standing in.
 BLEND_BALL_BRUSH_USAGE: |-
   <gold>Blend Ball Parameters:

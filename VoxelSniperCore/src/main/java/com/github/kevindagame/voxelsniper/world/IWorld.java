@@ -68,6 +68,8 @@ public interface IWorld {
     }
     void setBiome(VoxelLocation location, VoxelBiome selectedBiome);
 
+    void setBiome(int x, int y, int z, VoxelBiome selectedBiome);
+
     int getHighestBlockYAt(int x, int z);
 
     void regenerateChunk(int x, int z);
