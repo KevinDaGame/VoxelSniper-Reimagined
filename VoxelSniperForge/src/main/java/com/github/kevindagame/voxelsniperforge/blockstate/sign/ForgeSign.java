@@ -1,23 +1,25 @@
 package com.github.kevindagame.voxelsniperforge.blockstate.sign;
 
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
+import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.blockstate.ForgeBlockState;
+
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import org.jetbrains.annotations.NotNull;
 
 public class ForgeSign extends ForgeBlockState implements ISign {
 
-    public ForgeSign(IBlock block, Sign blockState) {
+    private final SignBlockEntity tileEntity;
+
+    public ForgeSign(ForgeBlock block, BlockState blockState, SignBlockEntity tileEntity) {
         super(block, blockState);
+        this.tileEntity = tileEntity;
     }
 
     @NotNull
     private static String translateColorCodesToAmpersand(@NotNull String textToTranslate) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    private Sign getSign() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
