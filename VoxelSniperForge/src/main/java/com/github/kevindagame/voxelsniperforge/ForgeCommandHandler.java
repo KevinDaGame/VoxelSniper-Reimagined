@@ -39,7 +39,7 @@ public class ForgeCommandHandler implements Predicate<CommandSourceStack>, Comma
     public int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         var inputString = context.getInput();
         var input = inputString.split(" ");
-        this.command.setActiveIdentifier(context.getRootNode().getName()); // This is the root command.
+        this.command.setActiveIdentifier(context.getNodes().get(0).getNode().getName()); // This is the root command.
         this.command.setActiveAlias(input[0]);   // This is the alias that was executed.
 
         if (context.getSource().isPlayer()) {

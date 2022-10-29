@@ -125,6 +125,7 @@ public class VoxelSniperForge implements IVoxelsniper {
     }
 
     public IPlayer getPlayer(ServerPlayer p) {
+        if (p == null) return null;
         // TODO keep track of players
         return new ForgePlayer(p);
     }
