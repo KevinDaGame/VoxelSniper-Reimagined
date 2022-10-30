@@ -37,53 +37,8 @@ public class BiomeBallBrush extends AbstractBrush {
 
     private void biome(final SnipeData v) {
         final int brushSize = v.getBrushSize();
-        final double brushSizeSquared = Math.pow(brushSize, 2);
-        var targetBlock = this.getTargetBlock();
-        int blockPositionX = targetBlock.getX();
-        int blockPositionY = targetBlock.getY();
-        int blockPositionZ = targetBlock.getZ();
-        for (int z = 1; z <= brushSize; z++) {
-            final double zSquared = Math.pow(z, 2);
-            this.getWorld().setBiome(blockPositionX + z, blockPositionY, blockPositionZ, this.selectedBiome);
-            this.getWorld().setBiome(blockPositionX + z, blockPositionY, blockPositionZ, this.selectedBiome);
-            this.getWorld().setBiome(blockPositionX - z, blockPositionY, blockPositionZ, this.selectedBiome);
-            this.getWorld().setBiome(blockPositionX, blockPositionY + z, blockPositionZ, this.selectedBiome);
-            this.getWorld().setBiome(blockPositionX, blockPositionY - z, blockPositionZ, this.selectedBiome);
-            this.getWorld().setBiome(blockPositionX, blockPositionY, blockPositionZ + z, this.selectedBiome);
-            this.getWorld().setBiome(blockPositionX, blockPositionY, blockPositionZ - z, this.selectedBiome);
-
-            for (int x = 1; x <= brushSize; x++) {
-                final double xSquared = Math.pow(x, 2);
-
-                if (zSquared + xSquared <= brushSizeSquared) {
-                    this.getWorld().setBiome(blockPositionX + z, blockPositionY, blockPositionZ + x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX + z, blockPositionY, blockPositionZ - x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX - z, blockPositionY, blockPositionZ + x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX - z, blockPositionY, blockPositionZ - x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX + z, blockPositionY + x, blockPositionZ, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX + z, blockPositionY - x, blockPositionZ, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX - z, blockPositionY + x, blockPositionZ, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX - z, blockPositionY - x, blockPositionZ, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX, blockPositionY + z, blockPositionZ + x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX, blockPositionY + z, blockPositionZ - x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX, blockPositionY - z, blockPositionZ + x, this.selectedBiome);
-                    this.getWorld().setBiome(blockPositionX, blockPositionY - z, blockPositionZ - x, this.selectedBiome);
-                }
-
-                for (int y = 1; y <= brushSize; y++) {
-                    if ((xSquared + Math.pow(y, 2) + zSquared) <= brushSizeSquared) {
-                        this.getWorld().setBiome(blockPositionX + x, blockPositionY + y, blockPositionZ + z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX + x, blockPositionY + y, blockPositionZ - z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX - x, blockPositionY + y, blockPositionZ + z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX - x, blockPositionY + y, blockPositionZ - z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX + x, blockPositionY - y, blockPositionZ + z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX + x, blockPositionY - y, blockPositionZ - z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX - x, blockPositionY - y, blockPositionZ + z, this.selectedBiome);
-                        this.getWorld().setBiome(blockPositionX - x, blockPositionY - y, blockPositionZ - z, this.selectedBiome);
-                    }
-                }
-            }
-        }
+        var blocks = this.sphere(this.getTargetBlock().getLocation(), brushSize, true);
+        blocks.forEach(block -> block.getWorld().setBiome(block.getBlockX(), block.getBlockY(), block.getBlockZ(), selectedBiome));
 
         //refresh chunks
         final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
@@ -104,7 +59,7 @@ public class BiomeBallBrush extends AbstractBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Messages.BIOME_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
+            v.sendMessage(Messages.BIOMEBALL_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
 
