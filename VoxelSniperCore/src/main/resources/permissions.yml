@@ -84,6 +84,7 @@ permissions:
 - name: voxelsniper.brush.voxeldisc
 - name: voxelsniper.brush.voxeldiscface
 - name: voxelsniper.brush.warp
+- name: voxelsniper.brush.biomeball
 - name: voxelsniper.brush.*
   description: Allows player to use all brushes
 - name: voxelsniper.*
