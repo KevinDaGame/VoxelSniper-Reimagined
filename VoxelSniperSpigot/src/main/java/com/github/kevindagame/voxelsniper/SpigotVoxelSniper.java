@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.voxelsniper.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.bstats.Metrics;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -63,8 +64,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     @Override
     public void onEnable() {
-        Metrics metrics = new Metrics(this, 16602);
-
         VoxelSniper.voxelsniper = this;
         SpigotVoxelSniper.instance = this;
         this.fileHandler = new SpigotFileHandler(this);
@@ -84,9 +83,13 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
         Bukkit.getPluginManager().registerEvents(this, this);
         getLogger().info("Registered Sniper Listener.");
+        Bukkit.getPluginManager().registerEvents(new BrushUsageCounter(), this);
 
         // Initialize commands
         SpigotCommandManager.initialize();
+        Metrics metrics = new Metrics(this, 16602);
+        metrics.addCustomChart(new Metrics.SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
+//        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
     }
 
     @Override

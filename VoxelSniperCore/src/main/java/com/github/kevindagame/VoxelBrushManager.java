@@ -33,6 +33,7 @@ public class VoxelBrushManager {
 
         brushManager.registerSniperBrush(BallBrush.class, "b", "ball");
         brushManager.registerSniperBrush(BiomeBrush.class, "bio", "biome");
+        brushManager.registerSniperBrush(BiomeBallBrush.class, "bioball", "biomeball");
         brushManager.registerSniperBrush(BlendBallBrush.class, "bb", "blendball");
         brushManager.registerSniperBrush(BlendDiscBrush.class, "bd", "blenddisc");
         brushManager.registerSniperBrush(BlendVoxelBrush.class, "bv", "blendvoxel");
