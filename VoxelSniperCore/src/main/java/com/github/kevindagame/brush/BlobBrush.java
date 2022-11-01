@@ -188,12 +188,12 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y))
+                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
         }
-        
+
         this.currentPerformer.perform(positions);
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }

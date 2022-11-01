@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.google.common.collect.Lists;
@@ -25,9 +26,7 @@ public class BallBrush extends PerformerBrush {
     }
 
     private void ball(final SnipeData v, IBlock targetBlock) {
-        final int brushSize = v.getBrushSize();
-        var positions = this.sphere(targetBlock.getLocation(), brushSize, this.smoothSphere);
-        this.currentPerformer.perform(positions);
+        this.currentPerformer.perform(Shapes.ball(targetBlock.getLocation(), v.getBrushSize(), this.smoothSphere));
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 

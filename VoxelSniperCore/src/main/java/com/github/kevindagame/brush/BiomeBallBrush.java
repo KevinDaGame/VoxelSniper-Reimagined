@@ -2,6 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -37,7 +38,7 @@ public class BiomeBallBrush extends AbstractBrush {
 
     private void biome(final SnipeData v) {
         final int brushSize = v.getBrushSize();
-        var blocks = this.sphere(this.getTargetBlock().getLocation(), brushSize, true);
+        var blocks = Shapes.ball(this.getTargetBlock().getLocation(), brushSize, true);
         blocks.forEach(block -> block.getWorld().setBiome(block.getBlockX(), block.getBlockY(), block.getBlockZ(), selectedBiome));
 
         //refresh chunks

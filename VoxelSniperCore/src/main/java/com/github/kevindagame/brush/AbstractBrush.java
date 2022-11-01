@@ -48,29 +48,7 @@ public abstract class AbstractBrush implements IBrush {
         return false;
     }
 
-    protected Set<VoxelLocation> sphere(VoxelLocation location, double radius, boolean smooth) {
-        Set<VoxelLocation> circleBlocks = new HashSet<>();
-        double SMOOTH_SPHERE_VALUE = 0.5;
-        int VOXEL_SPHERE_VALUE = 0;
 
-        int bx = location.getBlockX();
-        int by = location.getBlockY();
-        int bz = location.getBlockZ();
-        var radiusSquared = Math.pow(radius + (smooth ? SMOOTH_SPHERE_VALUE : VOXEL_SPHERE_VALUE), 2);
-        for (int x = (int) (bx - radius); x <= bx + radius; x++) {
-            for (int y = (int) (by - radius); y <= by + radius; y++) {
-                for (int z = (int) (bz - radius); z <= bz + radius; z++) {
-
-                    double distance = ((bx - x) * (bx - x) + ((bz - z) * (bz - z)) + ((by - y) * (by - y)));
-                    if (distance <= radiusSquared) {
-                        circleBlocks.add(new VoxelLocation(location.getWorld(), x, y, z));
-                    }
-                }
-            }
-        }
-
-        return circleBlocks;
-    }
 
     @Override
     public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
