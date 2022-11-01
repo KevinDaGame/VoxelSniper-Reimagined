@@ -2,7 +2,6 @@ package com.github.kevindagame.voxelsniper.events.sniper;
 
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
-import com.github.kevindagame.voxelsniper.events.SniperBrushChangedEvent;
 
 public class SniperBrushSizeChangedEvent extends SniperEvent {
 

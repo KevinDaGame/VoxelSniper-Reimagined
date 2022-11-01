@@ -12,7 +12,7 @@ public class SniperReplaceMaterialChangedEvent extends SniperMaterialChangedEven
         super(sniper, originalMaterial, newMaterial);
     }
 
-    public static HandlerList getHandlerList() {
+    public static HandlerList<SniperReplaceMaterialChangedEvent> getHandlerList() {
         return handlers;
     }
 
