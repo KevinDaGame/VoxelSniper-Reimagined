@@ -1,5 +1,6 @@
 package com.github.kevindagame.snipe;
 
+import com.github.kevindagame.voxelsniper.events.sniper.SniperSnipeEvent;
 import com.google.common.collect.Maps;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;
@@ -128,7 +129,8 @@ public class Sniper {
         }
 
         var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-        VoxelSniper.voxelsniper.getEventManager().callSniperSnipeEvent(this, sniperTool.getCurrentBrush(), success);
+        SniperSnipeEvent event = new SniperSnipeEvent(this, sniperTool.getCurrentBrush(), success);
+        event.callEvent();
         return success;
     }
 
@@ -136,18 +138,12 @@ public class Sniper {
         IBlockData oldSubstance, newSubstance;
         switch (snipeAction) {
             case GUNPOWDER:
-                oldSubstance = snipeData.getReplaceSubstance();
                 snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                newSubstance = snipeData.getReplaceSubstance();
-                VoxelSniper.voxelsniper.getEventManager().callSniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
 
                 snipeData.getVoxelMessage().replace();
                 return true;
             case ARROW:
-                oldSubstance = snipeData.getVoxelSubstance();
                 snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                newSubstance = snipeData.getVoxelSubstance();
-                VoxelSniper.voxelsniper.getEventManager().callSniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                 snipeData.getVoxelMessage().voxel();
                 return true;
             default:

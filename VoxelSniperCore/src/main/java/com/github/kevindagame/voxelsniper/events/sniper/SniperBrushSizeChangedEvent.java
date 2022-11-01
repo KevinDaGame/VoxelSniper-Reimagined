@@ -1,28 +1,24 @@
-package com.github.kevindagame.voxelsniper.events.bukkit;
+package com.github.kevindagame.voxelsniper.events.sniper;
 
 import com.github.kevindagame.snipe.Sniper;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import com.github.kevindagame.voxelsniper.events.HandlerList;
+import com.github.kevindagame.voxelsniper.events.SniperBrushChangedEvent;
 
-/**
- *
- */
-public class SniperBrushSizeChangedEvent extends Event {
+public class SniperBrushSizeChangedEvent extends SniperEvent {
 
-    private static final HandlerList handlers = new HandlerList();
-    private final Sniper sniper;
+    private static final HandlerList<SniperBrushSizeChangedEvent> handlers = new HandlerList<>();
     private final int originalSize;
     private final int newSize;
     private final String toolId;
 
     public SniperBrushSizeChangedEvent(Sniper sniper, String toolId, int originalSize, int newSize) {
-        this.sniper = sniper;
+        super(sniper);
         this.originalSize = originalSize;
         this.newSize = newSize;
         this.toolId = toolId;
     }
 
-    public static HandlerList getHandlerList() {
+    public static HandlerList<SniperBrushSizeChangedEvent> getHandlerList() {
         return handlers;
     }
 
@@ -34,16 +30,12 @@ public class SniperBrushSizeChangedEvent extends Event {
         return newSize;
     }
 
-    public Sniper getSniper() {
-        return sniper;
-    }
-
     public String getToolId() {
         return toolId;
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public HandlerList<SniperBrushSizeChangedEvent> getHandlers() {
         return handlers;
     }
 }

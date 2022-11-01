@@ -4,6 +4,7 @@
  */
 package com.github.kevindagame.brush.perform;
 
+import com.github.kevindagame.voxelsniper.events.SniperBrushChangedEvent;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.AbstractBrush;
@@ -38,7 +39,8 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
         } else {
             currentPerformer = newPerfomer;
 
-            VoxelSniper.voxelsniper.getEventManager().callSniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
+            SniperBrushChangedEvent event = new SniperBrushChangedEvent(v.owner(), v.owner().getCurrentToolId(), this, this);
+            event.callEvent();
 
             info(v.getVoxelMessage());
             currentPerformer.info(v.getVoxelMessage());
