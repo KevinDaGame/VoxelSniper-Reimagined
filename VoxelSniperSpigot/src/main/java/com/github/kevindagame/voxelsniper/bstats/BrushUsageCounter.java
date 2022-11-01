@@ -1,16 +1,16 @@
 package com.github.kevindagame.voxelsniper.bstats;
 
-import com.github.kevindagame.voxelsniper.events.sniper.SniperSnipeEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
 
 public class BrushUsageCounter {
 //    private static final Map<String, Integer> perBrushCounter = new HashMap<>();
     private static int counter = 0;
 
     public void registerListeners() {
-        SniperSnipeEvent.getHandlerList().registerListener(this::onBrushUse);
+        PlayerSnipeEvent.getHandlerList().registerListener(this::onBrushUse);
     }
 
-    private void onBrushUse(SniperSnipeEvent event) {
+    private void onBrushUse(PlayerSnipeEvent event) {
         if(!event.isSuccessful()) return;
 //        String brushName = event.getBrush().getName();
 //        perBrushCounter.put(brushName, perBrushCounter.getOrDefault(brushName, 0) + 1);

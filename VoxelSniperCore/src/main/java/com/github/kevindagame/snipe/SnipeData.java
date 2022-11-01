@@ -3,8 +3,8 @@ package com.github.kevindagame.snipe;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.events.sniper.SniperMaterialChangedEvent;
-import com.github.kevindagame.voxelsniper.events.sniper.SniperReplaceMaterialChangedEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerMaterialChangedEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerReplaceMaterialChangedEvent;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.text.ComponentLike;
@@ -84,7 +84,7 @@ public class SnipeData {
         var oldSubstance = this.getVoxelSubstance();
         this.voxelSubstance = voxelSubstance;
         var newSubstance = this.getVoxelSubstance();
-        SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(owner, oldSubstance, newSubstance);
+        PlayerMaterialChangedEvent event = new PlayerMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance);
         event.callEvent();
     }
 
@@ -100,7 +100,7 @@ public class SnipeData {
         var oldSubstance = this.getReplaceSubstance();
         this.replaceSubstance = targetSubstance;
         var newSubstance = this.getReplaceSubstance();
-        SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(owner, oldSubstance, newSubstance);
+        PlayerReplaceMaterialChangedEvent event = new PlayerReplaceMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance);
         event.callEvent();
     }
 

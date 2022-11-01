@@ -1,19 +1,19 @@
-package com.github.kevindagame.voxelsniper.events.sniper;
+package com.github.kevindagame.voxelsniper.events.player;
 
 import com.github.kevindagame.brush.IBrush;
-import com.github.kevindagame.snipe.Sniper;
+import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SniperSnipeEvent extends SniperEvent {
+public class PlayerSnipeEvent extends PlayerEvent {
 
-    private static final HandlerList<SniperSnipeEvent> handlers = new HandlerList<>();
+    private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
 
     private final boolean success;
-    public SniperSnipeEvent(Sniper sniper, IBrush brush, boolean success) {
-        super(sniper);
+    public PlayerSnipeEvent(IPlayer p, IBrush brush, boolean success) {
+        super(p);
         this.brush = brush;
         this.success = success;
     }
@@ -28,10 +28,10 @@ public class SniperSnipeEvent extends SniperEvent {
 
     @NotNull
     @Override
-    public HandlerList<SniperSnipeEvent> getHandlers() {
+    public HandlerList<PlayerSnipeEvent> getHandlers() {
         return handlers;
     }
-    public static HandlerList<SniperSnipeEvent> getHandlerList() {
+    public static HandlerList<PlayerSnipeEvent> getHandlerList() {
         return handlers;
     }
 }
