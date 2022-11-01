@@ -16,7 +16,7 @@ public class SniperMaterialChangedEvent extends SniperEvent {
         this.newMaterial = newMaterial;
     }
 
-    public static HandlerList<SniperMaterialChangedEvent> getHandlerList() {
+    public static HandlerList<? extends SniperMaterialChangedEvent> getHandlerList() {
         return handlers;
     }
 
@@ -29,7 +29,7 @@ public class SniperMaterialChangedEvent extends SniperEvent {
     }
 
     @Override
-    public HandlerList<?> getHandlers() {
+    public HandlerList<? extends SniperMaterialChangedEvent> getHandlers() {
         return handlers;
     }
 }

@@ -9,19 +9,23 @@ import com.github.kevindagame.voxelsniper.events.sniper.SniperSnipeEvent;
 
 public final class EventManager {
 	public EventManager() {
-		VoxelSniper.registerListener(SniperReplaceMaterialChangedEvent.class, (SniperReplaceMaterialChangedEvent ev) -> {
-			ev.getSniper().getPlayer().sendMessage("Test SniperReplaceMaterialChangedEvent with reflection");
-		});
+//		VoxelSniper.registerListener(SniperMaterialChangedEvent.class, (SniperMaterialChangedEvent ev) -> {
+//			ev.getSniper().getPlayer().sendMessage("Test SniperReplaceMaterialChangedEvent with reflection");
+//		});
 
 		SniperSnipeEvent.getHandlerList().registerListener((ev) -> {
 			ev.getSniper().getPlayer().sendMessage("Test SniperSnipeEvent without reflection");
 		});
 
-		SniperMaterialChangedEvent.getHandlerList().registerListener(this::handleEvent);
+		SniperMaterialChangedEvent.getHandlerList().registerListener((ev) -> {
+			ev.getSniper().getPlayer().sendMessage("Test SniperMaterialChangedEvent without reflection");
+		});
+
+		SniperReplaceMaterialChangedEvent.getHandlerList().registerListener(this::handleEvent);
 	}
 	
-	private void handleEvent(SniperMaterialChangedEvent ev) {
-		ev.getSniper().getPlayer().sendMessage("Test SniperMaterialChangedEvent in function");
+	private void handleEvent(SniperReplaceMaterialChangedEvent ev) {
+		ev.getSniper().getPlayer().sendMessage("Test SniperReplaceMaterialChangedEvent in function");
 	}
 	
 }
