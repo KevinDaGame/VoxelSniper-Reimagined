@@ -79,7 +79,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
         Bukkit.getPluginManager().registerEvents(this, this);
         getLogger().info("Registered Sniper Listener.");
-        Bukkit.getPluginManager().registerEvents(new BrushUsageCounter(), this);
+        new BrushUsageCounter().registerListeners();
 
         // Initialize commands
         SpigotCommandManager.initialize();
