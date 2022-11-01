@@ -32,6 +32,12 @@ public abstract class AbstractBrush implements IBrush {
      * Last Block before targeted Block.
      */
     private IBlock lastBlock;
+
+    /**
+     * The blocks this brush impacts
+     */
+    protected Set<VoxelLocation> positions = new HashSet<>();
+
     /**
      * Brush name.
      */
@@ -57,14 +63,19 @@ public abstract class AbstractBrush implements IBrush {
         switch (action) {
             case ARROW:
                 this.arrow(data);
-                return true;
+                break;
             case GUNPOWDER:
                 this.powder(data);
-                return true;
+                break;
             default:
                 return false;
         }
+        //TODO Create event
+        return actPerform(data);
+
     }
+
+    protected abstract boolean actPerform(SnipeData v);
 
     /**
      * The arrow action. Executed when a player RightClicks with an Arrow
@@ -273,6 +284,7 @@ public abstract class AbstractBrush implements IBrush {
      * @param material the material to set this block to
      * @param undo     The Undo container to store the change
      */
+    @Deprecated
     protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material, Undo undo) {
         if(isInWorldHeight(y)) {
             var b = getWorld().getBlock(x ,y ,z);

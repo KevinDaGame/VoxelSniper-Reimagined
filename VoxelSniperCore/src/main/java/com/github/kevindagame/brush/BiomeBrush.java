@@ -5,6 +5,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,14 +27,20 @@ public class BiomeBrush extends AbstractBrush {
 
         for (int x = -brushSize; x <= brushSize; x++) {
             final double xSquared = Math.pow(x, 2);
-
             for (int z = -brushSize; z <= brushSize; z++) {
                 if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
-                    this.getWorld().setBiome(this.getTargetBlock().getX() + x, this.getTargetBlock().getZ() + z, this.selectedBiome);
+                    this.positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() + x, 0, this.getTargetBlock().getZ() + z));
                 }
             }
         }
 
+
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        this.positions.forEach(position -> position.getWorld().setBiome(position.getBlockX(), position.getBlockZ(), selectedBiome));
+        var brushSize = v.getBrushSize();
         final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
         final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
 
@@ -47,6 +54,7 @@ public class BiomeBrush extends AbstractBrush {
                 this.getWorld().refreshChunk(x, z);
             }
         }
+        return true;
     }
 
     @Override

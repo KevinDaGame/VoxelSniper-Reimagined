@@ -26,6 +26,7 @@ public class BiomeBallBrush extends AbstractBrush {
         return "voxelsniper.brush.biomeball";
     }
 
+
     @Override
     public void arrow(SnipeData v) {
         this.biome(v);
@@ -37,9 +38,15 @@ public class BiomeBallBrush extends AbstractBrush {
     }
 
     private void biome(final SnipeData v) {
-        final int brushSize = v.getBrushSize();
-        var blocks = Shapes.ball(this.getTargetBlock().getLocation(), brushSize, true);
-        blocks.forEach(block -> block.getWorld().setBiome(block.getBlockX(), block.getBlockY(), block.getBlockZ(), selectedBiome));
+        this.positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true);
+
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        this.positions.forEach(position -> position.getWorld().setBiome(position.getBlockX(), position.getBlockY(), position.getBlockZ(), selectedBiome));
+
+        var brushSize = v.getBrushSize();
 
         //refresh chunks
         final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
@@ -55,8 +62,8 @@ public class BiomeBallBrush extends AbstractBrush {
                 this.getWorld().refreshChunk(x, z);
             }
         }
+        return true;
     }
-
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
