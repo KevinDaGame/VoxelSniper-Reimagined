@@ -8,8 +8,8 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.events.SniperBrushChangedEvent;
-import com.github.kevindagame.voxelsniper.events.sniper.SniperBrushSizeChangedEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerBrushSizeChangedEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public class VoxelBrushCommand extends VoxelCommand {
             int originalSize = snipeData.getBrushSize();
             snipeData.setBrushSize(Integer.parseInt(args[0]));
 
-            SniperBrushSizeChangedEvent event = new SniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
+            PlayerBrushSizeChangedEvent event = new PlayerBrushSizeChangedEvent(player, currentToolId, originalSize, snipeData.getBrushSize());
             event.callEvent();
 
             snipeData.getVoxelMessage().size();
@@ -99,7 +99,7 @@ public class VoxelBrushCommand extends VoxelCommand {
                 }
                 return true;
             }
-            SniperBrushChangedEvent event = new SniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
+            PlayerBrushChangedEvent event = new PlayerBrushChangedEvent(player, currentToolId, oldBrush, newBrush);
             event.callEvent();
             sniper.displayInfo();
         }

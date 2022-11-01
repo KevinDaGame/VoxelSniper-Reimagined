@@ -1,23 +1,23 @@
-package com.github.kevindagame.voxelsniper.events.sniper;
+package com.github.kevindagame.voxelsniper.events.player;
 
-import com.github.kevindagame.snipe.Sniper;
+import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
 
-public class SniperBrushSizeChangedEvent extends SniperEvent {
+public class PlayerBrushSizeChangedEvent extends PlayerEvent {
 
-    private static final HandlerList<SniperBrushSizeChangedEvent> handlers = new HandlerList<>();
+    private static final HandlerList<PlayerBrushSizeChangedEvent> handlers = new HandlerList<>();
     private final int originalSize;
     private final int newSize;
     private final String toolId;
 
-    public SniperBrushSizeChangedEvent(Sniper sniper, String toolId, int originalSize, int newSize) {
-        super(sniper);
+    public PlayerBrushSizeChangedEvent(IPlayer p, String toolId, int originalSize, int newSize) {
+        super(p);
         this.originalSize = originalSize;
         this.newSize = newSize;
         this.toolId = toolId;
     }
 
-    public static HandlerList<SniperBrushSizeChangedEvent> getHandlerList() {
+    public static HandlerList<PlayerBrushSizeChangedEvent> getHandlerList() {
         return handlers;
     }
 
@@ -34,7 +34,7 @@ public class SniperBrushSizeChangedEvent extends SniperEvent {
     }
 
     @Override
-    public HandlerList<SniperBrushSizeChangedEvent> getHandlers() {
+    public HandlerList<PlayerBrushSizeChangedEvent> getHandlers() {
         return handlers;
     }
 }

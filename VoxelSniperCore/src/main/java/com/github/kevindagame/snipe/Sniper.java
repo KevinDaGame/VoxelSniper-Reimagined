@@ -1,6 +1,6 @@
 package com.github.kevindagame.snipe;
 
-import com.github.kevindagame.voxelsniper.events.sniper.SniperSnipeEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
 import com.google.common.collect.Maps;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;
@@ -129,7 +129,7 @@ public class Sniper {
         }
 
         var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-        SniperSnipeEvent event = new SniperSnipeEvent(this, sniperTool.getCurrentBrush(), success);
+        PlayerSnipeEvent event = new PlayerSnipeEvent(this.getPlayer(), sniperTool.getCurrentBrush(), success);
         event.callEvent();
         return success;
     }
