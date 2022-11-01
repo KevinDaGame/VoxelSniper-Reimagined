@@ -1,15 +1,13 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Blob_Brush
@@ -37,6 +35,7 @@ public class BlobBrush extends PerformerBrush {
     }
 
     private void digBlob(final SnipeData v) {
+        Set<VoxelLocation> positions = new HashSet<>();
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final int[][][] splat = new int[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
@@ -112,16 +111,17 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
         }
-
+        this.currentPerformer.perform(positions);
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void growBlob(final SnipeData v) {
+        Set<VoxelLocation> positions = new HashSet<>();
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final int[][][] splat = new int[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
@@ -188,12 +188,13 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y))
                     }
                 }
             }
         }
-
+        
+        this.currentPerformer.perform(positions);
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 

@@ -27,7 +27,7 @@ public class BallBrush extends PerformerBrush {
     private void ball(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         var positions = this.sphere(targetBlock.getLocation(), brushSize, this.smoothSphere);
-        positions.forEach(position -> this.currentPerformer.perform(position.getBlock()));
+        this.currentPerformer.perform(positions);
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 

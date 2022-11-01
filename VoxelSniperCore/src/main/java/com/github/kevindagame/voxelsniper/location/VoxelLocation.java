@@ -128,6 +128,7 @@ public class VoxelLocation implements Cloneable{
         }
     }
 
+    @Deprecated
     public IBlock getClampedBlock() {
         return getWorld().getBlock(getBlockX(), Math.max(Math.min(getBlockY(), getWorld().getMaxWorldHeight()), getWorld().getMinWorldHeight()), getBlockZ());
     }

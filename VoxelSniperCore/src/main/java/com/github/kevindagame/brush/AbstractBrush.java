@@ -37,17 +37,6 @@ public abstract class AbstractBrush implements IBrush {
      */
     private String name = "Undefined";
 
-    /**
-     * @param x
-     * @param y
-     * @param z
-     * @return {@link IBlock}
-     */
-    public final IBlock clampY(final int x, final int y, final int z) {
-        int clampedY = this.clampWorldHeight(y);
-        return this.getWorld().getBlock(x, clampedY, z);
-    }
-
     private boolean preparePerform(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (this.getTarget(v, clickedBlock, clickedFace)) {
             if (this instanceof PerformerBrush) {
@@ -68,12 +57,12 @@ public abstract class AbstractBrush implements IBrush {
         int by = location.getBlockY();
         int bz = location.getBlockZ();
         var radiusSquared = Math.pow(radius + (smooth ? SMOOTH_SPHERE_VALUE : VOXEL_SPHERE_VALUE), 2);
-        for(int x = (int) (bx - radius); x <= bx + radius; x++) {
-            for(int y = (int) (by - radius); y <= by + radius; y++) {
-                for(int z = (int) (bz - radius); z <= bz + radius; z++) {
+        for (int x = (int) (bx - radius); x <= bx + radius; x++) {
+            for (int y = (int) (by - radius); y <= by + radius; y++) {
+                for (int z = (int) (bz - radius); z <= bz + radius; z++) {
 
-                    double distance = ((bx-x) * (bx-x) + ((bz-z) * (bz-z)) + ((by-y) * (by-y)));
-                    if(distance <= radiusSquared) {
+                    double distance = ((bx - x) * (bx - x) + ((bz - z) * (bz - z)) + ((by - y) * (by - y)));
+                    if (distance <= radiusSquared) {
                         circleBlocks.add(new VoxelLocation(location.getWorld(), x, y, z));
                     }
                 }
@@ -226,8 +215,8 @@ public abstract class AbstractBrush implements IBrush {
         return getWorld().getMaxWorldHeight();
     }
 
-    protected final int clampWorldHeight(int height) {
-        return Math.max(getMinHeight(), Math.min(getMaxHeight(), height));
+    protected final boolean isInWorldHeight(int height) {
+        return getMinHeight() < height && getMaxHeight() > height;
     }
 
     /**
@@ -239,7 +228,7 @@ public abstract class AbstractBrush implements IBrush {
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
     protected VoxelMaterial getBlockMaterialAt(int x, int y, int z) {
-        return clampY(x, y, z).getMaterial();
+        return isInWorldHeight(y) ? this.getWorld().getBlock(x, y, z).getMaterial() : VoxelMaterial.AIR;
     }
 
     /**
@@ -251,7 +240,7 @@ public abstract class AbstractBrush implements IBrush {
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
     protected IBlockData getBlockDataAt(int x, int y, int z) {
-        return this.clampY(x, y, z).getBlockData();
+        return isInWorldHeight(y) ? this.getWorld().getBlock(x, y, z).getBlockData() : VoxelMaterial.AIR.createBlockData();
     }
 
     /**
@@ -269,16 +258,6 @@ public abstract class AbstractBrush implements IBrush {
     }
 
     /**
-     * Set block data with supplied data over BlockWrapper.
-     *
-     * @param blockWrapper Block data wrapper
-     */
-    @Deprecated
-    protected final void setBlock(BlockWrapper blockWrapper) {
-        this.clampY(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ()).setBlockData(blockWrapper.getBlockData());
-    }
-
-    /**
      * Sets the VoxelMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
      * @param x        X coordinate
@@ -287,7 +266,9 @@ public abstract class AbstractBrush implements IBrush {
      * @param material the material to set this block to
      */
     protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material) {
-        this.clampY(x, y, z).setBlockData(material.createBlockData());
+        if(isInWorldHeight(y)) {
+            this.getWorld().getBlock(x, y, z).setBlockData(material.createBlockData());
+        }
     }
 
     /**
@@ -300,7 +281,9 @@ public abstract class AbstractBrush implements IBrush {
      * @param blockData The blockData to set this block to
      */
     protected final void setBlockMaterialAndDataAt(int x, int y, int z, IBlockData blockData) {
-        this.clampY(x, y, z).setBlockData(blockData, true);
+        if(isInWorldHeight(y)) {
+            this.getWorld().getBlock(x, y, z).setBlockData(blockData, true);
+        }
     }
 
     /**
@@ -313,11 +296,13 @@ public abstract class AbstractBrush implements IBrush {
      * @param undo     The Undo container to store the change
      */
     protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material, Undo undo) {
-        IBlock b = this.clampY(x, y, z);
-        if (b.getMaterial() != material) {
-            undo.put(b);
+        if(isInWorldHeight(y)) {
+            var b = getWorld().getBlock(x ,y ,z);
+            if (b.getMaterial() != material) {
+                undo.put(b);
+            }
+            b.setMaterial(material);
         }
-        b.setMaterial(material);
     }
 
     /**
@@ -328,13 +313,12 @@ public abstract class AbstractBrush implements IBrush {
      * @param undo     The Undo container to store the change
      */
     protected final void setBlockType(IBlock b, VoxelMaterial material, Undo undo) {
-        int clampedY = this.clampWorldHeight(b.getY());
-        if (clampedY != b.getY()) {
-            b = getWorld().getBlock(b.getX(), clampedY, b.getX());
+        if(isInWorldHeight(b.getY())) {
+            if (b.getMaterial() != material) {
+                undo.put(b);
+            }
+            b.setMaterial(material);
         }
-        if (b.getMaterial() != material) {
-            undo.put(b);
-        }
-        b.setMaterial(material);
+
     }
 }

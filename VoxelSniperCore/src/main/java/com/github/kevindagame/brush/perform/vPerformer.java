@@ -8,7 +8,10 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+
+import java.util.Set;
 
 /**
  * @author Voxel
@@ -27,7 +30,10 @@ public abstract class vPerformer {
         h = new Undo();
     }
 
-    public abstract void perform(IBlock b);
+    protected abstract void perform(IBlock b);
+    public void perform(Set<VoxelLocation> positions) {
+        positions.forEach(position -> this.perform(position.getBlock()));
+    }
 
     public Undo getUndo() {
         Undo temp = h;
@@ -38,4 +44,5 @@ public abstract class vPerformer {
     public boolean isUsingReplaceMaterial() {
         return false;
     }
+
 }
