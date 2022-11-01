@@ -8,6 +8,7 @@ import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
+import com.github.kevindagame.voxelsniperforge.blockstate.ExtendedBlockState;
 import com.github.kevindagame.voxelsniperforge.blockstate.ForgeBlockState;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
@@ -52,23 +53,25 @@ public class ForgeBlock extends AbstractBlock {
     @Override
     public void setBlockData(IBlockData blockData, boolean applyPhysics) {
         var world = getLevel();
-        var position = this.pos;
         BlockState old = getLevel().getBlockState(this.pos);
         BlockState newState = ((ForgeBlockData) blockData).getState();
 
         if (old.hasBlockEntity() && newState.getBlock() != old.getBlock()) {
-            world.removeBlockEntity(position);
+            world.removeBlockEntity(this.pos);
         }
 
         if (applyPhysics) {
-            world.setBlock(position, newState, 3);
+            world.setBlock(this.pos, newState, 3);
         } else {
-            throw new UnsupportedOperationException("Not implemented yet");
-//            boolean success = world.setBlock(position, newState, 2 | 16); // NOTIFY | NO_OBSERVER | NO_PLACE (custom)
-//            if (success) {
-//                world.sendBlockUpdated(position, old, newState, 3);
-//            }
+            if (newState instanceof ExtendedBlockState extend) {
+                extend.setShouldUpdate(false);
+                world.setBlock(this.pos, newState, 3);
+                extend.setShouldUpdate(true);
+            } else {
+                throw new UnsupportedOperationException("Not implemented yet");
+            }
         }
+        world.setBlock(this.pos, newState, 3);
 
         this.material = blockData.getMaterial();
     }
