@@ -8,8 +8,6 @@ import com.github.kevindagame.voxelsniper.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.bstats.Metrics;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.events.IEventManager;
-import com.github.kevindagame.voxelsniper.events.bukkit.SpigotEventManager;
 import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
@@ -49,7 +47,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     private final Map<UUID, SpigotPlayer> players = new HashMap<>();
     private VoxelSniperConfiguration voxelSniperConfiguration;
     private IFileHandler fileHandler;
-    private IEventManager eventManager;
 
     /**
      * @return {@link SpigotVoxelSniper}
@@ -67,7 +64,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         VoxelSniper.voxelsniper = this;
         SpigotVoxelSniper.instance = this;
         this.fileHandler = new SpigotFileHandler(this);
-        this.eventManager = new SpigotEventManager();
         // Initialize profile manager (Sniper)
         VoxelProfileManager.initialize();
 
@@ -171,11 +167,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @Override
     public IFileHandler getFileHandler() {
         return fileHandler;
-    }
-
-    @Override
-    public IEventManager getEventManager() {
-        return this.eventManager;
     }
 
     @NotNull

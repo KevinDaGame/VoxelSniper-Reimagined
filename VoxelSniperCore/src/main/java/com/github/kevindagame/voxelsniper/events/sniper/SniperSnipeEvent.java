@@ -1,26 +1,21 @@
-package com.github.kevindagame.voxelsniper.events.bukkit;
+package com.github.kevindagame.voxelsniper.events.sniper;
 
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.snipe.Sniper;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import com.github.kevindagame.voxelsniper.events.HandlerList;
+
 import org.jetbrains.annotations.NotNull;
 
-public class SniperSnipeEvent extends Event {
+public class SniperSnipeEvent extends SniperEvent {
 
-    private static final HandlerList handlers = new HandlerList();
-    private final Sniper sniper;
+    private static final HandlerList<SniperSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
 
     private final boolean success;
     public SniperSnipeEvent(Sniper sniper, IBrush brush, boolean success) {
-        this.sniper = sniper;
+        super(sniper);
         this.brush = brush;
         this.success = success;
-    }
-
-    public Sniper getSniper() {
-        return sniper;
     }
 
     public IBrush getBrush() {
@@ -33,10 +28,10 @@ public class SniperSnipeEvent extends Event {
 
     @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public HandlerList<SniperSnipeEvent> getHandlers() {
         return handlers;
     }
-    public static HandlerList getHandlerList() {
+    public static HandlerList<SniperSnipeEvent> getHandlerList() {
         return handlers;
     }
 }
