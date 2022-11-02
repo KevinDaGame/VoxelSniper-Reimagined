@@ -7,7 +7,7 @@ package com.github.kevindagame.voxelsniper.events;
  * listeners with higher priority are called last.
  * <p>
  * Listeners are called in following order:
- * {@link #LOW} -> {@link #NORMAL} -> {@link #HIGH}
+ * {@link #LOW} -> {@link #MEDIUM} -> {@link #HIGH}
  */
 public enum EventPriority {
 
@@ -18,10 +18,11 @@ public enum EventPriority {
     LOW,
     /**
      * Event call is neither important nor unimportant, and may be run
-     * normally.<p>
-     * This is also the default EventPriority for an {@link EventListener}.
+     * normally.
+     * <p>
+     * This is also the default EventPriority when registering events.
      */
-    NORMAL,
+    MEDIUM,
     /**
      * Event call is critical and must have the final say in what happens
      * to the event
