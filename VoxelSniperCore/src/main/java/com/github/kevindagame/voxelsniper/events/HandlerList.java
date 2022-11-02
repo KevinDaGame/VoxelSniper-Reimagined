@@ -1,7 +1,8 @@
 package com.github.kevindagame.voxelsniper.events;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -9,8 +10,7 @@ import java.util.function.Consumer;
  * @param <T> The {@link Event} type this HandlerList is for
  */
 public class HandlerList<T extends Event> {
-	// Using a TreeSet to force the handlers to be sorted
-	private final Set<EventListener<T>> handlers = new TreeSet<>();
+	private final List<EventListener<T>> handlers = new ArrayList<>();
 
 	/**
 	 * Registers an {@link EventListener} with a given {@link EventPriority}
@@ -19,6 +19,7 @@ public class HandlerList<T extends Event> {
 	 */
 	public void registerListener(EventPriority priority, Consumer<T> handler) {
 		this.handlers.add(new EventListener<>(priority, handler));
+		Collections.sort(this.handlers);
 	}
 
 	/**
@@ -26,7 +27,7 @@ public class HandlerList<T extends Event> {
 	 * @param handler the handler to register
 	 */
 	public void registerListener(Consumer<T> handler) {
-		this.registerListener(EventPriority.NORMAL, handler);
+		this.registerListener(EventPriority.MEDIUM, handler);
 	}
 
 	/**
