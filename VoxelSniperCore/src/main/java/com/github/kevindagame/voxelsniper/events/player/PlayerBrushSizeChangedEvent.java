@@ -17,10 +17,6 @@ public class PlayerBrushSizeChangedEvent extends PlayerEvent {
         this.toolId = toolId;
     }
 
-    public static HandlerList<PlayerBrushSizeChangedEvent> getHandlerList() {
-        return handlers;
-    }
-
     public int getOriginalSize() {
         return originalSize;
     }
@@ -34,7 +30,10 @@ public class PlayerBrushSizeChangedEvent extends PlayerEvent {
     }
 
     @Override
-    public HandlerList<PlayerBrushSizeChangedEvent> getHandlers() {
+    protected HandlerList<PlayerBrushSizeChangedEvent> getHandlers() {
+        return handlers;
+    }
+    public static HandlerList<PlayerBrushSizeChangedEvent> getHandlerList() {
         return handlers;
     }
 }

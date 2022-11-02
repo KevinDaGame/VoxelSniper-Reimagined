@@ -16,10 +16,6 @@ public class PlayerMaterialChangedEvent extends PlayerEvent {
         this.newMaterial = newMaterial;
     }
 
-    public static HandlerList<? extends PlayerMaterialChangedEvent> getHandlerList() {
-        return handlers;
-    }
-
     public IBlockData getOriginalMaterial() {
         return originalMaterial;
     }
@@ -29,7 +25,10 @@ public class PlayerMaterialChangedEvent extends PlayerEvent {
     }
 
     @Override
-    public HandlerList<? extends PlayerMaterialChangedEvent> getHandlers() {
+    protected HandlerList<? extends PlayerMaterialChangedEvent> getHandlers() {
+        return handlers;
+    }
+    public static HandlerList<? extends PlayerMaterialChangedEvent> getHandlerList() {
         return handlers;
     }
 }

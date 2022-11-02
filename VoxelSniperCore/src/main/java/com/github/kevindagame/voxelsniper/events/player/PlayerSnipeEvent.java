@@ -10,8 +10,8 @@ public class PlayerSnipeEvent extends PlayerEvent {
 
     private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
-
     private final boolean success;
+
     public PlayerSnipeEvent(IPlayer p, IBrush brush, boolean success) {
         super(p);
         this.brush = brush;
@@ -28,7 +28,7 @@ public class PlayerSnipeEvent extends PlayerEvent {
 
     @NotNull
     @Override
-    public HandlerList<PlayerSnipeEvent> getHandlers() {
+    protected HandlerList<PlayerSnipeEvent> getHandlers() {
         return handlers;
     }
     public static HandlerList<PlayerSnipeEvent> getHandlerList() {

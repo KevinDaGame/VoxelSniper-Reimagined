@@ -18,10 +18,6 @@ public class PlayerBrushChangedEvent extends PlayerEvent {
         this.toolId = toolId;
     }
 
-    public static HandlerList<PlayerBrushChangedEvent> getHandlerList() {
-        return handlers;
-    }
-
     public IBrush getOriginalBrush() {
         return originalBrush;
     }
@@ -35,7 +31,10 @@ public class PlayerBrushChangedEvent extends PlayerEvent {
     }
 
     @Override
-    public HandlerList<PlayerBrushChangedEvent> getHandlers() {
+    protected HandlerList<PlayerBrushChangedEvent> getHandlers() {
+        return handlers;
+    }
+    public static HandlerList<PlayerBrushChangedEvent> getHandlerList() {
         return handlers;
     }
 }

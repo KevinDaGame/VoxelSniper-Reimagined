@@ -17,7 +17,7 @@ public class PlayerReplaceMaterialChangedEvent extends PlayerMaterialChangedEven
     }
 
     @Override
-    public HandlerList<PlayerReplaceMaterialChangedEvent> getHandlers() {
+    protected HandlerList<PlayerReplaceMaterialChangedEvent> getHandlers() {
         return handlers;
     }
 }

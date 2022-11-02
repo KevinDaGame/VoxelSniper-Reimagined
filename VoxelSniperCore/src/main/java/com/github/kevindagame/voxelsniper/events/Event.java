@@ -1,29 +1,20 @@
 package com.github.kevindagame.voxelsniper.events;
 
+/**
+ * Abstract class for all events
+ */
 public abstract class Event {
-    private final boolean async;
 
     /**
-     * The default constructor is defined for cleaner code. This constructor
-     * assumes the event is synchronous.
-     */
-    public Event() {
-        this(false);
-    }
-
-    /**
-     * This constructor is used to explicitly declare an event as synchronous
-     * or asynchronous.
      *
-     * @param isAsync true indicates the event will fire asynchronously, false
-     *     by default from default constructor
+     * @return the {@link HandlerList} for this event
+     * @param <T> The Event type this {@link HandlerList} is for
      */
-    public Event(boolean isAsync) {
-        this.async = isAsync;
-    }
+    protected abstract <T extends Event> HandlerList<T> getHandlers();
 
-    public abstract <T extends Event> HandlerList<T> getHandlers();
-    
+    /**
+     * Call the registered {@link EventListener}s for this event
+     */
     public final void callEvent() {
     	getHandlers().callEvent(this);
     }
