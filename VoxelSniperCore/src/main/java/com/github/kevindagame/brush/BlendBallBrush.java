@@ -6,10 +6,6 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
  */
@@ -24,13 +20,13 @@ public class BlendBallBrush extends BlendBrushBase {
 
     @Override
     protected final void blend(final SnipeData v) {
-        super.blend(v);
         this.positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), false);
     }
 
     @Override
     protected boolean actPerform(SnipeData v) {
         final int brushSize = v.getBrushSize();
+        var newMaterials = this.blend3D(brushSize);
         final Undo undo = new Undo();
         for(var position : this.positions) {
                 var material = newMaterials[this.getTargetBlock().getX() - position.getBlockX() + brushSize][this.getTargetBlock().getY() - position.getBlockY() + brushSize][this.getTargetBlock().getZ() - position.getBlockZ() + brushSize];

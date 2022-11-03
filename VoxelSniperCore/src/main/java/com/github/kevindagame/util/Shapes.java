@@ -47,7 +47,7 @@ public class Shapes {
         Set<VoxelLocation> positions = new HashSet<>();
         double SMOOTH_CIRCLE_VALUE = 0.5;
         double VOXEL_CIRCLE_VALUE = 0.0;
-        final double radiusSquared = (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (v.getBrushSize() + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
+        final double radiusSquared = (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
         final VoxelVector centerPoint = location.toVector();
         final VoxelVector currentPoint = centerPoint.clone();
 
@@ -63,4 +63,13 @@ public class Shapes {
         return positions;
     }
 
+    public static Set<VoxelLocation> voxelDisc(VoxelLocation location, int brushSize) {
+        Set<VoxelLocation> positions = new HashSet<>();
+        for (int x = brushSize; x >= -brushSize; x--) {
+            for (int z = brushSize; z >= -brushSize; z--) {
+                positions.add(new VoxelLocation(location.getWorld(), location.getX() + z, location.getY(), location.getZ() + z));
+            }
+        }
+        return positions;
+    }
 }

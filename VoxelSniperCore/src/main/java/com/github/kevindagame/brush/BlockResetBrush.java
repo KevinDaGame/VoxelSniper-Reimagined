@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -52,22 +53,20 @@ public class BlockResetBrush extends AbstractBrush {
     }
 
     private void applyBrush(final SnipeData v) {
-        for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
-            for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
-                for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
-                    final IBlock block = this.getWorld().getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())) {
-                        continue;
-                    }
+        this.positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
+    }
 
-                    // Resets the block state to initial state by creating a new BlockData with default values.
-                    block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
-
-                    // Do we need this???
-                    // block.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(block.getMaterial()), oldData), true);
-                }
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        for (var position : positions) {
+            final IBlock block = position.getBlock();
+            if (BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())) {
+                continue;
             }
+            // Resets the block state to initial state by creating a new BlockData with default values.
+            block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
         }
+        return true;
     }
 
     @Override

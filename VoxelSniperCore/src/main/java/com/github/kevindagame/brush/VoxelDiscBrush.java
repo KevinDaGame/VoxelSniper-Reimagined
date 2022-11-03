@@ -2,6 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
@@ -19,23 +20,19 @@ public class VoxelDiscBrush extends PerformerBrush {
         this.setName("Voxel Disc");
     }
 
-    private void disc(final SnipeData v, IBlock targetBlock) {
-        for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-            for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
-                currentPerformer.perform(targetBlock.getRelative(x, 0, z));
-            }
-        }
+    private void voxelDisc(final SnipeData v) {
+        this.positions = Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize());
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.disc(v, this.getTargetBlock());
+        this.voxelDisc(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.disc(v, this.getLastBlock());
+        this.voxelDisc(v);
     }
 
     @Override

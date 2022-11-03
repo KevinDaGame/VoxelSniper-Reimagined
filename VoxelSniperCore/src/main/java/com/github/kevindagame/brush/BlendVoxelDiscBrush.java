@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.HashMap;
@@ -23,81 +24,25 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
 
     @Override
     protected final void blend(final SnipeData v) {
-        final int brushSize = v.getBrushSize();
-        final int brushSizeDoubled = 2 * brushSize;
-        final VoxelMaterial[][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
-        final VoxelMaterial[][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the blended materials
-
-        // Log current materials into oldmats
-        for (int x = 0; x <= 2 * (brushSize + 1); x++) {
-            for (int z = 0; z <= 2 * (brushSize + 1); z++) {
-                oldMaterials[x][z] = this.getBlockMaterialAt(this.getTargetBlock().getX() - brushSize - 1 + x, this.getTargetBlock().getY(), this.getTargetBlock().getZ() - brushSize - 1 + z);
-            }
+        this.positions = Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize());
         }
 
-        // Log current materials into newmats
-        for (int x = 0; x <= brushSizeDoubled; x++) {
-            System.arraycopy(oldMaterials[x + 1], 1, newMaterials[x], 0, brushSizeDoubled + 1);
-        }
-
-        // Blend materials
-        for (int x = 0; x <= brushSizeDoubled; x++) {
-            for (int z = 0; z <= brushSizeDoubled; z++) {
-                Map<VoxelMaterial, Integer> materialFrequency = new HashMap<>();
-
-                boolean tiecheck = true;
-
-                for (int m = -1; m <= 1; m++) {
-                    for (int n = -1; n <= 1; n++) {
-                        if (!(m == 0 && n == 0)) {
-                            VoxelMaterial currentMaterial = oldMaterials[x + 1 + m][z + 1 + n];
-                            int currentFrequency = materialFrequency.getOrDefault(currentMaterial, 0) + 1;
-
-                            materialFrequency.put(currentMaterial, currentFrequency);
-                        }
-                    }
-                }
-
-                int highestMaterialCount = 0;
-                VoxelMaterial highestMaterial = VoxelMaterial.AIR;
-
-                // Find most common neighboring material.
-                for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() > highestMaterialCount && !(this.excludeAir && e.getKey().isAir()) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
-                        highestMaterialCount = e.getValue();
-                        highestMaterial = e.getKey();
-                    }
-                }
-
-                // Make sure that there's no tie in highest material
-                for (Entry<VoxelMaterial, Integer> e : materialFrequency.entrySet()) {
-                    if (e.getValue() == highestMaterialCount && !(this.excludeAir && e.getKey().isAir()) && !(this.excludeWater && e.getKey() == VoxelMaterial.WATER)) {
-                        if (e.getKey() == highestMaterial) {
-                            continue;
-                        }
-                        tiecheck = false;
-                    }
-                }
-
-                // Record most common neighbor material for this block
-                if (tiecheck) {
-                    newMaterials[x][z] = highestMaterial;
-                }
-            }
-        }
-
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        var brushSize = v.getBrushSize();
         final Undo undo = new Undo();
+        var newMaterials = this.blend2D(brushSize);
 
-        // Make the changes
-        for (int x = brushSizeDoubled; x >= 0; x--) {
-            for (int z = brushSizeDoubled; z >= 0; z--) {
-                if (!(this.excludeAir && newMaterials[x][z].isAir()) && !(this.excludeWater && newMaterials[x][z] == VoxelMaterial.WATER)) {
-                    this.setBlockMaterialAt(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY(), this.getTargetBlock().getZ() - brushSize + z, newMaterials[x][z], undo);
-                }
+        for(var position : this.positions) {
+            var material = newMaterials[this.getTargetBlock().getX() - position.getBlockX() + brushSize][this.getTargetBlock().getZ() - position.getBlockZ() + brushSize];
+            if (!(this.excludeAir && material.isAir()) && !(this.excludeWater && (material == VoxelMaterial.WATER))) {
+
+                undo.put(position.getBlock());
+                position.getBlock().setMaterial(material);
             }
         }
-
         v.owner().storeUndo(undo);
+        return true;
     }
 
     @Override

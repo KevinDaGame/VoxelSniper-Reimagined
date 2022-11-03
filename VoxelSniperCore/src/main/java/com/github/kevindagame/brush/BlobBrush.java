@@ -116,8 +116,6 @@ public class BlobBrush extends PerformerBrush {
                 }
             }
         }
-        this.currentPerformer.perform(positions);
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void growBlob(final SnipeData v) {
@@ -193,9 +191,6 @@ public class BlobBrush extends PerformerBrush {
                 }
             }
         }
-
-        this.currentPerformer.perform(positions);
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
