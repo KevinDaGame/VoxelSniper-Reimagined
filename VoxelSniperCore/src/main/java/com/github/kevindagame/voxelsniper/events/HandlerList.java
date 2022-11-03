@@ -14,8 +14,9 @@ public class HandlerList<T extends Event> {
 
 	/**
 	 * Registers an {@link EventListener} with a given {@link EventPriority}
-	 * @param priority the {@link EventPriority} for this event
-	 * @param handler the handler to register
+	 *
+	 * @param priority The {@link EventPriority} for this event
+	 * @param handler  The handler to register
 	 */
 	public void registerListener(EventPriority priority, Consumer<T> handler) {
 		this.handlers.add(new EventListener<>(priority, handler));
@@ -24,7 +25,7 @@ public class HandlerList<T extends Event> {
 
 	/**
 	 * Registers an {@link EventListener}
-	 * @param handler the handler to register
+	 * @param handler The handler to register
 	 */
 	public void registerListener(Consumer<T> handler) {
 		this.registerListener(EventPriority.MEDIUM, handler);
