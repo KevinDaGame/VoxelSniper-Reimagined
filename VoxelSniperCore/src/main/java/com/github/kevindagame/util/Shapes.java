@@ -1,8 +1,10 @@
 package com.github.kevindagame.util;
 
+import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -72,4 +74,7 @@ public class Shapes {
         }
         return positions;
     }
+}
+
+record Coord(int x, int y, int z) {
 }

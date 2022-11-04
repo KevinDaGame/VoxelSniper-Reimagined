@@ -1,5 +1,7 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.Actions;
+import com.github.kevindagame.util.Shapes;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -26,28 +28,20 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
 
     /**
      * @param v
-     * @param target
      */
-    private void applyBrush(final SnipeData v, final IBlock target) {
-        for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-            for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
-                final int sum = this.useWorldCoordinates ? target.getX() + x + target.getZ() + y : x + y;
-                if (sum % 2 != 0) {
-                    this.currentPerformer.perform(this.clampY(target.getX() + x, target.getY(), target.getZ() + y));
-                }
-            }
-        }
+    private void applyBrush(final SnipeData v) {
+        this.positions = Actions.checker(Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize()), this.useWorldCoordinates);
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.applyBrush(v, this.getTargetBlock());
+        this.applyBrush(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.applyBrush(v, this.getLastBlock());
+        this.applyBrush(v);
     }
 
     @Override
