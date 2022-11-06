@@ -74,10 +74,10 @@ public class Shapes {
         return positions;
     }
 
-    public static Set<VoxelLocation> cylinder(VoxelLocation location, int brushSize, int height, boolean smooth) {
+    public static Set<VoxelLocation> cylinder(VoxelLocation location, int brushSize, int height, int shift, boolean smooth) {
         Set<VoxelLocation> positions = new HashSet<>();
-        for (int y = height - 1; y < height; y++) {
-            positions.addAll(disc(new VoxelLocation(location.getWorld(), location.getX(), location.getY() + y, location.getZ()), brushSize, smooth));
+        for (int y = 0; y < height; y++) {
+            positions.addAll(disc(new VoxelLocation(location.getWorld(), location.getX(), location.getY() + y - (height / 2.0) + 1 + shift, location.getZ()), brushSize, smooth));
         }
         return positions;
     }

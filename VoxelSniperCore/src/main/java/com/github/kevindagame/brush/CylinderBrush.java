@@ -30,7 +30,7 @@ public class CylinderBrush extends PerformerBrush {
     }
 
     private void cylinder(final SnipeData v) {
-        this.positions = Shapes.cylinder(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight(), this.smoothCircle);
+        this.positions = Shapes.cylinder(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight(), v.getcCen(), this.smoothCircle);
     }
 
     @Override
