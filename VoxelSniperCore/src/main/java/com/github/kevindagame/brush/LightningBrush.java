@@ -3,6 +3,9 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+
+import java.util.HashSet;
 
 /**
  * @author Gavjenks
@@ -23,13 +26,19 @@ public class LightningBrush extends AbstractBrush {
     }
 
     @Override
+    protected boolean actPerform(SnipeData v) {
+        this.positions.forEach(position -> position.getWorld().strikeLightning(position));
+        return true;
+    }
+
+    @Override
     protected final void arrow(final SnipeData v) {
-        this.getWorld().strikeLightning(this.getTargetBlock().getLocation());
+        this.positions.add(this.getTargetBlock().getLocation());
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.getWorld().strikeLightning(this.getTargetBlock().getLocation());
+        this.positions.add(this.getLastBlock().getLocation());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.Shapes;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -28,56 +29,18 @@ public class CylinderBrush extends PerformerBrush {
         this.setName("Cylinder");
     }
 
-    private void cylinder(final SnipeData v, IBlock targetBlock) {
-        final int brushSize = v.getBrushSize();
-        int yStartingPoint = targetBlock.getY() + v.getcCen();
-        int yEndPoint = targetBlock.getY() + v.getVoxelHeight() + v.getcCen();
-
-        if (yEndPoint < yStartingPoint) {
-            yEndPoint = yStartingPoint;
-        }
-        if (yStartingPoint < this.getMinHeight()) {
-            yStartingPoint = this.getMinHeight();
-            v.sendMessage(Messages.OFF_WORLD_START_POS);
-        } else if (yStartingPoint > this.getMaxHeight() - 1) {
-            yStartingPoint = this.getMaxHeight() - 1;
-            v.sendMessage(Messages.OFF_WORLD_START_POS);
-        }
-        if (yEndPoint < this.getMinHeight()) {
-            yEndPoint = this.getMinHeight();
-            v.sendMessage(Messages.OFF_WORLD_START_POS);
-        } else if (yEndPoint > this.getMaxHeight() - 1) {
-            yEndPoint = this.getMaxHeight() - 1;
-            v.sendMessage(Messages.OFF_WORLD_START_POS);
-        }
-
-        final double bSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-
-        for (int y = yEndPoint; y >= yStartingPoint; y--) {
-            for (int x = brushSize; x >= 0; x--) {
-                final double xSquared = Math.pow(x, 2);
-
-                for (int z = brushSize; z >= 0; z--) {
-                    if ((xSquared + Math.pow(z, 2)) <= bSquared) {
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, y, targetBlock.getZ() + z));
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() + x, y, targetBlock.getZ() - z));
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() - x, y, targetBlock.getZ() + z));
-                        this.currentPerformer.perform(this.clampY(targetBlock.getX() - x, y, targetBlock.getZ() - z));
-                    }
-                }
-            }
-        }
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    private void cylinder(final SnipeData v) {
+        this.positions = Shapes.cylinder(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight(), this.smoothCircle);
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.cylinder(v, this.getTargetBlock());
+        this.cylinder(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.cylinder(v, this.getLastBlock());
+        this.cylinder(v);
     }
 
     @Override

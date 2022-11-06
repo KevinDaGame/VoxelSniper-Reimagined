@@ -4,7 +4,6 @@ import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -74,7 +73,30 @@ public class Shapes {
         }
         return positions;
     }
-}
 
-record Coord(int x, int y, int z) {
+    public static Set<VoxelLocation> cylinder(VoxelLocation location, int brushSize, int height, boolean smooth) {
+        Set<VoxelLocation> positions = new HashSet<>();
+        for (int y = height - 1; y < height; y++) {
+            positions.addAll(disc(new VoxelLocation(location.getWorld(), location.getX(), location.getY() + y, location.getZ()), brushSize, smooth));
+        }
+        return positions;
+    }
+
+    public static Set<VoxelLocation> discFace(VoxelLocation location, int brushSize, boolean smooth, BlockFace face) {
+        Set<VoxelLocation> disc = disc(location, brushSize, smooth);
+        Set<VoxelLocation> positions = new HashSet<>();
+        if(face == BlockFace.UP || face == BlockFace.DOWN) return disc;
+        for (var pos : disc) {
+            VoxelVector diff = location.toVector().subtract(pos.toVector());
+            switch (face) {
+                case NORTH:
+                case SOUTH:
+                    positions.add(new VoxelLocation(location.getWorld(), location.getX() + diff.getBlockX(), pos.getY() + diff.getBlockZ(), pos.getZ()));
+                case EAST:
+                case WEST:
+                    positions.add(new VoxelLocation(location.getWorld(), pos.getX(), pos.getY() + diff.getBlockX(), location.getZ() + diff.getBlockZ()));
+            }
+        }
+        return positions;
+    }
 }
