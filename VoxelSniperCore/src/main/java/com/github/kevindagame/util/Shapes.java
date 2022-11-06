@@ -89,12 +89,10 @@ public class Shapes {
         for (var pos : disc) {
             VoxelVector diff = location.toVector().subtract(pos.toVector());
             switch (face) {
-                case NORTH:
-                case SOUTH:
-                    positions.add(new VoxelLocation(location.getWorld(), location.getX() + diff.getBlockX(), pos.getY() + diff.getBlockZ(), pos.getZ()));
-                case EAST:
-                case WEST:
-                    positions.add(new VoxelLocation(location.getWorld(), pos.getX(), pos.getY() + diff.getBlockX(), location.getZ() + diff.getBlockZ()));
+                case NORTH, SOUTH ->
+                        positions.add(new VoxelLocation(location.getWorld(), location.getX() + diff.getBlockX(), location.getY() + diff.getBlockZ(), location.getZ()));
+                case EAST, WEST ->
+                        positions.add(new VoxelLocation(location.getWorld(), location.getX(), location.getY() + diff.getBlockX(), location.getZ() + diff.getBlockZ()));
             }
         }
         return positions;

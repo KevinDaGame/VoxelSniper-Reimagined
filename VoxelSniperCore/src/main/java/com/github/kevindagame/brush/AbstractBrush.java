@@ -58,6 +58,7 @@ public abstract class AbstractBrush implements IBrush {
 
     @Override
     public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
+        this.positions.clear();
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
         switch (action) {
