@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Disc_Brush
  *
  * @author Voxel
  */
@@ -32,7 +31,7 @@ public class DiscBrush extends PerformerBrush {
     /**
      * Disc executor.
      *
-     * @param v
+     * @param v SnipeData
      */
     private void disc(final SnipeData v, final IBlock targetBlock) {
       this.positions = Shapes.disc(targetBlock.getLocation(), v.getBrushSize(), this.smoothCircle);

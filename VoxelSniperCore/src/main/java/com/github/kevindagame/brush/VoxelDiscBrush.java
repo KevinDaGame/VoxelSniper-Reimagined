@@ -7,7 +7,6 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Voxel_Disc_Brush
  *
  * @author Voxel
  */
@@ -22,7 +21,6 @@ public class VoxelDiscBrush extends PerformerBrush {
 
     private void voxelDisc(final SnipeData v) {
         this.positions = Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize());
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override

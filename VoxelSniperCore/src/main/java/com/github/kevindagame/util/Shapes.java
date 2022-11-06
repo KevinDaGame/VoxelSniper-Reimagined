@@ -68,7 +68,7 @@ public class Shapes {
         Set<VoxelLocation> positions = new HashSet<>();
         for (int x = brushSize; x >= -brushSize; x--) {
             for (int z = brushSize; z >= -brushSize; z--) {
-                positions.add(new VoxelLocation(location.getWorld(), location.getX() + z, location.getY(), location.getZ() + z));
+                positions.add(new VoxelLocation(location.getWorld(), location.getX() + x, location.getY(), location.getZ() + z));
             }
         }
         return positions;
