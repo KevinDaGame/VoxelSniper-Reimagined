@@ -17,9 +17,6 @@ import java.util.List;
  */
 public class CylinderBrush extends PerformerBrush {
 
-    private static final double SMOOTH_CIRCLE_VALUE = 0.5;
-    private static final double VOXEL_CIRCLE_VALUE = 0.0;
-
     private boolean smoothCircle = false;
 
     /**
