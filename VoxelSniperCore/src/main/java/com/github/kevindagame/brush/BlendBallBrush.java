@@ -6,9 +6,6 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
-/**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
- */
 public class BlendBallBrush extends BlendBrushBase {
 
     /**
@@ -28,8 +25,8 @@ public class BlendBallBrush extends BlendBrushBase {
         final int brushSize = v.getBrushSize();
         var newMaterials = this.blend3D(brushSize);
         final Undo undo = new Undo();
-        for(var position : this.positions) {
-                var material = newMaterials[this.getTargetBlock().getX() - position.getBlockX() + brushSize][this.getTargetBlock().getY() - position.getBlockY() + brushSize][this.getTargetBlock().getZ() - position.getBlockZ() + brushSize];
+        for (var position : this.positions) {
+            var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockY() - this.getTargetBlock().getY() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
             if (!(this.excludeAir && material.isAir()) && !(this.excludeWater && (material == VoxelMaterial.WATER))) {
 
                 undo.put(position.getBlock());

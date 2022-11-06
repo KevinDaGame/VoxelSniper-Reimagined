@@ -6,9 +6,6 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
-/**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
- */
 public class BlendDiscBrush extends BlendBrushBase {
 
     /**
@@ -30,7 +27,7 @@ public class BlendDiscBrush extends BlendBrushBase {
         final double rSquared = Math.pow(brushSize + 1, 2);
 
         for(var position : this.positions) {
-            var material = newMaterials[this.getTargetBlock().getX() - position.getBlockX() + brushSize][this.getTargetBlock().getZ() - position.getBlockZ() + brushSize];
+            var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
             if (!(this.excludeAir && material.isAir()) && !(this.excludeWater && (material == VoxelMaterial.WATER))) {
 
                 undo.put(position.getBlock());
