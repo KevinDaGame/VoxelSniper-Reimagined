@@ -1,6 +1,8 @@
 package com.github.kevindagame.util;
 
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
+import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
@@ -93,6 +95,42 @@ public class Shapes {
                         positions.add(new VoxelLocation(location.getWorld(), location.getX() + diff.getBlockX(), location.getY() + diff.getBlockZ(), location.getZ()));
                 case EAST, WEST ->
                         positions.add(new VoxelLocation(location.getWorld(), location.getX(), location.getY() + diff.getBlockX(), location.getZ() + diff.getBlockZ()));
+            }
+        }
+        return positions;
+    }
+
+    public static Set<VoxelLocation> dome(VoxelLocation location, int brushSize, int height) {
+
+        final Set<VoxelLocation> positions = new HashSet<>();
+        final int absoluteHeight = Math.abs(height);
+        final boolean negative = height < 0;
+
+        final Undo undo = new Undo();
+
+        final int brushSizeTimesVoxelHeight = brushSize * absoluteHeight;
+        final double stepScale = ((brushSize * brushSize) + brushSizeTimesVoxelHeight + brushSizeTimesVoxelHeight) / 5.0;
+
+        final double stepSize = 1 / stepScale;
+
+        for (double u = 0; u <= Math.PI / 2; u += stepSize) {
+            final double y = absoluteHeight * Math.sin(u);
+            for (double stepV = -Math.PI; stepV <= -(Math.PI / 2); stepV += stepSize) {
+                final double x = brushSize * Math.cos(u) * Math.cos(stepV);
+                final double z = brushSize * Math.cos(u) * Math.sin(stepV);
+
+                final double targetBlockX = location.getX() + 0.5;
+                final double targetBlockZ = location.getZ() + 0.5;
+                final int targetY = ((int) Math.floor(location.getY() + (negative ? -y : y)));
+                final int currentBlockXAdd = ((int) Math.floor(targetBlockX + x));
+                final int currentBlockZAdd = ((int) Math.floor(targetBlockZ + z));
+                final int currentBlockXSubtract = ((int) Math.floor(targetBlockX - x));
+                final int currentBlockZSubtract = ((int) Math.floor(targetBlockZ - z));
+                positions.add(new VoxelLocation(location.getWorld(), currentBlockXAdd, targetY, currentBlockZAdd));
+                positions.add(new VoxelLocation(location.getWorld(), currentBlockXSubtract, targetY, currentBlockZAdd));
+                positions.add(new VoxelLocation(location.getWorld(), currentBlockXAdd, targetY, currentBlockZSubtract));
+                positions.add(new VoxelLocation(location.getWorld(), currentBlockXSubtract, targetY, currentBlockZSubtract));
+
             }
         }
         return positions;

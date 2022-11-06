@@ -42,6 +42,7 @@ public abstract class AbstractBrush implements IBrush {
      * Brush name.
      */
     private String name = "Undefined";
+    protected boolean cancelled = false;
 
     private boolean preparePerform(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (this.getTarget(v, clickedBlock, clickedFace)) {
@@ -59,6 +60,7 @@ public abstract class AbstractBrush implements IBrush {
     @Override
     public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
         this.positions.clear();
+        this.cancelled = false;
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
         switch (action) {
@@ -71,8 +73,12 @@ public abstract class AbstractBrush implements IBrush {
             default:
                 return false;
         }
+        if(!cancelled) {
+
         //TODO Create event
         return actPerform(data);
+        }
+        return false;
 
     }
 
@@ -311,5 +317,9 @@ public abstract class AbstractBrush implements IBrush {
             b.setMaterial(material);
         }
 
+    }
+
+    protected void cancel() {
+        this.cancelled = true;
     }
 }
