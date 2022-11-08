@@ -3,4 +3,7 @@ plugins {
     id("maven-publish")
 }
 
+group = "com.github.kevindagame"
+
+
 description = "VoxelSniperCore"
