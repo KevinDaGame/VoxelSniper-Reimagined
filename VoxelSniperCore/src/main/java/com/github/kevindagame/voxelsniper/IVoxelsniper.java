@@ -1,6 +1,7 @@
 package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.IEventManager;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
@@ -32,4 +33,6 @@ public interface IVoxelsniper {
 
     @Nullable
     IMaterial getMaterial(VoxelMaterial material);
+
+    IEventManager getEventManager();
 }
