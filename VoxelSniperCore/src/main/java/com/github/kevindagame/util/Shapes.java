@@ -7,6 +7,7 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Shapes {
@@ -86,15 +87,25 @@ public class Shapes {
 
     public static Set<VoxelLocation> discFace(VoxelLocation location, int brushSize, boolean smooth, BlockFace face) {
         Set<VoxelLocation> disc = disc(location, brushSize, smooth);
+        return face(location, disc, face);
+    }
+
+    public static Set<VoxelLocation> voxelDiscFace(VoxelLocation location, int brushSize, BlockFace face) {
+        Set<VoxelLocation> voxelDisc = voxelDisc(location, brushSize);
+        return face(location, voxelDisc, face);
+    }
+
+    public static Set<VoxelLocation> face(VoxelLocation center, Set<VoxelLocation> locations, BlockFace face) {
+        if(face == BlockFace.UP || face == BlockFace.DOWN) return locations;
+
         Set<VoxelLocation> positions = new HashSet<>();
-        if(face == BlockFace.UP || face == BlockFace.DOWN) return disc;
-        for (var pos : disc) {
-            VoxelVector diff = location.toVector().subtract(pos.toVector());
+        for (var pos : locations) {
+            VoxelVector diff = center.toVector().subtract(pos.toVector());
             switch (face) {
                 case NORTH, SOUTH ->
-                        positions.add(new VoxelLocation(location.getWorld(), location.getX() + diff.getBlockX(), location.getY() + diff.getBlockZ(), location.getZ()));
+                        positions.add(new VoxelLocation(center.getWorld(), center.getX() + diff.getBlockX(), center.getY() + diff.getBlockZ(), center.getZ()));
                 case EAST, WEST ->
-                        positions.add(new VoxelLocation(location.getWorld(), location.getX(), location.getY() + diff.getBlockX(), location.getZ() + diff.getBlockZ()));
+                        positions.add(new VoxelLocation(center.getWorld(), center.getX(), center.getY() + diff.getBlockX(), center.getZ() + diff.getBlockZ()));
             }
         }
         return positions;
@@ -135,4 +146,5 @@ public class Shapes {
         }
         return positions;
     }
+
 }
