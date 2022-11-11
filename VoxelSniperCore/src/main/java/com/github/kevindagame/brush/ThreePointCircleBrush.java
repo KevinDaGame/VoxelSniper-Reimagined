@@ -4,6 +4,7 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
                     // Check if point is within sphere and on plane (some tolerance given)
                     if (tempDistance <= radius && (Math.abs(cornerConstant - planeConstant) < this.tolerance.getValue() || Math.abs(centerConstant - planeConstant) < this.tolerance.getValue())) {
-                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
+                        this.positions.add(new VoxelLocation(getWorld(), brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
                     }
 
                 }
@@ -144,18 +145,10 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         switch (this.tolerance) {
-            case ACCURATE:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_ACCURATE);
-                break;
-            case DEFAULT:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_DEFAULT);
-                break;
-            case SMOOTH:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_SMOOTH);
-                break;
-            default:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_UNKNOWN);
-                break;
+            case ACCURATE -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_ACCURATE);
+            case DEFAULT -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_DEFAULT);
+            case SMOOTH -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_SMOOTH);
+            default -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_UNKNOWN);
         }
 
     }
@@ -180,7 +173,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
+        arguments.addAll(Arrays.stream(Tolerance.values()).map(Enum::name).toList());
 
         arguments.addAll(super.registerArguments());
         return arguments;

@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
@@ -18,8 +19,6 @@ import java.util.Iterator;
  * @author MikeMatrix
  */
 public class LineBrush extends PerformerBrush {
-
-    private static final VoxelVector HALF_BLOCK_OFFSET = new VoxelVector(0.5, 0.5, 0.5);
     private VoxelVector originCoords = null;
     private VoxelVector targetCoords = new VoxelVector();
     private IWorld targetWorld;
@@ -48,22 +47,7 @@ public class LineBrush extends PerformerBrush {
     }
 
     private void linePowder(final SnipeData v) {
-        final VoxelVector originClone = this.originCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
-        final VoxelVector targetClone = this.targetCoords.clone().add(LineBrush.HALF_BLOCK_OFFSET);
-
-        final VoxelVector direction = targetClone.clone().subtract(originClone);
-        final double length = this.targetCoords.distance(this.originCoords);
-
-        if (length == 0) {
-            this.currentPerformer.perform(this.targetCoords.getLocation(this.targetWorld).getBlock());
-        } else {
-            for (final Iterator<IBlock> blockIterator = getWorld().getBlockIterator(originClone, direction, 0, (int) Math.round(length)); blockIterator.hasNext(); ) {
-                final IBlock currentBlock = blockIterator.next();
-                this.currentPerformer.perform(currentBlock);
-            }
-        }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+        this.positions = Shapes.line(this.originCoords, this.targetCoords, this.getWorld());
     }
 
     @Override

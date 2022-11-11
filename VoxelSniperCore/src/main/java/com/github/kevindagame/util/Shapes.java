@@ -1,10 +1,12 @@
 package com.github.kevindagame.util;
 
+import com.github.kevindagame.brush.LineBrush;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -96,7 +98,7 @@ public class Shapes {
     }
 
     public static Set<VoxelLocation> face(VoxelLocation center, Set<VoxelLocation> locations, BlockFace face) {
-        if(face == BlockFace.UP || face == BlockFace.DOWN) return locations;
+        if (face == BlockFace.UP || face == BlockFace.DOWN) return locations;
 
         Set<VoxelLocation> positions = new HashSet<>();
         for (var pos : locations) {
@@ -147,4 +149,23 @@ public class Shapes {
         return positions;
     }
 
+    public static Set<VoxelLocation> line(VoxelVector originCoords, VoxelVector targetCoords, IWorld world) {
+        final VoxelVector HALF_BLOCK_OFFSET = new VoxelVector(0.5, 0.5, 0.5);
+        final VoxelVector originClone = originCoords.clone().add(HALF_BLOCK_OFFSET);
+        final VoxelVector targetClone = targetCoords.clone().add(HALF_BLOCK_OFFSET);
+
+        Set<VoxelLocation> positions = new HashSet<>();
+        final VoxelVector direction = targetClone.clone().subtract(originClone);
+        final double length = targetCoords.distance(originCoords);
+
+        if (length == 0) {
+            positions.add(targetCoords.getLocation(world));
+        } else {
+            for (final Iterator<IBlock> blockIterator = world.getBlockIterator(originClone, direction, 0, (int) Math.round(length)); blockIterator.hasNext(); ) {
+                final IBlock currentBlock = blockIterator.next();
+                positions.add(currentBlock.getLocation());
+            }
+        }
+        return positions;
+    }
 }
