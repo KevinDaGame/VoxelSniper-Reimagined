@@ -7,19 +7,19 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 public class PlayerBrushChangedEvent extends PlayerEvent {
 
     private static final HandlerList<PlayerBrushChangedEvent> handlers = new HandlerList<>();
-    private final IBrush originalBrush;
+    private final IBrush oldBrush;
     private final IBrush newBrush;
     private final String toolId;
 
-    public PlayerBrushChangedEvent(IPlayer p, String toolId, IBrush originalBrush, IBrush newBrush) {
+    public PlayerBrushChangedEvent(IPlayer p, String toolId, IBrush oldBrush, IBrush newBrush) {
         super(p);
-        this.originalBrush = originalBrush;
+        this.oldBrush = oldBrush;
         this.newBrush = newBrush;
         this.toolId = toolId;
     }
 
-    public IBrush getOriginalBrush() {
-        return originalBrush;
+    public IBrush getOldBrush() {
+        return oldBrush;
     }
 
     public IBrush getNewBrush() {

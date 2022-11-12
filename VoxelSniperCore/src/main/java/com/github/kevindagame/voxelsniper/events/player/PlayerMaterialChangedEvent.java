@@ -7,17 +7,17 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 public class PlayerMaterialChangedEvent extends PlayerEvent {
 
     private static final HandlerList<PlayerMaterialChangedEvent> handlers = new HandlerList<>();
-    private final IBlockData originalMaterial;
+    private final IBlockData oldMaterial;
     private final IBlockData newMaterial;
 
-    public PlayerMaterialChangedEvent(IPlayer p, IBlockData originalMaterial, IBlockData newMaterial) {
+    public PlayerMaterialChangedEvent(IPlayer p, IBlockData oldMaterial, IBlockData newMaterial) {
         super(p);
-        this.originalMaterial = originalMaterial;
+        this.oldMaterial = oldMaterial;
         this.newMaterial = newMaterial;
     }
 
-    public IBlockData getOriginalMaterial() {
-        return originalMaterial;
+    public IBlockData getOldMaterial() {
+        return newMaterial;
     }
 
     public IBlockData getNewMaterial() {

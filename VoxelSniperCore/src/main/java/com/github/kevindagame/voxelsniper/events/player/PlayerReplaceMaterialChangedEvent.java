@@ -8,8 +8,8 @@ public class PlayerReplaceMaterialChangedEvent extends PlayerMaterialChangedEven
 
     private static final HandlerList<PlayerReplaceMaterialChangedEvent> handlers = new HandlerList<>();
 
-    public PlayerReplaceMaterialChangedEvent(IPlayer p, IBlockData originalMaterial, IBlockData newMaterial) {
-        super(p, originalMaterial, newMaterial);
+    public PlayerReplaceMaterialChangedEvent(IPlayer p, IBlockData oldMaterial, IBlockData newMaterial) {
+        super(p, oldMaterial, newMaterial);
     }
 
     public static HandlerList<PlayerReplaceMaterialChangedEvent> getHandlerList() {

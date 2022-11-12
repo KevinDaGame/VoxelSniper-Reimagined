@@ -6,19 +6,19 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 public class PlayerBrushSizeChangedEvent extends PlayerEvent {
 
     private static final HandlerList<PlayerBrushSizeChangedEvent> handlers = new HandlerList<>();
-    private final int originalSize;
+    private final int oldSize;
     private final int newSize;
     private final String toolId;
 
-    public PlayerBrushSizeChangedEvent(IPlayer p, String toolId, int originalSize, int newSize) {
+    public PlayerBrushSizeChangedEvent(IPlayer p, String toolId, int oldSize, int newSize) {
         super(p);
-        this.originalSize = originalSize;
+        this.oldSize = oldSize;
         this.newSize = newSize;
         this.toolId = toolId;
     }
 
-    public int getOriginalSize() {
-        return originalSize;
+    public int getOldSize() {
+        return oldSize;
     }
 
     public int getNewSize() {
