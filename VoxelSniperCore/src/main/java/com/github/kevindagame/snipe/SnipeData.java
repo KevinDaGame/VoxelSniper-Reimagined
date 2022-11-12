@@ -84,8 +84,7 @@ public class SnipeData {
         var oldSubstance = this.getVoxelSubstance();
         this.voxelSubstance = voxelSubstance;
         var newSubstance = this.getVoxelSubstance();
-        PlayerMaterialChangedEvent event = new PlayerMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance);
-        event.callEvent();
+        new PlayerMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance).callEvent();
     }
 
     public VoxelMaterial getVoxelMaterial() {
@@ -100,8 +99,7 @@ public class SnipeData {
         var oldSubstance = this.getReplaceSubstance();
         this.replaceSubstance = targetSubstance;
         var newSubstance = this.getReplaceSubstance();
-        PlayerReplaceMaterialChangedEvent event = new PlayerReplaceMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance);
-        event.callEvent();
+        new PlayerReplaceMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance).callEvent();
     }
 
     public VoxelMaterial getReplaceMaterial() {

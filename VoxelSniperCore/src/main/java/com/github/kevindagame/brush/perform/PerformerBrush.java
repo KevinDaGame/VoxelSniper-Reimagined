@@ -38,8 +38,7 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
         } else {
             currentPerformer = newPerfomer;
 
-            PlayerBrushChangedEvent event = new PlayerBrushChangedEvent(v.owner().getPlayer(), v.owner().getCurrentToolId(), this, this);
-            event.callEvent();
+            new PlayerBrushChangedEvent(v.owner().getPlayer(), v.owner().getCurrentToolId(), this, this).callEvent();
 
             info(v.getVoxelMessage());
             currentPerformer.info(v.getVoxelMessage());

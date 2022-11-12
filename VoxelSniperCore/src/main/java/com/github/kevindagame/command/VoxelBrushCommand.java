@@ -59,8 +59,7 @@ public class VoxelBrushCommand extends VoxelCommand {
             int originalSize = snipeData.getBrushSize();
             snipeData.setBrushSize(Integer.parseInt(args[0]));
 
-            PlayerBrushSizeChangedEvent event = new PlayerBrushSizeChangedEvent(player, currentToolId, originalSize, snipeData.getBrushSize());
-            event.callEvent();
+            new PlayerBrushSizeChangedEvent(player, currentToolId, originalSize, snipeData.getBrushSize()).callEvent();
 
             snipeData.getVoxelMessage().size();
             return true;
@@ -99,8 +98,7 @@ public class VoxelBrushCommand extends VoxelCommand {
                 }
                 return true;
             }
-            PlayerBrushChangedEvent event = new PlayerBrushChangedEvent(player, currentToolId, oldBrush, newBrush);
-            event.callEvent();
+            new PlayerBrushChangedEvent(player, currentToolId, oldBrush, newBrush).callEvent();
             sniper.displayInfo();
         }
 
