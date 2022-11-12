@@ -2,9 +2,12 @@ package com.github.kevindagame.voxelsniper.events.player;
 
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.EventPriority;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
 
-public class PlayerBrushChangedEvent extends PlayerEvent {
+import java.util.function.Consumer;
+
+public class PlayerBrushChangedEvent extends PlayerEvent<PlayerBrushChangedEvent> {
 
     private static final HandlerList<PlayerBrushChangedEvent> handlers = new HandlerList<>();
     private final IBrush oldBrush;
@@ -34,7 +37,11 @@ public class PlayerBrushChangedEvent extends PlayerEvent {
     protected HandlerList<PlayerBrushChangedEvent> getHandlers() {
         return handlers;
     }
-    public static HandlerList<PlayerBrushChangedEvent> getHandlerList() {
-        return handlers;
+    public static void registerListener(Consumer<PlayerBrushChangedEvent> handler) {
+        handlers.registerListener(handler);
+    }
+
+    public static void registerListener(EventPriority priority, Consumer<PlayerBrushChangedEvent> handler) {
+        handlers.registerListener(priority, handler);
     }
 }

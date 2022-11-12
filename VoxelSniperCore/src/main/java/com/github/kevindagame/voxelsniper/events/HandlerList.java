@@ -9,7 +9,7 @@ import java.util.function.Consumer;
  * Keeps track of all the eventListeners for a specific {@link Event}
  * @param <T> The {@link Event} type this HandlerList is for
  */
-public class HandlerList<T extends Event> {
+public class HandlerList<T extends Event<?>> {
 	private final List<EventListener<T>> handlers = new ArrayList<>();
 
 	/**
@@ -34,10 +34,11 @@ public class HandlerList<T extends Event> {
 	/**
 	 * Call the registered {@link EventListener}s for this event
 	 */
-	public void callEvent(T ev) {
+	public T callEvent(T ev) {
 		for(Consumer<T> handler : handlers) {
 			handler.accept(ev);
 		}
+		return ev;
 	}
 
 }

@@ -7,7 +7,7 @@ public class BrushUsageCounter {
     private static int counter = 0;
 
     public void registerListeners() {
-        PlayerSnipeEvent.getHandlerList().registerListener(this::onBrushUse);
+        PlayerSnipeEvent.registerListener(this::onBrushUse);
     }
 
     private void onBrushUse(PlayerSnipeEvent event) {

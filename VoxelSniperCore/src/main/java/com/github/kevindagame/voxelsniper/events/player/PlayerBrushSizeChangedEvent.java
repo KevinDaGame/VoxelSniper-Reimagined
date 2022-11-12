@@ -1,9 +1,12 @@
 package com.github.kevindagame.voxelsniper.events.player;
 
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.EventPriority;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
 
-public class PlayerBrushSizeChangedEvent extends PlayerEvent {
+import java.util.function.Consumer;
+
+public class PlayerBrushSizeChangedEvent extends PlayerEvent<PlayerBrushSizeChangedEvent> {
 
     private static final HandlerList<PlayerBrushSizeChangedEvent> handlers = new HandlerList<>();
     private final int oldSize;
@@ -33,7 +36,11 @@ public class PlayerBrushSizeChangedEvent extends PlayerEvent {
     protected HandlerList<PlayerBrushSizeChangedEvent> getHandlers() {
         return handlers;
     }
-    public static HandlerList<PlayerBrushSizeChangedEvent> getHandlerList() {
-        return handlers;
+    public static void registerListener(Consumer<PlayerBrushSizeChangedEvent> handler) {
+        handlers.registerListener(handler);
+    }
+
+    public static void registerListener(EventPriority priority, Consumer<PlayerBrushSizeChangedEvent> handler) {
+        handlers.registerListener(priority, handler);
     }
 }

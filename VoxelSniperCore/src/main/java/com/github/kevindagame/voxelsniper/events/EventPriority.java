@@ -27,5 +27,5 @@ public enum EventPriority {
      * Event call is critical and must have the final say in what happens
      * to the event
      */
-    HIGH;
+    HIGH
 }
