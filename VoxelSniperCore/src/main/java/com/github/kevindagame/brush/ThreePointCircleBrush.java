@@ -10,7 +10,6 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Three-Point_Circle_Brush
@@ -130,9 +129,6 @@ public class ThreePointCircleBrush extends PerformerBrush {
                 }
             }
         }
-
-        v.sendMessage(Messages.TRI_POINT_CIRCLE_DONE);
-        v.owner().storeUndo(this.currentPerformer.getUndo());
 
         // Reset Brush
         this.coordsOne = null;

@@ -92,8 +92,9 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     @Override
     protected boolean actPerform(SnipeData v) {
         currentPerformer.perform(positions);
-        if (currentPerformer.getUndo().getSize() > 0) {
-            v.owner().storeUndo(currentPerformer.getUndo());
+        var u = currentPerformer.getAndClearUndo();
+        if (u.getSize() > 0) {
+            v.owner().storeUndo(u);
         }
         return true;
     }

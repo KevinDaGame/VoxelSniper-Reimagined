@@ -35,7 +35,6 @@ public class BlobBrush extends PerformerBrush {
     }
 
     private void digBlob(final SnipeData v) {
-        Set<VoxelLocation> positions = new HashSet<>();
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final int[][][] splat = new int[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];
@@ -119,7 +118,6 @@ public class BlobBrush extends PerformerBrush {
     }
 
     private void growBlob(final SnipeData v) {
-        Set<VoxelLocation> positions = new HashSet<>();
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final int[][][] splat = new int[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1];

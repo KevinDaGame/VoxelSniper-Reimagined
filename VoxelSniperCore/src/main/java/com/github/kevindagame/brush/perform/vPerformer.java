@@ -35,7 +35,7 @@ public abstract class vPerformer {
         positions.forEach(position -> this.perform(position.getBlock()));
     }
 
-    public Undo getUndo() {
+    public Undo getAndClearUndo() {
         Undo temp = h;
         h = null;
         return temp;

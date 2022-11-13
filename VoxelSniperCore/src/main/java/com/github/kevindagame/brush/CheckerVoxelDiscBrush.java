@@ -7,7 +7,6 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
      */
     private void applyBrush(final SnipeData v) {
         this.positions = Actions.checker(Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize()), this.useWorldCoordinates);
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+        v.owner().storeUndo(this.currentPerformer.getAndClearUndo());
     }
 
     @Override

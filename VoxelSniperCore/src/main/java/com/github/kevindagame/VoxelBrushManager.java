@@ -66,7 +66,7 @@ public class VoxelBrushManager {
 //        brushManager.registerSniperBrush(JaggedLineBrush.class, "j", "jagged");
 //        brushManager.registerSniperBrush(JockeyBrush.class, "jockey");
         brushManager.registerSniperBrush(LightningBrush.class, "light", "lightning");
-//        brushManager.registerSniperBrush(LineBrush.class, "l", "line");
+        brushManager.registerSniperBrush(LineBrush.class, "l", "line");
 //        brushManager.registerSniperBrush(MoveBrush.class, "mv", "move");
 //        brushManager.registerSniperBrush(OceanBrush.class, "o", "ocean");
 //        brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
@@ -87,11 +87,11 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(SnipeBrush.class, "s", "snipe");
         //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
         //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
-//        brushManager.registerSniperBrush(SplatterBallBrush.class, "sb", "splatball");
-//        brushManager.registerSniperBrush(SplatterDiscBrush.class, "sd", "splatdisc");
-//        brushManager.registerSniperBrush(SplatterOverlayBrush.class, "sover", "splatteroverlay");
-//        brushManager.registerSniperBrush(SplatterVoxelBrush.class, "sv", "splattervoxel");
-//        brushManager.registerSniperBrush(SplatterDiscBrush.class, "svd", "splatvoxeldisc");
+        brushManager.registerSniperBrush(SplatterBallBrush.class, "sb", "splatball");
+        brushManager.registerSniperBrush(SplatterDiscBrush.class, "sd", "splatdisc");
+        brushManager.registerSniperBrush(SplatterOverlayBrush.class, "sover", "splatteroverlay");
+        brushManager.registerSniperBrush(SplatterVoxelBrush.class, "sv", "splattervoxel");
+        brushManager.registerSniperBrush(SplatterDiscBrush.class, "svd", "splatvoxeldisc");
 //        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
