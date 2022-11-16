@@ -1,0 +1,21 @@
+on:
+  pull_request:
+    branches:
+      - master
+name: Version check
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: git fetch --all --tags
+
+      - name: Check Release Version
+        uses: thebongy/version-check@v1
+        with:
+          file: voxel-core.gradle.kts
+          tagFormat: version = "{version}"
+        id: version_check_staging
+      - name: Check if version is unique
+        run: echo "Version ${{steps.version_check_staging.outputs.releaseVersion}}"
