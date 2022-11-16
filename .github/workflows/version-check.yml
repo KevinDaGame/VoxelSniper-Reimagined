@@ -14,7 +14,7 @@ jobs:
       - name: Check Release Version
         uses: thebongy/version-check@v1
         with:
-          file: voxel-core.gradle.kts
+          file: buildSrc/src/main/kotlin/voxel-core.gradle.kts
           tagFormat: version = "{version}"
         id: version_check_staging
       - name: Check if version is unique
