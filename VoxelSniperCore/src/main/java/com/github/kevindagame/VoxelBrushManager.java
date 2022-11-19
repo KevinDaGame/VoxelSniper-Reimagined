@@ -39,12 +39,12 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(BlendVoxelBrush.class, "bv", "blendvoxel");
         brushManager.registerSniperBrush(BlendVoxelDiscBrush.class, "bvd", "blendvoxeldisc");
         brushManager.registerSniperBrush(BlobBrush.class, "blob", "splatblob");
-        brushManager.registerSniperBrush(BlockResetBrush.class, "brb", "blockresetbrush");
+//        brushManager.registerSniperBrush(BlockResetBrush.class, "brb", "blockresetbrush");
 //        brushManager.registerSniperBrush(BlockResetSurfaceBrush.class, "brbs", "blockresetbrushsurface");
 //        brushManager.registerSniperBrush(CanyonBrush.class, "ca", "canyon");
 //        brushManager.registerSniperBrush(CanyonSelectionBrush.class, "cas", "canyonselection");
         brushManager.registerSniperBrush(CheckerVoxelDiscBrush.class, "cvd", "checkervoxeldisc");
-        brushManager.registerSniperBrush(CleanSnowBrush.class, "cls", "cleansnow");
+//        brushManager.registerSniperBrush(CleanSnowBrush.class, "cls", "cleansnow");
 //        brushManager.registerSniperBrush(CloneStampBrush.class, "cs", "clonestamp");
 //        brushManager.registerSniperBrush(CometBrush.class, "com", "comet");
 //        brushManager.registerSniperBrush(CopyPastaBrush.class, "cp", "copypasta");
@@ -79,7 +79,7 @@ public class VoxelBrushManager {
 //        brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
 //        brushManager.registerSniperBrush(RulerBrush.class, "r", "ruler");
 //        brushManager.registerSniperBrush(ScannerBrush.class, "sc", "scanner");
-//        brushManager.registerSniperBrush(SetBrush.class, "set");
+        brushManager.registerSniperBrush(SetBrush.class, "set");
 //        brushManager.registerSniperBrush(ShellBallBrush.class, "shb", "shellball");
 //        brushManager.registerSniperBrush(ShellSetBrush.class, "shs", "shellset");
 //        brushManager.registerSniperBrush(ShellVoxelBrush.class, "shv", "shellvoxel");
@@ -96,8 +96,8 @@ public class VoxelBrushManager {
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
         brushManager.registerSniperBrush(ThreePointCircleBrush.class, "tpc", "threepointcircle");
-//        brushManager.registerSniperBrush(TreeSnipeBrush.class, "t", "tree", "treesnipe");
-//        brushManager.registerSniperBrush(TriangleBrush.class, "tri", "triangle");
+        brushManager.registerSniperBrush(TreeSnipeBrush.class, "t", "tree", "treesnipe");
+        brushManager.registerSniperBrush(TriangleBrush.class, "tri", "triangle");
 //        brushManager.registerSniperBrush(UnderlayBrush.class, "under", "underlay");
 //        brushManager.registerSniperBrush(VoltMeterBrush.class, "volt", "voltmeter");
         brushManager.registerSniperBrush(VoxelBrush.class, "v", "voxel");

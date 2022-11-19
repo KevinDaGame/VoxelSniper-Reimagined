@@ -98,12 +98,13 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public void generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo) {
+    public Undo generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo) {
         if (treeType.isSupported()) {
             SpigotUndoDelegate undoDelegate = new SpigotUndoDelegate(world, undo);
             TreeType bukkitType = TreeType.valueOf(treeType.name());
             world.generateTree(SpigotLocation.toSpigotLocation(location), bukkitType, undoDelegate);
         }
+        return undo;
     }
 
     @Override

@@ -33,18 +33,7 @@ public class TreeSnipeBrush extends AbstractBrush {
     }
 
     private void single(final SnipeData v, IBlock targetBlock) {
-        Undo undo = new Undo();
-
-        IBlock blockBelow = targetBlock.getRelative(BlockFace.DOWN);
-        IBlockState currentState = blockBelow.getState();
-        undo.put(currentState);
-        blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK, false);
-
-        this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undo);
-
-        blockBelow.setBlockData(currentState.getBlockData(), false);
-
-        v.owner().storeUndo(undo);
+        this.positions.add(targetBlock.getLocation());
     }
 
     private int getYOffset() {
@@ -73,6 +62,23 @@ public class TreeSnipeBrush extends AbstractBrush {
         }
 
         vm.custom(printout);
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        Undo undo = new Undo();
+        for (var position : positions) {
+            IBlock blockBelow = position.getBlock().getRelative(BlockFace.DOWN);
+            IBlockState currentState = blockBelow.getState();
+            undo.put(currentState);
+            blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK, false);
+
+            undo = this.getWorld().generateTree(position, this.treeType, undo);
+
+            blockBelow.setBlockData(currentState.getBlockData(), false);
+        }
+        v.owner().storeUndo(undo);
+        return true;
     }
 
     @Override

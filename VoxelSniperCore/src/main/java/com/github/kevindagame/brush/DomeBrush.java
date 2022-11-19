@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
@@ -17,7 +18,7 @@ import java.util.Set;
  * @author Gavjenks
  * @author MikeMatrix
  */
-public class DomeBrush extends AbstractBrush {
+public class DomeBrush extends PerformerBrush {
 
     /**
      *
@@ -40,7 +41,6 @@ public class DomeBrush extends AbstractBrush {
 
         this.positions = Shapes.dome(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight());
     }
-
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());

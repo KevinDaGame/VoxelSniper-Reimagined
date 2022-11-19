@@ -68,7 +68,7 @@ public interface IWorld {
 
     void regenerateChunk(int x, int z);
 
-    void generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo);
+    Undo generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo);
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 }
