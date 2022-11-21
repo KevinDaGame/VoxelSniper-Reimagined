@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.SnipeAction;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -113,46 +114,59 @@ public class JockeyBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        if (jockeyType == JockeyType.STACK) {
-            stack(v);
-        } else {
-            this.sitOn(v);
+    protected boolean actPerform(SnipeData v) {
+        switch (this.snipeAction) {
+            case GUNPOWDER:
+                // invers || stack: remove passenger(s) from player
+                // normal: remove player from pasenger (jockeyedEntity)
+                if (jockeyType == JockeyType.INVERSE || jockeyType == JockeyType.STACK) {
+                    Set<IEntity> foundPassengers = new HashSet<>();
+                    foundPassengers.add(v.owner().getPlayer());
+                    while (foundPassengers.size() > 0) {
+                        Set<IEntity> entities = foundPassengers;
+                        foundPassengers = new HashSet<>();
+                        for (IEntity e : entities) {
+                            List<IEntity> passengers = e.getPassengers();
+                            if (passengers.size() > 0) {
+                                foundPassengers.addAll(passengers);
+                                e.eject();
+                            }
+                        }
+                    }
+                } else {
+                    if (jockeyedEntity != null) {
+                        jockeyedEntity.eject();
+                        jockeyedEntity = null;
+                        v.sendMessage(Messages.YOU_HAVE_BEEN_EJECTED);
+                    }
+                }
+                return true;
+            case ARROW:
+                if (jockeyType == JockeyType.STACK) {
+                    stack(v);
+                } else {
+                    this.sitOn(v);
+                }
+                return true;
+            default:
+                return false;
         }
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        // invers || stack: remove passenger(s) from player
-        // normal: remove player from pasenger (jockeyedEntity)
-        if (jockeyType == JockeyType.INVERSE || jockeyType == JockeyType.STACK) {
-            Set<IEntity> foundPassengers = new HashSet<>();
-            foundPassengers.add(v.owner().getPlayer());
-            while (foundPassengers.size() > 0) {
-                Set<IEntity> entities = foundPassengers;
-                foundPassengers = new HashSet<>();
-                for (IEntity e : entities) {
-                    List<IEntity> passengers = e.getPassengers();
-                    if (passengers.size() > 0) {
-                        foundPassengers.addAll(passengers);
-                        e.eject();
-                    }
-                }
-            }
-        } else {
-            if (jockeyedEntity != null) {
-                jockeyedEntity.eject();
-                jockeyedEntity = null;
-                v.sendMessage(Messages.YOU_HAVE_BEEN_EJECTED);
-            }
-        }
+    protected final void arrow(final SnipeData v) {
+        positions.add(this.getTargetBlock().getLocation());
+    }
 
+    @Override
+    protected final void powder(final SnipeData v) {
+        positions.add(this.getTargetBlock().getLocation());
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName(this.playerOnly)));
+        vm.custom(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName()));
     }
 
     @Override
@@ -161,20 +175,6 @@ public class JockeyBrush extends AbstractBrush {
             v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
         }
-
-        if (params[0].equalsIgnoreCase("player")) {
-            this.playerOnly = !this.playerOnly;
-
-            if (playerOnly) {
-                jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_PLAYER_ONLY");
-                v.sendMessage(Messages.JOCKEY_TARGETING_PLAYERS);
-            } else {
-                jockeyType = JockeyType.valueOf(this.jockeyType.name().split("_")[0] + "_ALL_ENTITIES");
-                v.sendMessage(Messages.JOCKEY_TARGETING_ENTITIES);
-            }
-            return;
-        }
-
         try {
             if (params[0].equalsIgnoreCase("inverse")) {
                 jockeyType = JockeyType.INVERSE;
@@ -183,7 +183,7 @@ public class JockeyBrush extends AbstractBrush {
             } else if (params[0].equalsIgnoreCase("normal")) {
                 jockeyType = JockeyType.NORMAL;
             }
-            v.sendMessage(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName(this.playerOnly)));
+            v.sendMessage(Messages.CURRENT_JOCKEY_MODE.replace("%mode%", jockeyType.getName()));
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
@@ -192,7 +192,7 @@ public class JockeyBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal", "player"));
+        return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal"));
     }
 
     @Override
@@ -219,8 +219,8 @@ public class JockeyBrush extends AbstractBrush {
             return this.name;
         }
 
-        public String getName(boolean playerOnly) {
-            return this.name + (playerOnly ? " (Player only)" : " (All)");
+        public String getName() {
+            return this.name;
         }
     }
 }

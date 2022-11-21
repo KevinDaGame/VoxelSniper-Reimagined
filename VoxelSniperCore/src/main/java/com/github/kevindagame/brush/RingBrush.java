@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.Shapes;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -33,24 +34,7 @@ public class RingBrush extends PerformerBrush {
     }
 
     private void ring(final SnipeData v, IBlock targetBlock) {
-        final int brushSize = v.getBrushSize();
-        final double outerSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-        final double innerSquared = Math.pow(this.innerSize, 2);
-
-        for (int x = brushSize; x >= 0; x--) {
-            final double xSquared = Math.pow(x, 2);
-            for (int z = brushSize; z >= 0; z--) {
-                final double ySquared = Math.pow(z, 2);
-                if ((xSquared + ySquared) <= outerSquared && (xSquared + ySquared) >= innerSquared) {
-                    currentPerformer.perform(targetBlock.getRelative(x, 0, z));
-                    currentPerformer.perform(targetBlock.getRelative(x, 0, -z));
-                    currentPerformer.perform(targetBlock.getRelative(-x, 0, z));
-                    currentPerformer.perform(targetBlock.getRelative(-x, 0, -z));
-                }
-            }
-        }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+       this.positions = Shapes.ring(this.getTargetBlock().getLocation(), v.getBrushSize(), this.innerSize, this.smoothCircle);
     }
 
     @Override

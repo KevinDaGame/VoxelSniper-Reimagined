@@ -13,6 +13,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Shapes {
+    static double SMOOTH_CIRCLE_VALUE = 0.5;
+    static double VOXEL_CIRCLE_VALUE = 0.0;
+
     public static Set<VoxelLocation> ball(VoxelLocation location, double radius, boolean smooth) {
         Set<VoxelLocation> positions = new HashSet<>();
         double SMOOTH_SPHERE_VALUE = 0.5;
@@ -51,8 +54,6 @@ public class Shapes {
 
     public static Set<VoxelLocation> disc(VoxelLocation location, int brushSize, boolean smooth) {
         Set<VoxelLocation> positions = new HashSet<>();
-        double SMOOTH_CIRCLE_VALUE = 0.5;
-        double VOXEL_CIRCLE_VALUE = 0.0;
         final double radiusSquared = (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
         final VoxelVector centerPoint = location.toVector();
         final VoxelVector currentPoint = centerPoint.clone();
@@ -104,10 +105,8 @@ public class Shapes {
         for (var pos : locations) {
             VoxelVector diff = center.toVector().subtract(pos.toVector());
             switch (face) {
-                case NORTH, SOUTH ->
-                        positions.add(new VoxelLocation(center.getWorld(), center.getX() + diff.getBlockX(), center.getY() + diff.getBlockZ(), center.getZ()));
-                case EAST, WEST ->
-                        positions.add(new VoxelLocation(center.getWorld(), center.getX(), center.getY() + diff.getBlockX(), center.getZ() + diff.getBlockZ()));
+                case NORTH, SOUTH -> positions.add(new VoxelLocation(center.getWorld(), center.getX() + diff.getBlockX(), center.getY() + diff.getBlockZ(), center.getZ()));
+                case EAST, WEST -> positions.add(new VoxelLocation(center.getWorld(), center.getX(), center.getY() + diff.getBlockX(), center.getZ() + diff.getBlockZ()));
             }
         }
         return positions;
@@ -164,6 +163,26 @@ public class Shapes {
             for (final Iterator<IBlock> blockIterator = world.getBlockIterator(originClone, direction, 0, (int) Math.round(length)); blockIterator.hasNext(); ) {
                 final IBlock currentBlock = blockIterator.next();
                 positions.add(currentBlock.getLocation());
+            }
+        }
+        return positions;
+    }
+
+    public static Set<VoxelLocation> ring(VoxelLocation location, int radius, double innerSize, boolean smooth) {
+        Set<VoxelLocation> positions = new HashSet<>();
+        final double outerSquared = Math.pow(radius + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
+        final double innerSquared = Math.pow(innerSize, 2);
+
+        for (int x = radius; x >= 0; x--) {
+            final double xSquared = Math.pow(x, 2);
+            for (int z = radius; z >= 0; z--) {
+                final double ySquared = Math.pow(z, 2);
+                if ((xSquared + ySquared) <= outerSquared && (xSquared + ySquared) >= innerSquared) {
+                    positions.add(new VoxelLocation(location.getWorld(), location.getX() + x, location.getY(), location.getZ() + z));
+                    positions.add(new VoxelLocation(location.getWorld(), location.getX() - x, location.getY(), location.getZ() + z));
+                    positions.add(new VoxelLocation(location.getWorld(), location.getX() + x, location.getY(), location.getZ() - z));
+                    positions.add(new VoxelLocation(location.getWorld(), location.getX() - x, location.getY(), location.getZ() - z));
+                }
             }
         }
         return positions;

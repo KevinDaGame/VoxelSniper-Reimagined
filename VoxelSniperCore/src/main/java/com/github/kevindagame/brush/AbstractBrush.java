@@ -43,6 +43,7 @@ public abstract class AbstractBrush implements IBrush {
      */
     private String name = "Undefined";
     protected boolean cancelled = false;
+    protected SnipeAction snipeAction;
 
     private boolean preparePerform(final SnipeData v, final IBlock clickedBlock, final BlockFace clickedFace) {
         if (this.getTarget(v, clickedBlock, clickedFace)) {
@@ -63,6 +64,7 @@ public abstract class AbstractBrush implements IBrush {
         this.cancelled = false;
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
+        this.snipeAction = action;
         switch (action) {
             case ARROW:
                 this.arrow(data);
