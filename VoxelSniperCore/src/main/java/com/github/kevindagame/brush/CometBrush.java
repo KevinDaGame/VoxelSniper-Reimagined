@@ -29,11 +29,8 @@ public class CometBrush extends AbstractBrush {
 
     private void doFireball(final SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        final VoxelLocation playerLocation = v.owner().getPlayer().getEyeLocation();
-        final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
-
-        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
-        v.owner().getPlayer().launchProjectile(type, slope.normalize());
+        positions.add(targetCoords.getLocation(this.getWorld()));
+        positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ()));
     }
 
     @Override
@@ -62,6 +59,17 @@ public class CometBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("big", "small"));
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
+        final VoxelLocation playerLocation = v.owner().getPlayer().getEyeLocation();
+        final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
+
+        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
+        v.owner().getPlayer().launchProjectile(type, slope.normalize());
+        return true;
     }
 
     @Override

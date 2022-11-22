@@ -23,15 +23,15 @@ public class VoltMeterBrush extends AbstractBrush {
     }
 
     private void data(final SnipeData v) {
-        final IBlock block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
-        final IBlockData data = block.getBlockData();
+        positions.add(getTargetBlock().getLocation());
+        final IBlockData data = getTargetBlock().getBlockData();
         if (data instanceof IRedstoneWire redstone) {
             v.sendMessage(Messages.REDSTONE_POWER_LEVEL.replace("%blocks%", String.valueOf(redstone.getPower())));
         }
     }
 
     private void volt(final SnipeData v) {
-        final IBlock block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        var block = getTargetBlock();
         final boolean indirect = block.isBlockIndirectlyPowered();
         final boolean direct = block.isBlockPowered();
         v.sendMessage(Messages.BLOCK_POWER_MESSAGE.replace("%direct%", String.valueOf(direct)).replace("%indirect%", String.valueOf(indirect)));
@@ -44,13 +44,27 @@ public class VoltMeterBrush extends AbstractBrush {
     }
 
     @Override
+    protected boolean actPerform(SnipeData v) {
+        switch (this.snipeAction) {
+            case ARROW:
+                volt(v);
+                return true;
+            case GUNPOWDER:
+                data(v);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
     protected final void arrow(final SnipeData v) {
-        this.volt(v);
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.data(v);
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override

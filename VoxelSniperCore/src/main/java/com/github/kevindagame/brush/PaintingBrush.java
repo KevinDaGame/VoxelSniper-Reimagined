@@ -18,6 +18,20 @@ public class PaintingBrush extends AbstractBrush {
         this.setName("Painting");
     }
 
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        switch(this.snipeAction) {
+            case ARROW:
+                BlockHelper.painting(v.owner().getPlayer(), true, false, 0);
+                return true;
+            case GUNPOWDER:
+                BlockHelper.painting(v.owner().getPlayer(), true, true, 0);
+                return true;
+            default:
+                return false;
+        }
+    }
+
     /**
      * Scroll painting forward.
      *
@@ -25,7 +39,7 @@ public class PaintingBrush extends AbstractBrush {
      */
     @Override
     protected final void arrow(final SnipeData v) {
-        BlockHelper.painting(v.owner().getPlayer(), true, false, 0);
+        positions.add(getTargetBlock().getLocation());
     }
 
     /**
@@ -35,7 +49,7 @@ public class PaintingBrush extends AbstractBrush {
      */
     @Override
     protected final void powder(final SnipeData v) {
-        BlockHelper.painting(v.owner().getPlayer(), true, true, 0);
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override
