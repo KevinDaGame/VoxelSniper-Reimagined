@@ -91,13 +91,19 @@ public class EntityRemovalBrush extends AbstractBrush {
     }
 
     @Override
+    protected boolean actPerform(SnipeData v) {
+        radialRemoval(v);
+        return true;
+    }
+
+    @Override
     protected void arrow(SnipeData v) {
-        this.radialRemoval(v);
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override
     protected void powder(SnipeData v) {
-        this.radialRemoval(v);
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override

@@ -101,28 +101,43 @@ public class SignOverwriteBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        if (this.rangedMode) {
-            setRanged(v);
-        } else {
-            setSingle(v);
+    protected boolean actPerform(SnipeData v) {
+        switch(snipeAction) {
+            case ARROW -> {
+                if (this.rangedMode) {
+                    setRanged(v);
+                } else {
+                    setSingle(v);
+                }
+                return true;
+            }
+            case GUNPOWDER -> {
+                if (this.getTargetBlock().getState() instanceof ISign sign) {
+
+                    for (int i = 0; i < this.signTextLines.length; i++) {
+                        if (this.signLinesEnabled[i]) {
+                            this.signTextLines[i] = sign.getLine(i);
+                        }
+                    }
+
+                    displayBuffer(v);
+                } else {
+                    v.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
+                }
+                return true;
+            }
         }
+        return false;
+    }
+
+    @Override
+    protected final void arrow(final SnipeData v) {
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        if (this.getTargetBlock().getState() instanceof ISign sign) {
-
-            for (int i = 0; i < this.signTextLines.length; i++) {
-                if (this.signLinesEnabled[i]) {
-                    this.signTextLines[i] = sign.getLine(i);
-                }
-            }
-
-            displayBuffer(v);
-        } else {
-            v.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
-        }
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override

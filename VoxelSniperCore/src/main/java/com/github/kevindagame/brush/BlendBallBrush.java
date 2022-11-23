@@ -8,9 +8,6 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 public class BlendBallBrush extends BlendBrushBase {
 
-    /**
-     * TODO: NEEDS TO CHECK AFTER REWRITE
-     */
     public BlendBallBrush() {
         this.setName("Blend Ball");
     }

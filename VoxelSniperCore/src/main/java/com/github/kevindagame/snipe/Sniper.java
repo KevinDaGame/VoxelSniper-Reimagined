@@ -244,7 +244,7 @@ public class Sniper {
                 if (undo != null) {
                     undo.undo();
                     changedBlocks += undo.getSize();
-                } else { // TODO: Check if this logic makes sense
+                } else {
                     break;
                 }
             }

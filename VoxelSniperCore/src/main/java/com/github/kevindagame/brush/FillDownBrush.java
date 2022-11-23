@@ -63,7 +63,7 @@ public class FillDownBrush extends PerformerBrush {
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
                         if (currentBlock.isEmpty() || (fillLiquid && currentBlock.isLiquid())) {
-                            this.currentPerformer.perform(currentBlock);
+                            this.positions.add(currentBlock.getLocation());
                         } else {
                             break;
                         }
@@ -71,8 +71,6 @@ public class FillDownBrush extends PerformerBrush {
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override

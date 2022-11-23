@@ -35,13 +35,19 @@ public class EntityBrush extends AbstractBrush {
     }
 
     @Override
+    protected boolean actPerform(SnipeData v) {
+        spawn(v);
+        return true;
+    }
+
+    @Override
     protected final void arrow(final SnipeData v) {
-        this.spawn(v);
+        this.positions.add(getLastBlock().getLocation());
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.spawn(v);
+        this.positions.add(getLastBlock().getLocation());
     }
 
     @Override

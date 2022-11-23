@@ -76,7 +76,7 @@ public abstract class AbstractBrush implements IBrush {
                 return false;
         }
         if(!cancelled) {
-
+        //TODO If positions.size == 0 then don't actPerform
         //TODO Create event
         return actPerform(data);
         }
