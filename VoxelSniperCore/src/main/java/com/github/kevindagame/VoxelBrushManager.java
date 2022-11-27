@@ -45,7 +45,7 @@ public class VoxelBrushManager {
 //        brushManager.registerSniperBrush(CanyonSelectionBrush.class, "cas", "canyonselection");
         brushManager.registerSniperBrush(CheckerVoxelDiscBrush.class, "cvd", "checkervoxeldisc");
 //        brushManager.registerSniperBrush(CleanSnowBrush.class, "cls", "cleansnow");
-//        brushManager.registerSniperBrush(CloneStampBrush.class, "cs", "clonestamp");
+        brushManager.registerSniperBrush(CloneStampBrush.class, "cs", "clonestamp");
         brushManager.registerSniperBrush(CometBrush.class, "com", "comet");
 //        brushManager.registerSniperBrush(CopyPastaBrush.class, "cp", "copypasta");
         brushManager.registerSniperBrush(CylinderBrush.class, "c", "cylinder");
@@ -55,12 +55,12 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(DrainBrush.class, "drain");
 //        brushManager.registerSniperBrush(EllipseBrush.class, "el", "ellipse");
 //        brushManager.registerSniperBrush(EllipsoidBrush.class, "elo", "ellipsoid");
-//        brushManager.registerSniperBrush(EntityBrush.class, "en", "entity");
-//        brushManager.registerSniperBrush(EntityRemovalBrush.class, "er", "entityremoval");
+        brushManager.registerSniperBrush(EntityBrush.class, "en", "entity");
+        brushManager.registerSniperBrush(EntityRemovalBrush.class, "er", "entityremoval");
 //        brushManager.registerSniperBrush(EraserBrush.class, "erase", "eraser");
 //        brushManager.registerSniperBrush(ErodeBrush.class, "e", "erode");
 //        brushManager.registerSniperBrush(ExtrudeBrush.class, "ex", "extrude");
-//        brushManager.registerSniperBrush(FillDownBrush.class, "fd", "filldown");
+        brushManager.registerSniperBrush(FillDownBrush.class, "fd", "filldown");
 //        brushManager.registerSniperBrush(FlatOceanBrush.class, "fo", "flatocean");
 //        brushManager.registerSniperBrush(GenerateTreeBrush.class, "gt", "generatetree");
 //        brushManager.registerSniperBrush(JaggedLineBrush.class, "j", "jagged");
@@ -69,7 +69,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(LineBrush.class, "l", "line");
 //        brushManager.registerSniperBrush(MoveBrush.class, "mv", "move");
 //        brushManager.registerSniperBrush(OceanBrush.class, "o", "ocean");
-//        brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
+        brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
         brushManager.registerSniperBrush(PaintingBrush.class, "painting");
 //        brushManager.registerSniperBrush(PullBrush.class, "pull");
         brushManager.registerSniperBrush(RegenerateChunkBrush.class, "rc", "regeneratechunk");
@@ -83,7 +83,7 @@ public class VoxelBrushManager {
 //        brushManager.registerSniperBrush(ShellBallBrush.class, "shb", "shellball");
 //        brushManager.registerSniperBrush(ShellSetBrush.class, "shs", "shellset");
 //        brushManager.registerSniperBrush(ShellVoxelBrush.class, "shv", "shellvoxel");
-//        brushManager.registerSniperBrush(SignOverwriteBrush.class, "sio", "signoverwriter");
+        brushManager.registerSniperBrush(SignOverwriteBrush.class, "sio", "signoverwriter");
         brushManager.registerSniperBrush(SnipeBrush.class, "s", "snipe");
         //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
         //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");

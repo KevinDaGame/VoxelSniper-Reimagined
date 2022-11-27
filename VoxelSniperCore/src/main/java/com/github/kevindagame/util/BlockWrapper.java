@@ -28,6 +28,20 @@ public class BlockWrapper {
     }
 
     /**
+     * @param b
+     * @param blx
+     * @param bly
+     * @param blz
+     */
+    public BlockWrapper(final IBlock b, final int blx, final int bly, final int blz, final IWorld world) {
+        this.blockData = b.getBlockData();
+        this.x = blx;
+        this.y = bly;
+        this.z = blz;
+        this.world = world;
+    }
+
+    /**
      * @return the data
      */
     public final IBlockData getBlockData() {
