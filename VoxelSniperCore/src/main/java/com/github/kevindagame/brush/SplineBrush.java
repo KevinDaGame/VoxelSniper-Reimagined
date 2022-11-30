@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -21,7 +22,6 @@ public class SplineBrush extends PerformerBrush {
 
     private final ArrayList<Point> endPts = new ArrayList<>();
     private final ArrayList<Point> ctrlPts = new ArrayList<>();
-    protected ArrayList<Point> spline = new ArrayList<>();
     protected boolean set;
     protected boolean ctrl;
 
@@ -84,7 +84,7 @@ public class SplineBrush extends PerformerBrush {
     }
 
     public final boolean spline(final Point start, final Point end, final Point c1, final Point c2, final SnipeData v) {
-        this.spline.clear();
+        this.positions.clear();
 
         try {
             final Point c = (c1.subtract(start)).multiply(3);
@@ -95,10 +95,7 @@ public class SplineBrush extends PerformerBrush {
                 final int px = (int) Math.round((a.getX() * (t * t * t)) + (b.getX() * (t * t)) + (c.getX() * t) + start.getX());
                 final int py = (int) Math.round((a.getY() * (t * t * t)) + (b.getY() * (t * t)) + (c.getY() * t) + start.getY());
                 final int pz = (int) Math.round((a.getZ() * (t * t * t)) + (b.getZ() * (t * t)) + (c.getZ() * t) + start.getZ());
-
-                if (!this.spline.contains(new Point(px, py, pz))) {
-                    this.spline.add(new Point(px, py, pz));
-                }
+                positions.add(new VoxelLocation(getWorld(), px, py, pz));
             }
 
             return true;
@@ -106,19 +103,6 @@ public class SplineBrush extends PerformerBrush {
             v.sendMessage(Messages.SPLINE_BRUSH_NOT_ENOUGH_POINTS.replace("%endPts%", String.valueOf(this.endPts.size())).replace("%ctrlPts%", String.valueOf(this.ctrlPts.size())));
             return false;
         }
-    }
-
-    protected final void render(final SnipeData v) {
-        if (this.spline.isEmpty()) {
-            return;
-        }
-
-        this.initP(v);
-        for (final Point point : this.spline) {
-            this.currentPerformer.perform(this.clampY(point.getX(), point.getY(), point.getZ()));
-        }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
@@ -131,7 +115,7 @@ public class SplineBrush extends PerformerBrush {
     }
 
     protected final void clear(final SnipeData v) {
-        this.spline.clear();
+        this.positions.clear();
         this.ctrlPts.clear();
         this.endPts.clear();
         v.sendMessage(Messages.BEZIER_CURVE_CLEARED);
@@ -202,7 +186,7 @@ public class SplineBrush extends PerformerBrush {
                 return;
             }
             if (this.spline(this.endPts.get(0), this.endPts.get(1), this.ctrlPts.get(0), this.ctrlPts.get(1), v)) {
-                this.render(v);
+                this.actPerform(v);
             }
             return;
         }
