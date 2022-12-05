@@ -39,8 +39,8 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(BlendVoxelBrush.class, "bv", "blendvoxel");
         brushManager.registerSniperBrush(BlendVoxelDiscBrush.class, "bvd", "blendvoxeldisc");
         brushManager.registerSniperBrush(BlobBrush.class, "blob", "splatblob");
-//        brushManager.registerSniperBrush(BlockResetBrush.class, "brb", "blockresetbrush");
-//        brushManager.registerSniperBrush(BlockResetSurfaceBrush.class, "brbs", "blockresetbrushsurface");
+        brushManager.registerSniperBrush(BlockResetBrush.class, "brb", "blockresetbrush");
+        brushManager.registerSniperBrush(BlockResetSurfaceBrush.class, "brbs", "blockresetbrushsurface");
 //        brushManager.registerSniperBrush(CanyonBrush.class, "ca", "canyon");
 //        brushManager.registerSniperBrush(CanyonSelectionBrush.class, "cas", "canyonselection");
         brushManager.registerSniperBrush(CheckerVoxelDiscBrush.class, "cvd", "checkervoxeldisc");
@@ -57,13 +57,13 @@ public class VoxelBrushManager {
 //        brushManager.registerSniperBrush(EllipsoidBrush.class, "elo", "ellipsoid");
         brushManager.registerSniperBrush(EntityBrush.class, "en", "entity");
         brushManager.registerSniperBrush(EntityRemovalBrush.class, "er", "entityremoval");
-//        brushManager.registerSniperBrush(EraserBrush.class, "erase", "eraser");
-//        brushManager.registerSniperBrush(ErodeBrush.class, "e", "erode");
+        brushManager.registerSniperBrush(EraserBrush.class, "erase", "eraser");
+        brushManager.registerSniperBrush(ErodeBrush.class, "e", "erode");
 //        brushManager.registerSniperBrush(ExtrudeBrush.class, "ex", "extrude");
         brushManager.registerSniperBrush(FillDownBrush.class, "fd", "filldown");
 //        brushManager.registerSniperBrush(FlatOceanBrush.class, "fo", "flatocean");
 //        brushManager.registerSniperBrush(GenerateTreeBrush.class, "gt", "generatetree");
-//        brushManager.registerSniperBrush(JaggedLineBrush.class, "j", "jagged");
+        brushManager.registerSniperBrush(JaggedLineBrush.class, "j", "jagged");
         brushManager.registerSniperBrush(JockeyBrush.class, "jockey");
         brushManager.registerSniperBrush(LightningBrush.class, "light", "lightning");
         brushManager.registerSniperBrush(LineBrush.class, "l", "line");
@@ -92,18 +92,20 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(SplatterOverlayBrush.class, "sover", "splatteroverlay");
         brushManager.registerSniperBrush(SplatterVoxelBrush.class, "sv", "splattervoxel");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "svd", "splatvoxeldisc");
-//        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
-        //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
-        //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
         brushManager.registerSniperBrush(ThreePointCircleBrush.class, "tpc", "threepointcircle");
         brushManager.registerSniperBrush(TreeSnipeBrush.class, "t", "tree", "treesnipe");
         brushManager.registerSniperBrush(TriangleBrush.class, "tri", "triangle");
-//        brushManager.registerSniperBrush(UnderlayBrush.class, "under", "underlay");
+        brushManager.registerSniperBrush(UnderlayBrush.class, "under", "underlay");
         brushManager.registerSniperBrush(VoltMeterBrush.class, "volt", "voltmeter");
         brushManager.registerSniperBrush(VoxelBrush.class, "v", "voxel");
         brushManager.registerSniperBrush(VoxelDiscBrush.class, "vd", "voxeldisc");
         brushManager.registerSniperBrush(VoxelDiscFaceBrush.class, "vdf", "voxeldiscface");
         brushManager.registerSniperBrush(WarpBrush.class, "w", "warp");
+
+        //these brushes are currently removed/broken
+//        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
+        //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
+        //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
 
         return getInstance();
     }

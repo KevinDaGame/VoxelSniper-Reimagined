@@ -25,12 +25,24 @@ public class ErodeBrush extends AbstractBrush {
     private static final VoxelVector[] FACES_TO_CHECK = {new VoxelVector(0, 0, 1), new VoxelVector(0, 0, -1), new VoxelVector(0, 1, 0), new VoxelVector(0, -1, 0), new VoxelVector(1, 0, 0), new VoxelVector(-1, 0, 0)};
     private String presetName = "NONE";
     private ErosionPreset currentPreset = new ErosionPreset(0, 1, 0, 1);
+    private BlockChangeTracker blockTracker;
 
     /**
      *
      */
     public ErodeBrush() {
         this.setName("Erode");
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        var undo = new Undo();
+        for (final BlockWrapper blockWrapper : blockTracker.getAll()) {
+            undo.put(blockWrapper.getBlock());
+            blockWrapper.getBlock().setBlockData(blockWrapper.getBlockData(), true);
+        }
+        v.owner().storeUndo(undo);
+        return true;
     }
 
     @Override
@@ -56,14 +68,8 @@ public class ErodeBrush extends AbstractBrush {
         for (int i = 0; i < erosionPreset.getFillRecursion(); ++i) {
             fillIteration(v, erosionPreset, blockChangeTracker, targetBlockVector);
         }
-
-        final Undo undo = new Undo();
-        for (final BlockWrapper blockWrapper : blockChangeTracker.getAll()) {
-            undo.put(blockWrapper.getBlock());
-            blockWrapper.getBlock().setBlockData(blockWrapper.getBlockData(), true);
-        }
-
-        v.owner().storeUndo(undo);
+        blockChangeTracker.getAll().forEach(block -> positions.add(block.block.getLocation()));
+        this.blockTracker = blockChangeTracker;
     }
 
     private void erosionIteration(final SnipeData v, final ErosionPreset erosionPreset, final BlockChangeTracker blockChangeTracker, final VoxelVector targetBlockVector) {
