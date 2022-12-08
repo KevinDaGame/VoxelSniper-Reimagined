@@ -46,7 +46,7 @@ public class ScannerBrush extends AbstractBrush {
             if (y >= this.getMaxHeight() || y < this.getMinHeight()) {
                 break;
             }
-            VoxelMaterial mat = this.clampY(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
+            VoxelMaterial mat = getWorld().getBlock(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
             if (mat == checkFor) {
                 v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getName()).replace("%i%", Integer.toString(i)));
                 return;
@@ -56,8 +56,14 @@ public class ScannerBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected boolean actPerform(SnipeData v) {
         this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
+        return true;
+    }
+
+    @Override
+    protected final void arrow(final SnipeData v) {
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override
