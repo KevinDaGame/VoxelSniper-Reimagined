@@ -68,7 +68,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(LightningBrush.class, "light", "lightning");
         brushManager.registerSniperBrush(LineBrush.class, "l", "line");
 //        brushManager.registerSniperBrush(MoveBrush.class, "mv", "move");
-//        brushManager.registerSniperBrush(OceanBrush.class, "o", "ocean");
+        brushManager.registerSniperBrush(OceanBrush.class, "o", "ocean");
         brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
         brushManager.registerSniperBrush(PaintingBrush.class, "painting");
 //        brushManager.registerSniperBrush(PullBrush.class, "pull");
