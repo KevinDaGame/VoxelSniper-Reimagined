@@ -28,7 +28,7 @@ public class PullBrush extends AbstractBrush {
      * Default Constructor.
      */
     public PullBrush() {
-        this.setName("Soft Selection");
+        this.setName("pull");
     }
 
     @Override
