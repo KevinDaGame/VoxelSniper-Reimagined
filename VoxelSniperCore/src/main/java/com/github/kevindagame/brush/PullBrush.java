@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -9,6 +10,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class PullBrush extends AbstractBrush {
 
     private double pinch = 1;
     private double bubble = 0;
+    private final List<com.github.kevindagame.util.BlockWrapper> operations = new ArrayList<>();
 
     /**
      * Default Constructor.
@@ -104,7 +107,7 @@ public class PullBrush extends AbstractBrush {
                     final double volume = (xSquared + Math.pow(y, 2) + zSquared);
                     if (volume <= bSquared) {
                         if (this.isSurface(actualX, this.getTargetBlock().getY() + y, actualZ)) {
-                            surface.add(new BlockWrapper(this.clampY(actualX, this.getTargetBlock().getY() + y, actualZ), this.getStr(((volume / bSquared)))));
+                            surface.add(new BlockWrapper(getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ), this.getStr(((volume / bSquared)))));
                         }
                     }
                 }
@@ -131,35 +134,54 @@ public class PullBrush extends AbstractBrush {
 
     }
 
-    private void setBlock(final BlockWrapper block, Undo undo, int vh) {
-        final IBlock currentBlock = this.clampY(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        undo.put(currentBlock);
-        currentBlock.setBlockData(block.getBlockData());
-
+    private void setBlock(final BlockWrapper block, int vh) {
+        final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
+        var bw = new com.github.kevindagame.util.BlockWrapper(currentBlock);
+        bw.setBlockData(block.getBlockData());
+        operations.add(bw);
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
-                IBlock b = this.clampY(block.getX(), y, block.getZ());
-                undo.put(b);
-                b.setBlockData(VoxelMaterial.AIR.createBlockData());
+                IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
+                bw = new com.github.kevindagame.util.BlockWrapper(b);
+                bw.setBlockData(VoxelMaterial.AIR.createBlockData());
+                operations.add(bw);
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
-                final IBlock current = this.clampY(block.getX(), y, block.getZ());
-                undo.put(current);
-                current.setBlockData(block.getBlockData());
+                final IBlock current = this.getWorld().getBlock(block.getX(), y, block.getZ());
+                bw = new com.github.kevindagame.util.BlockWrapper(current);
+                bw.setBlockData(block.getBlockData());
+                operations.add(bw);
             }
         }
     }
 
-    private void setBlockDown(final BlockWrapper block, Undo undo, int vh) {
-        final IBlock currentBlock = this.clampY(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        undo.put(currentBlock);
+    private void setBlockDown(final BlockWrapper block, int vh) {
+        final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
+        var bw = new com.github.kevindagame.util.BlockWrapper(currentBlock);
+        bw.setBlockData(block.getBlockData());
+        operations.add(bw);
         currentBlock.setBlockData(block.getBlockData());
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
-            IBlock b = this.clampY(block.getX(), y, block.getZ());
-            undo.put(b);
-            b.setBlockData(VoxelMaterial.AIR.createBlockData());
+            IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
+            bw = new com.github.kevindagame.util.BlockWrapper(b);
+            bw.setBlockData(VoxelMaterial.AIR.createBlockData());
+            operations.add(bw);
         }
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        Undo undo = new Undo();
+        for (var operation : operations) {
+            if(positions.contains(operation.getLocation())) {
+                var block = operation.getLocation().getBlock();
+                undo.put(block);
+                block.setMaterial(operation.getMaterial(), false);
+            }
+        }
+        v.owner().storeUndo(undo);
+        return true;
     }
 
     @Override
@@ -170,11 +192,11 @@ public class PullBrush extends AbstractBrush {
 
         if (vh > 0) {
             for (final BlockWrapper block : surface) {
-                this.setBlock(block, undo, vh);
+                this.setBlock(block, vh);
             }
         } else if (vh < 0) {
             for (final BlockWrapper block : surface) {
-                this.setBlockDown(block, undo, vh);
+                this.setBlockDown(block, vh);
             }
         }
 
@@ -223,7 +245,7 @@ public class PullBrush extends AbstractBrush {
                             lastStr = (int) (vh * str);
                             lastY = actualY + lastStr;
 
-                            IBlock b = this.clampY(actualX, lastY, actualZ);
+                            IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
                             undo.put(b);
                             b.setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
 
@@ -239,7 +261,7 @@ public class PullBrush extends AbstractBrush {
                                 int newY = actualY + lastStr;
                                 VoxelMaterial material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
-                                    b = this.clampY(actualX, i, actualZ);
+                                    b = this.getWorld().getBlock(actualX, i, actualZ);
                                     undo.put(b);
                                     b.setBlockData(material.createBlockData());
                                 }
@@ -263,7 +285,7 @@ public class PullBrush extends AbstractBrush {
                         if (volume <= brushSizeSquared && !this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial().isAir()) {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (vh * this.getStr(volume / brushSizeSquared));
-                            IBlock b = this.clampY(actualX, lastY, actualZ);
+                            IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
                             undo.put(b);
                             b.setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
                             y++;
@@ -272,7 +294,7 @@ public class PullBrush extends AbstractBrush {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (vh * this.getStr(volume / brushSizeSquared));
                                 final VoxelMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
-                                    b = this.clampY(actualX, i, actualZ);
+                                    b = this.getWorld().getBlock(actualX, i, actualZ);
                                     undo.put(b);
                                     b.setBlockData(blockMaterial.createBlockData());
                                 }

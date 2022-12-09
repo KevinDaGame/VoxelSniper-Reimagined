@@ -59,7 +59,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(EntityRemovalBrush.class, "er", "entityremoval");
         brushManager.registerSniperBrush(EraserBrush.class, "erase", "eraser");
         brushManager.registerSniperBrush(ErodeBrush.class, "e", "erode");
-//        brushManager.registerSniperBrush(ExtrudeBrush.class, "ex", "extrude");
+        brushManager.registerSniperBrush(ExtrudeBrush.class, "ex", "extrude");
         brushManager.registerSniperBrush(FillDownBrush.class, "fd", "filldown");
         brushManager.registerSniperBrush(FlatOceanBrush.class, "fo", "flatocean");
 //        brushManager.registerSniperBrush(GenerateTreeBrush.class, "gt", "generatetree");
@@ -71,7 +71,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(OceanBrush.class, "o", "ocean");
         brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
         brushManager.registerSniperBrush(PaintingBrush.class, "painting");
-//        brushManager.registerSniperBrush(PullBrush.class, "pull");
+        brushManager.registerSniperBrush(PullBrush.class, "pull");
         brushManager.registerSniperBrush(RegenerateChunkBrush.class, "rc", "regeneratechunk");
         brushManager.registerSniperBrush(RingBrush.class, "ri", "ring");
 //        brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
