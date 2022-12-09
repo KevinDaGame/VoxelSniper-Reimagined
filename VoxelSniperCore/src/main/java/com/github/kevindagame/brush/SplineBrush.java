@@ -186,6 +186,7 @@ public class SplineBrush extends PerformerBrush {
                 return;
             }
             if (this.spline(this.endPts.get(0), this.endPts.get(1), this.ctrlPts.get(0), this.ctrlPts.get(1), v)) {
+                this.initP(v);
                 this.actPerform(v);
             }
             return;

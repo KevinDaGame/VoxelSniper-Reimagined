@@ -90,6 +90,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(SplatterBallBrush.class, "sb", "splatball");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "sd", "splatdisc");
         brushManager.registerSniperBrush(SplatterOverlayBrush.class, "sover", "splatteroverlay");
+        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
         brushManager.registerSniperBrush(SplatterVoxelBrush.class, "sv", "splattervoxel");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "svd", "splatvoxeldisc");
         brushManager.registerSniperBrush(ThreePointCircleBrush.class, "tpc", "threepointcircle");
@@ -103,7 +104,6 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(WarpBrush.class, "w", "warp");
 
         //these brushes are currently removed/broken
-//        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
 
