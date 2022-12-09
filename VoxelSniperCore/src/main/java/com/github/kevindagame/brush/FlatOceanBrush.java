@@ -1,5 +1,7 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -20,6 +22,7 @@ public class FlatOceanBrush extends AbstractBrush {
     private static final int DEFAULT_FLOOR_LEVEL = 8;
     private int waterLevel = DEFAULT_WATER_LEVEL;
     private int floorLevel = DEFAULT_FLOOR_LEVEL;
+    private final List<BlockWrapper> operations = new ArrayList<>();
 
     /**
      *
@@ -28,22 +31,39 @@ public class FlatOceanBrush extends AbstractBrush {
         this.setName("FlatOcean");
     }
 
-    @SuppressWarnings("deprecation")
     private void flatOcean(final IChunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 // chunk.getWorld() == getWorld()
                 for (int y = this.getMinHeight(); y < this.getMaxHeight(); y++) {
+                    var block = chunk.getBlock(x, y, z);
+                    positions.add(block.getLocation());
+                    var blockWrapper = new BlockWrapper(block);
                     if (y <= this.floorLevel) {
-                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.DIRT, false);
+                        blockWrapper.setBlockData(VoxelMaterial.DIRT.getIMaterial().createBlockData());
                     } else if (y <= this.waterLevel) {
-                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.WATER, false);
+                        blockWrapper.setBlockData(VoxelMaterial.WATER.getIMaterial().createBlockData());
                     } else {
-                        chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.AIR, false);
+                        blockWrapper.setBlockData(VoxelMaterial.AIR.getIMaterial().createBlockData());
                     }
+                    operations.add(blockWrapper);
                 }
             }
         }
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        Undo undo = new Undo();
+        for (var operation : operations) {
+            if(positions.contains(operation.getLocation())) {
+                var block = operation.getLocation().getBlock();
+                undo.put(block);
+                block.setMaterial(operation.getMaterial(), false);
+            }
+        }
+        v.owner().storeUndo(undo);
+        return true;
     }
 
     @Override
@@ -54,20 +74,19 @@ public class FlatOceanBrush extends AbstractBrush {
     @Override
     protected final void powder(final SnipeData v) {
         this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
-        this.flatOcean(this.getWorld().getChunkAtLocation(this.clampY(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() - CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX(), 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
+        this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() - CHUNK_SIZE).getLocation()));
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(Messages.BRUSH_NO_UNDO);
         vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%", String.valueOf(waterLevel)));
         vm.custom(Messages.OCEAN_FLOOR_LEVEL_SET.replace("%floorLevel%", String.valueOf(this.floorLevel)));
     }

@@ -2,6 +2,7 @@ package com.github.kevindagame.util;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -67,6 +68,13 @@ public class BlockWrapper {
      */
     public final IWorld getWorld() {
         return this.world;
+    }
+
+    /**
+     * @return the VoxelLocation
+     */
+    public final VoxelLocation getLocation() {
+        return new VoxelLocation(this.world, this.x, this.y, this.z);
     }
 
     /**
