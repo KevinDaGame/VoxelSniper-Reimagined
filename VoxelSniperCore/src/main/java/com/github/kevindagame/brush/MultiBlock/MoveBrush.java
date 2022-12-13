@@ -1,5 +1,6 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -25,7 +26,7 @@ import java.util.List;
  *
  * @author MikeMatrix
  */
-public class MoveBrush extends AbstractBrush {
+public class MoveBrush extends MultiBlockBrush {
 
     /**
      * Saved direction.
@@ -49,14 +50,9 @@ public class MoveBrush extends AbstractBrush {
      * @param selection
      * @param direction
      */
-    @SuppressWarnings("deprecation")
     private void moveSelection(final SnipeData v, final Selection selection, final int[] direction) {
-        if (selection.getBlockStates().size() > 0) {
-            final IWorld world = selection.getBlockStates().get(0).getWorld();
-
-            final Undo undo = new Undo();
-            final HashSet<IBlock> undoSet = new HashSet<>();
-
+        if (selection.getBlockWrappers().size() > 0) {
+            final IWorld world = selection.getBlockWrappers().get(0).getWorld();
             final Selection newSelection = new Selection();
             final VoxelLocation movedLocation1 = selection.getLocation1();
             movedLocation1.add(direction[0], direction[1], direction[2]);
@@ -70,30 +66,17 @@ public class MoveBrush extends AbstractBrush {
                 v.sendMessage(exception);
             }
 
-            for (final IBlockState blockState : selection.getBlockStates()) {
-                undoSet.add(blockState.getBlock());
+            for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
+                operations.add(blockWrapper.clone().setMaterial(VoxelMaterial.AIR));
             }
-            for (final IBlockState blockState : newSelection.getBlockStates()) {
-                undoSet.add(blockState.getBlock());
-            }
-
-            for (final IBlock block : undoSet) {
-                undo.put(block);
-            }
-            v.owner().storeUndo(undo);
-
-            for (final IBlockState blockState : selection.getBlockStates()) {
-                blockState.getBlock().setMaterial(VoxelMaterial.AIR);
-            }
-            for (final IBlockState blockState : selection.getBlockStates()) {
-                final IBlock affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
-                affectedBlock.setBlockData(blockState.getBlockData(), !blockState.getMaterial().fallsOff());
+            for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
+                operations.add(new BlockWrapper(world.getBlock(blockWrapper.getX() + direction[0], blockWrapper.getY() + direction[1], blockWrapper.getZ() + direction[2])).setBlockData(blockWrapper.getBlockData()));
             }
         }
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         if (this.selection == null) {
             this.selection = new Selection();
         }
@@ -111,7 +94,7 @@ public class MoveBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         if (this.selection == null) {
             this.selection = new Selection();
         }
@@ -228,7 +211,7 @@ public class MoveBrush extends AbstractBrush {
         /**
          * Calculated BlockStates of the selection.
          */
-        private final ArrayList<IBlockState> blockStates = new ArrayList<>();
+        private final ArrayList<BlockWrapper> blockWrappers = new ArrayList<>();
         /**
          *
          */
@@ -260,7 +243,7 @@ public class MoveBrush extends AbstractBrush {
                     for (int y = lowY; y <= highY; y++) {
                         for (int x = lowX; x <= highX; x++) {
                             for (int z = lowZ; z <= highZ; z++) {
-                                this.blockStates.add(world.getBlock(x, y, z).getState());
+                                this.blockWrappers.add(new BlockWrapper(world.getBlock(x, y, z)));
                             }
                         }
                     }
@@ -273,8 +256,8 @@ public class MoveBrush extends AbstractBrush {
         /**
          * @return ArrayList<BlockState> calculated BlockStates of defined region.
          */
-        public ArrayList<IBlockState> getBlockStates() {
-            return this.blockStates;
+        public ArrayList<BlockWrapper> getBlockWrappers() {
+            return this.blockWrappers;
         }
 
         /**

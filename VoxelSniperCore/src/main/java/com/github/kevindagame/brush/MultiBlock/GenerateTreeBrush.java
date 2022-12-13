@@ -1,5 +1,7 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -18,13 +20,12 @@ import java.util.*;
  *
  * @author Ghost8700 @ Voxel
  */
-public class GenerateTreeBrush extends AbstractBrush {
+public class GenerateTreeBrush extends MultiBlockBrush {
 
     // Tree Variables.
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
-    private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
     private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD;
@@ -72,13 +73,8 @@ public class GenerateTreeBrush extends AbstractBrush {
                 location.addY(this.random.nextInt(2));
             }
 
-            // Add block to undo function.
-            if (location.getBlock().getMaterial() != woodMaterial) {
-                this.undo.put(location.getClampedBlock());
-            }
-
             // Creates a branch block.
-            location.getBlock().setBlockData(woodMaterial.createBlockData(), false);
+            operations.add(new BlockWrapper(location.getBlock()).setMaterial(this.woodMaterial));
             this.branchBlocks.add(location.getClampedBlock());
         }
     }
@@ -103,12 +99,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
                             if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-                                // Adds block to undo function.
-                                if (location.getBlock().getRelative(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
-                                    this.undo.put(location.getBlock().getRelative(x, y, z));
-                                }
-                                // Creates block.
-                                location.getClampedBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
+                                operations.add(new BlockWrapper(location.getBlock().getRelative(x, y, z)).setMaterial(this.leavesMaterial));
                             }
                         }
                         for (int dx : new int[]{-1, 1}) {
@@ -126,8 +117,7 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     private void createLeaf(final VoxelLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-            this.undo.put(location.getClampedBlock().getRelative(x, y, z));
-            location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
+            operations.add(new BlockWrapper(location.getBlock().getRelative(x, y, z)).setMaterial(this.leavesMaterial));
         }
     }
 
@@ -164,10 +154,9 @@ public class GenerateTreeBrush extends AbstractBrush {
                 // If not solid then...
                 // Save for undo function
                 if (location.getBlock().getMaterial() != woodMaterial) {
-                    this.undo.put(location.getClampedBlock());
 
                     // Place log block.
-                    location.getClampedBlock().setBlockData(woodMaterial.createBlockData(), false);
+                    operations.add(new BlockWrapper(location.getBlock()).setMaterial(woodMaterial));
                 } else {
                     // If solid then...
                     // End loop
@@ -241,10 +230,8 @@ public class GenerateTreeBrush extends AbstractBrush {
     private void createTrunk(final VoxelLocation location, int x, int z) {
         // If block is air, then create a block.
         if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
-            // Adds block to undo function.
-            this.undo.put(location.getClampedBlock().getRelative(x, 0, z));
             // Creates block.
-            location.getClampedBlock().getRelative(x, 0, z).setBlockData(woodMaterial.createBlockData(), false);
+            operations.add(new BlockWrapper(location.getBlock().getRelative(x, 0, z)).setMaterial(woodMaterial));
         }
     }
 
@@ -349,8 +336,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.undo = new Undo();
+    protected final void doArrow(final SnipeData v) {
 
         this.branchBlocks.clear();
 
@@ -368,14 +354,11 @@ public class GenerateTreeBrush extends AbstractBrush {
         for (final IBlock block : this.branchBlocks) {
             this.leafNodeCreate(block.getLocation());
         }
-
-        // Ends the undo function and mos on.
-        v.owner().storeUndo(this.undo);
     }
 
     // The Powder currently does nothing extra.
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.arrow(v);
     }
 

@@ -1,5 +1,6 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author giltwist
  */
-public class CopyPastaBrush extends AbstractBrush {
+public class CopyPastaBrush extends MultiBlockBrush {
 
     private static final int BLOCK_LIMIT = 10000;
     private final int[] pastePoint = new int[3];
@@ -79,24 +80,21 @@ public class CopyPastaBrush extends AbstractBrush {
 
                     switch (this.pivot) {
                         case 180:
-                            block = this.clampY(this.pastePoint[0] - this.offsetPoint[0] - i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[2] - k);
+                            block = this.getWorld().getBlock(this.pastePoint[0] - this.offsetPoint[0] - i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[2] - k);
                             break;
                         case 270:
-                            block = this.clampY(this.pastePoint[0] + this.offsetPoint[2] + k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[0] - i);
+                            block = this.getWorld().getBlock(this.pastePoint[0] + this.offsetPoint[2] + k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[0] - i);
                             break;
                         case 90:
-                            block = this.clampY(this.pastePoint[0] - this.offsetPoint[2] - k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[0] + i);
+                            block = this.getWorld().getBlock(this.pastePoint[0] - this.offsetPoint[2] - k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[0] + i);
                             break;
                         default: // assume no rotation
-                            block = this.clampY(this.pastePoint[0] + this.offsetPoint[0] + i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[2] + k);
+                            block = this.getWorld().getBlock(this.pastePoint[0] + this.offsetPoint[0] + i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[2] + k);
                             break;
                     }
 
-                    if (!(this.substanceArray[currentPosition].getMaterial().isAir() && !this.pasteAir)) {
-                        if (block.getMaterial() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
-                            undo.put(block);
-                        }
-                        block.setBlockData(this.substanceArray[currentPosition], true);
+                    if (!(!this.pasteAir && this.substanceArray[currentPosition].getMaterial().isAir())) {
+                        operations.add(new BlockWrapper(block).setBlockData(this.substanceArray[currentPosition]));
                     }
                 }
             }
@@ -107,7 +105,7 @@ public class CopyPastaBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         switch (this.points) {
             case 0:
                 this.firstPoint[0] = this.getTargetBlock().getX();
@@ -135,7 +133,7 @@ public class CopyPastaBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         if (this.points == 2) {
             if (this.numBlocks == 0) {
                 this.doCopy(v);

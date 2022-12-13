@@ -9,7 +9,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 /**
  * @author MikeMatrix
  */
-public class BlockWrapper {
+public class BlockWrapper implements Cloneable {
 
     private IBlockData blockData;
     private int x;
@@ -137,5 +137,20 @@ public class BlockWrapper {
     public final BlockWrapper setZ(final int z) {
         this.z = z;
         return this;
+    }
+
+    @Override
+    public BlockWrapper clone() {
+        try {
+            BlockWrapper clone = (BlockWrapper) super.clone();
+            clone.blockData = this.blockData.getMaterial().createBlockData();
+            clone.x = this.x;
+            clone.y = this.y;
+            clone.z = this.z;
+            clone.world = this.world;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

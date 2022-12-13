@@ -268,59 +268,6 @@ public abstract class AbstractBrush implements IBrush {
             this.getWorld().getBlock(x, y, z).setBlockData(material.createBlockData());
         }
     }
-
-    /**
-     * Sets the BlockData value of the block at the passed coordinate. Will use the exact BlockData that is passed into the function and NOT the default
-     * BlockData of the Material.
-     *
-     * @param x         X coordinate
-     * @param y         Y coordinate
-     * @param z         Z coordinate
-     * @param blockData The blockData to set this block to
-     */
-    protected final void setBlockMaterialAndDataAt(int x, int y, int z, IBlockData blockData) {
-        if(isInWorldHeight(y)) {
-            this.getWorld().getBlock(x, y, z).setBlockData(blockData, true);
-        }
-    }
-
-    /**
-     * Sets the type of the passed block, and appends the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
-     *
-     * @param x        X coordinate
-     * @param y        Y coordinate
-     * @param z        Z coordinate
-     * @param material the material to set this block to
-     * @param undo     The Undo container to store the change
-     */
-    @Deprecated
-    protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material, Undo undo) {
-        if(isInWorldHeight(y)) {
-            var b = getWorld().getBlock(x ,y ,z);
-            if (b.getMaterial() != material) {
-                undo.put(b);
-            }
-            b.setMaterial(material);
-        }
-    }
-
-    /**
-     * Sets the type of the passed block, and adds the block to the Undo container. This function will automatically create use the default BlockData for the passed Material.
-     *
-     * @param b        The block to change
-     * @param material the material to set this block to
-     * @param undo     The Undo container to store the change
-     */
-    protected final void setBlockType(IBlock b, VoxelMaterial material, Undo undo) {
-        if(isInWorldHeight(b.getY())) {
-            if (b.getMaterial() != material) {
-                undo.put(b);
-            }
-            b.setMaterial(material);
-        }
-
-    }
-
     protected void cancel() {
         this.cancelled = true;
     }
