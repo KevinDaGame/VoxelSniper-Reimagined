@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Piotr
  */
-public class ShellSetBrush extends AbstractBrush {
+public class ShellSetBrush extends ShellBrushBase {
 
     private static final int MAX_SIZE = 5000000;
     private IBlock block = null;
@@ -95,13 +95,6 @@ public class ShellSetBrush extends AbstractBrush {
         }
     }
 
-    @Override
-    public final void info(final VoxelMessage vm) {
-        vm.brushName(this.getName());
-        vm.size();
-        vm.voxel();
-        vm.replace();
-    }
 
     @Override
     public String getPermissionNode() {

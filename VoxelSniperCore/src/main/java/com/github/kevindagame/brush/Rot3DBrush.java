@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  *
  */
-public class Rot3DBrush extends AbstractBrush {
+public class Rot3DBrush extends MultiBlockBrush {
 
     private BlockWrapper[][][] snap;
     private double seYaw;
@@ -118,7 +119,7 @@ public class Rot3DBrush extends AbstractBrush {
 
                 for (int y = 0; y < this.snap.length; y++) {
                     if (xSquared + zSquared + Math.pow(y - bSize, 2) <= brushSizeSquared) {
-                        final IBlock block = this.clampY(sx, sz, sz);
+                        final IBlock block = this.getWorld().getBlock(sx, sz, sz);
                         this.snap[x][y][z] = new BlockWrapper(block);
                         block.setMaterial(VoxelMaterial.AIR);
                         sz++;
@@ -164,7 +165,7 @@ public class Rot3DBrush extends AbstractBrush {
                 for (int y = 0; y < this.snap.length; y++) {
                     final int yy = y - bSize;
                     if (xSquared + zSquared + Math.pow(yy, 2) <= brushSizeSquared) {
-                        undo.put(this.clampY(this.getTargetBlock().getX() + xx, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + zz)); // just store
+                        undo.put(this.getWorld().getBlock(this.getTargetBlock().getX() + xx, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + zz)); // just store
                         // whole sphere in undo, too complicated otherwise, since this brush both adds and remos things unpredictably.
 
                         final double newxyX = (newxzX * cosPitch) - (yy * sinPitch);
@@ -180,7 +181,7 @@ public class Rot3DBrush extends AbstractBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ, block.getBlockData());
+                        this.getWorld().getBlock(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ).setBlockData(block.getBlockData());
                     }
                 }
             }
@@ -216,7 +217,7 @@ public class Rot3DBrush extends AbstractBrush {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
 
-                            this.setBlockMaterialAndDataAt(fx, fy, fz, winner);
+                            this.getWorld().getBlock(fx, fy, fz).setBlockData(winner);
                         }
                     }
                 }
@@ -226,7 +227,7 @@ public class Rot3DBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         int bSize = v.getBrushSize();
 
         this.getMatrix(bSize);
@@ -235,7 +236,7 @@ public class Rot3DBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.arrow(v);
     }
 

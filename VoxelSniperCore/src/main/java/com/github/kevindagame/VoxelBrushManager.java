@@ -78,7 +78,7 @@ public class VoxelBrushManager {
 //        brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
 //        brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
 //        brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
-//        brushManager.registerSniperBrush(RulerBrush.class, "r", "ruler");
+        brushManager.registerSniperBrush(RulerBrush.class, "r", "ruler");
         brushManager.registerSniperBrush(ScannerBrush.class, "sc", "scanner");
         brushManager.registerSniperBrush(SetBrush.class, "set");
 //        brushManager.registerSniperBrush(ShellBallBrush.class, "shb", "shellball");

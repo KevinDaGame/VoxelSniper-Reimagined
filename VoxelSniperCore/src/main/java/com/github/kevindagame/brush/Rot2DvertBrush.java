@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 // The X Y and Z variable names in this file do NOT MAKE ANY SENSE. Do not attempt to actually figure out what on earth is going on here. Just go to the
 // original 2d horizontal brush if you wish to make anything similar to this, and start there. I didn't bother renaming everything.
-public class Rot2DvertBrush extends AbstractBrush {
+public class Rot2DvertBrush extends MultiBlockBrush {
 
     private BlockWrapper[][][] snap;
     private double se;
@@ -47,7 +48,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                 sy = this.getTargetBlock().getY() - bSize;
 
                 for (int y = 0; y < this.snap.length; y++) {
-                    final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                    final IBlock block = this.getWorld().getBlock(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                     this.snap[x][y][z] = new BlockWrapper(block);
                     block.setMaterial(VoxelMaterial.AIR);
                     sy++;
@@ -88,7 +89,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());
+                        this.getWorld().getBlock(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ).setBlockData(block.getBlockData());
                     }
                 }
             }
@@ -124,7 +125,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
 
-                            this.setBlockMaterialAndDataAt(fy, fx, fz, winner);
+                            this.getWorld().getBlock(fy, fx, fz).setBlockData(winner);
                         }
                     }
                 }
@@ -133,7 +134,7 @@ public class Rot2DvertBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         int bSize = v.getBrushSize();
 
         this.getMatrix(bSize);
@@ -142,7 +143,7 @@ public class Rot2DvertBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.arrow(v);
     }
 

@@ -12,7 +12,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
  *
  * @author Voxel
  */
-public class ShellVoxelBrush extends AbstractBrush {
+public class ShellVoxelBrush extends ShellBrushBase {
 
     /**
      *
@@ -24,7 +24,7 @@ public class ShellVoxelBrush extends AbstractBrush {
     private void vShell(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
         final int brushSizeSquared = 2 * brushSize;
-        final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a  buffer
+        final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
         final VoxelMaterial[][][] newMaterials = new VoxelMaterial[2 * brushSize + 1][2 * brushSize + 1][2 * brushSize + 1]; // Array that holds the hollowed materials
 
         int blockPositionX = targetBlock.getX();
@@ -102,14 +102,6 @@ public class ShellVoxelBrush extends AbstractBrush {
     @Override
     protected final void powder(final SnipeData v) {
         this.vShell(v, this.getLastBlock());
-    }
-
-    @Override
-    public final void info(final VoxelMessage vm) {
-        vm.brushName(this.getName());
-        vm.size();
-        vm.voxel();
-        vm.replace();
     }
 
     @Override

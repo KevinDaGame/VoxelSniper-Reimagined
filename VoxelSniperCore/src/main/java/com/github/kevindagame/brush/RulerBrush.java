@@ -1,9 +1,11 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
@@ -27,20 +29,36 @@ public class RulerBrush extends AbstractBrush {
         this.setName("Ruler");
     }
 
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        switch (snipeAction) {
+            case ARROW -> {
+                if (positions.size() == 1) {
+                        this.coords = positions.stream().toList().get(0).toVector();
+                        v.sendMessage(Messages.FIRST_POINT_SELECTED);
+                        this.first = !this.first;
+                }
+            }
+            case GUNPOWDER -> {
+                var target = positions.stream().toList().get(0);
+                double x = target.getX() - this.coords.getX();
+                double y = target.getY() - this.coords.getY();
+                double z = target.getZ() - this.coords.getZ();
+                final double distance = (double) (Math.round(target.toVector().subtract(this.coords).length() * 100) / 100);
+                final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z))) + 1) * 100) / 100);
+
+                v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%distance%", String.valueOf(distance)).replace("%blockDistance%", String.valueOf(blockDistance)));
+            }
+        }
+        return true;
+    }
+
     @Override
     protected final void arrow(final SnipeData v) {
-        final VoxelMaterial voxelMaterial = v.getVoxelMaterial();
-        this.coords = this.getTargetBlock().getLocation().toVector();
-
-        if (this.xOff == 0 && this.yOff == 0 && this.zOff == 0) {
-            v.sendMessage(Messages.FIRST_POINT_SELECTED);
-            this.first = !this.first;
-        } else {
-            final Undo undo = new Undo();
-            setBlockMaterialAt(this.getTargetBlock().getX() + this.xOff, this.getTargetBlock().getY() + this.yOff, this.getTargetBlock().getZ() + this.zOff, voxelMaterial, undo);
-            v.owner().storeUndo(undo);
-        }
+        positions.add(getTargetBlock().getLocation());
     }
+
 
     @Override
     protected final void powder(final SnipeData v) {
@@ -48,14 +66,7 @@ public class RulerBrush extends AbstractBrush {
             v.sendMessage(Messages.FIRST_COORDINATE_NOT_SET);
             return;
         }
-
-        double x = this.getTargetBlock().getX() - this.coords.getX();
-        double y = this.getTargetBlock().getY() - this.coords.getY();
-        double z = this.getTargetBlock().getZ() - this.coords.getZ();
-        final double distance = (double) (Math.round(this.getTargetBlock().getLocation().toVector().subtract(this.coords).length() * 100) / 100);
-        final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z))) + 1) * 100) / 100);
-
-        v.sendMessage(Messages.RULER_BRUSH_POWDER.replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%distance%", String.valueOf(distance)).replace("%blockDistance%", String.valueOf(blockDistance)));
+        positions.add(getTargetBlock().getLocation());
     }
 
     @Override
