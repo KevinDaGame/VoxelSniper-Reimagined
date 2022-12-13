@@ -1,9 +1,9 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
@@ -17,11 +17,10 @@ import java.util.List;
  *
  * @author psanker
  */
-public class ExtrudeBrush extends AbstractBrush {
+public class ExtrudeBrush extends MultiBlockBrush {
 
     private static final double SMOOTH_CIRCLE_VALUE = 0.5;
     private static final double VOXEL_CIRCLE_VALUE = 0.0;
-    private final List<BlockWrapper> operations = new ArrayList<>();
     private boolean smoothCircle = false;
 
     /**
@@ -96,10 +95,7 @@ public class ExtrudeBrush extends AbstractBrush {
 
     private void perform(final IBlock b1, final IBlock b2, final SnipeData v) {
         if (v.getVoxelList().contains(b1.getMaterial())) {
-            var bw = new BlockWrapper(b2);
-            bw.setBlockData(b1.getBlockData());
-            operations.add(bw);
-            positions.add(b2.getLocation());
+            operations.add(new BlockWrapper(b2).setBlockData(b1.getBlockData()));
         }
     }
 
@@ -130,26 +126,12 @@ public class ExtrudeBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for (var operation : operations) {
-            if(positions.contains(operation.getLocation())) {
-                var block = operation.getLocation().getBlock();
-                undo.put(block);
-                block.setMaterial(operation.getMaterial(), false);
-            }
-        }
-        v.owner().storeUndo(undo);
-        return true;
-    }
-
-    @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.selectExtrudeMethod(v, this.getTargetBlock().getFace(this.getLastBlock()), false);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.selectExtrudeMethod(v, this.getTargetBlock().getFace(this.getLastBlock()), true);
     }
 

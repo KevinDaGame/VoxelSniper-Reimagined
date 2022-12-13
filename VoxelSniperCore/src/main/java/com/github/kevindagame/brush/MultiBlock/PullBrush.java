@@ -1,6 +1,6 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -10,7 +10,6 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,11 +17,11 @@ import java.util.List;
  * @author Piotr
  */
 // TODO: Figure out what this does
-public class PullBrush extends AbstractBrush {
+public class PullBrush extends MultiBlockBrush {
 
     private double pinch = 1;
     private double bubble = 0;
-    private final List<com.github.kevindagame.util.BlockWrapper> operations = new ArrayList<>();
+
 
     /**
      * Default Constructor.
@@ -136,56 +135,31 @@ public class PullBrush extends AbstractBrush {
 
     private void setBlock(final BlockWrapper block, int vh) {
         final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        var bw = new com.github.kevindagame.util.BlockWrapper(currentBlock);
-        bw.setBlockData(block.getBlockData());
-        operations.add(bw);
+        operations.add(new com.github.kevindagame.util.BlockWrapper(currentBlock).setBlockData(block.getBlockData()));
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
                 IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                bw = new com.github.kevindagame.util.BlockWrapper(b);
-                bw.setBlockData(VoxelMaterial.AIR.createBlockData());
-                operations.add(bw);
+                operations.add(new com.github.kevindagame.util.BlockWrapper(b).setMaterial(VoxelMaterial.AIR));
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
                 final IBlock current = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                bw = new com.github.kevindagame.util.BlockWrapper(current);
-                bw.setBlockData(block.getBlockData());
-                operations.add(bw);
+                operations.add(new com.github.kevindagame.util.BlockWrapper(current).setBlockData(block.getBlockData()));
             }
         }
     }
 
     private void setBlockDown(final BlockWrapper block, int vh) {
         final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        var bw = new com.github.kevindagame.util.BlockWrapper(currentBlock);
-        bw.setBlockData(block.getBlockData());
-        operations.add(bw);
-        currentBlock.setBlockData(block.getBlockData());
+        operations.add(new com.github.kevindagame.util.BlockWrapper(currentBlock).setBlockData(block.getBlockData()));
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
             IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-            bw = new com.github.kevindagame.util.BlockWrapper(b);
-            bw.setBlockData(VoxelMaterial.AIR.createBlockData());
-            operations.add(bw);
+            operations.add(new com.github.kevindagame.util.BlockWrapper(b).setBlockData(VoxelMaterial.AIR.createBlockData()));
         }
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for (var operation : operations) {
-            if(positions.contains(operation.getLocation())) {
-                var block = operation.getLocation().getBlock();
-                undo.put(block);
-                block.setMaterial(operation.getMaterial(), false);
-            }
-        }
-        v.owner().storeUndo(undo);
-        return true;
-    }
-
-    @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         int vh = v.getVoxelHeight();
         HashSet<BlockWrapper> surface = this.getSurface(v);
         Undo undo = new Undo();
@@ -205,7 +179,7 @@ public class PullBrush extends AbstractBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         Undo undo = new Undo();
 
         int vh = v.getVoxelHeight();

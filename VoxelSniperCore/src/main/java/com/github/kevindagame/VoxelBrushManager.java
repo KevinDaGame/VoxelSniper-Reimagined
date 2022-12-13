@@ -1,5 +1,6 @@
 package com.github.kevindagame;
 
+import com.github.kevindagame.brush.MultiBlock.*;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
@@ -41,8 +42,8 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(BlobBrush.class, "blob", "splatblob");
         brushManager.registerSniperBrush(BlockResetBrush.class, "brb", "blockresetbrush");
         brushManager.registerSniperBrush(BlockResetSurfaceBrush.class, "brbs", "blockresetbrushsurface");
-//        brushManager.registerSniperBrush(CanyonBrush.class, "ca", "canyon");
-//        brushManager.registerSniperBrush(CanyonSelectionBrush.class, "cas", "canyonselection");
+        brushManager.registerSniperBrush(CanyonBrush.class, "ca", "canyon");
+        brushManager.registerSniperBrush(CanyonSelectionBrush.class, "cas", "canyonselection");
         brushManager.registerSniperBrush(CheckerVoxelDiscBrush.class, "cvd", "checkervoxeldisc");
 //        brushManager.registerSniperBrush(CleanSnowBrush.class, "cls", "cleansnow");
         brushManager.registerSniperBrush(CloneStampBrush.class, "cs", "clonestamp");

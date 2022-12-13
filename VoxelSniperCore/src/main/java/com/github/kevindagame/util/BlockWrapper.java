@@ -52,8 +52,17 @@ public class BlockWrapper {
     /**
      * @param blockData the data to set
      */
-    public final void setBlockData(final IBlockData blockData) {
+    public final BlockWrapper setBlockData(final IBlockData blockData) {
         this.blockData = blockData;
+        return this;
+    }
+
+    /**
+     * @param material the material to set
+     */
+    public final BlockWrapper setMaterial(final VoxelMaterial material) {
+        setBlockData(material.createBlockData());
+        return this;
     }
 
     /**
@@ -80,8 +89,9 @@ public class BlockWrapper {
     /**
      * @param world the world to set
      */
-    public final void setWorld(final IWorld world) {
+    public final BlockWrapper setWorld(final IWorld world) {
         this.world = world;
+        return this;
     }
 
     /**
@@ -94,8 +104,9 @@ public class BlockWrapper {
     /**
      * @param x the x to set
      */
-    public final void setX(final int x) {
+    public final BlockWrapper setX(final int x) {
         this.x = x;
+        return this;
     }
 
     /**
@@ -108,8 +119,9 @@ public class BlockWrapper {
     /**
      * @param y the y to set
      */
-    public final void setY(final int y) {
+    public final BlockWrapper setY(final int y) {
         this.y = y;
+        return this;
     }
 
     /**
@@ -122,7 +134,8 @@ public class BlockWrapper {
     /**
      * @param z the z to set
      */
-    public final void setZ(final int z) {
+    public final BlockWrapper setZ(final int z) {
         this.z = z;
+        return this;
     }
 }

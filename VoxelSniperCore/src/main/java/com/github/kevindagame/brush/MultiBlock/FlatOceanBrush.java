@@ -1,6 +1,6 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
@@ -16,13 +16,12 @@ import java.util.List;
 /**
  * @author GavJenks
  */
-public class FlatOceanBrush extends AbstractBrush {
+public class FlatOceanBrush extends MultiBlockBrush {
 
     private static final int DEFAULT_WATER_LEVEL = 29;
     private static final int DEFAULT_FLOOR_LEVEL = 8;
     private int waterLevel = DEFAULT_WATER_LEVEL;
     private int floorLevel = DEFAULT_FLOOR_LEVEL;
-    private final List<BlockWrapper> operations = new ArrayList<>();
 
     /**
      *
@@ -53,26 +52,12 @@ public class FlatOceanBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for (var operation : operations) {
-            if(positions.contains(operation.getLocation())) {
-                var block = operation.getLocation().getBlock();
-                undo.put(block);
-                block.setMaterial(operation.getMaterial(), false);
-            }
-        }
-        v.owner().storeUndo(undo);
-        return true;
-    }
-
-    @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
         this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
         this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));

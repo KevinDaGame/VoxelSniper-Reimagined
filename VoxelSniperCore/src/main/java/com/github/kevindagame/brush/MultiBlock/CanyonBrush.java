@@ -1,8 +1,9 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
+import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author Voxel
  */
-public class CanyonBrush extends AbstractBrush {
+public class CanyonBrush extends MultiBlockBrush {
 
     private static final int SHIFT_LEVEL_MIN = -60;
     private static final int SHIFT_LEVEL_MAX = 60;
@@ -33,9 +34,8 @@ public class CanyonBrush extends AbstractBrush {
 
     /**
      * @param chunk
-     * @param undo
      */
-    protected final void canyon(final IChunk chunk, final Undo undo) {
+    protected final void canyon(final IChunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 int currentYLevel = this.yLevel;
@@ -43,46 +43,30 @@ public class CanyonBrush extends AbstractBrush {
                 for (int y = 63; y < this.getMaxHeight(); y++) {
                     final IBlock block = chunk.getBlock(x, y, z);
                     final IBlock currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
-
-                    undo.put(block);
-                    undo.put(currentYLevelBlock);
-
-                    currentYLevelBlock.setBlockData(block.getBlockData(), false);
-
+                    operations.add(new BlockWrapper(currentYLevelBlock).setBlockData(block.getBlockData()));
                     currentYLevel++;
                 }
                 for (int y = currentYLevel; y < this.getMaxHeight(); y++) {
-                    chunk.getBlock(x, y, z).setMaterial(VoxelMaterial.AIR);
+                    operations.add(new BlockWrapper(chunk.getBlock(x, y, z)).setMaterial(VoxelMaterial.AIR));
                 }
-
-                final IBlock block = chunk.getBlock(x, this.getMinHeight(), z);
-                undo.put(block);
-                block.setMaterial(VoxelMaterial.BEDROCK);
+                operations.add(new BlockWrapper(chunk.getBlock(x, this.getMinHeight(), z)).setMaterial(VoxelMaterial.BEDROCK));
             }
         }
     }
 
     @Override
-    protected void arrow(final SnipeData v) {
-        final Undo undo = new Undo();
-
-        canyon(getTargetBlock().getChunk(), undo);
-
-        v.owner().storeUndo(undo);
+    protected void doArrow(final SnipeData v) {
+        canyon(getTargetBlock().getChunk());
     }
 
     @Override
-    protected void powder(final SnipeData v) {
-        final Undo undo = new Undo();
-
+    protected void doPowder(final SnipeData v) {
         IChunk targetChunk = getTargetBlock().getChunk();
         for (int x = targetChunk.getX() - 1; x <= targetChunk.getX() + 1; x++) {
             for (int z = targetChunk.getZ() - 1; z <= targetChunk.getZ() + 1; z++) {
-                canyon(getWorld().getChunkAtLocation(x, z), undo);
+                canyon(getWorld().getChunkAtLocation(x, z));
             }
         }
-
-        v.owner().storeUndo(undo);
     }
 
     @Override

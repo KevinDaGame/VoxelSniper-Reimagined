@@ -1,5 +1,6 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.github.kevindagame.util.BlockWrapper;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
@@ -20,14 +21,12 @@ import java.util.List;
  *
  * @author Voxel
  */
-// TODO: FIX (not working?)
-public class OceanBrush extends AbstractBrush {
+public class OceanBrush extends MultiBlockBrush {
 
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
     private static final int WATER_LEVEL_MIN = 12;
     private static final int LOW_CUT_LEVEL = 12;
     private static final List<VoxelMaterial> EXCLUDED_MATERIALS = new LinkedList<>();
-    private final List<BlockWrapper> operations = new ArrayList<>();
 
     static {
         EXCLUDED_MATERIALS.add(VoxelMaterial.AIR);
@@ -129,10 +128,7 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().isAir()) {
-                        BlockWrapper wrapper = new BlockWrapper(block);
-                        wrapper.setBlockData(VoxelMaterial.AIR.createBlockData());
-                        operations.add(wrapper);
-                        positions.add(wrapper.getLocation());
+                        operations.add(new BlockWrapper(block).setMaterial(VoxelMaterial.AIR));
                     }
                 }
 
@@ -141,10 +137,7 @@ public class OceanBrush extends AbstractBrush {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
                         // do not put blocks into the undo we already put into
-                        BlockWrapper wrapper = new BlockWrapper(block);
-                        wrapper.setBlockData(VoxelMaterial.WATER.createBlockData());
-                        operations.add(wrapper);
-                        positions.add(wrapper.getLocation());
+                        operations.add(new BlockWrapper(block).setMaterial(VoxelMaterial.WATER));
                     }
                 }
 
@@ -152,10 +145,7 @@ public class OceanBrush extends AbstractBrush {
                 if (this.coverFloor && (newSeaFloorLevel < this.waterLevel)) {
                     IBlock block = world.getBlock(x, newSeaFloorLevel, z);
                     if (block.getMaterial() != v.getVoxelMaterial()) {
-                        BlockWrapper wrapper = new BlockWrapper(block);
-                        wrapper.setBlockData(v.getVoxelMaterial().createBlockData());
-                        operations.add(wrapper);
-                        positions.add(wrapper.getLocation());
+                        operations.add(new BlockWrapper(block).setMaterial(v.getVoxelMaterial()));
                     }
                 }
             }
@@ -163,28 +153,14 @@ public class OceanBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for (var operation : operations) {
-            if(positions.contains(operation.getLocation())) {
-                var block = operation.getLocation().getBlock();
-                undo.put(block);
-                block.setMaterial(operation.getMaterial(), false);
-            }
-        }
-        v.owner().storeUndo(undo);
-        return true;
-    }
-
-    @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         Undo undo = new Undo();
         this.oceanator(v, undo);
         v.owner().storeUndo(undo);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         arrow(v);
     }
 
