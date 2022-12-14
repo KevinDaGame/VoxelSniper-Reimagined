@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    `maven-publish`
     id("com.github.johnrengelman.shadow")
 }
 
@@ -42,7 +43,7 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.2.1"
+version = "8.3.0"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile>() {
@@ -68,5 +69,14 @@ tasks {
 
     clean {
         delete("../output")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+
+            from(components["java"])
+        }
     }
 }
