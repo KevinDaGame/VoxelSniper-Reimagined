@@ -1,16 +1,11 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.Shell;
 
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Monofraps
@@ -23,15 +18,17 @@ public abstract class ShellBrushBase extends AbstractBrush {
      */
     protected abstract void shell(SnipeData v);
 
-    protected void bShell(final SnipeData v, IBlock targetBlock) {
+    protected VoxelMaterial[][][] bShell(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
         final VoxelMaterial[][][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the hollowed materials
+        final var targetBlock = getTargetBlock();
 
         int blockPositionX = targetBlock.getX();
         int blockPositionY = targetBlock.getY();
         int blockPositionZ = targetBlock.getZ();
+
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {
             for (int y = 0; y <= 2 * (brushSize + 1); y++) {
@@ -81,15 +78,16 @@ public abstract class ShellBrushBase extends AbstractBrush {
                 }
             }
         }
+        return newMaterials;
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected void arrow(final SnipeData v) {
         this.shell(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected void powder(final SnipeData v) {
         this.shell(v);
     }
 

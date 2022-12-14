@@ -24,7 +24,6 @@ public class BlendDiscBrush extends BlendBrushBase {
         var brushSize = v.getBrushSize();
         final Undo undo = new Undo();
         var newMaterials = this.blend2D(brushSize);
-        final double rSquared = Math.pow(brushSize + 1, 2);
 
         for(var position : this.positions) {
             var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];

@@ -1,9 +1,9 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.Shell;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class ShellSetBrush extends ShellBrushBase {
 
     private static final int MAX_SIZE = 5000000;
     private IBlock block = null;
+    private ArrayList<BlockWrapper> operations = new ArrayList<>();
 
     /**
      *
@@ -26,6 +27,7 @@ public class ShellSetBrush extends ShellBrushBase {
     }
 
     private boolean set(final IBlock bl, final SnipeData v) {
+        operations.clear();
         if (this.block == null) {
             this.block = bl;
             return true;
@@ -64,21 +66,35 @@ public class ShellSetBrush extends ShellBrushBase {
                         }
                     }
                 }
-
-                final Undo undo = new Undo();
                 for (final IBlock currentBlock : blocks) {
                     if (currentBlock.getMaterial() != v.getVoxelMaterial()) {
-                        undo.put(currentBlock);
                         currentBlock.setBlockData(v.getVoxelMaterial().createBlockData());
+                        operations.add(new BlockWrapper(currentBlock).setMaterial(v.getVoxelMaterial()));
                     }
                 }
-                v.owner().storeUndo(undo);
                 v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
             }
 
             this.block = null;
             return false;
         }
+    }
+
+    @Override
+    protected boolean actPerform(SnipeData v) {
+        Undo undo = new Undo();
+        operations.forEach(blockWrapper -> {
+            IBlock block = blockWrapper.getWorld().getBlock(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ());
+            undo.put(block);
+            block.setBlockData(blockWrapper.getMaterial().createBlockData());
+        });
+        v.owner().storeUndo(undo);
+        return true;
+    }
+
+    @Override
+    protected void shell(SnipeData v) {
+        //empty because method is not needed right now
     }
 
     @Override
