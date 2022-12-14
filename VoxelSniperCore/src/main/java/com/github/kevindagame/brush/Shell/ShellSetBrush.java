@@ -68,7 +68,6 @@ public class ShellSetBrush extends ShellBrushBase {
                 }
                 for (final IBlock currentBlock : blocks) {
                     if (currentBlock.getMaterial() != v.getVoxelMaterial()) {
-                        currentBlock.setBlockData(v.getVoxelMaterial().createBlockData());
                         operations.add(new BlockWrapper(currentBlock).setMaterial(v.getVoxelMaterial()));
                     }
                 }

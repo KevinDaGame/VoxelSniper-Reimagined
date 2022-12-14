@@ -24,6 +24,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
     public SplatterOverlayBrush() {
         this.setName("Splatter Overlay");
     }
+
     private final boolean randomizeHeight = false;
     private int depth = 3;
     private final int yOffset = 0;
@@ -32,15 +33,14 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
 
     private void sOverlay(final SnipeData v) {
 
-       var splat = splatter2D(v);
+        var splat = splatter2D(v);
         final double brushSizeSquared = Math.pow(v.getBrushSize() + 0.5, 2);
-
+        final int[][] memory = new int[2 * v.getBrushSize() + 1][2 * v.getBrushSize() + 1];
         for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-                var checked = false;
                 for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) {
                     // start scanning from the height you clicked at
-                    if (!checked) {
+                    if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) {
                         // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) {
                             // if inside of the column && if to be splattered
@@ -53,12 +53,12 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
                                     final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
                                     for (int d = this.depth - 1; ((this.depth - d) <= depth); d--) {
-                                        var block = v.getWorld().getBlock(getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z);
-                                        if (block.getMaterial().isAir()) {
+                                        if (!this.getWorld().getBlock(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
                                             // fills down as many layers as you specify in parameters
+                                            var block = v.getWorld().getBlock(getTargetBlock().getX() + x, y - d + yOffset, this.getTargetBlock().getZ() + z);
                                             this.positions.add(block.getLocation());
                                             // stop it from checking any other blocks in this vertical 1x1 column.
-                                            checked = true;
+                                            memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1;
                                         }
                                     }
                                 }
@@ -78,7 +78,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
             for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
                 var checked = false;
                 for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) { // start scanning from the height you clicked at
-                    if(!checked) { // if haven't already found the surface in this column
+                    if (!checked) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) { // if inside of the column...&& if to be splattered
                             if (!this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z).isAir()) { // if not a floating block (like one of Notch'world pools)
                                 if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z).isAir()) { // must start at surface... this prevents it filling stuff in if
@@ -87,8 +87,8 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
                                         final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
                                             this.positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z));
-                                            checked = true; // stop it from checking any other blocks in this vertical 1x1 column.
                                         }
+                                        checked = true; // stop it from checking any other blocks in this vertical 1x1 column.
                                     }
                                 }
                             }
@@ -130,7 +130,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
-        if(super.parseParams(triggerHandle, params, v)) return;
+        if (super.parseParams(triggerHandle, params, v)) return;
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.SPLATTER_OVERLAY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
