@@ -76,9 +76,6 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(PullBrush.class, "pull");
         brushManager.registerSniperBrush(RegenerateChunkBrush.class, "rc", "regeneratechunk");
         brushManager.registerSniperBrush(RingBrush.class, "ri", "ring");
-//        brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
-//        brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
-//        brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
         brushManager.registerSniperBrush(RulerBrush.class, "r", "ruler");
         brushManager.registerSniperBrush(ScannerBrush.class, "sc", "scanner");
         brushManager.registerSniperBrush(SetBrush.class, "set");
@@ -87,8 +84,6 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(ShellVoxelBrush.class, "shv", "shellvoxel");
         brushManager.registerSniperBrush(SignOverwriteBrush.class, "sio", "signoverwriter");
         brushManager.registerSniperBrush(SnipeBrush.class, "s", "snipe");
-        //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
-        //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
         brushManager.registerSniperBrush(SplatterBallBrush.class, "sb", "splatball");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "sd", "splatdisc");
         brushManager.registerSniperBrush(SplatterOverlayBrush.class, "sover", "splatteroverlay");
@@ -108,6 +103,15 @@ public class VoxelBrushManager {
         //these brushes are currently removed/broken
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
+
+        //brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
+        //brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
+        //brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
+
+
+        //these brushes have an unknown status
+        //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
+        //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
 
         return getInstance();
     }
