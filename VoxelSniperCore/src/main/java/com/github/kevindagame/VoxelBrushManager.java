@@ -1,6 +1,7 @@
 package com.github.kevindagame;
 
 import com.github.kevindagame.brush.MultiBlock.*;
+import com.github.kevindagame.brush.Shell.*;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
@@ -81,9 +82,9 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(RulerBrush.class, "r", "ruler");
         brushManager.registerSniperBrush(ScannerBrush.class, "sc", "scanner");
         brushManager.registerSniperBrush(SetBrush.class, "set");
-//        brushManager.registerSniperBrush(ShellBallBrush.class, "shb", "shellball");
-//        brushManager.registerSniperBrush(ShellSetBrush.class, "shs", "shellset");
-//        brushManager.registerSniperBrush(ShellVoxelBrush.class, "shv", "shellvoxel");
+        brushManager.registerSniperBrush(ShellBallBrush.class, "shb", "shellball");
+        brushManager.registerSniperBrush(ShellSetBrush.class, "shs", "shellset");
+        brushManager.registerSniperBrush(ShellVoxelBrush.class, "shv", "shellvoxel");
         brushManager.registerSniperBrush(SignOverwriteBrush.class, "sio", "signoverwriter");
         brushManager.registerSniperBrush(SnipeBrush.class, "s", "snipe");
         //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
