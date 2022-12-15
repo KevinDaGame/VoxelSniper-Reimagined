@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Disc_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#disc-brush">...</a>
  *
  * @author Voxel
  */

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blend-disc-brush">...</a>
  */
 public class BlendDiscBrush extends BlendBrushBase {
 

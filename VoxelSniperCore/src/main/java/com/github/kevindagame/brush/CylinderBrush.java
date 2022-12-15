@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * @author Kavutop
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#cylinder-brush">...</a>
  */
 public class CylinderBrush extends PerformerBrush {
 

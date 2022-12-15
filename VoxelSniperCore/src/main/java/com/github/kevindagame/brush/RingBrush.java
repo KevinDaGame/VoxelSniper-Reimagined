@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ring_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ring-brush">...</a>
  *
  * @author Voxel
  */

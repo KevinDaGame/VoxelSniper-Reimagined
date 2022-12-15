@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * this may be only a factor of about 2. In a hypothetical worst case scenario of a 3d checkerboard of stone and air every other block, this brush should only
  * be about 1.5x slower than the original brush. Savings increase for larger brushes.
  *
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#block-reset-brush-surface-only-brush">...</a>
  * @author GavJenks
  */
 public class BlockResetSurfaceBrush extends AbstractBrush {
@@ -73,7 +74,6 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
-                    // TODO clampY
                     IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                     if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;

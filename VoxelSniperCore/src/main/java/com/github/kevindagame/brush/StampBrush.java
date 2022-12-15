@@ -38,8 +38,6 @@ public class StampBrush extends AbstractBrush {
     }
 
     protected final boolean falling(final VoxelMaterial material) {
-        // TODO: Translate this
-        // return (id > 7 && id < 14);
         return material.hasGravity() || material.isFluid();
     }
 
