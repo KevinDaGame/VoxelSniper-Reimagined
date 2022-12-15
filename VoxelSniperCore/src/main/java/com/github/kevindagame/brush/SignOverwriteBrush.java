@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
- * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
+ * Overwrites signs. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#sign-overwrite-brush-brush">...</a>
  *
  * @author Monofraps
  */

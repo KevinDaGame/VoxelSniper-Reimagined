@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A brush that creates a solid ball. http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ball_Brush
+ * A brush that creates a solid ball. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ball-brush">...</a>
  *
  * @author Piotr
  */

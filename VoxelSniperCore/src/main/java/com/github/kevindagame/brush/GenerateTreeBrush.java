@@ -14,7 +14,7 @@ import java.util.*;
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#VoxelTrees_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#generate-tree-brush">...</a>
  *
  * @author Ghost8700 @ Voxel
  */

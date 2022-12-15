@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#erode-brush">...</a>
  *
  * @author Piotr
  * @author MikeMatrix

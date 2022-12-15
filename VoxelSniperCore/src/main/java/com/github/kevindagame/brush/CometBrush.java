@@ -15,6 +15,7 @@ import java.util.List;
  * @author Gavjenks Heavily revamped from ruler brush blockPositionY
  * @author Giltwist
  * @author Monofraps (Merged Meteor brush)
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#comet-brush">...</a>
  */
 public class CometBrush extends AbstractBrush {
 

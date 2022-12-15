@@ -8,7 +8,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ruler_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ruler-brush">...</a>
  *
  * @author Gavjenks
  */

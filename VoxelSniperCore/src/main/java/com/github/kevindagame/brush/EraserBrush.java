@@ -10,7 +10,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import java.util.Set;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Eraser_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#eraser-brush">...</a>
  *
  * @author Voxel
  */
