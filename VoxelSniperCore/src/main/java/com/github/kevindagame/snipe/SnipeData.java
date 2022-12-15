@@ -98,7 +98,7 @@ public class SnipeData {
     public void setReplaceSubstance(IBlockData targetSubstance) {
         var oldSubstance = this.getReplaceSubstance();
 
-        if(new PlayerReplaceMaterialChangedEvent(owner.getPlayer(), oldSubstance, targetSubstance).callEvent().isCancelled()) {
+        if(!new PlayerReplaceMaterialChangedEvent(owner.getPlayer(), oldSubstance, targetSubstance).callEvent().isCancelled()) {
             this.replaceSubstance = targetSubstance;
         }
     }

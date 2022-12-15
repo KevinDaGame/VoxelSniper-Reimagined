@@ -101,7 +101,7 @@ public class VoxelBrushCommand extends VoxelCommand {
                 }
                 return true;
             }
-            if(new PlayerBrushChangedEvent(player, currentToolId, oldBrush, newBrush).callEvent().isCancelled()) {
+            if(!new PlayerBrushChangedEvent(player, currentToolId, oldBrush, newBrush).callEvent().isCancelled()) {
                 sniper.setBrush(currentToolId, brush);
                 sniper.displayInfo();
             }
