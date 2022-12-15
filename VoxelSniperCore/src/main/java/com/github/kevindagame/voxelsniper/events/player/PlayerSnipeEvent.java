@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent>implements Cancellable {
+public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements Cancellable {
 
     private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
