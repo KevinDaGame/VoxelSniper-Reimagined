@@ -43,7 +43,7 @@ public class VoxelReplaceCommand extends MaterialCommand {
         }
 
         // Command: /vr [material]       <- Sets the defined material as voxel substance.
-        VoxelMaterial material = VoxelMaterial.getMaterial(args[0]); // TODO: Match old ID numbers to materials
+        VoxelMaterial material = VoxelMaterial.getMaterial(args[0]);
         if (material != null && material.isBlock()) {
             snipeData.setReplaceSubstance(material.createBlockData());
             snipeData.getVoxelMessage().replace();

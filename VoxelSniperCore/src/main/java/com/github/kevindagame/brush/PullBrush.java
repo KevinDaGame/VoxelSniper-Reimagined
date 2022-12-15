@@ -14,8 +14,8 @@ import java.util.List;
 
 /**
  * @author Piotr
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#pull-brush">...</a>
  */
-// TODO: Figure out what this does
 public class PullBrush extends AbstractBrush {
 
     private double pinch = 1;

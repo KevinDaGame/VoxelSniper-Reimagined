@@ -123,7 +123,6 @@ public abstract class AbstractBrush implements IBrush {
         v.sendMessage(Messages.BRUSH_NO_PARAMS_ACCEPTED);
     }
 
-    // TODO: make abstract
     @Override
     public List<String> registerArguments() {
         // Return empty list if not overridden; i.e. no arguments to add.

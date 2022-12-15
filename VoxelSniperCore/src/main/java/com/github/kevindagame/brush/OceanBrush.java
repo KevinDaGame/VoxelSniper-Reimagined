@@ -15,11 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_OCEANATOR_5000
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushe">...</a>s#ocean-brush
  *
  * @author Voxel
  */
-// TODO: FIX (not working?)
 public class OceanBrush extends AbstractBrush {
 
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here

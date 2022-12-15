@@ -15,7 +15,7 @@ import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 /**
- *
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#entity-removal-brush">...</a>
  */
 public class EntityRemovalBrush extends AbstractBrush {
 
