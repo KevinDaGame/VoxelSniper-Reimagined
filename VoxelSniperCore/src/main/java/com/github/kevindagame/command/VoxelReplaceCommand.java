@@ -7,6 +7,7 @@ import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.player.materialChange.PlayerReplaceMaterialChangedEvent;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 public class VoxelReplaceCommand extends MaterialCommand {
@@ -34,8 +35,10 @@ public class VoxelReplaceCommand extends MaterialCommand {
         if (args.length == 0) {
             IBlock selectedBlock = new BlockHelper(sniper.getPlayer()).getTargetBlock();
             if (selectedBlock != null) {
-                snipeData.setReplaceSubstance(selectedBlock.getBlockData());
-                snipeData.getVoxelMessage().replace();
+                if (!new PlayerReplaceMaterialChangedEvent(sniper.getPlayer(), sniper.getSnipeData(sniper.getCurrentToolId()).getReplaceSubstance(), selectedBlock.getBlockData()).callEvent().isCancelled()) {
+                    snipeData.setReplaceSubstance(selectedBlock.getBlockData());
+                    snipeData.getVoxelMessage().replace();
+                }
             } else {
                 sniper.sendMessage(Messages.REPLACE_NOTHING_TO_IMITATE);
             }
@@ -45,8 +48,10 @@ public class VoxelReplaceCommand extends MaterialCommand {
         // Command: /vr [material]       <- Sets the defined material as voxel substance.
         VoxelMaterial material = VoxelMaterial.getMaterial(args[0]);
         if (material != null && material.isBlock()) {
-            snipeData.setReplaceSubstance(material.createBlockData());
-            snipeData.getVoxelMessage().replace();
+            if (!new PlayerReplaceMaterialChangedEvent(sniper.getPlayer(), sniper.getSnipeData(sniper.getCurrentToolId()).getReplaceSubstance(), material.createBlockData()).callEvent().isCancelled()) {
+                snipeData.setReplaceSubstance(material.createBlockData());
+                snipeData.getVoxelMessage().replace();
+            }
         } else {
             sniper.sendMessage(Messages.INVALID_ITEM_ID);
         }

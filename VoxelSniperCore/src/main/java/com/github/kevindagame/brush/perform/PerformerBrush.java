@@ -33,17 +33,15 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     @Override
     public final boolean parsePerformer(String performerHandle, SnipeData v) {
         vPerformer newPerfomer = Performer.getPerformer(performerHandle);
-        if (newPerfomer == null) {
-            return false;
-        } else {
-            currentPerformer = newPerfomer;
-
-            new PlayerBrushChangedEvent(v.owner().getPlayer(), v.owner().getCurrentToolId(), this, this).callEvent();
-
-            info(v.getVoxelMessage());
-            currentPerformer.info(v.getVoxelMessage());
-            return true;
+        if (newPerfomer != null) {
+            if(!new PlayerBrushChangedEvent(v.owner().getPlayer(), v.owner().getCurrentToolId(), this, this).callEvent().isCancelled()) {
+                currentPerformer = newPerfomer;
+                info(v.getVoxelMessage());
+                currentPerformer.info(v.getVoxelMessage());
+                return true;
+            }
         }
+        return false;
     }
 
     @Override
