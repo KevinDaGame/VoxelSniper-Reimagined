@@ -13,10 +13,6 @@ import java.util.Map.Entry;
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blend-ball-brush">...</a>
  */
 public class BlendBallBrush extends BlendBrushBase {
-
-    /**
-     * TODO: NEEDS TO CHECK AFTER REWRITE
-     */
     public BlendBallBrush() {
         this.setName("Blend Ball");
     }

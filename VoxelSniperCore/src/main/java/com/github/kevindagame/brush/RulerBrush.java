@@ -65,7 +65,6 @@ public class RulerBrush extends AbstractBrush {
     }
 
     @Override
-    // TODO: Implement block placing
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.RULER_BRUSH_USAGE);

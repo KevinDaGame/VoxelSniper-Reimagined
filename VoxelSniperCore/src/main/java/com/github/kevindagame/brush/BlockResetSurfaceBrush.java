@@ -74,7 +74,6 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
-                    // TODO clampY
                     IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                     if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
