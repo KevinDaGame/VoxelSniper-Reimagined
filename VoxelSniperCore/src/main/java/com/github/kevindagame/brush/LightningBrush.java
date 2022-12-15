@@ -6,6 +6,7 @@ import com.github.kevindagame.util.VoxelMessage;
 
 /**
  * @author Gavjenks
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#lightning-brush">...</a>
  */
 public class LightningBrush extends AbstractBrush {
 

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#3d-rotation-brush">...</a>
  */
 public class Rot3DBrush extends AbstractBrush {
 

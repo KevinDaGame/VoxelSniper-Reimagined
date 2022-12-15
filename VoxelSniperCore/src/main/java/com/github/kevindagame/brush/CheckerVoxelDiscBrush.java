@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * @author MikeMatrix
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#checker-voxel-disc-brush">...</a>
  */
 public class CheckerVoxelDiscBrush extends PerformerBrush {
 

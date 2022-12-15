@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Splatter_Brushes
+ *
  *
  * @author Voxel
  */

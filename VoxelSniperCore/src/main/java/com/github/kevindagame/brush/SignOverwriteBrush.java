@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
- * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
+ * Overwrites signs. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#sign-overwrite-brush-brush">...</a>
  *
  * @author Monofraps
  */
@@ -126,7 +126,6 @@ public class SignOverwriteBrush extends AbstractBrush {
     }
 
     @Override
-    // TODO: Rewrite this
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         boolean textChanged = false;
 
@@ -244,7 +243,6 @@ public class SignOverwriteBrush extends AbstractBrush {
             }
         }
 
-        // TODO not entirely sure what to do here
         newText = new StringBuilder(newText.toString());
 
         // remove last space or return if the string is empty and the user just wanted to set the status

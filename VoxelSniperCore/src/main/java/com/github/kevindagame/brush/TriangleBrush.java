@@ -6,7 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Triangle_Brush
+ * https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#triangle-brush
  *
  * @author Giltwist
  */

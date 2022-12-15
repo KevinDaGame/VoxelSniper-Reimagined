@@ -10,12 +10,11 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import java.util.Set;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Eraser_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#eraser-brush">...</a>
  *
  * @author Voxel
  */
 public class EraserBrush extends AbstractBrush {
-    //todo This was enumset, should it still be?
     private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
             VoxelMaterial.AIR, VoxelMaterial.CAVE_AIR, VoxelMaterial.VOID_AIR, VoxelMaterial.STONE, VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT, VoxelMaterial.SAND, VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE);
     private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(

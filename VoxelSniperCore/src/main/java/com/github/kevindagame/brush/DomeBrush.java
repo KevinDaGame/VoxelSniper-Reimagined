@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Dome_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#dome-brush">...</a>
  *
  * @author Gavjenks
  * @author MikeMatrix
@@ -80,8 +80,6 @@ public class DomeBrush extends AbstractBrush {
 
         for (final VoxelVector vector : changeablePositions) {
             final IBlock currentTargetBlock = vector.getLocation(this.getTargetBlock().getWorld()).getBlock();
-            // TODO: Check whether BlockData omission affects this or not.
-            // if (currentTargetBlock.getMaterial() != v.getVoxelMaterial() || currentTargetBlock.getBlockData().matches(v.getVoxelSubstance())) {
             if (currentTargetBlock.getMaterial() != v.getVoxelMaterial()) {
                 undo.put(currentTargetBlock);
                 currentTargetBlock.setBlockData(v.getVoxelMaterial().createBlockData(), true);

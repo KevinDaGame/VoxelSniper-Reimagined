@@ -9,6 +9,9 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#biome-ball-brush">...</a>
+ */
 public class BiomeBallBrush extends AbstractBrush {
 
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;

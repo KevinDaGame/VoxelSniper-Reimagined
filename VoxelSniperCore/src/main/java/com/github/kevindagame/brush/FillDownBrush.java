@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * @author Voxel
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#fill-down-brush">...</a>
  */
 public class FillDownBrush extends PerformerBrush {
 
