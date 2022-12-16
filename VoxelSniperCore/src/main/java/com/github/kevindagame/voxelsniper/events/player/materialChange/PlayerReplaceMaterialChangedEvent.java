@@ -27,4 +27,5 @@ public class PlayerReplaceMaterialChangedEvent extends AbstractMaterialChangedEv
     public static void registerListener(EventPriority priority, Consumer<PlayerReplaceMaterialChangedEvent> handler) {
         handlers.registerListener(priority, handler);
     }
+
 }
