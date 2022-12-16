@@ -3,8 +3,6 @@ package com.github.kevindagame.snipe;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.events.player.materialChange.PlayerMaterialChangedEvent;
-import com.github.kevindagame.voxelsniper.events.player.materialChange.PlayerReplaceMaterialChangedEvent;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.text.ComponentLike;
@@ -80,10 +78,7 @@ public class SnipeData {
     }
 
     public void setVoxelSubstance(IBlockData voxelSubstance) {
-        var oldSubstance = this.getVoxelSubstance();
-        if(!new PlayerMaterialChangedEvent(owner.getPlayer(), oldSubstance, voxelSubstance).callEvent().isCancelled()){
-            this.voxelSubstance = voxelSubstance;
-        }
+        this.voxelSubstance = voxelSubstance;
     }
 
     public VoxelMaterial getVoxelMaterial() {
@@ -95,11 +90,7 @@ public class SnipeData {
     }
 
     public void setReplaceSubstance(IBlockData targetSubstance) {
-        var oldSubstance = this.getReplaceSubstance();
-
-        if(!new PlayerReplaceMaterialChangedEvent(owner.getPlayer(), oldSubstance, targetSubstance).callEvent().isCancelled()) {
-            this.replaceSubstance = targetSubstance;
-        }
+        this.replaceSubstance = targetSubstance;
     }
 
     public VoxelMaterial getReplaceMaterial() {
