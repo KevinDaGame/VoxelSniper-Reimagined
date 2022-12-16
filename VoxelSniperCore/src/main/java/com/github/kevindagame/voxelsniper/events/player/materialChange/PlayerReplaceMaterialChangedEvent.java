@@ -2,17 +2,14 @@ package com.github.kevindagame.voxelsniper.events.player.materialChange;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.events.Cancellable;
 import com.github.kevindagame.voxelsniper.events.EventPriority;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
-import com.github.kevindagame.voxelsniper.events.player.EventResult;
 
 import java.util.function.Consumer;
 
-public class PlayerReplaceMaterialChangedEvent extends AbstractMaterialChangedEvent<PlayerReplaceMaterialChangedEvent> implements Cancellable {
+public class PlayerReplaceMaterialChangedEvent extends AbstractMaterialChangedEvent<PlayerReplaceMaterialChangedEvent> {
 
     private static final HandlerList<PlayerReplaceMaterialChangedEvent> handlers = new HandlerList<>();
-    private EventResult status;
 
     public PlayerReplaceMaterialChangedEvent(IPlayer p, IBlockData oldMaterial, IBlockData newMaterial) {
         super(p, oldMaterial, newMaterial);
@@ -31,13 +28,4 @@ public class PlayerReplaceMaterialChangedEvent extends AbstractMaterialChangedEv
         handlers.registerListener(priority, handler);
     }
 
-    @Override
-    public boolean isCancelled() {
-        return status == EventResult.DENY;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        status = cancel ? EventResult.DENY : EventResult.DEFAULT;
-    }
 }
