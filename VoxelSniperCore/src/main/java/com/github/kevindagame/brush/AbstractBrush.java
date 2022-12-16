@@ -3,14 +3,13 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockHelper;
-import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
@@ -57,11 +56,9 @@ public abstract class AbstractBrush implements IBrush {
     }
 
 
-
     @Override
     public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
         this.positions.clear();
-        this.cancelled = false;
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
         this.snipeAction = action;
@@ -75,14 +72,14 @@ public abstract class AbstractBrush implements IBrush {
             default:
                 return false;
         }
-        if(!cancelled) {
-        //TODO If positions.size == 0 then don't actPerform
-        //TODO Create event
-        return actPerform(data);
+        var event = new PlayerSnipeEvent(data.owner().getPlayer(), this, this.positions).callEvent();
+        if (!event.isCancelled() && event.getPositions().size() > 0) {
+            this.positions = event.getPositions();
+            return actPerform(data);
         }
         return false;
 
-    }
+}
 
     protected abstract boolean actPerform(SnipeData v);
 
@@ -263,10 +260,11 @@ public abstract class AbstractBrush implements IBrush {
      * @param material the material to set this block to
      */
     protected final void setBlockMaterialAt(int x, int y, int z, VoxelMaterial material) {
-        if(isInWorldHeight(y)) {
+        if (isInWorldHeight(y)) {
             this.getWorld().getBlock(x, y, z).setBlockData(material.createBlockData());
         }
     }
+
     protected void cancel() {
         this.cancelled = true;
     }

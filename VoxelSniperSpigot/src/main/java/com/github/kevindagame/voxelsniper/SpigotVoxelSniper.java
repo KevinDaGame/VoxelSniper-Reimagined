@@ -8,6 +8,7 @@ import com.github.kevindagame.voxelsniper.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.bstats.Metrics;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
 import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
@@ -86,6 +87,12 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         Metrics metrics = new Metrics(this, 16602);
         metrics.addCustomChart(new Metrics.SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
 //        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
+
+        PlayerSnipeEvent.registerListener((event) -> {
+            if(!event.getPlayer().isSneaking()){
+                event.setCancelled(true);
+            }
+        });
     }
 
     @Override

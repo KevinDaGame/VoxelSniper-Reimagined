@@ -162,7 +162,6 @@ public class PullBrush extends MultiBlockBrush {
     protected final void doArrow(final SnipeData v) {
         int vh = v.getVoxelHeight();
         HashSet<BlockWrapper> surface = this.getSurface(v);
-        Undo undo = new Undo();
 
         if (vh > 0) {
             for (final BlockWrapper block : surface) {
@@ -173,14 +172,10 @@ public class PullBrush extends MultiBlockBrush {
                 this.setBlockDown(block, vh);
             }
         }
-
-        if (undo.getSize() > 0)
-            v.owner().storeUndo(undo);
     }
 
     @Override
     protected final void doPowder(final SnipeData v) {
-        Undo undo = new Undo();
 
         int vh = v.getVoxelHeight();
 
@@ -220,8 +215,7 @@ public class PullBrush extends MultiBlockBrush {
                             lastY = actualY + lastStr;
 
                             IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
-                            undo.put(b);
-                            b.setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
+                            operations.add(new com.github.kevindagame.util.BlockWrapper(b).setBlockData(this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
 
                             if (str == 1) {
                                 str = 0.8;
@@ -236,8 +230,7 @@ public class PullBrush extends MultiBlockBrush {
                                 VoxelMaterial material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
-                                    undo.put(b);
-                                    b.setBlockData(material.createBlockData());
+                                    operations.add(new com.github.kevindagame.util.BlockWrapper(b).setMaterial(material));
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -260,8 +253,7 @@ public class PullBrush extends MultiBlockBrush {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (vh * this.getStr(volume / brushSizeSquared));
                             IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
-                            undo.put(b);
-                            b.setMaterial(this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial());
+                            operations.add(new com.github.kevindagame.util.BlockWrapper(b).setBlockData(this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
@@ -269,8 +261,7 @@ public class PullBrush extends MultiBlockBrush {
                                 final VoxelMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
-                                    undo.put(b);
-                                    b.setBlockData(blockMaterial.createBlockData());
+                                    operations.add(new com.github.kevindagame.util.BlockWrapper(b).setMaterial(blockMaterial));
                                 }
                                 lastY = blockY;
                                 y++;
@@ -282,9 +273,6 @@ public class PullBrush extends MultiBlockBrush {
                 }
             }
         }
-
-        if (undo.getSize() > 0)
-            v.owner().storeUndo(undo);
     }
 
     @Override

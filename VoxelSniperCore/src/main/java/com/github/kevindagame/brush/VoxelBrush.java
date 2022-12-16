@@ -20,8 +20,7 @@ public class VoxelBrush extends PerformerBrush {
     }
 
     private void voxel(final SnipeData v) {
-        this.currentPerformer.perform(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()));
-        v.owner().storeUndo(this.currentPerformer.getAndClearUndo());
+        this.positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
     }
 
     @Override
