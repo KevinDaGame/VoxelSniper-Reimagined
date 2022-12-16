@@ -5,8 +5,7 @@ import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.Cancellable;
 import com.github.kevindagame.voxelsniper.events.EventPriority;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
-
-import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
@@ -16,9 +15,9 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
 
     private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
-    private final List<VoxelLocation> positions;
+    private final Set<VoxelLocation> positions;
     private EventResult status;
-    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, List<VoxelLocation> positions) {
+    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, Set<VoxelLocation> positions) {
         super(p);
         this.brush = brush;
         this.status = EventResult.DEFAULT;
@@ -29,7 +28,7 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
         return brush;
     }
 
-    public List<VoxelLocation> getPositions() {
+    public Set<VoxelLocation> getPositions() {
         return positions;
     }
 
