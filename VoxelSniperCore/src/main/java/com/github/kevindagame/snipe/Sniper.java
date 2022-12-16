@@ -129,7 +129,6 @@ public class Sniper {
         }
 
         var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-        new PlayerSnipeEvent(this.getPlayer(), sniperTool.getCurrentBrush(), success).callEvent();
         return success;
     }
 

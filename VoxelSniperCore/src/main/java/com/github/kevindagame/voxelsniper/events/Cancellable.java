@@ -7,7 +7,7 @@ public interface Cancellable {
      *
      * @return True if this event is cancelled by another {@link EventListener}
      */
-    public boolean isCancelled();
+    boolean isCancelled();
 
     /**
      * Sets the cancellation state of this event. A cancelled event will not
@@ -16,5 +16,5 @@ public interface Cancellable {
      * @param cancel True if you wish to cancel this event.
      * @apiNote Another {@link EventListener} might be able to un-cancel the event
      */
-    public void setCancelled(boolean cancel);
+    void setCancelled(boolean cancel);
 }

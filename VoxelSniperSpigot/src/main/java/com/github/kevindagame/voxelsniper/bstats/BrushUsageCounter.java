@@ -11,7 +11,7 @@ public class BrushUsageCounter {
     }
 
     private void onBrushUse(PlayerSnipeEvent event) {
-        if(!event.isSuccessful()) return;
+        if(event.isCancelled()) return;
 //        String brushName = event.getBrush().getName();
 //        perBrushCounter.put(brushName, perBrushCounter.getOrDefault(brushName, 0) + 1);
         counter++;
