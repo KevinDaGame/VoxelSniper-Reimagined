@@ -6,7 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 
 /**
- * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
+ * THIS BRUSH SHOULD NOT USE PERFORMERS. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#shell-voxel-brush">...</a>
  *
  * @author Voxel
  */
