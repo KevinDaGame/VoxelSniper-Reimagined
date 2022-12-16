@@ -81,9 +81,8 @@ public class SnipeData {
 
     public void setVoxelSubstance(IBlockData voxelSubstance) {
         var oldSubstance = this.getVoxelSubstance();
-        var newSubstance = voxelSubstance;
-        if(!new PlayerMaterialChangedEvent(owner.getPlayer(), oldSubstance, newSubstance).callEvent().isCancelled()){
-            this.voxelSubstance = newSubstance;
+        if(!new PlayerMaterialChangedEvent(owner.getPlayer(), oldSubstance, voxelSubstance).callEvent().isCancelled()){
+            this.voxelSubstance = voxelSubstance;
         }
     }
 
