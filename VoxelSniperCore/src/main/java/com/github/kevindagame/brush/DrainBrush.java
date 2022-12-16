@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Drain_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#drain-brush">...</a>
  *
  * @author Gavjenks
  * @author psanker

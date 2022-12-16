@@ -5,7 +5,7 @@ import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.VoxelMessage;
 
 /**
- * Painting scrolling Brush. http://www.voxelwiki.com/minecraft/Voxelsniper#The_Painting_Picker_Brush
+ * Painting scrolling Brush. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#painting-brush">...</a>
  *
  * @author Voxel
  */

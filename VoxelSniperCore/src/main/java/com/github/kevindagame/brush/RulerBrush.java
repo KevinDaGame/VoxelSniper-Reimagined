@@ -10,7 +10,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ruler_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ruler-brush">...</a>
  *
  * @author Gavjenks
  */
@@ -76,7 +76,6 @@ public class RulerBrush extends AbstractBrush {
     }
 
     @Override
-    // TODO: Implement block placing
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.RULER_BRUSH_USAGE);

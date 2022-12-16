@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Clean_Snow_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#clean-snow-brush">...</a>
  *
  * @author psanker
  */

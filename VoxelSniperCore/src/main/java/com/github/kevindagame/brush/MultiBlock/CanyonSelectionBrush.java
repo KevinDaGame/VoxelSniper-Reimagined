@@ -7,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Canyon_Selection_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#canyon-selection-brush">...</a>
  *
  * @author Voxel
  */

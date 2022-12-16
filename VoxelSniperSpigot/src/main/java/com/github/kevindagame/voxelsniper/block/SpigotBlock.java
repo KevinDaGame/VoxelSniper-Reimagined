@@ -32,7 +32,6 @@ public class SpigotBlock extends AbstractBlock {
         block.setType(((SpigotMaterial) material.getIMaterial()).material(), applyPhysics);
     }
 
-    //todo test if this works
     @Override
     @Nullable
     public BlockFace getFace(IBlock block) {

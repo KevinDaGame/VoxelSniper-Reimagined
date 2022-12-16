@@ -8,7 +8,9 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 /**
- * @author Monofraps
+ * THIS BRUSH SHOULD NOT USE PERFORMERS. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#shell-ball-brush">...</a>
+ *
+ * @author Voxel
  */
 public abstract class ShellBrushBase extends AbstractBrush {
 

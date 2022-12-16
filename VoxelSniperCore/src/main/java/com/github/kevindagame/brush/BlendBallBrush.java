@@ -5,9 +5,10 @@ import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-
+/**
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blend-ball-brush">...</a>
+ */
 public class BlendBallBrush extends BlendBrushBase {
-
     public BlendBallBrush() {
         this.setName("Blend Ball");
     }

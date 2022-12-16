@@ -31,7 +31,6 @@ public class SnipeData {
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 
     // Voxel and ReplaceTarget Materials & BlockData
-    //todo abstract these variables
     private IBlockData voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
     private IBlockData replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
 

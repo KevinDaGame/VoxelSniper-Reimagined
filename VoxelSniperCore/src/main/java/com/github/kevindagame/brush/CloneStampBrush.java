@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * The CloneStamp class is used to create a collection of blocks in a cylinder shape according to the selection the player has set.
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Clone_and_CopyPasta_Brushes
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#clone-brush">...</a>
  *
  * @author Voxel
  */

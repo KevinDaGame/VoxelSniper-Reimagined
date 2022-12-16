@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * @author Piotr
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#2d-rotation-brush">...</a>
  */
 public class Rot2DBrush extends MultiBlockBrush {
     private BlockWrapper[][][] snap;

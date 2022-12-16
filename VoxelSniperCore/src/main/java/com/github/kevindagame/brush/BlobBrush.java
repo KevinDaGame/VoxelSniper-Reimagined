@@ -10,7 +10,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import java.util.*;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Blob_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blob-brush">...</a>
  *
  * @author Giltwist
  */

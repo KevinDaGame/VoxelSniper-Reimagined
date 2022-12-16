@@ -12,7 +12,7 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import java.util.*;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#jagged-line-brush">...</a>
  *
  * @author Giltwist
  * @author Monofraps

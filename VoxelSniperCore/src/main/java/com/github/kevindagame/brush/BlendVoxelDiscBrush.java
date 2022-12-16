@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blend-voxel-disc-brush">...</a>
+ */
 public class BlendVoxelDiscBrush extends BlendBrushBase {
 
     /**

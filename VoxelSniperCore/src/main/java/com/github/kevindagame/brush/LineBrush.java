@@ -12,7 +12,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import java.util.Iterator;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Line_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#line-brush">...</a>
  *
  * @author Gavjenks
  * @author giltwist

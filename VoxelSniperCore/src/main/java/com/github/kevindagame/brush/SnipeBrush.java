@@ -5,6 +5,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 
 /**
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#snipe-brush">...</a>
  *
  * @author Voxel
  */

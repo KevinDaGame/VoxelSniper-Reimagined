@@ -9,7 +9,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import java.util.ArrayList;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#shell-set-brush">...</a>
  *
  * @author Piotr
  */

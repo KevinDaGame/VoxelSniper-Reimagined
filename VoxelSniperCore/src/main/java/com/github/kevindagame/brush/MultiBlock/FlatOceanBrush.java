@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * @author GavJenks
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#flatocean-brush">...</a>
  */
 public class FlatOceanBrush extends MultiBlockBrush {
 

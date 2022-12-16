@@ -9,7 +9,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.IRedstoneWire;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Volt-Meter_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#voltmeter-brush">...</a>
  *
  * @author Gavjenks
  */

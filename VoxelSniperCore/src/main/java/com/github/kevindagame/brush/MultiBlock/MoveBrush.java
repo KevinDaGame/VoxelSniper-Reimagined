@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Moves a selection blockPositionY a certain amount. http://www.voxelwiki.com/minecraft/Voxelsniper#Move_Brush
+ * Moves a selection blockPositionY a certain amount. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#move-brush">...</a>
  *
  * @author MikeMatrix
  */

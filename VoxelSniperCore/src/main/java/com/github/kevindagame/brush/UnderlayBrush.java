@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Underlay_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#underlay-reverse-overlay-brush">...</a>
  *
  * @author jmck95 Credit to GavJenks for framework and 95 of code. Big Thank you
  * to GavJenks

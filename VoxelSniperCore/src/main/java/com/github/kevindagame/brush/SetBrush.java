@@ -8,7 +8,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Set_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#set-brush">...</a>
  *
  * @author Voxel
  */

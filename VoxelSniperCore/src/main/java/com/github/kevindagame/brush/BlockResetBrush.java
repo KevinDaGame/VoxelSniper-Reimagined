@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * @author MikeMatrix
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#block-reset-brush-brush">...</a>
  */
 public class BlockResetBrush extends AbstractBrush {
 

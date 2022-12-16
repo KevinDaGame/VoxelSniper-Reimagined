@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * @author DivineRage
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#scanner-brush">...</a>
  */
 public class ScannerBrush extends AbstractBrush {
 

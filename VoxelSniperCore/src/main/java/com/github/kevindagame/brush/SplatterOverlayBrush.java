@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Splatter_Overlay_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#splatter-overlay-brush">...</a>
  *
  * @author Gavjenks Splatterized blockPositionY Giltwist
  */

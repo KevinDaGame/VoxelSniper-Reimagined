@@ -6,6 +6,9 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
+/**
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blend-disc-brush">...</a>
+ */
 public class BlendDiscBrush extends BlendBrushBase {
 
     /**

@@ -18,6 +18,7 @@ import java.util.Set;
 /**
  * @author Voxel
  * @author Monofraps
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#jockey-brush">...</a>
  */
 public class JockeyBrush extends AbstractBrush {
 

@@ -7,6 +7,7 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 
 /**
  * @author MikeMatrix
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#warp-brush">...</a>
  */
 public class WarpBrush extends AbstractBrush {
 
