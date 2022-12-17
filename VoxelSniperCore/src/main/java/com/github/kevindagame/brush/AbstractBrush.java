@@ -15,6 +15,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -74,7 +75,7 @@ public abstract class AbstractBrush implements IBrush {
         }
         var event = new PlayerSnipeEvent(data.owner().getPlayer(), this, this.positions).callEvent();
         if (!event.isCancelled() && event.getPositions().size() > 0) {
-            this.positions = event.getPositions();
+            this.positions = event.getPositions().stream().filter(p -> isInWorldHeight(p.getBlockY())).collect(Collectors.toSet());
             return actPerform(data);
         }
         return false;
@@ -210,7 +211,7 @@ public abstract class AbstractBrush implements IBrush {
     }
 
     protected final boolean isInWorldHeight(int height) {
-        return getMinHeight() < height && getMaxHeight() > height;
+        return getMinHeight() <= height && getMaxHeight() > height;
     }
 
     /**

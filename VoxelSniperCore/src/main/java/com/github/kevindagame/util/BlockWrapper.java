@@ -144,10 +144,6 @@ public class BlockWrapper implements Cloneable {
         try {
             BlockWrapper clone = (BlockWrapper) super.clone();
             clone.blockData = this.blockData.getMaterial().createBlockData();
-            clone.x = this.x;
-            clone.y = this.y;
-            clone.z = this.z;
-            clone.world = this.world;
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

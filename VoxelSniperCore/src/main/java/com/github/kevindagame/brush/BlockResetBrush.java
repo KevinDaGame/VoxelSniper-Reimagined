@@ -7,6 +7,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author MikeMatrix
@@ -54,16 +55,13 @@ public class BlockResetBrush extends AbstractBrush {
     }
 
     private void applyBrush(final SnipeData v) {
-        this.positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
+        this.positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().filter(p -> BlockResetBrush.DENIED_UPDATES.contains(p.getBlock().getMaterial())).collect(Collectors.toSet());
     }
 
     @Override
     protected boolean actPerform(SnipeData v) {
         for (var position : positions) {
             final IBlock block = position.getBlock();
-            if (BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())) {
-                continue;
-            }
             // Resets the block state to initial state by creating a new BlockData with default values.
             block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
         }
