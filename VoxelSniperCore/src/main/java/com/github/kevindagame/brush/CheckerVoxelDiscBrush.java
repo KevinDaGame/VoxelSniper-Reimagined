@@ -31,7 +31,6 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
      */
     private void applyBrush(final SnipeData v) {
         this.positions = Actions.checker(Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize()), this.useWorldCoordinates);
-        v.owner().storeUndo(this.currentPerformer.getAndClearUndo());
     }
 
     @Override

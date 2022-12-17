@@ -71,7 +71,7 @@ public class ShellSetBrush extends ShellBrushBase {
                         operations.add(new BlockWrapper(currentBlock).setMaterial(v.getVoxelMaterial()));
                     }
                 }
-                v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
+
             }
 
             this.block = null;
@@ -88,6 +88,7 @@ public class ShellSetBrush extends ShellBrushBase {
             block.setBlockData(blockWrapper.getMaterial().createBlockData());
         });
         v.owner().storeUndo(undo);
+        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
         return true;
     }
 
