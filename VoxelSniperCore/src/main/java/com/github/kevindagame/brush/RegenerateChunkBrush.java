@@ -9,14 +9,11 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 
 /**
  * Regenerates the target chunk.
- *<a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#regenerate-chunk-brush">...</a>
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#regenerate-chunk-brush">...</a>
+ *
  * @author Mick
  */
 public class RegenerateChunkBrush extends AbstractBrush {
-    private Undo tempUndo;
-    /**
-     *
-     */
     public RegenerateChunkBrush() {
         this.setName("Chunk Generator 40k");
     }

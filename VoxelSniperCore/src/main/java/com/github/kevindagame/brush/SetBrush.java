@@ -62,7 +62,6 @@ public class SetBrush extends PerformerBrush {
             }
 
             this.block = null;
-            return;
         }
     }
 

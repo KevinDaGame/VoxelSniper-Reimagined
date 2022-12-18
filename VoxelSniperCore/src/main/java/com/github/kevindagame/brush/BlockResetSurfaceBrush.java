@@ -90,8 +90,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
                     airFound = checkBlock(world, x, y, z - 1, airFound);
 
                     if (airFound) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
+                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z));
                     }
                 }
             }

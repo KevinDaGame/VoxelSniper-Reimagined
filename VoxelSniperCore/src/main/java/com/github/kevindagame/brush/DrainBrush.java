@@ -45,6 +45,7 @@ public class DrainBrush extends AbstractBrush {
                 block.setMaterial(VoxelMaterial.AIR);
             }
         }
+        v.owner().storeUndo(undo);
         return true;
     }
 
