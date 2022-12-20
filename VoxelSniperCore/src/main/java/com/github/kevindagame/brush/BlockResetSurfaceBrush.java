@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
@@ -113,9 +114,13 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
 
     @Override
     protected boolean actPerform(SnipeData v) {
+        Undo undo = new Undo();
         for(VoxelLocation position: positions) {
-            resetBlock(position.getBlock());
+            var block = position.getBlock();
+            undo.put(block);
+            resetBlock(block);
         }
+        v.owner().storeUndo(undo);
         return true;
     }
 

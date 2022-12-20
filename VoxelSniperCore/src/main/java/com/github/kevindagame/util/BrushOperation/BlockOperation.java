@@ -7,20 +7,15 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 /**
  * Operation that is performed on a block. This operation modifies blockData.
  */
-public class BlockOperation extends AbstractOperation {
+public class BlockOperation extends LocationOperation {
 
-    private final VoxelLocation location;
     private final IBlockData oldData;
     private IBlockData newData;
 
     public BlockOperation(VoxelLocation location, IBlockData oldData, IBlockData newData) {
-        this.location = location;
+        super(location);
         this.oldData = oldData;
         this.newData = newData;
-    }
-
-    public VoxelLocation getLocation() {
-        return location;
     }
 
     public IBlockData getOldData() {
