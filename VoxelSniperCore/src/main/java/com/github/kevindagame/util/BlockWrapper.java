@@ -143,7 +143,7 @@ public class BlockWrapper implements Cloneable {
     public BlockWrapper clone() {
         try {
             BlockWrapper clone = (BlockWrapper) super.clone();
-            clone.blockData = this.blockData.getMaterial().createBlockData();
+            clone.blockData = this.blockData.getCopy();
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
