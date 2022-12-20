@@ -6,17 +6,22 @@ package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
+import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
+import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @author Voxel
  */
-public abstract class vPerformer {
+public abstract class BasePerformer implements Predicate<IBlock> {
 
     public String name = "Performer";
     protected Undo h;
@@ -30,9 +35,13 @@ public abstract class vPerformer {
         h = new Undo();
     }
 
-    protected abstract void perform(IBlock b);
-    public void perform(Set<VoxelLocation> positions) {
-        positions.forEach(position -> this.perform(position.getBlock()));
+    @Override
+    public abstract boolean test(IBlock b);
+
+    protected abstract BlockOperation perform(IBlock b);
+
+    public List<BrushOperation> perform(Set<VoxelLocation> positions) {
+        return positions.stream().map(VoxelLocation::getBlock).filter(this).map(this::perform).collect(Collectors.toList());
     }
 
     public Undo getAndClearUndo() {

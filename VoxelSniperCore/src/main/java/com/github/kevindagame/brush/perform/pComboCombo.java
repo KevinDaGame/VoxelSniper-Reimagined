@@ -5,6 +5,7 @@
 package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
@@ -12,7 +13,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 /**
  * @author Voxel
  */
-public class pComboCombo extends vPerformer {
+public class pComboCombo extends BasePerformer {
 
     private IBlockData voxelSubstance;
     private IBlockData targetSubstance;
@@ -29,6 +30,11 @@ public class pComboCombo extends vPerformer {
     }
 
     @Override
+    public boolean test(IBlock b) {
+        return b.getBlockData().matches(targetSubstance);
+    }
+
+    @Override
     public void info(VoxelMessage vm) {
         vm.performerName(name);
         vm.voxel();
@@ -38,11 +44,8 @@ public class pComboCombo extends vPerformer {
     }
 
     @Override
-    public void perform(IBlock b) {
-        if (b.getBlockData().matches(targetSubstance)) {
-            h.put(b);
-            b.setBlockData(voxelSubstance, true);
-        }
+    public BlockOperation perform(IBlock b) {
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelSubstance);
     }
 
     @Override
