@@ -1,6 +1,6 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -53,7 +53,7 @@ public class JaggedLineBrush extends PerformerBrush {
             for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, ((int) Math.round(length))); iterator.hasNext(); ) {
                 final IBlock block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
-                    this.positions.add(new VoxelLocation(getWorld(), Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
+                    this.positions.add(new BaseLocation(getWorld(), Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
                 }
             }
         }

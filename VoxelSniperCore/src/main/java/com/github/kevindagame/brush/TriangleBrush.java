@@ -4,7 +4,7 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
  * https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#triangle-brush
@@ -147,7 +147,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.positions.add(new VoxelLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.positions.add(new BaseLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -198,7 +198,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.positions.add(new VoxelLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.positions.add(new BaseLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -248,7 +248,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     // VoxelSniper.log.info("Bary: "+barycentric+", hb: "+heronbig+", h1: "+heronone+", h2: "+herontwo+", h3: "+heronthree);
                     if (barycentric <= 1.1) {
-                        this.positions.add(new VoxelLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.positions.add(new BaseLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
                     }
                 }
             } // END Z DEPENDENT

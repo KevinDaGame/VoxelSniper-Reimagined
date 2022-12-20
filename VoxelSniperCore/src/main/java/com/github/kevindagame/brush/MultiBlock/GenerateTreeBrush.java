@@ -1,14 +1,13 @@
 package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.*;
@@ -50,8 +49,8 @@ public class GenerateTreeBrush extends MultiBlockBrush {
     }
 
     // Branch Creation based on direction chosen from the parameters passed.
-    private void branchCreate(VoxelLocation location, final int xDirection, final int zDirection) {
-        location = location.clone();
+    private void branchCreate(BaseLocation origin, final int xDirection, final int zDirection) {
+        VoxelLocation location = origin.makeMutableLocation();
 
         // Sets direction preference.
         final int xPreference = this.random.nextInt(60) + 20;
@@ -74,12 +73,13 @@ public class GenerateTreeBrush extends MultiBlockBrush {
             }
 
             // Creates a branch block.
-            operations.add(new BlockWrapper(location.getBlock()).setMaterial(this.woodMaterial));
+            operations.add(new BlockWrapper(location, this.woodMaterial));
             this.branchBlocks.add(location.getClampedBlock());
         }
     }
 
-    private void leafNodeCreate(final VoxelLocation location) {
+    private void leafNodeCreate(final BaseLocation origin) {
+        VoxelLocation location = origin.makeMutableLocation();
         // Generates the node size.
         final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
@@ -115,7 +115,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         }
     }
 
-    private void createLeaf(final VoxelLocation location, int x, int y, int z) {
+    private void createLeaf(final BaseLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
             operations.add(new BlockWrapper(location.getBlock().getRelative(x, y, z)).setMaterial(this.leavesMaterial));
         }
@@ -124,13 +124,13 @@ public class GenerateTreeBrush extends MultiBlockBrush {
     /**
      * Code Concerning Root Generation.
      *
-     * @param location
+     * @param origin
      * @param xDirection
      * @param zDirection
      */
-    private void rootCreate(VoxelLocation location, final int xDirection, final int zDirection) {
+    private void rootCreate(BaseLocation origin, final int xDirection, final int zDirection) {
         // Sets Origin.
-        location = location.clone();
+        VoxelLocation location = origin.makeMutableLocation();
 
         // Generates the number of roots to create.
         final int roots = this.random.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
@@ -193,7 +193,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         }
     }
 
-    private void rootGen(final VoxelLocation location) {
+    private void rootGen(final BaseLocation location) {
         // Quadrant 1
         this.rootCreate(location, 1, 1);
 
@@ -207,7 +207,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         this.rootCreate(location, -1, -1);
     }
 
-    private void trunkCreate(final VoxelLocation location) {
+    private void trunkCreate(final BaseLocation location) {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
 
@@ -227,7 +227,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         }
     }
 
-    private void createTrunk(final VoxelLocation location, int x, int z) {
+    private void createTrunk(final BaseLocation location, int x, int z) {
         // If block is air, then create a block.
         if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
             // Creates block.
@@ -239,9 +239,9 @@ public class GenerateTreeBrush extends MultiBlockBrush {
      *
      * Code Concerning Trunk Generation
      */
-    private void trunkGen(final VoxelLocation origin) {
+    private void trunkGen(final BaseLocation origin) {
         // Sets Origin
-        VoxelLocation location = origin.clone();
+        VoxelLocation location = origin.makeMutableLocation();
 
         // ----------
         // Main Trunk
@@ -288,7 +288,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         this.branchCreate(location, -1, -1);
 
         // Reset Origin for next trunk.
-        location = origin.clone();
+        location = origin.makeMutableLocation();
         location.addY(4);
 
         // ---------------
@@ -342,7 +342,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
 
         // Sets the location variables.
 
-        VoxelLocation location = new VoxelLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
+        BaseLocation location = new BaseLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
 
         // Generates the roots.
         this.rootGen(location);

@@ -1,6 +1,6 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -48,7 +48,7 @@ public class UnderlayBrush extends PerformerBrush {
                                 for (int d = 0; (d < this.depth); d++) {
                                     var mat = getBlockMaterialAt(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z);
                                     if (!mat.isAir()) {
-                                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                        positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                         // parameters
                                         memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                     }
@@ -74,7 +74,7 @@ public class UnderlayBrush extends PerformerBrush {
                             final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = -1; (d < this.depth - 1); d++) {
-                                    positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                    positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                     // parameters
                                     memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                 }

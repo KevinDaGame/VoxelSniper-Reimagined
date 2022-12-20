@@ -1,6 +1,5 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.snipe.SnipeAction;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -8,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,7 +35,7 @@ public class JockeyBrush extends AbstractBrush {
     }
 
     private void sitOn(final SnipeData v) {
-        VoxelLocation location = this.getLastBlock().getLocation();
+        BaseLocation location = this.getLastBlock().getLocation();
         IChunk targetChunk = location.getChunk();
         final int targetChunkX = targetChunk.getX();
         final int targetChunkZ = targetChunk.getZ();

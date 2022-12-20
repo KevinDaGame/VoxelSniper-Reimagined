@@ -1,14 +1,12 @@
 package com.github.kevindagame.brush.MultiBlock;
 
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.text.Component;
@@ -18,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -54,9 +51,9 @@ public class MoveBrush extends MultiBlockBrush {
         if (selection.getBlockWrappers().size() > 0) {
             final IWorld world = selection.getBlockWrappers().get(0).getWorld();
             final Selection newSelection = new Selection();
-            final VoxelLocation movedLocation1 = selection.getLocation1();
+            final VoxelLocation movedLocation1 = selection.getLocation1().makeMutableLocation();
             movedLocation1.add(direction[0], direction[1], direction[2]);
-            final VoxelLocation movedLocation2 = selection.getLocation2();
+            final VoxelLocation movedLocation2 = selection.getLocation2().makeMutableLocation();
             movedLocation2.add(direction[0], direction[1], direction[2]);
             newSelection.setLocation1(movedLocation1);
             newSelection.setLocation2(movedLocation2);
@@ -215,11 +212,11 @@ public class MoveBrush extends MultiBlockBrush {
         /**
          *
          */
-        private VoxelLocation location1 = null;
+        private BaseLocation location1 = null;
         /**
          *
          */
-        private VoxelLocation location2 = null;
+        private BaseLocation location2 = null;
 
         /**
          * Calculates region, then saves all Blocks as BlockState.
@@ -263,28 +260,28 @@ public class MoveBrush extends MultiBlockBrush {
         /**
          * @return Location
          */
-        public VoxelLocation getLocation1() {
+        public BaseLocation getLocation1() {
             return this.location1;
         }
 
         /**
          * @param location1
          */
-        public void setLocation1(final VoxelLocation location1) {
+        public void setLocation1(final BaseLocation location1) {
             this.location1 = location1;
         }
 
         /**
          * @return Location
          */
-        public VoxelLocation getLocation2() {
+        public BaseLocation getLocation2() {
             return this.location2;
         }
 
         /**
          * @param location2
          */
-        public void setLocation2(final VoxelLocation location2) {
+        public void setLocation2(final BaseLocation location2) {
             this.location2 = location2;
         }
     }

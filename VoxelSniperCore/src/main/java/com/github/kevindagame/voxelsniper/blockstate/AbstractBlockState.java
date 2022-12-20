@@ -1,7 +1,7 @@
 package com.github.kevindagame.voxelsniper.blockstate;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 public abstract class AbstractBlockState implements IBlockState {
@@ -17,8 +17,8 @@ public abstract class AbstractBlockState implements IBlockState {
     }
 
     @Override
-    public final VoxelLocation getLocation() {
-        return new VoxelLocation(getWorld(), getX(), getY(), getZ());
+    public final BaseLocation getLocation() {
+        return new BaseLocation(getWorld(), getX(), getY(), getZ());
     }
 
     @Override

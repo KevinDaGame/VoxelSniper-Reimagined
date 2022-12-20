@@ -1,12 +1,11 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,14 +48,14 @@ public class EllipsoidBrush extends PerformerBrush {
                     final double ySquared = (y / (yRad + istrueoffset)) * (y / (yRad + istrueoffset));
 
                     if (xSquared + ySquared + zSquared <= 1) {
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
-                        positions.add(new VoxelLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
                     }
 
                 }

@@ -5,7 +5,7 @@ import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
  * Regenerates the target chunk.
@@ -22,7 +22,7 @@ public class RegenerateChunkBrush extends AbstractBrush {
         for (int z = CHUNK_SIZE; z >= 0; z--) {
             for (int x = CHUNK_SIZE; x >= 0; x--) {
                 for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
-                    this.positions.add(new VoxelLocation(this.getWorld(), x, y, z));
+                    this.positions.add(new BaseLocation(this.getWorld(), x, y, z));
                 }
             }
         }

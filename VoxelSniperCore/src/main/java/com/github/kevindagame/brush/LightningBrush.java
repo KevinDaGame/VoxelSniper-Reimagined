@@ -3,9 +3,6 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
-
-import java.util.HashSet;
 
 /**
  * @author Gavjenks

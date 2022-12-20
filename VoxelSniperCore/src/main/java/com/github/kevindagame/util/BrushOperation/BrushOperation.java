@@ -1,17 +1,17 @@
 package com.github.kevindagame.util.BrushOperation;
 
 import com.github.kevindagame.voxelsniper.events.Cancellable;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
  * This class is the base class for all operations
  */
 public abstract class BrushOperation implements Cancellable {
 
-    private final VoxelLocation location;
+    private final BaseLocation location;
     private boolean cancelled;
 
-    public BrushOperation(VoxelLocation location) {
+    public BrushOperation(BaseLocation location) {
         this.location = location;
     }
 
@@ -27,7 +27,7 @@ public abstract class BrushOperation implements Cancellable {
         cancelled = cancel;
     }
 
-    public VoxelLocation getLocation() {
+    public BaseLocation getLocation() {
         return location;
     }
 }

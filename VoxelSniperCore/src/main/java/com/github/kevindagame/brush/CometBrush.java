@@ -5,7 +5,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class CometBrush extends AbstractBrush {
     private void doFireball(final SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
         positions.add(targetCoords.getLocation(this.getWorld()));
-        positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ()));
+        positions.add(new BaseLocation(this.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ()));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class CometBrush extends AbstractBrush {
     @Override
     protected boolean actPerform(SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        final VoxelLocation playerLocation = v.owner().getPlayer().getEyeLocation();
+        final BaseLocation playerLocation = v.owner().getPlayer().getEyeLocation();
         final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
 
         final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
