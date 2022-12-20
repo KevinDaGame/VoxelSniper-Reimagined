@@ -7,7 +7,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 /**
  * Operation that is performed on a block. This operation modifies blockData.
  */
-public class BlockOperation extends LocationOperation {
+public class BlockOperation extends BrushOperation {
 
     private final IBlockData oldData;
     private IBlockData newData;

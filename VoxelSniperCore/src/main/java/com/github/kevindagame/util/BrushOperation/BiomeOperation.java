@@ -5,19 +5,14 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 /**
  * Represents a brush operation that changes the biome of a location.
  */
-public class BiomeOperation extends AbstractOperation {
-    private final VoxelLocation location;
+public class BiomeOperation extends BrushOperation {
     private final String oldBiome;
     private String newBiome;
 
     public BiomeOperation(VoxelLocation location, String oldBiome, String newBiome) {
-        this.location = location;
+        super(location);
         this.oldBiome = oldBiome;
         this.newBiome = newBiome;
-    }
-
-    public VoxelLocation getLocation() {
-        return location;
     }
 
     public String getOldBiome() {
