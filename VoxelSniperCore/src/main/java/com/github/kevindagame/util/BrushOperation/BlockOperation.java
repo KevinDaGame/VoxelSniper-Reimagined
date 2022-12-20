@@ -11,11 +11,18 @@ public class BlockOperation extends BrushOperation {
 
     private final IBlockData oldData;
     private IBlockData newData;
+    private boolean applyPhysics;
 
     public BlockOperation(VoxelLocation location, IBlockData oldData, IBlockData newData) {
         super(location);
         this.oldData = oldData;
         this.newData = newData;
+        this.applyPhysics = true;
+    }
+
+    public BlockOperation(VoxelLocation location, IBlockData oldData, IBlockData newData, boolean applyPhysics) {
+        this(location, oldData, newData);
+        this.applyPhysics = applyPhysics;
     }
 
     public IBlockData getOldData() {
@@ -31,7 +38,6 @@ public class BlockOperation extends BrushOperation {
     }
 
     /**
-     *
      * @param newMaterial the material to create blockData for
      */
     public void setNewMaterial(VoxelMaterial newMaterial) {

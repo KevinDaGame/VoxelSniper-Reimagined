@@ -106,7 +106,7 @@ public class SplineBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         if (this.set) {
             this.removeFromSet(v, true, this.getTargetBlock());
         } else if (this.ctrl) {
@@ -122,7 +122,7 @@ public class SplineBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         if (this.set) {
             this.addToSet(v, true, this.getTargetBlock());
         }

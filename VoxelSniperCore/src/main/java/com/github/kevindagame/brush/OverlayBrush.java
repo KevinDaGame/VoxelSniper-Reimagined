@@ -108,7 +108,7 @@ public class OverlayBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         if (this.useVoxelList && v.getVoxelList().isEmpty()) {
             v.sendMessage(Messages.OVERLAY_BRUSH_VOXELLIST_EMPTY);
             return;
@@ -117,7 +117,7 @@ public class OverlayBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.overlayTwo(v);
     }
 

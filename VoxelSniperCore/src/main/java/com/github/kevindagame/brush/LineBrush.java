@@ -51,14 +51,14 @@ public class LineBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.originCoords = this.getTargetBlock().getLocation().toVector();
         this.targetWorld = this.getTargetBlock().getWorld();
         v.sendMessage(Messages.FIRST_POINT_SELECTED);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         if (this.originCoords == null || !this.getTargetBlock().getWorld().equals(this.targetWorld)) {
             v.sendMessage(Messages.FIRST_COORDINATE_NOT_SET);
         } else {

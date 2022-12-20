@@ -99,12 +99,12 @@ public class UnderlayBrush extends PerformerBrush {
     }
 
     @Override
-    public final void arrow(final SnipeData v) {
+    public final void doArrow(final SnipeData v) {
         this.underlay(v);
     }
 
     @Override
-    public final void powder(final SnipeData v) {
+    public final void doPowder(final SnipeData v) {
         this.underlay2(v);
     }
 

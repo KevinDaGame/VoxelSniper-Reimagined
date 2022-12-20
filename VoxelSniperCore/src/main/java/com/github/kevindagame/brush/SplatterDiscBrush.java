@@ -38,12 +38,12 @@ public class SplatterDiscBrush extends SplatterBrushBase {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.splatterDisc(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.splatterDisc(v);
     }
 

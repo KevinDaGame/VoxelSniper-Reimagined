@@ -71,4 +71,6 @@ public interface IWorld {
     Undo generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo);
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
+
+    VoxelBiome getBiome(VoxelLocation location);
 }

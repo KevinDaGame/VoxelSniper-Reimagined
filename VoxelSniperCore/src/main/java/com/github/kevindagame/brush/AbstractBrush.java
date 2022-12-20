@@ -4,13 +4,13 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockHelper;
+import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -34,9 +34,9 @@ public abstract class AbstractBrush implements IBrush {
     private IBlock lastBlock;
 
     /**
-     * The blocks this brush impacts
+     * The operations this brush performs
      */
-    protected Set<VoxelLocation> positions = new HashSet<>();
+    protected List<BrushOperation> operations = new ArrayList<>();
 
     /**
      * Brush name.
@@ -59,7 +59,7 @@ public abstract class AbstractBrush implements IBrush {
 
     @Override
     public boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock) {
-        this.positions.clear();
+        this.operations.clear();
         this.setTargetBlock(targetBlock);
         this.setLastBlock(lastBlock);
         this.snipeAction = action;
@@ -73,9 +73,9 @@ public abstract class AbstractBrush implements IBrush {
             default:
                 return false;
         }
-        var event = new PlayerSnipeEvent(data.owner().getPlayer(), this, this.positions).callEvent();
+        var event = new PlayerSnipeEvent(data.owner().getPlayer(), this, this.operations).callEvent();
         if (!event.isCancelled() && event.getPositions().size() > 0) {
-            this.positions = event.getPositions().stream().filter(p -> isInWorldHeight(p.getBlockY())).collect(Collectors.toSet());
+            this.operations = event.getPositions().stream().filter(p -> isInWorldHeight(p.getLocation().getBlockY())).collect(Collectors.toList());
             return actPerform(data);
         }
         return false;

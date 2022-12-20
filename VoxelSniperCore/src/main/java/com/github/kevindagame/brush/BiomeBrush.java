@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BrushOperation.BiomeOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
@@ -29,7 +30,8 @@ public class BiomeBrush extends AbstractBrush {
             final double xSquared = Math.pow(x, 2);
             for (int z = -brushSize; z <= brushSize; z++) {
                 if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
-                    this.positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() + x, 0, this.getTargetBlock().getZ() + z));
+                    var location = new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() + x, 0, this.getTargetBlock().getZ() + z);
+                    this.operations.add(new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome));
                 }
             }
         }

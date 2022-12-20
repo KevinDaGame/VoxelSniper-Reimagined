@@ -1,23 +1,24 @@
 package com.github.kevindagame.voxelsniper.events.player;
 
 import com.github.kevindagame.brush.IBrush;
+import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.Cancellable;
 import com.github.kevindagame.voxelsniper.events.EventPriority;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
-import java.util.Set;
+
+import java.util.List;
 import java.util.function.Consumer;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements Cancellable {
 
     private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
-    private final Set<VoxelLocation> positions;
+    private final List<BrushOperation> positions;
     private EventResult status;
-    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, Set<VoxelLocation> positions) {
+    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, List<BrushOperation> positions) {
         super(p);
         this.brush = brush;
         this.status = EventResult.DEFAULT;
@@ -28,7 +29,7 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
         return brush;
     }
 
-    public Set<VoxelLocation> getPositions() {
+    public List<BrushOperation> getPositions() {
         return positions;
     }
 

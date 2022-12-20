@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BrushOperation.BiomeOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
@@ -9,6 +10,8 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#biome-ball-brush">...</a>
@@ -41,7 +44,7 @@ public class BiomeBallBrush extends AbstractBrush {
     }
 
     private void biome(final SnipeData v) {
-        this.positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true);
+        this.operations = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true).stream().map(location -> new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome)).collect(toList());
 
     }
 
@@ -85,6 +88,6 @@ public class BiomeBallBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(Collectors.toList());
+        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(toList());
     }
 }

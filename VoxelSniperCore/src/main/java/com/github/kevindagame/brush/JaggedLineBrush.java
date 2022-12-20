@@ -60,7 +60,7 @@ public class JaggedLineBrush extends PerformerBrush {
     }
 
     @Override
-    public final void arrow(final SnipeData v) {
+    public final void doArrow(final SnipeData v) {
         if (originCoords == null) {
             originCoords = new VoxelVector();
         }
@@ -69,7 +69,7 @@ public class JaggedLineBrush extends PerformerBrush {
     }
 
     @Override
-    public final void powder(final SnipeData v) {
+    public final void doPowder(final SnipeData v) {
         if (originCoords == null) {
             v.sendMessage(Messages.FIRST_COORDINATE_NOT_SET);
         } else {

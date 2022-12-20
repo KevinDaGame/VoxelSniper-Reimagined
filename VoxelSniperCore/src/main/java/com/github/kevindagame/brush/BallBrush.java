@@ -31,12 +31,12 @@ public class BallBrush extends PerformerBrush {
 
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.ball(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.ball(v, this.getLastBlock());
     }
 

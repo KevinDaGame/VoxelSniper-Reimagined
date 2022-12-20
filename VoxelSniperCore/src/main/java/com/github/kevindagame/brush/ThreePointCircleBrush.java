@@ -31,7 +31,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         if (this.coordsOne == null) {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
             v.sendMessage(Messages.FIRST_POINT_SELECTED);
@@ -50,7 +50,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         if (this.coordsOne == null || this.coordsTwo == null || this.coordsThree == null) {
             return;
         }

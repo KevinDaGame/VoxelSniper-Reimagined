@@ -6,7 +6,7 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 /**
  * This class is the base class for all operations
  */
-public class BrushOperation implements Cancellable {
+public abstract class BrushOperation implements Cancellable {
 
     private final VoxelLocation location;
     private boolean cancelled;
