@@ -2,6 +2,7 @@ package com.github.kevindagame.util.BrushOperation;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 /**
  * Operation that is performed on a block. This operation modifies blockData.
@@ -32,5 +33,13 @@ public class BlockOperation extends AbstractOperation {
 
     public void setNewData(IBlockData newData) {
         this.newData = newData;
+    }
+
+    /**
+     *
+     * @param newMaterial the material to create blockData for
+     */
+    public void setNewMaterial(VoxelMaterial newMaterial) {
+        this.newData = newMaterial.createBlockData();
     }
 }
