@@ -86,7 +86,7 @@ public class BaseLocation implements Cloneable {
         }
     }
     
-    public VoxelLocation makeMutableLocation() {
+    public VoxelLocation makeMutable() {
         return new VoxelLocation(world, x, y, z, yaw, pitch);
     }
 

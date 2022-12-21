@@ -51,9 +51,9 @@ public class MoveBrush extends MultiBlockBrush {
         if (selection.getBlockWrappers().size() > 0) {
             final IWorld world = selection.getBlockWrappers().get(0).getWorld();
             final Selection newSelection = new Selection();
-            final VoxelLocation movedLocation1 = selection.getLocation1().makeMutableLocation();
+            final VoxelLocation movedLocation1 = selection.getLocation1().makeMutable();
             movedLocation1.add(direction[0], direction[1], direction[2]);
-            final VoxelLocation movedLocation2 = selection.getLocation2().makeMutableLocation();
+            final VoxelLocation movedLocation2 = selection.getLocation2().makeMutable();
             movedLocation2.add(direction[0], direction[1], direction[2]);
             newSelection.setLocation1(movedLocation1);
             newSelection.setLocation2(movedLocation2);

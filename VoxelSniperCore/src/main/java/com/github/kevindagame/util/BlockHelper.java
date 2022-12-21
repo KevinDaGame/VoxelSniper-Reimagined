@@ -225,7 +225,7 @@ public class BlockHelper {
         this.minWorldHeight = world.getMinWorldHeight();
         this.startPoint = location;
 
-        this.current = location.makeMutableLocation();
+        this.current = location.makeMutable();
         this.last = this.current;
         this.direction = location.getDirection();
         this.direction.normalize();

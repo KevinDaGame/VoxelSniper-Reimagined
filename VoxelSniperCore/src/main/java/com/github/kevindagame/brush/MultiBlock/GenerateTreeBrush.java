@@ -50,7 +50,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
 
     // Branch Creation based on direction chosen from the parameters passed.
     private void branchCreate(BaseLocation origin, final int xDirection, final int zDirection) {
-        VoxelLocation location = origin.makeMutableLocation();
+        VoxelLocation location = origin.makeMutable();
 
         // Sets direction preference.
         final int xPreference = this.random.nextInt(60) + 20;
@@ -79,7 +79,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
     }
 
     private void leafNodeCreate(final BaseLocation origin) {
-        VoxelLocation location = origin.makeMutableLocation();
+        VoxelLocation location = origin.makeMutable();
         // Generates the node size.
         final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
@@ -130,7 +130,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
      */
     private void rootCreate(BaseLocation origin, final int xDirection, final int zDirection) {
         // Sets Origin.
-        VoxelLocation location = origin.makeMutableLocation();
+        VoxelLocation location = origin.makeMutable();
 
         // Generates the number of roots to create.
         final int roots = this.random.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
@@ -156,7 +156,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
                 if (location.getBlock().getMaterial() != woodMaterial) {
 
                     // Place log block.
-                    operations.add(new BlockWrapper(location.getBlock()).setMaterial(woodMaterial));
+                    operations.add(new BlockWrapper(location, woodMaterial));
                 } else {
                     // If solid then...
                     // End loop
@@ -241,7 +241,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
      */
     private void trunkGen(final BaseLocation origin) {
         // Sets Origin
-        VoxelLocation location = origin.makeMutableLocation();
+        VoxelLocation location = origin.makeMutable();
 
         // ----------
         // Main Trunk
@@ -288,7 +288,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         this.branchCreate(location, -1, -1);
 
         // Reset Origin for next trunk.
-        location = origin.makeMutableLocation();
+        location = origin.makeMutable();
         location.addY(4);
 
         // ---------------

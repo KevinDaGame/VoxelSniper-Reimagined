@@ -55,12 +55,12 @@ public final class VoxelLocation extends BaseLocation implements Cloneable {
         this.addZ(direction.getZ());
     }
 
-    public BaseLocation makeImmutableLocation() {
+    public BaseLocation makeImmutable() {
         return new BaseLocation(world, x, y, z, yaw, pitch);
     }
 
     @Override
-    public VoxelLocation makeMutableLocation() {
+    public VoxelLocation makeMutable() {
         return this.clone();
     }
 
