@@ -8,18 +8,14 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
  */
 public class EntityRemoveOperation extends BrushOperation {
 
-    private IEntity entity;
+    private final IEntity entity;
 
     public EntityRemoveOperation(BaseLocation location, IEntity entity) {
         super(location);
         this.entity = entity;
     }
 
-    public IEntity getEntityType() {
+    public IEntity getEntity() {
         return entity;
-    }
-
-    public void setEntityType(IEntity entity) {
-        this.entity = entity;
     }
 }

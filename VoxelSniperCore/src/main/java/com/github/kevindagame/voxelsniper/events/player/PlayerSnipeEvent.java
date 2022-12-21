@@ -10,28 +10,27 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements Cancellable {
 
     private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
-    private final List<BrushOperation> positions;
+    private final List<BrushOperation> operations;
     private EventResult status;
-    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, List<BrushOperation> positions) {
+    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, List<BrushOperation> operations) {
         super(p);
         this.brush = brush;
         this.status = EventResult.DEFAULT;
-        this.positions = positions;
+        this.operations = operations;
     }
 
     public IBrush getBrush() {
         return brush;
     }
 
-    public List<BrushOperation> getPositions() {
-        return positions;
+    public List<BrushOperation> getOperations() {
+        return operations;
     }
 
     public EventResult getStatus() {

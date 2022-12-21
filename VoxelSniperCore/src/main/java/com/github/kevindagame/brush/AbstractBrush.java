@@ -3,8 +3,9 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockHelper;
-import com.github.kevindagame.util.BrushOperation.BrushOperation;
+import com.github.kevindagame.util.BrushOperation.*;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
@@ -15,7 +16,6 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 /**
@@ -74,15 +74,68 @@ public abstract class AbstractBrush implements IBrush {
                 return false;
         }
         var event = new PlayerSnipeEvent(data.owner().getPlayer(), this, this.operations).callEvent();
-        if (!event.isCancelled() && event.getPositions().size() > 0) {
-            this.operations = event.getPositions().stream().filter(p -> isInWorldHeight(p.getLocation().getBlockY())).collect(Collectors.toList());
-            return actPerform(data);
+        if (!event.isCancelled() && event.getOperations().size() > 0) {
+            var reloadArea = false;
+            for (var operation: event.getOperations()) {
+                Undo undo = new Undo();
+                reloadArea = reloadArea || executeOperation(operation, undo);
+            }
+            if (reloadArea) {
+                reloadBrushArea(data);
+            }
         }
         return false;
 
 }
 
-    protected abstract boolean actPerform(SnipeData v);
+    private void reloadBrushArea(SnipeData v) {
+        var brushSize = v.getBrushSize();
+        final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
+        final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
+
+        final int lowChunkX = (block1.getX() <= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
+        final int lowChunkZ = (block1.getZ() <= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
+        final int highChunkX = (block1.getX() >= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
+        final int highChunkZ = (block1.getZ() >= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
+
+        for (int x = lowChunkX; x <= highChunkX; x++) {
+            for (int z = lowChunkZ; z <= highChunkZ; z++) {
+                this.getWorld().refreshChunk(x, z);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param operation
+     * @return whether to reload the area
+     */
+    private boolean executeOperation(BrushOperation operation, Undo undo) {
+        if(operation instanceof BlockOperation blockOperation) {
+            var block = blockOperation.getLocation().getBlock();
+            undo.put(block);
+            block.setBlockData(blockOperation.getNewData(), blockOperation.applyPhysics());
+        }
+        else if (operation instanceof BiomeOperation biomeOperation) {
+            var location = biomeOperation.getLocation();
+            getWorld().setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), biomeOperation.getNewBiome());
+            return true;
+        }
+        else if (operation instanceof EntityRemoveOperation entityRemoveOperation) {
+            entityRemoveOperation.getEntity().remove();
+        }
+        else if (operation instanceof EntitySpawnOperation entitySpawnOperation) {
+            var location = entitySpawnOperation.getLocation();
+            getWorld().spawn(location, entitySpawnOperation.getEntityType());
+
+        }
+        return false;
+    }
+
+    protected final boolean actPerform(SnipeData v) {
+        //TODO change this
+        return true;
+    }
 
     /**
      * The arrow action. Executed when a player RightClicks with an Arrow

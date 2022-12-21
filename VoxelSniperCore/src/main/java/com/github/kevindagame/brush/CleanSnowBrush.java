@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.google.common.collect.Lists;
@@ -30,22 +31,14 @@ public class CleanSnowBrush extends AbstractBrush {
     }
 
     private void cleanSnow(final SnipeData v) {
-        this.positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), smoothSphere);
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        var undo = new Undo();
+        var positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), smoothSphere);
         for(var position: positions) {
             IBlock b = position.getBlock();
             IBlock blockDown = b.getRelative(BlockFace.DOWN);
             if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {
-                undo.put(b);
-                b.setMaterial(VoxelMaterial.AIR);
+                operations.add(new BlockOperation(position, b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
         }
-        v.owner().storeUndo(undo);
-        return true;
     }
 
     @Override

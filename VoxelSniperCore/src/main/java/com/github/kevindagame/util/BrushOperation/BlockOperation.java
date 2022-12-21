@@ -37,6 +37,10 @@ public class BlockOperation extends BrushOperation {
         this.newData = newData;
     }
 
+    public boolean applyPhysics() {
+        return applyPhysics;
+    }
+
     /**
      * @param newMaterial the material to create blockData for
      */

@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
@@ -30,21 +31,13 @@ public class DrainBrush extends AbstractBrush {
     }
 
     private void drain(final SnipeData v) {
-        positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
+        var positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
         for (var pos : positions) {
             var block = pos.getBlock();
             if (block.getMaterial().isFluid()) {
-                undo.put(block);
-                block.setMaterial(VoxelMaterial.AIR);
+                operations.add(new BlockOperation(pos, block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
         }
-        v.owner().storeUndo(undo);
-        return true;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
@@ -55,17 +57,8 @@ public class BlockResetBrush extends AbstractBrush {
     }
 
     private void applyBrush(final SnipeData v) {
-        this.positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().filter(p -> BlockResetBrush.DENIED_UPDATES.contains(p.getBlock().getMaterial())).collect(Collectors.toSet());
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        for (var position : positions) {
-            final IBlock block = position.getBlock();
-            // Resets the block state to initial state by creating a new BlockData with default values.
-            block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
-        }
-        return true;
+        this.operations = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)
+                .filter(block -> BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())).map(b -> new BlockOperation(b.getLocation(), b.getBlockData(), b.getBlockData().getMaterial().createBlockData())).collect(Collectors.toList());
     }
 
     @Override

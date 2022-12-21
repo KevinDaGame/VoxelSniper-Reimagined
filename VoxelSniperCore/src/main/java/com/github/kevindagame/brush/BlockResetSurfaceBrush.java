@@ -2,9 +2,11 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -91,7 +93,9 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
                     airFound = checkBlock(world, x, y, z - 1, airFound);
 
                     if (airFound) {
-                        positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z));
+                        var location = new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+
+                        resetBlock(location);
                     }
                 }
             }
@@ -101,27 +105,16 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
     private boolean checkBlock(IWorld world, int x, int y, int z, boolean airFound) {
         IBlock block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
         if (block.getMaterial().isAir()) {
-            positions.add(block.getLocation());
+            resetBlock(block.getLocation());
             airFound = true;
         }
         return airFound;
     }
 
-    private void resetBlock(IBlock block) {
-        // Resets the block state to initial state by creating a new BlockData with default values.
-        block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for(BaseLocation position: positions) {
-            var block = position.getBlock();
-            undo.put(block);
-            resetBlock(block);
-        }
-        v.owner().storeUndo(undo);
-        return true;
+    private void resetBlock(BaseLocation location) {
+        // create an operation to reset the block
+        var block = location.getBlock();
+        operations.add(new BlockOperation(location, block.getBlockData(), block.getMaterial().createBlockData()));
     }
 
     @Override

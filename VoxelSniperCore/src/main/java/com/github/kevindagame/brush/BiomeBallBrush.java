@@ -47,29 +47,6 @@ public class BiomeBallBrush extends AbstractBrush {
         this.operations = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true).stream().map(location -> new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome)).collect(toList());
 
     }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        this.positions.forEach(position -> position.getWorld().setBiome(position.getBlockX(), position.getBlockY(), position.getBlockZ(), selectedBiome));
-
-        var brushSize = v.getBrushSize();
-
-        //refresh chunks
-        final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
-        final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
-
-        final int lowChunkX = (block1.getX() <= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
-        final int lowChunkZ = (block1.getZ() <= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
-        final int highChunkX = (block1.getX() >= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
-        final int highChunkZ = (block1.getZ() >= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
-
-        for (int x = lowChunkX; x <= highChunkX; x++) {
-            for (int z = lowChunkZ; z <= highChunkZ; z++) {
-                this.getWorld().refreshChunk(x, z);
-            }
-        }
-        return true;
-    }
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
