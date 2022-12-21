@@ -20,7 +20,7 @@ public class BlockOperation extends BrushOperation {
         this.applyPhysics = true;
     }
 
-    public BlockOperation(VoxelLocation location, IBlockData oldData, IBlockData newData, boolean applyPhysics) {
+    public BlockOperation(BaseLocation location, IBlockData oldData, IBlockData newData, boolean applyPhysics) {
         this(location, oldData, newData);
         this.applyPhysics = applyPhysics;
     }

@@ -124,8 +124,8 @@ public class BaseLocation implements Cloneable {
     }
 
     @Override
-    public final String toString() {
-        return "VoxelLocation{" +
+    public String toString() {
+        return "BaseLocation{" +
                 "x=" + x +
                 ", y=" + y +
                 ", z=" + z +

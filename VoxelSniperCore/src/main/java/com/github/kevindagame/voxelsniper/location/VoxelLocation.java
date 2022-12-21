@@ -68,4 +68,15 @@ public final class VoxelLocation extends BaseLocation implements Cloneable {
     public VoxelLocation clone() {
         return (VoxelLocation) super.clone();
     }
+
+    @Override
+    public String toString() {
+        return "VoxelLocation{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                ", yaw=" + yaw +
+                ", pitch=" + pitch +
+                '}';
+    }
 }

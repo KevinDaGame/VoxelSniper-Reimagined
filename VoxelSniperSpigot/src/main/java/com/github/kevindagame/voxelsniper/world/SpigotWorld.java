@@ -124,7 +124,7 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public VoxelBiome getBiome(VoxelLocation location) {
+    public VoxelBiome getBiome(BaseLocation location) {
         return VoxelBiome.getBiome(world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ()).getKey().getKey());
     }
 }

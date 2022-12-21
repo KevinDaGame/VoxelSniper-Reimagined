@@ -5,7 +5,7 @@
 package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -25,7 +25,7 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
         return currentPerformer;
     }
 
-    protected Set<VoxelLocation> positions = new HashSet<>();
+    protected Set<BaseLocation> positions = new HashSet<>();
 
     public void sendPerformerMessage(String triggerHandle, SnipeData v) {
         v.sendMessage(Messages.PERFORMER_MESSAGE.replace("%triggerHandle%", triggerHandle));

@@ -92,7 +92,7 @@ public class BlockWrapper implements Cloneable {
     }
 
     /**
-     * @return the VoxelLocation
+     * @return the BaseLocation
      */
     public final BaseLocation getLocation() {
         return new BaseLocation(this.world, this.x, this.y, this.z);

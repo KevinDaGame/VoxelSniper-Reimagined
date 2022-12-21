@@ -72,5 +72,5 @@ public interface IWorld {
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 
-    VoxelBiome getBiome(VoxelLocation location);
+    VoxelBiome getBiome(BaseLocation location);
 }
