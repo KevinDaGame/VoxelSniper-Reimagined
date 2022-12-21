@@ -3,7 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
  * @author MikeMatrix
@@ -31,8 +31,8 @@ public class WarpBrush extends AbstractBrush {
     @Override
     protected final void arrow(final SnipeData v) {
         IPlayer player = v.owner().getPlayer();
-        VoxelLocation location = this.getLastBlock().getLocation();
-        VoxelLocation playerLocation = player.getLocation();
+        BaseLocation location = this.getLastBlock().getLocation();
+        BaseLocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
 
@@ -42,8 +42,8 @@ public class WarpBrush extends AbstractBrush {
     @Override
     protected final void powder(final SnipeData v) {
         IPlayer player = v.owner().getPlayer();
-        VoxelLocation location = this.getLastBlock().getLocation();
-        VoxelLocation playerLocation = player.getLocation();
+        BaseLocation location = this.getLastBlock().getLocation();
+        BaseLocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
 

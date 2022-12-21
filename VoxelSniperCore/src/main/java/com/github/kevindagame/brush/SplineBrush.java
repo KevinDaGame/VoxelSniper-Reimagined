@@ -1,6 +1,6 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -95,7 +95,7 @@ public class SplineBrush extends PerformerBrush {
                 final int px = (int) Math.round((a.getX() * (t * t * t)) + (b.getX() * (t * t)) + (c.getX() * t) + start.getX());
                 final int py = (int) Math.round((a.getY() * (t * t * t)) + (b.getY() * (t * t)) + (c.getY() * t) + start.getY());
                 final int pz = (int) Math.round((a.getZ() * (t * t * t)) + (b.getZ() * (t * t)) + (c.getZ() * t) + start.getZ());
-                positions.add(new VoxelLocation(getWorld(), px, py, pz));
+                positions.add(new BaseLocation(getWorld(), px, py, pz));
             }
 
             return true;

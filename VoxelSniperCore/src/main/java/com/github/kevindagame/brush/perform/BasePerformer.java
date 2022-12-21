@@ -10,7 +10,7 @@ import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.List;
@@ -40,8 +40,8 @@ public abstract class BasePerformer implements Predicate<IBlock> {
 
     protected abstract BlockOperation perform(IBlock b);
 
-    public List<BrushOperation> perform(Set<VoxelLocation> positions) {
-        return positions.stream().map(VoxelLocation::getBlock).filter(this).map(this::perform).collect(Collectors.toList());
+    public List<BrushOperation> perform(Set<BaseLocation> positions) {
+        return positions.stream().map(BaseLocation::getBlock).filter(this).map(this::perform).collect(Collectors.toList());
     }
 
     public Undo getAndClearUndo() {

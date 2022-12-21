@@ -6,7 +6,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public interface IWorld {
-    IBlock getBlock(VoxelLocation location);
+    IBlock getBlock(BaseLocation location);
 
     IBlock getBlock(int x, int y, int z);
 
@@ -31,7 +31,7 @@ public interface IWorld {
      */
     IChunk getChunkAtLocation(int x, int z);
 
-    default IChunk getChunkAtLocation(VoxelLocation location) {
+    default IChunk getChunkAtLocation(BaseLocation location) {
         return getChunkAtLocation(((int) Math.floor(location.getBlockX() / 16f)), ((int) Math.floor(location.getBlockZ() / 16f)));
     }
 
@@ -50,15 +50,15 @@ public interface IWorld {
      * @return the collection of entities near location. This will always be a
      *      non-null collection.
      */
-    List<IEntity> getNearbyEntities(VoxelLocation location, double x, double y, double z);
+    List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z);
 
     void refreshChunk(int x, int z);
 
-    void strikeLightning(VoxelLocation location);
+    void strikeLightning(BaseLocation location);
 
     String getName();
 
-    void spawn(VoxelLocation location, VoxelEntityType entity);
+    void spawn(BaseLocation location, VoxelEntityType entity);
 
     void setBiome(int x, int z, VoxelBiome selectedBiome);
 
@@ -68,9 +68,9 @@ public interface IWorld {
 
     void regenerateChunk(int x, int z);
 
-    Undo generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo);
+    Undo generateTree(BaseLocation location, VoxelTreeType treeType, Undo undo);
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 
-    VoxelBiome getBiome(VoxelLocation location);
+    VoxelBiome getBiome(BaseLocation location);
 }

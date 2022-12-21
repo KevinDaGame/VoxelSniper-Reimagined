@@ -3,7 +3,7 @@ package com.github.kevindagame.voxelsniper.entity;
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
 import com.github.kevindagame.voxelsniper.entity.Painting.SpigotPainting;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -48,9 +48,9 @@ public class SpigotEntity implements IEntity {
     }
 
     @Override
-    public VoxelLocation getLocation() {
+    public BaseLocation getLocation() {
         Location loc = entity.getLocation();
-        return new VoxelLocation(getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        return new BaseLocation(getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 
     @Override
@@ -74,10 +74,10 @@ public class SpigotEntity implements IEntity {
     }
 
     @Override
-    public VoxelLocation getEyeLocation() {
+    public BaseLocation getEyeLocation() {
         if (entity instanceof LivingEntity living) {
             Location loc = living.getEyeLocation();
-            return new VoxelLocation(getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+            return new BaseLocation(getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
         }
         return this.getLocation();
     }

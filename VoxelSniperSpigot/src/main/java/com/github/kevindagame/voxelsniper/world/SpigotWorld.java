@@ -10,7 +10,7 @@ import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.SpigotLocation;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import org.bukkit.TreeType;
@@ -27,7 +27,7 @@ import java.util.Locale;
 public record SpigotWorld(World world) implements IWorld {
 
     @Override
-    public IBlock getBlock(VoxelLocation location) {
+    public IBlock getBlock(BaseLocation location) {
         return new SpigotBlock(world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
@@ -52,7 +52,7 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public List<IEntity> getNearbyEntities(VoxelLocation location, double x, double y, double z) {
+    public List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z) {
         return this.world.getNearbyEntities(SpigotLocation.toSpigotLocation(location), x, y, z).stream().map(SpigotEntity::fromSpigotEntity).toList();
     }
 
@@ -62,7 +62,7 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public void strikeLightning(VoxelLocation location) {
+    public void strikeLightning(BaseLocation location) {
         world.strikeLightning(SpigotLocation.toSpigotLocation(location));
     }
 
@@ -72,7 +72,7 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public void spawn(VoxelLocation location, VoxelEntityType entity) {
+    public void spawn(BaseLocation location, VoxelEntityType entity) {
         world.spawnEntity(SpigotLocation.toSpigotLocation(location), EntityType.valueOf(entity.getKey().toUpperCase(Locale.ROOT)));
     }
 
@@ -98,7 +98,7 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public Undo generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo) {
+    public Undo generateTree(BaseLocation location, VoxelTreeType treeType, Undo undo) {
         if (treeType.isSupported()) {
             SpigotUndoDelegate undoDelegate = new SpigotUndoDelegate(world, undo);
             TreeType bukkitType = TreeType.valueOf(treeType.name());
@@ -124,7 +124,7 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public VoxelBiome getBiome(VoxelLocation location) {
+    public VoxelBiome getBiome(BaseLocation location) {
         return VoxelBiome.getBiome(world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ()).getKey().getKey());
     }
 }

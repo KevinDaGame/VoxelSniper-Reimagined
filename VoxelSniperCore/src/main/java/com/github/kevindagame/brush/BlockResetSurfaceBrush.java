@@ -4,7 +4,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -91,7 +91,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
                     airFound = checkBlock(world, x, y, z - 1, airFound);
 
                     if (airFound) {
-                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z));
+                        positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z));
                     }
                 }
             }
@@ -115,7 +115,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
     @Override
     protected boolean actPerform(SnipeData v) {
         Undo undo = new Undo();
-        for(VoxelLocation position: positions) {
+        for(BaseLocation position: positions) {
             var block = position.getBlock();
             undo.put(block);
             resetBlock(block);

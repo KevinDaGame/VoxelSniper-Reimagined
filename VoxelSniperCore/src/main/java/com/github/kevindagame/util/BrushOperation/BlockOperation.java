@@ -1,7 +1,7 @@
 package com.github.kevindagame.util.BrushOperation;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 /**
@@ -13,14 +13,14 @@ public class BlockOperation extends BrushOperation {
     private IBlockData newData;
     private boolean applyPhysics;
 
-    public BlockOperation(VoxelLocation location, IBlockData oldData, IBlockData newData) {
+    public BlockOperation(BaseLocation location, IBlockData oldData, IBlockData newData) {
         super(location);
         this.oldData = oldData;
         this.newData = newData;
         this.applyPhysics = true;
     }
 
-    public BlockOperation(VoxelLocation location, IBlockData oldData, IBlockData newData, boolean applyPhysics) {
+    public BlockOperation(BaseLocation location, IBlockData oldData, IBlockData newData, boolean applyPhysics) {
         this(location, oldData, newData);
         this.applyPhysics = applyPhysics;
     }

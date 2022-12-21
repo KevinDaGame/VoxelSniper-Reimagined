@@ -2,7 +2,7 @@ package com.github.kevindagame.util;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -26,6 +26,18 @@ public class BlockWrapper implements Cloneable {
         this.setY(block.getY());
         this.setZ(block.getZ());
         this.setWorld(block.getWorld());
+    }
+
+    /**
+     * @param location
+     * @param material
+     */
+    public BlockWrapper(final BaseLocation location, final VoxelMaterial material) {
+        this.setMaterial(material);
+        this.setX(location.getBlockX());
+        this.setY(location.getBlockY());
+        this.setZ(location.getBlockZ());
+        this.setWorld(location.getWorld());
     }
 
     /**
@@ -80,10 +92,10 @@ public class BlockWrapper implements Cloneable {
     }
 
     /**
-     * @return the VoxelLocation
+     * @return the BaseLocation
      */
-    public final VoxelLocation getLocation() {
-        return new VoxelLocation(this.world, this.x, this.y, this.z);
+    public final BaseLocation getLocation() {
+        return new BaseLocation(this.world, this.x, this.y, this.z);
     }
 
     /**

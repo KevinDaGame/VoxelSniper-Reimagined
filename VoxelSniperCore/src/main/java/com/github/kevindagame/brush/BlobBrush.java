@@ -1,6 +1,6 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -110,7 +110,7 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        positions.add(new BaseLocation(this.getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
@@ -184,7 +184,7 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        positions.add(new VoxelLocation(getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }

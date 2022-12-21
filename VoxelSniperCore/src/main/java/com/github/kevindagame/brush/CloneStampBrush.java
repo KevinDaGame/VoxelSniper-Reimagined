@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class CloneStampBrush extends StampBrush {
 
-    private VoxelLocation startingPoint;
+    private BaseLocation startingPoint;
 
     /**
      *
@@ -38,8 +39,9 @@ public class CloneStampBrush extends StampBrush {
      * @param v the caller
      */
     private void clone(final SnipeData v) {
-        this.startingPoint = getTargetBlock().getLocation().clone();
-        this.startingPoint.add(0, v.getcCen(), 0);
+        VoxelLocation point = getTargetBlock().getLocation().makeMutable();
+        point.add(0, v.getcCen(), 0);
+        this.startingPoint = point.makeImmutable();
         this.positions = Shapes.cylinder(startingPoint, v.getBrushSize(), v.getVoxelHeight(), 0, false);
 
     }

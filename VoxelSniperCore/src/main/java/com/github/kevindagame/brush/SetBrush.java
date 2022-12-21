@@ -5,7 +5,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#set-brush">...</a>
@@ -55,7 +55,7 @@ public class SetBrush extends PerformerBrush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            this.positions.add(new VoxelLocation(getWorld(), x, y, z));
+                            this.positions.add(new BaseLocation(getWorld(), x, y, z));
                         }
                     }
                 }

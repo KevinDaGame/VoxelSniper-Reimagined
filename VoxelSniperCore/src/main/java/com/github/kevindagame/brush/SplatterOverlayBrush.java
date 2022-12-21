@@ -1,18 +1,15 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
-import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelList;
-import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#splatter-overlay-brush">...</a>
@@ -86,7 +83,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
-                                            this.positions.add(new VoxelLocation(this.getWorld(), this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z));
+                                            this.positions.add(new BaseLocation(this.getWorld(), this.getTargetBlock().getX() + x, y + d + yOffset, this.getTargetBlock().getZ() + z));
                                         }
                                         checked = true; // stop it from checking any other blocks in this vertical 1x1 column.
                                     }

@@ -10,6 +10,7 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements Cancellable {
