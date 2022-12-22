@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BrushOperation.EntitySpawnOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
@@ -27,7 +28,7 @@ public class EntityBrush extends AbstractBrush {
     private void spawn(final SnipeData v) {
         for (int x = 0; x < v.getBrushSize(); x++) {
             try {
-                this.getWorld().spawn(this.getLastBlock().getLocation(), this.entityType);
+                operations.add(new EntitySpawnOperation(this.getLastBlock().getLocation(), entityType));
             } catch (final IllegalArgumentException exception) {
                 v.sendMessage(Messages.ENTITYBRUSH_SPAWN_FAIL);
             }
@@ -35,19 +36,13 @@ public class EntityBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        spawn(v);
-        return true;
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
-        this.positions.add(getLastBlock().getLocation());
+        spawn(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.positions.add(getLastBlock().getLocation());
+        spawn(v);
     }
 
     @Override

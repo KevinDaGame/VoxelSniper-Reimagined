@@ -24,11 +24,6 @@ public class WarpBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        return true;
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
         IPlayer player = v.owner().getPlayer();
         BaseLocation location = this.getLastBlock().getLocation();

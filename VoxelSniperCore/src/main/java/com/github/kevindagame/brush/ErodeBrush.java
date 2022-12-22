@@ -1,8 +1,8 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.base.Objects;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -10,6 +10,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.google.common.base.Objects;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,16 +35,6 @@ public class ErodeBrush extends AbstractBrush {
         this.setName("Erode");
     }
 
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        var undo = new Undo();
-        for (final BlockWrapper blockWrapper : blockTracker.getAll()) {
-            undo.put(blockWrapper.getBlock());
-            blockWrapper.getBlock().setBlockData(blockWrapper.getBlockData(), true);
-        }
-        v.owner().storeUndo(undo);
-        return true;
-    }
 
     @Override
     protected final void arrow(final SnipeData v) {
@@ -55,7 +46,6 @@ public class ErodeBrush extends AbstractBrush {
         this.erosion(v, this.currentPreset.getInverted());
     }
 
-    @SuppressWarnings("deprecation")
     private void erosion(final SnipeData v, final ErosionPreset erosionPreset) {
         final BlockChangeTracker blockChangeTracker = new BlockChangeTracker(this.getTargetBlock().getWorld());
 
@@ -68,7 +58,7 @@ public class ErodeBrush extends AbstractBrush {
         for (int i = 0; i < erosionPreset.getFillRecursion(); ++i) {
             fillIteration(v, erosionPreset, blockChangeTracker, targetBlockVector);
         }
-        blockChangeTracker.getAll().forEach(block -> positions.add(block.block.getLocation()));
+        blockChangeTracker.getAll().forEach(block -> operations.add(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData )));
         this.blockTracker = blockChangeTracker;
     }
 

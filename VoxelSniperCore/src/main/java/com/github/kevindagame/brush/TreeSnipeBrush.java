@@ -71,16 +71,6 @@ public class TreeSnipeBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for (var operation : this.operations) {
-            // do something
-        }
-        v.owner().storeUndo(undo);
-        return true;
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
         IBlock targetBlock = getTargetBlock().getRelative(0, getYOffset(), 0);
         this.single(v, targetBlock);

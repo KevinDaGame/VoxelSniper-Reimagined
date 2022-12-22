@@ -2,12 +2,10 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.Set;
 
@@ -40,23 +38,15 @@ public class EraserBrush extends AbstractBrush {
 
     private void doErase(final SnipeData v) {
 
-        positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        for(var pos: positions) {
+        var positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
+        for (var pos : positions) {
             var currentBlock = pos.getBlock();
             if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
                     || (snipeAction == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                 continue;
             }
-            undo.put(currentBlock);
-            currentBlock.setMaterial(VoxelMaterial.AIR);
+            operations.add(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
         }
-        v.owner().storeUndo(undo);
-        return true;
     }
 
     @Override
