@@ -1,38 +1,18 @@
-package com.github.kevindagame.util.BrushOperation;
+package com.github.kevindagame.util.BrushOperation
 
-import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
-import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.snipe.Undo
+import com.github.kevindagame.voxelsniper.biome.VoxelBiome
+import com.github.kevindagame.voxelsniper.location.BaseLocation
 
 /**
  * Represents a brush operation that changes the biome of a location.
  */
-public class BiomeOperation extends BrushOperation {
-    private final VoxelBiome oldBiome;
-    private VoxelBiome newBiome;
+class BiomeOperation(location: BaseLocation, val oldBiome: VoxelBiome, var newBiome: VoxelBiome) :
+    BrushOperation(location) {
 
-    public BiomeOperation(BaseLocation location, VoxelBiome oldBiome, VoxelBiome newBiome) {
-        super(location);
-        this.oldBiome = oldBiome;
-        this.newBiome = newBiome;
-    }
-
-    public VoxelBiome getOldBiome() {
-        return oldBiome;
-    }
-
-    public VoxelBiome getNewBiome() {
-        return newBiome;
-    }
-
-    public void setNewBiome(VoxelBiome newBiome) {
-        this.newBiome = newBiome;
-    }
-
-    @Override
-    public boolean perform(Undo undo) {
-        var location = getLocation();
-        getLocation().getWorld().setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), getNewBiome());
-        return true;
+    override fun perform(undo: Undo): Boolean {
+        val location = location
+        location.world.setBiome(location.blockX, location.blockY, location.blockZ, newBiome)
+        return true
     }
 }

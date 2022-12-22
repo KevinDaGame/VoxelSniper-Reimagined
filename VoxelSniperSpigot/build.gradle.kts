@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("voxel-implementation")
     id("xyz.jpenilla.run-paper") version "1.0.6"
+    kotlin("jvm") version "1.7.22"
 }
 
 
@@ -10,6 +13,7 @@ dependencies {
     implementation("net.kyori:adventure-platform-bukkit:4.1.1")
 
     testImplementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 description = "VoxelSniperSpigot"
@@ -50,4 +54,15 @@ tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run19") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
     minecraftVersion("1.19.3")
+}
+repositories {
+    mavenCentral()
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }

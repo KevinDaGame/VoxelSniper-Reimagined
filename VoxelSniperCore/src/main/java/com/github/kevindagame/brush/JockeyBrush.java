@@ -1,5 +1,7 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.CustomOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -8,6 +10,7 @@ import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,7 +22,7 @@ import java.util.Set;
  * @author Monofraps
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#jockey-brush">...</a>
  */
-public class JockeyBrush extends AbstractBrush {
+public class JockeyBrush extends CustomBrush {
 
     private static final int ENTITY_STACK_LIMIT = 50;
     private JockeyType jockeyType = JockeyType.NORMAL;
@@ -114,53 +117,13 @@ public class JockeyBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        switch (this.snipeAction) {
-            case GUNPOWDER:
-                // invers || stack: remove passenger(s) from player
-                // normal: remove player from pasenger (jockeyedEntity)
-                if (jockeyType == JockeyType.INVERSE || jockeyType == JockeyType.STACK) {
-                    Set<IEntity> foundPassengers = new HashSet<>();
-                    foundPassengers.add(v.owner().getPlayer());
-                    while (foundPassengers.size() > 0) {
-                        Set<IEntity> entities = foundPassengers;
-                        foundPassengers = new HashSet<>();
-                        for (IEntity e : entities) {
-                            List<IEntity> passengers = e.getPassengers();
-                            if (passengers.size() > 0) {
-                                foundPassengers.addAll(passengers);
-                                e.eject();
-                            }
-                        }
-                    }
-                } else {
-                    if (jockeyedEntity != null) {
-                        jockeyedEntity.eject();
-                        jockeyedEntity = null;
-                        v.sendMessage(Messages.YOU_HAVE_BEEN_EJECTED);
-                    }
-                }
-                return true;
-            case ARROW:
-                if (jockeyType == JockeyType.STACK) {
-                    stack(v);
-                } else {
-                    this.sitOn(v);
-                }
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
-        positions.add(this.getTargetBlock().getLocation());
+        operations.add(new CustomOperation(getTargetBlock().getLocation(), this, v));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        positions.add(this.getTargetBlock().getLocation());
+        operations.add(new CustomOperation(getTargetBlock().getLocation(), this, v));
     }
 
     @Override
@@ -198,6 +161,46 @@ public class JockeyBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.jockey";
+    }
+
+    @Override
+    public boolean perform(@NotNull BaseLocation location, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        switch (this.snipeAction) {
+            case GUNPOWDER:
+                // invers || stack: remove passenger(s) from player
+                // normal: remove player from pasenger (jockeyedEntity)
+                if (jockeyType == JockeyType.INVERSE || jockeyType == JockeyType.STACK) {
+                    Set<IEntity> foundPassengers = new HashSet<>();
+                    foundPassengers.add(snipeData.owner().getPlayer());
+                    while (foundPassengers.size() > 0) {
+                        Set<IEntity> entities = foundPassengers;
+                        foundPassengers = new HashSet<>();
+                        for (IEntity e : entities) {
+                            List<IEntity> passengers = e.getPassengers();
+                            if (passengers.size() > 0) {
+                                foundPassengers.addAll(passengers);
+                                e.eject();
+                            }
+                        }
+                    }
+                } else {
+                    if (jockeyedEntity != null) {
+                        jockeyedEntity.eject();
+                        jockeyedEntity = null;
+                        snipeData.sendMessage(Messages.YOU_HAVE_BEEN_EJECTED);
+                    }
+                }
+                return true;
+            case ARROW:
+                if (jockeyType == JockeyType.STACK) {
+                    stack(snipeData);
+                } else {
+                    this.sitOn(snipeData);
+                }
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
