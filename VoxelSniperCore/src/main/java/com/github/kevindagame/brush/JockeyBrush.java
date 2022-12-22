@@ -12,10 +12,7 @@ import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Voxel
@@ -118,12 +115,12 @@ public class JockeyBrush extends CustomBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        operations.add(new CustomOperation(getTargetBlock().getLocation(), this, v));
+        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        operations.add(new CustomOperation(getTargetBlock().getLocation(), this, v));
+        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v));
     }
 
     @Override
@@ -165,7 +162,7 @@ public class JockeyBrush extends CustomBrush {
 
     @Override
     public boolean perform(@NotNull BaseLocation location, @NotNull SnipeData snipeData, @NotNull Undo undo) {
-        switch (this.snipeAction) {
+        switch (Objects.requireNonNull(getSnipeAction())) {
             case GUNPOWDER:
                 // invers || stack: remove passenger(s) from player
                 // normal: remove player from pasenger (jockeyedEntity)

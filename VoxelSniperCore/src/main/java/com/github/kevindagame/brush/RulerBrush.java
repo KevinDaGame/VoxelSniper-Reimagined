@@ -5,6 +5,8 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
+import java.util.Objects;
+
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ruler-brush">...</a>
  *
@@ -28,7 +30,7 @@ public class RulerBrush extends AbstractBrush {
 
     @Override
     protected boolean actPerform(SnipeData v) {
-        switch (snipeAction) {
+        switch (Objects.requireNonNull(getSnipeAction())) {
             case ARROW -> {
                 if (positions.size() == 1) {
                         this.coords = positions.stream().toList().get(0).toVector();

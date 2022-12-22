@@ -38,7 +38,7 @@ public class TreeSnipeBrush extends AbstractBrush {
         if (result != null) {
             // don't include the clicked block
             BaseLocation targetLocation = targetBlock.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
-            this.operations.addAll(result.stream().filter((o) -> !o.getLocation().equals(targetLocation)).toList());
+            getOperations().addAll(result.stream().filter((o) -> !o.getLocation().equals(targetLocation)).toList());
         }
     }
 

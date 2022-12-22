@@ -112,7 +112,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
     private void resetBlock(BaseLocation location) {
         // create an operation to reset the block
         var block = location.getBlock();
-        operations.add(new BlockOperation(location, block.getBlockData(), block.getMaterial().createBlockData()));
+        getOperations().add(new BlockOperation(location, block.getBlockData(), block.getMaterial().createBlockData()));
     }
 
     @Override

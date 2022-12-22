@@ -93,12 +93,12 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     @Override
     protected final void arrow(SnipeData v) {
         doArrow(v);
-        operations = currentPerformer.perform(positions);
+        setOperations(currentPerformer.perform(positions));
     }
 
     @Override
     protected final void powder(SnipeData v) {
         doPowder(v);
-        operations = currentPerformer.perform(positions);
+        setOperations(currentPerformer.perform(positions));
     }
 }

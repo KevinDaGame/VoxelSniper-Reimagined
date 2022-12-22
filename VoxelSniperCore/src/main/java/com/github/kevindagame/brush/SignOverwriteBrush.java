@@ -11,6 +11,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Overwrites signs. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#sign-overwrite-brush-brush">...</a>
@@ -102,7 +103,7 @@ public class SignOverwriteBrush extends AbstractBrush {
 
     @Override
     protected boolean actPerform(SnipeData v) {
-        switch(snipeAction) {
+        switch(Objects.requireNonNull(getSnipeAction())) {
             case ARROW -> {
                 if (this.rangedMode) {
                     setRanged(v);

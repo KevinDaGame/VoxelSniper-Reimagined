@@ -8,6 +8,8 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.IRedstoneWire;
 
+import java.util.Objects;
+
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#voltmeter-brush">...</a>
  *
@@ -45,7 +47,7 @@ public class VoltMeterBrush extends AbstractBrush {
 
     @Override
     protected boolean actPerform(SnipeData v) {
-        switch (this.snipeAction) {
+        switch (Objects.requireNonNull(this.getSnipeAction())) {
             case ARROW:
                 volt(v);
                 return true;

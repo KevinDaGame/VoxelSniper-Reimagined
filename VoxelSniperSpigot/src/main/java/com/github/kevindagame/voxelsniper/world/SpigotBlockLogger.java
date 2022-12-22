@@ -29,7 +29,7 @@ public class SpigotBlockLogger implements BlockChangeDelegate {
     @Override
     public boolean setBlockData(int x, int y, int z, @NotNull BlockData blockData) {
         var oldData = SpigotBlockData.fromSpigotData(getBlockData(x, y, z));
-        this.operations.add(new BlockOperation(new BaseLocation(this.world, x, y, z), oldData, SpigotBlockData.fromSpigotData(blockData)));
+        operations.add(new BlockOperation(new BaseLocation(this.world, x, y, z), oldData, SpigotBlockData.fromSpigotData(blockData)));
 //        this.currentUndo.put(SpigotBlockState.fromSpigotState(targetWorld.getBlockAt(x, y, z).getState()));
 //        this.targetWorld.getBlockAt(x, y, z).setBlockData(blockData, false);
         return true;

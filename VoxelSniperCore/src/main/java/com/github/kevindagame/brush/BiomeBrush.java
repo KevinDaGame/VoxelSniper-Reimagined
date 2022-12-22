@@ -30,7 +30,7 @@ public class BiomeBrush extends AbstractBrush {
             for (int z = -brushSize; z <= brushSize; z++) {
                 if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
                     var location = new BaseLocation(this.getWorld(), this.getTargetBlock().getX() + x, 0, this.getTargetBlock().getZ() + z);
-                    this.operations.add(new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome));
+                    this.getOperations().add(new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome));
                 }
             }
         }

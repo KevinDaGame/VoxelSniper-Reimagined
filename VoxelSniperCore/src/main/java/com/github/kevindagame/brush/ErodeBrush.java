@@ -57,7 +57,7 @@ public class ErodeBrush extends AbstractBrush {
         for (int i = 0; i < erosionPreset.getFillRecursion(); ++i) {
             fillIteration(v, erosionPreset, blockChangeTracker, targetBlockVector);
         }
-        blockChangeTracker.getAll().forEach(block -> operations.add(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData )));
+        blockChangeTracker.getAll().forEach(block -> getOperations().add(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData )));
         this.blockTracker = blockChangeTracker;
     }
 

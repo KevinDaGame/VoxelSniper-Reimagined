@@ -28,7 +28,7 @@ public class EntityBrush extends AbstractBrush {
     private void spawn(final SnipeData v) {
         for (int x = 0; x < v.getBrushSize(); x++) {
             try {
-                operations.add(new EntitySpawnOperation(this.getLastBlock().getLocation(), entityType));
+                getOperations().add(new EntitySpawnOperation(this.getLastBlock().getLocation(), entityType));
             } catch (final IllegalArgumentException exception) {
                 v.sendMessage(Messages.ENTITYBRUSH_SPAWN_FAIL);
             }

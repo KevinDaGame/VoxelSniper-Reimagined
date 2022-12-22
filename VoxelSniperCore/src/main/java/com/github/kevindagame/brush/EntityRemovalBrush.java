@@ -84,7 +84,7 @@ public class EntityRemovalBrush extends AbstractBrush {
                 continue;
             }
 
-            operations.add(new EntityRemoveOperation(entity.getLocation(), entity));
+            getOperations().add(new EntityRemoveOperation(entity.getLocation(), entity));
             entityCount++;
         }
 

@@ -42,10 +42,10 @@ public class EraserBrush extends AbstractBrush {
         for (var pos : positions) {
             var currentBlock = pos.getBlock();
             if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
-                    || (snipeAction == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
+                    || (getSnipeAction() == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                 continue;
             }
-            operations.add(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            getOperations().add(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
         }
     }
 

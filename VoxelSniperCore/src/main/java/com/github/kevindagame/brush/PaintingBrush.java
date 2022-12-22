@@ -4,6 +4,8 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.VoxelMessage;
 
+import java.util.Objects;
+
 /**
  * Painting scrolling Brush. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#painting-brush">...</a>
  *
@@ -20,7 +22,7 @@ public class PaintingBrush extends AbstractBrush {
 
     @Override
     protected boolean actPerform(SnipeData v) {
-        switch(this.snipeAction) {
+        switch(Objects.requireNonNull(getSnipeAction())) {
             case ARROW:
                 BlockHelper.painting(v.owner().getPlayer(), true, false, 0);
                 return true;
