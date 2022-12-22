@@ -1,5 +1,6 @@
 package com.github.kevindagame.util.BrushOperation;
 
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.events.Cancellable;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
@@ -15,8 +16,6 @@ public abstract class BrushOperation implements Cancellable {
         this.location = location;
     }
 
-
-
     @Override
     public boolean isCancelled() {
         return cancelled;
@@ -30,4 +29,15 @@ public abstract class BrushOperation implements Cancellable {
     public BaseLocation getLocation() {
         return location;
     }
+
+    /**
+     * DO NOT USE THIS METHOD
+     * Performs the operation.
+     *
+     * @param undo the undo object to add the operation to
+     *
+     * @return whether to reload the brush area
+     */
+    @Deprecated
+    public abstract boolean perform(Undo undo);
 }

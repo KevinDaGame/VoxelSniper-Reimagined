@@ -1,11 +1,11 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockHelper;
-import com.github.kevindagame.util.BrushOperation.*;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
@@ -111,24 +111,8 @@ public abstract class AbstractBrush implements IBrush {
      * @return whether to reload the area
      */
     private boolean executeOperation(BrushOperation operation, Undo undo) {
-        if(operation instanceof BlockOperation blockOperation) {
-            var block = blockOperation.getLocation().getBlock();
-            undo.put(block);
-            block.setBlockData(blockOperation.getNewData(), blockOperation.applyPhysics());
-        }
-        else if (operation instanceof BiomeOperation biomeOperation) {
-            var location = biomeOperation.getLocation();
-            getWorld().setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), biomeOperation.getNewBiome());
-            return true;
-        }
-        else if (operation instanceof EntityRemoveOperation entityRemoveOperation) {
-            entityRemoveOperation.getEntity().remove();
-        }
-        else if (operation instanceof EntitySpawnOperation entitySpawnOperation) {
-            var location = entitySpawnOperation.getLocation();
-            getWorld().spawn(location, entitySpawnOperation.getEntityType());
 
-        }
+        operation.perform(undo);
         return false;
     }
 

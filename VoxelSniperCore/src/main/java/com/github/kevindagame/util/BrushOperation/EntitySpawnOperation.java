@@ -1,5 +1,6 @@
 package com.github.kevindagame.util.BrushOperation;
 
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
@@ -21,5 +22,11 @@ public class EntitySpawnOperation extends BrushOperation {
 
     public void setEntityType(VoxelEntityType entityType) {
         this.entityType = entityType;
+    }
+
+    @Override
+    public boolean perform(Undo undo) {
+        getLocation().getWorld().spawn(getLocation(), getEntityType());
+        return false;
     }
 }

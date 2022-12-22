@@ -5,7 +5,6 @@ import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;

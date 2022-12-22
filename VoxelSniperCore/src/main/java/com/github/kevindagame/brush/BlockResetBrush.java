@@ -4,7 +4,6 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 

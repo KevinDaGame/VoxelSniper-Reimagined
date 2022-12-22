@@ -1,5 +1,6 @@
 package com.github.kevindagame.util.BrushOperation;
 
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
@@ -26,5 +27,12 @@ public class BiomeOperation extends BrushOperation {
 
     public void setNewBiome(VoxelBiome newBiome) {
         this.newBiome = newBiome;
+    }
+
+    @Override
+    public boolean perform(Undo undo) {
+        var location = getLocation();
+        getLocation().getWorld().setBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), getNewBiome());
+        return true;
     }
 }

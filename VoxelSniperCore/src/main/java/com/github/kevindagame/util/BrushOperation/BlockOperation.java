@@ -1,5 +1,6 @@
 package com.github.kevindagame.util.BrushOperation;
 
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -46,5 +47,13 @@ public class BlockOperation extends BrushOperation {
      */
     public void setNewMaterial(VoxelMaterial newMaterial) {
         this.newData = newMaterial.createBlockData();
+    }
+
+    @Override
+    public boolean perform(Undo undo) {
+        var block = getLocation().getBlock();
+        undo.put(block);
+        block.setBlockData(getNewData(), applyPhysics());
+        return false;
     }
 }

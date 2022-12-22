@@ -1,5 +1,6 @@
 package com.github.kevindagame.util.BrushOperation;
 
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
@@ -17,5 +18,11 @@ public class EntityRemoveOperation extends BrushOperation {
 
     public IEntity getEntity() {
         return entity;
+    }
+
+    @Override
+    public boolean perform(Undo undo) {
+        getEntity().remove();
+        return false;
     }
 }
