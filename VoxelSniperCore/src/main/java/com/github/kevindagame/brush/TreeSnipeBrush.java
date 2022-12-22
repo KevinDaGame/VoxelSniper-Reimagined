@@ -7,6 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import net.kyori.adventure.text.Component;
@@ -33,7 +34,12 @@ public class TreeSnipeBrush extends AbstractBrush {
     }
 
     private void single(final SnipeData v, IBlock targetBlock) {
-        this.positions.add(targetBlock.getLocation());
+        var result = this.getWorld().generateTree(targetBlock.getLocation(), this.treeType);
+        if (result != null) {
+            // don't include the clicked block
+            BaseLocation targetLocation = targetBlock.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
+            this.operations.addAll(result.stream().filter((o) -> !o.getLocation().equals(targetLocation)).toList());
+        }
     }
 
     private int getYOffset() {
@@ -67,15 +73,8 @@ public class TreeSnipeBrush extends AbstractBrush {
     @Override
     protected boolean actPerform(SnipeData v) {
         Undo undo = new Undo();
-        for (var position : positions) {
-            IBlock blockBelow = position.getBlock().getRelative(BlockFace.DOWN);
-            IBlockState currentState = blockBelow.getState();
-            undo.put(currentState);
-            blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK, false);
-
-            undo = this.getWorld().generateTree(position, this.treeType, undo);
-
-            blockBelow.setBlockData(currentState.getBlockData(), false);
+        for (var operation : this.operations) {
+            // do something
         }
         v.owner().storeUndo(undo);
         return true;

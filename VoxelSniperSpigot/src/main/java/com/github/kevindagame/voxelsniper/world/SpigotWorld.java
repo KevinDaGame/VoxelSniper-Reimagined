@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -13,6 +13,7 @@ import com.github.kevindagame.voxelsniper.location.SpigotLocation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -98,13 +99,14 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public Undo generateTree(BaseLocation location, VoxelTreeType treeType, Undo undo) {
+    public List<BlockOperation> generateTree(BaseLocation location, VoxelTreeType treeType) {
         if (treeType.isSupported()) {
-            SpigotUndoDelegate undoDelegate = new SpigotUndoDelegate(world, undo);
+            SpigotBlockLogger logger = new SpigotBlockLogger(this);
             TreeType bukkitType = TreeType.valueOf(treeType.name());
-            world.generateTree(SpigotLocation.toSpigotLocation(location), bukkitType, undoDelegate);
+            this.world.generateTree(SpigotLocation.toSpigotLocation(location), bukkitType, logger);
+            return logger.operations;
         }
-        return undo;
+        return null;
     }
 
     @Override

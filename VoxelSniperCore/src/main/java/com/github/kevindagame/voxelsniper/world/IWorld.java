@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
@@ -12,6 +12,8 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 import java.util.Iterator;
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 
 public interface IWorld {
     IBlock getBlock(BaseLocation location);
@@ -68,7 +70,8 @@ public interface IWorld {
 
     void regenerateChunk(int x, int z);
 
-    Undo generateTree(BaseLocation location, VoxelTreeType treeType, Undo undo);
+    @Nullable
+    List<BlockOperation> generateTree(BaseLocation location, VoxelTreeType treeType);
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 
