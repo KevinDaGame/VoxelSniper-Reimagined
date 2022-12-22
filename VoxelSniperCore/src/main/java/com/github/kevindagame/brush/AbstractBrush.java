@@ -73,6 +73,11 @@ public abstract class AbstractBrush implements IBrush {
             default:
                 return false;
         }
+        return performOperations(data);
+    }
+
+    protected final boolean performOperations(SnipeData data) {
+        if (this.operations.size() == 0) return false;
         var event = new PlayerSnipeEvent(data.owner().getPlayer(), this, this.operations).callEvent();
         if (!event.isCancelled() && event.getOperations().size() > 0) {
             var reloadArea = false;
@@ -85,8 +90,7 @@ public abstract class AbstractBrush implements IBrush {
             }
         }
         return false;
-
-}
+    }
 
     private void reloadBrushArea(SnipeData v) {
         var brushSize = v.getBrushSize();
@@ -108,6 +112,7 @@ public abstract class AbstractBrush implements IBrush {
     /**
      *
      * @param operation
+     * @param undo
      * @return whether to reload the area
      */
     private boolean executeOperation(BrushOperation operation, Undo undo) {

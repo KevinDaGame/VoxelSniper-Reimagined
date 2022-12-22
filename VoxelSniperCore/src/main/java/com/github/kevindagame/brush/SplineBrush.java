@@ -112,6 +112,7 @@ public class SplineBrush extends PerformerBrush {
         } else if (this.ctrl) {
             this.removeFromSet(v, false, this.getTargetBlock());
         }
+        this.positions.clear();
     }
 
     protected final void clear(final SnipeData v) {
@@ -129,6 +130,7 @@ public class SplineBrush extends PerformerBrush {
         if (this.ctrl) {
             this.addToSet(v, false, this.getTargetBlock());
         }
+        this.positions.clear();
     }
 
     @Override
@@ -187,7 +189,7 @@ public class SplineBrush extends PerformerBrush {
             }
             if (this.spline(this.endPts.get(0), this.endPts.get(1), this.ctrlPts.get(0), this.ctrlPts.get(1), v)) {
                 this.initP(v);
-                this.actPerform(v);
+                this.performOperations(v);
             }
             return;
         }
