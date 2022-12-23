@@ -8,6 +8,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class RegenerateChunkBrush extends CustomBrush {
         for (int z = CHUNK_SIZE; z >= 0; z--) {
             for (int x = CHUNK_SIZE; x >= 0; x--) {
                 for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
-                    getOperations().add(new CustomOperation(new BaseLocation(this.getWorld(), x, y, z), this, v, CustomOperationContext.OTHER));
+                    addOperation(new CustomOperation(new BaseLocation(this.getWorld(), x, y, z), this, v, CustomOperationContext.OTHER));
                 }
             }
         }
@@ -55,7 +56,7 @@ public class RegenerateChunkBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         final IChunk chunk = this.getTargetBlock().getChunk();
         //check if no operation has been cancelled by comparing the size to the amount of loops
         //TODO test this

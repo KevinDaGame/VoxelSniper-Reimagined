@@ -75,7 +75,7 @@ public class GenerateTreeBrush extends AbstractBrush {
             }
 
             // Creates a branch block.
-            getOperations().add(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
+            addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
             this.branchBlocks.add(location.getClampedBlock());
         }
     }
@@ -102,7 +102,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                             // If block is Air, create a leaf block.
                             if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
                                 var block = location.getBlock().getRelative(x, y, z);
-                                getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
+                                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
                             }
                         }
                         for (int dx : new int[]{-1, 1}) {
@@ -121,7 +121,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     private void createLeaf(final BaseLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
             var block = location.getBlock().getRelative(x, y, z);
-            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
+            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
         }
     }
 
@@ -160,7 +160,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 if (location.getBlock().getMaterial() != woodMaterial) {
 
                     // Place log block.
-                    getOperations().add(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
+                    addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 } else {
                     // If solid then...
                     // End loop
@@ -236,7 +236,7 @@ public class GenerateTreeBrush extends AbstractBrush {
         if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
             // Creates block.
             var block = location.getBlock().getRelative(x, 0, z);
-            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.woodMaterial.createBlockData()));
+            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.woodMaterial.createBlockData()));
         }
     }
 

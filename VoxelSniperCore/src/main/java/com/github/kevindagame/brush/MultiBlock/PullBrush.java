@@ -135,26 +135,26 @@ public class PullBrush extends AbstractBrush {
 
     private void setBlock(final BlockWrapper block, int vh) {
         final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        getOperations().add(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
+        addOperation(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
                 IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
                 final IBlock current = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                getOperations().add(new BlockOperation(current.getLocation(), current.getBlockData(), block.getBlockData()));
+                addOperation(new BlockOperation(current.getLocation(), current.getBlockData(), block.getBlockData()));
             }
         }
     }
 
     private void setBlockDown(final BlockWrapper block, int vh) {
         final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        getOperations().add(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
+        addOperation(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
             IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-            getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
         }
     }
 
@@ -215,7 +215,7 @@ public class PullBrush extends AbstractBrush {
                             lastY = actualY + lastStr;
 
                             IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
-                            getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
+                            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
 
                             if (str == 1) {
                                 str = 0.8;
@@ -230,7 +230,7 @@ public class PullBrush extends AbstractBrush {
                                 VoxelMaterial material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
-                                    getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), material.createBlockData()));
+                                    addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), material.createBlockData()));
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -253,7 +253,7 @@ public class PullBrush extends AbstractBrush {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (vh * this.getStr(volume / brushSizeSquared));
                             IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
-                            getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
+                            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
@@ -261,7 +261,7 @@ public class PullBrush extends AbstractBrush {
                                 final VoxelMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
-                                    getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), blockMaterial.createBlockData()));
+                                    addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), blockMaterial.createBlockData()));
                                 }
                                 lastY = blockY;
                                 y++;

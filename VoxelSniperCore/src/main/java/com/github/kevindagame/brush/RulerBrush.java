@@ -7,6 +7,7 @@ import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class RulerBrush extends CustomBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        getOperations().add(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
 
@@ -44,7 +45,7 @@ public class RulerBrush extends CustomBrush {
             v.sendMessage(Messages.FIRST_COORDINATE_NOT_SET);
             return;
         }
-        getOperations().add(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -69,7 +70,7 @@ public class RulerBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if(operations.size() != 1){
             return false;
         }

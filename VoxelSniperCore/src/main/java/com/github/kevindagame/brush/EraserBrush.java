@@ -45,7 +45,7 @@ public class EraserBrush extends AbstractBrush {
                     || (getSnipeAction() == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                 continue;
             }
-            getOperations().add(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
         }
     }
 

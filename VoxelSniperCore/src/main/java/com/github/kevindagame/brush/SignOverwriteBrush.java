@@ -9,6 +9,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
+import com.google.common.collect.ImmutableList;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
@@ -108,12 +109,12 @@ public class SignOverwriteBrush extends CustomBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -375,7 +376,7 @@ public class SignOverwriteBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch(Objects.requireNonNull(getSnipeAction())) {
             case ARROW -> {
                 if (this.rangedMode) {

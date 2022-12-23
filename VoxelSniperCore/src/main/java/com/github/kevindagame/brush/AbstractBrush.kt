@@ -6,6 +6,7 @@ import com.github.kevindagame.snipe.SnipeAction
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.util.BlockHelper
+import com.github.kevindagame.util.BrushOperation.CustomOperation
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.voxelsniper.block.BlockFace
@@ -14,6 +15,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
+import com.google.common.collect.ImmutableList
 import java.util.*
 
 /**
@@ -44,7 +46,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * The operations this brush performs
      */
-    var operations: MutableList<BrushOperation> = ArrayList()
+    private val operations: MutableList<BrushOperation> = ArrayList()
 
     /**
      * Brush name.
@@ -63,6 +65,13 @@ abstract class AbstractBrush : IBrush {
         return false
     }
 
+    protected fun addOperation(operation: BrushOperation) {
+        operations.add(operation)
+    }
+
+    protected fun addOperations(operations: Collection<BrushOperation>) {
+        this.operations.addAll(operations)
+    }
     override fun perform(action: SnipeAction, data: SnipeData, targetBlock: IBlock, lastBlock: IBlock): Boolean {
         operations.clear()
         this.targetBlock = targetBlock
@@ -71,19 +80,25 @@ abstract class AbstractBrush : IBrush {
         when (action) {
             SnipeAction.ARROW -> arrow(data)
             SnipeAction.GUNPOWDER -> powder(data)
-            else -> return false
         }
         return performOperations(data)
     }
 
     protected fun performOperations(data: SnipeData): Boolean {
         if (operations.size == 0) return false
-        val event = PlayerSnipeEvent(data.owner().player, this, operations).callEvent()
+        val event = PlayerSnipeEvent(data.owner().player, this, ImmutableList.copyOf(operations)).callEvent()
         if (!event.isCancelled && event.operations.size > 0) {
+                val undo = Undo()
+            if(event.isCustom) {
+                val cb = this as CustomBrush
+                cb.perform(event.operations as ImmutableList<CustomOperation>, data, undo)
+            }
             var reloadArea = false
             for (operation in event.operations) {
-                val undo = Undo()
+                if(!operation.isCancelled) {
                 reloadArea = reloadArea || executeOperation(operation, undo)
+
+                }
             }
             if (reloadArea) {
                 reloadBrushArea(data)
@@ -116,11 +131,6 @@ abstract class AbstractBrush : IBrush {
     private fun executeOperation(operation: BrushOperation, undo: Undo): Boolean {
         operation.perform(undo)
         return false
-    }
-
-    protected fun actPerform(v: SnipeData?): Boolean {
-        //TODO change this
-        return true
     }
 
     /**

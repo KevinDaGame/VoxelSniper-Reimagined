@@ -69,7 +69,7 @@ public class ShellSetBrush extends ShellBrushBase {
                 }
                 for (final IBlock currentBlock : blocks) {
                     if (currentBlock.getMaterial() != v.getVoxelMaterial()) {
-                        getOperations().add(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), v.getVoxelMaterial().createBlockData()));
+                        addOperation(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), v.getVoxelMaterial().createBlockData()));
                     }
                 }
                 v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);

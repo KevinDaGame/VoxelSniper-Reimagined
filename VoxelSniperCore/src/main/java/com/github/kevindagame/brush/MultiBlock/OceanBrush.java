@@ -129,7 +129,7 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().isAir()) {
-                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                     }
                 }
 
@@ -137,7 +137,7 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = this.waterLevel; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
-                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.WATER.createBlockData()));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.WATER.createBlockData()));
                     }
                 }
 
@@ -145,7 +145,7 @@ public class OceanBrush extends AbstractBrush {
                 if (this.coverFloor && (newSeaFloorLevel < this.waterLevel)) {
                     IBlock block = world.getBlock(x, newSeaFloorLevel, z);
                     if (block.getMaterial() != v.getVoxelMaterial()) {
-                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), v.getVoxelMaterial().createBlockData()));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), v.getVoxelMaterial().createBlockData()));
                     }
                 }
             }

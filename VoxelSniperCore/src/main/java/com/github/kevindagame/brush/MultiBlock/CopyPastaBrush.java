@@ -95,7 +95,7 @@ public class CopyPastaBrush extends AbstractBrush {
                     }
 
                     if (!(!this.pasteAir && this.substanceArray[currentPosition].getMaterial().isAir())) {
-                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.substanceArray[currentPosition]));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.substanceArray[currentPosition]));
                     }
                 }
             }

@@ -27,7 +27,7 @@ public class ShellVoxelBrush extends ShellBrushBase {
         var newMaterials = this.bShell(v);
         for (var position : positions) {
             var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockY() - this.getTargetBlock().getY() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
-            getOperations().add(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
+            addOperation(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
         }
         v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
     }

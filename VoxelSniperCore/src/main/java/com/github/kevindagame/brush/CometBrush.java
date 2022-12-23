@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BrushOperation.CustomOperation;
 import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -34,8 +35,8 @@ public class CometBrush extends CustomBrush {
 
     private void doFireball(final SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        getOperations().add(new CustomOperation(targetCoords.getLocation(getWorld()), this, v, CustomOperationContext.TARGETLOCATION));
-        getOperations().add(new CustomOperation(v.owner().getPlayer().getEyeLocation(), this, v, CustomOperationContext.PLAYERLOCATION));
+        addOperation(new CustomOperation(targetCoords.getLocation(getWorld()), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(v.owner().getPlayer().getEyeLocation(), this, v, CustomOperationContext.PLAYERLOCATION));
 
     }
 
@@ -92,7 +93,7 @@ public class CometBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if(operations.size() != 2) {
             return false;
         }

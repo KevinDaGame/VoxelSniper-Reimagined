@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BrushOperation.CustomOperation;
 import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -62,7 +63,7 @@ public class ScannerBrush extends CustomBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -112,7 +113,7 @@ public class ScannerBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if(operations.size() != 1) {
             return false;
         }

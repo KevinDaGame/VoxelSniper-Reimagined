@@ -53,7 +53,7 @@ public class StampBrush extends AbstractBrush {
      */
     protected final void setBlock(final BlockWrapper cb) {
         final IBlock block = getWorld().getBlock(this.getTargetBlock().getX() + cb.getX(), this.getTargetBlock().getY() + cb.getY(), this.getTargetBlock().getZ() + cb.getZ());
-        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
+        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
         block.setBlockData(cb.getBlockData());
     }
 
@@ -65,7 +65,7 @@ public class StampBrush extends AbstractBrush {
     protected final void setBlockFill(final BlockWrapper cb) {
         final IBlock block = getWorld().getBlock(this.getTargetBlock().getX() + cb.getX(), this.getTargetBlock().getY() + cb.getY(), this.getTargetBlock().getZ() + cb.getZ());
         if (block.getMaterial().isAir()) {
-            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
+            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
         }
     }
 

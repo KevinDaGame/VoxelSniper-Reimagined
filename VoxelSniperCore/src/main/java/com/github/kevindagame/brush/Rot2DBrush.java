@@ -48,7 +48,7 @@ public class Rot2DBrush extends AbstractBrush {
                     for (int z = 0; z < this.snap.length; z++) {
                         final IBlock block = getWorld().getBlock(sx, sy, sz);
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                         sy++;
                     }
                 }
@@ -88,7 +88,7 @@ public class Rot2DBrush extends AbstractBrush {
                             continue;
                         }
                         var b = getWorld().getBlock(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ);
-                        getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), block.getBlockData()));
+                        addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), block.getBlockData()));
 
                     }
                 }
@@ -125,7 +125,7 @@ public class Rot2DBrush extends AbstractBrush {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
                             var block = getWorld().getBlock(fx, fy, fz);
-                            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), winner));
+                            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), winner));
                         }
                     }
                 }

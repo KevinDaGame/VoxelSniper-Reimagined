@@ -44,15 +44,15 @@ public class CanyonBrush extends AbstractBrush {
                 for (int y = 63; y < this.getMaxHeight(); y++) {
                     final IBlock block = chunk.getBlock(x, y, z);
                     final IBlock currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
-                    getOperations().add(new BlockOperation(currentYLevelBlock.getLocation(), currentYLevelBlock.getBlockData(), block.getBlockData()));
+                    addOperation(new BlockOperation(currentYLevelBlock.getLocation(), currentYLevelBlock.getBlockData(), block.getBlockData()));
                     currentYLevel++;
                 }
                 for (int y = currentYLevel; y < this.getMaxHeight(); y++) {
                     var block = chunk.getBlock(x, y, z);
-                    getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                    addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                 }
                 var block = chunk.getBlock(x, this.getMinHeight(), z);
-                getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.BEDROCK.createBlockData()));
+                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.BEDROCK.createBlockData()));
             }
         }
     }

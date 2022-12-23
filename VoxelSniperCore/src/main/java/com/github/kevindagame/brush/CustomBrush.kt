@@ -3,8 +3,8 @@ package com.github.kevindagame.brush
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.util.BrushOperation.CustomOperation
-import com.github.kevindagame.voxelsniper.location.BaseLocation
+import com.google.common.collect.ImmutableList
 
 abstract class CustomBrush : AbstractBrush() {
-    abstract fun perform(operations: List<CustomOperation>, snipeData: SnipeData, undo: Undo): Boolean
+    abstract fun perform(operations: ImmutableList<CustomOperation>, snipeData: SnipeData, undo: Undo): Boolean
 }

@@ -56,7 +56,7 @@ public class BlockResetBrush extends AbstractBrush {
     }
 
     private void applyBrush(final SnipeData v) {
-        setOperations(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)
+        addOperations(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)
                 .filter(block -> BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())).map(b -> new BlockOperation(b.getLocation(), b.getBlockData(), b.getBlockData().getMaterial().createBlockData())).collect(Collectors.toList()));
     }
 

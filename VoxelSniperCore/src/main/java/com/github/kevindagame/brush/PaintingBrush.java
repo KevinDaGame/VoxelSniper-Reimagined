@@ -6,6 +6,7 @@ import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.BrushOperation.CustomOperation;
 import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.VoxelMessage;
+import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class PaintingBrush extends CustomBrush {
      */
     @Override
     protected final void arrow(final SnipeData v) {
-        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     /**
@@ -42,7 +43,7 @@ public class PaintingBrush extends CustomBrush {
      */
     @Override
     protected final void powder(final SnipeData v) {
-        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -56,7 +57,7 @@ public class PaintingBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch (Objects.requireNonNull(getSnipeAction())) {
             case ARROW:
                 BlockHelper.painting(snipeData.owner().getPlayer(), true, false, 0);

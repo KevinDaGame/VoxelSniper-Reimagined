@@ -27,7 +27,7 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
         for(var position : positions) {
             var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
             if (!(this.excludeAir && material.isAir()) && !(this.excludeWater && (material == VoxelMaterial.WATER))) {
-                getOperations().add(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
+                addOperation(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
             }
         }
     }

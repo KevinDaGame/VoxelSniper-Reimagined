@@ -46,7 +46,7 @@ public class FlatOceanBrush extends AbstractBrush {
                     } else {
                         blockWrapper.setBlockData(VoxelMaterial.AIR.getIMaterial().createBlockData());
                     }
-                    getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
+                    addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
                 }
             }
         }

@@ -25,7 +25,7 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
         return currentPerformer;
     }
 
-    protected Set<BaseLocation> positions = new HashSet<>();
+    protected List<BaseLocation> positions = new ArrayList<>();
 
     public void sendPerformerMessage(String triggerHandle, SnipeData v) {
         v.sendMessage(Messages.PERFORMER_MESSAGE.replace("%triggerHandle%", triggerHandle));
@@ -93,12 +93,12 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     @Override
     protected final void arrow(SnipeData v) {
         doArrow(v);
-        setOperations(currentPerformer.perform(positions));
+        addOperations(currentPerformer.perform(positions));
     }
 
     @Override
     protected final void powder(SnipeData v) {
         doPowder(v);
-        setOperations(currentPerformer.perform(positions));
+        addOperations(currentPerformer.perform(positions));
     }
 }

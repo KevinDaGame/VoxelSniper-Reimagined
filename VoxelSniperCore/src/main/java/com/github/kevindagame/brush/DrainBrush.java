@@ -34,7 +34,7 @@ public class DrainBrush extends AbstractBrush {
         for (var pos : positions) {
             var block = pos.getBlock();
             if (block.getMaterial().isFluid()) {
-                getOperations().add(new BlockOperation(pos, block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(pos, block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
         }
     }

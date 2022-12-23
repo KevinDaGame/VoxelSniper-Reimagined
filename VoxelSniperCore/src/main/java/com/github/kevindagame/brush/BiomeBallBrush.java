@@ -42,7 +42,7 @@ public class BiomeBallBrush extends AbstractBrush {
     }
 
     private void biome(final SnipeData v) {
-        this.setOperations(Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true).stream().map(location -> new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome)).collect(toList()));
+        this.addOperations(Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true).stream().map(location -> new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome)).collect(toList()));
 
     }
     @Override

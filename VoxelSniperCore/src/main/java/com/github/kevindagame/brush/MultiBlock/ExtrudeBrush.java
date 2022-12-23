@@ -96,7 +96,7 @@ public class ExtrudeBrush extends AbstractBrush {
 
     private void perform(final IBlock b1, final IBlock b2, final SnipeData v) {
         if (v.getVoxelList().contains(b1.getMaterial())) {
-            getOperations().add(new BlockOperation(b2.getLocation(), b2.getBlockData(), b1.getBlockData()));
+            addOperation(new BlockOperation(b2.getLocation(), b2.getBlockData(), b1.getBlockData()));
         }
     }
 
