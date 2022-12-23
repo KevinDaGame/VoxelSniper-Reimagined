@@ -2,15 +2,20 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.CustomOperation;
+import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,7 +23,7 @@ import java.util.Objects;
  *
  * @author Monofraps
  */
-public class SignOverwriteBrush extends AbstractBrush {
+public class SignOverwriteBrush extends CustomBrush {
 
     private static final int MAX_SIGN_LINE_LENGTH = 15;
     private static final int NUM_SIGN_LINES = 4;
@@ -102,43 +107,13 @@ public class SignOverwriteBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        switch(Objects.requireNonNull(getSnipeAction())) {
-            case ARROW -> {
-                if (this.rangedMode) {
-                    setRanged(v);
-                } else {
-                    setSingle(v);
-                }
-                return true;
-            }
-            case GUNPOWDER -> {
-                if (this.getTargetBlock().getState() instanceof ISign sign) {
-
-                    for (int i = 0; i < this.signTextLines.length; i++) {
-                        if (this.signLinesEnabled[i]) {
-                            this.signTextLines[i] = sign.getLine(i);
-                        }
-                    }
-
-                    displayBuffer(v);
-                } else {
-                    v.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
-        positions.add(getTargetBlock().getLocation());
+        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        positions.add(getTargetBlock().getLocation());
+        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -397,5 +372,35 @@ public class SignOverwriteBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.signoverwrite";
+    }
+
+    @Override
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        switch(Objects.requireNonNull(getSnipeAction())) {
+            case ARROW -> {
+                if (this.rangedMode) {
+                    setRanged(snipeData);
+                } else {
+                    setSingle(snipeData);
+                }
+                return true;
+            }
+            case GUNPOWDER -> {
+                if (this.getTargetBlock().getState() instanceof ISign sign) {
+
+                    for (int i = 0; i < this.signTextLines.length; i++) {
+                        if (this.signLinesEnabled[i]) {
+                            this.signTextLines[i] = sign.getLine(i);
+                        }
+                    }
+
+                    displayBuffer(snipeData);
+                } else {
+                    snipeData.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

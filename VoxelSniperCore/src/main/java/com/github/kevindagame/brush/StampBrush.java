@@ -4,6 +4,7 @@ import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -20,7 +21,6 @@ public class StampBrush extends AbstractBrush {
 
     protected HashSet<BlockWrapper> clone = new HashSet<>();
     protected HashSet<BlockWrapper> toStamp = new HashSet<>();
-    protected Undo undo;
     protected boolean sorted = false;
     protected StampType stamp = StampType.DEFAULT;
 
@@ -53,7 +53,7 @@ public class StampBrush extends AbstractBrush {
      */
     protected final void setBlock(final BlockWrapper cb) {
         final IBlock block = getWorld().getBlock(this.getTargetBlock().getX() + cb.getX(), this.getTargetBlock().getY() + cb.getY(), this.getTargetBlock().getZ() + cb.getZ());
-        this.undo.put(block);
+        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
         block.setBlockData(cb.getBlockData());
     }
 
@@ -65,8 +65,7 @@ public class StampBrush extends AbstractBrush {
     protected final void setBlockFill(final BlockWrapper cb) {
         final IBlock block = getWorld().getBlock(this.getTargetBlock().getX() + cb.getX(), this.getTargetBlock().getY() + cb.getY(), this.getTargetBlock().getZ() + cb.getZ());
         if (block.getMaterial().isAir()) {
-            this.undo.put(block);
-            block.setBlockData(cb.getBlockData());
+            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
         }
     }
 
@@ -88,11 +87,9 @@ public class StampBrush extends AbstractBrush {
             this.toStamp.addAll(this.clone);
             this.sorted = true;
         }
-        this.undo = new Undo();
         for (final BlockWrapper block : this.toStamp) {
             this.setBlock(block);
         }
-        v.owner().storeUndo(this.undo);
     }
 
     /**
@@ -104,11 +101,9 @@ public class StampBrush extends AbstractBrush {
             this.toStamp.addAll(this.clone);
             this.sorted = true;
         }
-        this.undo = new Undo();
         for (final BlockWrapper block : this.toStamp) {
             this.setBlockFill(block);
         }
-        v.owner().storeUndo(this.undo);
     }
 
     /**
@@ -128,22 +123,13 @@ public class StampBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        if (snipeAction == SnipeAction.ARROW) {
-            switch (this.stamp) {
-                case DEFAULT -> this.stamp(v);
-                case NO_AIR -> this.stampNoAir(v);
-                case FILL -> this.stampFill(v);
-                default -> v.sendMessage(Messages.STAMP_ERROR);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
-
+        switch (this.stamp) {
+            case DEFAULT -> this.stamp(v);
+            case NO_AIR -> this.stampNoAir(v);
+            case FILL -> this.stampFill(v);
+            default -> v.sendMessage(Messages.STAMP_ERROR);
+        }
     }
 
     @Override

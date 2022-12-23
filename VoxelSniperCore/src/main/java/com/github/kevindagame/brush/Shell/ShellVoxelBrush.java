@@ -2,6 +2,7 @@ package com.github.kevindagame.brush.Shell;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 
@@ -21,22 +22,14 @@ public class ShellVoxelBrush extends ShellBrushBase {
 
     @Override
     protected void shell(SnipeData v) {
-        this.positions = Shapes.voxel(getTargetBlock().getLocation(), v.getBrushSize());
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
+        var positions = Shapes.voxel(getTargetBlock().getLocation(), v.getBrushSize());
         final int brushSize = v.getBrushSize();
         var newMaterials = this.bShell(v);
-        final Undo undo = new Undo();
-        for (var position : this.positions) {
+        for (var position : positions) {
             var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockY() - this.getTargetBlock().getY() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
-            undo.put(position.getBlock());
-            position.getBlock().setMaterial(material);
+            getOperations().add(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
         }
-        v.owner().storeUndo(undo);
         v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
-        return true;
     }
 
     @Override

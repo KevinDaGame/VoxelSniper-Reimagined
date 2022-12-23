@@ -2,10 +2,15 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.CustomOperation;
+import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * Regenerates the target chunk.
@@ -13,7 +18,7 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
  *
  * @author Mick
  */
-public class RegenerateChunkBrush extends AbstractBrush {
+public class RegenerateChunkBrush extends CustomBrush {
     public RegenerateChunkBrush() {
         this.setName("Chunk Generator 40k");
     }
@@ -22,28 +27,10 @@ public class RegenerateChunkBrush extends AbstractBrush {
         for (int z = CHUNK_SIZE; z >= 0; z--) {
             for (int x = CHUNK_SIZE; x >= 0; x--) {
                 for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
-                    this.positions.add(new BaseLocation(this.getWorld(), x, y, z));
+                    getOperations().add(new CustomOperation(new BaseLocation(this.getWorld(), x, y, z), this, v, CustomOperationContext.OTHER));
                 }
             }
         }
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        final IChunk chunk = this.getTargetBlock().getChunk();
-        Undo undo = new Undo();
-        for (int z = CHUNK_SIZE; z >= 0; z--) {
-            for (int x = CHUNK_SIZE; x >= 0; x--) {
-                for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
-                    undo.put(chunk.getBlock(x, y, z));
-                }
-            }
-        }
-        v.owner().storeUndo(undo);
-        v.sendMessage(Messages.GENERATED_CHUNK.replace("%chunk.getX%", Integer.toString(chunk.getX())).replace("%chunk.getZ%", Integer.toString(chunk.getZ())));
-        this.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
-        this.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
-        return true;
     }
 
     @Override
@@ -65,5 +52,26 @@ public class RegenerateChunkBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.regeneratechunk";
+    }
+
+    @Override
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        final IChunk chunk = this.getTargetBlock().getChunk();
+        //check if no operation has been cancelled by comparing the size to the amount of loops
+        //TODO test this
+        if (operations.size() != CHUNK_SIZE * CHUNK_SIZE * (this.getMaxHeight() - this.getMinHeight())) {
+            return false;
+        }
+        for (int z = CHUNK_SIZE; z >= 0; z--) {
+            for (int x = CHUNK_SIZE; x >= 0; x--) {
+                for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
+                    undo.put(chunk.getBlock(x, y, z));
+                }
+            }
+        }
+        snipeData.sendMessage(Messages.GENERATED_CHUNK.replace("%chunk.getX%", Integer.toString(chunk.getX())).replace("%chunk.getZ%", Integer.toString(chunk.getZ())));
+        this.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
+        this.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
+        return true;
     }
 }

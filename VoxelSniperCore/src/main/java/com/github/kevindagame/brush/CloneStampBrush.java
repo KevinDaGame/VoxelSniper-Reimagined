@@ -42,7 +42,14 @@ public class CloneStampBrush extends StampBrush {
         VoxelLocation point = getTargetBlock().getLocation().makeMutable();
         point.add(0, v.getcCen(), 0);
         this.startingPoint = point.makeImmutable();
-        this.positions = Shapes.cylinder(startingPoint, v.getBrushSize(), v.getVoxelHeight(), 0, false);
+        var positions = Shapes.cylinder(startingPoint, v.getBrushSize(), v.getVoxelHeight(), 0, false);
+        this.clone.clear();
+        this.toStamp.clear();
+        this.sorted = false;
+        for(var p: positions) {
+            this.clone.add(new BlockWrapper(p.getBlock(), p.getBlockX() - startingPoint.getBlockX(), p.getBlockY() - startingPoint.getBlockY(), p.getBlockZ() - startingPoint.getBlockZ(), getWorld()));
+        }
+        v.sendMessage(Messages.BLOCKS_COPIED_SUCCESSFULLY.replace("%amount%", String.valueOf(this.clone.size())));
 
     }
 
@@ -74,24 +81,6 @@ public class CloneStampBrush extends StampBrush {
                 vm.custom(Messages.STAMP_ERROR);
                 break;
         }
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        if(super.actPerform(v)) {
-            return true;
-        }
-        if(snipeAction == SnipeAction.GUNPOWDER) {
-            this.clone.clear();
-            this.toStamp.clear();
-            this.sorted = false;
-            for(var p: positions) {
-                this.clone.add(new BlockWrapper(p.getBlock(), p.getBlockX() - startingPoint.getBlockX(), p.getBlockY() - startingPoint.getBlockY(), p.getBlockZ() - startingPoint.getBlockZ(), getWorld()));
-            }
-            v.sendMessage(Messages.BLOCKS_COPIED_SUCCESSFULLY.replace("%amount%", String.valueOf(this.clone.size())));
-            return true;
-        }
-        return false;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
@@ -20,7 +19,7 @@ import java.util.List;
  */
 // The X Y and Z variable names in this file do NOT MAKE ANY SENSE. Do not attempt to actually figure out what on earth is going on here. Just go to the
 // original 2d horizontal brush if you wish to make anything similar to this, and start there. I didn't bother renaming everything.
-public class Rot2DvertBrush extends MultiBlockBrush {
+public class Rot2DvertBrush extends AbstractBrush {
 
     private BlockWrapper[][][] snap;
     private double se;
@@ -134,7 +133,7 @@ public class Rot2DvertBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         int bSize = v.getBrushSize();
 
         this.getMatrix(bSize);
@@ -143,7 +142,7 @@ public class Rot2DvertBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         this.arrow(v);
     }
 

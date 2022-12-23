@@ -1,9 +1,14 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockHelper;
+import com.github.kevindagame.util.BrushOperation.CustomOperation;
+import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.VoxelMessage;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,27 +16,13 @@ import java.util.Objects;
  *
  * @author Voxel
  */
-public class PaintingBrush extends AbstractBrush {
+public class PaintingBrush extends CustomBrush {
 
     /**
      *
      */
     public PaintingBrush() {
         this.setName("Painting");
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        switch(Objects.requireNonNull(getSnipeAction())) {
-            case ARROW:
-                BlockHelper.painting(v.owner().getPlayer(), true, false, 0);
-                return true;
-            case GUNPOWDER:
-                BlockHelper.painting(v.owner().getPlayer(), true, true, 0);
-                return true;
-            default:
-                return false;
-        }
     }
 
     /**
@@ -41,7 +32,7 @@ public class PaintingBrush extends AbstractBrush {
      */
     @Override
     protected final void arrow(final SnipeData v) {
-        positions.add(getTargetBlock().getLocation());
+        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     /**
@@ -51,7 +42,7 @@ public class PaintingBrush extends AbstractBrush {
      */
     @Override
     protected final void powder(final SnipeData v) {
-        positions.add(getTargetBlock().getLocation());
+        getOperations().add(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -62,5 +53,19 @@ public class PaintingBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.painting";
+    }
+
+    @Override
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        switch (Objects.requireNonNull(getSnipeAction())) {
+            case ARROW:
+                BlockHelper.painting(snipeData.owner().getPlayer(), true, false, 0);
+                return true;
+            case GUNPOWDER:
+                BlockHelper.painting(snipeData.owner().getPlayer(), true, true, 0);
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
+
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Piotr
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#2d-rotation-brush">...</a>
  */
-public class Rot2DBrush extends MultiBlockBrush {
+public class Rot2DBrush extends AbstractBrush {
     private BlockWrapper[][][] snap;
     private double se;
 
@@ -47,7 +48,7 @@ public class Rot2DBrush extends MultiBlockBrush {
                     for (int z = 0; z < this.snap.length; z++) {
                         final IBlock block = getWorld().getBlock(sx, sy, sz);
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        operations.add(new BlockWrapper(block).setMaterial(VoxelMaterial.AIR));
+                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                         sy++;
                     }
                 }
@@ -86,7 +87,9 @@ public class Rot2DBrush extends MultiBlockBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        operations.add(new BlockWrapper(getWorld().getBlock(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ)).setBlockData(block.getBlockData()));
+                        var b = getWorld().getBlock(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ);
+                        getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), block.getBlockData()));
+
                     }
                 }
             }
@@ -121,8 +124,8 @@ public class Rot2DBrush extends MultiBlockBrush {
                             } else {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
-
-                            operations.add(new BlockWrapper(getWorld().getBlock(fx, fy, fz)).setBlockData(winner));
+                            var block = getWorld().getBlock(fx, fy, fz);
+                            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), winner));
                         }
                     }
                 }
@@ -131,7 +134,7 @@ public class Rot2DBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         int bSize = v.getBrushSize();
 
         this.getMatrix(bSize);
@@ -140,7 +143,7 @@ public class Rot2DBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         this.arrow(v);
 
     }

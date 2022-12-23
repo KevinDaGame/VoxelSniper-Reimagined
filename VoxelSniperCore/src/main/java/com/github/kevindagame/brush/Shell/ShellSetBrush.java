@@ -3,6 +3,7 @@ package com.github.kevindagame.brush.Shell;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
@@ -68,28 +69,16 @@ public class ShellSetBrush extends ShellBrushBase {
                 }
                 for (final IBlock currentBlock : blocks) {
                     if (currentBlock.getMaterial() != v.getVoxelMaterial()) {
-                        operations.add(new BlockWrapper(currentBlock).setMaterial(v.getVoxelMaterial()));
+                        getOperations().add(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), v.getVoxelMaterial().createBlockData()));
                     }
                 }
+                v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
 
             }
 
             this.block = null;
             return false;
         }
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        Undo undo = new Undo();
-        operations.forEach(blockWrapper -> {
-            IBlock block = blockWrapper.getWorld().getBlock(blockWrapper.getX(), blockWrapper.getY(), blockWrapper.getZ());
-            undo.put(block);
-            block.setBlockData(blockWrapper.getMaterial().createBlockData());
-        });
-        v.owner().storeUndo(undo);
-        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
-        return true;
     }
 
     @Override

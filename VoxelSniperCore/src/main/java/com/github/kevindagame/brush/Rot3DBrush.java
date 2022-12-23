@@ -1,6 +1,5 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#3d-rotation-brush">...</a>
  */
-public class Rot3DBrush extends MultiBlockBrush {
+public class Rot3DBrush extends AbstractBrush {
 
     private BlockWrapper[][][] snap;
     private double seYaw;
@@ -227,7 +226,7 @@ public class Rot3DBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         int bSize = v.getBrushSize();
 
         this.getMatrix(bSize);
@@ -236,7 +235,7 @@ public class Rot3DBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         this.arrow(v);
     }
 
