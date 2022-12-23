@@ -1,6 +1,8 @@
 package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
@@ -19,7 +21,7 @@ import java.util.*;
  *
  * @author Ghost8700 @ Voxel
  */
-public class GenerateTreeBrush extends MultiBlockBrush {
+public class GenerateTreeBrush extends AbstractBrush {
 
     // Tree Variables.
     private final Random random = new Random();
@@ -73,7 +75,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
             }
 
             // Creates a branch block.
-            operations.add(new BlockWrapper(location, this.woodMaterial));
+            getOperations().add(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
             this.branchBlocks.add(location.getClampedBlock());
         }
     }
@@ -99,7 +101,8 @@ public class GenerateTreeBrush extends MultiBlockBrush {
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
                             if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-                                operations.add(new BlockWrapper(location.getBlock().getRelative(x, y, z)).setMaterial(this.leavesMaterial));
+                                var block = location.getBlock().getRelative(x, y, z);
+                                getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
                             }
                         }
                         for (int dx : new int[]{-1, 1}) {
@@ -117,7 +120,8 @@ public class GenerateTreeBrush extends MultiBlockBrush {
 
     private void createLeaf(final BaseLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-            operations.add(new BlockWrapper(location.getBlock().getRelative(x, y, z)).setMaterial(this.leavesMaterial));
+            var block = location.getBlock().getRelative(x, y, z);
+            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
         }
     }
 
@@ -156,7 +160,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
                 if (location.getBlock().getMaterial() != woodMaterial) {
 
                     // Place log block.
-                    operations.add(new BlockWrapper(location, woodMaterial));
+                    getOperations().add(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 } else {
                     // If solid then...
                     // End loop
@@ -231,7 +235,8 @@ public class GenerateTreeBrush extends MultiBlockBrush {
         // If block is air, then create a block.
         if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
             // Creates block.
-            operations.add(new BlockWrapper(location.getBlock().getRelative(x, 0, z)).setMaterial(woodMaterial));
+            var block = location.getBlock().getRelative(x, 0, z);
+            getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.woodMaterial.createBlockData()));
         }
     }
 
@@ -336,7 +341,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
 
         this.branchBlocks.clear();
 
@@ -358,7 +363,7 @@ public class GenerateTreeBrush extends MultiBlockBrush {
 
     // The Powder currently does nothing extra.
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         this.arrow(v);
     }
 

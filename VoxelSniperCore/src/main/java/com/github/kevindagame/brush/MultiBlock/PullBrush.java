@@ -1,9 +1,9 @@
 package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Piotr
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#pull-brush">...</a>
  */
-public class PullBrush extends MultiBlockBrush {
+public class PullBrush extends AbstractBrush {
 
     private double pinch = 1;
     private double bubble = 0;
@@ -135,31 +135,31 @@ public class PullBrush extends MultiBlockBrush {
 
     private void setBlock(final BlockWrapper block, int vh) {
         final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        operations.add(new com.github.kevindagame.util.BlockWrapper(currentBlock).setBlockData(block.getBlockData()));
+        getOperations().add(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
                 IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                operations.add(new com.github.kevindagame.util.BlockWrapper(b).setMaterial(VoxelMaterial.AIR));
+                getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
                 final IBlock current = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                operations.add(new com.github.kevindagame.util.BlockWrapper(current).setBlockData(block.getBlockData()));
+                getOperations().add(new BlockOperation(current.getLocation(), current.getBlockData(), block.getBlockData()));
             }
         }
     }
 
     private void setBlockDown(final BlockWrapper block, int vh) {
         final IBlock currentBlock = this.getWorld().getBlock(block.getX(), block.getY() + (int) (vh * block.getStr()), block.getZ());
-        operations.add(new com.github.kevindagame.util.BlockWrapper(currentBlock).setBlockData(block.getBlockData()));
+        getOperations().add(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
             IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-            operations.add(new com.github.kevindagame.util.BlockWrapper(b).setBlockData(VoxelMaterial.AIR.createBlockData()));
+            getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
         }
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         int vh = v.getVoxelHeight();
         HashSet<BlockWrapper> surface = this.getSurface(v);
 
@@ -175,7 +175,7 @@ public class PullBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
 
         int vh = v.getVoxelHeight();
 
@@ -215,7 +215,7 @@ public class PullBrush extends MultiBlockBrush {
                             lastY = actualY + lastStr;
 
                             IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
-                            operations.add(new com.github.kevindagame.util.BlockWrapper(b).setBlockData(this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
+                            getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
 
                             if (str == 1) {
                                 str = 0.8;
@@ -230,7 +230,7 @@ public class PullBrush extends MultiBlockBrush {
                                 VoxelMaterial material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
-                                    operations.add(new com.github.kevindagame.util.BlockWrapper(b).setMaterial(material));
+                                    getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), material.createBlockData()));
                                 }
                                 lastY = newY;
                                 actualY--;
@@ -253,7 +253,7 @@ public class PullBrush extends MultiBlockBrush {
                             final int actualY = this.getTargetBlock().getY() + y;
                             lastY = actualY + (int) (vh * this.getStr(volume / brushSizeSquared));
                             IBlock b = this.getWorld().getBlock(actualX, lastY, actualZ);
-                            operations.add(new com.github.kevindagame.util.BlockWrapper(b).setBlockData(this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
+                            getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), this.getWorld().getBlock(actualX, actualY, actualZ).getBlockData()));
                             y++;
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
@@ -261,7 +261,7 @@ public class PullBrush extends MultiBlockBrush {
                                 final VoxelMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
-                                    operations.add(new com.github.kevindagame.util.BlockWrapper(b).setMaterial(blockMaterial));
+                                    getOperations().add(new BlockOperation(b.getLocation(), b.getBlockData(), blockMaterial.createBlockData()));
                                 }
                                 lastY = blockY;
                                 y++;

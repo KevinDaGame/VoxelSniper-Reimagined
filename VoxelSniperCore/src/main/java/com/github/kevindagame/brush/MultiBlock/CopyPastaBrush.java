@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author giltwist
  */
-public class CopyPastaBrush extends MultiBlockBrush {
+public class CopyPastaBrush extends AbstractBrush {
 
     private static final int BLOCK_LIMIT = 10000;
     private final int[] pastePoint = new int[3];
@@ -94,7 +95,7 @@ public class CopyPastaBrush extends MultiBlockBrush {
                     }
 
                     if (!(!this.pasteAir && this.substanceArray[currentPosition].getMaterial().isAir())) {
-                        operations.add(new BlockWrapper(block).setBlockData(this.substanceArray[currentPosition]));
+                        getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), this.substanceArray[currentPosition]));
                     }
                 }
             }
@@ -105,7 +106,7 @@ public class CopyPastaBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         switch (this.points) {
             case 0:
                 this.firstPoint[0] = this.getTargetBlock().getX();
@@ -133,7 +134,7 @@ public class CopyPastaBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         if (this.points == 2) {
             if (this.numBlocks == 0) {
                 this.doCopy(v);

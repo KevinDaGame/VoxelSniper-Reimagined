@@ -1,7 +1,7 @@
 package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
-import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Voxel
  */
-public class CanyonBrush extends MultiBlockBrush {
+public class CanyonBrush extends AbstractBrush {
 
     private static final int SHIFT_LEVEL_MIN = -60;
     private static final int SHIFT_LEVEL_MAX = 60;
@@ -40,27 +40,30 @@ public class CanyonBrush extends MultiBlockBrush {
             for (int z = 0; z < CHUNK_SIZE; z++) {
                 int currentYLevel = this.yLevel;
 
+                //TODO I don't think 63 is correct
                 for (int y = 63; y < this.getMaxHeight(); y++) {
                     final IBlock block = chunk.getBlock(x, y, z);
                     final IBlock currentYLevelBlock = chunk.getBlock(x, currentYLevel, z);
-                    operations.add(new BlockWrapper(currentYLevelBlock).setBlockData(block.getBlockData()));
+                    getOperations().add(new BlockOperation(currentYLevelBlock.getLocation(), currentYLevelBlock.getBlockData(), block.getBlockData()));
                     currentYLevel++;
                 }
                 for (int y = currentYLevel; y < this.getMaxHeight(); y++) {
-                    operations.add(new BlockWrapper(chunk.getBlock(x, y, z)).setMaterial(VoxelMaterial.AIR));
+                    var block = chunk.getBlock(x, y, z);
+                    getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                 }
-                operations.add(new BlockWrapper(chunk.getBlock(x, this.getMinHeight(), z)).setMaterial(VoxelMaterial.BEDROCK));
+                var block = chunk.getBlock(x, this.getMinHeight(), z);
+                getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.BEDROCK.createBlockData()));
             }
         }
     }
 
     @Override
-    protected void doArrow(final SnipeData v) {
+    protected void arrow(final SnipeData v) {
         canyon(getTargetBlock().getChunk());
     }
 
     @Override
-    protected void doPowder(final SnipeData v) {
+    protected void powder(final SnipeData v) {
         IChunk targetChunk = getTargetBlock().getChunk();
         for (int x = targetChunk.getX() - 1; x <= targetChunk.getX() + 1; x++) {
             for (int z = targetChunk.getZ() - 1; z <= targetChunk.getZ() + 1; z++) {

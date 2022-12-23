@@ -52,12 +52,12 @@ public class CanyonSelectionBrush extends CanyonBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         execute(v);
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         execute(v);
     }
 

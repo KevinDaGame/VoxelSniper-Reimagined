@@ -1,14 +1,20 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.CustomOperation;
+import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * @author Gavjenks
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#lightning-brush">...</a>
  */
-public class LightningBrush extends AbstractBrush {
+public class LightningBrush extends CustomBrush {
 
     /**
      *
@@ -24,23 +30,23 @@ public class LightningBrush extends AbstractBrush {
     }
 
     @Override
-    protected boolean actPerform(SnipeData v) {
-        this.positions.forEach(position -> position.getWorld().strikeLightning(position));
-        return true;
-    }
-
-    @Override
     protected final void arrow(final SnipeData v) {
-        this.positions.add(this.getTargetBlock().getLocation());
+        getOperations().add(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.positions.add(this.getLastBlock().getLocation());
+        getOperations().add(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.lightning";
+    }
+
+    @Override
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        operations.forEach(operation -> operation.getLocation().getWorld().strikeLightning(operation.getLocation()));
+        return true;
     }
 }

@@ -1,6 +1,8 @@
 package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
@@ -23,7 +25,7 @@ import java.util.List;
  *
  * @author MikeMatrix
  */
-public class MoveBrush extends MultiBlockBrush {
+public class MoveBrush extends AbstractBrush {
 
     /**
      * Saved direction.
@@ -64,16 +66,17 @@ public class MoveBrush extends MultiBlockBrush {
             }
 
             for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
-                operations.add(blockWrapper.clone().setMaterial(VoxelMaterial.AIR));
+                getOperations().add(new BlockOperation(blockWrapper.getLocation(), blockWrapper.getLocation().getBlock().getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
             for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
-                operations.add(new BlockWrapper(world.getBlock(blockWrapper.getX() + direction[0], blockWrapper.getY() + direction[1], blockWrapper.getZ() + direction[2])).setBlockData(blockWrapper.getBlockData()));
+                var block = world.getBlock(blockWrapper.getX() + direction[0], blockWrapper.getY() + direction[1], blockWrapper.getZ() + direction[2]);
+                getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
             }
         }
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         if (this.selection == null) {
             this.selection = new Selection();
         }
@@ -91,7 +94,7 @@ public class MoveBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         if (this.selection == null) {
             this.selection = new Selection();
         }

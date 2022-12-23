@@ -1,7 +1,8 @@
 package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author psanker
  */
-public class ExtrudeBrush extends MultiBlockBrush {
+public class ExtrudeBrush extends AbstractBrush {
 
     private static final double SMOOTH_CIRCLE_VALUE = 0.5;
     private static final double VOXEL_CIRCLE_VALUE = 0.0;
@@ -95,7 +96,7 @@ public class ExtrudeBrush extends MultiBlockBrush {
 
     private void perform(final IBlock b1, final IBlock b2, final SnipeData v) {
         if (v.getVoxelList().contains(b1.getMaterial())) {
-            operations.add(new BlockWrapper(b2).setBlockData(b1.getBlockData()));
+            getOperations().add(new BlockOperation(b2.getLocation(), b2.getBlockData(), b1.getBlockData()));
         }
     }
 
@@ -126,12 +127,12 @@ public class ExtrudeBrush extends MultiBlockBrush {
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         this.selectExtrudeMethod(v, this.getTargetBlock().getFace(this.getLastBlock()), false);
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         this.selectExtrudeMethod(v, this.getTargetBlock().getFace(this.getLastBlock()), true);
     }
 

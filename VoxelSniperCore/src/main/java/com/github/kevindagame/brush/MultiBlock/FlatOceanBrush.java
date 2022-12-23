@@ -1,7 +1,8 @@
 package com.github.kevindagame.brush.MultiBlock;
 
-import com.github.kevindagame.brush.MultiBlock.MultiBlockBrush;
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.BrushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author GavJenks
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#flatocean-brush">...</a>
  */
-public class FlatOceanBrush extends MultiBlockBrush {
+public class FlatOceanBrush extends AbstractBrush {
 
     private static final int DEFAULT_WATER_LEVEL = 29;
     private static final int DEFAULT_FLOOR_LEVEL = 8;
@@ -37,7 +38,6 @@ public class FlatOceanBrush extends MultiBlockBrush {
                 // chunk.getWorld() == getWorld()
                 for (int y = this.getMinHeight(); y < this.getMaxHeight(); y++) {
                     var block = chunk.getBlock(x, y, z);
-                    positions.add(block.getLocation());
                     var blockWrapper = new BlockWrapper(block);
                     if (y <= this.floorLevel) {
                         blockWrapper.setBlockData(VoxelMaterial.DIRT.getIMaterial().createBlockData());
@@ -46,19 +46,19 @@ public class FlatOceanBrush extends MultiBlockBrush {
                     } else {
                         blockWrapper.setBlockData(VoxelMaterial.AIR.getIMaterial().createBlockData());
                     }
-                    operations.add(blockWrapper);
+                    getOperations().add(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
                 }
             }
         }
     }
 
     @Override
-    protected final void doArrow(final SnipeData v) {
+    protected final void arrow(final SnipeData v) {
         this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
     }
 
     @Override
-    protected final void doPowder(final SnipeData v) {
+    protected final void powder(final SnipeData v) {
         this.flatOcean(this.getWorld().getChunkAtLocation(this.getTargetBlock().getLocation()));
         this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ()).getLocation()));
         this.flatOcean(this.getWorld().getChunkAtLocation(getWorld().getBlock(this.getTargetBlock().getX() + CHUNK_SIZE, 1, this.getTargetBlock().getZ() + CHUNK_SIZE).getLocation()));
