@@ -29,7 +29,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * Targeted Block.
      */
-    protected var targetBlock: IBlock? = null
+    protected lateinit var targetBlock: IBlock;
     /**
      * @return Block before target Block.
      */
@@ -39,7 +39,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * Last Block before targeted Block.
      */
-    protected var lastBlock: IBlock? = null
+    protected lateinit var lastBlock: IBlock;
 
     /**
      * The operations this brush performs

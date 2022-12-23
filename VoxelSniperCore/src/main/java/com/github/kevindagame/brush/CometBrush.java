@@ -1,5 +1,8 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.CustomOperation;
+import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -7,6 +10,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +21,7 @@ import java.util.List;
  * @author Monofraps (Merged Meteor brush)
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#comet-brush">...</a>
  */
-public class CometBrush extends AbstractBrush {
+public class CometBrush extends CustomBrush {
 
     private boolean useBigBalls = false;
 
@@ -30,8 +34,9 @@ public class CometBrush extends AbstractBrush {
 
     private void doFireball(final SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        positions.add(targetCoords.getLocation(this.getWorld()));
-        positions.add(new BaseLocation(this.getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ()));
+        getOperations().add(new CustomOperation(targetCoords.getLocation(getWorld()), this, v, CustomOperationContext.TARGETLOCATION));
+        getOperations().add(new CustomOperation(v.owner().getPlayer().getEyeLocation(), this, v, CustomOperationContext.PLAYERLOCATION));
+
     }
 
     @Override
@@ -56,21 +61,11 @@ public class CometBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("big", "small"));
-    }
-
-    @Override
-    protected boolean actPerform(SnipeData v) {
-        final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
-        final BaseLocation playerLocation = v.owner().getPlayer().getEyeLocation();
-        final VoxelVector slope = targetCoords.subtract(playerLocation.toVector());
-
-        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
-        v.owner().getPlayer().launchProjectile(type, slope.normalize());
-        return true;
     }
 
     @Override
@@ -94,5 +89,20 @@ public class CometBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.comet";
+    }
+
+    @Override
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        if(operations.size() != 2) {
+            return false;
+        }
+        final VoxelVector targetCoords = operations.stream().filter(operation -> operation.getContext() == CustomOperationContext.TARGETLOCATION).findFirst().get().getLocation().toVector();
+        final VoxelVector playerCoords = operations.stream().filter(operation -> operation.getContext() == CustomOperationContext.PLAYERLOCATION).findFirst().get().getLocation().toVector();
+        final VoxelVector slope = targetCoords.subtract(playerCoords);
+
+        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
+        snipeData.owner().getPlayer().launchProjectile(type, slope.normalize());
+        return true;
+
     }
 }
