@@ -88,7 +88,7 @@ abstract class AbstractBrush : IBrush {
     protected fun performOperations(data: SnipeData): Boolean {
         if (operations.size == 0) return false
         val event = PlayerSnipeEvent(data.owner().player, this, ImmutableList.copyOf(operations)).callEvent()
-        if (!event.isCancelled && event.operations.size > 0) {
+        if (!event.isCancelled) {
             val undo = Undo()
             var reloadArea = false
             if (event.isCustom) {

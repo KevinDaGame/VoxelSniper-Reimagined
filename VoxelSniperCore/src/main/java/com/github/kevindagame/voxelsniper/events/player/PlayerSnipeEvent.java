@@ -9,7 +9,6 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements Cancellable {
@@ -68,7 +67,17 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
 
     @Override
     public boolean isCancelled() {
-        return status == EventResult.DENY;
+        return status == EventResult.DENY || !hasNonCancelledOperation();
+    }
+
+    private boolean hasNonCancelledOperation() {
+        for (var operation :
+                getOperations()) {
+            if (!operation.isCancelled()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
