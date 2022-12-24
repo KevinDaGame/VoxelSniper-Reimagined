@@ -18,7 +18,7 @@ public abstract class AbstractBlockState implements IBlockState {
 
     @Override
     public final BaseLocation getLocation() {
-        return new BaseLocation(getWorld(), getX(), getY(), getZ());
+        return this.block.getLocation();
     }
 
     @Override

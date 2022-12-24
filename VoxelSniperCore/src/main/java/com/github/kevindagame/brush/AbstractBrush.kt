@@ -87,12 +87,12 @@ abstract class AbstractBrush : IBrush {
 
     protected fun performOperations(data: SnipeData): Boolean {
         if (operations.size == 0) return false
-        val event = PlayerSnipeEvent(data.owner().player, this, ImmutableList.copyOf(operations)).callEvent()
+        val event = PlayerSnipeEvent(data.owner().player, this, ImmutableList.copyOf(operations), operations.any { o -> o is CustomOperation }).callEvent()
         if (!event.isCancelled) {
             val undo = Undo()
             var reloadArea = false
             if (event.isCustom && this is CustomBrush) {
-                this.perform(event.operations as ImmutableList<CustomOperation>, data, undo)
+                this.perform(event.operations.stream().filter{ o -> !o.isCancelled && o is CustomOperation }.map { o -> o as CustomOperation }.collect(ImmutableList.toImmutableList()), data, undo)
             } else {
                 for (operation in event.operations) {
                     if (!operation.isCancelled) {

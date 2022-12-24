@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.BrushOperation.BlockStateOperation;
 import com.github.kevindagame.util.BrushOperation.CustomOperation;
 import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
@@ -53,13 +54,13 @@ public class SignOverwriteBrush extends CustomBrush {
      * @param sign
      */
     private void setSignText(final ISign sign) {
+        var oldState = sign.getBlock().getState();
         for (int i = 0; i < this.signTextLines.length; i++) {
             if (this.signLinesEnabled[i]) {
                 sign.setLine(i, this.signTextLines[i]);
             }
         }
-
-        sign.update();
+        addOperation(new BlockStateOperation(sign.getLocation(), oldState, sign));
     }
 
     /**
@@ -94,8 +95,8 @@ public class SignOverwriteBrush extends CustomBrush {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
                     IBlockState blockState = this.getWorld().getBlock(x, y, z).getState();
-                    if (blockState instanceof ISign) {
-                        setSignText((ISign) blockState);
+                    if (blockState instanceof ISign sign) {
+                        setSignText(sign);
                         signFound = true;
                     }
                 }
@@ -109,12 +110,17 @@ public class SignOverwriteBrush extends CustomBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        if (this.rangedMode) {
+            setRanged(v);
+        } else {
+            setSingle(v);
+        }
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
+        if (this.getTargetBlock().getState() instanceof ISign)
+            addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -379,12 +385,7 @@ public class SignOverwriteBrush extends CustomBrush {
     public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch(Objects.requireNonNull(getSnipeAction())) {
             case ARROW -> {
-                if (this.rangedMode) {
-                    setRanged(snipeData);
-                } else {
-                    setSingle(snipeData);
-                }
-                return true;
+                return false;
             }
             case GUNPOWDER -> {
                 if (this.getTargetBlock().getState() instanceof ISign sign) {

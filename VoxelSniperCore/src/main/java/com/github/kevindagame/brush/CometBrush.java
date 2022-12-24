@@ -9,7 +9,6 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +40,7 @@ public class CometBrush extends CustomBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.COMET_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -97,9 +96,10 @@ public class CometBrush extends CustomBrush {
         if(operations.size() != 2) {
             return false;
         }
-        final VoxelVector targetCoords = operations.stream().filter(operation -> operation.getContext() == CustomOperationContext.TARGETLOCATION).findFirst().get().getLocation().toVector();
-        final VoxelVector playerCoords = operations.stream().filter(operation -> operation.getContext() == CustomOperationContext.PLAYERLOCATION).findFirst().get().getLocation().toVector();
-        final VoxelVector slope = targetCoords.subtract(playerCoords);
+        final var targetCoords = operations.stream().filter(operation -> operation.getContext() == CustomOperationContext.TARGETLOCATION).findFirst();
+        final var playerCoords = operations.stream().filter(operation -> operation.getContext() == CustomOperationContext.PLAYERLOCATION).findFirst();
+        if (targetCoords.isEmpty() || playerCoords.isEmpty()) return false;
+        final VoxelVector slope = targetCoords.get().getLocation().toVector().subtract(playerCoords.get().getLocation().toVector());
 
         final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
         snipeData.owner().getPlayer().launchProjectile(type, slope.normalize());
