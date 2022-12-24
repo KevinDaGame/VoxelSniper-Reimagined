@@ -91,9 +91,8 @@ abstract class AbstractBrush : IBrush {
         if (!event.isCancelled) {
             val undo = Undo()
             var reloadArea = false
-            if (event.isCustom) {
-                val cb = this as CustomBrush
-                cb.perform(event.operations as ImmutableList<CustomOperation>, data, undo)
+            if (event.isCustom && this is CustomBrush) {
+                this.perform(event.operations as ImmutableList<CustomOperation>, data, undo)
             } else {
                 for (operation in event.operations) {
                     if (!operation.isCancelled) {

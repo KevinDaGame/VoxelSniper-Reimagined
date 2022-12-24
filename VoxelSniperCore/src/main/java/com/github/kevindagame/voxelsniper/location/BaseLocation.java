@@ -118,9 +118,10 @@ public class BaseLocation implements Cloneable {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BaseLocation that = (BaseLocation) o;
-        return Double.compare(that.x, x) == 0 && Double.compare(that.y, y) == 0 && Double.compare(that.z, z) == 0 && Float.compare(that.yaw, yaw) == 0 && Float.compare(that.pitch, pitch) == 0 && world.equals(that.world);
+        if (o instanceof BaseLocation loc) {
+            return Double.compare(loc.x, x) == 0 && Double.compare(loc.y, y) == 0 && Double.compare(loc.z, z) == 0 && Float.compare(loc.yaw, yaw) == 0 && Float.compare(loc.pitch, pitch) == 0 && world.equals(loc.world);
+        }
+        return false;
     }
 
     @Override

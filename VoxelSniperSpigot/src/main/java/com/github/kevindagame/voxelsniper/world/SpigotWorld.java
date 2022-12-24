@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
+import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -24,8 +24,10 @@ import org.bukkit.util.Vector;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public record SpigotWorld(World world) implements IWorld {
+    private static final Random RANDOM = new Random();
 
     @Override
     public IBlock getBlock(BaseLocation location) {
@@ -99,11 +101,18 @@ public record SpigotWorld(World world) implements IWorld {
     }
 
     @Override
-    public List<BlockOperation> generateTree(BaseLocation location, VoxelTreeType treeType) {
+    public List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean updateBlocks) {
         if (treeType.isSupported()) {
-            SpigotBlockLogger logger = new SpigotBlockLogger(this);
             TreeType bukkitType = TreeType.valueOf(treeType.name());
-            this.world.generateTree(SpigotLocation.toSpigotLocation(location), bukkitType, logger);
+            var loc = SpigotLocation.toSpigotLocation(location);
+            SpigotBlockLogger logger = new SpigotBlockLogger(this, updateBlocks);
+            try {
+                // This is a better implementation that handles tile entities (bee nests) better, but is not supported below MC 1.18
+                this.world.generateTree(loc, RANDOM, bukkitType, logger);
+            } catch (Exception e) {
+                // fallback implementation in case the above implementation is unavailable
+                this.world.generateTree(loc, bukkitType, logger);
+            }
             return logger.operations;
         }
         return null;

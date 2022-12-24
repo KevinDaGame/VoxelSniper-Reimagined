@@ -1,7 +1,7 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
@@ -34,10 +34,10 @@ public class TreeSnipeBrush extends AbstractBrush {
     }
 
     private void single(final SnipeData v, IBlock targetBlock) {
-        var result = this.getWorld().generateTree(targetBlock.getLocation(), this.treeType);
+        var result = this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, false);
         if (result != null) {
             // don't include the clicked block
-            BaseLocation targetLocation = targetBlock.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
+            BaseLocation targetLocation = targetBlock.getRelative(BlockFace.DOWN).getLocation();
             addOperations(result.stream().filter((o) -> !o.getLocation().equals(targetLocation)).toList());
         }
     }

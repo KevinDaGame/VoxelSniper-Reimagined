@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
+import com.github.kevindagame.util.BrushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
@@ -71,7 +71,12 @@ public interface IWorld {
     void regenerateChunk(int x, int z);
 
     @Nullable
-    List<BlockOperation> generateTree(BaseLocation location, VoxelTreeType treeType);
+    List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean updateBlocks);
+
+    @Nullable
+    default List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType) {
+        return generateTree(location, treeType, true);
+    }
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 
