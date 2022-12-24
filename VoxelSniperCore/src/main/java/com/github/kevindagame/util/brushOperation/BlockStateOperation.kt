@@ -1,4 +1,4 @@
-package com.github.kevindagame.util.BrushOperation
+package com.github.kevindagame.util.brushOperation
 
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState

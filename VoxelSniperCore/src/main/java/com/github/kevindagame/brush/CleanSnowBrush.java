@@ -1,6 +1,6 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.google.common.collect.Lists;

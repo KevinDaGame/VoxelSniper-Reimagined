@@ -6,15 +6,14 @@ package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
-import com.github.kevindagame.util.BrushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 

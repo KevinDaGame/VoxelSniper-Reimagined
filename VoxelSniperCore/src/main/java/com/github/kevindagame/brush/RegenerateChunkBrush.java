@@ -2,16 +2,14 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.BrushOperation.CustomOperation;
-import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * Regenerates the target chunk.

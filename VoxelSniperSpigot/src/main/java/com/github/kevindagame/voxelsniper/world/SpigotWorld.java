@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.util.BrushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.block.IBlock;

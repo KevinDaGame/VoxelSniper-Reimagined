@@ -1,8 +1,8 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.BrushOperation.CustomOperation;
-import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;

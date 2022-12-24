@@ -1,8 +1,8 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
-import com.github.kevindagame.util.BrushOperation.BlockStateOperation;
-import com.github.kevindagame.util.BrushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.BlockStateOperation;
+import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;

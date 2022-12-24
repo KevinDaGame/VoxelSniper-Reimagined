@@ -5,8 +5,8 @@ import com.github.kevindagame.snipe.SnipeAction
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.util.BlockHelper
-import com.github.kevindagame.util.BrushOperation.BrushOperation
-import com.github.kevindagame.util.BrushOperation.CustomOperation
+import com.github.kevindagame.util.brushOperation.BrushOperation
+import com.github.kevindagame.util.brushOperation.CustomOperation
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.voxelsniper.block.BlockFace

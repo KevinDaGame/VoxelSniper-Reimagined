@@ -1,9 +1,8 @@
 package com.github.kevindagame.brush.Shell;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockWrapper;
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 

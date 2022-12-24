@@ -2,7 +2,7 @@ package com.github.kevindagame.brush.MultiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
-import com.github.kevindagame.util.BrushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;

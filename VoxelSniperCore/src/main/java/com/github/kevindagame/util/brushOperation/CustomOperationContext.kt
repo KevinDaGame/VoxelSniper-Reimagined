@@ -1,4 +1,4 @@
-package com.github.kevindagame.util.BrushOperation
+package com.github.kevindagame.util.brushOperation
 
 enum class CustomOperationContext {
     PLAYERLOCATION,

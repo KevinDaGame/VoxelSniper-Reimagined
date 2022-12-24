@@ -3,9 +3,9 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.BrushOperation.BlockStateOperation;
-import com.github.kevindagame.util.BrushOperation.CustomOperation;
-import com.github.kevindagame.util.BrushOperation.CustomOperationContext;
+import com.github.kevindagame.util.brushOperation.BlockStateOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 /**

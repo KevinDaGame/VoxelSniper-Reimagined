@@ -1,4 +1,4 @@
-package com.github.kevindagame.util.BrushOperation
+package com.github.kevindagame.util.brushOperation
 
 import com.github.kevindagame.brush.CustomBrush
 import com.github.kevindagame.snipe.SnipeData
