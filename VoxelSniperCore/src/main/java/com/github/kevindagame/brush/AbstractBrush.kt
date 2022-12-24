@@ -1,11 +1,11 @@
 package com.github.kevindagame.brush
 
-import com.github.kevindagame.util.BrushOperation.BrushOperation
 import com.github.kevindagame.brush.perform.PerformerBrush
 import com.github.kevindagame.snipe.SnipeAction
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.util.BlockHelper
+import com.github.kevindagame.util.BrushOperation.BrushOperation
 import com.github.kevindagame.util.BrushOperation.CustomOperation
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
@@ -31,7 +31,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * Targeted Block.
      */
-    protected lateinit var targetBlock: IBlock;
+    protected lateinit var targetBlock: IBlock
     /**
      * @return Block before target Block.
      */
@@ -41,7 +41,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * Last Block before targeted Block.
      */
-    protected lateinit var lastBlock: IBlock;
+    protected lateinit var lastBlock: IBlock
 
     /**
      * The operations this brush performs
@@ -72,6 +72,7 @@ abstract class AbstractBrush : IBrush {
     protected fun addOperations(operations: Collection<BrushOperation>) {
         this.operations.addAll(operations)
     }
+
     override fun perform(action: SnipeAction, data: SnipeData, targetBlock: IBlock, lastBlock: IBlock): Boolean {
         operations.clear()
         this.targetBlock = targetBlock
@@ -88,18 +89,21 @@ abstract class AbstractBrush : IBrush {
         if (operations.size == 0) return false
         val event = PlayerSnipeEvent(data.owner().player, this, ImmutableList.copyOf(operations)).callEvent()
         if (!event.isCancelled && event.operations.size > 0) {
-                val undo = Undo()
-            if(event.isCustom) {
+            val undo = Undo()
+            var reloadArea = false
+            if (event.isCustom) {
                 val cb = this as CustomBrush
                 cb.perform(event.operations as ImmutableList<CustomOperation>, data, undo)
-            }
-            var reloadArea = false
-            for (operation in event.operations) {
-                if(!operation.isCancelled) {
-                reloadArea = reloadArea || executeOperation(operation, undo)
-
+            } else {
+                for (operation in event.operations) {
+                    if (!operation.isCancelled) {
+                        if (executeOperation(operation, undo)) {
+                            reloadArea = true;
+                        }
+                    }
                 }
             }
+            data.owner().storeUndo(undo);
             if (reloadArea) {
                 reloadBrushArea(data)
             }
@@ -109,8 +113,8 @@ abstract class AbstractBrush : IBrush {
 
     private fun reloadBrushArea(v: SnipeData) {
         val brushSize = v.brushSize
-        val block1 = world.getBlock(targetBlock!!.x - brushSize, 0, targetBlock!!.z - brushSize)
-        val block2 = world.getBlock(targetBlock!!.x + brushSize, 0, targetBlock!!.z + brushSize)
+        val block1 = world.getBlock(targetBlock.x - brushSize, 0, targetBlock.z - brushSize)
+        val block2 = world.getBlock(targetBlock.x + brushSize, 0, targetBlock.z + brushSize)
         val lowChunkX = if (block1.x <= block2.x) block1.chunk.x else block2.chunk.x
         val lowChunkZ = if (block1.z <= block2.z) block1.chunk.z else block2.chunk.z
         val highChunkX = if (block1.x >= block2.x) block1.chunk.x else block2.chunk.x
@@ -129,8 +133,7 @@ abstract class AbstractBrush : IBrush {
      * @return whether to reload the area
      */
     private fun executeOperation(operation: BrushOperation, undo: Undo): Boolean {
-        operation.perform(undo)
-        return false
+        return operation.perform(undo)
     }
 
     /**
@@ -178,14 +181,14 @@ abstract class AbstractBrush : IBrush {
                 return false
             }
             if (v.owner().getSnipeData(v.owner().currentToolId).isLightningEnabled) {
-                world.strikeLightning(targetBlock!!.location)
+                world.strikeLightning(targetBlock.location)
             }
             true
         } else {
             val rangeBlockHelper: BlockHelper
             if (v.owner().getSnipeData(v.owner().currentToolId).isRanged) {
                 rangeBlockHelper = BlockHelper(
-                    v.owner().player, v.owner().getSnipeData(v.owner().currentToolId).range
+                        v.owner().player, v.owner().getSnipeData(v.owner().currentToolId).range
                         .toDouble()
                 )
                 targetBlock = rangeBlockHelper.rangeBlock
@@ -200,7 +203,7 @@ abstract class AbstractBrush : IBrush {
                     return false
                 }
                 if (v.owner().getSnipeData(v.owner().currentToolId).isLightningEnabled) {
-                    world.strikeLightning(targetBlock!!.location)
+                    world.strikeLightning(targetBlock.location)
                 }
                 true
             } else {
@@ -226,7 +229,7 @@ abstract class AbstractBrush : IBrush {
      * @return the world
      */
     protected val world: IWorld
-        protected get() = targetBlock!!.world
+        protected get() = targetBlock.world
     protected val minHeight: Int
         protected get() = world.minWorldHeight
     protected val maxHeight: Int

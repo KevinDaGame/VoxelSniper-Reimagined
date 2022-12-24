@@ -97,7 +97,8 @@ public class SplineBrush extends PerformerBrush {
                 final int pz = (int) Math.round((a.getZ() * (t * t * t)) + (b.getZ() * (t * t)) + (c.getZ() * t) + start.getZ());
                 positions.add(new BaseLocation(getWorld(), px, py, pz));
             }
-
+            //manually add operations because the performer logic is not called here
+            addOperations(currentPerformer.perform(positions));
             return true;
         } catch (final Exception exception) {
             v.sendMessage(Messages.SPLINE_BRUSH_NOT_ENOUGH_POINTS.replace("%endPts%", String.valueOf(this.endPts.size())).replace("%ctrlPts%", String.valueOf(this.ctrlPts.size())));

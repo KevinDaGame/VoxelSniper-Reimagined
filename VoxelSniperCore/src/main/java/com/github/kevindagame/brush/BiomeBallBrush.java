@@ -16,6 +16,9 @@ import static java.util.stream.Collectors.toList;
  */
 public class BiomeBallBrush extends AbstractBrush {
 
+    public BiomeBallBrush() {
+        this.setName("Biome ball");
+    }
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
     @Override
