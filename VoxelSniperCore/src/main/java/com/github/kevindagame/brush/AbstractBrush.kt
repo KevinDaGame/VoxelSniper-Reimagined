@@ -5,10 +5,10 @@ import com.github.kevindagame.snipe.SnipeAction
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.util.BlockHelper
-import com.github.kevindagame.util.brushOperation.BrushOperation
-import com.github.kevindagame.util.brushOperation.CustomOperation
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
+import com.github.kevindagame.util.brushOperation.BrushOperation
+import com.github.kevindagame.util.brushOperation.CustomOperation
 import com.github.kevindagame.voxelsniper.block.BlockFace
 import com.github.kevindagame.voxelsniper.block.IBlock
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData
@@ -66,11 +66,13 @@ abstract class AbstractBrush : IBrush {
     }
 
     protected fun addOperation(operation: BrushOperation) {
-        operations.add(operation)
+        if (isInWorldHeight(operation.location.blockY)) {
+            operations.add(operation)
+        }
     }
 
     protected fun addOperations(operations: Collection<BrushOperation>) {
-        this.operations.addAll(operations)
+        this.operations.addAll(operations.filter { o -> isInWorldHeight(o.location.blockY) })
     }
 
     override fun perform(action: SnipeAction, data: SnipeData, targetBlock: IBlock, lastBlock: IBlock): Boolean {
@@ -92,7 +94,7 @@ abstract class AbstractBrush : IBrush {
             val undo = Undo()
             var reloadArea = false
             if (event.isCustom && this is CustomBrush) {
-                this.perform(event.operations.stream().filter{ o -> !o.isCancelled && o is CustomOperation }.map { o -> o as CustomOperation }.collect(ImmutableList.toImmutableList()), data, undo)
+                this.perform(event.operations.stream().filter { o -> !o.isCancelled && o is CustomOperation }.map { o -> o as CustomOperation }.collect(ImmutableList.toImmutableList()), data, undo)
             } else {
                 for (operation in event.operations) {
                     if (!operation.isCancelled) {
