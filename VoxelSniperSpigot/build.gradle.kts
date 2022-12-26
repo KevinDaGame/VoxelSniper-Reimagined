@@ -6,14 +6,22 @@ plugins {
     kotlin("jvm") version "1.7.22"
 }
 
+repositories {
+    maven { url = uri("https://maven.enginehub.org/repo/") }
+}
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") // newest worldguard that supports 1.16.5
+
+    implementation("org.bstats:bstats-bukkit:3.0.0")
 
     implementation("net.kyori:adventure-platform-bukkit:4.1.1")
+    implementation(kotlin("stdlib-jdk8"))
+
+    shadow("org.bstats:bstats-bukkit:3.0.0")
 
     testImplementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
-    implementation(kotlin("stdlib-jdk8"))
 }
 
 description = "VoxelSniperSpigot"
@@ -28,18 +36,15 @@ tasks {
         }
     }
     shadowJar {
-
+        dependencies {
+//            include(dependency("org.bstats:bstats-bukkit"))
+        }
+        relocate("org.bstats", "com.github.kevindagame.voxelsniper.libs.org.bstats")
     }
     runServer {
         minecraftVersion("1.16.5")
     }
 }
-
-//tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run16") {
-//    dependsOn(tasks.shadowJar)
-////    pluginJars(tasks.shadowJar.getArchiveFile())
-//    minecraftVersion("1.16.5")
-//}
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run17") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))

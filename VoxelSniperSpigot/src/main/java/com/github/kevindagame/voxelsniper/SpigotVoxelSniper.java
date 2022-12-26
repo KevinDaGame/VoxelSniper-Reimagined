@@ -4,19 +4,21 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.voxelsniper.bstats.BrushUsageCounter;
-import com.github.kevindagame.voxelsniper.bstats.Metrics;
+import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
+import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -83,8 +85,13 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         // Initialize commands
         SpigotCommandManager.initialize();
+
+        if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+            WorldGuardIntegration worldGuardIntegration = new WorldGuardIntegration();
+        }
+
         Metrics metrics = new Metrics(this, 16602);
-        metrics.addCustomChart(new Metrics.SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
+        metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
 //        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
     }
 
