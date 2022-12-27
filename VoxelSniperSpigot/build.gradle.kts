@@ -10,7 +10,6 @@ dependencies {
     implementation("net.kyori:adventure-platform-bukkit:4.1.1")
 
     testImplementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
-    implementation(kotlin("stdlib-jdk8"))
 }
 
 description = "VoxelSniperSpigot"
