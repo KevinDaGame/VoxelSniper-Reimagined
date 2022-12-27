@@ -40,11 +40,11 @@ public class FlatOceanBrush extends AbstractBrush {
                     var block = chunk.getBlock(x, y, z);
                     var blockWrapper = new BlockWrapper(block);
                     if (y <= this.floorLevel) {
-                        blockWrapper.setBlockData(VoxelMaterial.DIRT.getIMaterial().createBlockData());
+                        blockWrapper.setBlockData(VoxelMaterial.DIRT.createBlockData());
                     } else if (y <= this.waterLevel) {
-                        blockWrapper.setBlockData(VoxelMaterial.WATER.getIMaterial().createBlockData());
+                        blockWrapper.setBlockData(VoxelMaterial.WATER.createBlockData());
                     } else {
-                        blockWrapper.setBlockData(VoxelMaterial.AIR.getIMaterial().createBlockData());
+                        blockWrapper.setBlockData(VoxelMaterial.AIR.createBlockData());
                     }
                     addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
                 }
