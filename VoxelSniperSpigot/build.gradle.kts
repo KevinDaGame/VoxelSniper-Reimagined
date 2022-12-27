@@ -1,9 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("voxel-implementation")
     id("xyz.jpenilla.run-paper") version "1.0.6"
-    kotlin("jvm") version "1.7.22"
 }
 
 
@@ -54,15 +51,4 @@ tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run19") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
     minecraftVersion("1.19.3")
-}
-repositories {
-    mavenCentral()
-}
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "16"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "16"
 }
