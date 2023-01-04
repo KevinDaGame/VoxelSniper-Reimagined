@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("voxel-implementation")
     id("xyz.jpenilla.run-paper") version "1.0.6"
