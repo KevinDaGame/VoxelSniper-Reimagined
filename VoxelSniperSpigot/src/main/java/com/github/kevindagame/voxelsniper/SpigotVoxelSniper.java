@@ -94,14 +94,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         Metrics metrics = new Metrics(this, 16602);
         metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
 //        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
-
-        // Cancel all PlayerSnipeEvents
-
-//        PlayerSnipeEvent.registerListener((event) -> event.setCancelled(true));
-
-        //cancel all operations in PlayerSnipeEvent
-
-         PlayerSnipeEvent.registerListener((event) -> event.getOperations().forEach((operation) -> operation.setCancelled(true)));
     }
 
     @Override

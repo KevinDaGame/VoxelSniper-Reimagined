@@ -130,11 +130,6 @@ public class Sniper {
         }
 
         var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-            curBrushId++;
-            var brushes = VoxelBrushManager.getInstance().getRegisteredBrushesMultimap().keys().stream().toList();
-            var brush = brushes.get(curBrushId % brushes.size());
-            setBrush(getCurrentToolId(), brush);
-            displayInfo();
         return success;
     }
 
