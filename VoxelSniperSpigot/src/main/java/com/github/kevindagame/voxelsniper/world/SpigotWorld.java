@@ -76,19 +76,16 @@ public record SpigotWorld(World world) implements IWorld {
 
     @Override
     public void spawn(BaseLocation location, VoxelEntityType entity) {
-        System.out.println("Spawning " + entity.getKey().toUpperCase(Locale.ROOT));
         world.spawnEntity(SpigotLocation.toSpigotLocation(location), EntityType.valueOf(entity.getKey().toUpperCase(Locale.ROOT)));
     }
 
     @Override
     @Deprecated
     public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        System.out.println("Setting biome to " + selectedBiome.key().toUpperCase());
         world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
     @Override
     public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
-        System.out.println("Setting biome to " + selectedBiome.key().toUpperCase());
         world.setBiome(x, y, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
     }
 

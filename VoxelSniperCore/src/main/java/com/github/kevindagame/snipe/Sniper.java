@@ -1,6 +1,5 @@
 package com.github.kevindagame.snipe;
 
-import com.github.kevindagame.VoxelBrushManager;
 import com.google.common.collect.Maps;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;
@@ -29,7 +28,6 @@ public class Sniper {
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
     private boolean enabled = true;
-    static int curBrushId = 0;
 
     public Sniper(IPlayer player) {
         this.player = player.getUniqueId();

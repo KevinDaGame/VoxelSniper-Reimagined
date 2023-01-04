@@ -29,7 +29,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
 
 import java.util.HashMap;
 import java.util.List;
