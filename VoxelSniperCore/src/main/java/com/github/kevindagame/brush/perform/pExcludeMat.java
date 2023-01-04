@@ -5,6 +5,7 @@
 package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -13,7 +14,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 /**
  * @author Voxel
  */
-public class pExcludeMat extends vPerformer {
+public class pExcludeMat extends BasePerformer {
 
     private VoxelList excludeList;
     private VoxelMaterial voxelMaterial;
@@ -37,10 +38,12 @@ public class pExcludeMat extends vPerformer {
     }
 
     @Override
-    public void perform(IBlock b) {
-        if (!excludeList.contains(b.getMaterial())) {
-            h.put(b);
-            b.setBlockData(voxelMaterial.createBlockData());
-        }
+    public boolean test(IBlock b) {
+        return !excludeList.contains(b.getMaterial());
+    }
+
+    @Override
+    public BlockOperation perform(IBlock b) {
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterial.createBlockData());
     }
 }

@@ -4,12 +4,12 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -31,7 +31,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         if (this.coordsOne == null) {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
             v.sendMessage(Messages.FIRST_POINT_SELECTED);
@@ -50,7 +50,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         if (this.coordsOne == null || this.coordsTwo == null || this.coordsThree == null) {
             return;
         }
@@ -123,15 +123,12 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
                     // Check if point is within sphere and on plane (some tolerance given)
                     if (tempDistance <= radius && (Math.abs(cornerConstant - planeConstant) < this.tolerance.getValue() || Math.abs(centerConstant - planeConstant) < this.tolerance.getValue())) {
-                        this.currentPerformer.perform(this.clampY(brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
+                        this.positions.add(new BaseLocation(getWorld(), brushCenter.getBlockX() + x, brushCenter.getBlockY() + y, brushCenter.getBlockZ() + z));
                     }
 
                 }
             }
         }
-
-        v.sendMessage(Messages.TRI_POINT_CIRCLE_DONE);
-        v.owner().storeUndo(this.currentPerformer.getUndo());
 
         // Reset Brush
         this.coordsOne = null;
@@ -144,18 +141,10 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         switch (this.tolerance) {
-            case ACCURATE:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_ACCURATE);
-                break;
-            case DEFAULT:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_DEFAULT);
-                break;
-            case SMOOTH:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_SMOOTH);
-                break;
-            default:
-                vm.custom(Messages.TRI_POINT_CIRCLE_MODE_UNKNOWN);
-                break;
+            case ACCURATE -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_ACCURATE);
+            case DEFAULT -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_DEFAULT);
+            case SMOOTH -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_SMOOTH);
+            default -> vm.custom(Messages.TRI_POINT_CIRCLE_MODE_UNKNOWN);
         }
 
     }
@@ -180,7 +169,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
 
-        arguments.addAll(Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
+        arguments.addAll(Arrays.stream(Tolerance.values()).map(Enum::name).toList());
 
         arguments.addAll(super.registerArguments());
         return arguments;

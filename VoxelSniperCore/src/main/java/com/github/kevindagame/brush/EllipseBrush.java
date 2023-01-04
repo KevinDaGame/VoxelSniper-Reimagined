@@ -47,15 +47,15 @@ public class EllipseBrush extends PerformerBrush {
                 switch (getTargetBlock().getFace(this.getLastBlock())) {
                     case NORTH:
                     case SOUTH:
-                        currentPerformer.perform(targetBlock.getRelative(0, x, y));
+                        positions.add(targetBlock.getRelative(0, x, y).getLocation());
                         break;
                     case EAST:
                     case WEST:
-                        currentPerformer.perform(targetBlock.getRelative(x, y, 0));
+                        positions.add(targetBlock.getRelative(x, y, 0).getLocation());
                         break;
                     case UP:
                     case DOWN:
-                        currentPerformer.perform(targetBlock.getRelative(x, 0, y));
+                        positions.add(targetBlock.getRelative(x, 0, y).getLocation());
                     default:
                         break;
                 }
@@ -67,15 +67,13 @@ public class EllipseBrush extends PerformerBrush {
         } catch (final Exception exception) {
             v.sendMessage(Messages.INVALID_TARGET);
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void ellipsefill(final SnipeData v, IBlock targetBlock) {
         int ix = this.xscl;
         int iy = this.yscl;
 
-        currentPerformer.perform(targetBlock);
+        positions.add(targetBlock.getLocation());
 
         try {
             if (ix >= iy) { // Need this unless you want weird holes
@@ -87,15 +85,15 @@ public class EllipseBrush extends PerformerBrush {
                         switch (getTargetBlock().getFace(this.getLastBlock())) {
                             case NORTH:
                             case SOUTH:
-                                currentPerformer.perform(targetBlock.getRelative(0, x, y));
+                                positions.add(targetBlock.getRelative(0, x, y).getLocation());
                                 break;
                             case EAST:
                             case WEST:
-                                currentPerformer.perform(targetBlock.getRelative(x, y, 0));
+                                positions.add(targetBlock.getRelative(x, y, 0).getLocation());
                                 break;
                             case UP:
                             case DOWN:
-                                currentPerformer.perform(targetBlock.getRelative(x, 0, y));
+                                positions.add(targetBlock.getRelative(x, 0, y).getLocation());
                             default:
                                 break;
                         }
@@ -115,15 +113,15 @@ public class EllipseBrush extends PerformerBrush {
                         switch (getTargetBlock().getFace(this.getLastBlock())) {
                             case NORTH:
                             case SOUTH:
-                                currentPerformer.perform(targetBlock.getRelative(0, x, y));
+                                positions.add(targetBlock.getRelative(0, x, y).getLocation());
                                 break;
                             case EAST:
                             case WEST:
-                                currentPerformer.perform(targetBlock.getRelative(x, y, 0));
+                                positions.add(targetBlock.getRelative(x, y, 0).getLocation());
                                 break;
                             case UP:
                             case DOWN:
-                                currentPerformer.perform(targetBlock.getRelative(x, 0, y));
+                                positions.add(targetBlock.getRelative(x, 0, y).getLocation());
                             default:
                                 break;
                         }
@@ -138,8 +136,6 @@ public class EllipseBrush extends PerformerBrush {
         } catch (final Exception exception) {
             v.sendMessage(Messages.INVALID_TARGET);
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void execute(final SnipeData v, IBlock targetBlock) {
@@ -153,12 +149,12 @@ public class EllipseBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.execute(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.execute(v, this.getLastBlock());
     }
 

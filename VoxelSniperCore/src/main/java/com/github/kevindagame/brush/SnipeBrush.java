@@ -19,15 +19,13 @@ public class SnipeBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.currentPerformer.perform(this.getTargetBlock());
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    protected final void doArrow(final SnipeData v) {
+        this.positions.add(this.getTargetBlock().getLocation());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        this.currentPerformer.perform(this.getLastBlock());
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    protected final void doPowder(final SnipeData v) {
+        this.positions.add(this.getTargetBlock().getLocation());
     }
 
     @Override

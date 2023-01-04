@@ -1,13 +1,14 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.text.Component;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -49,18 +49,13 @@ public class MoveBrush extends AbstractBrush {
      * @param selection
      * @param direction
      */
-    @SuppressWarnings("deprecation")
     private void moveSelection(final SnipeData v, final Selection selection, final int[] direction) {
-        if (selection.getBlockStates().size() > 0) {
-            final IWorld world = selection.getBlockStates().get(0).getWorld();
-
-            final Undo undo = new Undo();
-            final HashSet<IBlock> undoSet = new HashSet<>();
-
+        if (selection.getBlockWrappers().size() > 0) {
+            final IWorld world = selection.getBlockWrappers().get(0).getWorld();
             final Selection newSelection = new Selection();
-            final VoxelLocation movedLocation1 = selection.getLocation1();
+            final VoxelLocation movedLocation1 = selection.getLocation1().makeMutable();
             movedLocation1.add(direction[0], direction[1], direction[2]);
-            final VoxelLocation movedLocation2 = selection.getLocation2();
+            final VoxelLocation movedLocation2 = selection.getLocation2().makeMutable();
             movedLocation2.add(direction[0], direction[1], direction[2]);
             newSelection.setLocation1(movedLocation1);
             newSelection.setLocation2(movedLocation2);
@@ -70,24 +65,12 @@ public class MoveBrush extends AbstractBrush {
                 v.sendMessage(exception);
             }
 
-            for (final IBlockState blockState : selection.getBlockStates()) {
-                undoSet.add(blockState.getBlock());
+            for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
+                addOperation(new BlockOperation(blockWrapper.getLocation(), blockWrapper.getLocation().getBlock().getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
-            for (final IBlockState blockState : newSelection.getBlockStates()) {
-                undoSet.add(blockState.getBlock());
-            }
-
-            for (final IBlock block : undoSet) {
-                undo.put(block);
-            }
-            v.owner().storeUndo(undo);
-
-            for (final IBlockState blockState : selection.getBlockStates()) {
-                blockState.getBlock().setMaterial(VoxelMaterial.AIR);
-            }
-            for (final IBlockState blockState : selection.getBlockStates()) {
-                final IBlock affectedBlock = world.getBlock(blockState.getX() + direction[0], blockState.getY() + direction[1], blockState.getZ() + direction[2]);
-                affectedBlock.setBlockData(blockState.getBlockData(), !blockState.getMaterial().fallsOff());
+            for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
+                var block = world.getBlock(blockWrapper.getX() + direction[0], blockWrapper.getY() + direction[1], blockWrapper.getZ() + direction[2]);
+                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
             }
         }
     }
@@ -228,15 +211,15 @@ public class MoveBrush extends AbstractBrush {
         /**
          * Calculated BlockStates of the selection.
          */
-        private final ArrayList<IBlockState> blockStates = new ArrayList<>();
+        private final ArrayList<BlockWrapper> blockWrappers = new ArrayList<>();
         /**
          *
          */
-        private VoxelLocation location1 = null;
+        private BaseLocation location1 = null;
         /**
          *
          */
-        private VoxelLocation location2 = null;
+        private BaseLocation location2 = null;
 
         /**
          * Calculates region, then saves all Blocks as BlockState.
@@ -260,7 +243,7 @@ public class MoveBrush extends AbstractBrush {
                     for (int y = lowY; y <= highY; y++) {
                         for (int x = lowX; x <= highX; x++) {
                             for (int z = lowZ; z <= highZ; z++) {
-                                this.blockStates.add(world.getBlock(x, y, z).getState());
+                                this.blockWrappers.add(new BlockWrapper(world.getBlock(x, y, z)));
                             }
                         }
                     }
@@ -273,35 +256,35 @@ public class MoveBrush extends AbstractBrush {
         /**
          * @return ArrayList<BlockState> calculated BlockStates of defined region.
          */
-        public ArrayList<IBlockState> getBlockStates() {
-            return this.blockStates;
+        public ArrayList<BlockWrapper> getBlockWrappers() {
+            return this.blockWrappers;
         }
 
         /**
          * @return Location
          */
-        public VoxelLocation getLocation1() {
+        public BaseLocation getLocation1() {
             return this.location1;
         }
 
         /**
          * @param location1
          */
-        public void setLocation1(final VoxelLocation location1) {
+        public void setLocation1(final BaseLocation location1) {
             this.location1 = location1;
         }
 
         /**
          * @return Location
          */
-        public VoxelLocation getLocation2() {
+        public BaseLocation getLocation2() {
             return this.location2;
         }
 
         /**
          * @param location2
          */
-        public void setLocation2(final VoxelLocation location2) {
+        public void setLocation2(final BaseLocation location2) {
             this.location2 = location2;
         }
     }

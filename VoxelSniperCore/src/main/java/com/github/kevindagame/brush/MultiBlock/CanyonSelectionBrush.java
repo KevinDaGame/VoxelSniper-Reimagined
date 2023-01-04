@@ -1,4 +1,4 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -44,7 +44,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
 
         for (int x = lowX; x <= highX; x++) {
             for (int z = lowZ; z <= highZ; z++) {
-                canyon(getWorld().getChunkAtLocation(x, z), undo);
+                canyon(getWorld().getChunkAtLocation(x, z));
             }
         }
 

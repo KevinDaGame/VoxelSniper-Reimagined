@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.vector;
 
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.Objects;
@@ -24,8 +24,8 @@ public class VoxelVector implements Cloneable {
         return num * num;
     }
 
-    public VoxelLocation getLocation(IWorld world) {
-        return new VoxelLocation(world, getX(), getY(), getZ());
+    public BaseLocation getLocation(IWorld world) {
+        return new BaseLocation(world, getX(), getY(), getZ());
     }
 
     public VoxelVector getMidpoint(VoxelVector other) {

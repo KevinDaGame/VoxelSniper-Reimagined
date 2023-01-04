@@ -1,5 +1,7 @@
 package com.github.kevindagame;
 
+import com.github.kevindagame.brush.MultiBlock.*;
+import com.github.kevindagame.brush.Shell.*;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
@@ -72,31 +74,22 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(OverlayBrush.class, "over", "overlay");
         brushManager.registerSniperBrush(PaintingBrush.class, "painting");
         brushManager.registerSniperBrush(PullBrush.class, "pull");
-        //brushManager.registerSniperBrush(RandomErodeBrush.class, "re", "randomerode");
         brushManager.registerSniperBrush(RegenerateChunkBrush.class, "rc", "regeneratechunk");
         brushManager.registerSniperBrush(RingBrush.class, "ri", "ring");
-        brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
-        brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
-        brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
         brushManager.registerSniperBrush(RulerBrush.class, "r", "ruler");
         brushManager.registerSniperBrush(ScannerBrush.class, "sc", "scanner");
         brushManager.registerSniperBrush(SetBrush.class, "set");
-        //brushManager.registerSniperBrush(SetRedstoneFlipBrush.class, "setrf", "setredstoneflip");
         brushManager.registerSniperBrush(ShellBallBrush.class, "shb", "shellball");
         brushManager.registerSniperBrush(ShellSetBrush.class, "shs", "shellset");
         brushManager.registerSniperBrush(ShellVoxelBrush.class, "shv", "shellvoxel");
         brushManager.registerSniperBrush(SignOverwriteBrush.class, "sio", "signoverwriter");
         brushManager.registerSniperBrush(SnipeBrush.class, "s", "snipe");
-        //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
-        //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
         brushManager.registerSniperBrush(SplatterBallBrush.class, "sb", "splatball");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "sd", "splatdisc");
         brushManager.registerSniperBrush(SplatterOverlayBrush.class, "sover", "splatteroverlay");
+        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
         brushManager.registerSniperBrush(SplatterVoxelBrush.class, "sv", "splattervoxel");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "svd", "splatvoxeldisc");
-        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
-        //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
-        //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
         brushManager.registerSniperBrush(ThreePointCircleBrush.class, "tpc", "threepointcircle");
         brushManager.registerSniperBrush(TreeSnipeBrush.class, "t", "tree", "treesnipe");
         brushManager.registerSniperBrush(TriangleBrush.class, "tri", "triangle");
@@ -106,6 +99,19 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(VoxelDiscBrush.class, "vd", "voxeldisc");
         brushManager.registerSniperBrush(VoxelDiscFaceBrush.class, "vdf", "voxeldiscface");
         brushManager.registerSniperBrush(WarpBrush.class, "w", "warp");
+
+        //these brushes are currently removed/broken
+        //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
+        //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
+
+        //brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
+        //brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
+        //brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
+
+
+        //these brushes have an unknown status
+        //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
+        //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
 
         return getInstance();
     }

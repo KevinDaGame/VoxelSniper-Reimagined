@@ -5,6 +5,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#set-brush">...</a>
@@ -30,15 +31,16 @@ public class SetBrush extends PerformerBrush {
      * @param v  data
      * @return TRUE when first point was selected, or second point is in different world
      */
-    private boolean set(final IBlock bl, final SnipeData v) {
+    private void set(final IBlock bl, final SnipeData v) {
         if (this.block == null) {
             this.block = bl;
-            return true;
+            v.sendMessage(Messages.FIRST_POINT_SELECTED);
+            return;
         } else {
             if (!this.block.getWorld().getName().equals(bl.getWorld().getName())) {
                 v.sendMessage(Messages.SELECTED_POINTS_DIFFERENT_WORLD);
                 this.block = bl;
-                return true;
+                return;
             }
             final int lowX = Math.min(this.block.getX(), bl.getX());
             final int lowY = Math.min(this.block.getY(), bl.getY());
@@ -53,33 +55,24 @@ public class SetBrush extends PerformerBrush {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            this.currentPerformer.perform(this.clampY(x, y, z));
+                            this.positions.add(new BaseLocation(getWorld(), x, y, z));
                         }
                     }
                 }
             }
 
             this.block = null;
-            return false;
         }
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        if (this.set(this.getTargetBlock(), v)) {
-            v.sendMessage(Messages.FIRST_POINT_SELECTED);
-        } else {
-            v.owner().storeUndo(this.currentPerformer.getUndo());
-        }
+    protected final void doArrow(final SnipeData v) {
+        this.set(this.getTargetBlock(), v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        if (this.set(this.getLastBlock(), v)) {
-            v.sendMessage(Messages.FIRST_POINT_SELECTED);
-        } else {
-            v.owner().storeUndo(this.currentPerformer.getUndo());
-        }
+    protected final void doPowder(final SnipeData v) {
+        this.set(this.getLastBlock(), v);
     }
 
     @Override

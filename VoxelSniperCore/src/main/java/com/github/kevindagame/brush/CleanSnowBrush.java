@@ -1,8 +1,10 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -18,9 +20,6 @@ import java.util.List;
  */
 public class CleanSnowBrush extends AbstractBrush {
 
-    public static final double SMOOTH_SPHERE_VALUE = 0.5;
-    public static final int VOXEL_SPHERE_VALUE = 0;
-
     private boolean smoothSphere = false;
 
     /**
@@ -31,29 +30,14 @@ public class CleanSnowBrush extends AbstractBrush {
     }
 
     private void cleanSnow(final SnipeData v) {
-        final int brushSize = v.getBrushSize();
-        final double brushSizeSquared = Math.pow(brushSize + (this.smoothSphere ? SMOOTH_SPHERE_VALUE : VOXEL_SPHERE_VALUE), 2);
-        final Undo undo = new Undo();
-
-        for (int x = (brushSize + 1) * 2; x >= 0; x--) {
-            final double xSquared = Math.pow(x - brushSize, 2);
-            for (int z = (brushSize + 1) * 2; z >= 0; z--) {
-                final double zSquared = Math.pow(z - brushSize, 2);
-
-                for (int y = (brushSize + 1) * 2; y >= 0; y--) {
-                    if ((xSquared + Math.pow(y - brushSize, 2) + zSquared) <= brushSizeSquared) {
-                        IBlock b = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize, this.getTargetBlock().getZ() + z - brushSize);
-                        IBlock blockDown = this.clampY(this.getTargetBlock().getX() + x - brushSize, this.getTargetBlock().getY() + y - brushSize - 1, this.getTargetBlock().getZ() + z - brushSize);
-                        if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {
-                            setBlockType(b, VoxelMaterial.AIR, undo);
-                        }
-
-                    }
-                }
+        var positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), smoothSphere);
+        for(var position: positions) {
+            IBlock b = position.getBlock();
+            IBlock blockDown = b.getRelative(BlockFace.DOWN);
+            if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {
+                addOperation(new BlockOperation(position, b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
             }
         }
-
-        v.owner().storeUndo(undo);
     }
 
     @Override

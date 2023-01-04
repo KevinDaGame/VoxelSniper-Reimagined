@@ -1,6 +1,5 @@
 package com.github.kevindagame.snipe;
 
-import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent;
 import com.google.common.collect.Maps;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;

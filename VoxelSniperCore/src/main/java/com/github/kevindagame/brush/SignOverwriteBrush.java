@@ -2,22 +2,29 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.BlockStateOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
+import com.google.common.collect.ImmutableList;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Overwrites signs. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#sign-overwrite-brush-brush">...</a>
  *
  * @author Monofraps
  */
-public class SignOverwriteBrush extends AbstractBrush {
+public class SignOverwriteBrush extends CustomBrush {
 
     private static final int MAX_SIGN_LINE_LENGTH = 15;
     private static final int NUM_SIGN_LINES = 4;
@@ -46,13 +53,13 @@ public class SignOverwriteBrush extends AbstractBrush {
      * @param sign
      */
     private void setSignText(final ISign sign) {
+        var oldState = sign.getBlock().getState();
         for (int i = 0; i < this.signTextLines.length; i++) {
             if (this.signLinesEnabled[i]) {
                 sign.setLine(i, this.signTextLines[i]);
             }
         }
-
-        sign.update();
+        addOperation(new BlockStateOperation(sign.getLocation(), oldState, sign));
     }
 
     /**
@@ -87,8 +94,8 @@ public class SignOverwriteBrush extends AbstractBrush {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
                     IBlockState blockState = this.getWorld().getBlock(x, y, z).getState();
-                    if (blockState instanceof ISign) {
-                        setSignText((ISign) blockState);
+                    if (blockState instanceof ISign sign) {
+                        setSignText(sign);
                         signFound = true;
                     }
                 }
@@ -111,18 +118,8 @@ public class SignOverwriteBrush extends AbstractBrush {
 
     @Override
     protected final void powder(final SnipeData v) {
-        if (this.getTargetBlock().getState() instanceof ISign sign) {
-
-            for (int i = 0; i < this.signTextLines.length; i++) {
-                if (this.signLinesEnabled[i]) {
-                    this.signTextLines[i] = sign.getLine(i);
-                }
-            }
-
-            displayBuffer(v);
-        } else {
-            v.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
-        }
+        if (this.getTargetBlock().getState() instanceof ISign)
+            addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -381,5 +378,30 @@ public class SignOverwriteBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.signoverwrite";
+    }
+
+    @Override
+    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        switch(Objects.requireNonNull(getSnipeAction())) {
+            case ARROW -> {
+                return false;
+            }
+            case GUNPOWDER -> {
+                if (this.getTargetBlock().getState() instanceof ISign sign) {
+
+                    for (int i = 0; i < this.signTextLines.length; i++) {
+                        if (this.signLinesEnabled[i]) {
+                            this.signTextLines[i] = sign.getLine(i);
+                        }
+                    }
+
+                    displayBuffer(snipeData);
+                } else {
+                    snipeData.sendMessage(Messages.TARGET_BLOCK_NO_SIGN);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

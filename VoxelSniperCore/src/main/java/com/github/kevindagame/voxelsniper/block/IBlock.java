@@ -4,7 +4,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 public interface IBlock {
-    VoxelLocation getLocation();
+    BaseLocation getLocation();
 
     VoxelMaterial getMaterial();
 

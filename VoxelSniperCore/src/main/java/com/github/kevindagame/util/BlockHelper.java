@@ -6,6 +6,7 @@ import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.Painting.IPainting;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
@@ -19,9 +20,9 @@ public class BlockHelper {
     private static final double DEFAULT_STEP = 0.2;
     private static final int DEFAULT_RANGE = 250;
     private final IWorld world;
-    private VoxelLocation startPoint;
+    private BaseLocation startPoint;
     private VoxelLocation current;
-    private VoxelLocation last;
+    private BaseLocation last;
     private VoxelVector direction;
     private double rangeSquared;
     private int maxWorldHeight;
@@ -32,7 +33,7 @@ public class BlockHelper {
      *
      * @param location
      */
-    public BlockHelper(final VoxelLocation location) {
+    public BlockHelper(final BaseLocation location) {
         this(location, BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP);
     }
 
@@ -43,7 +44,7 @@ public class BlockHelper {
      * @param range
      * @param step
      */
-    public BlockHelper(final VoxelLocation location, final double range, final double step) {
+    public BlockHelper(final BaseLocation location, final double range, final double step) {
         this.world = location.getWorld();
         this.init(location, range, step);
     }
@@ -86,7 +87,7 @@ public class BlockHelper {
      * @param choice Chosen index to set the painting to
      */
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
-        VoxelLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
+        BaseLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
         IChunk paintingChunk = targetLocation.getChunk();
         double bestDistanceMatch = 50.0;
         IPainting bestMatch = null;
@@ -121,7 +122,7 @@ public class BlockHelper {
         }
     }
 
-    private boolean isOutsideBuildHeight(VoxelLocation loc) {
+    private boolean isOutsideBuildHeight(BaseLocation loc) {
         // above worldHeight and going up, or below worldHeight and going down
         return (loc.getBlockY() >= maxWorldHeight && direction.getY() >= 0) || (loc.getBlockY() < minWorldHeight && direction.getY() <= 0);
     }
@@ -219,12 +220,12 @@ public class BlockHelper {
         }
     }
 
-    private void init(final VoxelLocation location, final double range, final double step) {
+    private void init(final BaseLocation location, final double range, final double step) {
         this.maxWorldHeight = world.getMaxWorldHeight();
         this.minWorldHeight = world.getMinWorldHeight();
         this.startPoint = location;
 
-        this.current = location.clone();
+        this.current = location.makeMutable();
         this.last = this.current;
         this.direction = location.getDirection();
         this.direction.normalize();

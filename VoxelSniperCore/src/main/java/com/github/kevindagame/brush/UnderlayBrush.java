@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -45,8 +46,9 @@ public class UnderlayBrush extends PerformerBrush {
                             final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = 0; (d < this.depth); d++) {
-                                    if (!this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                    var mat = getBlockMaterialAt(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z);
+                                    if (!mat.isAir()) {
+                                        positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                         // parameters
                                         memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                     }
@@ -58,8 +60,6 @@ public class UnderlayBrush extends PerformerBrush {
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void underlay2(final SnipeData v) {
@@ -74,7 +74,7 @@ public class UnderlayBrush extends PerformerBrush {
                             final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = -1; (d < this.depth - 1); d++) {
-                                    this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
+                                    positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
                                     // parameters
                                     memory[x + v.getBrushSize()][z + v.getBrushSize()] = 1; // stop it from checking any other blocks in this vertical 1x1 column.
                                 }
@@ -84,8 +84,6 @@ public class UnderlayBrush extends PerformerBrush {
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
@@ -101,12 +99,12 @@ public class UnderlayBrush extends PerformerBrush {
     }
 
     @Override
-    public final void arrow(final SnipeData v) {
+    public final void doArrow(final SnipeData v) {
         this.underlay(v);
     }
 
     @Override
-    public final void powder(final SnipeData v) {
+    public final void doPowder(final SnipeData v) {
         this.underlay2(v);
     }
 

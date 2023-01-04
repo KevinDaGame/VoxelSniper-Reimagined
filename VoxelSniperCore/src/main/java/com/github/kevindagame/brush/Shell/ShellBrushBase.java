@@ -1,10 +1,10 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.Shell;
 
+import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 /**
@@ -12,25 +12,25 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
  *
  * @author Voxel
  */
-public class ShellBallBrush extends AbstractBrush {
+public abstract class ShellBrushBase extends AbstractBrush {
+
 
     /**
-     *
+     * @param v
      */
-    public ShellBallBrush() {
-        this.setName("Shell Ball");
-    }
+    protected abstract void shell(SnipeData v);
 
-    // parameters isn't an abstract method, gilt. You can just leave it out if there are none.
-    private void bShell(final SnipeData v, IBlock targetBlock) {
+    protected VoxelMaterial[][][] bShell(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
         final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
         final VoxelMaterial[][][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the hollowed materials
+        final var targetBlock = getTargetBlock();
 
         int blockPositionX = targetBlock.getX();
         int blockPositionY = targetBlock.getY();
         int blockPositionZ = targetBlock.getZ();
+
         // Log current materials into oldmats
         for (int x = 0; x <= 2 * (brushSize + 1); x++) {
             for (int y = 0; y <= 2 * (brushSize + 1); y++) {
@@ -80,38 +80,17 @@ public class ShellBallBrush extends AbstractBrush {
                 }
             }
         }
-
-        // Make the changes
-        final Undo undo = new Undo();
-        final double rSquared = Math.pow(brushSize + 0.5, 2);
-
-        for (int x = brushSizeDoubled; x >= 0; x--) {
-            final double xSquared = Math.pow(x - brushSize, 2);
-
-            for (int y = 0; y <= 2 * brushSize; y++) {
-                final double ySquared = Math.pow(y - brushSize, 2);
-
-                for (int z = 2 * brushSize; z >= 0; z--) {
-                    if (xSquared + ySquared + Math.pow(z - brushSize, 2) <= rSquared) {
-                        setBlockMaterialAt(blockPositionX - brushSize + x, blockPositionY - brushSize + y, blockPositionZ - brushSize + z, newMaterials[x][y][z], undo);
-                    }
-                }
-            }
-        }
-        v.owner().storeUndo(undo);
-
-        // This is needed because most uses of this brush will not be sible to the sniper.
-        v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
+        return newMaterials;
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.bShell(v, this.getTargetBlock());
+    protected void arrow(final SnipeData v) {
+        this.shell(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        this.bShell(v, this.getLastBlock());
+    protected void powder(final SnipeData v) {
+        this.shell(v);
     }
 
     @Override
@@ -120,10 +99,5 @@ public class ShellBallBrush extends AbstractBrush {
         vm.size();
         vm.voxel();
         vm.replace();
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.shellball";
     }
 }

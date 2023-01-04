@@ -64,7 +64,7 @@ public class FillDownBrush extends PerformerBrush {
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
                         if (currentBlock.isEmpty() || (fillLiquid && currentBlock.isLiquid())) {
-                            this.currentPerformer.perform(currentBlock);
+                            this.positions.add(currentBlock.getLocation());
                         } else {
                             break;
                         }
@@ -72,17 +72,15 @@ public class FillDownBrush extends PerformerBrush {
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.fillDown(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.fillDown(v, this.getLastBlock());
     }
 

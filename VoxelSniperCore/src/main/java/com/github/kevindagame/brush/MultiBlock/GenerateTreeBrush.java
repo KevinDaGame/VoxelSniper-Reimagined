@@ -1,12 +1,14 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.*;
@@ -24,7 +26,6 @@ public class GenerateTreeBrush extends AbstractBrush {
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
-    private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
     private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD;
@@ -49,8 +50,8 @@ public class GenerateTreeBrush extends AbstractBrush {
     }
 
     // Branch Creation based on direction chosen from the parameters passed.
-    private void branchCreate(VoxelLocation location, final int xDirection, final int zDirection) {
-        location = location.clone();
+    private void branchCreate(BaseLocation origin, final int xDirection, final int zDirection) {
+        VoxelLocation location = origin.makeMutable();
 
         // Sets direction preference.
         final int xPreference = this.random.nextInt(60) + 20;
@@ -72,18 +73,14 @@ public class GenerateTreeBrush extends AbstractBrush {
                 location.addY(this.random.nextInt(2));
             }
 
-            // Add block to undo function.
-            if (location.getBlock().getMaterial() != woodMaterial) {
-                this.undo.put(location.getClampedBlock());
-            }
-
             // Creates a branch block.
-            location.getBlock().setBlockData(woodMaterial.createBlockData(), false);
+            addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
             this.branchBlocks.add(location.getClampedBlock());
         }
     }
 
-    private void leafNodeCreate(final VoxelLocation location) {
+    private void leafNodeCreate(final BaseLocation origin) {
+        VoxelLocation location = origin.makeMutable();
         // Generates the node size.
         final int nodeRadius = this.random.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
         final double bSquared = Math.pow(nodeRadius + 0.5, 2);
@@ -103,12 +100,8 @@ public class GenerateTreeBrush extends AbstractBrush {
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
                             if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-                                // Adds block to undo function.
-                                if (location.getBlock().getRelative(x, y, z).getBlockData().getMaterial() != leavesMaterial) {
-                                    this.undo.put(location.getBlock().getRelative(x, y, z));
-                                }
-                                // Creates block.
-                                location.getClampedBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
+                                var block = location.getBlock().getRelative(x, y, z);
+                                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
                             }
                         }
                         for (int dx : new int[]{-1, 1}) {
@@ -124,23 +117,23 @@ public class GenerateTreeBrush extends AbstractBrush {
         }
     }
 
-    private void createLeaf(final VoxelLocation location, int x, int y, int z) {
+    private void createLeaf(final BaseLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-            this.undo.put(location.getClampedBlock().getRelative(x, y, z));
-            location.getBlock().getRelative(x, y, z).setBlockData(leavesMaterial.createBlockData(), false);
+            var block = location.getBlock().getRelative(x, y, z);
+            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
         }
     }
 
     /**
      * Code Concerning Root Generation.
      *
-     * @param location
+     * @param origin
      * @param xDirection
      * @param zDirection
      */
-    private void rootCreate(VoxelLocation location, final int xDirection, final int zDirection) {
+    private void rootCreate(BaseLocation origin, final int xDirection, final int zDirection) {
         // Sets Origin.
-        location = location.clone();
+        VoxelLocation location = origin.makeMutable();
 
         // Generates the number of roots to create.
         final int roots = this.random.nextInt(this.maxRoots - this.minRoots + 1) + this.minRoots;
@@ -164,10 +157,9 @@ public class GenerateTreeBrush extends AbstractBrush {
                 // If not solid then...
                 // Save for undo function
                 if (location.getBlock().getMaterial() != woodMaterial) {
-                    this.undo.put(location.getClampedBlock());
 
                     // Place log block.
-                    location.getClampedBlock().setBlockData(woodMaterial.createBlockData(), false);
+                    addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 } else {
                     // If solid then...
                     // End loop
@@ -204,7 +196,7 @@ public class GenerateTreeBrush extends AbstractBrush {
         }
     }
 
-    private void rootGen(final VoxelLocation location) {
+    private void rootGen(final BaseLocation location) {
         // Quadrant 1
         this.rootCreate(location, 1, 1);
 
@@ -218,7 +210,7 @@ public class GenerateTreeBrush extends AbstractBrush {
         this.rootCreate(location, -1, -1);
     }
 
-    private void trunkCreate(final VoxelLocation location) {
+    private void trunkCreate(final BaseLocation location) {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
 
@@ -238,13 +230,12 @@ public class GenerateTreeBrush extends AbstractBrush {
         }
     }
 
-    private void createTrunk(final VoxelLocation location, int x, int z) {
+    private void createTrunk(final BaseLocation location, int x, int z) {
         // If block is air, then create a block.
         if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
-            // Adds block to undo function.
-            this.undo.put(location.getClampedBlock().getRelative(x, 0, z));
             // Creates block.
-            location.getClampedBlock().getRelative(x, 0, z).setBlockData(woodMaterial.createBlockData(), false);
+            var block = location.getBlock().getRelative(x, 0, z);
+            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.woodMaterial.createBlockData()));
         }
     }
 
@@ -252,9 +243,9 @@ public class GenerateTreeBrush extends AbstractBrush {
      *
      * Code Concerning Trunk Generation
      */
-    private void trunkGen(final VoxelLocation origin) {
+    private void trunkGen(final BaseLocation origin) {
         // Sets Origin
-        VoxelLocation location = origin.clone();
+        VoxelLocation location = origin.makeMutable();
 
         // ----------
         // Main Trunk
@@ -301,7 +292,7 @@ public class GenerateTreeBrush extends AbstractBrush {
         this.branchCreate(location, -1, -1);
 
         // Reset Origin for next trunk.
-        location = origin.clone();
+        location = origin.makeMutable();
         location.addY(4);
 
         // ---------------
@@ -350,13 +341,12 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.undo = new Undo();
 
         this.branchBlocks.clear();
 
         // Sets the location variables.
 
-        VoxelLocation location = new VoxelLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
+        BaseLocation location = new BaseLocation(this.getTargetBlock().getWorld(), this.getTargetBlock().getX(), this.getTargetBlock().getY() + this.startHeight, this.getTargetBlock().getZ());
 
         // Generates the roots.
         this.rootGen(location);
@@ -368,9 +358,6 @@ public class GenerateTreeBrush extends AbstractBrush {
         for (final IBlock block : this.branchBlocks) {
             this.leafNodeCreate(block.getLocation());
         }
-
-        // Ends the undo function and mos on.
-        v.owner().storeUndo(this.undo);
     }
 
     // The Powder currently does nothing extra.

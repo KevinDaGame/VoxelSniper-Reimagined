@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.util.brushOperation.EntityRemoveOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -83,7 +84,7 @@ public class EntityRemovalBrush extends AbstractBrush {
                 continue;
             }
 
-            entity.remove();
+            addOperation(new EntityRemoveOperation(entity.getLocation(), entity));
             entityCount++;
         }
 
@@ -92,12 +93,12 @@ public class EntityRemovalBrush extends AbstractBrush {
 
     @Override
     protected void arrow(SnipeData v) {
-        this.radialRemoval(v);
+        radialRemoval(v);
     }
 
     @Override
     protected void powder(SnipeData v) {
-        this.radialRemoval(v);
+        radialRemoval(v);
     }
 
     @Override

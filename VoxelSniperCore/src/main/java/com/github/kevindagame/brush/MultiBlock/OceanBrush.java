@@ -1,5 +1,7 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush.MultiBlock;
 
+import com.github.kevindagame.brush.AbstractBrush;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
@@ -93,7 +95,7 @@ public class OceanBrush extends AbstractBrush {
 
     private int getHeight(final int bx, final int bz) {
         for (int y = this.getWorld().getHighestBlockYAt(bx, bz); y > this.getMinHeight(); y--) {
-            final VoxelMaterial material = this.clampY(bx, y, bz).getMaterial();
+            final VoxelMaterial material = getWorld().getBlock(bx, y, bz).getMaterial();
             if (!EXCLUDED_MATERIALS.contains(material)) {
                 return y;
             }
@@ -126,8 +128,7 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().isAir()) {
-                        undo.put(block);
-                        block.setMaterial(VoxelMaterial.AIR);
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                     }
                 }
 
@@ -135,11 +136,7 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = this.waterLevel; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
-                        // do not put blocks into the undo we already put into
-                        if (!block.getMaterial().isAir()) {
-                            undo.put(block);
-                        }
-                        block.setMaterial(VoxelMaterial.WATER);
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.WATER.createBlockData()));
                     }
                 }
 
@@ -147,8 +144,7 @@ public class OceanBrush extends AbstractBrush {
                 if (this.coverFloor && (newSeaFloorLevel < this.waterLevel)) {
                     IBlock block = world.getBlock(x, newSeaFloorLevel, z);
                     if (block.getMaterial() != v.getVoxelMaterial()) {
-                        undo.put(block);
-                        block.setBlockData(v.getVoxelMaterial().createBlockData());
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), v.getVoxelMaterial().createBlockData()));
                     }
                 }
             }

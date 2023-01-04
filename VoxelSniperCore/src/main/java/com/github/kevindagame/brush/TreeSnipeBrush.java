@@ -1,12 +1,13 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import net.kyori.adventure.text.Component;
@@ -33,18 +34,12 @@ public class TreeSnipeBrush extends AbstractBrush {
     }
 
     private void single(final SnipeData v, IBlock targetBlock) {
-        Undo undo = new Undo();
-
-        IBlock blockBelow = targetBlock.getRelative(BlockFace.DOWN);
-        IBlockState currentState = blockBelow.getState();
-        undo.put(currentState);
-        blockBelow.setMaterial(VoxelMaterial.GRASS_BLOCK, false);
-
-        this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, undo);
-
-        blockBelow.setBlockData(currentState.getBlockData(), false);
-
-        v.owner().storeUndo(undo);
+        var result = this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, false);
+        if (result != null) {
+            // don't include the clicked block
+            BaseLocation targetLocation = targetBlock.getRelative(BlockFace.DOWN).getLocation();
+            addOperations(result.stream().filter((o) -> !o.getLocation().equals(targetLocation)).toList());
+        }
     }
 
     private int getYOffset() {

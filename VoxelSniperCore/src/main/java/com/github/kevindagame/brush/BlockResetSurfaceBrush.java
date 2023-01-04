@@ -1,8 +1,10 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -81,54 +83,36 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
 
                     boolean airFound = false;
 
-                    if (world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
-                        resetBlock(block);
-                        airFound = true;
-                    }
+                    airFound = checkBlock(world, x + 1, y, z , airFound);
+                    airFound = checkBlock(world, x -1, y, z , airFound);
+                    airFound = checkBlock(world, x, y + 1, z , airFound);
+                    airFound = checkBlock(world, x, y - 1, z , airFound);
+                    airFound = checkBlock(world, x, y, z + 1, airFound);
+                    airFound = checkBlock(world, x, y, z - 1, airFound);
 
                     if (airFound) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
+                        var location = new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+
+                        resetBlock(location);
                     }
                 }
             }
         }
     }
 
-    private void resetBlock(IBlock block) {
-        // Resets the block state to initial state by creating a new BlockData with default values.
-        block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
+    private boolean checkBlock(IWorld world, int x, int y, int z, boolean airFound) {
+        IBlock block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+        if (block.getMaterial().isAir()) {
+            resetBlock(block.getLocation());
+            airFound = true;
+        }
+        return airFound;
+    }
+
+    private void resetBlock(BaseLocation location) {
+        // create an operation to reset the block
+        var block = location.getBlock();
+        addOperation(new BlockOperation(location, block.getBlockData(), block.getMaterial().createBlockData()));
     }
 
     @Override

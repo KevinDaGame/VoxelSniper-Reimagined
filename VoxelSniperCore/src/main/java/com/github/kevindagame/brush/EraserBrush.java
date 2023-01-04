@@ -1,11 +1,11 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniper.world.IWorld;
 
 import java.util.Set;
 
@@ -36,39 +36,27 @@ public class EraserBrush extends AbstractBrush {
         this.setName("Eraser");
     }
 
-    private void doErase(final SnipeData v, final boolean keepWater) {
-        final int brushSize = v.getBrushSize();
-        final int brushSizeDoubled = 2 * brushSize;
-        IWorld world = this.getTargetBlock().getWorld();
-        final Undo undo = new Undo();
+    private void doErase(final SnipeData v) {
 
-        for (int x = brushSizeDoubled; x >= 0; x--) {
-            int currentX = this.getTargetBlock().getX() - brushSize + x;
-            for (int y = 0; y <= brushSizeDoubled; y++) {
-                int currentY = this.getTargetBlock().getY() - brushSize + y;
-                for (int z = brushSizeDoubled; z >= 0; z--) {
-                    int currentZ = this.getTargetBlock().getZ() - brushSize + z;
-                    IBlock currentBlock = world.getBlock(currentX, currentY, currentZ);
-                    if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
-                            || (keepWater && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
-                        continue;
-                    }
-                    undo.put(currentBlock);
-                    currentBlock.setMaterial(VoxelMaterial.AIR);
-                }
+        var positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
+        for (var pos : positions) {
+            var currentBlock = pos.getBlock();
+            if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
+                    || (getSnipeAction() == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
+                continue;
             }
+            addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
         }
-        v.owner().storeUndo(undo);
     }
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.doErase(v, false);
+        this.doErase(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.doErase(v, true);
+        this.doErase(v);
     }
 
     @Override
