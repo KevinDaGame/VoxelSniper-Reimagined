@@ -16,7 +16,7 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
-    implementation("net.kyori:adventure-platform-bukkit:4.1.1")
+    implementation("net.kyori:adventure-platform-bukkit:4.2.0")
     implementation(kotlin("stdlib-jdk8"))
 
     shadow("org.bstats:bstats-bukkit:3.0.0")
