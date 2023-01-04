@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("voxel-implementation")
     id("xyz.jpenilla.run-paper") version "1.0.6"
-    kotlin("jvm") version "1.7.22"
+    kotlin("jvm")
 }
 
 repositories {
