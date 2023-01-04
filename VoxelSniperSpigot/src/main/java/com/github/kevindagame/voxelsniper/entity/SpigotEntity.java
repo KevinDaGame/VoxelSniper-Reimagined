@@ -39,6 +39,7 @@ public class SpigotEntity implements IEntity {
 
     @Override
     public void remove() {
+        System.out.println("removing entity " + entity.getType().getKey());
         entity.remove();
     }
 
