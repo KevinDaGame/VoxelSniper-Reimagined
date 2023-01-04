@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("voxel-core")
-    kotlin("jvm") version "1.7.22"
+    kotlin("jvm")
 }
 description = "VoxelSniperCore"
 dependencies {

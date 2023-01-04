@@ -97,11 +97,11 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         // Cancel all PlayerSnipeEvents
 
-        PlayerSnipeEvent.registerListener((event) -> event.setCancelled(true));
+//        PlayerSnipeEvent.registerListener((event) -> event.setCancelled(true));
 
         //cancel all operations in PlayerSnipeEvent
 
-        // PlayerSnipeEvent.registerListener((event) -> event.getOperations().forEach((operation) -> operation.setCancelled(true)));
+         PlayerSnipeEvent.registerListener((event) -> event.getOperations().forEach((operation) -> operation.setCancelled(true)));
     }
 
     @Override

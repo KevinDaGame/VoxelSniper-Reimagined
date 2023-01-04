@@ -41,10 +41,7 @@ public class WarpBrush extends AbstractBrush {
         BaseLocation playerLocation = player.getLocation();
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
-
-        getWorld().strikeLightning(location);
         player.teleport(location);
-        getWorld().strikeLightning(location);
     }
 
     @Override
