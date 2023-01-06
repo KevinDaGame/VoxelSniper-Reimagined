@@ -10,6 +10,7 @@ import com.sk89q.worldguard.protection.flags.Flags
 
 class WorldGuardIntegration {
     init {
+        enabled = true
         PlayerSnipeEvent.registerListener { event: PlayerSnipeEvent ->
             handleEvent(event)
         }
@@ -24,7 +25,7 @@ class WorldGuardIntegration {
         val container = instance.platform.regionContainer
         val query = container.createQuery()
 
-        if(instance.platform.sessionManager.hasBypass(localPlayer, world)) return
+        if (instance.platform.sessionManager.hasBypass(localPlayer, world)) return
 
         for (operation in event.operations) {
             if (operation.isCancelled) continue
@@ -35,5 +36,9 @@ class WorldGuardIntegration {
                 operation.isCancelled = true
             }
         }
+    }
+
+    companion object {
+        var enabled: Boolean = false
     }
 }
