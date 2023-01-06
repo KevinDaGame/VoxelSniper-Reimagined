@@ -19,6 +19,7 @@ import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -87,15 +88,24 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         // Initialize commands
         SpigotCommandManager.initialize();
 
+        Metrics metrics = new Metrics(this, 16602);
+
         if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
             WorldGuardIntegration worldGuardIntegration = new WorldGuardIntegration();
+            metrics.addCustomChart(new SimplePie("worldguard_integration", () -> "enabled"));
+        }
+        else{
+            metrics.addCustomChart(new SimplePie("worldguard_integration", () -> "disabled"));
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlotSquared")) {
             PlotSquaredIntegration plotSquaredIntegration = new PlotSquaredIntegration();
+            metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> "enabled"));
+        }
+        else{
+            metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> "disabled"));
         }
 
-        Metrics metrics = new Metrics(this, 16602);
         metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
 //        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
     }
