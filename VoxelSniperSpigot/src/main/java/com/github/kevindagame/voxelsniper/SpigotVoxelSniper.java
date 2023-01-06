@@ -10,6 +10,7 @@ import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
+import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredIntegration;
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
@@ -88,6 +89,10 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
             WorldGuardIntegration worldGuardIntegration = new WorldGuardIntegration();
+        }
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlotSquared")) {
+            PlotSquaredIntegration plotSquaredIntegration = new PlotSquaredIntegration();
         }
 
         Metrics metrics = new Metrics(this, 16602);

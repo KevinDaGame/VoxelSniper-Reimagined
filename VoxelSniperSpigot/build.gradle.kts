@@ -5,7 +5,6 @@ plugins {
 }
 
 repositories {
-
     mavenCentral()
     maven { url = uri("https://maven.enginehub.org/repo/") }
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
@@ -16,9 +15,9 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") // newest worldguard that supports 1.16.5
     compileOnly("com.plotsquared:PlotSquared-Core")
 
+    implementation(platform("com.intellectualsites.bom:bom-1.18.x:1.20"))
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("net.kyori:adventure-platform-bukkit:4.2.0")
-    implementation(platform("com.intellectualsites.bom:bom-1.18.x:1.20"))
     implementation(kotlin("stdlib-jdk8"))
 
     shadow("org.bstats:bstats-bukkit:3.0.0")
