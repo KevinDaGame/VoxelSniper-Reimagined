@@ -4,19 +4,19 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
-import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
+import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
+import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
+import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredIntegration;
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
-import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
+import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
@@ -90,22 +90,17 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         Metrics metrics = new Metrics(this, 16602);
 
-        if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-            WorldGuardIntegration worldGuardIntegration = new WorldGuardIntegration();
-            metrics.addCustomChart(new SimplePie("worldguard_integration", () -> "enabled"));
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+            new WorldGuardIntegration();
+            getLogger().info("WorldGuard integration enabled.");
         }
-        else{
-            metrics.addCustomChart(new SimplePie("worldguard_integration", () -> "disabled"));
-        }
-
         if (Bukkit.getPluginManager().isPluginEnabled("PlotSquared")) {
-            PlotSquaredIntegration plotSquaredIntegration = new PlotSquaredIntegration();
-            metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> "enabled"));
-        }
-        else{
-            metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> "disabled"));
+            new PlotSquaredIntegration();
+            getLogger().info("PlotSquared integration enabled.");
         }
 
+        metrics.addCustomChart(new SimplePie("worldguard_integration", () -> WorldGuardIntegration.Companion.getEnabled() ? "enabled" : "disabled"));
+        metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> PlotSquaredIntegration.Companion.getEnabled() ? "enabled" : "disabled"));
         metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
 //        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
     }

@@ -70,6 +70,13 @@ permissions:
   voxelsniper.*:
     description: Allows access to all VoxelSniper commands.
     children:
+      voxelsniper.bypass:
+        description: Allows bypassing of restricions of worldguard or plotSquared
+        children:
+          voxelSniper.bypass.worldguard:
+            description: Allows bypassing of worldguard restrictions
+          voxelsniper.bypass.plotsquared:
+            description: Allows bypassing of plotSquared restrictions
       voxelsniper.sniper:
         description: Allows acces to snipe commands
       voxelsniper.ignorelimitations:
