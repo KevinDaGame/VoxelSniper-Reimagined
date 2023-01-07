@@ -5,7 +5,7 @@ import java.util.*
 
 class BrushUsersCounter {
     fun registerListeners() {
-        PlayerSnipeEvent.registerListener { event: PlayerSnipeEvent -> onBrushUse(event) }
+        PlayerSnipeEvent.registerListener(this::onBrushUse )
     }
 
     private fun onBrushUse(event: PlayerSnipeEvent) {
