@@ -1,16 +1,17 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.brushOperation.BiomeOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
-import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#biome-brush">...</a>
  */
 public class BiomeBrush extends AbstractBrush {
 
@@ -26,27 +27,15 @@ public class BiomeBrush extends AbstractBrush {
 
         for (int x = -brushSize; x <= brushSize; x++) {
             final double xSquared = Math.pow(x, 2);
-
             for (int z = -brushSize; z <= brushSize; z++) {
                 if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
-                    this.getWorld().setBiome(this.getTargetBlock().getX() + x, this.getTargetBlock().getZ() + z, this.selectedBiome);
+                    var location = new BaseLocation(this.getWorld(), this.getTargetBlock().getX() + x, 0, this.getTargetBlock().getZ() + z);
+                    this.addOperation(new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome));
                 }
             }
         }
 
-        final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
-        final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
 
-        final int lowChunkX = (block1.getX() <= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
-        final int lowChunkZ = (block1.getZ() <= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
-        final int highChunkX = (block1.getX() >= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
-        final int highChunkZ = (block1.getZ() >= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
-
-        for (int x = lowChunkX; x <= highChunkX; x++) {
-            for (int z = lowChunkZ; z <= highChunkZ; z++) {
-                this.getWorld().refreshChunk(x, z);
-            }
-        }
     }
 
     @Override

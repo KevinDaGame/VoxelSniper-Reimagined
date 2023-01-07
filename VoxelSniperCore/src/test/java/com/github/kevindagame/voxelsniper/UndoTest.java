@@ -4,7 +4,7 @@ import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class UndoTest {
         undo = new Undo();
     }
 
-    private IBlock mockBlock(VoxelLocation loc, VoxelMaterial t) {
+    private IBlock mockBlock(BaseLocation loc, VoxelMaterial t) {
         IBlock block = Mockito.mock(IBlock.class);
         IBlockState normalBlockState = Mockito.mock(IBlockState.class);
         Mockito.when(block.getLocation())
@@ -57,13 +57,13 @@ public class UndoTest {
     public void testGetSize() {
         IWorld world = Mockito.mock(IWorld.class);
         for (int i = 0; i < 5; i++) {
-            VoxelLocation location = new VoxelLocation(world, 0, 0, i);
+            BaseLocation location = new BaseLocation(world, 0, 0, i);
             IBlock block = mockBlock(location, VoxelMaterial.DIRT);
 
             undo.put(block);
         }
         Assert.assertEquals(5, undo.getSize());
-        VoxelLocation location = new VoxelLocation(world, 0, 0, 8);
+        BaseLocation location = new BaseLocation(world, 0, 0, 8);
         IBlock block = mockBlock(location, VoxelMaterial.DIRT);
         undo.put(block);
         Assert.assertEquals(6, undo.getSize());
@@ -75,7 +75,7 @@ public class UndoTest {
     @Test
     public void testPut() {
         IWorld world = Mockito.mock(IWorld.class);
-        VoxelLocation location = new VoxelLocation(world, 0, 0, 0);
+        BaseLocation location = new BaseLocation(world, 0, 0, 0);
         IBlock block = mockBlock(location, VoxelMaterial.DIRT);
 
         undo.put(block);
@@ -86,15 +86,15 @@ public class UndoTest {
     public void testUndo() {
         IWorld world = Mockito.mock(IWorld.class);
 
-        VoxelLocation normalBlockLocation = new VoxelLocation(world, 0, 0, 0);
+        BaseLocation normalBlockLocation = new BaseLocation(world, 0, 0, 0);
         IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE);
         IBlockState normalBlockState = normalBlock.getState();
 
-        VoxelLocation fragileBlockLocation = new VoxelLocation(world, 0, 0, 1);
+        BaseLocation fragileBlockLocation = new BaseLocation(world, 0, 0, 1);
         IBlock fragileBlock = mockBlock(fragileBlockLocation, VoxelMaterial.TORCH);
         IBlockState fragileBlockState = fragileBlock.getState();
 
-        VoxelLocation waterBlockLocation = new VoxelLocation(world, 0, 0, 2);
+        BaseLocation waterBlockLocation = new BaseLocation(world, 0, 0, 2);
         IBlock waterBlock = mockBlock(waterBlockLocation, VoxelMaterial.WATER);
         IBlockState waterBlockState = waterBlock.getState();
 

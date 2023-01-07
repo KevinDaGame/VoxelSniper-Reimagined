@@ -7,7 +7,7 @@ import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.SpigotLocation;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
@@ -62,7 +62,7 @@ public class SpigotPlayer extends SpigotEntity implements IPlayer {
     }
 
     @Override
-    public void teleport(VoxelLocation location) {
+    public void teleport(BaseLocation location) {
         player.teleport(SpigotLocation.toSpigotLocation(location));
     }
 

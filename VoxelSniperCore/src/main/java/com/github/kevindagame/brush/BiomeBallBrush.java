@@ -1,16 +1,24 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.brushOperation.BiomeOperation;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
+/**
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#biome-ball-brush">...</a>
+ */
 public class BiomeBallBrush extends AbstractBrush {
 
+    public BiomeBallBrush() {
+        this.setName("Biome ball");
+    }
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
     @Override
@@ -25,6 +33,7 @@ public class BiomeBallBrush extends AbstractBrush {
         return "voxelsniper.brush.biomeball";
     }
 
+
     @Override
     public void arrow(SnipeData v) {
         this.biome(v);
@@ -36,26 +45,9 @@ public class BiomeBallBrush extends AbstractBrush {
     }
 
     private void biome(final SnipeData v) {
-        final int brushSize = v.getBrushSize();
-        var blocks = this.sphere(this.getTargetBlock().getLocation(), brushSize, true);
-        blocks.forEach(block -> block.getWorld().setBiome(block.getBlockX(), block.getBlockY(), block.getBlockZ(), selectedBiome));
+        this.addOperations(Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true).stream().map(location -> new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome)).collect(toList()));
 
-        //refresh chunks
-        final IBlock block1 = this.getWorld().getBlock(this.getTargetBlock().getX() - brushSize, 0, this.getTargetBlock().getZ() - brushSize);
-        final IBlock block2 = this.getWorld().getBlock(this.getTargetBlock().getX() + brushSize, 0, this.getTargetBlock().getZ() + brushSize);
-
-        final int lowChunkX = (block1.getX() <= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
-        final int lowChunkZ = (block1.getZ() <= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
-        final int highChunkX = (block1.getX() >= block2.getX()) ? block1.getChunk().getX() : block2.getChunk().getX();
-        final int highChunkZ = (block1.getZ() >= block2.getZ()) ? block1.getChunk().getZ() : block2.getChunk().getZ();
-
-        for (int x = lowChunkX; x <= highChunkX; x++) {
-            for (int z = lowChunkZ; z <= highChunkZ; z++) {
-                this.getWorld().refreshChunk(x, z);
-            }
-        }
     }
-
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
@@ -74,6 +66,6 @@ public class BiomeBallBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(Collectors.toList());
+        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(toList());
     }
 }

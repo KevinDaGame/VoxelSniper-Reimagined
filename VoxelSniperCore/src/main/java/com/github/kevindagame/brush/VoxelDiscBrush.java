@@ -2,11 +2,12 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Voxel_Disc_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#voxel-disc-brush">...</a>
  *
  * @author Voxel
  */
@@ -19,23 +20,18 @@ public class VoxelDiscBrush extends PerformerBrush {
         this.setName("Voxel Disc");
     }
 
-    private void disc(final SnipeData v, IBlock targetBlock) {
-        for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-            for (int z = v.getBrushSize(); z >= -v.getBrushSize(); z--) {
-                currentPerformer.perform(targetBlock.getRelative(x, 0, z));
-            }
-        }
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    private void voxelDisc(final SnipeData v) {
+        this.positions = Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize());
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.disc(v, this.getTargetBlock());
+    protected final void doArrow(final SnipeData v) {
+        this.voxelDisc(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        this.disc(v, this.getLastBlock());
+    protected final void doPowder(final SnipeData v) {
+        this.voxelDisc(v);
     }
 
     @Override

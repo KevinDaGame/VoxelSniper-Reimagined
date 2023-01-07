@@ -2,13 +2,14 @@ package com.github.kevindagame.util;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 /**
  * @author MikeMatrix
  */
-public class BlockWrapper {
+public class BlockWrapper implements Cloneable {
 
     private IBlockData blockData;
     private int x;
@@ -28,6 +29,32 @@ public class BlockWrapper {
     }
 
     /**
+     * @param location
+     * @param material
+     */
+    public BlockWrapper(final BaseLocation location, final VoxelMaterial material) {
+        this.setMaterial(material);
+        this.setX(location.getBlockX());
+        this.setY(location.getBlockY());
+        this.setZ(location.getBlockZ());
+        this.setWorld(location.getWorld());
+    }
+
+    /**
+     * @param b
+     * @param blx
+     * @param bly
+     * @param blz
+     */
+    public BlockWrapper(final IBlock b, final int blx, final int bly, final int blz, final IWorld world) {
+        this.blockData = b.getBlockData();
+        this.x = blx;
+        this.y = bly;
+        this.z = blz;
+        this.world = world;
+    }
+
+    /**
      * @return the data
      */
     public final IBlockData getBlockData() {
@@ -37,8 +64,17 @@ public class BlockWrapper {
     /**
      * @param blockData the data to set
      */
-    public final void setBlockData(final IBlockData blockData) {
+    public final BlockWrapper setBlockData(final IBlockData blockData) {
         this.blockData = blockData;
+        return this;
+    }
+
+    /**
+     * @param material the material to set
+     */
+    public final BlockWrapper setMaterial(final VoxelMaterial material) {
+        setBlockData(material.createBlockData());
+        return this;
     }
 
     /**
@@ -56,10 +92,18 @@ public class BlockWrapper {
     }
 
     /**
+     * @return the BaseLocation
+     */
+    public final BaseLocation getLocation() {
+        return new BaseLocation(this.world, this.x, this.y, this.z);
+    }
+
+    /**
      * @param world the world to set
      */
-    public final void setWorld(final IWorld world) {
+    public final BlockWrapper setWorld(final IWorld world) {
         this.world = world;
+        return this;
     }
 
     /**
@@ -72,8 +116,9 @@ public class BlockWrapper {
     /**
      * @param x the x to set
      */
-    public final void setX(final int x) {
+    public final BlockWrapper setX(final int x) {
         this.x = x;
+        return this;
     }
 
     /**
@@ -86,8 +131,9 @@ public class BlockWrapper {
     /**
      * @param y the y to set
      */
-    public final void setY(final int y) {
+    public final BlockWrapper setY(final int y) {
         this.y = y;
+        return this;
     }
 
     /**
@@ -100,7 +146,19 @@ public class BlockWrapper {
     /**
      * @param z the z to set
      */
-    public final void setZ(final int z) {
+    public final BlockWrapper setZ(final int z) {
         this.z = z;
+        return this;
+    }
+
+    @Override
+    public BlockWrapper clone() {
+        try {
+            BlockWrapper clone = (BlockWrapper) super.clone();
+            clone.blockData = this.blockData.getCopy();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
