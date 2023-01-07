@@ -136,16 +136,8 @@ public class VoxelBrushManager {
      */
     public Class<? extends IBrush> getBrushForHandle(String handle) {
         Preconditions.checkNotNull(handle, "Brushhandle can not be null.");
-        if (!brushes.containsKey(handle.toLowerCase())) {
-            return null;
-        }
 
-        for (String key : brushes.keySet()) {
-            if (key.equalsIgnoreCase(handle)) {
-                return brushes.get(key);
-            }
-        }
-        return null;
+        return brushes.get(handle.toLowerCase());
     }
 
     /**
@@ -158,8 +150,8 @@ public class VoxelBrushManager {
     /**
      * @return Amount of handles registered with the system under Sniper visibility.
      */
-    public long registeredSniperBrushHandles() {
-        return brushes.values().stream().distinct().count();
+    public int registeredSniperBrushHandles() {
+        return (int) brushes.values().stream().distinct().count();
     }
 
     /**
@@ -179,7 +171,7 @@ public class VoxelBrushManager {
     /**
      * @return Immutable Multimap copy of all the registered brushes
      */
-    public Map<String, Class<? extends IBrush>> getRegisteredBrushesMultimap() {
+    public Map<String, Class<? extends IBrush>> getRegisteredBrushesMap() {
         return Map.copyOf(brushes);
     }
 

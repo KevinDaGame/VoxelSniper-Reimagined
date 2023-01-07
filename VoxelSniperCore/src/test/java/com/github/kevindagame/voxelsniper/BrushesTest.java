@@ -70,7 +70,7 @@ public class BrushesTest {
     public void testGetRegisteredBrushesMap() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Map<String, Class<? extends IBrush>> registeredBrushesMap = brushes.getRegisteredBrushesMultimap();
+        Map<String, Class<? extends IBrush>> registeredBrushesMap = brushes.getRegisteredBrushesMap();
         Assert.assertTrue(registeredBrushesMap.containsValue(brush.getClass()));
         Assert.assertFalse(registeredBrushesMap.containsValue(IBrush.class));
         Assert.assertSame(registeredBrushesMap.get("mockhandle"), brush.getClass());
