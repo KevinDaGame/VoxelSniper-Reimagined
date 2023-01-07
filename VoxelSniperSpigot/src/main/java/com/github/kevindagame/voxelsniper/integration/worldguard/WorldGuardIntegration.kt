@@ -11,9 +11,7 @@ import com.sk89q.worldguard.protection.flags.Flags
 class WorldGuardIntegration {
     init {
         enabled = true
-        PlayerSnipeEvent.registerListener { event: PlayerSnipeEvent ->
-            handleEvent(event)
-        }
+        PlayerSnipeEvent.registerListener(this::handleEvent)
     }
 
     private fun handleEvent(event: PlayerSnipeEvent) {

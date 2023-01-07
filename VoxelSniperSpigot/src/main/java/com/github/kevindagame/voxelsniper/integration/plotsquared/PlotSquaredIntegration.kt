@@ -11,9 +11,7 @@ class PlotSquaredIntegration {
 
     init {
         enabled = true
-        PlayerSnipeEvent.registerListener { event: PlayerSnipeEvent ->
-            handleEvent(event)
-        }
+        PlayerSnipeEvent.registerListener(this::handleEvent)
     }
 
     private fun handleEvent(event: PlayerSnipeEvent) {
