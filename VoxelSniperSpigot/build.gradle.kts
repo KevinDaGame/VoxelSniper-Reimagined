@@ -1,11 +1,9 @@
 plugins {
     id("voxel-implementation")
     id("xyz.jpenilla.run-paper") version "1.0.6"
-    kotlin("jvm")
 }
 
 repositories {
-    mavenCentral()
     maven { url = uri("https://maven.enginehub.org/repo/") }
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
 }
