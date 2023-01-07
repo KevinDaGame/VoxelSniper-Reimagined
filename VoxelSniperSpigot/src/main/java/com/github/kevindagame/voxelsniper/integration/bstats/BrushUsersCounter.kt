@@ -1,4 +1,4 @@
-package com.github.kevindagame.voxelsniper.bstats
+package com.github.kevindagame.voxelsniper.integration.bstats
 
 import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import java.util.*
