@@ -14,6 +14,8 @@ public class VoxelSniperConfiguration {
     public static final int DEFAULT_UNDO_CACHE_SIZE = 20;
     public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
     private final YamlConfiguration configuration;
+    private static final boolean DEFAULT_USE_PLOT_SQUARED = false;
+    private static final boolean DEFAULT_USE_WORLD_GUARD = false;
 
     /**
      * @param voxelSniper {@link IVoxelsniper} reference
@@ -56,5 +58,13 @@ public class VoxelSniperConfiguration {
      */
     public void setMessageOnLoginEnabled(boolean enabled) {
         configuration.set(CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED, enabled);
+    }
+
+    public boolean isPlotSquaredIntegrationEnabled() {
+        return configuration.getBoolean("plotsquared-integration-enabled", DEFAULT_USE_PLOT_SQUARED);
+    }
+
+    public boolean isWorldGuardIntegrationEnabled() {
+        return configuration.getBoolean("worldguard-integration-enabled", DEFAULT_USE_WORLD_GUARD);
     }
 }

@@ -90,11 +90,11 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         Metrics metrics = new Metrics(this, 16602);
 
-        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard") && voxelSniperConfiguration.isWorldGuardIntegrationEnabled()) {
             new WorldGuardIntegration();
             getLogger().info("WorldGuard integration enabled.");
         }
-        if (Bukkit.getPluginManager().isPluginEnabled("PlotSquared")) {
+        if (Bukkit.getPluginManager().isPluginEnabled("PlotSquared") && voxelSniperConfiguration.isPlotSquaredIntegrationEnabled()) {
             new PlotSquaredIntegration();
             getLogger().info("PlotSquared integration enabled.");
         }
