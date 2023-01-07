@@ -2,7 +2,6 @@ package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
-import com.google.common.collect.Multimap;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
@@ -68,15 +67,15 @@ public class BrushesTest {
     }
 
     @Test
-    public void testGetRegisteredBrushesMultimap() {
+    public void testGetRegisteredBrushesMap() {
         IBrush brush = Mockito.mock(IBrush.class);
         brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Multimap<Class<? extends IBrush>, String> registeredBrushesMultimap = brushes.getRegisteredBrushesMultimap();
-        Assert.assertTrue(registeredBrushesMultimap.containsKey(brush.getClass()));
-        Assert.assertFalse(registeredBrushesMultimap.containsKey(IBrush.class));
-        Assert.assertTrue(registeredBrushesMultimap.containsEntry(brush.getClass(), "mockhandle"));
-        Assert.assertTrue(registeredBrushesMultimap.containsEntry(brush.getClass(), "testhandle"));
-        Assert.assertFalse(registeredBrushesMultimap.containsEntry(brush.getClass(), "notAnEntry"));
+        Map<String, Class<? extends IBrush>> registeredBrushesMap = brushes.getRegisteredBrushesMultimap();
+        Assert.assertTrue(registeredBrushesMap.containsValue(brush.getClass()));
+        Assert.assertFalse(registeredBrushesMap.containsValue(IBrush.class));
+        Assert.assertSame(registeredBrushesMap.get("mockhandle"), brush.getClass());
+        Assert.assertSame(registeredBrushesMap.get("testhandle"), brush.getClass());
+        Assert.assertNotSame(registeredBrushesMap.get("notAnEntry"), brush.getClass());
     }
 
     @Test
