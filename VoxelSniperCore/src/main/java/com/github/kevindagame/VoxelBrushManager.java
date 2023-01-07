@@ -3,9 +3,6 @@ package com.github.kevindagame;
 import com.github.kevindagame.brush.MultiBlock.*;
 import com.github.kevindagame.brush.Shell.*;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import com.github.kevindagame.brush.*;
 
 import java.util.*;
@@ -17,9 +14,7 @@ public class VoxelBrushManager {
 
     private static VoxelBrushManager instance = null;
 
-    private final Multimap<Class<? extends IBrush>, String> brushes = HashMultimap.create();
-    private final List<String> brushHandles = new ArrayList<>();
-
+    private final Map<String, Class<? extends IBrush>> brushes = new HashMap<>();
     public static VoxelBrushManager getInstance() {
         return instance;
     }
@@ -90,6 +85,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
         brushManager.registerSniperBrush(SplatterVoxelBrush.class, "sv", "splattervoxel");
         brushManager.registerSniperBrush(SplatterDiscBrush.class, "svd", "splatvoxeldisc");
+        brushManager.registerSniperBrush(SplineBrush.class, "sp", "spline");
         brushManager.registerSniperBrush(ThreePointCircleBrush.class, "tpc", "threepointcircle");
         brushManager.registerSniperBrush(TreeSnipeBrush.class, "t", "tree", "treesnipe");
         brushManager.registerSniperBrush(TriangleBrush.class, "tri", "triangle");
@@ -125,43 +121,34 @@ public class VoxelBrushManager {
     public void registerSniperBrush(Class<? extends IBrush> clazz, String... handles) {
         Preconditions.checkNotNull(clazz, "Cannot register null as a class.");
         for (String handle : handles) {
-            brushes.put(clazz, handle.toLowerCase());
-            brushHandles.add(handle.toLowerCase());
+            brushes.put(handle.toLowerCase(), clazz);
         }
     }
 
     /**
      * Retrieve Brush class via handle Lookup.
      *
-     * @param handle Case insensitive brush handle
+     * @param handle Case-insensitive brush handle
      * @return Brush class
      */
     public Class<? extends IBrush> getBrushForHandle(String handle) {
         Preconditions.checkNotNull(handle, "Brushhandle can not be null.");
-        if (!brushes.containsValue(handle.toLowerCase())) {
-            return null;
-        }
 
-        for (Map.Entry<Class<? extends IBrush>, String> entry : brushes.entries()) {
-            if (entry.getValue().equalsIgnoreCase(handle)) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        return brushes.get(handle.toLowerCase());
     }
 
     /**
      * @return Amount of IBrush classes registered with the system under Sniper visibility.
      */
     public int registeredSniperBrushes() {
-        return brushes.keySet().size();
+        return (int) brushes.values().stream().distinct().count();
     }
 
     /**
      * @return Amount of handles registered with the system under Sniper visibility.
      */
     public int registeredSniperBrushHandles() {
-        return brushes.size();
+        return brushes.values().size();
     }
 
     /**
@@ -169,17 +156,23 @@ public class VoxelBrushManager {
      * @return All Sniper registered handles for the brush.
      */
     public Set<String> getSniperBrushHandles(Class<? extends IBrush> clazz) {
-        return new HashSet<>(brushes.get(clazz));
+        Set<String> handles = new HashSet<>();
+        for (String key : brushes.keySet()) {
+            if (brushes.get(key).equals(clazz)) {
+                handles.add(key);
+            }
+        }
+        return handles;
     }
 
     /**
-     * @return Immutable Multimap copy of all the registered brushes
+     * @return Immutable Map copy of all the registered brushes
      */
-    public Multimap<Class<? extends IBrush>, String> getRegisteredBrushesMultimap() {
-        return ImmutableMultimap.copyOf(brushes);
+    public Map<String, Class<? extends IBrush>> getRegisteredBrushesMap() {
+        return Map.copyOf(brushes);
     }
 
     public List<String> getBrushHandles() {
-        return brushHandles;
+        return new ArrayList<>(brushes.keySet());
     }
 }

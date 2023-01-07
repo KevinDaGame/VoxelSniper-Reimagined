@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * typical terrain, blockPositionY my calculations, overall speed increase is about a factor of 5-6 for a size 20 brush. For a complicated city or ship, etc.,
  * this may be only a factor of about 2. In a hypothetical worst case scenario of a 3d checkerboard of stone and air every other block, this brush should only
  * be about 1.5x slower than the original brush. Savings increase for larger brushes.
- *
+ * <br>
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#block-reset-brush-surface-only-brush">...</a>
  * @author GavJenks
  */
@@ -69,7 +69,6 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
         this.setName("Block Reset Brush Surface Only");
     }
 
-    @SuppressWarnings("deprecation")
     private void applyBrush(final SnipeData v) {
         final IWorld world = this.getWorld();
 
@@ -81,14 +80,14 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
                         continue;
                     }
 
-                    boolean airFound = false;
+                    boolean airFound;
 
-                    airFound = checkBlock(world, x + 1, y, z , airFound);
-                    airFound = checkBlock(world, x -1, y, z , airFound);
-                    airFound = checkBlock(world, x, y + 1, z , airFound);
-                    airFound = checkBlock(world, x, y - 1, z , airFound);
-                    airFound = checkBlock(world, x, y, z + 1, airFound);
-                    airFound = checkBlock(world, x, y, z - 1, airFound);
+                    airFound = checkBlock(world, x + 1, y, z);
+                    airFound = checkBlock(world, x -1, y, z) || airFound;
+                    airFound = checkBlock(world, x, y + 1, z) || airFound;
+                    airFound = checkBlock(world, x, y - 1, z) || airFound;
+                    airFound = checkBlock(world, x, y, z + 1) || airFound;
+                    airFound = checkBlock(world, x, y, z - 1) || airFound;
 
                     if (airFound) {
                         var location = new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
@@ -100,13 +99,13 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
         }
     }
 
-    private boolean checkBlock(IWorld world, int x, int y, int z, boolean airFound) {
+    private boolean checkBlock(IWorld world, int x, int y, int z) {
         IBlock block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
         if (block.getMaterial().isAir()) {
             resetBlock(block.getLocation());
-            airFound = true;
+            return true;
         }
-        return airFound;
+        return false;
     }
 
     private void resetBlock(BaseLocation location) {
