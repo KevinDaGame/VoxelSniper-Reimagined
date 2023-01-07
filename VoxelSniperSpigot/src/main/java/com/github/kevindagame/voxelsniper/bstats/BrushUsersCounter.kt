@@ -15,9 +15,7 @@ class BrushUsersCounter {
 
     companion object {
         private val users: MutableSet<UUID> = HashSet()
-        @JvmStatic
-        val totalBrushUses: Int
-            get() {
+        fun getTotalBrushUses(): Int {
                 val brushUsers = users.size
                 users.clear()
                 return brushUsers
