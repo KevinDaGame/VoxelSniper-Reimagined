@@ -146,9 +146,9 @@ public class Shapes {
     }
 
     public static List<BaseLocation> line(VoxelVector originCoords, VoxelVector targetCoords, IWorld world) {
-        final VoxelVector HALF_BLOCK_OFFList = new VoxelVector(0.5, 0.5, 0.5);
-        final VoxelVector originClone = originCoords.clone().add(HALF_BLOCK_OFFList);
-        final VoxelVector targetClone = targetCoords.clone().add(HALF_BLOCK_OFFList);
+        final VoxelVector HALF_BLOCK_OFFSET = new VoxelVector(0.5, 0.5, 0.5);
+        final VoxelVector originClone = originCoords.clone().add(HALF_BLOCK_OFFSET);
+        final VoxelVector targetClone = targetCoords.clone().add(HALF_BLOCK_OFFSET);
 
         List<BaseLocation> positions = new ArrayList<>();
         final VoxelVector direction = targetClone.clone().subtract(originClone);

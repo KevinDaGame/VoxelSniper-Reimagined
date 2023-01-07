@@ -28,9 +28,9 @@ repositories {
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
 
-    implementation("net.kyori:adventure-api:4.11.0")
-    implementation("net.kyori:adventure-text-minimessage:4.11.0")
-    implementation("net.kyori:adventure-text-serializer-legacy:4.11.0")
+    implementation("net.kyori:adventure-api:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("net.kyori:adventure-text-serializer-legacy:4.12.0")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.google.guava:guava:31.1-jre")
@@ -56,17 +56,17 @@ tasks.withType<JavaCompile>() {
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "16"
+    jvmTarget = "17"
 }
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "16"
+    jvmTarget = "17"
 }
 
 tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(16)
+        options.release.set(17)
     }
 
     shadowJar {

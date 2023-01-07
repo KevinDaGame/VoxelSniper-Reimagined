@@ -50,7 +50,6 @@ public class StampBrush extends AbstractBrush {
     protected final void setBlock(final BlockWrapper cb) {
         final IBlock block = getWorld().getBlock(this.getTargetBlock().getX() + cb.getX(), this.getTargetBlock().getY() + cb.getY(), this.getTargetBlock().getZ() + cb.getZ());
         addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), cb.getBlockData()));
-        block.setBlockData(cb.getBlockData());
     }
 
     /**
