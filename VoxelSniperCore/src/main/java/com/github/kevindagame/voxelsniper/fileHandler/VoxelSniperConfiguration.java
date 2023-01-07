@@ -61,10 +61,10 @@ public class VoxelSniperConfiguration {
     }
 
     public boolean isPlotSquaredIntegrationEnabled() {
-        return configuration.getBoolean("plotsquared-integration-enabled", DEFAULT_USE_PLOT_SQUARED);
+        return configuration.getBoolean("plotsquared-integration-enabled", DEFAULT_USE_PLOTSQUARED);
     }
 
     public boolean isWorldGuardIntegrationEnabled() {
-        return configuration.getBoolean("worldguard-integration-enabled", DEFAULT_USE_WORLD_GUARD);
+        return configuration.getBoolean("worldguard-integration-enabled", DEFAULT_USE_WORLDGUARD);
     }
 }
