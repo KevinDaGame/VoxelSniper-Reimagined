@@ -14,8 +14,8 @@ public class VoxelSniperConfiguration {
     public static final int DEFAULT_UNDO_CACHE_SIZE = 20;
     public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
     private final YamlConfiguration configuration;
-    private static final boolean DEFAULT_USE_PLOT_SQUARED = false;
-    private static final boolean DEFAULT_USE_WORLD_GUARD = false;
+    private static final boolean DEFAULT_USE_PLOTSQUARED = false;
+    private static final boolean DEFAULT_USE_WORLDGUARD = false;
 
     /**
      * @param voxelSniper {@link IVoxelsniper} reference
