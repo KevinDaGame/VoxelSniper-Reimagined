@@ -15,8 +15,6 @@ public class VoxelBrushManager {
     private static VoxelBrushManager instance = null;
 
     private final Map<String, Class<? extends IBrush>> brushes = new HashMap<>();
-    private final List<String> brushHandles = new ArrayList<>();
-
     public static VoxelBrushManager getInstance() {
         return instance;
     }
@@ -124,7 +122,6 @@ public class VoxelBrushManager {
         Preconditions.checkNotNull(clazz, "Cannot register null as a class.");
         for (String handle : handles) {
             brushes.put(handle.toLowerCase(), clazz);
-            brushHandles.add(handle.toLowerCase());
         }
     }
 
@@ -144,7 +141,7 @@ public class VoxelBrushManager {
      * @return Amount of IBrush classes registered with the system under Sniper visibility.
      */
     public int registeredSniperBrushes() {
-        return (int) brushes.keySet().stream().distinct().count();
+        return (int) brushes.values().stream().distinct().count();
     }
 
     /**
@@ -169,13 +166,13 @@ public class VoxelBrushManager {
     }
 
     /**
-     * @return Immutable Multimap copy of all the registered brushes
+     * @return Immutable Map copy of all the registered brushes
      */
     public Map<String, Class<? extends IBrush>> getRegisteredBrushesMap() {
         return Map.copyOf(brushes);
     }
 
     public List<String> getBrushHandles() {
-        return brushHandles;
+        return new ArrayList<>(brushes.keySet());
     }
 }
