@@ -1,8 +1,8 @@
 package com.github.kevindagame.voxelsniper.entity;
 
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
-import com.github.kevindagame.voxelsniper.entity.Painting.SpigotPainting;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
+import com.github.kevindagame.voxelsniper.entity.painting.SpigotPainting;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import org.bukkit.Location;
@@ -70,7 +70,7 @@ public class SpigotEntity implements IEntity {
 
     @Override
     public boolean teleport(IEntity other) {
-        return this.entity.teleport(((SpigotEntity)other).getEntity());
+        return this.entity.teleport(((SpigotEntity) other).getEntity());
     }
 
     @Override

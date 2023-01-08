@@ -1,15 +1,16 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.google.common.base.Objects;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -57,7 +58,7 @@ public class ErodeBrush extends AbstractBrush {
         for (int i = 0; i < erosionPreset.getFillRecursion(); ++i) {
             fillIteration(v, erosionPreset, blockChangeTracker, targetBlockVector);
         }
-        blockChangeTracker.getAll().forEach(block -> addOperation(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData )));
+        blockChangeTracker.getAll().forEach(block -> addOperation(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData)));
         this.blockTracker = blockChangeTracker;
     }
 
@@ -154,7 +155,7 @@ public class ErodeBrush extends AbstractBrush {
 
     @Override
     // TODO: Implement changing of individual variables | fill erode fillrecursion eroderecursion
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ERODE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -170,10 +171,11 @@ public class ErodeBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
+        return Arrays.stream(Preset.values()).map(Enum::name).collect(Collectors.toList());
     }
 
     @Override
@@ -281,7 +283,6 @@ public class ErodeBrush extends AbstractBrush {
         private final IBlock block;
         private final IBlockData blockData;
 
-        @SuppressWarnings("deprecation")
         public BlockWrapper(final IBlock block) {
             this.block = block;
             this.blockData = block.getBlockData();

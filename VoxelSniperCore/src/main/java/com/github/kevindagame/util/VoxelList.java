@@ -1,7 +1,7 @@
 package com.github.kevindagame.util;
 
-import com.google.common.collect.ImmutableList;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;

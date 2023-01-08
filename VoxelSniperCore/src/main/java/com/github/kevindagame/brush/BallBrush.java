@@ -7,6 +7,7 @@ import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,8 @@ public class BallBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -70,6 +73,7 @@ public class BallBrush extends PerformerBrush {
         arguments.addAll(super.registerArguments());
         return arguments;
     }
+
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.ball";

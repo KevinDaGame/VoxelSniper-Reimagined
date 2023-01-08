@@ -1,9 +1,9 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 /**
@@ -24,7 +24,7 @@ public class BlendDiscBrush extends BlendBrushBase {
         var brushSize = v.getBrushSize();
         var newMaterials = this.blend2D(brushSize);
 
-        for(var position : positions) {
+        for (var position : positions) {
             var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
             if (!(this.excludeAir && material.isAir()) && !(this.excludeWater && (material == VoxelMaterial.WATER))) {
                 addOperation(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));

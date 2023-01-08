@@ -1,15 +1,16 @@
-package com.github.kevindagame.brush.MultiBlock;
+package com.github.kevindagame.brush.multiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,7 +108,6 @@ public class OceanBrush extends AbstractBrush {
      * @param v
      * @param undo
      */
-    @SuppressWarnings("deprecation")
     protected final void oceanator(final SnipeData v, final Undo undo) {
         final IWorld world = this.getWorld();
 
@@ -164,7 +164,7 @@ public class OceanBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.OCEAN_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -195,12 +195,14 @@ public class OceanBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("water", "floor"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

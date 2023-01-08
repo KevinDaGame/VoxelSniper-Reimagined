@@ -1,15 +1,17 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ellipse-brush">...</a>
@@ -44,7 +46,7 @@ public class EllipseBrush extends PerformerBrush {
                 final int x = (int) Math.round(this.xscl * Math.cos(steps));
                 final int y = (int) Math.round(this.yscl * Math.sin(steps));
 
-                switch (getTargetBlock().getFace(this.getLastBlock())) {
+                switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                     case NORTH:
                     case SOUTH:
                         positions.add(targetBlock.getRelative(0, x, y).getLocation());
@@ -82,7 +84,7 @@ public class EllipseBrush extends PerformerBrush {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
 
-                        switch (getTargetBlock().getFace(this.getLastBlock())) {
+                        switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                             case NORTH:
                             case SOUTH:
                                 positions.add(targetBlock.getRelative(0, x, y).getLocation());
@@ -110,7 +112,7 @@ public class EllipseBrush extends PerformerBrush {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
 
-                        switch (getTargetBlock().getFace(this.getLastBlock())) {
+                        switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                             case NORTH:
                             case SOUTH:
                                 positions.add(targetBlock.getRelative(0, x, y).getLocation());
@@ -159,7 +161,7 @@ public class EllipseBrush extends PerformerBrush {
     }
 
     @Override
-    public final void info(final VoxelMessage vm) {
+    public final void info(@NotNull final VoxelMessage vm) {
         if (this.xscl < SCL_MIN || this.xscl > SCL_MAX) {
             this.xscl = SCL_DEFAULT;
         }
@@ -239,6 +241,7 @@ public class EllipseBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -248,6 +251,7 @@ public class EllipseBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

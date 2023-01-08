@@ -1,10 +1,10 @@
 package com.github.kevindagame.command;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;

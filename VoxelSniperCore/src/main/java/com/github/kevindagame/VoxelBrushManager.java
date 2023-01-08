@@ -1,9 +1,11 @@
 package com.github.kevindagame;
 
-import com.github.kevindagame.brush.MultiBlock.*;
-import com.github.kevindagame.brush.Shell.*;
-import com.google.common.base.Preconditions;
 import com.github.kevindagame.brush.*;
+import com.github.kevindagame.brush.multiBlock.*;
+import com.github.kevindagame.brush.shell.ShellBallBrush;
+import com.github.kevindagame.brush.shell.ShellSetBrush;
+import com.github.kevindagame.brush.shell.ShellVoxelBrush;
+import com.google.common.base.Preconditions;
 
 import java.util.*;
 
@@ -15,6 +17,7 @@ public class VoxelBrushManager {
     private static VoxelBrushManager instance = null;
 
     private final Map<String, Class<? extends IBrush>> brushes = new HashMap<>();
+
     public static VoxelBrushManager getInstance() {
         return instance;
     }

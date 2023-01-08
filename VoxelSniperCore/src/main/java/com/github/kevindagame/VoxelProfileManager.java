@@ -1,8 +1,8 @@
 package com.github.kevindagame;
 
-import com.google.common.collect.Maps;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.google.common.collect.Maps;
 
 import java.util.Map;
 import java.util.UUID;

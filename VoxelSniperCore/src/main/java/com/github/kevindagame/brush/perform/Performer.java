@@ -101,7 +101,7 @@ public enum Performer {
 
     private final Class<? extends BasePerformer> pclass;
     private final String short_name;
-//    public static final Component performer_list_short;
+    //    public static final Component performer_list_short;
 //    public static final Component performer_list_long;
     private final String long_name;
 
@@ -138,7 +138,7 @@ public enum Performer {
                 p = pclass.getConstructor().newInstance();
                 return p;
             } catch (InstantiationException | InvocationTargetException | IllegalArgumentException |
-                     IllegalAccessException ex) {
+                    IllegalAccessException ex) {
                 Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NoSuchMethodException | SecurityException ex) {

@@ -1,9 +1,9 @@
-package com.github.kevindagame.brush.Shell;
+package com.github.kevindagame.brush.shell;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class ShellSetBrush extends ShellBrushBase {
 
     private static final int MAX_SIZE = 5000000;
+    private final ArrayList<BlockWrapper> operations = new ArrayList<>();
     private IBlock block = null;
-    private ArrayList<BlockWrapper> operations = new ArrayList<>();
 
     /**
      *

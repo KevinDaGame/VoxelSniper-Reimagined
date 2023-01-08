@@ -3,11 +3,11 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockStateOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
-import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
 import com.google.common.collect.ImmutableList;
@@ -123,7 +123,7 @@ public class SignOverwriteBrush extends CustomBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         boolean textChanged = false;
 
         for (int i = 0; i < params.length; i++) {
@@ -382,7 +382,7 @@ public class SignOverwriteBrush extends CustomBrush {
 
     @Override
     public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
-        switch(Objects.requireNonNull(getSnipeAction())) {
+        switch (Objects.requireNonNull(getSnipeAction())) {
             case ARROW -> {
                 return false;
             }

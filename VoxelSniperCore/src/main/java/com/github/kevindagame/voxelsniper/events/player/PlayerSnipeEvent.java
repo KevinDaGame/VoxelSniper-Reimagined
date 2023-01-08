@@ -70,6 +70,11 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
         return status == EventResult.DENY || !hasNonCancelledOperation();
     }
 
+    @Override
+    public void setCancelled(boolean cancel) {
+        status = cancel ? EventResult.DENY : EventResult.DEFAULT;
+    }
+
     private boolean hasNonCancelledOperation() {
         for (var operation :
                 getOperations()) {
@@ -78,10 +83,5 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
             }
         }
         return false;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        status = cancel ? EventResult.DENY : EventResult.DEFAULT;
     }
 }

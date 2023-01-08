@@ -1,9 +1,9 @@
-package com.github.kevindagame.brush.Shell;
+package com.github.kevindagame.brush.shell;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 
 /**
  * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes

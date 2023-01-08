@@ -1,8 +1,8 @@
 package com.github.kevindagame.command;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;

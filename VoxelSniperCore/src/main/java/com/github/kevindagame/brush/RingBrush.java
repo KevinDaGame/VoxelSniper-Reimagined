@@ -1,12 +1,13 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.util.Shapes;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class RingBrush extends PerformerBrush {
     }
 
     private void ring(final SnipeData v, IBlock targetBlock) {
-       this.positions = Shapes.ring(this.getTargetBlock().getLocation(), v.getBrushSize(), this.innerSize, this.smoothCircle);
+        this.positions = Shapes.ring(this.getTargetBlock().getLocation(), v.getBrushSize(), this.innerSize, this.smoothCircle);
     }
 
     @Override
@@ -81,6 +82,7 @@ public class RingBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -90,6 +92,7 @@ public class RingBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
