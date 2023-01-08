@@ -11,6 +11,8 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * Regenerates the target chunk.
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#regenerate-chunk-brush">...</a>
@@ -18,18 +20,22 @@ import org.jetbrains.annotations.NotNull;
  * @author Mick
  */
 public class RegenerateChunkBrush extends CustomBrush {
+    private int originalSize;
+
     public RegenerateChunkBrush() {
         this.setName("Chunk Generator 40k");
     }
 
     private void generateChunk(final SnipeData v) {
+        final IChunk chunk = this.getTargetBlock().getChunk();
         for (int z = CHUNK_SIZE; z >= 0; z--) {
             for (int x = CHUNK_SIZE; x >= 0; x--) {
                 for (int y = this.getMaxHeight(); y >= this.getMinHeight(); y--) {
-                    addOperation(new CustomOperation(new BaseLocation(this.getWorld(), x, y, z), this, v, CustomOperationContext.OTHER));
+                    addOperation(new CustomOperation(new BaseLocation(this.getWorld(), chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z), this, v, CustomOperationContext.OTHER));
                 }
             }
         }
+        originalSize = this.getOperationsCount();
     }
 
     @Override
@@ -57,8 +63,7 @@ public class RegenerateChunkBrush extends CustomBrush {
     public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         final IChunk chunk = this.getTargetBlock().getChunk();
         //check if no operation has been cancelled by comparing the size to the amount of loops
-        //TODO test this
-        if (operations.size() != CHUNK_SIZE * CHUNK_SIZE * (this.getMaxHeight() - this.getMinHeight())) {
+        if (operations.stream().filter(o -> !o.isCancelled()).count() != originalSize) {
             return false;
         }
         for (int z = CHUNK_SIZE; z >= 0; z--) {

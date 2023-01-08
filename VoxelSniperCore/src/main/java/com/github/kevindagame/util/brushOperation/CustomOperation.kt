@@ -8,6 +8,7 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation
 /**
  * This class serves as an operation for brushes that don't fit one of the other operations.
  */
+@Suppress("unused")
 class CustomOperation(
     location: BaseLocation,
     private var customBrush: CustomBrush,
@@ -16,6 +17,6 @@ class CustomOperation(
 ) :
     BrushOperation(location) {
     override fun perform(undo: Undo): Boolean {
-        TODO("Not used")
+        throw UnsupportedOperationException("Not implemented")
     }
 }
