@@ -75,6 +75,10 @@ abstract class AbstractBrush : IBrush {
         this.operations.addAll(operations.filter { o -> isInWorldHeight(o.location.blockY) })
     }
 
+    protected fun getOperationsCount(): Int {
+        return operations.size
+    }
+
     override fun perform(action: SnipeAction, data: SnipeData, targetBlock: IBlock, lastBlock: IBlock): Boolean {
         operations.clear()
         this.targetBlock = targetBlock
