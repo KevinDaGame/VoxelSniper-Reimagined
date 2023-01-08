@@ -7,6 +7,7 @@ import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.player.materialChange.PlayerMaterialChangedEvent;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 
@@ -34,8 +35,10 @@ public class VoxelVoxelCommand extends MaterialCommand {
         if (args.length == 0) {
             IBlock selectedBlock = new BlockHelper(sniper.getPlayer()).getTargetBlock();
             if (selectedBlock != null) {
-                snipeData.setVoxelSubstance(selectedBlock.getBlockData());
-                snipeData.getVoxelMessage().voxel();
+                if (!new PlayerMaterialChangedEvent(sniper.getPlayer(), sniper.getSnipeData(sniper.getCurrentToolId()).getVoxelSubstance(), selectedBlock.getBlockData()).callEvent().isCancelled()) {
+                    snipeData.setVoxelSubstance(selectedBlock.getBlockData());
+                    snipeData.getVoxelMessage().voxel();
+                }
             } else {
                 sniper.sendMessage(Messages.NOTHING_TO_SET_SUBSTANCE);
             }
@@ -46,8 +49,10 @@ public class VoxelVoxelCommand extends MaterialCommand {
         VoxelMaterial material = VoxelMaterial.getMaterial(args[0]);
 
         if (material != null && material.isBlock()) {
-            snipeData.setVoxelSubstance(material.createBlockData());
-            snipeData.getVoxelMessage().voxel();
+            if (!new PlayerMaterialChangedEvent(sniper.getPlayer(), sniper.getSnipeData(sniper.getCurrentToolId()).getVoxelSubstance(), material.createBlockData()).callEvent().isCancelled()) {
+                snipeData.setVoxelSubstance(material.createBlockData());
+                snipeData.getVoxelMessage().voxel();
+            }
         } else {
             sniper.sendMessage(Messages.INVALID_TYPE_ID);
         }

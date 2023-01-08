@@ -3,11 +3,22 @@ plugins {
     id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
+repositories {
+    maven { url = uri("https://maven.enginehub.org/repo/") }
+    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
+}
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") // newest worldguard that supports 1.16.5
+    compileOnly("com.plotsquared:PlotSquared-Core")
 
-    shadow("net.kyori:adventure-platform-bukkit:4.1.1")
+    shadow(platform("com.intellectualsites.bom:bom-1.18.x:1.20"))
+    shadow("org.bstats:bstats-bukkit:3.0.0")
+    shadow("net.kyori:adventure-platform-bukkit:4.2.0")
+    implementation(kotlin("stdlib-jdk8"))
+
+    shadow("org.bstats:bstats-bukkit:3.0.0")
 
     testImplementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
 }
@@ -24,18 +35,15 @@ tasks {
         }
     }
     shadowJar {
-
+        dependencies {
+//            include(dependency("org.bstats:bstats-bukkit"))
+        }
+        relocate("org.bstats", "com.github.kevindagame.voxelsniper.libs.org.bstats")
     }
     runServer {
         minecraftVersion("1.16.5")
     }
 }
-
-//tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run16") {
-//    dependsOn(tasks.shadowJar)
-////    pluginJars(tasks.shadowJar.getArchiveFile())
-//    minecraftVersion("1.16.5")
-//}
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run17") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
@@ -49,5 +57,5 @@ tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run18") {
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run19") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
-    minecraftVersion("1.19.2")
+    minecraftVersion("1.19.3")
 }

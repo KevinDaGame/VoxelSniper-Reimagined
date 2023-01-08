@@ -5,6 +5,7 @@
 package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -13,7 +14,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 /**
  * @author Voxel
  */
-public class pIncludeCombo extends vPerformer {
+public class pIncludeCombo extends BasePerformer {
 
     private VoxelList includeList;
     private IBlockData voxelSubstance;
@@ -38,10 +39,12 @@ public class pIncludeCombo extends vPerformer {
     }
 
     @Override
-    public void perform(IBlock b) {
-        if (includeList.contains(b.getMaterial())) {
-            h.put(b);
-            b.setBlockData(voxelSubstance, true);
-        }
+    public boolean test(IBlock b) {
+        return includeList.contains(b.getMaterial());
+    }
+
+    @Override
+    public BlockOperation perform(IBlock b) {
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelSubstance);
     }
 }

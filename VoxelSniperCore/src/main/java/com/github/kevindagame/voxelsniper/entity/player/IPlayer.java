@@ -3,7 +3,7 @@ package com.github.kevindagame.voxelsniper.entity.player;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import net.kyori.adventure.audience.Audience;
@@ -26,7 +26,7 @@ public interface IPlayer extends IEntity, Audience {
 
     String getName();
 
-    void teleport(VoxelLocation location);
+    void teleport(BaseLocation location);
 
     IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
 

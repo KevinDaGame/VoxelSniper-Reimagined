@@ -1,8 +1,7 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.base.Objects;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -10,12 +9,13 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.google.common.base.Objects;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#erode-brush">...</a>
  *
  * @author Piotr
  * @author MikeMatrix
@@ -25,6 +25,7 @@ public class ErodeBrush extends AbstractBrush {
     private static final VoxelVector[] FACES_TO_CHECK = {new VoxelVector(0, 0, 1), new VoxelVector(0, 0, -1), new VoxelVector(0, 1, 0), new VoxelVector(0, -1, 0), new VoxelVector(1, 0, 0), new VoxelVector(-1, 0, 0)};
     private String presetName = "NONE";
     private ErosionPreset currentPreset = new ErosionPreset(0, 1, 0, 1);
+    private BlockChangeTracker blockTracker;
 
     /**
      *
@@ -32,6 +33,7 @@ public class ErodeBrush extends AbstractBrush {
     public ErodeBrush() {
         this.setName("Erode");
     }
+
 
     @Override
     protected final void arrow(final SnipeData v) {
@@ -43,7 +45,6 @@ public class ErodeBrush extends AbstractBrush {
         this.erosion(v, this.currentPreset.getInverted());
     }
 
-    @SuppressWarnings("deprecation")
     private void erosion(final SnipeData v, final ErosionPreset erosionPreset) {
         final BlockChangeTracker blockChangeTracker = new BlockChangeTracker(this.getTargetBlock().getWorld());
 
@@ -56,14 +57,8 @@ public class ErodeBrush extends AbstractBrush {
         for (int i = 0; i < erosionPreset.getFillRecursion(); ++i) {
             fillIteration(v, erosionPreset, blockChangeTracker, targetBlockVector);
         }
-
-        final Undo undo = new Undo();
-        for (final BlockWrapper blockWrapper : blockChangeTracker.getAll()) {
-            undo.put(blockWrapper.getBlock());
-            blockWrapper.getBlock().setBlockData(blockWrapper.getBlockData(), true);
-        }
-
-        v.owner().storeUndo(undo);
+        blockChangeTracker.getAll().forEach(block -> addOperation(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData )));
+        this.blockTracker = blockChangeTracker;
     }
 
     private void erosionIteration(final SnipeData v, final ErosionPreset erosionPreset, final BlockChangeTracker blockChangeTracker, final VoxelVector targetBlockVector) {

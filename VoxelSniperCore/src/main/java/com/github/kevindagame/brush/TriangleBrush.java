@@ -4,9 +4,10 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Triangle_Brush
+ * https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#triangle-brush
  *
  * @author Giltwist
  */
@@ -146,7 +147,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.positions.add(new BaseLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -197,7 +198,7 @@ public class TriangleBrush extends PerformerBrush {
 
                     if (barycentric <= 1.1) {
 
-                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.positions.add(new BaseLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
 
                     }
 
@@ -247,12 +248,10 @@ public class TriangleBrush extends PerformerBrush {
 
                     // VoxelSniper.log.info("Bary: "+barycentric+", hb: "+heronbig+", h1: "+heronone+", h2: "+herontwo+", h3: "+heronthree);
                     if (barycentric <= 1.1) {
-                        this.currentPerformer.perform(this.clampY((int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
+                        this.positions.add(new BaseLocation(getWorld(), (int) this.currentCoords[0], (int) this.currentCoords[1], (int) this.currentCoords[2]));
                     }
                 }
             } // END Z DEPENDENT
-
-            v.owner().storeUndo(this.currentPerformer.getUndo());
 
         }
 
@@ -272,12 +271,12 @@ public class TriangleBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.triangleA(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) { // Add a point
+    protected final void doPowder(final SnipeData v) { // Add a point
         this.triangleP(v);
     }
 

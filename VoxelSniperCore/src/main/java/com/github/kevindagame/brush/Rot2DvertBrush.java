@@ -47,7 +47,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                 sy = this.getTargetBlock().getY() - bSize;
 
                 for (int y = 0; y < this.snap.length; y++) {
-                    final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                    final IBlock block = this.getWorld().getBlock(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                     this.snap[x][y][z] = new BlockWrapper(block);
                     block.setMaterial(VoxelMaterial.AIR);
                     sy++;
@@ -88,7 +88,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());
+                        this.getWorld().getBlock(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ).setBlockData(block.getBlockData());
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
 
-                            this.setBlockMaterialAndDataAt(fy, fx, fz, winner);
+                            this.getWorld().getBlock(fy, fx, fz).setBlockData(winner);
                         }
                     }
                 }

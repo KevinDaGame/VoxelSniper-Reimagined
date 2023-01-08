@@ -11,7 +11,8 @@ repositories {
 }
 
 dependencies {
-     implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
+    implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.7.22")
     implementation("org.spongepowered:mixingradle:0.7.+")
     implementation("com.google.guava:guava:31.1-jre")
 }

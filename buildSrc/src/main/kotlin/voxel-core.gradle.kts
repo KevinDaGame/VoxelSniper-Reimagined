@@ -1,14 +1,18 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
+    `maven-publish`
     id("com.github.johnrengelman.shadow")
+    kotlin("jvm")
 }
 
 // Projects should use Maven Central for external dependencies
 // This could be the organization's private repository
 repositories {
     mavenLocal()
+    mavenCentral()
     maven {
         url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     }
@@ -30,13 +34,13 @@ dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
     compileOnly("com.google.guava:guava:31.1-jre")
 
-    shadow("net.kyori:adventure-api:4.11.0")
-    shadow("net.kyori:adventure-text-minimessage:4.11.0")
-    shadow("net.kyori:adventure-text-serializer-legacy:4.11.0")
+    shadow("net.kyori:adventure-api:4.12.0")
+    shadow("net.kyori:adventure-text-minimessage:4.12.0")
+    shadow("net.kyori:adventure-text-serializer-legacy:4.12.0")
 
-    shadow("org.yaml:snakeyaml:1.31")
-    // include in output jar, but not on runtime classpath, since this causes issues with the Forge runClient task
+    implementation(kotlin("stdlib-jdk8"))
     shadowNoRuntime("com.google.guava:guava:31.1-jre")
+    shadow("org.yaml:snakeyaml:1.31")
 
     testImplementation("com.google.guava:guava:31.1-jre")
     testImplementation("junit:junit:4.13.2")
@@ -54,17 +58,25 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.2.1"
+version = "8.4.0"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile>() {
     options.encoding = "UTF-8"
 }
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "17"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "17"
+}
 
 tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(16)
+        options.release.set(17)
     }
 
     shadowJar {
@@ -81,5 +93,14 @@ tasks {
 
     clean {
         delete("../output")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+
+            from(components["java"])
+        }
     }
 }

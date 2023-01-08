@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.google.common.collect.Lists;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A brush that creates a solid ball. http://www.voxelwiki.com/minecraft/Voxelsniper#The_Ball_Brush
+ * A brush that creates a solid ball. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ball-brush">...</a>
  *
  * @author Piotr
  */
@@ -25,20 +26,17 @@ public class BallBrush extends PerformerBrush {
     }
 
     private void ball(final SnipeData v, IBlock targetBlock) {
-        final int brushSize = v.getBrushSize();
-        var positions = this.sphere(targetBlock.getLocation(), brushSize, this.smoothSphere);
-        positions.forEach(position -> this.currentPerformer.perform(position.getBlock()));
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+        this.positions = Shapes.ball(targetBlock.getLocation(), v.getBrushSize(), this.smoothSphere);
     }
 
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.ball(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.ball(v, this.getLastBlock());
     }
 

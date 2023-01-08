@@ -6,7 +6,6 @@ import com.github.kevindagame.voxelsniper.Version;
 import java.util.HashMap;
 import java.util.Map;
 
-//todo: backwards compatibility
 @SuppressWarnings("unused")
 public record VoxelBiome(String namespace, String key, Version version) {
     public static final String DEFAULT_NAMESPACE = "minecraft";

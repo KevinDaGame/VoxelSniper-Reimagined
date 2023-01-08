@@ -1,19 +1,25 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
-import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.IRedstoneWire;
+import com.google.common.collect.ImmutableList;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Volt-Meter_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#voltmeter-brush">...</a>
  *
  * @author Gavjenks
  */
-public class VoltMeterBrush extends AbstractBrush {
+public class VoltMeterBrush extends CustomBrush {
 
     /**
      *
@@ -23,15 +29,14 @@ public class VoltMeterBrush extends AbstractBrush {
     }
 
     private void data(final SnipeData v) {
-        final IBlock block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
-        final IBlockData data = block.getBlockData();
+        final IBlockData data = getTargetBlock().getBlockData();
         if (data instanceof IRedstoneWire redstone) {
             v.sendMessage(Messages.REDSTONE_POWER_LEVEL.replace("%blocks%", String.valueOf(redstone.getPower())));
         }
     }
 
     private void volt(final SnipeData v) {
-        final IBlock block = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ());
+        var block = getTargetBlock();
         final boolean indirect = block.isBlockIndirectlyPowered();
         final boolean direct = block.isBlockPowered();
         v.sendMessage(Messages.BLOCK_POWER_MESSAGE.replace("%direct%", String.valueOf(direct)).replace("%indirect%", String.valueOf(indirect)));
@@ -45,12 +50,12 @@ public class VoltMeterBrush extends AbstractBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.volt(v);
+        addOperation(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.data(v);
+        addOperation(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -62,5 +67,19 @@ public class VoltMeterBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.voltmeter";
+    }
+
+    @Override
+    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        switch (Objects.requireNonNull(this.getSnipeAction())) {
+            case ARROW:
+                volt(snipeData);
+                return true;
+            case GUNPOWDER:
+                data(snipeData);
+                return true;
+            default:
+                return false;
+        }
     }
 }

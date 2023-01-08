@@ -2,13 +2,14 @@ package com.github.kevindagame.command;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
-import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent;
+import com.github.kevindagame.voxelsniper.events.player.PlayerBrushSizeChangedEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,12 +57,15 @@ public class VoxelBrushCommand extends VoxelCommand {
         // Command: /b <number> -- Change brush size
         try {
             int originalSize = snipeData.getBrushSize();
-            snipeData.setBrushSize(Integer.parseInt(args[0]));
 
-            VoxelSniper.voxelsniper.getEventManager().callSniperBrushSizeChangedEvent(sniper, currentToolId, originalSize, snipeData.getBrushSize());
+            if(!new PlayerBrushSizeChangedEvent(player, currentToolId, sniper.getBrush(currentToolId), originalSize, snipeData.getBrushSize()).callEvent().isCancelled()) {
+                snipeData.setBrushSize(Integer.parseInt(args[0]));
+                snipeData.getVoxelMessage().size();
+                return true;
 
-            snipeData.getVoxelMessage().size();
-            return true;
+            }
+            return false;
+
         } catch (NumberFormatException ignored) {
         }
 
@@ -78,7 +82,7 @@ public class VoxelBrushCommand extends VoxelCommand {
             snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
         } else {
             IBrush oldBrush = sniper.getBrush(currentToolId);
-            IBrush newBrush = sniper.setBrush(currentToolId, brush);
+            IBrush newBrush = sniper.getBrush(currentToolId);
 
             if (newBrush == null) {
                 snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
@@ -97,8 +101,10 @@ public class VoxelBrushCommand extends VoxelCommand {
                 }
                 return true;
             }
-            VoxelSniper.voxelsniper.getEventManager().callSniperBrushChangedEvent(sniper, currentToolId, oldBrush, newBrush);
-            sniper.displayInfo();
+            if(!new PlayerBrushChangedEvent(player, currentToolId, oldBrush, newBrush).callEvent().isCancelled()) {
+                sniper.setBrush(currentToolId, brush);
+                sniper.displayInfo();
+            }
         }
 
         return true;

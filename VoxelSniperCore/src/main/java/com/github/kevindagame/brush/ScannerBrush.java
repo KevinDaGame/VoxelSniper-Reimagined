@@ -1,11 +1,16 @@
 package com.github.kevindagame.brush;
 
+import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +18,9 @@ import java.util.List;
 
 /**
  * @author DivineRage
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#scanner-brush">...</a>
  */
-public class ScannerBrush extends AbstractBrush {
+public class ScannerBrush extends CustomBrush {
 
     private static final int DEPTH_MIN = 1;
     private static final int DEPTH_DEFAULT = 24;
@@ -46,7 +52,7 @@ public class ScannerBrush extends AbstractBrush {
             if (y >= this.getMaxHeight() || y < this.getMinHeight()) {
                 break;
             }
-            VoxelMaterial mat = this.clampY(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
+            VoxelMaterial mat = getWorld().getBlock(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
             if (mat == checkFor) {
                 v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getName()).replace("%i%", Integer.toString(i)));
                 return;
@@ -57,7 +63,7 @@ public class ScannerBrush extends AbstractBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.scan(v, this.getTargetBlock().getFace(this.getLastBlock()));
+        addOperation(new CustomOperation(getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
     }
 
     @Override
@@ -104,5 +110,14 @@ public class ScannerBrush extends AbstractBrush {
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.scanner";
+    }
+
+    @Override
+    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+        if(operations.size() != 1) {
+            return false;
+        }
+        this.scan(snipeData, this.getTargetBlock().getFace(this.getLastBlock()));
+        return true;
     }
 }
