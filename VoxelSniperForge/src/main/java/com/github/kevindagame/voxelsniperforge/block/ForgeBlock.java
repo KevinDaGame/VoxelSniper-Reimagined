@@ -5,7 +5,7 @@ import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
 import com.github.kevindagame.voxelsniperforge.blockstate.ExtendedBlockState;
@@ -25,7 +25,7 @@ public class ForgeBlock extends AbstractBlock {
 
     private final BlockPos pos;
 
-    public ForgeBlock(VoxelLocation location, BlockPos pos) {
+    public ForgeBlock(BaseLocation location, BlockPos pos) {
         super(location, BlockMaterial.fromForgeBlock(((ForgeWorld)location.getWorld()).getLevel().getBlockState(pos).getBlock()));
         this.pos = pos;
     }

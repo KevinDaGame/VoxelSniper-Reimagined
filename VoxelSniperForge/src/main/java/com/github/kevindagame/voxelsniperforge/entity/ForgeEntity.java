@@ -2,7 +2,7 @@ package com.github.kevindagame.voxelsniperforge.entity;
 
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.VoxelSniperForge;
 import com.github.kevindagame.voxelsniperforge.entity.Painting.ForgePainting;
@@ -51,8 +51,8 @@ public class ForgeEntity implements IEntity {
     }
 
     @Override
-    public VoxelLocation getLocation() {
-        return new VoxelLocation(getWorld(), entity.getX(), entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
+    public BaseLocation getLocation() {
+        return new BaseLocation(getWorld(), entity.getX(), entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
     }
 
     @Override
@@ -87,10 +87,8 @@ public class ForgeEntity implements IEntity {
     }
 
     @Override
-    public VoxelLocation getEyeLocation() {
-        var loc = this.getLocation();
-        loc.setY(this.entity.getEyeY());
-        return loc;
+    public BaseLocation getEyeLocation() {
+        return new BaseLocation(getWorld(), entity.getX(), entity.getEyeY(), entity.getZ(), entity.getYRot(), entity.getXRot());
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.github.kevindagame.voxelsniperforge.entity.player;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
@@ -76,7 +76,7 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
     }
 
     @Override
-    public void teleport(VoxelLocation location) {
+    public void teleport(BaseLocation location) {
         player.moveTo(ForgeLocation.toForgeBlockPos(location), location.getYaw(), location.getPitch());
     }
 

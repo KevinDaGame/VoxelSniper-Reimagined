@@ -8,8 +8,6 @@ import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.Version;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.events.DummyEventManager;
-import com.github.kevindagame.voxelsniper.events.IEventManager;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
@@ -51,7 +49,6 @@ public class VoxelSniperForge implements IVoxelsniper {
     private final Logger LOGGER;
     private ForgeFileHandler fileHandler;
     private VoxelSniperConfiguration voxelSniperConfiguration;
-    private final DummyEventManager eventManager = new DummyEventManager();
     private static VoxelSniperForge instance;
 
     public static VoxelSniperForge getInstance() {
@@ -176,8 +173,4 @@ public class VoxelSniperForge implements IVoxelsniper {
         throw new IllegalArgumentException("Requested material does not exist");
     }
 
-    @Override
-    public IEventManager getEventManager() {
-        return eventManager;
-    }
 }

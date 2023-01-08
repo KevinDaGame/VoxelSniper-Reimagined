@@ -1,18 +1,17 @@
 package com.github.kevindagame.voxelsniperforge.world;
 
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
-import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.AABB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +38,7 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
         return level;
     }
     @Override
-    public IBlock getBlock(VoxelLocation location) {
+    public IBlock getBlock(BaseLocation location) {
         if (location.getWorld() != this)
             throw new IllegalArgumentException("location doesn't belong to this World");
         return new ForgeBlock(location, new BlockPos(location.getX(), location.getY(), location.getZ()));
@@ -48,7 +46,7 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
 
     @Override
     public IBlock getBlock(int x, int y, int z) {
-        return getBlock(new VoxelLocation(this, x, y, z));
+        return getBlock(new BaseLocation(this, x, y, z));
     }
 
     @Override
@@ -67,7 +65,7 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
     }
 
     @Override
-    public List<IEntity> getNearbyEntities(VoxelLocation location, double x, double y, double z) {
+    public List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -78,7 +76,7 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
     }
 
     @Override
-    public void strikeLightning(VoxelLocation location) {
+    public void strikeLightning(BaseLocation location) {
         LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, level);
         bolt.setPos(location.getX(), location.getY(), location.getZ());
         level.addFreshEntity(bolt);
@@ -91,7 +89,7 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
     }
 
     @Override
-    public void spawn(VoxelLocation location, VoxelEntityType entity) {
+    public void spawn(BaseLocation location, VoxelEntityType entity) {
         //TODO test this
         var tag = EntityType.byString(entity.getKey());
         if (tag.isPresent()){
@@ -131,12 +129,17 @@ public record ForgeWorld(@NotNull Level level) implements IWorld {
     }
 
     @Override
-    public void generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo) {
+    public List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean b) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public VoxelBiome getBiome(BaseLocation location) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 }
