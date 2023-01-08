@@ -1,14 +1,18 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author MikeMatrix
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#block-reset-brush-brush">...</a>
  */
 public class BlockResetBrush extends AbstractBrush {
 
@@ -52,22 +56,8 @@ public class BlockResetBrush extends AbstractBrush {
     }
 
     private void applyBrush(final SnipeData v) {
-        for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
-            for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
-                for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
-                    final IBlock block = this.getWorld().getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())) {
-                        continue;
-                    }
-
-                    // Resets the block state to initial state by creating a new BlockData with default values.
-                    block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
-
-                    // Do we need this???
-                    // block.setBlockData(MagicValues.getBlockDataFor(MagicValues.getIdFor(block.getMaterial()), oldData), true);
-                }
-            }
-        }
+        addOperations(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)
+                .filter(block -> BlockResetBrush.DENIED_UPDATES.contains(block.getMaterial())).map(b -> new BlockOperation(b.getLocation(), b.getBlockData(), b.getBlockData().getMaterial().createBlockData())).collect(Collectors.toList()));
     }
 
     @Override

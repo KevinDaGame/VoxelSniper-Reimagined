@@ -72,7 +72,7 @@ public enum Performer {
     //COMBO_INK_NOPHYS_UPDATE(  pComboInkNoPhysUpdate.class,    "ciup",         "combo-ink-update-nophys"), //              place combo, replace ink, graphical update, no physics
     //COMBO_COMBO_UPDATE(       pComboComboUpdate.class,        "ccu",          "combo-combo-update"),      //              place combo, replace combo, graphical update
     //COMBO_COMBO_NOPHYS_UPDATE(pComboComboNoPhysUpdate.class,  "ccup",         "combo-combo-update-nophys"),//             place combo, replace combo, graphical update, no physics
-    private static final Map<String, vPerformer> performers;
+    private static final Map<String, BasePerformer> performers;
     private static final Map<String, String> long_names;
 
     static {
@@ -99,19 +99,19 @@ public enum Performer {
 //        performer_list_long = performer_list_long_builder.build();
     }
 
-    private final Class<? extends vPerformer> pclass;
+    private final Class<? extends BasePerformer> pclass;
     private final String short_name;
-//    public static final Component performer_list_short;
+    //    public static final Component performer_list_short;
 //    public static final Component performer_list_long;
     private final String long_name;
 
-    Performer(Class<? extends vPerformer> c, String s, String l) {
+    Performer(Class<? extends BasePerformer> c, String s, String l) {
         pclass = c;
         short_name = s;
         long_name = l;
     }
 
-    public static vPerformer getPerformer(String s) {
+    public static BasePerformer getPerformer(String s) {
         if (performers.containsKey(s)) {
             return performers.get(s);
         } else {
@@ -131,14 +131,14 @@ public enum Performer {
         return performers.keySet();
     }
 
-    private vPerformer getPerformer() {
-        vPerformer p;
+    private BasePerformer getPerformer() {
+        BasePerformer p;
         try {
             try {
                 p = pclass.getConstructor().newInstance();
                 return p;
             } catch (InstantiationException | InvocationTargetException | IllegalArgumentException |
-                     IllegalAccessException ex) {
+                    IllegalAccessException ex) {
                 Logger.getLogger(Performer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NoSuchMethodException | SecurityException ex) {

@@ -10,4 +10,7 @@ public interface IBlockData {
     String getAsString();
 
     IBlockData merge(IBlockData newData);
+
+    //no default clone because it's protected
+    IBlockData getCopy();
 }

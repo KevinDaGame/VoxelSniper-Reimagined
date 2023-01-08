@@ -6,6 +6,7 @@ package com.github.kevindagame.brush.perform;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -13,7 +14,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 /**
  * @author Voxel
  */
-public class pMatComboNoPhysics extends vPerformer {
+public class pMatComboNoPhysics extends BasePerformer {
 
     private VoxelMaterial voxelMaterial;
     private IBlockData targetSubstance;
@@ -30,6 +31,11 @@ public class pMatComboNoPhysics extends vPerformer {
     }
 
     @Override
+    public boolean test(IBlock b) {
+        return b.getBlockData().matches(targetSubstance);
+    }
+
+    @Override
     public void info(VoxelMessage vm) {
         vm.performerName(name);
         vm.voxel();
@@ -38,11 +44,8 @@ public class pMatComboNoPhysics extends vPerformer {
     }
 
     @Override
-    public void perform(IBlock b) {
-        if (b.getBlockData().matches(targetSubstance)) {
-            h.put(b);
-            b.setBlockData(voxelMaterial.createBlockData(), false);
-        }
+    public BlockOperation perform(IBlock b) {
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterial.createBlockData(), false);
     }
 
     @Override

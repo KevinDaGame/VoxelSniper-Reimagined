@@ -42,4 +42,9 @@ public class SpigotBlockData implements IBlockData {
     public IBlockData merge(IBlockData newData) {
         return new SpigotBlockData(this.blockData.merge(((SpigotBlockData) newData).getBlockData()));
     }
+
+    @Override
+    public IBlockData getCopy() {
+        return new SpigotBlockData(blockData.clone());
+    }
 }

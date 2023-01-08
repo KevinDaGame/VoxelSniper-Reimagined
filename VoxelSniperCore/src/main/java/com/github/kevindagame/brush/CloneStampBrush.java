@@ -1,20 +1,27 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The CloneStamp class is used to create a collection of blocks in a cylinder shape according to the selection the player has set.
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Clone_and_CopyPasta_Brushes
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#clone-brush">...</a>
  *
  * @author Voxel
  */
 public class CloneStampBrush extends StampBrush {
+
+    private BaseLocation startingPoint;
 
     /**
      *
@@ -32,55 +39,18 @@ public class CloneStampBrush extends StampBrush {
      * @param v the caller
      */
     private void clone(final SnipeData v) {
-        final int brushSize = v.getBrushSize();
+        VoxelLocation point = getTargetBlock().getLocation().makeMutable();
+        point.add(0, v.getcCen(), 0);
+        this.startingPoint = point.makeImmutable();
+        var positions = Shapes.cylinder(startingPoint, v.getBrushSize(), v.getVoxelHeight(), 0, false);
         this.clone.clear();
-        this.fall.clear();
-        this.drop.clear();
-        this.solid.clear();
+        this.toStamp.clear();
         this.sorted = false;
-
-        int yStartingPoint = this.getTargetBlock().getY() + v.getcCen();
-        int yEndPoint = this.getTargetBlock().getY() + v.getVoxelHeight() + v.getcCen();
-
-        if (yStartingPoint < this.getMinHeight()) {
-            yStartingPoint = this.getMinHeight();
-            v.sendMessage(Messages.OFF_WORLD_START_POS);
-        } else if (yStartingPoint > this.getMaxHeight() - 1) {
-            yStartingPoint = this.getMaxHeight() - 1;
-            v.sendMessage(Messages.OFF_WORLD_START_POS);
-        }
-
-        if (yEndPoint < this.getMinHeight()) {
-            yEndPoint = this.getMinHeight();
-            v.sendMessage(Messages.OFF_WORLD_END_POS);
-        } else if (yEndPoint > this.getMaxHeight() - 1) {
-            yEndPoint = this.getMaxHeight() - 1;
-            v.sendMessage(Messages.OFF_WORLD_END_POS);
-        }
-
-        final double bSquared = Math.pow(brushSize, 2);
-
-        for (int z = yStartingPoint; z < yEndPoint; z++) {
-            this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ()), 0, z - yStartingPoint, 0, v.getWorld()));
-            for (int y = 1; y <= brushSize; y++) {
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ() + y), 0, z - yStartingPoint, y, v.getWorld()));
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX(), z, this.getTargetBlock().getZ() - y), 0, z - yStartingPoint, -y, v.getWorld()));
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + y, z, this.getTargetBlock().getZ()), y, z - yStartingPoint, 0, v.getWorld()));
-                this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - y, z, this.getTargetBlock().getZ()), -y, z - yStartingPoint, 0, v.getWorld()));
-            }
-            for (int x = 1; x <= brushSize; x++) {
-                final double xSquared = Math.pow(x, 2);
-                for (int y = 1; y <= brushSize; y++) {
-                    if ((xSquared + Math.pow(y, 2)) <= bSquared) {
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + x, z, this.getTargetBlock().getZ() + y), x, z - yStartingPoint, y, v.getWorld()));
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() + x, z, this.getTargetBlock().getZ() - y), x, z - yStartingPoint, -y, v.getWorld()));
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - x, z, this.getTargetBlock().getZ() + y), -x, z - yStartingPoint, y, v.getWorld()));
-                        this.clone.add(new BlockWrapper(this.clampY(this.getTargetBlock().getX() - x, z, this.getTargetBlock().getZ() - y), -x, z - yStartingPoint, -y, v.getWorld()));
-                    }
-                }
-            }
+        for (var p : positions) {
+            this.clone.add(new BlockWrapper(p.getBlock(), p.getBlockX() - startingPoint.getBlockX(), p.getBlockY() - startingPoint.getBlockY(), p.getBlockZ() - startingPoint.getBlockZ(), getWorld()));
         }
         v.sendMessage(Messages.BLOCKS_COPIED_SUCCESSFULLY.replace("%amount%", String.valueOf(this.clone.size())));
+
     }
 
     @Override
@@ -114,7 +84,7 @@ public class CloneStampBrush extends StampBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.CLONE_STAMP_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -141,13 +111,12 @@ public class CloneStampBrush extends StampBrush {
             return;
         }
 
-        /**
-         * TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
-         * set to " + v.getcCen()); return; }
-         */
+        // TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
+        // set to " + v.getcCen()); return; }
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

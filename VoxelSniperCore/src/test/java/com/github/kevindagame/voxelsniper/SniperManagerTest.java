@@ -3,7 +3,6 @@ package com.github.kevindagame.voxelsniper;
 import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.Sniper;
-import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.IMaterial;

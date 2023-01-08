@@ -1,10 +1,12 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Blob_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#blob-brush">...</a>
  *
  * @author Giltwist
  */
@@ -112,13 +114,11 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        positions.add(new BaseLocation(this.getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void growBlob(final SnipeData v) {
@@ -188,22 +188,20 @@ public class BlobBrush extends PerformerBrush {
 
                 for (int z = brushSizeDoubled; z >= 0; z--) {
                     if (splat[x][y][z] == 1 && xSquared + ySquared + Math.pow(z - brushSize - 1, 2) <= rSquared) {
-                        this.currentPerformer.perform(this.clampY(this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
+                        positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() - brushSize + x, this.getTargetBlock().getY() - brushSize + z, this.getTargetBlock().getZ() - brushSize + y));
                     }
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.growBlob(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.digBlob(v);
     }
 
@@ -255,6 +253,7 @@ public class BlobBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -264,6 +263,7 @@ public class BlobBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

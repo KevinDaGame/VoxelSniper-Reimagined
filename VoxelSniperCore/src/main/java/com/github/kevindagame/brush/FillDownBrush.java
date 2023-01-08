@@ -1,17 +1,19 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Voxel
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#fill-down-brush">...</a>
  */
 public class FillDownBrush extends PerformerBrush {
 
@@ -63,7 +65,7 @@ public class FillDownBrush extends PerformerBrush {
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
                         if (currentBlock.isEmpty() || (fillLiquid && currentBlock.isLiquid())) {
-                            this.currentPerformer.perform(currentBlock);
+                            this.positions.add(currentBlock.getLocation());
                         } else {
                             break;
                         }
@@ -71,17 +73,15 @@ public class FillDownBrush extends PerformerBrush {
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.fillDown(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.fillDown(v, this.getLastBlock());
     }
 
@@ -122,6 +122,7 @@ public class FillDownBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();

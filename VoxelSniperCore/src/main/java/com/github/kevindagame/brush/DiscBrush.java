@@ -1,25 +1,24 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Disc_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#disc-brush">...</a>
  *
  * @author Voxel
  */
 public class DiscBrush extends PerformerBrush {
 
-    private static final double SMOOTH_CIRCLE_VALUE = 0.5;
-    private static final double VOXEL_CIRCLE_VALUE = 0.0;
 
     private boolean smoothCircle = false;
 
@@ -33,32 +32,19 @@ public class DiscBrush extends PerformerBrush {
     /**
      * Disc executor.
      *
-     * @param v
+     * @param v SnipeData
      */
     private void disc(final SnipeData v, final IBlock targetBlock) {
-        final double radiusSquared = (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (v.getBrushSize() + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
-        final VoxelVector centerPoint = targetBlock.getLocation().toVector();
-        final VoxelVector currentPoint = centerPoint.clone();
-
-        for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
-            currentPoint.setX(centerPoint.getX() + x);
-            for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
-                currentPoint.setZ(centerPoint.getZ() + z);
-                if (centerPoint.distanceSquared(currentPoint) <= radiusSquared) {
-                    this.currentPerformer.perform(this.clampY(currentPoint.getBlockX(), currentPoint.getBlockY(), currentPoint.getBlockZ()));
-                }
-            }
-        }
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+        this.positions = Shapes.disc(targetBlock.getLocation(), v.getBrushSize(), this.smoothCircle);
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.disc(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.disc(v, this.getLastBlock());
     }
 
@@ -85,6 +71,7 @@ public class DiscBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();

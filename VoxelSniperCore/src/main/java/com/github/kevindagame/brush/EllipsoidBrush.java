@@ -1,18 +1,19 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipsoid_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ellipsoid-brush">...</a>
  */
 public class EllipsoidBrush extends PerformerBrush {
 
@@ -28,12 +29,12 @@ public class EllipsoidBrush extends PerformerBrush {
         this.setName("Ellipsoid");
     }
 
-    private void execute(final SnipeData v, IBlock targetBlock) {
-        this.currentPerformer.perform(targetBlock);
+    private void execute(final SnipeData v) {
+        positions.add(getTargetBlock().getLocation());
         double istrueoffset = istrue ? 0.5 : 0;
-        int blockPositionX = targetBlock.getX();
-        int blockPositionY = targetBlock.getY();
-        int blockPositionZ = targetBlock.getZ();
+        int blockPositionX = getTargetBlock().getX();
+        int blockPositionY = getTargetBlock().getY();
+        int blockPositionZ = getTargetBlock().getZ();
 
         for (double x = 0; x <= xRad; x++) {
 
@@ -48,31 +49,29 @@ public class EllipsoidBrush extends PerformerBrush {
                     final double ySquared = (y / (yRad + istrueoffset)) * (y / (yRad + istrueoffset));
 
                     if (xSquared + ySquared + zSquared <= 1) {
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
-                        this.currentPerformer.perform(this.clampY((int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX + x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY + y), (int) (blockPositionZ - z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ + z)));
+                        positions.add(new BaseLocation(getWorld(), (int) (blockPositionX - x), (int) (blockPositionY - y), (int) (blockPositionZ - z)));
                     }
 
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.execute(v, this.getTargetBlock());
+    protected final void doArrow(final SnipeData v) {
+        this.execute(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        this.execute(v, this.getLastBlock());
+    protected final void doPowder(final SnipeData v) {
+        this.execute(v);
     }
 
     @Override
@@ -115,6 +114,7 @@ public class EllipsoidBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -124,6 +124,7 @@ public class EllipsoidBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

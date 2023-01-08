@@ -1,19 +1,23 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
+
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Piotr
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#2d-rotation-brush">...</a>
  */
 public class Rot2DBrush extends AbstractBrush {
     private BlockWrapper[][][] snap;
@@ -43,9 +47,9 @@ public class Rot2DBrush extends AbstractBrush {
                 sy = this.getTargetBlock().getY() - bSize;
                 if (xSquared + Math.pow(y - bSize, 2) <= brushSizeSquared) {
                     for (int z = 0; z < this.snap.length; z++) {
-                        final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                        final IBlock block = getWorld().getBlock(sx, sy, sz);
                         this.snap[x][z][y] = new BlockWrapper(block);
-                        block.setMaterial(VoxelMaterial.AIR);
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
                         sy++;
                     }
                 }
@@ -84,7 +88,9 @@ public class Rot2DBrush extends AbstractBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());
+                        var b = getWorld().getBlock(this.getTargetBlock().getX() + (int) newX, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + (int) newZ);
+                        addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), block.getBlockData()));
+
                     }
                 }
             }
@@ -119,8 +125,8 @@ public class Rot2DBrush extends AbstractBrush {
                             } else {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
-
-                            this.setBlockMaterialAndDataAt(fx, fy, fz, winner);
+                            var block = getWorld().getBlock(fx, fy, fz);
+                            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), winner));
                         }
                     }
                 }
@@ -149,7 +155,7 @@ public class Rot2DBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -164,6 +170,7 @@ public class Rot2DBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

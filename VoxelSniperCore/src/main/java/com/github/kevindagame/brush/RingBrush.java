@@ -1,18 +1,20 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ring_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ring-brush">...</a>
  *
  * @author Voxel
  */
@@ -33,33 +35,16 @@ public class RingBrush extends PerformerBrush {
     }
 
     private void ring(final SnipeData v, IBlock targetBlock) {
-        final int brushSize = v.getBrushSize();
-        final double outerSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
-        final double innerSquared = Math.pow(this.innerSize, 2);
-
-        for (int x = brushSize; x >= 0; x--) {
-            final double xSquared = Math.pow(x, 2);
-            for (int z = brushSize; z >= 0; z--) {
-                final double ySquared = Math.pow(z, 2);
-                if ((xSquared + ySquared) <= outerSquared && (xSquared + ySquared) >= innerSquared) {
-                    currentPerformer.perform(targetBlock.getRelative(x, 0, z));
-                    currentPerformer.perform(targetBlock.getRelative(x, 0, -z));
-                    currentPerformer.perform(targetBlock.getRelative(-x, 0, z));
-                    currentPerformer.perform(targetBlock.getRelative(-x, 0, -z));
-                }
-            }
-        }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+        this.positions = Shapes.ring(this.getTargetBlock().getLocation(), v.getBrushSize(), this.innerSize, this.smoothCircle);
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.ring(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.ring(v, this.getLastBlock());
     }
 
@@ -97,6 +82,7 @@ public class RingBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -106,6 +92,7 @@ public class RingBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables

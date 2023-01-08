@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class SpigotCommandHandler implements TabExecutor {
     }
 
     @Override
-    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public final boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, @NotNull String[] args) {
         this.command.setActiveIdentifier(command.getLabel()); // This is the root command.
         this.command.setActiveAlias(label);   // This is the alias that was executed.
 
@@ -32,7 +33,7 @@ public class SpigotCommandHandler implements TabExecutor {
     }
 
     @Override
-    public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public final List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, @NotNull String[] args) {
         this.command.setActiveIdentifier(command.getLabel()); // This is the root command.
         this.command.setActiveAlias(alias);   // This is the alias that was executed.
 

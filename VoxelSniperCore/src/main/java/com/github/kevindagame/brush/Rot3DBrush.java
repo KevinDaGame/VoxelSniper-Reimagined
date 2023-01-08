@@ -1,6 +1,5 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.BlockWrapper;
@@ -9,13 +8,15 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#3d-rotation-brush">...</a>
  */
 public class Rot3DBrush extends AbstractBrush {
 
@@ -41,7 +42,7 @@ public class Rot3DBrush extends AbstractBrush {
     // --> agreed. Do what erode does and store one snapshot with Block pointers and int id of what the block started with, afterwards simply go thru that
     // matrix and compare Block.getId with 'id' if different undo.add( new BlockWrapper ( Block, oldId ) )
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ROTATION_3D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
@@ -81,12 +82,14 @@ public class Rot3DBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("pitch", "roll", "yaw"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables
@@ -118,7 +121,7 @@ public class Rot3DBrush extends AbstractBrush {
 
                 for (int y = 0; y < this.snap.length; y++) {
                     if (xSquared + zSquared + Math.pow(y - bSize, 2) <= brushSizeSquared) {
-                        final IBlock block = this.clampY(sx, sz, sz);
+                        final IBlock block = this.getWorld().getBlock(sx, sz, sz);
                         this.snap[x][y][z] = new BlockWrapper(block);
                         block.setMaterial(VoxelMaterial.AIR);
                         sz++;
@@ -164,7 +167,7 @@ public class Rot3DBrush extends AbstractBrush {
                 for (int y = 0; y < this.snap.length; y++) {
                     final int yy = y - bSize;
                     if (xSquared + zSquared + Math.pow(yy, 2) <= brushSizeSquared) {
-                        undo.put(this.clampY(this.getTargetBlock().getX() + xx, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + zz)); // just store
+                        undo.put(this.getWorld().getBlock(this.getTargetBlock().getX() + xx, this.getTargetBlock().getY() + yy, this.getTargetBlock().getZ() + zz)); // just store
                         // whole sphere in undo, too complicated otherwise, since this brush both adds and remos things unpredictably.
 
                         final double newxyX = (newxzX * cosPitch) - (yy * sinPitch);
@@ -180,7 +183,7 @@ public class Rot3DBrush extends AbstractBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ, block.getBlockData());
+                        this.getWorld().getBlock(this.getTargetBlock().getX() + (int) newxyX, this.getTargetBlock().getY() + (int) newyzY, this.getTargetBlock().getZ() + (int) newyzZ).setBlockData(block.getBlockData());
                     }
                 }
             }
@@ -216,7 +219,7 @@ public class Rot3DBrush extends AbstractBrush {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
 
-                            this.setBlockMaterialAndDataAt(fx, fy, fz, winner);
+                            this.getWorld().getBlock(fx, fy, fz).setBlockData(winner);
                         }
                     }
                 }

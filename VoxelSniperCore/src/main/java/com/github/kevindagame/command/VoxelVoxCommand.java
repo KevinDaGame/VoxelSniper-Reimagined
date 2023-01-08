@@ -1,10 +1,10 @@
 package com.github.kevindagame.command;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int x = Integer.parseInt(args[0]);
                 final int z = Integer.parseInt(args[1]);
 
-                player.teleport(new VoxelLocation(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
+                player.teleport(new BaseLocation(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
                 player.sendMessage(Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 player.sendMessage(Messages.GOTO_INVALID_SYNTAX);
@@ -98,7 +98,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int x = Integer.parseInt(args[1]);
                 final int z = Integer.parseInt(args[2]);
 
-                player.teleport(new VoxelLocation(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
+                player.teleport(new BaseLocation(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
                 player.sendMessage(Messages.GOTO_MSG);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 player.sendMessage(Messages.VOX_GOTO_USAGE.replace("%alias%", getActiveAlias()).replace("%name%", getName()));

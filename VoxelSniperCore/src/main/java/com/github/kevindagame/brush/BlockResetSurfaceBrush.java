@@ -2,7 +2,9 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -20,6 +22,8 @@ import java.util.ArrayList;
  * typical terrain, blockPositionY my calculations, overall speed increase is about a factor of 5-6 for a size 20 brush. For a complicated city or ship, etc.,
  * this may be only a factor of about 2. In a hypothetical worst case scenario of a 3d checkerboard of stone and air every other block, this brush should only
  * be about 1.5x slower than the original brush. Savings increase for larger brushes.
+ * <br>
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#block-reset-brush-surface-only-brush">...</a>
  *
  * @author GavJenks
  */
@@ -66,69 +70,49 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
         this.setName("Block Reset Brush Surface Only");
     }
 
-    @SuppressWarnings("deprecation")
     private void applyBrush(final SnipeData v) {
         final IWorld world = this.getWorld();
 
         for (int z = -v.getBrushSize(); z <= v.getBrushSize(); z++) {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
-                    // TODO clampY
                     IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
                     if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
                         continue;
                     }
 
-                    boolean airFound = false;
+                    boolean airFound;
 
-                    if (world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
-                        resetBlock(block);
-                        airFound = true;
-                    }
-
-                    if (world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getMaterial().isAir()) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
-                        resetBlock(block);
-                        airFound = true;
-                    }
+                    airFound = checkBlock(world, x + 1, y, z);
+                    airFound = checkBlock(world, x - 1, y, z) || airFound;
+                    airFound = checkBlock(world, x, y + 1, z) || airFound;
+                    airFound = checkBlock(world, x, y - 1, z) || airFound;
+                    airFound = checkBlock(world, x, y, z + 1) || airFound;
+                    airFound = checkBlock(world, x, y, z - 1) || airFound;
 
                     if (airFound) {
-                        block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        resetBlock(block);
+                        var location = new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+
+                        resetBlock(location);
                     }
                 }
             }
         }
     }
 
-    private void resetBlock(IBlock block) {
-        // Resets the block state to initial state by creating a new BlockData with default values.
-        block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
+    private boolean checkBlock(IWorld world, int x, int y, int z) {
+        IBlock block = world.getBlock(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
+        if (block.getMaterial().isAir()) {
+            resetBlock(block.getLocation());
+            return true;
+        }
+        return false;
+    }
+
+    private void resetBlock(BaseLocation location) {
+        // create an operation to reset the block
+        var block = location.getBlock();
+        addOperation(new BlockOperation(location, block.getBlockData(), block.getMaterial().createBlockData()));
     }
 
     @Override

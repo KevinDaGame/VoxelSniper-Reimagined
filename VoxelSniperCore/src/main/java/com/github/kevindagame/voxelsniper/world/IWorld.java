@@ -1,20 +1,21 @@
 package com.github.kevindagame.voxelsniper.world;
 
-import com.github.kevindagame.snipe.Undo;
+import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.List;
 
 public interface IWorld {
-    IBlock getBlock(VoxelLocation location);
+    IBlock getBlock(BaseLocation location);
 
     IBlock getBlock(int x, int y, int z);
 
@@ -31,7 +32,7 @@ public interface IWorld {
      */
     IChunk getChunkAtLocation(int x, int z);
 
-    default IChunk getChunkAtLocation(VoxelLocation location) {
+    default IChunk getChunkAtLocation(BaseLocation location) {
         return getChunkAtLocation(((int) Math.floor(location.getBlockX() / 16f)), ((int) Math.floor(location.getBlockZ() / 16f)));
     }
 
@@ -44,21 +45,21 @@ public interface IWorld {
      * search bounding box.
      *
      * @param location The center of the bounding box
-     * @param x 1/2 the size of the box along x axis
-     * @param y 1/2 the size of the box along y axis
-     * @param z 1/2 the size of the box along z axis
+     * @param x        1/2 the size of the box along x axis
+     * @param y        1/2 the size of the box along y axis
+     * @param z        1/2 the size of the box along z axis
      * @return the collection of entities near location. This will always be a
-     *      non-null collection.
+     * non-null collection.
      */
-    List<IEntity> getNearbyEntities(VoxelLocation location, double x, double y, double z);
+    List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z);
 
     void refreshChunk(int x, int z);
 
-    void strikeLightning(VoxelLocation location);
+    void strikeLightning(BaseLocation location);
 
     String getName();
 
-    void spawn(VoxelLocation location, VoxelEntityType entity);
+    void spawn(BaseLocation location, VoxelEntityType entity);
 
     void setBiome(int x, int z, VoxelBiome selectedBiome);
 
@@ -68,7 +69,15 @@ public interface IWorld {
 
     void regenerateChunk(int x, int z);
 
-    void generateTree(VoxelLocation location, VoxelTreeType treeType, Undo undo);
+    @Nullable
+    List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean updateBlocks);
+
+    @Nullable
+    default List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType) {
+        return generateTree(location, treeType, true);
+    }
 
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
+
+    VoxelBiome getBiome(BaseLocation location);
 }

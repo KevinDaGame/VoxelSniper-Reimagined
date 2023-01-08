@@ -1,6 +1,5 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
@@ -8,6 +7,8 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                 sy = this.getTargetBlock().getY() - bSize;
 
                 for (int y = 0; y < this.snap.length; y++) {
-                    final IBlock block = this.clampY(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
+                    final IBlock block = this.getWorld().getBlock(sx, sy, sz); // why is this not sx + x, sy + y sz + z?
                     this.snap[x][y][z] = new BlockWrapper(block);
                     block.setMaterial(VoxelMaterial.AIR);
                     sy++;
@@ -88,7 +89,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                         if (block.getMaterial().isAir()) {
                             continue;
                         }
-                        this.setBlockMaterialAndDataAt(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ, block.getBlockData());
+                        this.getWorld().getBlock(this.getTargetBlock().getX() + yy, this.getTargetBlock().getY() + (int) newX, this.getTargetBlock().getZ() + (int) newZ).setBlockData(block.getBlockData());
                     }
                 }
             }
@@ -124,7 +125,7 @@ public class Rot2DvertBrush extends AbstractBrush {
                                 winner = b; // blockPositionY making this default, it will also automatically cover situations where B = C;
                             }
 
-                            this.setBlockMaterialAndDataAt(fy, fx, fz, winner);
+                            this.getWorld().getBlock(fy, fx, fz).setBlockData(winner);
                         }
                     }
                 }
@@ -152,7 +153,7 @@ public class Rot2DvertBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -167,6 +168,7 @@ public class Rot2DvertBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

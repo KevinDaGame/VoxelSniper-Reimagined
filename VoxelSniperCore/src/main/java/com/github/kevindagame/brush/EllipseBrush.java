@@ -1,18 +1,20 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipse_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ellipse-brush">...</a>
  *
  * @author psanker
  */
@@ -44,18 +46,18 @@ public class EllipseBrush extends PerformerBrush {
                 final int x = (int) Math.round(this.xscl * Math.cos(steps));
                 final int y = (int) Math.round(this.yscl * Math.sin(steps));
 
-                switch (getTargetBlock().getFace(this.getLastBlock())) {
+                switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                     case NORTH:
                     case SOUTH:
-                        currentPerformer.perform(targetBlock.getRelative(0, x, y));
+                        positions.add(targetBlock.getRelative(0, x, y).getLocation());
                         break;
                     case EAST:
                     case WEST:
-                        currentPerformer.perform(targetBlock.getRelative(x, y, 0));
+                        positions.add(targetBlock.getRelative(x, y, 0).getLocation());
                         break;
                     case UP:
                     case DOWN:
-                        currentPerformer.perform(targetBlock.getRelative(x, 0, y));
+                        positions.add(targetBlock.getRelative(x, 0, y).getLocation());
                     default:
                         break;
                 }
@@ -67,15 +69,13 @@ public class EllipseBrush extends PerformerBrush {
         } catch (final Exception exception) {
             v.sendMessage(Messages.INVALID_TARGET);
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void ellipsefill(final SnipeData v, IBlock targetBlock) {
         int ix = this.xscl;
         int iy = this.yscl;
 
-        currentPerformer.perform(targetBlock);
+        positions.add(targetBlock.getLocation());
 
         try {
             if (ix >= iy) { // Need this unless you want weird holes
@@ -84,18 +84,18 @@ public class EllipseBrush extends PerformerBrush {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
 
-                        switch (getTargetBlock().getFace(this.getLastBlock())) {
+                        switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                             case NORTH:
                             case SOUTH:
-                                currentPerformer.perform(targetBlock.getRelative(0, x, y));
+                                positions.add(targetBlock.getRelative(0, x, y).getLocation());
                                 break;
                             case EAST:
                             case WEST:
-                                currentPerformer.perform(targetBlock.getRelative(x, y, 0));
+                                positions.add(targetBlock.getRelative(x, y, 0).getLocation());
                                 break;
                             case UP:
                             case DOWN:
-                                currentPerformer.perform(targetBlock.getRelative(x, 0, y));
+                                positions.add(targetBlock.getRelative(x, 0, y).getLocation());
                             default:
                                 break;
                         }
@@ -112,18 +112,18 @@ public class EllipseBrush extends PerformerBrush {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
 
-                        switch (getTargetBlock().getFace(this.getLastBlock())) {
+                        switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                             case NORTH:
                             case SOUTH:
-                                currentPerformer.perform(targetBlock.getRelative(0, x, y));
+                                positions.add(targetBlock.getRelative(0, x, y).getLocation());
                                 break;
                             case EAST:
                             case WEST:
-                                currentPerformer.perform(targetBlock.getRelative(x, y, 0));
+                                positions.add(targetBlock.getRelative(x, y, 0).getLocation());
                                 break;
                             case UP:
                             case DOWN:
-                                currentPerformer.perform(targetBlock.getRelative(x, 0, y));
+                                positions.add(targetBlock.getRelative(x, 0, y).getLocation());
                             default:
                                 break;
                         }
@@ -138,8 +138,6 @@ public class EllipseBrush extends PerformerBrush {
         } catch (final Exception exception) {
             v.sendMessage(Messages.INVALID_TARGET);
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     private void execute(final SnipeData v, IBlock targetBlock) {
@@ -153,17 +151,17 @@ public class EllipseBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
+    protected final void doArrow(final SnipeData v) {
         this.execute(v, this.getTargetBlock());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
+    protected final void doPowder(final SnipeData v) {
         this.execute(v, this.getLastBlock());
     }
 
     @Override
-    public final void info(final VoxelMessage vm) {
+    public final void info(@NotNull final VoxelMessage vm) {
         if (this.xscl < SCL_MIN || this.xscl > SCL_MAX) {
             this.xscl = SCL_DEFAULT;
         }
@@ -243,6 +241,7 @@ public class EllipseBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -252,6 +251,7 @@ public class EllipseBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

@@ -1,6 +1,5 @@
 package com.github.kevindagame.snipe;
 
-import com.google.common.collect.Maps;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
@@ -12,6 +11,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Maps;
 import net.kyori.adventure.text.ComponentLike;
 import org.jetbrains.annotations.NotNull;
 
@@ -127,27 +127,19 @@ public class Sniper {
             performerBrush.initP(snipeData);
         }
 
-        var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-        VoxelSniper.voxelsniper.getEventManager().callSniperSnipeEvent(this, sniperTool.getCurrentBrush(), success);
-        return success;
+        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
     }
 
     private boolean handleSneakLeftClick(String toolId, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock) {
         IBlockData oldSubstance, newSubstance;
         switch (snipeAction) {
             case GUNPOWDER:
-                oldSubstance = snipeData.getReplaceSubstance();
                 snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                newSubstance = snipeData.getReplaceSubstance();
-                VoxelSniper.voxelsniper.getEventManager().callSniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
 
                 snipeData.getVoxelMessage().replace();
                 return true;
             case ARROW:
-                oldSubstance = snipeData.getVoxelSubstance();
                 snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                newSubstance = snipeData.getVoxelSubstance();
-                VoxelSniper.voxelsniper.getEventManager().callSniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                 snipeData.getVoxelMessage().voxel();
                 return true;
             default:
@@ -244,13 +236,12 @@ public class Sniper {
                 if (undo != null) {
                     undo.undo();
                     changedBlocks += undo.getSize();
-                } else { // TODO: Check if this logic makes sense
+                } else {
                     break;
                 }
             }
 
             sendMessage(Messages.UNDO_SUCCESSFUL.replace("%changedBlocks%", String.valueOf(changedBlocks)));
-            ;
         }
         return changedBlocks;
     }

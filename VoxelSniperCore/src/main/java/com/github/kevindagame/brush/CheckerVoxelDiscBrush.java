@@ -1,17 +1,20 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.Actions;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author MikeMatrix
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#checker-voxel-disc-brush">...</a>
  */
 public class CheckerVoxelDiscBrush extends PerformerBrush {
 
@@ -26,28 +29,19 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
 
     /**
      * @param v
-     * @param target
      */
-    private void applyBrush(final SnipeData v, final IBlock target) {
-        for (int x = v.getBrushSize(); x >= -v.getBrushSize(); x--) {
-            for (int y = v.getBrushSize(); y >= -v.getBrushSize(); y--) {
-                final int sum = this.useWorldCoordinates ? target.getX() + x + target.getZ() + y : x + y;
-                if (sum % 2 != 0) {
-                    this.currentPerformer.perform(this.clampY(target.getX() + x, target.getY(), target.getZ() + y));
-                }
-            }
-        }
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    private void applyBrush(final SnipeData v) {
+        this.positions = Actions.checker(Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize()), this.useWorldCoordinates);
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.applyBrush(v, this.getTargetBlock());
+    protected final void doArrow(final SnipeData v) {
+        this.applyBrush(v);
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        this.applyBrush(v, this.getLastBlock());
+    protected final void doPowder(final SnipeData v) {
+        this.applyBrush(v);
     }
 
     @Override
@@ -74,6 +68,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();

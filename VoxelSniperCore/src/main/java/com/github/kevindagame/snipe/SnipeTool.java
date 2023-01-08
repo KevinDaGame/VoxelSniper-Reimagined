@@ -1,11 +1,11 @@
 package com.github.kevindagame.snipe;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.*;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.*;
 
 /**
  * @author ervinnnc
@@ -29,7 +29,7 @@ public class SnipeTool {
         snipeData.setVoxelMessage(messageHelper);
 
         IBrush newBrushInstance = instanciateBrush(currentBrush);
-        if (snipeData.owner().getPlayer().hasPermission(newBrushInstance.getPermissionNode())) {
+        if (snipeData.owner().getPlayer().hasPermission(newBrushInstance.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
             brushes.put(currentBrush, newBrushInstance);
             this.currentBrush = currentBrush;
         }
@@ -71,14 +71,14 @@ public class SnipeTool {
         if (brushInstance == null) {
             brushInstance = instanciateBrush(brush);
             Preconditions.checkNotNull(brushInstance, "Could not instanciate brush class.");
-            if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode())) {
+            if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
                 brushes.put(brush, brushInstance);
                 previousBrush = currentBrush;
                 currentBrush = brush;
                 return brushInstance;
             }
         }
-        if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode())) {
+        if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
             previousBrush = currentBrush;
             currentBrush = brush;
             return brushInstance;

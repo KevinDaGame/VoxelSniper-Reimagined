@@ -1,11 +1,11 @@
 package com.github.kevindagame.voxelsniper.block;
 
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
-import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
+import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
+import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.bukkit.block.Block;
@@ -16,7 +16,7 @@ public class SpigotBlock extends AbstractBlock {
     private final Block block;
 
     public SpigotBlock(Block block) {
-        super(new VoxelLocation(SpigotVoxelSniper.getInstance().getWorld(block.getWorld()), block.getX(), block.getY(), block.getZ()), SpigotMaterial.fromSpigotMaterial(block.getType()));
+        super(new BaseLocation(SpigotVoxelSniper.getInstance().getWorld(block.getWorld()), block.getX(), block.getY(), block.getZ()), SpigotMaterial.fromSpigotMaterial(block.getType()));
         this.block = block;
     }
 
@@ -32,7 +32,6 @@ public class SpigotBlock extends AbstractBlock {
         block.setType(((SpigotMaterial) material.getIMaterial()).material(), applyPhysics);
     }
 
-    //todo test if this works
     @Override
     @Nullable
     public BlockFace getFace(IBlock block) {

@@ -1,17 +1,19 @@
 package com.github.kevindagame.brush;
 
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#jagged-line-brush">...</a>
  *
  * @author Giltwist
  * @author Monofraps
@@ -47,21 +49,19 @@ public class JaggedLineBrush extends PerformerBrush {
         final double length = this.targetCoords.distance(this.originCoords);
 
         if (length == 0) {
-            this.currentPerformer.perform(this.targetCoords.getLocation(this.getWorld()).getBlock());
+            this.positions.add(this.targetCoords.getLocation(this.getWorld()));
         } else {
             for (final Iterator<IBlock> iterator = getWorld().getBlockIterator(originClone, direction, 0, ((int) Math.round(length))); iterator.hasNext(); ) {
                 final IBlock block = iterator.next();
                 for (int i = 0; i < recursion; i++) {
-                    this.currentPerformer.perform(this.clampY(Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
+                    this.positions.add(new BaseLocation(getWorld(), Math.round(block.getX() + this.random.nextInt(spread * 2) - spread), Math.round(block.getY() + this.random.nextInt(spread * 2) - spread), Math.round(block.getZ() + this.random.nextInt(spread * 2) - spread)));
                 }
             }
         }
-
-        v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
     @Override
-    public final void arrow(final SnipeData v) {
+    public final void doArrow(final SnipeData v) {
         if (originCoords == null) {
             originCoords = new VoxelVector();
         }
@@ -70,7 +70,7 @@ public class JaggedLineBrush extends PerformerBrush {
     }
 
     @Override
-    public final void powder(final SnipeData v) {
+    public final void doPowder(final SnipeData v) {
         if (originCoords == null) {
             v.sendMessage(Messages.FIRST_COORDINATE_NOT_SET);
         } else {
@@ -121,6 +121,7 @@ public class JaggedLineBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -130,6 +131,7 @@ public class JaggedLineBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

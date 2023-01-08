@@ -1,6 +1,7 @@
 package com.github.kevindagame.util;
 
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import net.kyori.adventure.text.ComponentLike;
 
 import java.util.stream.Collectors;
@@ -113,7 +114,7 @@ public record VoxelMessage(SnipeData snipeData) {
     /**
      * Display toggle printout message.
      */
-    public final void togglePrintout() {
+    public void togglePrintout() {
         // TODO seems to do the same as toggleLightning()
         String state = ((snipeData.owner().getSnipeData(snipeData.owner().getCurrentToolId()).isLightningEnabled()) ? "on" : "off");
         snipeData.sendMessage(Messages.TOGGLE_PRINTOUT.replace("%state%", state));
@@ -136,7 +137,7 @@ public record VoxelMessage(SnipeData snipeData) {
             snipeData.sendMessage(Messages.VOXEL_LIST_EMPTY);
         } else {
 
-            String blocks = snipeData.getVoxelList().getList().stream().map(e -> e.getKey().toString()).collect(Collectors.joining(","));
+            String blocks = snipeData.getVoxelList().getList().stream().map(VoxelMaterial::getKey).collect(Collectors.joining(","));
             snipeData.sendMessage(Messages.VOXEL_LIST.replace("%blocks%", blocks));
         }
     }

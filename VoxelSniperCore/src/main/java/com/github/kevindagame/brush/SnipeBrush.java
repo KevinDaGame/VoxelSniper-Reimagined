@@ -5,7 +5,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Snipe_Brush
+ * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#snipe-brush">...</a>
  *
  * @author Voxel
  */
@@ -19,15 +19,13 @@ public class SnipeBrush extends PerformerBrush {
     }
 
     @Override
-    protected final void arrow(final SnipeData v) {
-        this.currentPerformer.perform(this.getTargetBlock());
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    protected final void doArrow(final SnipeData v) {
+        this.positions.add(this.getTargetBlock().getLocation());
     }
 
     @Override
-    protected final void powder(final SnipeData v) {
-        this.currentPerformer.perform(this.getLastBlock());
-        v.owner().storeUndo(this.currentPerformer.getUndo());
+    protected final void doPowder(final SnipeData v) {
+        this.positions.add(this.getTargetBlock().getLocation());
     }
 
     @Override
