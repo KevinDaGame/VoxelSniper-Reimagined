@@ -123,7 +123,7 @@ public class SignOverwriteBrush extends CustomBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         boolean textChanged = false;
 
         for (int i = 0; i < params.length; i++) {

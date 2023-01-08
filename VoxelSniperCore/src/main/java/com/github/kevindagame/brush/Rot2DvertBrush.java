@@ -8,6 +8,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +153,7 @@ public class Rot2DvertBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ROTATE_2D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -167,6 +168,7 @@ public class Rot2DvertBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

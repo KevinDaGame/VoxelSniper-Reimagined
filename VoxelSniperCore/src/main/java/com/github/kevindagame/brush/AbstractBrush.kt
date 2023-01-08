@@ -52,7 +52,6 @@ abstract class AbstractBrush : IBrush {
      * Brush name.
      */
     private var name = "Undefined"
-    protected var cancelled = false
     protected var snipeAction: SnipeAction? = null
 
     private fun preparePerform(v: SnipeData, clickedBlock: IBlock, clickedFace: BlockFace): Boolean {
@@ -103,12 +102,12 @@ abstract class AbstractBrush : IBrush {
                 for (operation in event.operations) {
                     if (!operation.isCancelled) {
                         if (executeOperation(operation, undo)) {
-                            reloadArea = true;
+                            reloadArea = true
                         }
                     }
                 }
             }
-            data.owner().storeUndo(undo);
+            data.owner().storeUndo(undo)
             if (reloadArea) {
                 reloadBrushArea(data)
             }
@@ -280,10 +279,6 @@ abstract class AbstractBrush : IBrush {
         if (isInWorldHeight(y)) {
             world.getBlock(x, y, z).blockData = material.createBlockData()
         }
-    }
-
-    protected fun cancel() {
-        cancelled = true
     }
 
     companion object {

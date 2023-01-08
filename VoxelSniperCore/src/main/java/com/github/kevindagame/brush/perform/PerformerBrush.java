@@ -11,6 +11,7 @@ import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -57,18 +58,20 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     }
 
     @Override
-    public void parseParameters(String triggerHandle, String[] params, SnipeData v) {
+    public void parseParameters(@NotNull String triggerHandle, @NotNull String[] params, @NotNull SnipeData v) {
         super.parseParameters(triggerHandle, params, v);
 
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("p"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {        // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();

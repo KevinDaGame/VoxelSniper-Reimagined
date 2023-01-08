@@ -6,6 +6,7 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -249,6 +250,7 @@ public class BlobBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -258,6 +260,7 @@ public class BlobBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

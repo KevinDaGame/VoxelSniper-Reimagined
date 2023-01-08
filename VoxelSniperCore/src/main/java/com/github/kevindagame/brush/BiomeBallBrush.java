@@ -6,6 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class BiomeBallBrush extends AbstractBrush {
 
     }
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.BIOMEBALL_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -63,6 +64,7 @@ public class BiomeBallBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

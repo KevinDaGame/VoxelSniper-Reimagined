@@ -6,6 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,6 +166,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();

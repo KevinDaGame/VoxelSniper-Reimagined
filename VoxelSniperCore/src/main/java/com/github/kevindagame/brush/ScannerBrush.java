@@ -73,7 +73,7 @@ public class ScannerBrush extends CustomBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.SCANNER_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -91,12 +91,14 @@ public class ScannerBrush extends CustomBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("depth"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables

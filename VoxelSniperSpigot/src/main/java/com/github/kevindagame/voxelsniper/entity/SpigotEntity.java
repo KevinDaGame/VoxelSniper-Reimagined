@@ -1,7 +1,7 @@
 package com.github.kevindagame.voxelsniper.entity;
 
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
-import com.github.kevindagame.voxelsniper.entity.Painting.SpigotPainting;
+import com.github.kevindagame.voxelsniper.entity.painting.SpigotPainting;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.world.IWorld;

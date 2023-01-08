@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,9 +20,6 @@ public abstract class BlendBrushBase extends AbstractBrush {
     protected boolean excludeAir = true;
     protected boolean excludeWater = true;
 
-    /**
-     * @param v
-     */
     protected abstract void blend(SnipeData v);
     protected VoxelMaterial[][][] blend3D(int brushSize) {
         final int brushSizeDoubled = 2 * brushSize;
@@ -184,7 +182,7 @@ public abstract class BlendBrushBase extends AbstractBrush {
     }
 
     @Override
-    public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("water")) {
             if (params.length >= 2) {
                 this.excludeWater = !Boolean.parseBoolean(params[1].toLowerCase());
@@ -198,11 +196,13 @@ public abstract class BlendBrushBase extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         return new ArrayList<>(Lists.newArrayList("water"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

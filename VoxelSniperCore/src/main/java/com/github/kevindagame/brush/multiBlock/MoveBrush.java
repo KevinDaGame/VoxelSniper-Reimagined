@@ -1,4 +1,4 @@
-package com.github.kevindagame.brush.MultiBlock;
+package com.github.kevindagame.brush.multiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.util.BlockWrapper;
@@ -118,7 +118,7 @@ public class MoveBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -157,12 +157,14 @@ public class MoveBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("reset", "x", "y", "z"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

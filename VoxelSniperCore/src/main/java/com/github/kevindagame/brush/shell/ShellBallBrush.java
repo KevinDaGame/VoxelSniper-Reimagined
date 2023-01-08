@@ -1,4 +1,4 @@
-package com.github.kevindagame.brush.Shell;
+package com.github.kevindagame.brush.shell;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
@@ -6,24 +6,24 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 
 /**
- * THIS BRUSH SHOULD NOT USE PERFORMERS. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#shell-voxel-brush">...</a>
+ * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
  *
  * @author Voxel
  */
-public class ShellVoxelBrush extends ShellBrushBase {
+public class ShellBallBrush extends ShellBrushBase {
 
     /**
      *
      */
-    public ShellVoxelBrush() {
-        this.setName("Shell Voxel");
+    public ShellBallBrush() {
+        this.setName("Shell Ball");
     }
 
     @Override
-    protected void shell(SnipeData v) {
-        var positions = Shapes.voxel(getTargetBlock().getLocation(), v.getBrushSize());
-        final int brushSize = v.getBrushSize();
+    protected final void shell(final SnipeData v) {
+        var positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), false);
         var newMaterials = this.bShell(v);
+        final int brushSize = v.getBrushSize();
         for (var position : positions) {
             var material = newMaterials[position.getBlockX() - this.getTargetBlock().getX() + brushSize][position.getBlockY() - this.getTargetBlock().getY() + brushSize][position.getBlockZ() - this.getTargetBlock().getZ() + brushSize];
             addOperation(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
@@ -33,7 +33,6 @@ public class ShellVoxelBrush extends ShellBrushBase {
 
     @Override
     public String getPermissionNode() {
-        return "voxelsniper.brush.shellvoxel";
+        return "voxelsniper.brush.shellball";
     }
-
 }

@@ -54,7 +54,7 @@ public class RulerBrush extends CustomBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.RULER_BRUSH_USAGE);
             return;

@@ -132,7 +132,7 @@ public class JockeyBrush extends CustomBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.JOCKEY_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -151,6 +151,7 @@ public class JockeyBrush extends CustomBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

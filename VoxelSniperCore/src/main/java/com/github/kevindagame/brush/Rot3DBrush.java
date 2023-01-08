@@ -9,6 +9,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class Rot3DBrush extends AbstractBrush {
     // --> agreed. Do what erode does and store one snapshot with Block pointers and int id of what the block started with, afterwards simply go thru that
     // matrix and compare Block.getId with 'id' if different undo.add( new BlockWrapper ( Block, oldId ) )
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ROTATION_3D_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
@@ -81,12 +82,14 @@ public class Rot3DBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("pitch", "roll", "yaw"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         // Number variables

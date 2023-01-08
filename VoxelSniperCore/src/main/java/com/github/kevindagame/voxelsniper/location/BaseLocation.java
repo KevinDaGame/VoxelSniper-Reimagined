@@ -90,11 +90,6 @@ public class BaseLocation implements Cloneable {
         return new VoxelLocation(world, x, y, z, yaw, pitch);
     }
 
-    @Deprecated
-    public final IBlock getClampedBlock() {
-        return getWorld().getBlock(getBlockX(), Math.max(Math.min(getBlockY(), getWorld().getMaxWorldHeight()), getWorld().getMinWorldHeight()), getBlockZ());
-    }
-
     public final IBlock getBlock() {
         return getWorld().getBlock(this);
     }

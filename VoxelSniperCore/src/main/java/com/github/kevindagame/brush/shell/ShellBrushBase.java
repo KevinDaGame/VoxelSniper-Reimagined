@@ -1,9 +1,7 @@
-package com.github.kevindagame.brush.Shell;
+package com.github.kevindagame.brush.shell;
 
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 

@@ -8,6 +8,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class DiscFaceBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();

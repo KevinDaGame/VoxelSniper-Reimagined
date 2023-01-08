@@ -127,8 +127,7 @@ public class Sniper {
             performerBrush.initP(snipeData);
         }
 
-        var success = sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
-        return success;
+        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
     }
 
     private boolean handleSneakLeftClick(String toolId, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock) {
@@ -243,7 +242,6 @@ public class Sniper {
             }
 
             sendMessage(Messages.UNDO_SUCCESSFUL.replace("%changedBlocks%", String.valueOf(changedBlocks)));
-            ;
         }
         return changedBlocks;
     }

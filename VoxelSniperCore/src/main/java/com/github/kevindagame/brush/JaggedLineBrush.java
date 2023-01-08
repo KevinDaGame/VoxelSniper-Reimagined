@@ -8,6 +8,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -120,6 +121,7 @@ public class JaggedLineBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -129,6 +131,7 @@ public class JaggedLineBrush extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

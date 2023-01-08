@@ -5,6 +5,7 @@ import com.github.kevindagame.util.brushOperation.EntitySpawnOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class EntityBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.ENTITYBRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -74,6 +75,7 @@ public class EntityBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> entities = new ArrayList<>();

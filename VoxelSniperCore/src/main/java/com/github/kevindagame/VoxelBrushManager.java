@@ -1,7 +1,7 @@
 package com.github.kevindagame;
 
-import com.github.kevindagame.brush.MultiBlock.*;
-import com.github.kevindagame.brush.Shell.*;
+import com.github.kevindagame.brush.multiBlock.*;
+import com.github.kevindagame.brush.shell.*;
 import com.google.common.base.Preconditions;
 import com.github.kevindagame.brush.*;
 

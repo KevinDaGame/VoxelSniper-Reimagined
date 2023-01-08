@@ -35,7 +35,6 @@ public class DomeBrush extends PerformerBrush {
 
         if (v.getVoxelHeight() == 0) {
             v.sendMessage(Messages.VOXEL_HEIGHT_MUST_NOT_BE_0);
-            this.cancel();
             return;
         }
 

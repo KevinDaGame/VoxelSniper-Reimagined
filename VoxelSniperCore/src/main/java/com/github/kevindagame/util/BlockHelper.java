@@ -3,7 +3,7 @@ package com.github.kevindagame.util;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
-import com.github.kevindagame.voxelsniper.entity.Painting.IPainting;
+import com.github.kevindagame.voxelsniper.entity.painting.IPainting;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;

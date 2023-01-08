@@ -70,7 +70,7 @@ public class VoltMeterBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch (Objects.requireNonNull(this.getSnipeAction())) {
             case ARROW:
                 volt(snipeData);

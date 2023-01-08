@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,7 @@ public class CloneStampBrush extends StampBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.CLONE_STAMP_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -111,13 +112,12 @@ public class CloneStampBrush extends StampBrush {
             return;
         }
 
-        /**
-         * TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
-         * set to " + v.getcCen()); return; }
-         */
+         // TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
+         // set to " + v.getcCen()); return; }
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
