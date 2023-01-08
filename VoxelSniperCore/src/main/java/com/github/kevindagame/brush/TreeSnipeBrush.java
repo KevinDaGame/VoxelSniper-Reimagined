@@ -1,14 +1,11 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;

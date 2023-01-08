@@ -1,10 +1,9 @@
 package com.github.kevindagame.voxelsniper.chunk;
 
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
-import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
+import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
 import com.github.kevindagame.voxelsniper.world.IWorld;
-
 import org.bukkit.Chunk;
 
 import java.util.Arrays;

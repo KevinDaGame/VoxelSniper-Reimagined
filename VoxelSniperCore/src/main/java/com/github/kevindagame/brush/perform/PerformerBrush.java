@@ -4,16 +4,18 @@
  */
 package com.github.kevindagame.brush.perform;
 
-import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent;
-import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Voxel
@@ -21,12 +23,11 @@ import java.util.*;
 public abstract class PerformerBrush extends AbstractBrush implements IPerformerBrush {
 
     protected BasePerformer currentPerformer = new pMaterial();
+    protected List<BaseLocation> positions = new ArrayList<>();
 
     public BasePerformer getCurrentPerformer() {
         return currentPerformer;
     }
-
-    protected List<BaseLocation> positions = new ArrayList<>();
 
     public void sendPerformerMessage(String triggerHandle, SnipeData v) {
         v.sendMessage(Messages.PERFORMER_MESSAGE.replace("%triggerHandle%", triggerHandle));
@@ -36,7 +37,7 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     public final boolean parsePerformer(String performerHandle, SnipeData v) {
         BasePerformer newPerfomer = Performer.getPerformer(performerHandle);
         if (newPerfomer != null) {
-            if(!new PlayerBrushChangedEvent(v.owner().getPlayer(), v.owner().getCurrentToolId(), this, this).callEvent().isCancelled()) {
+            if (!new PlayerBrushChangedEvent(v.owner().getPlayer(), v.owner().getCurrentToolId(), this, this).callEvent().isCancelled()) {
                 currentPerformer = newPerfomer;
                 info(v.getVoxelMessage());
                 currentPerformer.info(v.getVoxelMessage());
@@ -92,7 +93,9 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     }
 
     protected abstract void doArrow(SnipeData v);
+
     protected abstract void doPowder(SnipeData v);
+
     @Override
     protected final void arrow(SnipeData v) {
         doArrow(v);

@@ -1,14 +1,14 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.util.brushOperation.BlockOperation;
-import com.github.kevindagame.util.Shapes;
-import com.github.kevindagame.voxelsniper.block.BlockFace;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class CleanSnowBrush extends AbstractBrush {
 
     private void cleanSnow(final SnipeData v) {
         var positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), smoothSphere);
-        for(var position: positions) {
+        for (var position : positions) {
             IBlock b = position.getBlock();
             IBlock blockDown = b.getRelative(BlockFace.DOWN);
             if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {

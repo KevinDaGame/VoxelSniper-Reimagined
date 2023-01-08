@@ -1,10 +1,10 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public abstract class BlendBrushBase extends AbstractBrush {
     protected boolean excludeWater = true;
 
     protected abstract void blend(SnipeData v);
+
     protected VoxelMaterial[][][] blend3D(int brushSize) {
         final int brushSizeDoubled = 2 * brushSize;
         // Array that holds the original materials plus a buffer

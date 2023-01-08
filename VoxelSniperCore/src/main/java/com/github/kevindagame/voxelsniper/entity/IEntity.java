@@ -18,6 +18,7 @@ public interface IEntity {
     IWorld getWorld();
 
     void addPassenger(IEntity entity);
+
     List<IEntity> getPassengers();
 
     BaseLocation getEyeLocation();

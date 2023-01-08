@@ -1,12 +1,12 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import java.util.Objects;
  * FOR ANY BRUSH THAT USES A SPLINE, EXTEND THAT BRUSH FROM THIS BRUSH!!! That way, the spline calculations are already there. Also, the UI for the splines will
  * be included.
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#spline-brush">...</a>
+ *
  * @author psanker
  */
 public class SplineBrush extends PerformerBrush {

@@ -358,7 +358,8 @@ public enum Messages implements ComponentLike {
     //</editor-fold>
 
 
-    private @NotNull String message = this.name().toLowerCase(Locale.ROOT);
+    private @NotNull
+    String message = this.name().toLowerCase(Locale.ROOT);
 
     public static void load(IVoxelsniper voxelSniper) {
         File langFile = new File(voxelSniper.getFileHandler().getDataFolder(), "lang.yml");
@@ -415,7 +416,8 @@ public enum Messages implements ComponentLike {
     }
 
     @Override
-    public @NotNull Component asComponent() {
+    public @NotNull
+    Component asComponent() {
         return MiniMessage.miniMessage().deserialize(this.message);
     }
 
@@ -455,7 +457,8 @@ public enum Messages implements ComponentLike {
         }
 
         @Override
-        public @NotNull Component asComponent() {
+        public @NotNull
+        Component asComponent() {
             return MiniMessage.miniMessage().deserialize(this.message);
         }
     }

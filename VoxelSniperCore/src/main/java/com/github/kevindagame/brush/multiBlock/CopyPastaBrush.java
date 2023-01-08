@@ -1,14 +1,14 @@
 package com.github.kevindagame.brush.multiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

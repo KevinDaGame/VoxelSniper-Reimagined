@@ -2,9 +2,9 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 /**
  *
  */
-public class  StampBrush extends AbstractBrush {
+public class StampBrush extends AbstractBrush {
 
     protected HashSet<BlockWrapper> clone = new HashSet<>();
     protected HashSet<BlockWrapper> toStamp = new HashSet<>();

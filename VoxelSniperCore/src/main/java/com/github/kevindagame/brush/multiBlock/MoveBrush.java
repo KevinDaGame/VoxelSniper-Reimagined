@@ -1,16 +1,16 @@
 package com.github.kevindagame.brush.multiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
-import com.github.kevindagame.util.BlockWrapper;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -35,6 +35,7 @@ public class MoveBrush extends AbstractBrush {
      * Saved selection.
      */
     private Selection selection = null;
+
     /**
      *
      */
@@ -194,7 +195,8 @@ public class MoveBrush extends AbstractBrush {
         }
 
         @Override
-        public @NotNull Component asComponent() {
+        public @NotNull
+        Component asComponent() {
             return component.asComponent();
         }
     }

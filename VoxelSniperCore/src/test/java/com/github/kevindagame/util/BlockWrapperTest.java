@@ -1,11 +1,9 @@
 package com.github.kevindagame.util;
 
-import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import junit.framework.TestCase;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;

@@ -6,26 +6,25 @@ import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
-
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 /**
  *
  */
 public class SpigotBlockLogger implements BlockChangeDelegate, Predicate<BlockState> {
 
-    private final IWorld world;
-    private final World targetWorld;
     final List<BrushOperation> operations = new ArrayList<>();
     final boolean updateBlocks;
+    private final IWorld world;
+    private final World targetWorld;
 
     public SpigotBlockLogger(SpigotWorld targetWorld, boolean updateBlocks) {
         this.world = targetWorld;

@@ -73,6 +73,7 @@ public class BallBrush extends PerformerBrush {
         arguments.addAll(super.registerArguments());
         return arguments;
     }
+
     @Override
     public String getPermissionNode() {
         return "voxelsniper.brush.ball";

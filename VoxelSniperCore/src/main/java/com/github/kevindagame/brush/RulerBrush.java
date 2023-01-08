@@ -2,10 +2,10 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.brushOperation.CustomOperation;
-import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
@@ -70,7 +70,7 @@ public class RulerBrush extends CustomBrush {
 
     @Override
     public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
-        if(operations.size() != 1){
+        if (operations.size() != 1) {
             return false;
         }
         switch (Objects.requireNonNull(getSnipeAction())) {

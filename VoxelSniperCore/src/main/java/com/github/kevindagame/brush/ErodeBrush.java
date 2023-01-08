@@ -1,9 +1,9 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -58,7 +58,7 @@ public class ErodeBrush extends AbstractBrush {
         for (int i = 0; i < erosionPreset.getFillRecursion(); ++i) {
             fillIteration(v, erosionPreset, blockChangeTracker, targetBlockVector);
         }
-        blockChangeTracker.getAll().forEach(block -> addOperation(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData )));
+        blockChangeTracker.getAll().forEach(block -> addOperation(new BlockOperation(block.block.getLocation(), block.block.getBlockData(), block.blockData)));
         this.blockTracker = blockChangeTracker;
     }
 

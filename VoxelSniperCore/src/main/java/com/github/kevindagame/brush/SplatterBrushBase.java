@@ -214,10 +214,10 @@ public abstract class SplatterBrushBase extends PerformerBrush {
 
 
     protected void resetBrush(SnipeData v) {
-            this.seedPercent = SEED_PERCENT_DEFAULT;
-            this.growPercent = GROW_PERCENT_DEFAULT;
-            this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
-            v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
+        this.seedPercent = SEED_PERCENT_DEFAULT;
+        this.growPercent = GROW_PERCENT_DEFAULT;
+        this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
+        v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
     }
 
 

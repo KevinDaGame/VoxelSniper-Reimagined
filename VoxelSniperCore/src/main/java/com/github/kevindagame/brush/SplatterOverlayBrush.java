@@ -1,11 +1,11 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelList;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -19,15 +19,14 @@ import java.util.List;
  */
 public class SplatterOverlayBrush extends SplatterBrushBase {
 
+    private final boolean randomizeHeight = false;
+    private final int yOffset = 0;
+    private int depth = 3;
+    private boolean allBlocks = false;
+    private boolean useVoxelList = false;
     public SplatterOverlayBrush() {
         this.setName("Splatter Overlay");
     }
-
-    private final boolean randomizeHeight = false;
-    private int depth = 3;
-    private final int yOffset = 0;
-    private boolean allBlocks = false;
-    private boolean useVoxelList = false;
 
     private void sOverlay(final SnipeData v) {
 

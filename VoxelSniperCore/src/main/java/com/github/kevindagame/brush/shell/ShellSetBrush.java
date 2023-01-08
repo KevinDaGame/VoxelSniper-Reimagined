@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class ShellSetBrush extends ShellBrushBase {
 
     private static final int MAX_SIZE = 5000000;
-    private IBlock block = null;
     private final ArrayList<BlockWrapper> operations = new ArrayList<>();
+    private IBlock block = null;
 
     /**
      *

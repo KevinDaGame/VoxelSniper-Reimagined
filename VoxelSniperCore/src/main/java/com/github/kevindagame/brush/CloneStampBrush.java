@@ -1,14 +1,13 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.snipe.SnipeAction;
+import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
+import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.google.common.collect.Lists;
-import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.VoxelMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class CloneStampBrush extends StampBrush {
         this.clone.clear();
         this.toStamp.clear();
         this.sorted = false;
-        for(var p: positions) {
+        for (var p : positions) {
             this.clone.add(new BlockWrapper(p.getBlock(), p.getBlockX() - startingPoint.getBlockX(), p.getBlockY() - startingPoint.getBlockY(), p.getBlockZ() - startingPoint.getBlockZ(), getWorld()));
         }
         v.sendMessage(Messages.BLOCKS_COPIED_SUCCESSFULLY.replace("%amount%", String.valueOf(this.clone.size())));
@@ -112,8 +111,8 @@ public class CloneStampBrush extends StampBrush {
             return;
         }
 
-         // TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
-         // set to " + v.getcCen()); return; }
+        // TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
+        // set to " + v.getcCen()); return; }
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 

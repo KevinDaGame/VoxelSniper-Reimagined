@@ -7,7 +7,9 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Shapes {
     static double SMOOTH_CIRCLE_VALUE = 0.5;

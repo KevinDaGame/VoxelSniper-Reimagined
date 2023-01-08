@@ -2,10 +2,10 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
-import com.github.kevindagame.util.brushOperation.CustomOperation;
-import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.IRedstoneWire;

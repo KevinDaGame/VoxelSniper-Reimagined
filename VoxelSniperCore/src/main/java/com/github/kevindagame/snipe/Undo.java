@@ -1,10 +1,10 @@
 package com.github.kevindagame.snipe;
 
-import com.google.common.collect.Sets;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import com.google.common.collect.Sets;
 
 import java.util.Arrays;
 import java.util.LinkedList;

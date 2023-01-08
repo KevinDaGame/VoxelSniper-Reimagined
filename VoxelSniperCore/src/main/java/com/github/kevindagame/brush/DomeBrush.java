@@ -2,15 +2,9 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#dome-brush">...</a>
@@ -28,7 +22,6 @@ public class DomeBrush extends PerformerBrush {
     }
 
     /**
-     *
      * @param v
      */
     private void generateDome(final SnipeData v) {
@@ -40,6 +33,7 @@ public class DomeBrush extends PerformerBrush {
 
         this.positions = Shapes.dome(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight());
     }
+
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());

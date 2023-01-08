@@ -5,7 +5,7 @@ import java.util.*
 
 class BrushUsersCounter {
     fun registerListeners() {
-        PlayerSnipeEvent.registerListener(this::onBrushUse )
+        PlayerSnipeEvent.registerListener(this::onBrushUse)
     }
 
     private fun onBrushUse(event: PlayerSnipeEvent) {
@@ -16,9 +16,9 @@ class BrushUsersCounter {
     companion object {
         private val users: MutableSet<UUID> = HashSet()
         fun getTotalBrushUses(): Int {
-                val brushUsers = users.size
-                users.clear()
-                return brushUsers
-            }
+            val brushUsers = users.size
+            users.clear()
+            return brushUsers
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.github.kevindagame.snipe;
 
-import com.google.common.collect.Maps;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
@@ -12,6 +11,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Maps;
 import net.kyori.adventure.text.ComponentLike;
 import org.jetbrains.annotations.NotNull;
 

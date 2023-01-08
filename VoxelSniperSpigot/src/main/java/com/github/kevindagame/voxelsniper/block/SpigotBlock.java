@@ -1,10 +1,10 @@
 package com.github.kevindagame.voxelsniper.block;
 
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
-import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
+import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
+import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
