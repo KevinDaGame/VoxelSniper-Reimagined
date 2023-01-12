@@ -286,10 +286,12 @@ public class Sniper {
     public IBrush instantiateBrush(Class<? extends IBrush> brush) {
         try {
             var brushInstance = brush.newInstance();
+            if(getPlayer().hasPermission(brushInstance.getPermissionNode()))
             return brushInstance;
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
+        return null;
     }
 
     public enum Action {

@@ -66,18 +66,9 @@ public class SnipeTool {
     }
 
     public IBrush setCurrentBrush(@NotNull IBrush brush) {
-        Preconditions.checkNotNull(brush, "Can't set brush to null.");
-        if (snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
-            previousBrush = currentBrush;
-            currentBrush = brush;
-            return brush;
-        }
-        if (snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
-            previousBrush = currentBrush;
-            currentBrush = brush;
-            return brush;
-        }
-        return null;
+        previousBrush = currentBrush;
+        currentBrush = brush;
+        return brush;
     }
 
     public SnipeAction getActionAssigned(VoxelMaterial itemInHand) {
