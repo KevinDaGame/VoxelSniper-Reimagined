@@ -148,7 +148,7 @@ public class Sniper {
     }
 
 
-    public IBrush setBrush(String toolId, Class<? extends IBrush> brush) {
+    public IBrush setBrush(String toolId, IBrush brush) {
         if (!tools.containsKey(toolId)) {
             return null;
         }
@@ -281,6 +281,15 @@ public class Sniper {
 
     public final void sendMessage(final @NotNull ComponentLike message) {
         this.getPlayer().sendMessage(message);
+    }
+
+    public IBrush instantiateBrush(Class<? extends IBrush> brush) {
+        try {
+            var brushInstance = brush.newInstance();
+            return brushInstance;
+        } catch (InstantiationException | IllegalAccessException e) {
+            return null;
+        }
     }
 
     public enum Action {
