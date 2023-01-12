@@ -30,7 +30,7 @@ public class SnipeTool {
         this.snipeData = snipeData;
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
-        if (snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
+        if (snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode())) {
             this.currentBrush = brush;
         }
     }
