@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniperforge.entity.Painting;
 
-import com.github.kevindagame.voxelsniper.entity.Painting.IPainting;
+import com.github.kevindagame.voxelsniper.entity.painting.IPainting;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 
 import java.util.List;
