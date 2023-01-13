@@ -17,12 +17,9 @@ public final class ForgeCommandManager extends VoxelCommandManager {
     private static WeakReference<CommandDispatcher<CommandSourceStack>> dispatcher;
 
     public static void initialize(CommandDispatcher<CommandSourceStack> dispatcher) {
-        // Instantiate Command Manager if it's not yet instantiated.
-        if (getInstance() == null) {
             // store dispatcher as a weak reference - don't know the lifetime of this and don't want to keep it around unnecessarily
             ForgeCommandManager.dispatcher = new WeakReference<>(dispatcher);
             instance = new ForgeCommandManager();
-        }
     }
 
     @Override
