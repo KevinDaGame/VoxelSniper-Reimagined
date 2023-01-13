@@ -16,12 +16,12 @@ What version do I pick?
 
 | Minecraft version | VoxelSniper version                                                                |
 |-------------------|------------------------------------------------------------------------------------|
-| 1.16              | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) |
-| 1.17              | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) |
+| *1.16*\*          | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) |
+| *1.17*\*          | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) |
 | 1.18              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    |
 | 1.19              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    |
 
-***We will not support anything below 1.16.5***
+\* Please note that we will not provide support for the latest voxelsniper version
 
 Compilation
 -----------
