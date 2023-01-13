@@ -148,7 +148,7 @@ public class Sniper {
     }
 
 
-    public IBrush setBrush(String toolId, IBrush brush) {
+    public IBrush setBrush(String toolId, @NotNull IBrush brush) {
         if (!tools.containsKey(toolId)) {
             return null;
         }
