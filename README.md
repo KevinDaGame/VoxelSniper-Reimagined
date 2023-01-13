@@ -21,7 +21,7 @@ What version do I pick?
 | 1.18              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    |
 | 1.19              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    |
 
-\* Please note that we will not provide support for the latest voxelsniper version
+\* Please note that we will not provide support when using Minecraft 1.16 or 1.17
 
 Compilation
 -----------
