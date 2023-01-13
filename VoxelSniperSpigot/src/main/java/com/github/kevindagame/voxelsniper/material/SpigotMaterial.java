@@ -1,7 +1,7 @@
 package com.github.kevindagame.voxelsniper.material;
 
-import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import org.bukkit.Material;
 
 public record SpigotMaterial(Material material) implements IMaterial {

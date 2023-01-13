@@ -1,8 +1,8 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
  * be about 1.5x slower than the original brush. Savings increase for larger brushes.
  * <br>
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#block-reset-brush-surface-only-brush">...</a>
+ *
  * @author GavJenks
  */
 public class BlockResetSurfaceBrush extends AbstractBrush {
@@ -83,7 +84,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
                     boolean airFound;
 
                     airFound = checkBlock(world, x + 1, y, z);
-                    airFound = checkBlock(world, x -1, y, z) || airFound;
+                    airFound = checkBlock(world, x - 1, y, z) || airFound;
                     airFound = checkBlock(world, x, y + 1, z) || airFound;
                     airFound = checkBlock(world, x, y - 1, z) || airFound;
                     airFound = checkBlock(world, x, y, z + 1) || airFound;

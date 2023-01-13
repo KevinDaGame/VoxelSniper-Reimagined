@@ -34,7 +34,7 @@ class PlotSquaredIntegration {
                         DBFunc.EVERYONE
                     )
                 ) {
-                    continue;
+                    continue
                 }
             }
             operation.isCancelled = true

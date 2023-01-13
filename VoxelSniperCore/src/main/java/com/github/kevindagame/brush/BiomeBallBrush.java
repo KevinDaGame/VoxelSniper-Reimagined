@@ -1,11 +1,12 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BiomeOperation;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BiomeOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -16,10 +17,11 @@ import static java.util.stream.Collectors.toList;
  */
 public class BiomeBallBrush extends AbstractBrush {
 
+    private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
+
     public BiomeBallBrush() {
         this.setName("Biome ball");
     }
-    private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
     @Override
     public void info(VoxelMessage vm) {
@@ -48,8 +50,9 @@ public class BiomeBallBrush extends AbstractBrush {
         this.addOperations(Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), true).stream().map(location -> new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome)).collect(toList()));
 
     }
+
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.BIOMEBALL_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -63,6 +66,7 @@ public class BiomeBallBrush extends AbstractBrush {
         }
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 

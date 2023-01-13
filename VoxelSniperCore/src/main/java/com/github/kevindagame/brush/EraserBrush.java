@@ -2,9 +2,9 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.Set;
@@ -16,18 +16,9 @@ import java.util.Set;
  */
 public class EraserBrush extends AbstractBrush {
     private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
-            VoxelMaterial.AIR, VoxelMaterial.CAVE_AIR, VoxelMaterial.VOID_AIR, VoxelMaterial.STONE, VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT, VoxelMaterial.SAND, VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE);
+            VoxelMaterial.AIR, VoxelMaterial.CAVE_AIR, VoxelMaterial.VOID_AIR, VoxelMaterial.STONE, VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT, VoxelMaterial.SAND, VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE, VoxelMaterial.DEEPSLATE);
     private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
             VoxelMaterial.WATER, VoxelMaterial.LAVA);
-
-    static {
-        try {
-            // 1.17+
-            EXCLUSIVE_MATERIALS.add(VoxelMaterial.DEEPSLATE);
-        } catch (Throwable ignore) {
-            // Don't add for older versions
-        }
-    }
 
     /**
      *

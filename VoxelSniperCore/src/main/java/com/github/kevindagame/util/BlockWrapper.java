@@ -70,18 +70,18 @@ public class BlockWrapper implements Cloneable {
     }
 
     /**
+     * @return the id
+     */
+    public final VoxelMaterial getMaterial() {
+        return this.blockData.getMaterial();
+    }
+
+    /**
      * @param material the material to set
      */
     public final BlockWrapper setMaterial(final VoxelMaterial material) {
         setBlockData(material.createBlockData());
         return this;
-    }
-
-    /**
-     * @return the id
-     */
-    public final VoxelMaterial getMaterial() {
-        return this.blockData.getMaterial();
     }
 
     /**
@@ -92,18 +92,18 @@ public class BlockWrapper implements Cloneable {
     }
 
     /**
-     * @return the BaseLocation
-     */
-    public final BaseLocation getLocation() {
-        return new BaseLocation(this.world, this.x, this.y, this.z);
-    }
-
-    /**
      * @param world the world to set
      */
     public final BlockWrapper setWorld(final IWorld world) {
         this.world = world;
         return this;
+    }
+
+    /**
+     * @return the BaseLocation
+     */
+    public final BaseLocation getLocation() {
+        return new BaseLocation(this.world, this.x, this.y, this.z);
     }
 
     /**

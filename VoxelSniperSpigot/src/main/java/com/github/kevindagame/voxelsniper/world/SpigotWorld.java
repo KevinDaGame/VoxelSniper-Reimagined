@@ -2,18 +2,17 @@ package com.github.kevindagame.voxelsniper.world;
 
 import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
-import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.chunk.SpigotChunk;
+import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
-import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
+import com.github.kevindagame.voxelsniper.chunk.SpigotChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
+import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.location.SpigotLocation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.SpigotLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;

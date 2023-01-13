@@ -1,16 +1,16 @@
-package com.github.kevindagame.brush.MultiBlock;
+package com.github.kevindagame.brush.multiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
-import com.github.kevindagame.util.BlockWrapper;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -35,6 +35,7 @@ public class MoveBrush extends AbstractBrush {
      * Saved selection.
      */
     private Selection selection = null;
+
     /**
      *
      */
@@ -118,7 +119,7 @@ public class MoveBrush extends AbstractBrush {
     }
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.MOVE_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;
@@ -157,12 +158,14 @@ public class MoveBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("reset", "x", "y", "z"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
@@ -192,7 +195,8 @@ public class MoveBrush extends AbstractBrush {
         }
 
         @Override
-        public @NotNull Component asComponent() {
+        public @NotNull
+        Component asComponent() {
             return component.asComponent();
         }
     }

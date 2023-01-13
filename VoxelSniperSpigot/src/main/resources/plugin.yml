@@ -3,34 +3,34 @@ main: com.github.kevindagame.voxelsniper.SpigotVoxelSniper
 version: ${version}
 api-version: 1.15
 website: https://github.com/KevinDaGame/VoxelSniper-Reimagined
-authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev, Lennart99]
+authors: [ przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, KevDaDev, Lennart99 ]
 description: The premier long-distance brush editor for Minecraft, reimagined!
-softdepend: [WorldGuard, PlotSquared]
+softdepend: [ WorldGuard, PlotSquared ]
 commands:
   u:
     description: Undo changes made by yourself or other players.
     permission: voxelsniper.sniper
-    aliases: [undo]
+    aliases: [ undo ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   uu:
     description: Undo changes made by other players.
     permission: voxelsniper.sniper
-    aliases: [undouser]
+    aliases: [ undouser ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   d:
     description: Reverts all values back to defaults.
     permission: voxelsniper.sniper
-    alias: [default]
+    alias: [ default ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   p:
     description: Change the currently active performer for the performer brush.
     permission: voxelsniper.sniper
-    aliases: [perf, performer]
+    aliases: [ perf, performer ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   sniper:
     description: View and change settings related to VoxelSniper.
     permission: voxelsniper.sniper
-    aliases: [voxelsniper, vs]
+    aliases: [ voxelsniper, vs ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   vi:
     description: Changes the data value of the currently active voxel material.
@@ -59,10 +59,10 @@ commands:
   vox:
     description: Multi-purpose command to perform various utility functions.
     permission: voxelsniper.sniper
-    aliases: [painting, vchunk, goto]
+    aliases: [ painting, vchunk, goto ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.
   vv:
     description: Changes various variables related to voxel brushes.
     permission: voxelsniper.sniper
-    aliases: [vl, vc, vh, vvariables, vvar, variables]
+    aliases: [ vl, vc, vh, vvariables, vvar, variables ]
     usage: Invalid syntax. Use /<command> help to see valid syntax.

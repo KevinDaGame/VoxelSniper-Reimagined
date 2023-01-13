@@ -5,6 +5,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -193,7 +194,7 @@ public abstract class SplatterBrushBase extends PerformerBrush {
     }
 
     @Override
-    public final void info(final VoxelMessage vm) {
+    public final void info(@NotNull final VoxelMessage vm) {
         if (this.seedPercent < SEED_PERCENT_MIN || this.seedPercent > SEED_PERCENT_MAX) {
             this.seedPercent = SEED_PERCENT_DEFAULT;
         }
@@ -213,10 +214,10 @@ public abstract class SplatterBrushBase extends PerformerBrush {
 
 
     protected void resetBrush(SnipeData v) {
-            this.seedPercent = SEED_PERCENT_DEFAULT;
-            this.growPercent = GROW_PERCENT_DEFAULT;
-            this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
-            v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
+        this.seedPercent = SEED_PERCENT_DEFAULT;
+        this.growPercent = GROW_PERCENT_DEFAULT;
+        this.splatterRecursions = SPLATREC_PERCENT_DEFAULT;
+        v.sendMessage(Messages.BRUSH_RESET_DEFAULT);
     }
 
 
@@ -269,6 +270,7 @@ public abstract class SplatterBrushBase extends PerformerBrush {
         return false;
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
@@ -278,6 +280,7 @@ public abstract class SplatterBrushBase extends PerformerBrush {
         return arguments;
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

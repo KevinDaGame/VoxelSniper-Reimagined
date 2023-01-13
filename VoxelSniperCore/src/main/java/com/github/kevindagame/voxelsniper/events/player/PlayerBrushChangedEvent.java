@@ -23,6 +23,14 @@ public class PlayerBrushChangedEvent extends PlayerEvent<PlayerBrushChangedEvent
         this.toolId = toolId;
     }
 
+    public static void registerListener(Consumer<PlayerBrushChangedEvent> handler) {
+        handlers.registerListener(handler);
+    }
+
+    public static void registerListener(EventPriority priority, Consumer<PlayerBrushChangedEvent> handler) {
+        handlers.registerListener(priority, handler);
+    }
+
     public IBrush getOldBrush() {
         return oldBrush;
     }
@@ -38,13 +46,6 @@ public class PlayerBrushChangedEvent extends PlayerEvent<PlayerBrushChangedEvent
     @Override
     protected HandlerList<PlayerBrushChangedEvent> getHandlers() {
         return handlers;
-    }
-    public static void registerListener(Consumer<PlayerBrushChangedEvent> handler) {
-        handlers.registerListener(handler);
-    }
-
-    public static void registerListener(EventPriority priority, Consumer<PlayerBrushChangedEvent> handler) {
-        handlers.registerListener(priority, handler);
     }
 
     @Override

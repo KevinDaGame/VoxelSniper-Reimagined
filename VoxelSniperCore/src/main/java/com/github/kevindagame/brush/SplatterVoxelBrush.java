@@ -1,17 +1,9 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.util.Shapes;
-import com.google.common.collect.Lists;
-import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#splatter-voxel-brush">...</a>
@@ -48,7 +40,7 @@ public class SplatterVoxelBrush extends SplatterBrushBase {
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
-        if(super.parseParams(triggerHandle, params, v)) return;
+        if (super.parseParams(triggerHandle, params, v)) return;
         if (params[0].equalsIgnoreCase("info")) {
             v.sendMessage(Messages.SPLATTER_FOXEL_BRUSH_USAGE.replace("%triggerHandle%", triggerHandle));
             return;

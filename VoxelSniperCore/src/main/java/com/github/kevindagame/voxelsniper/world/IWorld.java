@@ -9,11 +9,10 @@ import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
 
 public interface IWorld {
     IBlock getBlock(BaseLocation location);
@@ -46,11 +45,11 @@ public interface IWorld {
      * search bounding box.
      *
      * @param location The center of the bounding box
-     * @param x 1/2 the size of the box along x axis
-     * @param y 1/2 the size of the box along y axis
-     * @param z 1/2 the size of the box along z axis
+     * @param x        1/2 the size of the box along x axis
+     * @param y        1/2 the size of the box along y axis
+     * @param z        1/2 the size of the box along z axis
      * @return the collection of entities near location. This will always be a
-     *      non-null collection.
+     * non-null collection.
      */
     List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z);
 

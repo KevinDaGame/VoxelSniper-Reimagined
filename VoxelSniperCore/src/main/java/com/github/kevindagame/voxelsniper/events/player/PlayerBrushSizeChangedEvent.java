@@ -25,6 +25,14 @@ public class PlayerBrushSizeChangedEvent extends PlayerEvent<PlayerBrushSizeChan
         this.brush = brush;
     }
 
+    public static void registerListener(Consumer<PlayerBrushSizeChangedEvent> handler) {
+        handlers.registerListener(handler);
+    }
+
+    public static void registerListener(EventPriority priority, Consumer<PlayerBrushSizeChangedEvent> handler) {
+        handlers.registerListener(priority, handler);
+    }
+
     public int getOldSize() {
         return oldSize;
     }
@@ -44,14 +52,6 @@ public class PlayerBrushSizeChangedEvent extends PlayerEvent<PlayerBrushSizeChan
     @Override
     protected HandlerList<PlayerBrushSizeChangedEvent> getHandlers() {
         return handlers;
-    }
-
-    public static void registerListener(Consumer<PlayerBrushSizeChangedEvent> handler) {
-        handlers.registerListener(handler);
-    }
-
-    public static void registerListener(EventPriority priority, Consumer<PlayerBrushSizeChangedEvent> handler) {
-        handlers.registerListener(priority, handler);
     }
 
     @Override

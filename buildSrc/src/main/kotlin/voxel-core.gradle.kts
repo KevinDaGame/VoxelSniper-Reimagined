@@ -61,7 +61,7 @@ group = "com.github.kevindagame"
 version = "8.4.0"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
-tasks.withType<JavaCompile>() {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 val compileKotlin: KotlinCompile by tasks

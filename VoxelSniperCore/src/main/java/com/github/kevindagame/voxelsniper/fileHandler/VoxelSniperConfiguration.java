@@ -13,9 +13,9 @@ public class VoxelSniperConfiguration {
     public static final String CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED = "message-on-login-enabled";
     public static final int DEFAULT_UNDO_CACHE_SIZE = 20;
     public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
-    private final YamlConfiguration configuration;
     private static final boolean DEFAULT_USE_PLOTSQUARED = false;
     private static final boolean DEFAULT_USE_WORLDGUARD = false;
+    private final YamlConfiguration configuration;
 
     /**
      * @param voxelSniper {@link IVoxelsniper} reference

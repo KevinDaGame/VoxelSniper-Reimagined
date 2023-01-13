@@ -52,7 +52,6 @@ abstract class AbstractBrush : IBrush {
      * Brush name.
      */
     private var name = "Undefined"
-    protected var cancelled = false
     protected var snipeAction: SnipeAction? = null
 
     private fun preparePerform(v: SnipeData, clickedBlock: IBlock, clickedFace: BlockFace): Boolean {
@@ -93,22 +92,27 @@ abstract class AbstractBrush : IBrush {
 
     protected fun performOperations(data: SnipeData): Boolean {
         if (operations.size == 0) return false
-        val event = PlayerSnipeEvent(data.owner().player, this, ImmutableList.copyOf(operations), operations.any { o -> o is CustomOperation }).callEvent()
+        val event = PlayerSnipeEvent(
+            data.owner().player,
+            this,
+            ImmutableList.copyOf(operations),
+            operations.any { o -> o is CustomOperation }).callEvent()
         if (!event.isCancelled) {
             val undo = Undo()
             var reloadArea = false
             if (event.isCustom && this is CustomBrush) {
-                this.perform(event.operations.stream().filter { o -> !o.isCancelled && o is CustomOperation }.map { o -> o as CustomOperation }.collect(ImmutableList.toImmutableList()), data, undo)
+                this.perform(event.operations.stream().filter { o -> !o.isCancelled && o is CustomOperation }
+                    .map { o -> o as CustomOperation }.collect(ImmutableList.toImmutableList()), data, undo)
             } else {
                 for (operation in event.operations) {
                     if (!operation.isCancelled) {
                         if (executeOperation(operation, undo)) {
-                            reloadArea = true;
+                            reloadArea = true
                         }
                     }
                 }
             }
-            data.owner().storeUndo(undo);
+            data.owner().storeUndo(undo)
             if (reloadArea) {
                 reloadBrushArea(data)
             }
@@ -193,7 +197,7 @@ abstract class AbstractBrush : IBrush {
             val rangeBlockHelper: BlockHelper
             if (v.owner().getSnipeData(v.owner().currentToolId).isRanged) {
                 rangeBlockHelper = BlockHelper(
-                        v.owner().player, v.owner().getSnipeData(v.owner().currentToolId).range
+                    v.owner().player, v.owner().getSnipeData(v.owner().currentToolId).range
                         .toDouble()
                 )
                 targetBlock = rangeBlockHelper.rangeBlock
@@ -280,10 +284,6 @@ abstract class AbstractBrush : IBrush {
         if (isInWorldHeight(y)) {
             world.getBlock(x, y, z).blockData = material.createBlockData()
         }
-    }
-
-    protected fun cancel() {
-        cancelled = true
     }
 
     companion object {

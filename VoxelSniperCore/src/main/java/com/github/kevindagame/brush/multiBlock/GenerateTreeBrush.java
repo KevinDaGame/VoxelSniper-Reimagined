@@ -1,15 +1,16 @@
-package com.github.kevindagame.brush.MultiBlock;
+package com.github.kevindagame.brush.multiBlock;
 
 import com.github.kevindagame.brush.AbstractBrush;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
-import com.github.kevindagame.voxelsniper.location.VoxelLocation;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -75,7 +76,7 @@ public class GenerateTreeBrush extends AbstractBrush {
 
             // Creates a branch block.
             addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
-            this.branchBlocks.add(location.getClampedBlock());
+            this.branchBlocks.add(location.getBlock());
         }
     }
 
@@ -167,7 +168,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 }
                 List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
                 // Checks is block below is solid
-                if (blocks.contains(location.getClampedBlock().getRelative(0, -1, 0).getMaterial())) {
+                if (blocks.contains(location.getBlock().getRelative(0, -1, 0).getMaterial())) {
                     // Move down if solid.
                     location.addY(-1);
                     if (this.rootFloat) {
@@ -187,7 +188,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                         location.addZ(zDirection);
                     }
                     // Checks if new location is solid, if not then move down.
-                    if (blocks.contains(location.getClampedBlock().getRelative(0, -1, 0).getMaterial())) {
+                    if (blocks.contains(location.getBlock().getRelative(0, -1, 0).getMaterial())) {
                         location.addY(-1);
                     }
                 }
@@ -384,7 +385,7 @@ public class GenerateTreeBrush extends AbstractBrush {
 
 
     @Override
-    public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
+    public final void parseParameters(@NotNull final String triggerHandle, final String[] params, @NotNull final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
             if (params.length == 1 || params[1].equals("1")) {
@@ -546,6 +547,7 @@ public class GenerateTreeBrush extends AbstractBrush {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
 
@@ -553,6 +555,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 "rootFloat", "info", "rootMin", "rootMax", "minHeight", "maxHeight", "leavesMin", "leavesMax", "default"));
     }
 
+    @NotNull
     @Override
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();

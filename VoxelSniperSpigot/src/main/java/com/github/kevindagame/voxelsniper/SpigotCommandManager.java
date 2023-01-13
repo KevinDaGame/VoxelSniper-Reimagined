@@ -27,9 +27,7 @@ public final class SpigotCommandManager extends VoxelCommandManager {
         SpigotCommandHandler executor = new SpigotCommandHandler(command);
         if (bukkitCommand != null) {
             bukkitCommand.setExecutor(executor);
-            bukkitCommand.getAliases().forEach(e -> {
-                argumentsMap.put(e, command.registerTabCompletion());
-            });
+            bukkitCommand.getAliases().forEach(e -> argumentsMap.put(e, command.registerTabCompletion()));
         }
 
         // Initializes command alternates that use the same executors
@@ -39,9 +37,7 @@ public final class SpigotCommandManager extends VoxelCommandManager {
 
             if (bukkitCommandAlt != null) {
                 bukkitCommandAlt.setExecutor(executor);
-                bukkitCommandAlt.getAliases().forEach(e -> {
-                    argumentsMap.put(e, command.registerTabCompletion());
-                });
+                bukkitCommandAlt.getAliases().forEach(e -> argumentsMap.put(e, command.registerTabCompletion()));
             }
         });
     }

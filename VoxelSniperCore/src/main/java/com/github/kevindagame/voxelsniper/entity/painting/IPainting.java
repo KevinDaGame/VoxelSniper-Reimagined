@@ -1,4 +1,4 @@
-package com.github.kevindagame.voxelsniper.entity.Painting;
+package com.github.kevindagame.voxelsniper.entity.painting;
 
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 

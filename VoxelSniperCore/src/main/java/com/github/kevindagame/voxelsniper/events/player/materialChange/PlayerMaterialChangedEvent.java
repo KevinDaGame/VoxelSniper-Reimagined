@@ -15,16 +15,16 @@ public class PlayerMaterialChangedEvent extends AbstractMaterialChangedEvent<Pla
         super(p, oldMaterial, newMaterial);
     }
 
-    @Override
-    protected HandlerList<PlayerMaterialChangedEvent> getHandlers() {
-        return handlers;
-    }
-
     public static void registerListener(Consumer<PlayerMaterialChangedEvent> handler) {
         handlers.registerListener(handler);
     }
 
     public static void registerListener(EventPriority priority, Consumer<PlayerMaterialChangedEvent> handler) {
         handlers.registerListener(priority, handler);
+    }
+
+    @Override
+    protected HandlerList<PlayerMaterialChangedEvent> getHandlers() {
+        return handlers;
     }
 }

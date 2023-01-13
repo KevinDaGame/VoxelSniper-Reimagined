@@ -1,13 +1,12 @@
 package com.github.kevindagame.brush;
 
-import com.github.kevindagame.util.Shapes;
-import com.google.common.collect.Lists;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.BlockFace;
-import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class DiscFaceBrush extends PerformerBrush {
         this.setName("Disc Face");
     }
 
-    private void discFace(final SnipeData v){
+    private void discFace(final SnipeData v) {
         this.positions = Shapes.discFace(this.getTargetBlock().getLocation(), v.getBrushSize(), this.smoothCircle, this.getTargetBlock().getFace(this.getLastBlock()));
     }
 
@@ -68,6 +67,7 @@ public class DiscFaceBrush extends PerformerBrush {
         sendPerformerMessage(triggerHandle, v);
     }
 
+    @NotNull
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();

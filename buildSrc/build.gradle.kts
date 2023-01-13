@@ -18,14 +18,14 @@ dependencies {
 }
 
 tasks {
-  compileJava {
-    options.encoding = Charsets.UTF_8.name()
-    options.release.set(17)
-  }
-
-  compileKotlin {
-    kotlinOptions {
-        jvmTarget = "17"
+    compileJava {
+        options.encoding = Charsets.UTF_8.name()
+        options.release.set(17)
     }
-  }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
 }

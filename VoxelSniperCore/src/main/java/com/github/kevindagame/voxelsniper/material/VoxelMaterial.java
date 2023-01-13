@@ -968,6 +968,7 @@ public class VoxelMaterial implements IMaterial {
     private final String namespace;
     private final List<Tags> tags;
     private IMaterial material = null;
+
     public VoxelMaterial(String namespace, String key, Version version, Tags... tags) {
         this.namespace = namespace;
         this.key = key;
