@@ -87,5 +87,11 @@ permissions:
 - name: voxelsniper.brush.biomeball
 - name: voxelsniper.brush.*
   description: Allows player to use all brushes
+- name: voxelsniper.bypass.*
+  description: Allows bypassing of restricions of worldguard or plotSquared
+- name: voxelsniper.bypass.worldguard
+  description: Allows bypassing of worldguard restrictions
+- name: voxelsniper.bypass.plotsquared
+  description: Allows bypassing of plotSquared restrictions
 - name: voxelsniper.*
   description: Allows access to all VoxelSniper commands.

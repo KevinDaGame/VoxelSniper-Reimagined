@@ -29,7 +29,7 @@ public class SnipeTool {
         snipeData.setVoxelMessage(messageHelper);
 
         IBrush newBrushInstance = instanciateBrush(currentBrush);
-        if (snipeData.owner().getPlayer().hasPermission(newBrushInstance.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
+        if (snipeData.owner().getPlayer().hasPermission(newBrushInstance.getPermissionNode())) {
             brushes.put(currentBrush, newBrushInstance);
             this.currentBrush = currentBrush;
         }
@@ -71,14 +71,14 @@ public class SnipeTool {
         if (brushInstance == null) {
             brushInstance = instanciateBrush(brush);
             Preconditions.checkNotNull(brushInstance, "Could not instanciate brush class.");
-            if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
+            if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode())) {
                 brushes.put(brush, brushInstance);
                 previousBrush = currentBrush;
                 currentBrush = brush;
                 return brushInstance;
             }
         }
-        if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode()) || snipeData.owner().getPlayer().hasPermission("voxelsniper.brush.*")) {
+        if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode())) {
             previousBrush = currentBrush;
             currentBrush = brush;
             return brushInstance;
