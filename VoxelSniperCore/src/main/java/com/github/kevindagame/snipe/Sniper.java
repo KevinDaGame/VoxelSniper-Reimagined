@@ -14,6 +14,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.google.common.collect.Maps;
 import net.kyori.adventure.text.ComponentLike;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -123,11 +124,15 @@ public class Sniper {
             }
         }
 
-        if (sniperTool.getCurrentBrush() instanceof PerformerBrush performerBrush) {
+        var brush = sniperTool.getCurrentBrush();
+
+        if (brush == null) return true;
+
+        if (brush instanceof PerformerBrush performerBrush) {
             performerBrush.initP(snipeData);
         }
 
-        return sniperTool.getCurrentBrush().perform(snipeAction, snipeData, targetBlock, lastBlock);
+        return brush.perform(snipeAction, snipeData, targetBlock, lastBlock);
     }
 
     private boolean handleSneakLeftClick(String toolId, SnipeData snipeData, SnipeAction snipeAction, IBlock targetBlock) {
@@ -156,7 +161,7 @@ public class Sniper {
         return tools.get(toolId).setCurrentBrush(brush);
     }
 
-    public IBrush getBrush(String toolId) {
+    public @Nullable IBrush getBrush(String toolId) {
         if (!tools.containsKey(toolId)) {
             return null;
         }
@@ -164,7 +169,11 @@ public class Sniper {
         return tools.get(toolId).getCurrentBrush();
     }
 
-    public IBrush previousBrush(String toolId) {
+    /**
+     * For the given toolID, sets the current Brush to the previous Brush, and then returns the new Brush
+     * @return The new Brush, or null if there is no previous Brush
+     */
+    public @Nullable IBrush previousBrush(String toolId) {
         if (!tools.containsKey(toolId)) {
             return null;
         }
@@ -283,11 +292,11 @@ public class Sniper {
         this.getPlayer().sendMessage(message);
     }
 
-    public IBrush instantiateBrush(Class<? extends IBrush> brush) {
+    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush) {
         try {
             var brushInstance = brush.newInstance();
             if(getPlayer().hasPermission(brushInstance.getPermissionNode()))
-            return brushInstance;
+                return brushInstance;
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }

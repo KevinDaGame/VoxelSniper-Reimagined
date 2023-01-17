@@ -8,16 +8,18 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 
 import java.util.function.Consumer;
 
+import org.jetbrains.annotations.NotNull;
+
 public class PlayerBrushSizeChangedEvent extends PlayerEvent<PlayerBrushSizeChangedEvent> implements Cancellable {
 
     private static final HandlerList<PlayerBrushSizeChangedEvent> handlers = new HandlerList<>();
     private final int oldSize;
     private final int newSize;
     private final String toolId;
-    private final IBrush brush;
+    private final @NotNull IBrush brush;
     private EventResult status;
 
-    public PlayerBrushSizeChangedEvent(IPlayer p, String toolId, IBrush brush, int oldSize, int newSize) {
+    public PlayerBrushSizeChangedEvent(IPlayer p, String toolId, @NotNull IBrush brush, int oldSize, int newSize) {
         super(p);
         this.oldSize = oldSize;
         this.newSize = newSize;
@@ -45,6 +47,7 @@ public class PlayerBrushSizeChangedEvent extends PlayerEvent<PlayerBrushSizeChan
         return toolId;
     }
 
+    @NotNull
     public IBrush getBrush() {
         return brush;
     }
