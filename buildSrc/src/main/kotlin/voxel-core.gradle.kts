@@ -74,6 +74,7 @@ tasks {
         relocate("com.google.common", "com.github.kevindagame.voxelsniper.libs.com.google.common")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
         relocate("org.yaml.snakeyaml", "com.github.kevindagame.voxelsniper.libs.org.yaml.snakeyaml")
+        relocate("kotlin", "com.github.kevindagame.voxelsniper.libs.kotlin")
     }
 
     build {
