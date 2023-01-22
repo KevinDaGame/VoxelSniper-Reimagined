@@ -1,6 +1,7 @@
 package com.github.kevindagame.snipe;
 
 import com.github.kevindagame.VoxelSniper;
+import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
@@ -292,11 +293,11 @@ public class Sniper {
         this.getPlayer().sendMessage(message);
     }
 
-    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush) {
+    public @Nullable IBrush instantiateBrush(BrushData brushData) {
         try {
-            var brushInstance = brush.newInstance();
+            var brushInstance = brushData.getClazz().newInstance();
             if(getPlayer().hasPermission(brushInstance.getPermissionNode()))
-                return brushInstance;
+            return brushInstance;
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }

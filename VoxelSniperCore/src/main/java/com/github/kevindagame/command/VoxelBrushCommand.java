@@ -2,6 +2,7 @@ package com.github.kevindagame.command;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelProfileManager;
+import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
@@ -79,13 +80,13 @@ public class VoxelBrushCommand extends VoxelCommand {
         }
 
         // Command: /b <brush> -- change brush to <brush>
-        Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
+        BrushData data = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
 
-        if (brush == null) {
+        if (data == null) {
             snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
         } else {
             IBrush oldBrush = sniper.getBrush(currentToolId);
-            IBrush newBrush = sniper.instantiateBrush(brush);
+            IBrush newBrush = sniper.instantiateBrush(data);
 
             if (newBrush == null) {
                 snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
