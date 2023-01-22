@@ -27,9 +27,7 @@ public class PullBrush extends AbstractBrush {
     /**
      * Default Constructor.
      */
-    public PullBrush() {
-        this.setName("pull");
-    }
+
 
     @Override
     public final void info(final VoxelMessage vm) {
@@ -275,11 +273,6 @@ public class PullBrush extends AbstractBrush {
                 }
             }
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.pull";
     }
 
     /**

@@ -25,12 +25,6 @@ public class CometBrush extends CustomBrush {
 
     private boolean useBigBalls = false;
 
-    /**
-     *
-     */
-    public CometBrush() {
-        this.setName("Comet");
-    }
 
     private void doFireball(final SnipeData v) {
         final VoxelVector targetCoords = new VoxelVector(this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()), this.getTargetBlock().getY() + .5, this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ()));
@@ -84,11 +78,6 @@ public class CometBrush extends CustomBrush {
         vm.voxel();
         String size = (useBigBalls ? "BIG" : "small");
         vm.custom(Messages.COMET_SIZE.replace("%size%", size));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.comet";
     }
 
     @Override

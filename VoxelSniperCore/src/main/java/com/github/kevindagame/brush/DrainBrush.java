@@ -23,12 +23,6 @@ public class DrainBrush extends AbstractBrush {
     private final boolean smooth = true;
     private boolean disc = false;
 
-    /**
-     *
-     */
-    public DrainBrush() {
-        this.setName("Drain");
-    }
 
     private void drain(final SnipeData v) {
         var positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
@@ -79,10 +73,5 @@ public class DrainBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("shape"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.drain";
     }
 }

@@ -25,9 +25,7 @@ public class DiscBrush extends PerformerBrush {
     /**
      * Default Constructor.
      */
-    public DiscBrush() {
-        this.setName("Disc");
-    }
+
 
     /**
      * Disc executor.
@@ -79,10 +77,5 @@ public class DiscBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.disc";
     }
 }

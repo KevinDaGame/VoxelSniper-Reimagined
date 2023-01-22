@@ -11,12 +11,6 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
  */
 public class BlendVoxelDiscBrush extends BlendBrushBase {
 
-    /**
-     *
-     */
-    public BlendVoxelDiscBrush() {
-        this.setName("Blend Voxel Disc");
-    }
 
     @Override
     protected final void blend(final SnipeData v) {
@@ -40,10 +34,5 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
         }
 
         super.parseParameters(triggerHandle, params, v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.blendvoxeldisc";
     }
 }

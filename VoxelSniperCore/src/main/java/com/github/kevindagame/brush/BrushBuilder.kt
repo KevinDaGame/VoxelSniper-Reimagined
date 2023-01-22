@@ -18,7 +18,6 @@ class BrushBuilder {
     fun name(name: String): BrushBuilder
     {
         this.name = name
-        aliases.add(name)
         return this
     }
 

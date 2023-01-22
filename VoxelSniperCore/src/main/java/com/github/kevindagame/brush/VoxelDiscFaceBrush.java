@@ -12,12 +12,6 @@ import com.github.kevindagame.util.VoxelMessage;
  */
 public class VoxelDiscFaceBrush extends PerformerBrush {
 
-    /**
-     *
-     */
-    public VoxelDiscFaceBrush() {
-        this.setName("Voxel Disc Face");
-    }
 
     private void voxelDiscFace(final SnipeData v) {
         this.positions = Shapes.voxelDiscFace(this.getTargetBlock().getLocation(), v.getBrushSize(), this.getTargetBlock().getFace(this.getLastBlock()));
@@ -37,10 +31,5 @@ public class VoxelDiscFaceBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.voxeldiscface";
     }
 }

@@ -25,12 +25,6 @@ public class Rot2DvertBrush extends AbstractBrush {
     private BlockWrapper[][][] snap;
     private double se;
 
-    /**
-     *
-     */
-    public Rot2DvertBrush() {
-        this.setName("2D Rotation");
-    }
 
     private void getMatrix(final int bSize) {
         int brushSize = (bSize * 2) + 1;
@@ -173,10 +167,5 @@ public class Rot2DvertBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("[number]"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.rot2dvert";
     }
 }

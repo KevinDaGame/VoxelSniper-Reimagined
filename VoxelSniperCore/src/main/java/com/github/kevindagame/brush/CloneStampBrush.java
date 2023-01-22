@@ -23,12 +23,6 @@ public class CloneStampBrush extends StampBrush {
 
     private BaseLocation startingPoint;
 
-    /**
-     *
-     */
-    public CloneStampBrush() {
-        this.setName("Clone");
-    }
 
     /**
      * The clone method is used to grab a snapshot of the selected area dictated blockPositionY targetBlock.x y z v.brushSize v.voxelHeight and v.cCen.
@@ -121,10 +115,5 @@ public class CloneStampBrush extends StampBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("air", "fill", "default"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.clonestamp";
     }
 }

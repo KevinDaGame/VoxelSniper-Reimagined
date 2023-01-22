@@ -295,6 +295,8 @@ public class Sniper {
 
     public @Nullable IBrush instantiateBrush(BrushData brushData) {
         var brushInstance = brushData.getSupplier().get();
+        brushInstance.setPermissionNode(brushData.getPermission());
+        brushInstance.setName(brushData.getName());
         if(getPlayer().hasPermission(brushInstance.getPermissionNode())) return brushInstance;
         return null;
     }

@@ -19,20 +19,12 @@ public class BiomeBallBrush extends AbstractBrush {
 
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
-    public BiomeBallBrush() {
-        this.setName("Biome ball");
-    }
 
     @Override
     public void info(VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
         vm.custom(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.biomeball";
     }
 
 

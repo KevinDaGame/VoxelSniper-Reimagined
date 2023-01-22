@@ -20,7 +20,7 @@ import util.InitOnceProperty
 import java.util.*
 import kotlin.properties.ReadWriteProperty
 
-inline fun <reified T> initOnce(): ReadWriteProperty<Any, T> = InitOnceProperty()
+
 
 /**
  * Abstract implementation of the [IBrush] interface.
@@ -55,8 +55,8 @@ abstract class AbstractBrush : IBrush {
     /**
      * Brush name.
      */
-    var name: String by initOnce()
-    var permissionNode: String by initOnce()
+    override var name by initOnce<String>()
+    override var permissionNode: String by initOnce()
     protected var snipeAction: SnipeAction? = null
 
     private fun preparePerform(v: SnipeData, clickedBlock: IBlock, clickedFace: BlockFace): Boolean {
@@ -225,18 +225,6 @@ abstract class AbstractBrush : IBrush {
                 false
             }
         }
-    }
-
-    override fun getName(): String {
-        return name
-    }
-
-    override fun setName(name: String) {
-        this.name = name
-    }
-
-    override fun getBrushCategory(): String {
-        return "General"
     }
 
     /**

@@ -27,9 +27,7 @@ public class BlobBrush extends PerformerBrush {
     private final Random randomGenerator = new Random();
     private int growPercent = GROW_PERCENT_DEFAULT; // chance block on recursion pass is made active
 
-    public BlobBrush() {
-        this.setName("Blob");
-    }
+
 
     private void checkValidGrowPercent(final SnipeData v) {
         if (this.growPercent < GROW_PERCENT_MIN || this.growPercent > GROW_PERCENT_MAX) {
@@ -273,10 +271,5 @@ public class BlobBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.blob";
     }
 }

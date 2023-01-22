@@ -20,9 +20,7 @@ import org.jetbrains.annotations.NotNull;
 public class RegenerateChunkBrush extends CustomBrush {
     private int originalSize;
 
-    public RegenerateChunkBrush() {
-        this.setName("Chunk Generator 40k");
-    }
+
 
     private void generateChunk(final SnipeData v) {
         final IChunk chunk = this.getTargetBlock().getChunk();
@@ -50,11 +48,6 @@ public class RegenerateChunkBrush extends CustomBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.brushMessage(Messages.REGENERATE_CHUNK_MESSAGE);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.regeneratechunk";
     }
 
     @Override

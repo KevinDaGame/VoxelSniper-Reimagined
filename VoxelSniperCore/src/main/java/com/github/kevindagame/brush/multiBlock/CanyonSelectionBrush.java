@@ -17,13 +17,6 @@ public class CanyonSelectionBrush extends CanyonBrush {
     private int fx;
     private int fz;
 
-    /**
-     *
-     */
-    public CanyonSelectionBrush() {
-        this.setName("Canyon Selection");
-    }
-
     private void execute(final SnipeData v) {
         final IChunk chunk = getTargetBlock().getChunk();
 
@@ -65,10 +58,5 @@ public class CanyonSelectionBrush extends CanyonBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.custom(Messages.SHIFT_LEVEL_SET.replace("%getYLevel%", String.valueOf(this.getYLevel())));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.canyonselection";
     }
 }

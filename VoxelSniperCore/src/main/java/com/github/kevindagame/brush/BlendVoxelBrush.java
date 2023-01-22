@@ -11,12 +11,6 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
  */
 public class BlendVoxelBrush extends BlendBrushBase {
 
-    /**
-     *
-     */
-    public BlendVoxelBrush() {
-        this.setName("Blend Voxel");
-    }
 
     @Override
     protected final void blend(final SnipeData v) {
@@ -39,10 +33,5 @@ public class BlendVoxelBrush extends BlendBrushBase {
         }
 
         super.parseParameters(triggerHandle, params, v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.blendvoxel";
     }
 }

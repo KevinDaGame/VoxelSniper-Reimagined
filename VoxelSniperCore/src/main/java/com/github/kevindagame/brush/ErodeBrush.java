@@ -28,12 +28,6 @@ public class ErodeBrush extends AbstractBrush {
     private ErosionPreset currentPreset = new ErosionPreset(0, 1, 0, 1);
     private BlockChangeTracker blockTracker;
 
-    /**
-     *
-     */
-    public ErodeBrush() {
-        this.setName("Erode");
-    }
 
 
     @Override
@@ -176,11 +170,6 @@ public class ErodeBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return Arrays.stream(Preset.values()).map(Enum::name).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.erode";
     }
 
     /**

@@ -22,10 +22,6 @@ public class BallBrush extends PerformerBrush {
 
     private boolean smoothSphere = false;
 
-    public BallBrush() {
-        this.setName("Ball");
-    }
-
     private void ball(final SnipeData v, IBlock targetBlock) {
         this.positions = Shapes.ball(targetBlock.getLocation(), v.getBrushSize(), this.smoothSphere);
     }
@@ -72,10 +68,5 @@ public class BallBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.ball";
     }
 }

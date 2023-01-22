@@ -34,12 +34,6 @@ public class JaggedLineBrush extends PerformerBrush {
     private int recursion = RECURSION_DEFAULT;
     private int spread = SPREAD_DEFAULT;
 
-    /**
-     *
-     */
-    public JaggedLineBrush() {
-        this.setName("Jagged Line");
-    }
 
     private void jaggedP(final SnipeData v) {
         final VoxelVector originClone = this.originCoords.clone().add(JaggedLineBrush.HALF_BLOCK_OFFSET);
@@ -141,10 +135,5 @@ public class JaggedLineBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.jaggedline";
     }
 }

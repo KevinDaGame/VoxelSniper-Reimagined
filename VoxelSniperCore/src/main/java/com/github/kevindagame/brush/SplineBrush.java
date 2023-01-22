@@ -27,9 +27,7 @@ public class SplineBrush extends PerformerBrush {
     protected boolean set;
     protected boolean ctrl;
 
-    public SplineBrush() {
-        this.setName("Spline");
-    }
+
 
     public final void addToSet(final SnipeData v, final boolean ep, IBlock targetBlock) {
         String pos = "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ";
@@ -209,11 +207,6 @@ public class SplineBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.spline";
     }
 
     // Vector class for splines

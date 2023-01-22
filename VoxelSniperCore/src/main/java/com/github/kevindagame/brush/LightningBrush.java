@@ -15,12 +15,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class LightningBrush extends CustomBrush {
 
-    /**
-     *
-     */
-    public LightningBrush() {
-        this.setName("Lightning");
-    }
 
     @Override
     public final void info(final VoxelMessage vm) {
@@ -36,11 +30,6 @@ public class LightningBrush extends CustomBrush {
     @Override
     protected final void powder(final SnipeData v) {
         addOperation(new CustomOperation(this.getTargetBlock().getLocation(), this, v, CustomOperationContext.TARGETLOCATION));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.lightning";
     }
 
     @Override

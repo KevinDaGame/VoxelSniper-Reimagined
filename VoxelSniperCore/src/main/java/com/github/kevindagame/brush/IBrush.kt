@@ -1,22 +1,22 @@
-package com.github.kevindagame.brush;
+package com.github.kevindagame.brush
 
-import com.github.kevindagame.snipe.SnipeAction;
-import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.snipe.SnipeAction
+import com.github.kevindagame.snipe.SnipeData
+import com.github.kevindagame.util.VoxelMessage
+import com.github.kevindagame.voxelsniper.block.IBlock
+import util.InitOnceProperty
+import kotlin.properties.ReadWriteProperty
 
-import java.util.HashMap;
-import java.util.List;
+inline fun <reified T> initOnce(): ReadWriteProperty<Any, T> = InitOnceProperty()
 
 /**
  * Brush Interface.
  */
-public interface IBrush {
-
+interface IBrush {
     /**
      * @param vm Message object
      */
-    void info(VoxelMessage vm);
+    fun info(vm: VoxelMessage)
 
     /**
      * Handles parameters passed to brushes.
@@ -25,41 +25,32 @@ public interface IBrush {
      * @param params        Array of string containing parameters
      * @param v             Snipe Data
      */
-    void parseParameters(String triggerHandle, String[] params, SnipeData v);
-
-    boolean perform(SnipeAction action, SnipeData data, IBlock targetBlock, IBlock lastBlock);
-
+    fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData)
+    fun perform(action: SnipeAction, data: SnipeData, targetBlock: IBlock, lastBlock: IBlock): Boolean
     /**
      * @return The name of the Brush
      */
-    String getName();
-
     /**
      * @param name New name for the Brush
      */
-    void setName(String name);
-
-    /**
-     * @return The name of the category the brush is in.
-     */
-    String getBrushCategory();
+    var name: String
 
     /**
      * @return Permission node required to use this brush
      */
-    String getPermissionNode();
+    var permissionNode: String
 
     /**
      * Registers the additional arguments for the tab completion
      *
      * @return
      */
-    List<String> registerArguments();
+    fun registerArguments(): List<String>
 
     /**
      * Registers the additional arguments for the tab completion
      *
      * @return
      */
-    HashMap<String, List<String>> registerArgumentValues();
+    fun registerArgumentValues(): HashMap<String, List<String>>
 }

@@ -20,12 +20,6 @@ public class CylinderBrush extends PerformerBrush {
 
     private boolean smoothCircle = false;
 
-    /**
-     *
-     */
-    public CylinderBrush() {
-        this.setName("Cylinder");
-    }
 
     private void cylinder(final SnipeData v) {
         this.positions = Shapes.cylinder(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight(), v.getcCen(), this.smoothCircle);
@@ -108,10 +102,5 @@ public class CylinderBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.cylinder";
     }
 }

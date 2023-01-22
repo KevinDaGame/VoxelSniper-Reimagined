@@ -12,12 +12,6 @@ import com.github.kevindagame.util.VoxelMessage;
  */
 public class VoxelBrush extends PerformerBrush {
 
-    /**
-     *
-     */
-    public VoxelBrush() {
-        this.setName("Voxel");
-    }
 
     private void voxel(final SnipeData v) {
         this.positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
@@ -37,10 +31,5 @@ public class VoxelBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.voxel";
     }
 }

@@ -15,13 +15,6 @@ import com.github.kevindagame.util.VoxelMessage;
 public class DomeBrush extends PerformerBrush {
 
     /**
-     *
-     */
-    public DomeBrush() {
-        this.setName("Dome");
-    }
-
-    /**
      * @param v
      */
     private void generateDome(final SnipeData v) {
@@ -50,10 +43,5 @@ public class DomeBrush extends PerformerBrush {
     @Override
     protected final void doPowder(final SnipeData v) {
         this.generateDome(v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.dome";
     }
 }
