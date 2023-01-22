@@ -16,7 +16,11 @@ import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
 import com.google.common.collect.ImmutableList
+import util.InitOnceProperty
 import java.util.*
+import kotlin.properties.ReadWriteProperty
+
+inline fun <reified T> initOnce(): ReadWriteProperty<Any, T> = InitOnceProperty()
 
 /**
  * Abstract implementation of the [IBrush] interface.
@@ -51,7 +55,8 @@ abstract class AbstractBrush : IBrush {
     /**
      * Brush name.
      */
-    private var name = "Undefined"
+    var name: String by initOnce()
+    var permissionNode: String by initOnce()
     protected var snipeAction: SnipeAction? = null
 
     private fun preparePerform(v: SnipeData, clickedBlock: IBlock, clickedFace: BlockFace): Boolean {
