@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author ervinnnc
@@ -44,29 +43,25 @@ public abstract class VoxelCommandManager {
     public abstract void registerCommand(VoxelCommand command);
 
     public void registerBrushSubcommands() {
-        try {
-            for (String brushHandle : VoxelBrushManager.getInstance().getBrushHandles()) {
-                // Initialize brush to retrieve subcommand map
-                IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).getClazz().newInstance();
+        for (String brushHandle : VoxelBrushManager.getInstance().getBrushHandles()) {
+            // Initialize brush to retrieve subcommand map
+            IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).getSupplier().get();
 
-                if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle)) {
-                    VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
+            if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle)) {
+                VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
+                return;
+            }
+
+            argumentsMap.put(BRUSH_SUBCOMMAND_PREFIX + brushHandle, brush.registerArguments());
+
+            brush.registerArgumentValues().forEach((identifier, arguments) -> {
+                if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier)) {
+                    VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
                     return;
                 }
 
-                argumentsMap.put(BRUSH_SUBCOMMAND_PREFIX + brushHandle, brush.registerArguments());
-
-                brush.registerArgumentValues().forEach((identifier, arguments) -> {
-                    if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier)) {
-                        VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle + identifier, brushHandle});
-                        return;
-                    }
-
-                    argumentsMap.put(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier, arguments);
-                });
-            }
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(VoxelCommandManager.class.getName()).log(Level.SEVERE, "Could not initialize brush subcommand arguments!", ex);
+                argumentsMap.put(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier, arguments);
+            });
         }
     }
 

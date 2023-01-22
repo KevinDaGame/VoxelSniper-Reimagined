@@ -1,6 +1,7 @@
 package com.github.kevindagame.brush
 
 import java.util.*
+import java.util.function.Supplier
 
 /**
  * Builder class for (old) brushes
@@ -9,7 +10,7 @@ class BrushBuilder {
     private lateinit var name: String
     private lateinit var permission: String
     private val aliases: MutableList<String> = mutableListOf()
-    private lateinit var clazz: Class<out IBrush>
+    private lateinit var supplier: Supplier<out IBrush>
 
     /**
      * Sets the name of the brush.
@@ -42,9 +43,9 @@ class BrushBuilder {
     /**
      * Sets the class of the brush.
      */
-    fun setClass(clazz: Class<out IBrush>): BrushBuilder
+    fun setSupplier(supplier: Supplier<out IBrush>): BrushBuilder
     {
-        this.clazz = clazz
+        this.supplier = supplier
         return this
     }
 
@@ -52,6 +53,6 @@ class BrushBuilder {
         if(!::permission.isInitialized) {
             permission = "voxelsniper.brush.${name.lowercase(Locale.getDefault())}"
         }
-        return BrushData(name, permission, aliases, clazz)
+        return BrushData(name, permission, aliases, supplier)
     }
 }

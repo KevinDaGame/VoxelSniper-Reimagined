@@ -59,6 +59,6 @@ class PolyBrushBuilder {
      * Build the brush
      */
     fun build(): PolyBrushData {
-        return PolyBrushData(name, permission, aliases, PolyBrush::class.javaObjectType, shapes, operation)
+        return PolyBrushData(name, permission, aliases, { PolyBrush(name, permission, aliases, shapes, operation) }, shapes, operation)
     }
 }

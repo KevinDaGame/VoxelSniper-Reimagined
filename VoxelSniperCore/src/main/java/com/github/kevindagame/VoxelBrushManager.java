@@ -2,7 +2,6 @@ package com.github.kevindagame;
 
 import com.github.kevindagame.brush.*;
 import com.github.kevindagame.brush.multiBlock.*;
-import com.github.kevindagame.brush.polymorphic.PolyBrush;
 import com.github.kevindagame.brush.shell.ShellBallBrush;
 import com.github.kevindagame.brush.shell.ShellSetBrush;
 import com.github.kevindagame.brush.shell.ShellVoxelBrush;
@@ -118,329 +117,329 @@ public class VoxelBrushManager {
     }
 
     private static BrushData biomeBrush() {
-        return new BrushBuilder().name("biome").alias("bio").setClass(BiomeBrush.class).build();
+        return new BrushBuilder().name("biome").alias("bio").setSupplier(BiomeBrush::new).build();
     }
 
     private static BrushData ballBrush() {
-        return new BrushBuilder().name("ball").alias("b").setClass(BallBrush.class).build();
+        return new BrushBuilder().name("ball").alias("b").setSupplier(BallBrush::new).build();
     }
 
     private static BrushData biomeBallBrush() {
         return new BrushBuilder().name("biomeball"
-        ).alias("bioball").setClass(BiomeBallBrush.class).build();
+        ).alias("bioball").setSupplier(BiomeBallBrush::new).build();
     }
 
     private static BrushData blendBallBrush() {
         return new BrushBuilder().name("blendball"
-        ).alias("bb").setClass(BlendBallBrush.class).build();
+        ).alias("bb").setSupplier(BlendBallBrush::new).build();
     }
 
     private static BrushData blendDiscBrush() {
         return new BrushBuilder().name("blenddisc"
-        ).alias("bd").setClass(BlendDiscBrush.class).build();
+        ).alias("bd").setSupplier(BlendDiscBrush::new).build();
     }
 
     private static BrushData blendVoxelBrush() {
         return new BrushBuilder().name("blendvoxel"
-        ).alias("bv").setClass(BlendVoxelBrush.class).build();
+        ).alias("bv").setSupplier(BlendVoxelBrush::new).build();
     }
 
     private static BrushData blendVoxelDiscBrush() {
         return new BrushBuilder().name("blendvoxeldisc"
-        ).alias("bvd").setClass(BlendVoxelDiscBrush.class).build();
+        ).alias("bvd").setSupplier(BlendVoxelDiscBrush::new).build();
     }
 
     private static BrushData blobBrush() {
         return new BrushBuilder().name("splatblob"
-        ).alias("blob").setClass(BlobBrush.class).build();
+        ).alias("blob").setSupplier(BlobBrush::new).build();
     }
 
     private static BrushData blockResetBrush() {
         return new BrushBuilder().name("blockresetbrush"
-        ).alias("brb").setClass(BlockResetBrush.class).build();
+        ).alias("brb").setSupplier(BlockResetBrush::new).build();
     }
 
     private static BrushData blockResetSurfaceBrush() {
         return new BrushBuilder().name("blockresetbrushsurface"
-        ).alias("brbs").setClass(BlockResetSurfaceBrush.class).build();
+        ).alias("brbs").setSupplier(BlockResetSurfaceBrush::new).build();
     }
 
     private static BrushData canyonBrush() {
         return new BrushBuilder().name("canyon"
-        ).alias("ca").setClass(CanyonBrush.class).build();
+        ).alias("ca").setSupplier(CanyonBrush::new).build();
     }
 
     private static BrushData canyonSelectionBrush() {
         return new BrushBuilder().name("canyonselection"
-        ).alias("cas").setClass(CanyonSelectionBrush.class).build();
+        ).alias("cas").setSupplier(CanyonSelectionBrush::new).build();
     }
 
     private static BrushData checkerVoxelDiscBrush() {
         return new BrushBuilder().name("checkervoxeldisc"
-        ).alias("cvd").setClass(CheckerVoxelDiscBrush.class).build();
+        ).alias("cvd").setSupplier(CheckerVoxelDiscBrush::new).build();
     }
 
     private static BrushData cleanSnowBrush() {
         return new BrushBuilder().name("cleansnow"
-        ).alias("cls").setClass(CleanSnowBrush.class).build();
+        ).alias("cls").setSupplier(CleanSnowBrush::new).build();
     }
 
     private static BrushData cloneStampBrush() {
         return new BrushBuilder().name("clonestamp"
-        ).alias("cs").setClass(CloneStampBrush.class).build();
+        ).alias("cs").setSupplier(CloneStampBrush::new).build();
     }
 
     private static BrushData cometBrush() {
         return new BrushBuilder().name("comet"
-        ).alias("com").setClass(CometBrush.class).build();
+        ).alias("com").setSupplier(CometBrush::new).build();
     }
 
     private static BrushData copyPastaBrush() {
         return new BrushBuilder().name("copypasta"
-        ).alias("cp").setClass(CopyPastaBrush.class).build();
+        ).alias("cp").setSupplier(CopyPastaBrush::new).build();
     }
 
     private static BrushData cylinderBrush() {
         return new BrushBuilder().name("cylinder"
-        ).alias("c").setClass(CylinderBrush.class).build();
+        ).alias("c").setSupplier(CylinderBrush::new).build();
     }
 
     private static BrushData discBrush() {
         return new BrushBuilder().name("disc"
-        ).alias("d").setClass(DiscBrush.class).build();
+        ).alias("d").setSupplier(DiscBrush::new).build();
     }
 
     private static BrushData discFaceBrush() {
         return new BrushBuilder().name("discface"
-        ).alias("df").setClass(DiscFaceBrush.class).build();
+        ).alias("df").setSupplier(DiscFaceBrush::new).build();
     }
 
     private static BrushData domeBrush() {
         return new BrushBuilder().name("domebrush"
-        ).alias("dome").setClass(DomeBrush.class).build();
+        ).alias("dome").setSupplier(DomeBrush::new).build();
     }
 
     private static BrushData drainBrush() {
         return new BrushBuilder().name("drain"
-        ).setClass(DrainBrush.class).build();
+        ).setSupplier(DrainBrush::new).build();
     }
 
     private static BrushData ellipseBrush() {
         return new BrushBuilder().name("ellipse"
-        ).alias("el").setClass(EllipseBrush.class).build();
+        ).alias("el").setSupplier(EllipseBrush::new).build();
     }
 
     private static BrushData ellipsoidBrush() {
         return new BrushBuilder().name("ellipsoid"
-        ).alias("elo").setClass(EllipsoidBrush.class).build();
+        ).alias("elo").setSupplier(EllipsoidBrush::new).build();
     }
 
     private static BrushData entityBrush() {
         return new BrushBuilder().name("entity"
-        ).alias("en").setClass(EntityBrush.class).build();
+        ).alias("en").setSupplier(EntityBrush::new).build();
     }
 
     private static BrushData entityRemovalBrush() {
         return new BrushBuilder().name("entityremoval"
-        ).alias("er").setClass(EntityRemovalBrush.class).build();
+        ).alias("er").setSupplier(EntityRemovalBrush::new).build();
     }
 
     private static BrushData eraserBrush() {
         return new BrushBuilder().name("eraser"
-        ).alias("erase").setClass(EraserBrush.class).build();
+        ).alias("erase").setSupplier(EraserBrush::new).build();
     }
 
     private static BrushData erodeBrush() {
         return new BrushBuilder().name("erode"
-        ).alias("e").setClass(ErodeBrush.class).build();
+        ).alias("e").setSupplier(ErodeBrush::new).build();
     }
 
     private static BrushData extrudeBrush() {
         return new BrushBuilder().name("extrude"
-        ).alias("ex").setClass(ExtrudeBrush.class).build();
+        ).alias("ex").setSupplier(ExtrudeBrush::new).build();
     }
 
     private static BrushData fillDownBrush() {
         return new BrushBuilder().name("filldown"
-        ).alias("fd").setClass(FillDownBrush.class).build();
+        ).alias("fd").setSupplier(FillDownBrush::new).build();
     }
 
     private static BrushData flatOceanBrush() {
         return new BrushBuilder().name("flatocean"
-        ).alias("fo").setClass(FlatOceanBrush.class).build();
+        ).alias("fo").setSupplier(FlatOceanBrush::new).build();
     }
 
     private static BrushData generateTreeBrush() {
         return new BrushBuilder().name("generatetree"
-        ).alias("gt").setClass(GenerateTreeBrush.class).build();
+        ).alias("gt").setSupplier(GenerateTreeBrush::new).build();
     }
 
     private static BrushData jaggedLineBrush() {
         return new BrushBuilder().name("jagged"
-        ).alias("j").setClass(JaggedLineBrush.class).build();
+        ).alias("j").setSupplier(JaggedLineBrush::new).build();
     }
 
     private static BrushData jockeyBrush() {
         return new BrushBuilder().name("jockey"
-        ).setClass(JockeyBrush.class).build();
+        ).setSupplier(JockeyBrush::new).build();
     }
 
     private static BrushData lightningBrush() {
         return new BrushBuilder().name("lightning"
-        ).alias("light").setClass(LightningBrush.class).build();
+        ).alias("light").setSupplier(LightningBrush::new).build();
     }
 
     private static BrushData lineBrush() {
         return new BrushBuilder().name("line"
-        ).alias("l").setClass(LineBrush.class).build();
+        ).alias("l").setSupplier(LineBrush::new).build();
     }
 
     private static BrushData moveBrush() {
         return new BrushBuilder().name("move"
-        ).alias("mv").setClass(MoveBrush.class).build();
+        ).alias("mv").setSupplier(MoveBrush::new).build();
     }
 
     private static BrushData oceanBrush() {
         return new BrushBuilder().name("ocean"
-        ).alias("o").setClass(OceanBrush.class).build();
+        ).alias("o").setSupplier(OceanBrush::new).build();
     }
 
     private static BrushData overlayBrush() {
         return new BrushBuilder().name("overlay"
-        ).alias("over").setClass(OverlayBrush.class).build();
+        ).alias("over").setSupplier(OverlayBrush::new).build();
     }
 
     private static BrushData paintingBrush() {
         return new BrushBuilder().name("painting"
-        ).setClass(PaintingBrush.class).build();
+        ).setSupplier(PaintingBrush::new).build();
     }
 
     private static BrushData pullBrush() {
         return new BrushBuilder().name("pull"
-        ).setClass(PullBrush.class).build();
+        ).setSupplier(PullBrush::new).build();
     }
 
     private static BrushData regenerateChunkBrush() {
         return new BrushBuilder().name("regeneratechunk"
-        ).alias("rc").setClass(RegenerateChunkBrush.class).build();
+        ).alias("rc").setSupplier(RegenerateChunkBrush::new).build();
     }
 
     private static BrushData ringBrush() {
         return new BrushBuilder().name("ring"
-        ).alias("ri").setClass(RingBrush.class).build();
+        ).alias("ri").setSupplier(RingBrush::new).build();
     }
 
     private static BrushData rulerBrush() {
         return new BrushBuilder().name("ruler"
-        ).alias("r").setClass(RulerBrush.class).build();
+        ).alias("r").setSupplier(RulerBrush::new).build();
     }
 
     private static BrushData scannerBrush() {
         return new BrushBuilder().name("scanner"
-        ).alias("sc").setClass(ScannerBrush.class).build();
+        ).alias("sc").setSupplier(ScannerBrush::new).build();
     }
 
     private static BrushData setBrush() {
         return new BrushBuilder().name("set"
-        ).setClass(SetBrush.class).build();
+        ).setSupplier(SetBrush::new).build();
     }
 
     private static BrushData shellBallBrush() {
         return new BrushBuilder().name("shellball"
-        ).alias("shb").setClass(ShellBallBrush.class).build();
+        ).alias("shb").setSupplier(ShellBallBrush::new).build();
     }
 
     private static BrushData shellSetBrush() {
         return new BrushBuilder().name("shellset"
-        ).alias("shs").setClass(ShellSetBrush.class).build();
+        ).alias("shs").setSupplier(ShellSetBrush::new).build();
     }
 
     private static BrushData shellVoxelBrush() {
         return new BrushBuilder().name("shellvoxel"
-        ).alias("shv").setClass(ShellVoxelBrush.class).build();
+        ).alias("shv").setSupplier(ShellVoxelBrush::new).build();
     }
 
     private static BrushData signOverwriteBrush() {
         return new BrushBuilder().name("signoverwriter"
-        ).alias("sio").setClass(SignOverwriteBrush.class).build();
+        ).alias("sio").setSupplier(SignOverwriteBrush::new).build();
     }
 
     private static BrushData snipeBrush() {
         return new BrushBuilder().name("snipe"
-        ).alias("s").setClass(SnipeBrush.class).build();
+        ).alias("s").setSupplier(SnipeBrush::new).build();
     }
 
     private static BrushData splatterBallBrush() {
         return new BrushBuilder().name("splatball"
-        ).alias("sb").setClass(SplatterBallBrush.class).build();
+        ).alias("sb").setSupplier(SplatterBallBrush::new).build();
     }
 
     private static BrushData splatterDiscBrush() {
         return new BrushBuilder().name("splatdisc"
-        ).alias("sd").setClass(SplatterDiscBrush.class).build();
+        ).alias("sd").setSupplier(SplatterDiscBrush::new).build();
     }
 
     private static BrushData splatterOverlayBrush() {
         return new BrushBuilder().name("splatteroverlay"
-        ).alias("sover").setClass(SplatterOverlayBrush.class).build();
+        ).alias("sover").setSupplier(SplatterOverlayBrush::new).build();
     }
 
     private static BrushData splineBrush() {
         return new BrushBuilder().name("spline"
-        ).alias("sp").setClass(SplineBrush.class).build();
+        ).alias("sp").setSupplier(SplineBrush::new).build();
     }
 
     private static BrushData splatterVoxelBrush() {
         return new BrushBuilder().name("splattervoxel"
-        ).alias("sv").setClass(SplatterVoxelBrush.class).build();
+        ).alias("sv").setSupplier(SplatterVoxelBrush::new).build();
     }
 
     private static BrushData splatterVoxelDiscBrush() {
         return new BrushBuilder().name("splatvoxeldisc"
-        ).alias("svd").setClass(SplatterVoxelDiscBrush.class).build();
+        ).alias("svd").setSupplier(SplatterVoxelDiscBrush::new).build();
     }
 
     private static BrushData threePointCircleBrush() {
         return new BrushBuilder().name("threepointcircle"
-        ).alias("tpc").setClass(ThreePointCircleBrush.class).build();
+        ).alias("tpc").setSupplier(ThreePointCircleBrush::new).build();
     }
 
     private static BrushData treeSnipeBrush() {
-        return new BrushBuilder().name("t").setClass(TreeSnipeBrush.class).build();
+        return new BrushBuilder().name("t").setSupplier(TreeSnipeBrush::new).build();
     }
 
     private static BrushData triangleBrush() {
         return new BrushBuilder().name("triangle"
-        ).alias("tri").setClass(TriangleBrush.class).build();
+        ).alias("tri").setSupplier(TriangleBrush::new).build();
     }
 
     private static BrushData underlayBrush() {
         return new BrushBuilder().name("underlay"
-        ).alias("under").setClass(UnderlayBrush.class).build();
+        ).alias("under").setSupplier(UnderlayBrush::new).build();
     }
 
     private static BrushData voltMeterBrush() {
         return new BrushBuilder().name("voltmeter"
-        ).alias("volt").setClass(VoltMeterBrush.class).build();
+        ).alias("volt").setSupplier(VoltMeterBrush::new).build();
     }
 
     private static BrushData voxelBrush() {
         return new BrushBuilder().name("voxel"
-        ).alias("v").setClass(VoxelBrush.class).build();
+        ).alias("v").setSupplier(VoxelBrush::new).build();
     }
 
     private static BrushData voxelDiscBrush() {
         return new BrushBuilder().name("voxeldisc"
-        ).alias("vd").setClass(VoxelDiscBrush.class).build();
+        ).alias("vd").setSupplier(VoxelDiscBrush::new).build();
     }
 
     private static BrushData voxelDiscFaceBrush() {
         return new BrushBuilder().name("voxeldiscface"
-        ).alias("vdf").setClass(VoxelDiscFaceBrush.class).build();
+        ).alias("vdf").setSupplier(VoxelDiscFaceBrush::new).build();
     }
 
     private static BrushData warpBrush() {
-        return new BrushBuilder().name("warp").alias("w").setClass(WarpBrush.class).build();
+        return new BrushBuilder().name("warp").alias("w").setSupplier(WarpBrush::new).build();
     }
 
     /**

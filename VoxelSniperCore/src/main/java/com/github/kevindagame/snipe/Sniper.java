@@ -294,13 +294,8 @@ public class Sniper {
     }
 
     public @Nullable IBrush instantiateBrush(BrushData brushData) {
-        try {
-            var brushInstance = brushData.getClazz().newInstance();
-            if(getPlayer().hasPermission(brushInstance.getPermissionNode()))
-            return brushInstance;
-        } catch (InstantiationException | IllegalAccessException e) {
-            return null;
-        }
+        var brushInstance = brushData.getSupplier().get();
+        if(getPlayer().hasPermission(brushInstance.getPermissionNode())) return brushInstance;
         return null;
     }
 
