@@ -34,4 +34,8 @@ public class VoxelProfileManager {
         }
         return sniperInstances.get(player.getUniqueId());
     }
+
+    public void clearSniperForPlayer(IPlayer player) {
+        sniperInstances.remove(player.getUniqueId());
+    }
 }

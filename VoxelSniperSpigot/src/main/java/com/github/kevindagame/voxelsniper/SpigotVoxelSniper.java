@@ -126,6 +126,8 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
+        var player = this.players.get(event.getPlayer().getUniqueId());
+        if (player != null) VoxelProfileManager.getInstance().clearSniperForPlayer(player);
         this.players.remove(event.getPlayer().getUniqueId());
     }
 

@@ -29,14 +29,15 @@ public class SnipeTool {
         this.snipeData = snipeData;
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
-        if (brush != null && snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode())) { // npe brush.getPermissionNode()
+        if (brush != null && snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode())) {
             this.currentBrush = brush;
         }
     }
 
     public @Nullable IBrush getCurrentBrush() {
         if (currentBrush == null) {
-            return null;
+            currentBrush = snipeData.owner().instantiateBrush(SnipeBrush.class);
+            return currentBrush;
         }
         return currentBrush;
     }
