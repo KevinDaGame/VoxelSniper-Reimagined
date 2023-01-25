@@ -5,6 +5,7 @@ import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
+import com.github.kevindagame.brush.polymorphic.PolyBrush;
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
@@ -172,6 +173,7 @@ public class Sniper {
 
     /**
      * For the given toolID, sets the current Brush to the previous Brush, and then returns the new Brush
+     *
      * @return The new Brush, or null if there is no previous Brush
      */
     public @Nullable IBrush previousBrush(String toolId) {
@@ -293,11 +295,20 @@ public class Sniper {
         this.getPlayer().sendMessage(message);
     }
 
+    /**
+     * Create the instance of a brush based on the BrushData
+     *
+     * @param brushData
+     * @return {IBrush} The brush instance
+     **/
     public @Nullable IBrush instantiateBrush(BrushData brushData) {
         var brushInstance = brushData.getSupplier().get();
-        brushInstance.setPermissionNode(brushData.getPermission());
-        brushInstance.setName(brushData.getName());
-        if(getPlayer().hasPermission(brushInstance.getPermissionNode())) return brushInstance;
+        //polybrush already does this in constructor, so no need (or ability) to set these parameters
+        if (!(brushInstance instanceof PolyBrush)) {
+            brushInstance.setPermissionNode(brushData.getPermission());
+            brushInstance.setName(brushData.getName());
+        }
+        if (getPlayer().hasPermission(brushInstance.getPermissionNode())) return brushInstance;
         return null;
     }
 

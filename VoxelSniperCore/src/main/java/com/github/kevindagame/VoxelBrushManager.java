@@ -2,6 +2,9 @@ package com.github.kevindagame;
 
 import com.github.kevindagame.brush.*;
 import com.github.kevindagame.brush.multiBlock.*;
+import com.github.kevindagame.brush.polymorphic.PolyBrushBuilder;
+import com.github.kevindagame.brush.polymorphic.PolyBrushShape;
+import com.github.kevindagame.brush.polymorphic.PolyOperation;
 import com.github.kevindagame.brush.shell.ShellBallBrush;
 import com.github.kevindagame.brush.shell.ShellSetBrush;
 import com.github.kevindagame.brush.shell.ShellVoxelBrush;
@@ -118,7 +121,7 @@ public class VoxelBrushManager {
 
     // region <Brush Registration methods>
     private static BrushData ballBrush() {
-        return new BrushBuilder().name("Ball").alias("b").alias("ball").setSupplier(BallBrush::new).setPermission("voxelsniper.brush.ball").build();
+        return new PolyBrushBuilder().name("Ball").alias("b").alias("ball").permission("voxelsniper.brush.ball").shape(PolyBrushShape.BALL).build();
     }
 
     private static BrushData biomeBrush() {

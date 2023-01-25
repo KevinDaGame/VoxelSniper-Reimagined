@@ -5,7 +5,7 @@ import com.github.kevindagame.brush.IBrush
 class PolyBrushBuilder {
     private lateinit var name: String
     private lateinit var permission: String
-    private lateinit var operation: PolyOperation
+    private var operation: PolyOperation = PolyOperation.BLOCK
 
     private val aliases: MutableList<String> = mutableListOf()
     private val shapes: MutableList<PolyBrushShape> = mutableListOf()
@@ -47,7 +47,7 @@ class PolyBrushBuilder {
     }
 
     /**
-     * Set the operation type of the brush
+     * Set the operation type of the brush By default this is {PolyOperation.BLOCK}
      */
     fun operation(operation: PolyOperation): PolyBrushBuilder
     {
