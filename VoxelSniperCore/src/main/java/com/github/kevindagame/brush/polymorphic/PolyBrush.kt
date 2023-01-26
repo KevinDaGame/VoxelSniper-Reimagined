@@ -99,6 +99,31 @@ class PolyBrush(
         return false
     }
 
+    override fun registerArguments(): List<String> {
+        return properties.map { it.name }
+    }
+
+    override fun parseParameters(triggerHandle: String, params: Array<out String>, v: SnipeData) {
+        if (params[0].equals("info", ignoreCase = true)) {
+            TODO("Not yet implemented")
+        }
+        for (property in properties) {
+            if (params[0].equals(property.name, ignoreCase = true)) {
+                property.set(params[1])
+                break
+
+            }
+        }
+    }
+
+    override fun registerArgumentValues(): HashMap<String, List<String>> {
+        val map = HashMap<String, List<String>>()
+        for(property in properties) {
+            map.put(property.name, property.getValues())
+        }
+        return map
+    }
+
     companion object {
         var SMOOTH_CIRCLE_VALUE = 0.5
         var VOXEL_CIRCLE_VALUE = 0.0
