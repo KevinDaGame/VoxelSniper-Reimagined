@@ -61,7 +61,7 @@ public class VoxelBrushCommand extends VoxelCommand {
 
             var brush = sniper.getBrush(currentToolId);
             if (brush == null) {
-                snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
+                snipeData.sendMessage(Messages.NO_BRUSH_SELECTED);
                 return true;
             }
 
