@@ -1,7 +1,5 @@
 package com.github.kevindagame.brush.polymorphic
 
-import com.github.kevindagame.brush.IBrush
-
 class PolyBrushBuilder {
     private lateinit var name: String
     private lateinit var permission: String
@@ -13,8 +11,7 @@ class PolyBrushBuilder {
     /**
      * Sets the name of the brush.
      */
-    fun name(name: String): PolyBrushBuilder
-    {
+    fun name(name: String): PolyBrushBuilder {
         this.name = name
         return this
     }
@@ -22,8 +19,7 @@ class PolyBrushBuilder {
     /**
      * Add an alias for the brush.
      */
-    fun alias(alias: String): PolyBrushBuilder
-    {
+    fun alias(alias: String): PolyBrushBuilder {
         aliases.add(alias)
         return this
     }
@@ -31,8 +27,7 @@ class PolyBrushBuilder {
     /**
      * Sets the permission of the brush.
      */
-    fun permission(permission: String): PolyBrushBuilder
-    {
+    fun permission(permission: String): PolyBrushBuilder {
         this.permission = permission
         return this
     }
@@ -40,8 +35,7 @@ class PolyBrushBuilder {
     /**
      * Add an operation to the brush.
      */
-    fun shape(shape: PolyBrushShape): PolyBrushBuilder
-    {
+    fun shape(shape: PolyBrushShape): PolyBrushBuilder {
         shapes.add(shape)
         return this
     }
@@ -49,8 +43,7 @@ class PolyBrushBuilder {
     /**
      * Set the operation type of the brush By default this is {PolyOperation.BLOCK}
      */
-    fun operation(operation: PolyOperation): PolyBrushBuilder
-    {
+    fun operation(operation: PolyOperation): PolyBrushBuilder {
         this.operation = operation
         return this
     }
@@ -59,6 +52,13 @@ class PolyBrushBuilder {
      * Build the brush
      */
     fun build(): PolyBrushData {
-        return PolyBrushData(name, permission, aliases, { PolyBrush(name, permission, aliases, shapes, operation) }, shapes, operation)
+        return PolyBrushData(
+            name,
+            permission,
+            aliases,
+            { PolyBrush(name, permission, aliases, shapes, operation) },
+            shapes,
+            operation
+        )
     }
 }

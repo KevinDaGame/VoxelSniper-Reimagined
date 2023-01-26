@@ -1,11 +1,11 @@
 package com.github.kevindagame.brush.polymorphic
 
 import com.github.kevindagame.brush.perform.PerformerBrush
+import com.github.kevindagame.brush.polymorphic.property.PolyPropertiesEnum
+import com.github.kevindagame.brush.polymorphic.property.PolyProperty
+import com.github.kevindagame.brush.polymorphic.property.SmoothProperty
 import com.github.kevindagame.snipe.SnipeData
-import com.github.kevindagame.util.Shapes
 import com.github.kevindagame.util.VoxelMessage
-import com.github.kevindagame.util.brushOperation.BlockOperation
-import com.github.kevindagame.util.brushOperation.BrushOperation
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import kotlin.math.pow
 
@@ -14,14 +14,20 @@ class PolyBrush(
     permissionNode: String,
     val aliases: MutableList<String>,
     val shapes: MutableList<PolyBrushShape>,
-    val operation: PolyOperation
+    val operation: PolyOperation,
 ) : PerformerBrush() {
-    // TODO How to make this configurable?
-    private val smooth: Boolean = false
+    var properties: MutableList<PolyProperty<*>> = mutableListOf()
 
     init {
         this.name = name
         this.permissionNode = permissionNode
+        var properties = mutableSetOf<PolyPropertiesEnum>()
+        for (shape in shapes) {
+            properties.addAll(shape.parameters.toList())
+        }
+        for (property in properties) {
+            this.properties.add(property.clazz.java.newInstance())
+        }
     }
 
     override fun info(vm: VoxelMessage) {
@@ -45,7 +51,7 @@ class PolyBrush(
     private fun getPositions(v: SnipeData): List<BaseLocation> {
         val positions = initPositions(v)
         val newPositions = mutableListOf<BaseLocation>()
-        val radiusSquared = (v.brushSize + if (smooth) SMOOTH_CIRCLE_VALUE else VOXEL_CIRCLE_VALUE).pow(2)
+        val radiusSquared = (v.brushSize + if (getSmooth()) SMOOTH_CIRCLE_VALUE else VOXEL_CIRCLE_VALUE).pow(2)
         val center = targetBlock
 
         for (position in positions) {
@@ -70,7 +76,7 @@ class PolyBrush(
      * "A relative location a day keeps the Math pain away" - KevinDaGame
      */
     private fun initPositions(v: SnipeData): MutableList<PolyLocation> {
-        var positions = mutableListOf<PolyLocation>()
+        val positions = mutableListOf<PolyLocation>()
         val brushSize = v.brushSize
         for (z in brushSize downTo -brushSize) {
             for (x in brushSize downTo -brushSize) {
@@ -82,6 +88,15 @@ class PolyBrush(
             }
         }
         return positions
+    }
+
+    private fun getSmooth(): Boolean {
+        for (property in properties) {
+            if (property is SmoothProperty) {
+                return property.value
+            }
+        }
+        return false
     }
 
     companion object {
