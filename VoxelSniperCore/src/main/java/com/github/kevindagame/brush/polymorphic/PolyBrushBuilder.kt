@@ -56,7 +56,7 @@ class PolyBrushBuilder {
             name,
             permission,
             aliases,
-            { PolyBrush(name, permission, aliases, shapes, operation) },
+            { PolyBrush(name, permission, shapes, operation) },
             shapes,
             operation
         )

@@ -2,6 +2,9 @@ package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
+import com.github.kevindagame.brush.BallBrush;
+import com.github.kevindagame.brush.BrushBuilder;
+import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
@@ -35,32 +38,30 @@ public class BrushesTest {
 
     @Test
     public void testGetBrushForHandle() {
-        IBrush brush = Mockito.mock(IBrush.class);
-        brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Assert.assertEquals(brush.getClass(), brushes.getBrushForHandle("mockhandle"));
-        Assert.assertEquals(brush.getClass(), brushes.getBrushForHandle("testhandle"));
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build();
+        brushes.registerSniperBrush(brushData);
+        Assert.assertEquals(brushData, brushes.getBrushForHandle("mockhandle"));
+        Assert.assertEquals(brushData, brushes.getBrushForHandle("testhandle"));
         Assert.assertNull(brushes.getBrushForHandle("notExistant"));
     }
 
     @Test
     public void testRegisteredSniperBrushes() {
-        IBrush brush = Mockito.mock(IBrush.class);
-        brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
+        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testRegisteredSniperBrushHandles() {
-        IBrush brush = Mockito.mock(IBrush.class);
-        brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
+        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testGetSniperBrushHandles() {
-        IBrush brush = Mockito.mock(IBrush.class);
-        brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brush.getClass());
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build();
+        brushes.registerSniperBrush(brushData);
+        Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brushData);
         Assert.assertTrue(sniperBrushHandles.contains("mockhandle"));
         Assert.assertTrue(sniperBrushHandles.contains("testhandle"));
         Assert.assertFalse(sniperBrushHandles.contains("notInSet"));
@@ -68,18 +69,17 @@ public class BrushesTest {
 
     @Test
     public void testGetRegisteredBrushesMap() {
-        IBrush brush = Mockito.mock(IBrush.class);
-        brushes.registerSniperBrush(brush.getClass(), "mockhandle", "testhandle");
-        Map<String, Class<? extends IBrush>> registeredBrushesMap = brushes.getRegisteredBrushesMap();
-        Assert.assertTrue(registeredBrushesMap.containsValue(brush.getClass()));
-        Assert.assertFalse(registeredBrushesMap.containsValue(IBrush.class));
-        Assert.assertSame(registeredBrushesMap.get("mockhandle"), brush.getClass());
-        Assert.assertSame(registeredBrushesMap.get("testhandle"), brush.getClass());
-        Assert.assertNotSame(registeredBrushesMap.get("notAnEntry"), brush.getClass());
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build();
+        brushes.registerSniperBrush(brushData);
+        Map<String, BrushData> registeredBrushesMap = brushes.getRegisteredBrushesMap();
+        Assert.assertTrue(registeredBrushesMap.containsValue(brushData));
+        Assert.assertSame(registeredBrushesMap.get("mockhandle"), brushData);
+        Assert.assertSame(registeredBrushesMap.get("testhandle"), brushData);
+        Assert.assertNotSame(registeredBrushesMap.get("notAnEntry"), brushData);
     }
 
     @Test
-    public void testPerformerBrushesArgumentsOverloading() throws Exception {
+    public void testPerformerBrushesArgumentsOverloading() {
         // Load all brushes
         brushes = VoxelBrushManager.initialize();
 
@@ -95,14 +95,14 @@ public class BrushesTest {
         System.out.println("======================================================================");
 
         for (String brushHandle : brushes.getBrushHandles()) {
-            Class<? extends IBrush> clazz = brushes.getBrushForHandle(brushHandle);
-            IBrush brush = clazz.getDeclaredConstructor().newInstance();
+            BrushData brushData = brushes.getBrushForHandle(brushHandle);
+            IBrush brush = brushData.getSupplier().get();
 
             if (brush instanceof PerformerBrush) {
                 List<String> arguments = brush.registerArguments();
-                Assert.assertTrue("PERFORMER ARGUMENTS TEST: Please see the HINT A above. Failing at: " + clazz.getName(), arguments.contains("p"));
+                Assert.assertTrue("PERFORMER ARGUMENTS TEST: Please see the HINT A above. Failing at: " + brushData.getName(), arguments.contains("p"));
 
-                Assert.assertEquals("PERFORMER ARGUMENTS TEST: Duplicate argument 'p'. Please see the HINT Z above. Failing at: " + clazz.getName(), 1, Collections.frequency(arguments, "p"));
+                Assert.assertEquals("PERFORMER ARGUMENTS TEST: Duplicate argument 'p'. Please see the HINT Z above. Failing at: " + brushData.getName(), 1, Collections.frequency(arguments, "p"));
             }
         }
         System.out.println("Performer Arguments Test OK!");
@@ -112,7 +112,7 @@ public class BrushesTest {
     }
 
     @Test
-    public void testPerformerBrushesArgumentValuesOverloading() throws Exception {
+    public void testPerformerBrushesArgumentValuesOverloading() {
         // Load all brushes
         brushes = VoxelBrushManager.initialize();
         System.out.println(" ");
@@ -129,13 +129,13 @@ public class BrushesTest {
         Collection<String> performerHandles = Performer.getPerformerHandles();
 
         for (String brushHandle : brushes.getBrushHandles()) {
-            Class<? extends IBrush> clazz = brushes.getBrushForHandle(brushHandle);
-            IBrush brush = clazz.getDeclaredConstructor().newInstance();
+            BrushData brushData = brushes.getBrushForHandle(brushHandle);
+            IBrush brush = brushData.getSupplier().get();
 
             if (brush instanceof PerformerBrush) {
                 HashMap<String, List<String>> argumentValues = brush.registerArgumentValues();
-                Assert.assertTrue("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT A above. Failing at: " + clazz.getName(), argumentValues.containsKey("p"));
-                Assert.assertTrue("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT Z above. Failing at: " + clazz.getName(), argumentValues.get("p").containsAll(performerHandles));
+                Assert.assertTrue("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT A above. Failing at: " + brushData.getName(), argumentValues.containsKey("p"));
+                Assert.assertTrue("PERFORMER ARGUMENTS VALUES TEST: Please see the HINT Z above. Failing at: " + brushData.getName(), argumentValues.get("p").containsAll(performerHandles));
             }
         }
         System.out.println("Performer Arguments VALUES Test OK!");

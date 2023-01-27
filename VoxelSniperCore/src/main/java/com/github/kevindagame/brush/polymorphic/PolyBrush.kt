@@ -12,7 +12,6 @@ import kotlin.math.pow
 class PolyBrush(
     name: String,
     permissionNode: String,
-    val aliases: MutableList<String>,
     val shapes: MutableList<PolyBrushShape>,
     val operation: PolyOperation,
 ) : PerformerBrush() {
@@ -21,12 +20,12 @@ class PolyBrush(
     init {
         this.name = name
         this.permissionNode = permissionNode
-        var properties = mutableSetOf<PolyPropertiesEnum>()
+        val properties = mutableSetOf<PolyPropertiesEnum>()
         for (shape in shapes) {
             properties.addAll(shape.parameters.toList())
         }
         for (property in properties) {
-            this.properties.add(property.clazz.java.newInstance())
+            this.properties.add(property.clazz.java.getDeclaredConstructor().newInstance())
         }
     }
 
@@ -100,10 +99,13 @@ class PolyBrush(
     }
 
     override fun registerArguments(): List<String> {
-        return properties.map { it.name }
+        val arguments = properties.map { it.name }.toMutableList()
+        arguments.addAll(super.registerArguments())
+        return arguments
     }
 
     override fun parseParameters(triggerHandle: String, params: Array<out String>, v: SnipeData) {
+        super.parseParameters(triggerHandle, params, v)
         if (params[0].equals("info", ignoreCase = true)) {
             TODO("Not yet implemented")
         }
@@ -121,6 +123,7 @@ class PolyBrush(
         for(property in properties) {
             map.put(property.name, property.getValues())
         }
+        super.registerArgumentValues().forEach { (t, u) -> map.put(t, u) }
         return map
     }
 

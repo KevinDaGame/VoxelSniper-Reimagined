@@ -4,7 +4,6 @@ import com.github.kevindagame.brush.*;
 import com.github.kevindagame.brush.multiBlock.*;
 import com.github.kevindagame.brush.polymorphic.PolyBrushBuilder;
 import com.github.kevindagame.brush.polymorphic.PolyBrushShape;
-import com.github.kevindagame.brush.polymorphic.PolyOperation;
 import com.github.kevindagame.brush.shell.ShellBallBrush;
 import com.github.kevindagame.brush.shell.ShellSetBrush;
 import com.github.kevindagame.brush.shell.ShellVoxelBrush;
@@ -423,13 +422,13 @@ public class VoxelBrushManager {
     }
 
     /**
-     * @param clazz Brush class
+     * @param brushData The brush data to check.
      * @return All Sniper registered handles for the brush.
      */
-    public Set<String> getSniperBrushHandles(Class<? extends IBrush> clazz) {
+    public Set<String> getSniperBrushHandles(BrushData brushData) {
         Set<String> handles = new HashSet<>();
         for (String key : brushes.keySet()) {
-            if (brushes.get(key).equals(clazz)) {
+            if (brushes.get(key).equals(brushData)) {
                 handles.add(key);
             }
         }
