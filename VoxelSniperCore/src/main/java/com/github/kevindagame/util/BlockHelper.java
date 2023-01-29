@@ -11,6 +11,8 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
+import javax.annotation.Nullable;
+
 
 /**
  * @author Voxel
@@ -31,7 +33,7 @@ public class BlockHelper {
     /**
      * Constructor requiring location, uses default values.
      *
-     * @param location
+     * @param location The location
      */
     public BlockHelper(final BaseLocation location) {
         this(location, BlockHelper.DEFAULT_RANGE, BlockHelper.DEFAULT_STEP);
@@ -40,9 +42,9 @@ public class BlockHelper {
     /**
      * Constructor requiring location, max range, and a stepping value.
      *
-     * @param location
-     * @param range
-     * @param step
+     * @param location the location
+     * @param range The maximum distance to raytrace
+     * @param step The step amount to raytrace
      */
     public BlockHelper(final BaseLocation location, final double range, final double step) {
         this.world = location.getWorld();
@@ -52,9 +54,9 @@ public class BlockHelper {
     /**
      * Constructor requiring player, max range, and a stepping value.
      *
-     * @param player
-     * @param range
-     * @param step
+     * @param player The player whose location should be the location
+     * @param range The maximum distance to raytrace
+     * @param step The step amount to raytrace
      */
     public BlockHelper(final IPlayer player, final double range, final double step) {
         this(player.getEyeLocation(), range, step);
@@ -63,7 +65,7 @@ public class BlockHelper {
     /**
      * Constructor requiring player, uses default values.
      *
-     * @param player
+     * @param player The player whose location should be the location
      */
     public BlockHelper(final IPlayer player) {
         this(player, BlockHelper.DEFAULT_RANGE);
@@ -71,8 +73,8 @@ public class BlockHelper {
     }
 
     /**
-     * @param player
-     * @param range
+     * @param player The player whose location should be the location
+     * @param range The maximum range to raytrace
      */
     public BlockHelper(final IPlayer player, final double range) {
         this(player, range, BlockHelper.DEFAULT_STEP);
@@ -191,11 +193,13 @@ public class BlockHelper {
      *
      * @return IBlock
      */
+    @Nullable
     public final IBlock getTargetBlock() {
         IBlock current;
         while (((current = this.getNextBlock()) != null) && (current.getMaterial().isAir())) {
 
         }
+
         return this.getCurBlock();
     }
 

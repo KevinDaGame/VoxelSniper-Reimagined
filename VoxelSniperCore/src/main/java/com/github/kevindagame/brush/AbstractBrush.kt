@@ -16,32 +16,19 @@ import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
 import com.google.common.collect.ImmutableList
-import util.InitOnceProperty
 import java.util.*
-import kotlin.properties.ReadWriteProperty
-
 
 
 /**
  * Abstract implementation of the [IBrush] interface.
  */
 abstract class AbstractBrush : IBrush {
-    /**
-     * @return the targetBlock
-     */
-    /**
-     * @param targetBlock the targetBlock to set
-     */
+
     /**
      * Targeted Block.
      */
     protected lateinit var targetBlock: IBlock
-    /**
-     * @return Block before target Block.
-     */
-    /**
-     * @param lastBlock Last Block before target Block.
-     */
+
     /**
      * Last Block before targeted Block.
      */
@@ -187,7 +174,10 @@ abstract class AbstractBrush : IBrush {
      * @return boolean
      */
     protected fun getTarget(v: SnipeData, clickedBlock: IBlock?, clickedFace: BlockFace?): Boolean {
-        return if (clickedBlock != null) {
+        val targetBlock: IBlock?
+        val lastBlock: IBlock?
+
+        if (clickedBlock != null) {
             targetBlock = clickedBlock
             lastBlock = clickedBlock.getRelative(clickedFace)
             if (lastBlock == null) {
@@ -197,7 +187,6 @@ abstract class AbstractBrush : IBrush {
             if (v.owner().getSnipeData(v.owner().currentToolId).isLightningEnabled) {
                 world.strikeLightning(targetBlock.location)
             }
-            true
         } else {
             val rangeBlockHelper: BlockHelper
             if (v.owner().getSnipeData(v.owner().currentToolId).isRanged) {
@@ -208,7 +197,7 @@ abstract class AbstractBrush : IBrush {
                 targetBlock = rangeBlockHelper.rangeBlock
             } else {
                 rangeBlockHelper = BlockHelper(v.owner().player)
-                targetBlock = rangeBlockHelper.targetBlock
+                targetBlock = rangeBlockHelper.targetBlock!!
             }
             if (targetBlock != null) {
                 lastBlock = rangeBlockHelper.lastBlock
@@ -219,23 +208,22 @@ abstract class AbstractBrush : IBrush {
                 if (v.owner().getSnipeData(v.owner().currentToolId).isLightningEnabled) {
                     world.strikeLightning(targetBlock.location)
                 }
-                true
             } else {
                 v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE)
-                false
+                return false
             }
         }
+        this.lastBlock = lastBlock
+        this.targetBlock = targetBlock
+        return true
     }
 
     /**
      * @return the world
      */
-    protected val world: IWorld
-        protected get() = targetBlock.world
-    protected val minHeight: Int
-        protected get() = world.minWorldHeight
-    protected val maxHeight: Int
-        protected get() = world.maxWorldHeight
+    protected val world: IWorld get() = targetBlock.world
+    protected val minHeight: Int get() = world.minWorldHeight
+    protected val maxHeight: Int get() = world.maxWorldHeight
 
     protected fun isInWorldHeight(height: Int): Boolean {
         return minHeight <= height && maxHeight > height
