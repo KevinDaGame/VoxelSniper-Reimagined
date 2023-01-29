@@ -25,16 +25,10 @@ public class SnipeTool {
     private final SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
-        this(Objects.requireNonNull(owner.instantiateBrush(SnipeBrush.class, true)), new SnipeData(owner));
-    }
-
-    protected SnipeTool(@NotNull IBrush brush, SnipeData snipeData) {
-        this.snipeData = snipeData;
+        this.snipeData = new SnipeData(owner);
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
-        if (snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode())) {
-            this.currentBrush = brush;
-        }
+        this.currentBrush = Objects.requireNonNull(owner.instantiateBrush(SnipeBrush.class, true));
     }
 
     public @NotNull IBrush getCurrentBrush() {
