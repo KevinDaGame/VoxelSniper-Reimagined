@@ -585,3 +585,5 @@ FILE_ALREADY_EXISTS: This file already exists.
 UNDERLAY_DEPTH_SET: <aqua>Underlay depth set to %depth%
 UNDERLAY_MODE: <gold>Underlaying on %mode% blocks
 UNDERLAY_ON_MODE_DEPTH: <blue>Will underlay on %mode% blocks, %depth% blocks deep.
+POLY_BRUSH_USAGE: <gold>%brushName% brush parameters</gold>
+POLY_BRUSH_USAGE_LINE: <aqua>%triggerHandle% %property% -- %description%</aqua>

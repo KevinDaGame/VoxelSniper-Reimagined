@@ -1,6 +1,6 @@
 package com.github.kevindagame.brush.polymorphic.property
 
-abstract class PolyProperty<T>(val name: String, default: T) {
+abstract class PolyProperty<T>(val name: String, val description: String, default: T) {
 
     var value: T = default
     fun get(): T {

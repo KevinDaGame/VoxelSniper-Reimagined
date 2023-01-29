@@ -354,6 +354,8 @@ public enum Messages implements ComponentLike {
     UNDERLAY_DEPTH_SET,
     UNDERLAY_MODE,
     UNDERLAY_ON_MODE_DEPTH,
+    POLY_BRUSH_USAGE,
+    POLY_BRUSH_USAGE_LINE,
     ;
     //</editor-fold>
 

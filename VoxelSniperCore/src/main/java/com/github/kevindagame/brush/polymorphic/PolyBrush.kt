@@ -5,6 +5,7 @@ import com.github.kevindagame.brush.polymorphic.property.PolyPropertiesEnum
 import com.github.kevindagame.brush.polymorphic.property.PolyProperty
 import com.github.kevindagame.brush.polymorphic.property.SmoothProperty
 import com.github.kevindagame.snipe.SnipeData
+import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import kotlin.math.pow
@@ -107,7 +108,10 @@ class PolyBrush(
     override fun parseParameters(triggerHandle: String, params: Array<out String>, v: SnipeData) {
         super.parseParameters(triggerHandle, params, v)
         if (params[0].equals("info", ignoreCase = true)) {
-            TODO("Not yet implemented")
+            val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name);
+            for(property in properties) {
+                info.append(Messages.POLY_BRUSH_USAGE_LINE.replace("brushHandle", triggerHandle).replace("parameter", property.name).replace("description", property.description).toString())
+            }
         }
         for (property in properties) {
             if (params[0].equals(property.name, ignoreCase = true)) {
