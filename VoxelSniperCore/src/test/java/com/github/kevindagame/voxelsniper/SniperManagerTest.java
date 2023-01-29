@@ -1,6 +1,5 @@
 package com.github.kevindagame.voxelsniper;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
@@ -39,15 +38,16 @@ public class SniperManagerTest {
         Mockito.when(main.getMaterial(VoxelMaterial.AIR)).thenReturn(mat);
 
         VoxelSniper.voxelsniper = main;
-        VoxelProfileManager.initialize();
 
+        Sniper sniper = new Sniper(absplayer);
+        Mockito.when(absplayer.getSniper()).thenReturn(sniper);
     }
 
     @Test
     public void testGetSniperForPlayer() {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(absplayer);
+        Sniper sniper = absplayer.getSniper();
 
         Assert.assertSame(absplayer, sniper.getPlayer());
-        Assert.assertSame(sniper, VoxelProfileManager.getInstance().getSniperForPlayer(absplayer));
+        Assert.assertSame(sniper, absplayer.getSniper());
     }
 }

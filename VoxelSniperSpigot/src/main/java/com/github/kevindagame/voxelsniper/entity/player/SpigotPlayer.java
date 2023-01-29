@@ -1,5 +1,6 @@
 package com.github.kevindagame.voxelsniper.entity.player;
 
+import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
@@ -30,10 +31,12 @@ import java.util.stream.Collectors;
 
 public class SpigotPlayer extends SpigotEntity implements IPlayer {
     private final Player player;
+    private final @NotNull Sniper sniper;
 
     public SpigotPlayer(Player player) {
         super(player);
         this.player = player;
+        this.sniper = new Sniper(this);
     }
 
     @Override
@@ -93,6 +96,12 @@ public class SpigotPlayer extends SpigotEntity implements IPlayer {
         var item = player.getInventory().getItemInMainHand();
         VoxelMaterial mat = VoxelMaterial.getMaterial(item.getType().getKey().getKey());
         return mat != null ? mat : VoxelMaterial.AIR;
+    }
+
+    @Override
+    @NotNull
+    public Sniper getSniper() {
+        return this.sniper;
     }
 
     @Override

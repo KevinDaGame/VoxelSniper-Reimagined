@@ -1,7 +1,6 @@
 package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.VoxelBrushManager;
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -71,9 +70,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         this.fileHandler = new SpigotFileHandler(this);
 
-        // Initialize profile manager (Sniper)
-        VoxelProfileManager.initialize();
-
         // Initialize messages
         Messages.load(this);
         SpigotVoxelSniper.adventure = BukkitAudiences.create(this);
@@ -126,8 +122,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        var player = this.players.get(event.getPlayer().getUniqueId());
-        if (player != null) VoxelProfileManager.getInstance().clearSniperForPlayer(player);
         this.players.remove(event.getPlayer().getUniqueId());
     }
 
