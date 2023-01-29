@@ -293,9 +293,13 @@ public class Sniper {
     }
 
     public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush) {
+        return this.instantiateBrush(brush, false);
+    }
+
+    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush, boolean force) {
         try {
             var brushInstance = brush.newInstance();
-            if(getPlayer().hasPermission(brushInstance.getPermissionNode()))
+            if(force || getPlayer().hasPermission(brushInstance.getPermissionNode()))
                 return brushInstance;
         } catch (InstantiationException | IllegalAccessException e) {
             return null;

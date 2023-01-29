@@ -7,6 +7,9 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
+
+import java.util.Objects;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,29 +19,25 @@ import org.jetbrains.annotations.Nullable;
 public class SnipeTool {
 
     private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
-    private IBrush currentBrush = null;
+    private @NotNull IBrush currentBrush;
     private IBrush previousBrush = null;
     private final VoxelMessage messageHelper;
     private final SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
-        this(owner.instantiateBrush(SnipeBrush.class), new SnipeData(owner));
+        this(Objects.requireNonNull(owner.instantiateBrush(SnipeBrush.class, true)), new SnipeData(owner));
     }
 
-    protected SnipeTool(@Nullable IBrush brush, SnipeData snipeData) {
+    protected SnipeTool(@NotNull IBrush brush, SnipeData snipeData) {
         this.snipeData = snipeData;
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
-        if (brush != null && snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode())) {
+        if (snipeData.owner().getPlayer().hasPermission(brush.getPermissionNode())) {
             this.currentBrush = brush;
         }
     }
 
-    public @Nullable IBrush getCurrentBrush() {
-        if (currentBrush == null) {
-            currentBrush = snipeData.owner().instantiateBrush(SnipeBrush.class);
-            return currentBrush;
-        }
+    public @NotNull IBrush getCurrentBrush() {
         return currentBrush;
     }
 
