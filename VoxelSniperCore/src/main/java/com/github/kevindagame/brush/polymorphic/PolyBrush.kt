@@ -25,7 +25,7 @@ class PolyBrush(
             properties.addAll(shape.parameters.toList())
         }
         for (property in properties) {
-            this.properties.add(property.clazz.java.getDeclaredConstructor().newInstance())
+            this.properties.add(property.supplier())
         }
     }
 

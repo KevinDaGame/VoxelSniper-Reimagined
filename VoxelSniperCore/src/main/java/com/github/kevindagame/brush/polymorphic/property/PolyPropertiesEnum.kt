@@ -1,7 +1,7 @@
 package com.github.kevindagame.brush.polymorphic.property
 
-import kotlin.reflect.KClass
+import kotlin.reflect.KFunction0
 
-enum class PolyPropertiesEnum(val clazz: KClass<out PolyProperty<*>>) {
-    SMOOTH(SmoothProperty::class)
+enum class PolyPropertiesEnum(val supplier: KFunction0<SmoothProperty>) {
+    SMOOTH(::SmoothProperty)
 }
