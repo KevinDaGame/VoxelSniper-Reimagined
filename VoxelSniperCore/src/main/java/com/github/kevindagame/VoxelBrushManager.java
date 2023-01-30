@@ -4,6 +4,7 @@ import com.github.kevindagame.brush.*;
 import com.github.kevindagame.brush.multiBlock.*;
 import com.github.kevindagame.brush.polymorphic.PolyBrushBuilder;
 import com.github.kevindagame.brush.polymorphic.PolyBrushShape;
+import com.github.kevindagame.brush.polymorphic.PolyOperation;
 import com.github.kevindagame.brush.shell.ShellBallBrush;
 import com.github.kevindagame.brush.shell.ShellSetBrush;
 import com.github.kevindagame.brush.shell.ShellVoxelBrush;
@@ -128,7 +129,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData biomeBallBrush() {
-        return new BrushBuilder().name("Biomeball").alias("bioball").alias("biomeball").setSupplier(BiomeBallBrush::new).setPermission("voxelsniper.brush.biomeball").build();
+        return new PolyBrushBuilder().name("Biomeball").alias("bioball").alias("biomeball").permission("voxelsniper.brush.biomeball").operation(PolyOperation.BIOME).shape(PolyBrushShape.BALL).build();
     }
 
     private static BrushData blendBallBrush() {
@@ -188,11 +189,11 @@ public class VoxelBrushManager {
     }
 
     private static BrushData cylinderBrush() {
-        return new BrushBuilder().name("Cylinder").alias("c").alias("cylinder").setSupplier(CylinderBrush::new).setPermission("voxelsniper.brush.cylinder").build();
+        return new PolyBrushBuilder().name("Cylinder").alias("c").alias("cylinder").permission("voxelsniper.brush.cylinder").shape(PolyBrushShape.CYLINDER).build();
     }
 
     private static BrushData discBrush() {
-        return new BrushBuilder().name("Disc").alias("d").alias("disc").setSupplier(DiscBrush::new).setPermission("voxelsniper.brush.disc").build();
+        return new PolyBrushBuilder().name("Disc").alias("d").alias("disc").shape(PolyBrushShape.DISC).permission("voxelsniper.brush.disc").build();
     }
 
     private static BrushData discFaceBrush() {
@@ -368,7 +369,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData voxelBrush() {
-        return new BrushBuilder().name("Voxel").alias("v").alias("voxel").setSupplier(VoxelBrush::new).setPermission("voxelsniper.brush.voxel").build();
+        return new PolyBrushBuilder().name("Voxel").alias("v").alias("voxel").shape(PolyBrushShape.VOXEL).permission("voxelsniper.brush.voxel").build();
     }
 
     private static BrushData voxelDiscBrush() {
