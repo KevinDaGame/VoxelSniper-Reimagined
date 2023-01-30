@@ -1,6 +1,5 @@
 package com.github.kevindagame.command;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.BlockHelper;
@@ -22,7 +21,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(IPlayer player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         // Default command
@@ -64,7 +63,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(IPlayer player, String[] args) {
         // TODO: Very hacky parsing, find a more elegant solution.
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         String[] a = snipeData.getReplaceSubstance().getAsString().split("\\[");

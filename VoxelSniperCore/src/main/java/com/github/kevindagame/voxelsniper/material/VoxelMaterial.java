@@ -669,7 +669,7 @@ public class VoxelMaterial implements IMaterial {
     public static final VoxelMaterial POTTED_BAMBOO = register("minecraft", "potted_bamboo");
     public static final VoxelMaterial VOID_AIR = register("minecraft", "void_air", Tags.AIR);
     public static final VoxelMaterial CAVE_AIR = register("minecraft", "cave_air", Tags.AIR);
-    public static final VoxelMaterial BUBBLE_COLUMN = register("minecraft", "bubble_column");
+    public static final VoxelMaterial BUBBLE_COLUMN = register("minecraft", "bubble_column", Tags.FLUIDS);
     public static final VoxelMaterial POLISHED_GRANITE_STAIRS = register("minecraft", "polished_granite_stairs");
     public static final VoxelMaterial SMOOTH_RED_SANDSTONE_STAIRS = register("minecraft", "smooth_red_sandstone_stairs");
     public static final VoxelMaterial MOSSY_STONE_BRICK_STAIRS = register("minecraft", "mossy_stone_brick_stairs");
