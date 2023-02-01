@@ -373,7 +373,8 @@ public class VoxelBrushManager {
     }
 
     private static BrushData voxelDiscBrush() {
-        return new BrushBuilder().name("Voxeldisc").alias("vd").alias("voxeldisc").setSupplier(VoxelDiscBrush::new).setPermission("voxelsniper.brush.voxeldisc").build();
+        return new PolyBrushBuilder().name("Voxeldisc").alias("vd").alias("voxeldisc").permission("voxelsniper.brush.voxeldisc").shape(PolyBrushShape.VOXEL_DISC).build();
+
     }
 
     private static BrushData voxelDiscFaceBrush() {

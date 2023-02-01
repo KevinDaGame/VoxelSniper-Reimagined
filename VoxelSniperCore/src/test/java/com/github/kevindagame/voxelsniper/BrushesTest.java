@@ -2,10 +2,10 @@ package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
-import com.github.kevindagame.brush.BallBrush;
 import com.github.kevindagame.brush.BrushBuilder;
 import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
+import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import org.junit.Assert;
@@ -38,7 +38,7 @@ public class BrushesTest {
 
     @Test
     public void testGetBrushForHandle() {
-        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build();
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build();
         brushes.registerSniperBrush(brushData);
         Assert.assertEquals(brushData, brushes.getBrushForHandle("mockhandle"));
         Assert.assertEquals(brushData, brushes.getBrushForHandle("testhandle"));
@@ -47,19 +47,19 @@ public class BrushesTest {
 
     @Test
     public void testRegisteredSniperBrushes() {
-        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build());
+        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testRegisteredSniperBrushHandles() {
-        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build());
+        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testGetSniperBrushHandles() {
-        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build();
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build();
         brushes.registerSniperBrush(brushData);
         Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brushData);
         Assert.assertTrue(sniperBrushHandles.contains("mockhandle"));
@@ -69,7 +69,7 @@ public class BrushesTest {
 
     @Test
     public void testGetRegisteredBrushesMap() {
-        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(BallBrush::new).build();
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build();
         brushes.registerSniperBrush(brushData);
         Map<String, BrushData> registeredBrushesMap = brushes.getRegisteredBrushesMap();
         Assert.assertTrue(registeredBrushesMap.containsValue(brushData));
