@@ -28,7 +28,6 @@ public class Actions {
     public static List<BlockOperation> rotate(final IBlock target, final int bSize, final double angle, final RotationAxis axis) {
         List<BlockOperation> operations = new ArrayList<>();
 
-        final int brushSize = (bSize * 2) + 1;
         final double brushSizeSquared = Math.pow(bSize + 0.5, 2);
         // We need to translate the other way around, since we look up the old block for every new block instead of the other way around
         final double se = Math.toRadians(angle * -1);
@@ -59,6 +58,52 @@ public class Actions {
                 }
             }
         }
+        return operations;
+    }
+
+    public static List<BlockOperation> rotate3D(final IBlock target, final int bSize, final double roll, final double yaw, final double pitch) {
+        // basically rotates in a sphere around the target block, doing three rotations in a row, one in each dimension, unless some dimensions are set to zero or udnefined or whatever, then skip those.
+
+        List<BlockOperation> operations = new ArrayList<>();
+        final double brushSizeSquared = Math.pow(bSize + 0.5, 2);
+        final IWorld world = target.getWorld();
+
+        final double seYaw = Math.toRadians(yaw * -1);
+        final double sePitch = Math.toRadians(pitch * -1);
+        final double seRoll = Math.toRadians(roll * -1);
+        final double cosYaw = Math.cos(seYaw);
+        final double sinYaw = Math.sin(seYaw);
+        final double cosPitch = Math.cos(sePitch);
+        final double sinPitch = Math.sin(sePitch);
+        final double cosRoll = Math.cos(seRoll);
+        final double sinRoll = Math.sin(seRoll);
+
+        for (int x = -bSize; x <= bSize; x++) {
+            final double xSquared = Math.pow(x, 2);
+
+            for (int z = -bSize; z <= bSize; z++) {
+                final double zSquared = Math.pow(z, 2);
+
+                final double oldxzX = (x * cosYaw) - (z * sinYaw);
+                final double oldxzZ = (x * sinYaw) + (z * cosYaw);
+
+                for (int y = -bSize; y <= bSize; y++) {
+                    if (xSquared + zSquared + Math.pow(y, 2) <= brushSizeSquared) {
+                        final int oldX = (int) Math.round((oldxzX * cosPitch) - (y * sinPitch));
+                        final double oldxyY = (oldxzX * sinPitch) + (y * cosPitch); // calculates all three in succession in precise math space
+                        final int oldY = (int) Math.round((oldxyY * cosRoll) - (oldxzZ * sinRoll));
+                        final int oldZ = (int) Math.round((oldxyY * sinRoll) + (oldxzZ * cosRoll));
+
+                        if (!world.isInWorldHeight(target.getY() + y)) continue;
+                        final IBlockData oldBlockData = world.isInWorldHeight(target.getY() + oldY) ? world.getBlock(target.getX() + oldX, target.getY() + oldY, target.getZ() + oldZ).getBlockData() : VoxelMaterial.AIR.createBlockData();
+                        final IBlock newBlock = world.getBlock(target.getX() + x, target.getY() + y, target.getZ() + z);
+
+                        operations.add(new BlockOperation(newBlock.getLocation(), newBlock.getBlockData(), oldBlockData));
+                    }
+                }
+            }
+        }
+
         return operations;
     }
 }
