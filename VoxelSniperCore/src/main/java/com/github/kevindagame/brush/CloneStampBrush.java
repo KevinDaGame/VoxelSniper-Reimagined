@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
@@ -42,7 +43,7 @@ public class CloneStampBrush extends StampBrush {
         VoxelLocation point = getTargetBlock().getLocation().makeMutable();
         point.add(0, v.getcCen(), 0);
         this.startingPoint = point.makeImmutable();
-        var positions = Shapes.cylinder(startingPoint, v.getBrushSize(), v.getVoxelHeight(), 0, false);
+        var positions = Shapes.cylinder(startingPoint, RotationAxis.Y, v.getBrushSize(), v.getVoxelHeight(), 0, false);
         this.clone.clear();
         this.toStamp.clear();
         this.sorted = false;
