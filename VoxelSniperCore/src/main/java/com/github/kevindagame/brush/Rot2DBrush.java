@@ -4,7 +4,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Actions;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.RotationAxis;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
@@ -28,12 +28,18 @@ public class Rot2DBrush extends AbstractBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.addOperations(Actions.rotate(getTargetBlock(), v.getBrushSize(), this.angle, RotationAxis.Y));
+        int bSize = v.getBrushSize();
+
+        var cyl = Shapes.cylinder(getTargetBlock().getLocation(), bSize, (bSize*2)+1, 0, true);
+        this.addOperations(Actions.rotate3D(getTargetBlock(), cyl, 0, this.angle, 0));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.addOperations(Actions.rotate(getTargetBlock(), v.getBrushSize(), -1 * this.angle, RotationAxis.Y));
+        int bSize = v.getBrushSize();
+
+        var cyl = Shapes.cylinder(getTargetBlock().getLocation(), bSize, (bSize*2)+1, 0, true);
+        this.addOperations(Actions.rotate3D(getTargetBlock(), cyl, 0, this.angle * -1, 0));
 
     }
 

@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Actions;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
@@ -98,7 +99,8 @@ public class Rot3DBrush extends AbstractBrush {
     protected final void arrow(final SnipeData v) {
         int bSize = v.getBrushSize();
 
-        this.addOperations(Actions.rotate3D(getTargetBlock(), bSize, this.roll, this.yaw, this.pitch));
+        var ball = Shapes.ball(getTargetBlock().getLocation(), bSize, true);
+        this.addOperations(Actions.rotate3D(getTargetBlock(), ball, this.roll, this.yaw, this.pitch));
 
     }
 
