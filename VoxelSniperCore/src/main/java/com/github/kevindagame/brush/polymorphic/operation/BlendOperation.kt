@@ -5,9 +5,12 @@ import com.github.kevindagame.brush.polymorphic.PolyOperationType
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 
 class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
-    val excludeAir = false
-    val excludeWater = false
-    override fun apply(brushSize: Int, brush: PolyBrush): Array<Array<Array<VoxelMaterial>>> {
+    override fun apply(
+        brushSize: Int,
+        brush: PolyBrush,
+        excludeAir: Boolean,
+        excludeWater: Boolean
+    ): Array<Array<Array<VoxelMaterial>>> {
         val targetBlock = brush.targetBlock
         val brushSizeDoubled = 2 * brushSize
         // Array that holds the original materials plus a buffer
@@ -55,15 +58,15 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
 
                     // Find most common neighbouring material
                     for ((key, value) in materialFrequency) {
-                        if (value > highestMaterialCount && !(this.excludeAir && key!!.isAir) && !(this.excludeWater && key === VoxelMaterial.WATER)) {
+                        if (value > highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key === VoxelMaterial.WATER)) {
                             highestMaterialCount = value
                             highestMaterial = key
                         }
                     }
 
-                    // Make sure that there's no tie in highest material
+                    // Make sure that there's no tie in the highest material
                     for ((key, value) in materialFrequency) {
-                        if (value == highestMaterialCount && !(this.excludeAir && key!!.isAir) && !(this.excludeWater && key === VoxelMaterial.WATER)) {
+                        if (value == highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key === VoxelMaterial.WATER)) {
                             if (key === highestMaterial) {
                                 continue
                             }

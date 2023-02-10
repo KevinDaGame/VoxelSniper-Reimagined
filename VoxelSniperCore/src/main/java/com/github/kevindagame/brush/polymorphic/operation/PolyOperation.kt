@@ -8,5 +8,5 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial
  * Base class for operations such as blending and splatter
  */
 abstract class PolyOperation(val supportedOperationTypes: List<PolyOperationType>) {
-    abstract fun apply(brushSize: Int, brush: PolyBrush): Array<Array<Array<VoxelMaterial>>>
+    abstract fun apply(brushSize: Int, brush: PolyBrush, excludeAir: Boolean, excludeWater: Boolean): Array<Array<Array<VoxelMaterial>>>
 }

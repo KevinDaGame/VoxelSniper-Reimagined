@@ -1,9 +1,8 @@
 package com.github.kevindagame.brush.polymorphic
 
 import com.github.kevindagame.brush.perform.PerformerBrush
-import com.github.kevindagame.brush.polymorphic.property.PolyPropertiesEnum
-import com.github.kevindagame.brush.polymorphic.property.PolyProperty
-import com.github.kevindagame.brush.polymorphic.property.SmoothProperty
+import com.github.kevindagame.brush.polymorphic.operation.PolyOperation
+import com.github.kevindagame.brush.polymorphic.property.*
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
@@ -14,7 +13,8 @@ class PolyBrush(
     name: String,
     permissionNode: String,
     val shapes: MutableList<PolyBrushShape>,
-    val operation: PolyOperationType,
+    val operationType: PolyOperationType,
+    val operation: PolyOperation?,
 ) : PerformerBrush() {
     var properties: MutableList<PolyProperty<*>> = mutableListOf()
 
@@ -24,6 +24,11 @@ class PolyBrush(
         val properties = mutableSetOf<PolyPropertiesEnum>()
         for (shape in shapes) {
             properties.addAll(shape.parameters.toList())
+        }
+        if (operation != null) {
+            properties.add(PolyPropertiesEnum.EXCLUDEWATER)
+            properties.add(PolyPropertiesEnum.EXCLUDEAIR)
+
         }
         for (property in properties) {
             this.properties.add(property.supplier())
@@ -99,6 +104,24 @@ class PolyBrush(
         return false
     }
 
+    private fun getExcludeAir(): Boolean {
+        for (property in properties) {
+            if (property is ExcludeAirProperty) {
+                return property.value
+            }
+        }
+        return false
+    }
+
+    private fun getExcludeWater(): Boolean {
+        for (property in properties) {
+            if (property is ExcludeWaterProperty) {
+                return property.value
+            }
+        }
+        return false
+    }
+
     override fun registerArguments(): List<String> {
         val arguments = properties.map { it.name }.toMutableList()
         arguments.addAll(super.registerArguments())
@@ -109,8 +132,11 @@ class PolyBrush(
         super.parseParameters(triggerHandle, params, v)
         if (params[0].equals("info", ignoreCase = true)) {
             val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name);
-            for(property in properties) {
-                info.append(Messages.POLY_BRUSH_USAGE_LINE.replace("brushHandle", triggerHandle).replace("parameter", property.name).replace("description", property.description).toString())
+            for (property in properties) {
+                info.append(
+                    Messages.POLY_BRUSH_USAGE_LINE.replace("brushHandle", triggerHandle)
+                        .replace("parameter", property.name).replace("description", property.description).toString()
+                )
             }
         }
         for (property in properties) {
@@ -124,7 +150,7 @@ class PolyBrush(
 
     override fun registerArgumentValues(): HashMap<String, List<String>> {
         val map = HashMap<String, List<String>>()
-        for(property in properties) {
+        for (property in properties) {
             map.put(property.name, property.getValues())
         }
         super.registerArgumentValues().forEach { (t, u) -> map.put(t, u) }
