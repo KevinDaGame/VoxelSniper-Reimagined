@@ -14,7 +14,7 @@ class PolyBrush(
     name: String,
     permissionNode: String,
     val shapes: MutableList<PolyBrushShape>,
-    val operation: PolyOperation,
+    val operation: PolyOperationType,
 ) : PerformerBrush() {
     var properties: MutableList<PolyProperty<*>> = mutableListOf()
 

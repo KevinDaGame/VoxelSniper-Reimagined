@@ -4,7 +4,7 @@ import com.github.kevindagame.brush.*;
 import com.github.kevindagame.brush.multiBlock.*;
 import com.github.kevindagame.brush.polymorphic.PolyBrushBuilder;
 import com.github.kevindagame.brush.polymorphic.PolyBrushShape;
-import com.github.kevindagame.brush.polymorphic.PolyOperation;
+import com.github.kevindagame.brush.polymorphic.PolyOperationType;
 import com.github.kevindagame.brush.shell.ShellBallBrush;
 import com.github.kevindagame.brush.shell.ShellSetBrush;
 import com.github.kevindagame.brush.shell.ShellVoxelBrush;
@@ -129,7 +129,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData biomeBallBrush() {
-        return new PolyBrushBuilder().name("Biomeball").alias("bioball").alias("biomeball").permission("voxelsniper.brush.biomeball").operation(PolyOperation.BIOME).shape(PolyBrushShape.BALL).build();
+        return new PolyBrushBuilder().name("Biomeball").alias("bioball").alias("biomeball").permission("voxelsniper.brush.biomeball").operationType(PolyOperationType.BIOME).shape(PolyBrushShape.BALL).build();
     }
 
     private static BrushData blendBallBrush() {

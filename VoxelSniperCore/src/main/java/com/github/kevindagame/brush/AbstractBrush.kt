@@ -27,7 +27,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * Targeted Block.
      */
-    protected lateinit var targetBlock: IBlock
+    lateinit var targetBlock: IBlock
 
     /**
      * Last Block before targeted Block.
@@ -237,7 +237,7 @@ abstract class AbstractBrush : IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    protected fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterial {
+    fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterial {
         return if (isInWorldHeight(y)) world.getBlock(x, y, z).material else VoxelMaterial.AIR
     }
 

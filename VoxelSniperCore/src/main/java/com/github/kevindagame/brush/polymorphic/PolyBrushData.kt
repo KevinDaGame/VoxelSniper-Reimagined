@@ -10,5 +10,5 @@ class PolyBrushData(
     aliases: MutableList<String>,
     supplier: Supplier<out IBrush>,
     val shapes: MutableList<PolyBrushShape>?,
-    val operation: PolyOperation
+    val operation: PolyOperationType
 ) : BrushData(name, permission, aliases, supplier)
