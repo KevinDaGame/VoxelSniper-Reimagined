@@ -22,11 +22,11 @@ class BrushBuilder {
     }
 
     /**
-     * Add an alias for the brush.
+     * Add aliases for the brush.
      */
-    fun alias(alias: String): BrushBuilder
+    fun alias(vararg aliases: String): BrushBuilder
     {
-        aliases.add(alias)
+        this.aliases.addAll(aliases)
         return this
     }
 

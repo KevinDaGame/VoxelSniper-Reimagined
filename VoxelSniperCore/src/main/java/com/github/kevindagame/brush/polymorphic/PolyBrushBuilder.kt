@@ -19,10 +19,10 @@ class PolyBrushBuilder {
     }
 
     /**
-     * Add an alias for the brush.
+     * Add aliases for the brush.
      */
-    fun alias(alias: String): PolyBrushBuilder {
-        aliases.add(alias)
+    fun alias(vararg aliases: String): PolyBrushBuilder {
+        this.aliases.addAll(aliases)
         return this
     }
 
@@ -55,7 +55,7 @@ class PolyBrushBuilder {
      */
     fun operation(operation: PolyOperation): PolyBrushBuilder {
         this.operation = operation
-        return this;
+        return this
     }
 
     /**

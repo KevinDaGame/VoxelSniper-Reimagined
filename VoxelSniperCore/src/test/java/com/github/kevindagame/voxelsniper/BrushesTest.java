@@ -38,7 +38,7 @@ public class BrushesTest {
 
     @Test
     public void testGetBrushForHandle() {
-        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build();
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build();
         brushes.registerSniperBrush(brushData);
         Assert.assertEquals(brushData, brushes.getBrushForHandle("mockhandle"));
         Assert.assertEquals(brushData, brushes.getBrushForHandle("testhandle"));
@@ -47,19 +47,19 @@ public class BrushesTest {
 
     @Test
     public void testRegisteredSniperBrushes() {
-        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build());
+        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testRegisteredSniperBrushHandles() {
-        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build());
+        brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
     }
 
     @Test
     public void testGetSniperBrushHandles() {
-        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build();
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build();
         brushes.registerSniperBrush(brushData);
         Set<String> sniperBrushHandles = brushes.getSniperBrushHandles(brushData);
         Assert.assertTrue(sniperBrushHandles.contains("mockhandle"));
@@ -69,7 +69,7 @@ public class BrushesTest {
 
     @Test
     public void testGetRegisteredBrushesMap() {
-        var brushData = new BrushBuilder().name("mock").alias("mockhandle").alias("testhandle").setSupplier(SnipeBrush::new).build();
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build();
         brushes.registerSniperBrush(brushData);
         Map<String, BrushData> registeredBrushesMap = brushes.getRegisteredBrushesMap();
         Assert.assertTrue(registeredBrushesMap.containsValue(brushData));
