@@ -1,12 +1,16 @@
 package com.github.kevindagame.brush.polymorphic
 
-import com.github.kevindagame.brush.perform.PerformerBrush
+import com.github.kevindagame.brush.AbstractBrush
+import com.github.kevindagame.brush.perform.BasePerformer
 import com.github.kevindagame.brush.polymorphic.operation.PolyOperation
 import com.github.kevindagame.brush.polymorphic.property.*
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
+import com.github.kevindagame.util.brushOperation.BlockOperation
+import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent
 import com.github.kevindagame.voxelsniper.location.BaseLocation
+import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import kotlin.math.pow
 
 class PolyBrush(
@@ -15,8 +19,9 @@ class PolyBrush(
     val shapes: MutableList<PolyBrushShape>,
     val operationType: PolyOperationType,
     val operation: PolyOperation?,
-) : PerformerBrush() {
+) : AbstractBrush() {
     var properties: MutableList<PolyProperty<*>> = mutableListOf()
+    private var positions: MutableList<BaseLocation> = ArrayList()
 
     init {
         this.name = name
@@ -30,6 +35,7 @@ class PolyBrush(
             properties.add(PolyPropertiesEnum.EXCLUDEAIR)
 
         }
+        properties.add(PolyPropertiesEnum.PERFORMER)
         for (property in properties) {
             this.properties.add(property.supplier())
         }
@@ -40,23 +46,47 @@ class PolyBrush(
         vm.size()
     }
 
-    override fun doArrow(v: SnipeData) {
+    override fun arrow(v: SnipeData) {
+        positions.clear()
+        doArrow(v)
+    }
+
+    override fun powder(v: SnipeData) {
+        positions.clear()
+        doPowder(v)
+    }
+
+    fun doArrow(v: SnipeData) {
         executeBrush(v)
     }
 
-    override fun doPowder(v: SnipeData) {
+    fun doPowder(v: SnipeData) {
         executeBrush(v)
     }
 
 
     fun executeBrush(v: SnipeData) {
         this.positions = getPositions(v)
+
+        if (operation != null) {
+            val brushSize = v.brushSize
+            val newMaterials = operation.apply(brushSize, this, excludeAir, excludeWater)
+            for (position in positions) {
+                val material: VoxelMaterial =
+                    newMaterials[position.blockX - targetBlock.x + brushSize][position.blockY - targetBlock.y + brushSize][position.blockZ - targetBlock.z + brushSize]
+                if (!(excludeAir && material.isAir) && !(excludeWater && material === VoxelMaterial.WATER)) {
+                    addOperation(BlockOperation(position, position.block.blockData, material.createBlockData()))
+                }
+            }
+        } else {
+            addOperations(currentPerformer.perform(positions))
+        }
     }
 
-    private fun getPositions(v: SnipeData): List<BaseLocation> {
+    private fun getPositions(v: SnipeData): MutableList<BaseLocation> {
         val positions = initPositions(v)
         val newPositions = mutableListOf<BaseLocation>()
-        val radiusSquared = (v.brushSize + if (getSmooth()) SMOOTH_CIRCLE_VALUE else VOXEL_CIRCLE_VALUE).pow(2)
+        val radiusSquared = (v.brushSize + if (smooth) SMOOTH_CIRCLE_VALUE else VOXEL_CIRCLE_VALUE).pow(2)
         val center = targetBlock
 
         for (position in positions) {
@@ -95,32 +125,42 @@ class PolyBrush(
         return positions
     }
 
-    private fun getSmooth(): Boolean {
-        for (property in properties) {
-            if (property is SmoothProperty) {
-                return property.value
+    private val smooth: Boolean
+        get() {
+            for (property in properties) {
+                if (property is SmoothProperty) {
+                    return property.value
+                }
             }
+            return false
         }
-        return false
-    }
-
-    private fun getExcludeAir(): Boolean {
-        for (property in properties) {
-            if (property is ExcludeAirProperty) {
-                return property.value
+    private val excludeAir: Boolean
+        get() {
+            for (property in properties) {
+                if (property is ExcludeAirProperty) {
+                    return property.value
+                }
             }
+            return false
         }
-        return false
-    }
-
-    private fun getExcludeWater(): Boolean {
-        for (property in properties) {
-            if (property is ExcludeWaterProperty) {
-                return property.value
+    private val excludeWater: Boolean
+        get() {
+            for (property in properties) {
+                if (property is ExcludeWaterProperty) {
+                    return property.value
+                }
             }
+            return false
         }
-        return false
-    }
+    private val currentPerformer: BasePerformer
+        get() {
+            for (property in properties) {
+                if (property is PerformerProperty) {
+                    return property.value
+                }
+            }
+            return PerformerProperty().value
+        }
 
     override fun registerArguments(): List<String> {
         val arguments = properties.map { it.name }.toMutableList()
@@ -128,8 +168,7 @@ class PolyBrush(
         return arguments
     }
 
-    override fun parseParameters(triggerHandle: String, params: Array<out String>, v: SnipeData) {
-        super.parseParameters(triggerHandle, params, v)
+    override fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData) {
         if (params[0].equals("info", ignoreCase = true)) {
             val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name);
             for (property in properties) {
@@ -141,7 +180,15 @@ class PolyBrush(
         }
         for (property in properties) {
             if (params[0].equals(property.name, ignoreCase = true)) {
-                property.set(params[1])
+                if (!PlayerBrushChangedEvent(
+                        v.owner().player,
+                        v.owner().currentToolId,
+                        this,
+                        this
+                    ).callEvent().isCancelled
+                ) {
+                    property.set(params[1])
+                }
                 break
 
             }

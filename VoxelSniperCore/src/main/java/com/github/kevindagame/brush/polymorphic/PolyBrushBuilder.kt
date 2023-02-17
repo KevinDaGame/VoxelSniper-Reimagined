@@ -1,11 +1,12 @@
 package com.github.kevindagame.brush.polymorphic
 
 import com.github.kevindagame.brush.polymorphic.operation.PolyOperation
+import java.util.function.Supplier
 
 class PolyBrushBuilder {
     private lateinit var name: String
     private lateinit var permission: String
-    private var operation: PolyOperation? = null
+    private var operation: Supplier<out PolyOperation>? = null
     private var operationType: PolyOperationType = PolyOperationType.BLOCK
     private val aliases: MutableList<String> = mutableListOf()
     private val shapes: MutableList<PolyBrushShape> = mutableListOf()
@@ -53,7 +54,7 @@ class PolyBrushBuilder {
     /**
      * Set an operation to apply to the brush area
      */
-    fun operation(operation: PolyOperation): PolyBrushBuilder {
+    fun operation(operation: Supplier<out PolyOperation>): PolyBrushBuilder {
         this.operation = operation
         return this
     }
@@ -65,7 +66,7 @@ class PolyBrushBuilder {
         return PolyBrushData(
             name,
             permission, aliases,
-            { PolyBrush(name, permission, shapes, operationType, operation) },
+            { PolyBrush(name, permission, shapes, operationType, operation?.get()) },
             shapes,
             operationType
         )

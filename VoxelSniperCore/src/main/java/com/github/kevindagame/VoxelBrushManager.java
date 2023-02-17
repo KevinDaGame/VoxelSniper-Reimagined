@@ -5,6 +5,7 @@ import com.github.kevindagame.brush.multiBlock.*;
 import com.github.kevindagame.brush.polymorphic.PolyBrushBuilder;
 import com.github.kevindagame.brush.polymorphic.PolyBrushShape;
 import com.github.kevindagame.brush.polymorphic.PolyOperationType;
+import com.github.kevindagame.brush.polymorphic.operation.BlendOperation;
 import com.github.kevindagame.brush.shell.ShellBallBrush;
 import com.github.kevindagame.brush.shell.ShellSetBrush;
 import com.github.kevindagame.brush.shell.ShellVoxelBrush;
@@ -119,6 +120,7 @@ public class VoxelBrushManager {
         return getInstance();
     }
 
+
     // region <Brush Registration methods>
     private static BrushData ballBrush() {
         return new PolyBrushBuilder().name("Ball").alias("b", "ball").permission("voxelsniper.brush.ball").shape(PolyBrushShape.BALL).build();
@@ -133,19 +135,19 @@ public class VoxelBrushManager {
     }
 
     private static BrushData blendBallBrush() {
-        return new BrushBuilder().name("Blendball").alias("bb", "blendball").setSupplier(BlendBallBrush::new).setPermission("voxelsniper.brush.blendball").build();
+        return new PolyBrushBuilder().name("Blendball").alias("bb", "blendball").shape(PolyBrushShape.BALL).operation(BlendOperation::new).permission("voxelsniper.brush.blendball").build();
     }
 
     private static BrushData blendDiscBrush() {
-        return new BrushBuilder().name("Blenddisc").alias("bd", "blenddisc").setSupplier(BlendDiscBrush::new).setPermission("voxelsniper.brush.blenddisc").build();
+        return new PolyBrushBuilder().name("Blenddisc").alias("bd", "blenddisc").shape(PolyBrushShape.DISC).operation(BlendOperation::new).permission("voxelsniper.brush.blenddisc").build();
     }
 
     private static BrushData blendVoxelBrush() {
-        return new BrushBuilder().name("Blendvoxel").alias("bv", "blendvoxel").setSupplier(BlendVoxelBrush::new).setPermission("voxelsniper.brush.blendvoxel").build();
+        return new PolyBrushBuilder().name("Blendvoxel").alias("bv", "blendvoxel").shape(PolyBrushShape.VOXEL).operation(BlendOperation::new).permission("voxelsniper.brush.blendvoxel").build();
     }
 
     private static BrushData blendVoxelDiscBrush() {
-        return new BrushBuilder().name("Blendvoxeldisc").alias("bvd", "blendvoxeldisc").setSupplier(BlendVoxelDiscBrush::new).setPermission("voxelsniper.brush.blendvoxeldisc").build();
+        return new PolyBrushBuilder().name("Blendvoxeldisc").alias("bvd", "blendvoxeldisc").shape(PolyBrushShape.VOXEL_DISC).operation(BlendOperation::new).permission("voxelsniper.brush.blendvoxeldisc").build();
     }
 
     private static BrushData blobBrush() {

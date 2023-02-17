@@ -16,7 +16,6 @@ import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
 import com.google.common.collect.ImmutableList
-import java.util.*
 
 
 /**
@@ -142,14 +141,14 @@ abstract class AbstractBrush : IBrush {
      *
      * @param v Sniper caller
      */
-    protected open fun arrow(v: SnipeData?) {}
+    protected open fun arrow(v: SnipeData) {}
 
     /**
      * The powder action. Executed when a player RightClicks with Gunpowder
      *
      * @param v Sniper caller
      */
-    protected open fun powder(v: SnipeData?) {}
+    protected open fun powder(v: SnipeData) {}
     abstract override fun info(vm: VoxelMessage)
     override fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData) {
         v.sendMessage(Messages.BRUSH_NO_PARAMS_ACCEPTED)
