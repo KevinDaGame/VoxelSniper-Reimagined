@@ -12,13 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Dissect this
-
-/**
- * @author Gavjenks, hack job from the other 2d rotation brush blockPositionY piotr
- */
-// The X Y and Z variable names in this file do NOT MAKE ANY SENSE. Do not attempt to actually figure out what on earth is going on here. Just go to the
-// original 2d horizontal brush if you wish to make anything similar to this, and start there. I didn't bother renaming everything.
 public class Rot2DvertBrush extends AbstractBrush {
     private double angle = 90;
 
