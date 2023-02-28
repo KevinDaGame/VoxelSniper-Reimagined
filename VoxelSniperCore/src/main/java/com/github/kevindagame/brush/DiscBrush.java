@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -35,7 +36,7 @@ public class DiscBrush extends PerformerBrush {
      * @param v SnipeData
      */
     private void disc(final SnipeData v, final IBlock targetBlock) {
-        this.positions = Shapes.disc(targetBlock.getLocation(), v.getBrushSize(), this.smoothCircle);
+        this.positions = Shapes.disc(targetBlock.getLocation(), RotationAxis.Y, v.getBrushSize(), this.smoothCircle);
     }
 
     @Override

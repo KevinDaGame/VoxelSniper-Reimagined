@@ -13,6 +13,10 @@ public final class VoxelLocation extends BaseLocation implements Cloneable {
         super(world, x, y, z);
     }
 
+    public VoxelLocation(IWorld world, int x, int y, int z) {
+        this(world, x, y, z, 0, 0);
+    }
+
     public void setX(double x) {
         this.x = x;
     }

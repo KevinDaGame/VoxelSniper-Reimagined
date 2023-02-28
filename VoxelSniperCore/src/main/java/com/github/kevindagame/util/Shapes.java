@@ -4,6 +4,7 @@ import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
+import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
@@ -51,18 +52,19 @@ public class Shapes {
         return positions;
     }
 
-    public static List<BaseLocation> disc(BaseLocation location, int brushSize, boolean smooth) {
+    public static List<BaseLocation> disc(BaseLocation centerPoint, RotationAxis axis, int brushSize, boolean smooth) {
         List<BaseLocation> positions = new ArrayList<>();
         final double radiusSquared = (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE)) * (brushSize + (smooth ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE));
-        final VoxelVector centerPoint = location.toVector();
-        final VoxelVector currentPoint = centerPoint.clone();
+        final VoxelLocation currentPoint = centerPoint.makeMutable();
 
         for (int x = -brushSize; x <= brushSize; x++) {
             currentPoint.setX(centerPoint.getX() + x);
             for (int z = -brushSize; z <= brushSize; z++) {
                 currentPoint.setZ(centerPoint.getZ() + z);
                 if (centerPoint.distanceSquared(currentPoint) <= radiusSquared) {
-                    positions.add(new BaseLocation(location.getWorld(), currentPoint.getBlockX(), currentPoint.getBlockY(), currentPoint.getBlockZ()));
+                    var pos = axis.getLocationTranslator().invoke(centerPoint.getWorld(), x, 0, z);
+                    pos.add(centerPoint);
+                    positions.add(pos.makeImmutable());
                 }
             }
         }
@@ -79,16 +81,18 @@ public class Shapes {
         return positions;
     }
 
-    public static List<BaseLocation> cylinder(BaseLocation location, int brushSize, int height, int shift, boolean smooth) {
+    public static List<BaseLocation> cylinder(BaseLocation centerPoint, RotationAxis axis, int brushSize, int height, int shift, boolean smooth) {
         List<BaseLocation> positions = new ArrayList<>();
         for (int y = 0; y < height; y++) {
-            positions.addAll(disc(new BaseLocation(location.getWorld(), location.getX(), location.getY() + y - (height / 2.0) + 1 + shift, location.getZ()), brushSize, smooth));
+            var pos = axis.getLocationTranslator().invoke(centerPoint.getWorld(), 0, (int) (y - (height / 2.0) + 1 + shift), 0);
+            pos.add(centerPoint);
+            positions.addAll(disc(pos, axis, brushSize, smooth));
         }
         return positions;
     }
 
     public static List<BaseLocation> discFace(BaseLocation location, int brushSize, boolean smooth, BlockFace face) {
-        List<BaseLocation> disc = disc(location, brushSize, smooth);
+        List<BaseLocation> disc = disc(location, RotationAxis.Y, brushSize, smooth);
         return face(location, disc, face);
     }
 

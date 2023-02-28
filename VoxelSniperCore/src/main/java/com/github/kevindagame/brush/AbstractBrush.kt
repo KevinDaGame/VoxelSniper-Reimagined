@@ -245,7 +245,7 @@ abstract class AbstractBrush : IBrush {
         protected get() = world.maxWorldHeight
 
     protected fun isInWorldHeight(height: Int): Boolean {
-        return minHeight <= height && maxHeight > height
+        return world.isInWorldHeight(height)
     }
 
     /**

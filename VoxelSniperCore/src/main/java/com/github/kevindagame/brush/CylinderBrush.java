@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.google.common.collect.Lists;
@@ -28,7 +29,7 @@ public class CylinderBrush extends PerformerBrush {
     }
 
     private void cylinder(final SnipeData v) {
-        this.positions = Shapes.cylinder(this.getTargetBlock().getLocation(), v.getBrushSize(), v.getVoxelHeight(), v.getcCen(), this.smoothCircle);
+        this.positions = Shapes.cylinder(this.getTargetBlock().getLocation(), RotationAxis.Y, v.getBrushSize(), v.getVoxelHeight(), v.getcCen(), this.smoothCircle);
     }
 
     @Override

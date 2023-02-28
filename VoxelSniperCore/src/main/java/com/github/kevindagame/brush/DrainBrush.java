@@ -2,6 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
@@ -32,7 +33,7 @@ public class DrainBrush extends AbstractBrush {
     }
 
     private void drain(final SnipeData v) {
-        var positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
+        var positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), RotationAxis.Y, v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
         for (var pos : positions) {
             var block = pos.getBlock();
             var blockData = block.getBlockData();
