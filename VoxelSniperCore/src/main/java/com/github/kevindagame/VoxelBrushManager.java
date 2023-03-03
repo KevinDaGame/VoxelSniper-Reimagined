@@ -207,7 +207,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData drainBrush() {
-        return new BrushBuilder().name("drain").setSupplier(DrainBrush::new).setPermission("voxelsniper.brush.drain").build();
+        return new BrushBuilder().name("drain").alias("drain").setSupplier(DrainBrush::new).setPermission("voxelsniper.brush.drain").build();
     }
 
     private static BrushData ellipseBrush() {
