@@ -279,11 +279,11 @@ public class VoxelBrushManager {
     }
 
     private static BrushData paintingBrush() {
-        return new BrushBuilder().name("painting").setSupplier(PaintingBrush::new).setPermission("voxelsniper.brush.painting").build();
+        return new BrushBuilder().name("painting").alias("painting").setSupplier(PaintingBrush::new).setPermission("voxelsniper.brush.painting").build();
     }
 
     private static BrushData pullBrush() {
-        return new BrushBuilder().name("pull").setSupplier(PullBrush::new).setPermission("voxelsniper.brush.pull").build();
+        return new BrushBuilder().name("pull").alias("pull").setSupplier(PullBrush::new).setPermission("voxelsniper.brush.pull").build();
     }
 
     private static BrushData regenerateChunkBrush() {
@@ -315,7 +315,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData setBrush() {
-        return new BrushBuilder().name("set").setSupplier(SetBrush::new).setPermission("voxelsniper.brush.set").build();
+        return new BrushBuilder().name("set").alias("set").setSupplier(SetBrush::new).setPermission("voxelsniper.brush.set").build();
     }
 
     private static BrushData shellBallBrush() {
@@ -367,7 +367,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData treeSnipeBrush() {
-        return new BrushBuilder().name("t").setSupplier(TreeSnipeBrush::new).setPermission("voxelsniper.brush.t").build();
+        return new BrushBuilder().name("Treesnipe").alias("t", "treesnipe").setSupplier(TreeSnipeBrush::new).setPermission("voxelsniper.brush.t").build();
     }
 
     private static BrushData triangleBrush() {
