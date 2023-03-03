@@ -33,7 +33,7 @@ public class SnipeTool {
         this.snipeData = snipeData;
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
-        this.currentBrush = Objects.requireNonNull(owner.instantiateBrush(SnipeBrush.class, true));
+        this.currentBrush = brush;
     }
 
     public @NotNull IBrush getCurrentBrush() {

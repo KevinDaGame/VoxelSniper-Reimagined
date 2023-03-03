@@ -103,14 +103,14 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(voxelDiscFaceBrush());
         brushManager.registerSniperBrush(warpBrush());
 
+        brushManager.registerSniperBrush(rot2DBrush());
+        brushManager.registerSniperBrush(rot2DVertBrush());
+        brushManager.registerSniperBrush(rot3DBrush());
 
         //these brushes are currently removed/broken
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
 
-        brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
-        brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
-        brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
 
 
         //these brushes have an unknown status
@@ -296,6 +296,18 @@ public class VoxelBrushManager {
 
     private static BrushData rulerBrush() {
         return new BrushBuilder().name("Ruler").alias("r", "ruler").setSupplier(RulerBrush::new).setPermission("voxelsniper.brush.ruler").build();
+    }
+
+    private static BrushData rot2DBrush() {
+        return new BrushBuilder().name("Rot2D").alias("rot2", "rotation2d").setSupplier(Rot2DBrush::new).setPermission("voxelsniper.brush.rot2d").build();
+    }
+
+    private static BrushData rot2DVertBrush() {
+        return new BrushBuilder().name("Rot2DVert").alias("rot2dv", "rotation2dvertical").setSupplier(Rot2DvertBrush::new).setPermission("voxelsniper.brush.rot2dvert").build();
+    }
+
+    private static BrushData rot3DBrush() {
+        return new BrushBuilder().name("Rot3D").alias("rot3", "rotation3d").setSupplier(Rot3DBrush::new).setPermission("voxelsniper.brush.rot3d").build();
     }
 
     private static BrushData scannerBrush() {

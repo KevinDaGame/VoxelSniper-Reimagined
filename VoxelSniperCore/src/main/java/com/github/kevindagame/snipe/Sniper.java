@@ -27,13 +27,13 @@ import java.util.UUID;
  */
 public class Sniper {
 
-    private final UUID player;
+    public final IPlayer player;
     private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
     private boolean enabled = true;
 
     public Sniper(IPlayer player) {
-        this.player = player.getUniqueId();
+        this.player = player;
         SnipeTool sniperTool = new SnipeTool(this);
         sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
         sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterial("gunpowder"));
@@ -41,7 +41,7 @@ public class Sniper {
     }
 
     public String getCurrentToolId() {
-        return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand() : VoxelMaterial.AIR);
+        return getToolId((player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR);
     }
 
     public String getToolId(VoxelMaterial itemInHand) {
@@ -55,10 +55,6 @@ public class Sniper {
             }
         }
         return null;
-    }
-
-    public IPlayer getPlayer() {
-        return VoxelSniper.voxelsniper.getPlayer(this.player);
     }
 
     /**
@@ -86,7 +82,7 @@ public class Sniper {
         }
 
         String permissionNode = sniperTool.getCurrentBrush().getPermissionNode();
-        if (!getPlayer().hasPermission(permissionNode)) {
+        if (!player.hasPermission(permissionNode)) {
             sendMessage(Messages.NO_PERMISSION_BRUSH.replace("%permissionNode%", permissionNode));
             return true;
         }
@@ -99,7 +95,7 @@ public class Sniper {
             targetBlock = clickedBlock;
             lastBlock = targetBlock.getRelative(clickedFace);
         } else {
-            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), snipeData.getRange()) : new BlockHelper(getPlayer());
+            BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(player, snipeData.getRange()) : new BlockHelper(player);
             targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
             lastBlock = rangeBlockHelper.getLastBlock();
         }
@@ -107,7 +103,7 @@ public class Sniper {
         switch (action) {
             case LEFT_CLICK_AIR:
             case LEFT_CLICK_BLOCK:
-                if (getPlayer().isSneaking()) {
+                if (player.isSneaking()) {
                     return handleSneakLeftClick(toolId, snipeData, snipeAction, targetBlock);
                 }
                 break;
@@ -272,6 +268,10 @@ public class Sniper {
         return tools.containsKey(toolId) ? tools.get(toolId).getSnipeData() : null;
     }
 
+    public IPlayer getPlayer() {
+        return player;
+    }
+
     public void displayInfo() {
         String currentToolId = getCurrentToolId();
         SnipeTool sniperTool = tools.get(currentToolId);
@@ -292,7 +292,7 @@ public class Sniper {
     }
 
     public final void sendMessage(final @NotNull ComponentLike message) {
-        this.getPlayer().sendMessage(message);
+        player.sendMessage(message);
     }
 
     /**
@@ -301,22 +301,25 @@ public class Sniper {
      * @param brushData
      * @return {IBrush} The brush instance
      **/
-    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush) {
-        return this.instantiateBrush(brush, false);
+    public @Nullable IBrush instantiateBrush(BrushData brushData) {
+        return this.instantiateBrush(brushData, false);
     }
 
-    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush, boolean force) {
-        try {
-                 var brushInstance = brushData.getSupplier().get();
-                  if (!(brushInstance instanceof PolyBrush)) {
+    /**
+     * Create the instance of a brush based on the BrushData
+     *
+     * @param brushData
+     * @param force
+     * @return {IBrush} The brush instance
+     **/
+    public @Nullable IBrush instantiateBrush(BrushData brushData, boolean force) {
+        var brushInstance = brushData.getSupplier().get();
+        if (!(brushInstance instanceof PolyBrush)) {
             brushInstance.setPermissionNode(brushData.getPermission());
             brushInstance.setName(brushData.getName());
-            if(force || getPlayer().hasPermission(brushInstance.getPermissionNode()))
-                return brushInstance;
-        } catch (InstantiationException | IllegalAccessException e) {
-            return null;
         }
-        if (getPlayer().hasPermission(brushInstance.getPermissionNode())) return brushInstance;
+        if (force || player.hasPermission(brushInstance.getPermissionNode()))
+            return brushInstance;
         return null;
     }
 

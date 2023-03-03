@@ -1,7 +1,6 @@
 package com.github.kevindagame.command;
 
 import com.github.kevindagame.VoxelBrushManager;
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;

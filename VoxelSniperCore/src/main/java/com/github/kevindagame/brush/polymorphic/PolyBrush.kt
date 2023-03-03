@@ -79,7 +79,7 @@ class PolyBrush(
                 }
             }
         } else {
-            addOperations(currentPerformer.perform(positions))
+            addOperations(currentPerformer.perform(positions, v))
         }
     }
 
