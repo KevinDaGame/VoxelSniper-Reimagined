@@ -76,7 +76,7 @@ public class GenerateTreeBrush extends AbstractBrush {
             }
 
             // Creates a branch block.
-            addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
+            addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
             this.branchBlocks.add(location.getBlock());
         }
     }
@@ -162,7 +162,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 if (location.getBlock().getMaterial() != woodMaterial) {
 
                     // Place log block.
-                    addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
+                    addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 } else {
                     // If solid then...
                     // End loop
