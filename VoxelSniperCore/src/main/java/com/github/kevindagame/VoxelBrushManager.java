@@ -108,9 +108,9 @@ public class VoxelBrushManager {
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
 
-        //brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
-        //brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
-        //brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
+        brushManager.registerSniperBrush(Rot2DBrush.class, "rot2", "rotation2d");
+        brushManager.registerSniperBrush(Rot2DvertBrush.class, "rot2v", "rotation2dvertical");
+        brushManager.registerSniperBrush(Rot3DBrush.class, "rot3", "rotation3d");
 
 
         //these brushes have an unknown status

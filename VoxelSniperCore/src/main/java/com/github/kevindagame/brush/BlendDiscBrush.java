@@ -2,6 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -14,7 +15,7 @@ public class BlendDiscBrush extends BlendBrushBase {
 
     @Override
     protected final void blend(final SnipeData v) {
-        var positions = Shapes.disc(this.getTargetBlock().getLocation(), v.getBrushSize(), false);
+        var positions = Shapes.disc(this.getTargetBlock().getLocation(), RotationAxis.Y, v.getBrushSize(), false);
         var brushSize = v.getBrushSize();
         var newMaterials = this.blend2D(brushSize);
 

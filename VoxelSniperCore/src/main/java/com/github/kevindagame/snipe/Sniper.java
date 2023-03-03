@@ -301,12 +301,20 @@ public class Sniper {
      * @param brushData
      * @return {IBrush} The brush instance
      **/
-    public @Nullable IBrush instantiateBrush(BrushData brushData) {
-        var brushInstance = brushData.getSupplier().get();
-        //polybrush already does this in constructor, so no need (or ability) to set these parameters
-        if (!(brushInstance instanceof PolyBrush)) {
+    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush) {
+        return this.instantiateBrush(brush, false);
+    }
+
+    public @Nullable IBrush instantiateBrush(Class<? extends IBrush> brush, boolean force) {
+        try {
+                 var brushInstance = brushData.getSupplier().get();
+                  if (!(brushInstance instanceof PolyBrush)) {
             brushInstance.setPermissionNode(brushData.getPermission());
             brushInstance.setName(brushData.getName());
+            if(force || getPlayer().hasPermission(brushInstance.getPermissionNode()))
+                return brushInstance;
+        } catch (InstantiationException | IllegalAccessException e) {
+            return null;
         }
         if (getPlayer().hasPermission(brushInstance.getPermissionNode())) return brushInstance;
         return null;

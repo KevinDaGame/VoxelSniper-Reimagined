@@ -77,6 +77,10 @@ public class BaseLocation implements Cloneable {
         return this.world;
     }
 
+    public final boolean isInWorldHeight() {
+        return this.world.isInWorldHeight(this.getBlockY());
+    }
+
     @Override
     public BaseLocation clone() {
         try {

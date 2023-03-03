@@ -2,9 +2,11 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.voxelsniper.blockdata.waterlogged.IWaterlogged;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
@@ -25,11 +27,16 @@ public class DrainBrush extends AbstractBrush {
 
 
     private void drain(final SnipeData v) {
-        var positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
+        var positions = this.disc ? Shapes.disc(getTargetBlock().getLocation(), RotationAxis.Y, v.getBrushSize(), smooth) : Shapes.ball(getTargetBlock().getLocation(), v.getBrushSize(), smooth);
         for (var pos : positions) {
             var block = pos.getBlock();
-            if (block.getMaterial().isFluid()) {
-                addOperation(new BlockOperation(pos, block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            var blockData = block.getBlockData();
+            if (blockData.getMaterial().isFluid()) {
+                addOperation(new BlockOperation(pos, blockData, VoxelMaterial.AIR.createBlockData()));
+            } else if (blockData instanceof IWaterlogged waterlogged && waterlogged.isWaterlogged()) {
+                var newData = (IWaterlogged) waterlogged.getCopy();
+                newData.setWaterlogged(false);
+                addOperation(new BlockOperation(pos, blockData, newData));
             }
         }
     }
