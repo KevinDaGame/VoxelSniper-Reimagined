@@ -6,6 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.blockdata.persistent.IPersistent;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -100,10 +101,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                         // Chance to skip creation of a block.
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
-                            if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-                                var block = location.getBlock().getRelative(x, y, z);
-                                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
-                            }
+                            this.createLeaf(location, x, y, z);
                         }
                         for (int dx : new int[]{-1, 1}) {
                             for (int dy : new int[]{-1, 1}) {
@@ -121,7 +119,11 @@ public class GenerateTreeBrush extends AbstractBrush {
     private void createLeaf(final BaseLocation location, int x, int y, int z) {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
             var block = location.getBlock().getRelative(x, y, z);
-            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
+            var blockData = this.leavesMaterial.createBlockData();
+            if(blockData instanceof IPersistent) {
+                ((IPersistent) blockData).setPersistent(true);
+            }
+            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), blockData));
         }
     }
 

@@ -88,7 +88,8 @@ public class VoxelBrushCommand extends VoxelCommand {
             snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
         } else {
             IBrush oldBrush = sniper.getBrush(currentToolId);
-            IBrush newBrush = sniper.instantiateBrush(brush);
+            IBrush newBrush = oldBrush != null && oldBrush.getClass().equals(brush) ? oldBrush : sniper.instantiateBrush(brush);
+
 
             if (newBrush == null || !player.hasPermission(newBrush.getPermissionNode())) {
                 snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
