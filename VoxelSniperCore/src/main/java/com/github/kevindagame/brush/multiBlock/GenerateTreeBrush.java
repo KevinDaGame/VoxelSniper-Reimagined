@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 
@@ -401,14 +402,8 @@ public class GenerateTreeBrush extends AbstractBrush {
             if (params[0].equalsIgnoreCase("leaves")) {
                 VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
                 if (material == null) throw new IllegalArgumentException();
-
-                if (material == VoxelMaterial.OAK_LEAVES || material == VoxelMaterial.ACACIA_LEAVES || material == VoxelMaterial.SPRUCE_LEAVES
-                        || material == VoxelMaterial.JUNGLE_LEAVES || material == VoxelMaterial.DARK_OAK_LEAVES || material == VoxelMaterial.BIRCH_LEAVES) {
-                    this.leavesMaterial = material;
-                    v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
-                } else {
-                    throw new IllegalArgumentException();
-                }
+                this.leavesMaterial = material;
+                v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
                 return;
             }
 
@@ -416,13 +411,8 @@ public class GenerateTreeBrush extends AbstractBrush {
                 VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
                 if (material == null) throw new IllegalArgumentException();
 
-                if (material == VoxelMaterial.OAK_WOOD || material == VoxelMaterial.ACACIA_WOOD || material == VoxelMaterial.SPRUCE_WOOD
-                        || material == VoxelMaterial.JUNGLE_WOOD || material == VoxelMaterial.DARK_OAK_WOOD || material == VoxelMaterial.BIRCH_WOOD) {
-                    this.woodMaterial = material;
-                    v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
-                } else {
-                    throw new IllegalArgumentException();
-                }
+                this.woodMaterial = material;
+                v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
                 return;
             }
         } catch (IllegalArgumentException e) {
@@ -582,12 +572,10 @@ public class GenerateTreeBrush extends AbstractBrush {
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(VoxelMaterial.OAK_WOOD.getName(), VoxelMaterial.ACACIA_WOOD.getName(), VoxelMaterial.SPRUCE_WOOD.getName(), VoxelMaterial.JUNGLE_WOOD.getName(),
-                VoxelMaterial.DARK_OAK_WOOD.getName(), VoxelMaterial.BIRCH_WOOD.getName()));
+        argumentValues.put("wood", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         // Leaves material variables
-        argumentValues.put("leaves", Lists.newArrayList(VoxelMaterial.OAK_LEAVES.getName(), VoxelMaterial.ACACIA_LEAVES.getName(), VoxelMaterial.SPRUCE_LEAVES.getName(), VoxelMaterial.JUNGLE_LEAVES.getName(),
-                VoxelMaterial.DARK_OAK_LEAVES.getName(), VoxelMaterial.BIRCH_LEAVES.getName()));
+        argumentValues.put("leaves", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         return argumentValues;
     }
