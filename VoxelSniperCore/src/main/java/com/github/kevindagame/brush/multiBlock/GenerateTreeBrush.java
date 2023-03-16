@@ -28,6 +28,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     // Tree Variables.
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
+    private final HashMap<String, Boolean> leafBlocks = new HashMap<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
@@ -121,11 +122,26 @@ public class GenerateTreeBrush extends AbstractBrush {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
             var block = location.getBlock().getRelative(x, y, z);
             var blockData = this.leavesMaterial.createBlockData();
-            if(blockData instanceof IPersistent) {
+            if (blockData instanceof IPersistent) {
                 ((IPersistent) blockData).setPersistent(true);
             }
-            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), blockData));
+
+            var newLocation = block.getLocation();
+            if (leafBlocks.get(getKey(newLocation)) == null) {
+                addOperation(new BlockOperation(newLocation, block.getBlockData(), blockData));
+                leafBlocks.put(getKey(newLocation), true);
+            }
         }
+    }
+
+    /**
+     * Generate a key for a location
+     *
+     * @param location the location
+     * @return "x:y:z"
+     */
+    private String getKey(final BaseLocation location) {
+        return location.getX() + ":" + location.getY() + ":" + location.getZ();
     }
 
     /**
@@ -345,7 +361,6 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-
         this.branchBlocks.clear();
 
         // Sets the location variables.
