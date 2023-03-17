@@ -13,7 +13,6 @@ import com.github.kevindagame.voxelsniper.biome.VoxelBiome
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
-import java.lang.IllegalStateException
 import kotlin.math.pow
 
 class PolyBrush(
@@ -101,17 +100,15 @@ class PolyBrush(
         val center = targetBlock
 
         for (position in positions) {
-            for (shape in shapes) {
-                if (shape.apply(v, position, radiusSquared)) {
-                    newPositions.add(
-                        BaseLocation(
-                            world,
-                            (center.x + position.dx).toDouble(),
-                            (center.y + position.dy).toDouble(),
-                            (center.z + position.dz).toDouble()
-                        )
+            if (shapes.all { it.apply(v, position, radiusSquared) }) {
+                newPositions.add(
+                    BaseLocation(
+                        world,
+                        (center.x + position.dx).toDouble(),
+                        (center.y + position.dy).toDouble(),
+                        (center.z + position.dz).toDouble()
                     )
-                }
+                )
             }
         }
         return newPositions
