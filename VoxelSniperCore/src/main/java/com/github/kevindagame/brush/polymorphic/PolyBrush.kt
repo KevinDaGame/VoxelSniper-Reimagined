@@ -32,15 +32,20 @@ class PolyBrush(
         for (shape in shapes) {
             properties.addAll(shape.parameters.toList())
         }
-        if (operationType == PolyOperationType.BIOME) {
-            properties.add(PolyPropertiesEnum.BIOME)
+        when (operationType) {
+            PolyOperationType.BLOCK -> {
+                properties.add(PolyPropertiesEnum.PERFORMER)
+            }
+
+            PolyOperationType.BIOME -> {
+                properties.add(PolyPropertiesEnum.BIOME)
+            }
         }
         if (operation != null) {
             properties.add(PolyPropertiesEnum.EXCLUDEWATER)
             properties.add(PolyPropertiesEnum.EXCLUDEAIR)
 
         }
-        properties.add(PolyPropertiesEnum.PERFORMER)
         for (property in properties) {
             this.properties.add(property.supplier())
         }
@@ -150,7 +155,11 @@ class PolyBrush(
     private val biome: VoxelBiome get() = getPropertyValue<BiomeProperty, VoxelBiome>()
 
     override fun registerArguments(): List<String> {
-        val arguments = properties.map { it.name }.toMutableList()
+        val arguments = mutableListOf<String>()
+        properties.forEach {
+            arguments.add(it.name)
+            arguments.addAll(it.aliases)
+        }
         arguments.addAll(super.registerArguments())
         return arguments
     }
@@ -165,8 +174,12 @@ class PolyBrush(
                 )
             }
         }
+        if (params.size == 1) {
+            v.owner().player.sendMessage(Messages.PARAMETER_PARSE_ERROR.replace("parameter", params[0]))
+            return
+        }
         for (property in properties) {
-            if (params[0].equals(property.name, ignoreCase = true)) {
+            if (property.name.equals(params[0]) || property.aliases.any { it.equals(params[0], ignoreCase = true) }) {
                 if (!PlayerBrushChangedEvent(
                         v.owner().player,
                         v.owner().currentToolId,
@@ -177,7 +190,6 @@ class PolyBrush(
                     property.set(params[1])
                 }
                 break
-
             }
         }
     }
@@ -186,6 +198,7 @@ class PolyBrush(
         val map = HashMap<String, List<String>>()
         for (property in properties) {
             map.put(property.name, property.getValues())
+            property.aliases.forEach { alias -> map.put(alias, property.getValues()) }
         }
         super.registerArgumentValues().forEach { (t, u) -> map.put(t, u) }
         return map

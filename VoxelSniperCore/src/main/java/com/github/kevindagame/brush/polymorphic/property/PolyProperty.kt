@@ -1,6 +1,8 @@
 package com.github.kevindagame.brush.polymorphic.property
 
-abstract class PolyProperty<T>(val name: String, val description: String, default: T) {
+import com.google.common.collect.ImmutableList
+
+abstract class PolyProperty<T>(val name: String, val description: String, default: T, val aliases: ImmutableList<String> = ImmutableList.of()) {
 
     var value: T = default
     fun get(): T {
