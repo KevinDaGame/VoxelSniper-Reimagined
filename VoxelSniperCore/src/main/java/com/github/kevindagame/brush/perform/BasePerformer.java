@@ -39,7 +39,8 @@ public abstract class BasePerformer implements Predicate<IBlock> {
 
     protected abstract BlockOperation perform(IBlock b);
 
-    public List<BrushOperation> perform(List<BaseLocation> positions) {
+    public List<BrushOperation> perform(List<BaseLocation> positions, SnipeData v) {
+        init(v);
         return positions.stream().map(BaseLocation::getBlock).filter(this).map(this::perform).collect(Collectors.toList());
     }
 

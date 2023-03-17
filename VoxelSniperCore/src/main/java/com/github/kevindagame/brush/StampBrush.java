@@ -21,12 +21,6 @@ public class StampBrush extends AbstractBrush {
     protected boolean sorted = false;
     protected StampType stamp = StampType.DEFAULT;
 
-    /**
-     *
-     */
-    public StampBrush() {
-        this.setName("Stamp");
-    }
 
     /**
      *
@@ -136,11 +130,6 @@ public class StampBrush extends AbstractBrush {
     @Override
     public void info(@NotNull final VoxelMessage vm) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.stamp";
     }
 
     /**

@@ -24,12 +24,6 @@ public class TreeSnipeBrush extends AbstractBrush {
 
     private VoxelTreeType treeType = VoxelTreeType.TREE;
 
-    /**
-     *
-     */
-    public TreeSnipeBrush() {
-        this.setName("Tree Snipe");
-    }
 
     private void single(final SnipeData v, IBlock targetBlock) {
         var result = this.getWorld().generateTree(targetBlock.getLocation(), this.treeType, false);
@@ -108,10 +102,5 @@ public class TreeSnipeBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return Arrays.stream(VoxelTreeType.values()).filter(VoxelTreeType::isSupported).map(Enum::name).toList();
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.treesnipe";
     }
 }

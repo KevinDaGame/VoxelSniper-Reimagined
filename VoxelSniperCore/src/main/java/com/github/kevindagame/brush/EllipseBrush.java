@@ -33,12 +33,6 @@ public class EllipseBrush extends PerformerBrush {
     private double stepSize;
     private boolean fill;
 
-    /**
-     *
-     */
-    public EllipseBrush() {
-        this.setName("Ellipse");
-    }
 
     private void ellipse(final SnipeData v, IBlock targetBlock) {
         try {
@@ -262,10 +256,5 @@ public class EllipseBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.ellipse";
     }
 }

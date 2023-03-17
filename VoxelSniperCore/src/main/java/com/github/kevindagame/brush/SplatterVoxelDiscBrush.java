@@ -11,12 +11,6 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 public class SplatterVoxelDiscBrush extends SplatterBrushBase {
 
 
-    /**
-     *
-     */
-    public SplatterVoxelDiscBrush() {
-        this.setName("Splatter Voxel Disc");
-    }
 
     private void vSplatterDisc(final SnipeData v, IBlock targetBlock) {
         var positions = Shapes.voxelDisc(this.getTargetBlock().getLocation(), v.getBrushSize());
@@ -49,10 +43,5 @@ public class SplatterVoxelDiscBrush extends SplatterBrushBase {
         }
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.splattervoxeldisc";
     }
 }

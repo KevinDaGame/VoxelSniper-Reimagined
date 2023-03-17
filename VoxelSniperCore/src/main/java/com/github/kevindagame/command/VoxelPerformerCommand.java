@@ -1,6 +1,5 @@
 package com.github.kevindagame.command;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
 import com.github.kevindagame.brush.perform.Performer;
@@ -28,7 +27,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(IPlayer player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         // Default command

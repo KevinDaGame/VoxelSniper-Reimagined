@@ -21,12 +21,6 @@ import java.util.Objects;
  */
 public class VoltMeterBrush extends CustomBrush {
 
-    /**
-     *
-     */
-    public VoltMeterBrush() {
-        this.setName("VoltMeter");
-    }
 
     private void data(final SnipeData v) {
         final IBlockData data = getTargetBlock().getBlockData();
@@ -62,11 +56,6 @@ public class VoltMeterBrush extends CustomBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.brushMessage(Messages.VOLTMETER_BRUSH_MESSAGE);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.voltmeter";
     }
 
     @Override

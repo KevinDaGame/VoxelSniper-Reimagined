@@ -27,12 +27,6 @@ public class RingBrush extends PerformerBrush {
 
     private double innerSize = 0;
 
-    /**
-     *
-     */
-    public RingBrush() {
-        this.setName("Ring");
-    }
 
     private void ring(final SnipeData v, IBlock targetBlock) {
         this.positions = Shapes.ring(this.getTargetBlock().getLocation(), v.getBrushSize(), this.innerSize, this.smoothCircle);
@@ -102,10 +96,5 @@ public class RingBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.ring";
     }
 }

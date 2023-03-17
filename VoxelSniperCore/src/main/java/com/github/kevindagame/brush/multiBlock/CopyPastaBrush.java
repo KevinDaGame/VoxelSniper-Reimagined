@@ -35,12 +35,6 @@ public class CopyPastaBrush extends AbstractBrush {
     private IBlockData[] substanceArray;
     private int pivot = 0; // ccw degrees    
 
-    /**
-     *
-     */
-    public CopyPastaBrush() {
-        this.setName("CopyPasta");
-    }
 
     private void doCopy(final SnipeData v) {
         for (int i = 0; i < 3; i++) {
@@ -198,10 +192,5 @@ public class CopyPastaBrush extends AbstractBrush {
         argumentValues.put("rotate", Lists.newArrayList("0", "90", "180", "270"));
 
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.copypasta";
     }
 }

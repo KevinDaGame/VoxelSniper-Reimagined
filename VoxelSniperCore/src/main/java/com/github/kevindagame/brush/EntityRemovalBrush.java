@@ -27,7 +27,6 @@ public class EntityRemovalBrush extends AbstractBrush {
      *
      */
     public EntityRemovalBrush() {
-        this.setName("Entity Removal Brush");
         defaultValues();
     }
 
@@ -184,10 +183,5 @@ public class EntityRemovalBrush extends AbstractBrush {
         argumentValues.put("+", entities);
         argumentValues.put("-", entities);
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.entityremoval";
     }
 }

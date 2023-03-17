@@ -17,7 +17,7 @@ class WorldGuardIntegration {
     private fun handleEvent(event: PlayerSnipeEvent) {
         if (event.isCancelled) return
         if (event.player.hasPermission("voxelsniper.bypass.worldguard")) return
-        //Check if each operation is within the worldguard area
+        //Check if each operationType is within the worldguard area
         val instance = WorldGuard.getInstance()
         val localPlayer = WorldGuardPlugin.inst().wrapPlayer((event.player as SpigotPlayer).player)
         val world = localPlayer.world

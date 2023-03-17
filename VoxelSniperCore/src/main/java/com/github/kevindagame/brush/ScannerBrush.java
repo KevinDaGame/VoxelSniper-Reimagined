@@ -28,12 +28,6 @@ public class ScannerBrush extends CustomBrush {
 
     private int depth = DEPTH_DEFAULT;
 
-    /**
-     *
-     */
-    public ScannerBrush() {
-        this.setName("Scanner");
-    }
 
     private int clamp(final int value, final int min, final int max) {
         if (value < min) {
@@ -107,11 +101,6 @@ public class ScannerBrush extends CustomBrush {
         argumentValues.put("depth", Lists.newArrayList("[number]"));
 
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.scanner";
     }
 
     @Override

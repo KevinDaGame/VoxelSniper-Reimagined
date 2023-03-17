@@ -24,9 +24,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
     private int depth = 3;
     private boolean allBlocks = false;
     private boolean useVoxelList = false;
-    public SplatterOverlayBrush() {
-        this.setName("Splatter Overlay");
-    }
+
 
     private void sOverlay(final SnipeData v) {
 
@@ -193,10 +191,5 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.splatteroverlay";
     }
 }
