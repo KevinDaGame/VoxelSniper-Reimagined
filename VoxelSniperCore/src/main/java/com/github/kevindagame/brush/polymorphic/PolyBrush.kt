@@ -11,6 +11,7 @@ import com.github.kevindagame.util.brushOperation.BlockOperation
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import java.lang.IllegalStateException
 import kotlin.math.pow
 
 class PolyBrush(
@@ -125,42 +126,20 @@ class PolyBrush(
         return positions
     }
 
-    private val smooth: Boolean
-        get() {
-            for (property in properties) {
-                if (property is SmoothProperty) {
-                    return property.value
-                }
+    private inline fun <reified T, reified RET> getPropertyValue(): RET {
+        for (property in properties) {
+            if (property is T) {
+                return property.value as RET
             }
-            return false
         }
-    private val excludeAir: Boolean
-        get() {
-            for (property in properties) {
-                if (property is ExcludeAirProperty) {
-                    return property.value
-                }
-            }
-            return false
-        }
-    private val excludeWater: Boolean
-        get() {
-            for (property in properties) {
-                if (property is ExcludeWaterProperty) {
-                    return property.value
-                }
-            }
-            return false
-        }
-    private val currentPerformer: BasePerformer
-        get() {
-            for (property in properties) {
-                if (property is PerformerProperty) {
-                    return property.value
-                }
-            }
-            return PerformerProperty().value
-        }
+        val classname = T::class.simpleName
+        throw IllegalStateException("The requested property is not defined: $classname")
+    }
+
+    private val smooth: Boolean get() = getPropertyValue<SmoothProperty, Boolean>()
+    private val excludeAir: Boolean get() = getPropertyValue<ExcludeAirProperty, Boolean>()
+    private val excludeWater get() = getPropertyValue<ExcludeWaterProperty, Boolean>()
+    private val currentPerformer: BasePerformer get() = getPropertyValue<PerformerProperty, BasePerformer>()
 
     override fun registerArguments(): List<String> {
         val arguments = properties.map { it.name }.toMutableList()
@@ -170,7 +149,7 @@ class PolyBrush(
 
     override fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData) {
         if (params[0].equals("info", ignoreCase = true)) {
-            val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name);
+            val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name)
             for (property in properties) {
                 info.append(
                     Messages.POLY_BRUSH_USAGE_LINE.replace("brushHandle", triggerHandle)
