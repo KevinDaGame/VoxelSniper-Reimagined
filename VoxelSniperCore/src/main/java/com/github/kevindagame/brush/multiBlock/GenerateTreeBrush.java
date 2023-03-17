@@ -28,7 +28,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     // Tree Variables.
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
-    private final HashMap<String, Boolean> leafBlocks = new HashMap<>();
+    private final HashSet<String> leafBlocks = new HashSet<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
@@ -127,9 +127,9 @@ public class GenerateTreeBrush extends AbstractBrush {
             }
 
             var newLocation = block.getLocation();
-            if (leafBlocks.get(getKey(newLocation)) == null) {
+            if (!leafBlocks.contains(getKey(newLocation))) {
                 addOperation(new BlockOperation(newLocation, block.getBlockData(), blockData));
-                leafBlocks.put(getKey(newLocation), true);
+                leafBlocks.add(getKey(newLocation));
             }
         }
     }
