@@ -1,4 +1,4 @@
-package com.github.kevindagame.voxelsniper.blockdata.persistent
+package com.github.kevindagame.voxelsniper.blockdata.leaves
 
 import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData
 import org.bukkit.block.data.type.Leaves

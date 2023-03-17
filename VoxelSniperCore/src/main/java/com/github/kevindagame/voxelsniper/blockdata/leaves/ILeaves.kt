@@ -1,4 +1,4 @@
-package com.github.kevindagame.voxelsniper.blockdata.persistent
+package com.github.kevindagame.voxelsniper.blockdata.leaves
 
 interface ILeaves {
     fun isPersistent(): Boolean

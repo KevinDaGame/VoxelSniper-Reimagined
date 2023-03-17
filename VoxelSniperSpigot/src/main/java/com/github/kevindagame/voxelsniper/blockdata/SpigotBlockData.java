@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.blockdata;
 
-import com.github.kevindagame.voxelsniper.blockdata.persistent.SpigotLeaves;
+import com.github.kevindagame.voxelsniper.blockdata.leaves.SpigotLeaves;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.SpigotRedstoneWire;
 import com.github.kevindagame.voxelsniper.blockdata.waterlogged.SpigotWaterlogged;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
