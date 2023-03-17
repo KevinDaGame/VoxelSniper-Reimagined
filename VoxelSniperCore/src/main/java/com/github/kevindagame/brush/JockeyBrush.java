@@ -29,12 +29,6 @@ public class JockeyBrush extends CustomBrush {
 
     private boolean playerOnly = false;
 
-    /**
-     *
-     */
-    public JockeyBrush() {
-        this.setName("Jockey");
-    }
 
     private void sitOn(final SnipeData v) {
         BaseLocation location = this.getLastBlock().getLocation();
@@ -156,11 +150,6 @@ public class JockeyBrush extends CustomBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.jockey";
     }
 
     @Override

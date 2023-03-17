@@ -17,12 +17,6 @@ public class SetBrush extends PerformerBrush {
     private static final int SELECTION_SIZE_MAX = 5000000;
     private IBlock block = null;
 
-    /**
-     *
-     */
-    public SetBrush() {
-        this.setName("Set");
-    }
 
     /**
      * NOTE: TRUE when first point was selected, or second point is in different world
@@ -79,10 +73,5 @@ public class SetBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         this.block = null;
         vm.brushName(this.getName());
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.set";
     }
 }

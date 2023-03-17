@@ -15,12 +15,6 @@ import java.util.List;
 public class Rot2DvertBrush extends AbstractBrush {
     private double angle = 90;
 
-    /**
-     *
-     */
-    public Rot2DvertBrush() {
-        this.setName("2D Rotation");
-    }
 
     @Override
     protected final void arrow(final SnipeData v) {
@@ -65,10 +59,5 @@ public class Rot2DvertBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("[number]"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.rot2dvert";
     }
 }

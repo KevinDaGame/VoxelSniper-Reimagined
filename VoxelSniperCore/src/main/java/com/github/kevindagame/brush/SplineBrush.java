@@ -27,9 +27,7 @@ public class SplineBrush extends PerformerBrush {
     protected boolean set;
     protected boolean ctrl;
 
-    public SplineBrush() {
-        this.setName("Spline");
-    }
+
 
     public final void addToSet(final SnipeData v, final boolean ep, IBlock targetBlock) {
         String pos = "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ";
@@ -100,7 +98,7 @@ public class SplineBrush extends PerformerBrush {
                 positions.add(new BaseLocation(getWorld(), px, py, pz));
             }
             //manually add operations because the performer logic is not called here
-            addOperations(currentPerformer.perform(positions));
+            addOperations(currentPerformer.perform(positions, v));
             return true;
         } catch (final Exception exception) {
             v.sendMessage(Messages.SPLINE_BRUSH_NOT_ENOUGH_POINTS.replace("%endPts%", String.valueOf(this.endPts.size())).replace("%ctrlPts%", String.valueOf(this.ctrlPts.size())));
@@ -209,11 +207,6 @@ public class SplineBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.spline";
     }
 
     // Vector class for splines

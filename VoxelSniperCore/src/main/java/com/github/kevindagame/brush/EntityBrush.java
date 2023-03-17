@@ -19,12 +19,6 @@ public class EntityBrush extends AbstractBrush {
 
     private VoxelEntityType entityType = VoxelEntityType.ZOMBIE;
 
-    /**
-     *
-     */
-    public EntityBrush() {
-        this.setName("Entity");
-    }
 
     private void spawn(final SnipeData v) {
         for (int x = 0; x < v.getBrushSize(); x++) {
@@ -86,10 +80,5 @@ public class EntityBrush extends AbstractBrush {
         }
 
         return entities;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.entity";
     }
 }

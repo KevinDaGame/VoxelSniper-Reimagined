@@ -19,12 +19,6 @@ public class ShellSetBrush extends ShellBrushBase {
     private final ArrayList<BlockWrapper> operations = new ArrayList<>();
     private IBlock block = null;
 
-    /**
-     *
-     */
-    public ShellSetBrush() {
-        this.setName("Shell Set");
-    }
 
     private boolean set(final IBlock bl, final SnipeData v) {
         operations.clear();
@@ -99,9 +93,4 @@ public class ShellSetBrush extends ShellBrushBase {
         }
     }
 
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.shellset";
-    }
 }

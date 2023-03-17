@@ -23,12 +23,6 @@ public class CleanSnowBrush extends AbstractBrush {
 
     private boolean smoothSphere = false;
 
-    /**
-     *
-     */
-    public CleanSnowBrush() {
-        this.setName("Clean Snow");
-    }
 
     private void cleanSnow(final SnipeData v) {
         var positions = Shapes.ball(this.getTargetBlock().getLocation(), v.getBrushSize(), smoothSphere);
@@ -78,10 +72,5 @@ public class CleanSnowBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("smooth"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.cleansnow";
     }
 }

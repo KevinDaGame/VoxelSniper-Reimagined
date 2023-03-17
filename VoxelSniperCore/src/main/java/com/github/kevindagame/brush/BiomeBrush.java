@@ -18,9 +18,7 @@ public class BiomeBrush extends AbstractBrush {
 
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
-    public BiomeBrush() {
-        this.setName("Biome");
-    }
+
 
     private void biome(final SnipeData v) {
         final int brushSize = v.getBrushSize();
@@ -76,10 +74,5 @@ public class BiomeBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.biome";
     }
 }

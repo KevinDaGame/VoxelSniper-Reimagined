@@ -46,13 +46,6 @@ public class GenerateTreeBrush extends AbstractBrush {
     private int nodeMax = 4;
     private int nodeMin = 3;
 
-    /**
-     *
-     */
-    public GenerateTreeBrush() {
-        this.setName("Generate Tree");
-    }
-
     // Branch Creation based on direction chosen from the parameters passed.
     private void branchCreate(BaseLocation origin, final int xDirection, final int zDirection) {
         VoxelLocation location = origin.makeMutable();
@@ -591,10 +584,5 @@ public class GenerateTreeBrush extends AbstractBrush {
         argumentValues.put("leaves", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.generatetree";
     }
 }

@@ -20,12 +20,6 @@ public class EraserBrush extends AbstractBrush {
     private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
             VoxelMaterial.WATER, VoxelMaterial.LAVA);
 
-    /**
-     *
-     */
-    public EraserBrush() {
-        this.setName("Eraser");
-    }
 
     private void doErase(final SnipeData v) {
 
@@ -54,10 +48,5 @@ public class EraserBrush extends AbstractBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.eraser";
     }
 }

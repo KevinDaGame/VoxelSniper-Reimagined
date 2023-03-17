@@ -23,12 +23,6 @@ public class DiscFaceBrush extends PerformerBrush {
 
     private boolean smoothCircle = false;
 
-    /**
-     *
-     */
-    public DiscFaceBrush() {
-        this.setName("Disc Face");
-    }
 
     private void discFace(final SnipeData v) {
         this.positions = Shapes.discFace(this.getTargetBlock().getLocation(), v.getBrushSize(), this.smoothCircle, this.getTargetBlock().getFace(this.getLastBlock()));
@@ -75,10 +69,5 @@ public class DiscFaceBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.discface";
     }
 }

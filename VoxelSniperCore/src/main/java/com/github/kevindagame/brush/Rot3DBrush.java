@@ -20,12 +20,6 @@ public class Rot3DBrush extends AbstractBrush {
     private double pitch;
     private double roll;
 
-    /**
-     *
-     */
-    public Rot3DBrush() {
-        this.setName("3D Rotation");
-    }
 
     @Override
     public final void info(final VoxelMessage vm) {
@@ -107,10 +101,5 @@ public class Rot3DBrush extends AbstractBrush {
     @Override
     protected final void powder(final SnipeData v) {
         this.arrow(v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.rot3d";
     }
 }

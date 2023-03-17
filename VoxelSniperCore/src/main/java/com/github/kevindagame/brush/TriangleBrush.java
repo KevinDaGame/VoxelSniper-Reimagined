@@ -23,12 +23,6 @@ public class TriangleBrush extends PerformerBrush {
     private final double[] normalVector = new double[3];
     private int cornernumber = 1;
 
-    /**
-     *
-     */
-    public TriangleBrush() {
-        this.setName("Triangle");
-    }
 
     private void triangleA(final SnipeData v) {
         switch (this.cornernumber) {
@@ -294,10 +288,5 @@ public class TriangleBrush extends PerformerBrush {
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.triangle";
     }
 }

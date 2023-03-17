@@ -1,5 +1,6 @@
 package com.github.kevindagame.snipe;
 
+import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.util.VoxelMessage;
@@ -25,10 +26,14 @@ public class SnipeTool {
     private final SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
-        this.snipeData = new SnipeData(owner);
+        this(owner.instantiateBrush(VoxelBrushManager.getInstance().getDefaultBrush()), new SnipeData(owner));
+    }
+
+    protected SnipeTool(@Nullable IBrush brush, SnipeData snipeData) {
+        this.snipeData = snipeData;
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
-        this.currentBrush = Objects.requireNonNull(owner.instantiateBrush(SnipeBrush.class, true));
+        this.currentBrush = brush;
     }
 
     public @NotNull IBrush getCurrentBrush() {

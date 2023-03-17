@@ -17,9 +17,7 @@ import java.util.List;
  */
 public class SplatterBallBrush extends SplatterBrushBase {
 
-    public SplatterBallBrush() {
-        this.setName("Splatter Ball");
-    }
+
 
     private void splatterBall(final SnipeData v) {
         final int brushSize = v.getBrushSize();
@@ -80,10 +78,5 @@ public class SplatterBallBrush extends SplatterBrushBase {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.splatterball";
     }
 }

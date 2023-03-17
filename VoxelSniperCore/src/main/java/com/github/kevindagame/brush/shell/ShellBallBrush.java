@@ -12,12 +12,6 @@ import com.github.kevindagame.util.brushOperation.BlockOperation;
  */
 public class ShellBallBrush extends ShellBrushBase {
 
-    /**
-     *
-     */
-    public ShellBallBrush() {
-        this.setName("Shell Ball");
-    }
 
     @Override
     protected final void shell(final SnipeData v) {
@@ -29,10 +23,5 @@ public class ShellBallBrush extends ShellBrushBase {
             addOperation(new BlockOperation(position, position.getBlock().getBlockData(), material.createBlockData()));
         }
         v.sendMessage(Messages.SHELL_BRUSH_COMPLETE);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.shellball";
     }
 }
