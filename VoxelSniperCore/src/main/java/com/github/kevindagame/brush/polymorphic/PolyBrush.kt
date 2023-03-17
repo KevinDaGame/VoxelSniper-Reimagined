@@ -179,7 +179,7 @@ class PolyBrush(
             return
         }
         for (property in properties) {
-            if (property.name.equals(params[0]) || property.aliases.any { it.equals(params[0], ignoreCase = true) }) {
+            if (property.name.equals(params[0], ignoreCase = true) || property.aliases.any { it.equals(params[0], ignoreCase = true) }) {
                 if (!PlayerBrushChangedEvent(
                         v.owner().player,
                         v.owner().currentToolId,
