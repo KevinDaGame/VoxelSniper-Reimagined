@@ -28,7 +28,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     // Tree Variables.
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
-    private final HashSet<String> leafBlocks = new HashSet<>();
+    private final HashSet<BaseLocation> placedLocations = new HashSet<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
@@ -78,6 +78,7 @@ public class GenerateTreeBrush extends AbstractBrush {
             }
 
             // Creates a branch block.
+            placedLocations.add(location.getBlock().getLocation());
             addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
             this.branchBlocks.add(location.getBlock());
         }
@@ -119,18 +120,17 @@ public class GenerateTreeBrush extends AbstractBrush {
     }
 
     private void createLeaf(final BaseLocation location, int x, int y, int z) {
-        if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-            var block = location.getBlock().getRelative(x, y, z);
+        var block = location.getBlock().getRelative(x, y, z);
+        if(placedLocations.contains(block.getLocation())) System.out.println("Already placed: " + block.getLocation());
+        if (block.getMaterial().isAir() && !placedLocations.contains(block.getLocation())) {
             var blockData = this.leavesMaterial.createBlockData();
             if (blockData instanceof ILeaves) {
                 ((ILeaves) blockData).setPersistent(true);
             }
-
             var newLocation = block.getLocation();
-            if (!leafBlocks.contains(getKey(newLocation))) {
-                addOperation(new BlockOperation(newLocation, block.getBlockData(), blockData));
-                leafBlocks.add(getKey(newLocation));
-            }
+
+            addOperation(new BlockOperation(newLocation, block.getBlockData(), blockData));
+            placedLocations.add(newLocation);
         }
     }
 
@@ -176,14 +176,11 @@ public class GenerateTreeBrush extends AbstractBrush {
 
                 // If not solid then...
                 // Save for undo function
-                if (location.getBlock().getMaterial() != woodMaterial) {
+                if (location.getBlock().getMaterial() != woodMaterial && !location.getBlock().getMaterial().isAir()) {
 
                     // Place log block.
+                    placedLocations.add(location.getBlock().getLocation());
                     addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
-                } else {
-                    // If solid then...
-                    // End loop
-                    break;
                 }
                 List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
                 // Checks is block below is solid
@@ -252,9 +249,10 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     private void createTrunk(final BaseLocation location, int x, int z) {
         // If block is air, then create a block.
-        if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
+        var block = location.getBlock().getRelative(x, 0, z);
+        if (block.getMaterial().isAir() && !placedLocations.contains(block.getLocation())) {
             // Creates block.
-            var block = location.getBlock().getRelative(x, 0, z);
+            placedLocations.add(location.getBlock().getLocation());
             addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.woodMaterial.createBlockData()));
         }
     }
