@@ -1,11 +1,13 @@
 package com.github.kevindagame.voxelsniper.blockdata;
 
+import com.github.kevindagame.voxelsniper.blockdata.leaves.SpigotLeaves;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.SpigotRedstoneWire;
 import com.github.kevindagame.voxelsniper.blockdata.waterlogged.SpigotWaterlogged;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Waterlogged;
+import org.bukkit.block.data.type.Leaves;
 import org.bukkit.block.data.type.RedstoneWire;
 
 public class SpigotBlockData implements IBlockData {
@@ -18,6 +20,8 @@ public class SpigotBlockData implements IBlockData {
     public static IBlockData fromSpigotData(BlockData blockData) {
         if (blockData instanceof RedstoneWire redstone)
             return new SpigotRedstoneWire(redstone);
+        if (blockData instanceof Leaves leaves)
+            return new SpigotLeaves(leaves);
         if (blockData instanceof Waterlogged waterlogged)
             return new SpigotWaterlogged(waterlogged);
         return new SpigotBlockData(blockData);

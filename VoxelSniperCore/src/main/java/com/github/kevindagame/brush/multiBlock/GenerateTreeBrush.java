@@ -6,6 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.blockdata.leaves.ILeaves;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -13,6 +14,7 @@ import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 // Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 
@@ -26,6 +28,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     // Tree Variables.
     private final Random random = new Random();
     private final ArrayList<IBlock> branchBlocks = new ArrayList<>();
+    private final HashSet<BaseLocation> placedLocations = new HashSet<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     // If these default values are edited. Remember to change default values in the default preset.
     private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
@@ -68,7 +71,8 @@ public class GenerateTreeBrush extends AbstractBrush {
             }
 
             // Creates a branch block.
-            addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
+            placedLocations.add(location.getBlock().getLocation());
+            addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
             this.branchBlocks.add(location.getBlock());
         }
     }
@@ -93,10 +97,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                         // Chance to skip creation of a block.
                         if (this.chance(70)) {
                             // If block is Air, create a leaf block.
-                            if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-                                var block = location.getBlock().getRelative(x, y, z);
-                                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
-                            }
+                            this.createLeaf(location, x, y, z);
                         }
                         for (int dx : new int[]{-1, 1}) {
                             for (int dy : new int[]{-1, 1}) {
@@ -112,10 +113,27 @@ public class GenerateTreeBrush extends AbstractBrush {
     }
 
     private void createLeaf(final BaseLocation location, int x, int y, int z) {
-        if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
-            var block = location.getBlock().getRelative(x, y, z);
-            addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.leavesMaterial.createBlockData()));
+        var block = location.getBlock().getRelative(x, y, z);
+        if (block.getMaterial().isAir() && !placedLocations.contains(block.getLocation())) {
+            var blockData = this.leavesMaterial.createBlockData();
+            if (blockData instanceof ILeaves) {
+                ((ILeaves) blockData).setPersistent(true);
+            }
+            var newLocation = block.getLocation();
+
+            addOperation(new BlockOperation(newLocation, block.getBlockData(), blockData));
+            placedLocations.add(newLocation);
         }
+    }
+
+    /**
+     * Generate a key for a location
+     *
+     * @param location the location
+     * @return "x:y:z"
+     */
+    private String getKey(final BaseLocation location) {
+        return location.getX() + ":" + location.getY() + ":" + location.getZ();
     }
 
     /**
@@ -150,14 +168,11 @@ public class GenerateTreeBrush extends AbstractBrush {
 
                 // If not solid then...
                 // Save for undo function
-                if (location.getBlock().getMaterial() != woodMaterial) {
+                if (location.getBlock().getMaterial() != woodMaterial && !location.getBlock().getMaterial().isAir()) {
 
                     // Place log block.
-                    addOperation(new BlockOperation(location, location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
-                } else {
-                    // If solid then...
-                    // End loop
-                    break;
+                    placedLocations.add(location.getBlock().getLocation());
+                    addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 }
                 List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
                 // Checks is block below is solid
@@ -226,9 +241,10 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     private void createTrunk(final BaseLocation location, int x, int z) {
         // If block is air, then create a block.
-        if (location.getBlock().getRelative(x, 0, z).getMaterial().isAir()) {
+        var block = location.getBlock().getRelative(x, 0, z);
+        if (block.getMaterial().isAir() && !placedLocations.contains(block.getLocation())) {
             // Creates block.
-            var block = location.getBlock().getRelative(x, 0, z);
+            placedLocations.add(location.getBlock().getLocation());
             addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), this.woodMaterial.createBlockData()));
         }
     }
@@ -335,7 +351,6 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-
         this.branchBlocks.clear();
 
         // Sets the location variables.
@@ -392,14 +407,8 @@ public class GenerateTreeBrush extends AbstractBrush {
             if (params[0].equalsIgnoreCase("leaves")) {
                 VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
                 if (material == null) throw new IllegalArgumentException();
-
-                if (material == VoxelMaterial.OAK_LEAVES || material == VoxelMaterial.ACACIA_LEAVES || material == VoxelMaterial.SPRUCE_LEAVES
-                        || material == VoxelMaterial.JUNGLE_LEAVES || material == VoxelMaterial.DARK_OAK_LEAVES || material == VoxelMaterial.BIRCH_LEAVES) {
-                    this.leavesMaterial = material;
-                    v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
-                } else {
-                    throw new IllegalArgumentException();
-                }
+                this.leavesMaterial = material;
+                v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
                 return;
             }
 
@@ -407,13 +416,8 @@ public class GenerateTreeBrush extends AbstractBrush {
                 VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
                 if (material == null) throw new IllegalArgumentException();
 
-                if (material == VoxelMaterial.OAK_WOOD || material == VoxelMaterial.ACACIA_WOOD || material == VoxelMaterial.SPRUCE_WOOD
-                        || material == VoxelMaterial.JUNGLE_WOOD || material == VoxelMaterial.DARK_OAK_WOOD || material == VoxelMaterial.BIRCH_WOOD) {
-                    this.woodMaterial = material;
-                    v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
-                } else {
-                    throw new IllegalArgumentException();
-                }
+                this.woodMaterial = material;
+                v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
                 return;
             }
         } catch (IllegalArgumentException e) {
@@ -573,12 +577,10 @@ public class GenerateTreeBrush extends AbstractBrush {
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(VoxelMaterial.OAK_WOOD.getName(), VoxelMaterial.ACACIA_WOOD.getName(), VoxelMaterial.SPRUCE_WOOD.getName(), VoxelMaterial.JUNGLE_WOOD.getName(),
-                VoxelMaterial.DARK_OAK_WOOD.getName(), VoxelMaterial.BIRCH_WOOD.getName()));
+        argumentValues.put("wood", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         // Leaves material variables
-        argumentValues.put("leaves", Lists.newArrayList(VoxelMaterial.OAK_LEAVES.getName(), VoxelMaterial.ACACIA_LEAVES.getName(), VoxelMaterial.SPRUCE_LEAVES.getName(), VoxelMaterial.JUNGLE_LEAVES.getName(),
-                VoxelMaterial.DARK_OAK_LEAVES.getName(), VoxelMaterial.BIRCH_LEAVES.getName()));
+        argumentValues.put("leaves", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         return argumentValues;
     }
