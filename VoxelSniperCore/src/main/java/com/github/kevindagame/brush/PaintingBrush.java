@@ -18,12 +18,6 @@ import java.util.Objects;
  */
 public class PaintingBrush extends CustomBrush {
 
-    /**
-     *
-     */
-    public PaintingBrush() {
-        this.setName("Painting");
-    }
 
     /**
      * Scroll painting forward.
@@ -48,11 +42,6 @@ public class PaintingBrush extends CustomBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.painting";
     }
 
     @Override

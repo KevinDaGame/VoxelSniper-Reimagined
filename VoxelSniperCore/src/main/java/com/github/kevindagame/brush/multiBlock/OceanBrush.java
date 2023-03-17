@@ -87,12 +87,6 @@ public class OceanBrush extends AbstractBrush {
     private int waterLevel = WATER_LEVEL_DEFAULT;
     private boolean coverFloor = false;
 
-    /**
-     *
-     */
-    public OceanBrush() {
-        this.setName("OCEANATOR 5000(tm)");
-    }
 
     private int getHeight(final int bx, final int bz) {
         for (int y = this.getWorld().getHighestBlockYAt(bx, bz); y > this.getMinHeight(); y--) {
@@ -221,10 +215,5 @@ public class OceanBrush extends AbstractBrush {
         vm.brushName(this.getName());
         vm.custom(Messages.WATER_LEVEL_SET.replace("%waterLevel%", String.valueOf(waterLevel + 1))); // +1 since we are working with 0-based array indices
         vm.custom(Messages.OCEAN_FLOOR_COVER.replace("%state%", this.coverFloor ? "enabled" : "disabled"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.ocean";
     }
 }

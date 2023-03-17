@@ -63,12 +63,6 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CAVE_AIR);
     }
 
-    /**
-     *
-     */
-    public BlockResetSurfaceBrush() {
-        this.setName("Block Reset Brush Surface Only");
-    }
 
     private void applyBrush(final SnipeData v) {
         final IWorld world = this.getWorld();
@@ -128,10 +122,5 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.blockresetsurface";
     }
 }

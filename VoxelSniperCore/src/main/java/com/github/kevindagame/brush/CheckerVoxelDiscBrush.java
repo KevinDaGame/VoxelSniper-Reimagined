@@ -23,9 +23,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
     /**
      * Default constructor.
      */
-    public CheckerVoxelDiscBrush() {
-        this.setName("Checker Voxel Disc");
-    }
+
 
     /**
      * @param v
@@ -76,10 +74,5 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.checkervoxeldisc";
     }
 }

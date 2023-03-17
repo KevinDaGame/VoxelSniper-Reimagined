@@ -25,12 +25,6 @@ public class RulerBrush extends CustomBrush {
     private boolean first = true;
     private VoxelVector coords = new VoxelVector();
 
-    /**
-     *
-     */
-    public RulerBrush() {
-        this.setName("Ruler");
-    }
 
     @Override
     protected final void arrow(final SnipeData v) {
@@ -61,11 +55,6 @@ public class RulerBrush extends CustomBrush {
         }
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.ruler";
     }
 
     @Override

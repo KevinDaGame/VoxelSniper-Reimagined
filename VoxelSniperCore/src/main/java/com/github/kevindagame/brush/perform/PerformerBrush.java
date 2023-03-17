@@ -100,13 +100,13 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     protected final void arrow(SnipeData v) {
         positions.clear();
         doArrow(v);
-        addOperations(currentPerformer.perform(positions));
+        addOperations(currentPerformer.perform(positions, v));
     }
 
     @Override
     protected final void powder(SnipeData v) {
         positions.clear();
         doPowder(v);
-        addOperations(currentPerformer.perform(positions));
+        addOperations(currentPerformer.perform(positions, v));
     }
 }

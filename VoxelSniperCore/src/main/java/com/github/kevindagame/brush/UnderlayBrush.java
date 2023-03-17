@@ -28,12 +28,6 @@ public class UnderlayBrush extends PerformerBrush {
     private boolean allBlocks = false;
     private boolean useVoxelList = false;
 
-    /**
-     *
-     */
-    public UnderlayBrush() {
-        this.setName("Underlay (Reverse Overlay)");
-    }
 
     private void underlay(final SnipeData v) {
         final int[][] memory = new int[v.getBrushSize() * 2 + 1][v.getBrushSize() * 2 + 1];
@@ -179,10 +173,5 @@ public class UnderlayBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.underlay";
     }
 }

@@ -16,28 +16,18 @@ import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
 import com.google.common.collect.ImmutableList
-import java.util.*
+
 
 /**
  * Abstract implementation of the [IBrush] interface.
  */
 abstract class AbstractBrush : IBrush {
-    /**
-     * @return the targetBlock
-     */
-    /**
-     * @param targetBlock the targetBlock to set
-     */
+
     /**
      * Targeted Block.
      */
-    protected lateinit var targetBlock: IBlock
-    /**
-     * @return Block before target Block.
-     */
-    /**
-     * @param lastBlock Last Block before target Block.
-     */
+    lateinit var targetBlock: IBlock
+
     /**
      * Last Block before targeted Block.
      */
@@ -51,7 +41,8 @@ abstract class AbstractBrush : IBrush {
     /**
      * Brush name.
      */
-    private var name = "Undefined"
+    override var name by initOnce<String>()
+    override var permissionNode: String by initOnce()
     protected var snipeAction: SnipeAction? = null
 
     private fun preparePerform(v: SnipeData, clickedBlock: IBlock, clickedFace: BlockFace): Boolean {
@@ -150,14 +141,14 @@ abstract class AbstractBrush : IBrush {
      *
      * @param v Sniper caller
      */
-    protected open fun arrow(v: SnipeData?) {}
+    protected open fun arrow(v: SnipeData) {}
 
     /**
      * The powder action. Executed when a player RightClicks with Gunpowder
      *
      * @param v Sniper caller
      */
-    protected open fun powder(v: SnipeData?) {}
+    protected open fun powder(v: SnipeData) {}
     abstract override fun info(vm: VoxelMessage)
     override fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData) {
         v.sendMessage(Messages.BRUSH_NO_PARAMS_ACCEPTED)
@@ -182,7 +173,10 @@ abstract class AbstractBrush : IBrush {
      * @return boolean
      */
     protected fun getTarget(v: SnipeData, clickedBlock: IBlock?, clickedFace: BlockFace?): Boolean {
-        return if (clickedBlock != null) {
+        val targetBlock: IBlock?
+        val lastBlock: IBlock?
+
+        if (clickedBlock != null) {
             targetBlock = clickedBlock
             lastBlock = clickedBlock.getRelative(clickedFace)
             if (lastBlock == null) {
@@ -192,7 +186,6 @@ abstract class AbstractBrush : IBrush {
             if (v.owner().getSnipeData(v.owner().currentToolId).isLightningEnabled) {
                 world.strikeLightning(targetBlock.location)
             }
-            true
         } else {
             val rangeBlockHelper: BlockHelper
             if (v.owner().getSnipeData(v.owner().currentToolId).isRanged) {
@@ -203,7 +196,7 @@ abstract class AbstractBrush : IBrush {
                 targetBlock = rangeBlockHelper.rangeBlock
             } else {
                 rangeBlockHelper = BlockHelper(v.owner().player)
-                targetBlock = rangeBlockHelper.targetBlock
+                targetBlock = rangeBlockHelper.targetBlock!!
             }
             if (targetBlock != null) {
                 lastBlock = rangeBlockHelper.lastBlock
@@ -214,35 +207,22 @@ abstract class AbstractBrush : IBrush {
                 if (v.owner().getSnipeData(v.owner().currentToolId).isLightningEnabled) {
                     world.strikeLightning(targetBlock.location)
                 }
-                true
             } else {
                 v.sendMessage(Messages.TARGET_MUST_BE_VISIBLE)
-                false
+                return false
             }
         }
-    }
-
-    override fun getName(): String {
-        return name
-    }
-
-    override fun setName(name: String) {
-        this.name = name
-    }
-
-    override fun getBrushCategory(): String {
-        return "General"
+        this.lastBlock = lastBlock
+        this.targetBlock = targetBlock
+        return true
     }
 
     /**
      * @return the world
      */
-    protected val world: IWorld
-        protected get() = targetBlock.world
-    protected val minHeight: Int
-        protected get() = world.minWorldHeight
-    protected val maxHeight: Int
-        protected get() = world.maxWorldHeight
+    protected val world: IWorld get() = targetBlock.world
+    protected val minHeight: Int get() = world.minWorldHeight
+    protected val maxHeight: Int get() = world.maxWorldHeight
 
     protected fun isInWorldHeight(height: Int): Boolean {
         return world.isInWorldHeight(height)
@@ -256,7 +236,7 @@ abstract class AbstractBrush : IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    protected fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterial {
+    fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterial {
         return if (isInWorldHeight(y)) world.getBlock(x, y, z).material else VoxelMaterial.AIR
     }
 
