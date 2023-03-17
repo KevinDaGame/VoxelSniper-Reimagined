@@ -6,7 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.blockdata.persistent.IPersistent;
+import com.github.kevindagame.voxelsniper.blockdata.persistent.ILeaves;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -122,8 +122,8 @@ public class GenerateTreeBrush extends AbstractBrush {
         if (location.getBlock().getRelative(x, y, z).getMaterial().isAir()) {
             var block = location.getBlock().getRelative(x, y, z);
             var blockData = this.leavesMaterial.createBlockData();
-            if (blockData instanceof IPersistent) {
-                ((IPersistent) blockData).setPersistent(true);
+            if (blockData instanceof ILeaves) {
+                ((ILeaves) blockData).setPersistent(true);
             }
 
             var newLocation = block.getLocation();

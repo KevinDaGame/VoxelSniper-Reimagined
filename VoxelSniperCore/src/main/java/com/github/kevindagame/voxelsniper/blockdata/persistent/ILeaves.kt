@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.blockdata.persistent
 
-interface IPersistent {
+interface ILeaves {
     fun isPersistent(): Boolean
     fun setPersistent(persistent: Boolean)
 }

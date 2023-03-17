@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniper.blockdata;
 
-import com.github.kevindagame.voxelsniper.blockdata.persistent.SpigotPersistent;
+import com.github.kevindagame.voxelsniper.blockdata.persistent.SpigotLeaves;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.SpigotRedstoneWire;
 import com.github.kevindagame.voxelsniper.blockdata.waterlogged.SpigotWaterlogged;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
@@ -21,7 +21,7 @@ public class SpigotBlockData implements IBlockData {
         if (blockData instanceof RedstoneWire redstone)
             return new SpigotRedstoneWire(redstone);
         if (blockData instanceof Leaves leaves)
-            return new SpigotPersistent(leaves);
+            return new SpigotLeaves(leaves);
         if (blockData instanceof Waterlogged waterlogged)
             return new SpigotWaterlogged(waterlogged);
         return new SpigotBlockData(blockData);
