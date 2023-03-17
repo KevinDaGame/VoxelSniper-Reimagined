@@ -114,7 +114,6 @@ public class GenerateTreeBrush extends AbstractBrush {
 
     private void createLeaf(final BaseLocation location, int x, int y, int z) {
         var block = location.getBlock().getRelative(x, y, z);
-        if(placedLocations.contains(block.getLocation())) System.out.println("Already placed: " + block.getLocation());
         if (block.getMaterial().isAir() && !placedLocations.contains(block.getLocation())) {
             var blockData = this.leavesMaterial.createBlockData();
             if (blockData instanceof ILeaves) {

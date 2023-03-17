@@ -84,12 +84,11 @@ public class VoxelBrushCommand extends VoxelCommand {
 
         // Command: /b <brush> -- change brush to <brush>
         BrushData data = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
-
         if (data == null) {
             snipeData.sendMessage(Messages.BRUSH_HANDLE_NOT_FOUND.replace("%arg%", args[0]));
         } else {
             IBrush oldBrush = sniper.getBrush(currentToolId);
-            IBrush newBrush = oldBrush != null && oldBrush.getClass().equals(brush) ? oldBrush : sniper.instantiateBrush(brush);
+            IBrush newBrush = oldBrush != null && oldBrush.getName().equals(data.getName()) ? oldBrush : sniper.instantiateBrush(data);
 
             if (newBrush == null || !player.hasPermission(newBrush.getPermissionNode())) {
                 snipeData.sendMessage(Messages.VOXEL_BRUSH_NO_PERMISSION);
