@@ -4,7 +4,7 @@ import com.github.kevindagame.snipe.SnipeAction
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.voxelsniper.block.IBlock
-import util.InitOnceProperty
+import com.github.kevindagame.util.InitOnceProperty
 import kotlin.properties.ReadWriteProperty
 
 inline fun <reified T> initOnce(): ReadWriteProperty<Any, T> = InitOnceProperty()

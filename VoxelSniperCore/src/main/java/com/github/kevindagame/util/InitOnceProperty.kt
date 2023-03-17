@@ -1,4 +1,4 @@
-package util
+package com.github.kevindagame.util
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
