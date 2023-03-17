@@ -11,7 +11,7 @@ import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 
 /**

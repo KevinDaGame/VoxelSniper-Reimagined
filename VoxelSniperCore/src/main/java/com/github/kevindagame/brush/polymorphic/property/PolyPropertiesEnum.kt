@@ -7,4 +7,5 @@ enum class PolyPropertiesEnum(val supplier: KFunction0<PolyProperty<*>>) {
     EXCLUDEWATER(::ExcludeWaterProperty),
     EXCLUDEAIR(::ExcludeAirProperty),
     PERFORMER(::PerformerProperty),
+    BIOME(::BiomeProperty),
 }

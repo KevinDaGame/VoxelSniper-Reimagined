@@ -7,7 +7,9 @@ import com.github.kevindagame.brush.polymorphic.property.*
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
+import com.github.kevindagame.util.brushOperation.BiomeOperation
 import com.github.kevindagame.util.brushOperation.BlockOperation
+import com.github.kevindagame.voxelsniper.biome.VoxelBiome
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
@@ -30,6 +32,9 @@ class PolyBrush(
         val properties = mutableSetOf<PolyPropertiesEnum>()
         for (shape in shapes) {
             properties.addAll(shape.parameters.toList())
+        }
+        if (operationType == PolyOperationType.BIOME) {
+            properties.add(PolyPropertiesEnum.BIOME)
         }
         if (operation != null) {
             properties.add(PolyPropertiesEnum.EXCLUDEWATER)
@@ -68,7 +73,12 @@ class PolyBrush(
 
     fun executeBrush(v: SnipeData) {
         this.positions = getPositions(v)
-
+        if (operationType == PolyOperationType.BIOME) {
+            for (position in positions) {
+                addOperation(BiomeOperation(position, world.getBiome(position), biome))
+            }
+            return
+        }
         if (operation != null) {
             val brushSize = v.brushSize
             val newMaterials = operation.apply(brushSize, this, excludeAir, excludeWater)
@@ -140,6 +150,7 @@ class PolyBrush(
     private val excludeAir: Boolean get() = getPropertyValue<ExcludeAirProperty, Boolean>()
     private val excludeWater get() = getPropertyValue<ExcludeWaterProperty, Boolean>()
     private val currentPerformer: BasePerformer get() = getPropertyValue<PerformerProperty, BasePerformer>()
+    private val biome: VoxelBiome get() = getPropertyValue<BiomeProperty, VoxelBiome>()
 
     override fun registerArguments(): List<String> {
         val arguments = properties.map { it.name }.toMutableList()
