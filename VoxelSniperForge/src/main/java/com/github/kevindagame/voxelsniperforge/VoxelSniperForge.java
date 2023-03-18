@@ -1,7 +1,6 @@
 package com.github.kevindagame.voxelsniperforge;
 
 import com.github.kevindagame.VoxelBrushManager;
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.Environment;
@@ -90,7 +89,6 @@ public class VoxelSniperForge implements IVoxelsniper {
     public void onServerStarting(ServerStartingEvent event) {
         this.fileHandler = new ForgeFileHandler(this);
         MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
-        VoxelProfileManager.initialize();
         Messages.load(this);
 
         voxelSniperConfiguration = new VoxelSniperConfiguration(this);

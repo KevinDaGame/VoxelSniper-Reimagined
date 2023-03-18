@@ -1,6 +1,5 @@
 package com.github.kevindagame.voxelsniperforge;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -49,7 +48,7 @@ public class ForgeVoxelSniperListener {
         if (!player.hasPermission(SNIPER_PERMISSION)) return;
         if (cooldown.contains(player.getUniqueId())) return;
         try {
-            Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+            Sniper sniper = player.getSniper();
             var action = getAction(event);
             if (sniper.isEnabled() && action != null && sniper.snipe(
                     action,
@@ -120,7 +119,7 @@ public class ForgeVoxelSniperListener {
     public final void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent event) {
         IPlayer player = main.getPlayer(event.getEntity().getUUID());
         assert player != null;
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
 
         if (player.hasPermission(SNIPER_PERMISSION) && main.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
             sniper.displayInfo();

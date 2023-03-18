@@ -1,5 +1,6 @@
 package com.github.kevindagame.voxelsniperforge.entity.player;
 
+import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -34,10 +35,12 @@ import java.util.UUID;
 
 public class ForgePlayer extends ForgeEntity implements IPlayer {
     private final ServerPlayer player;
+    private final @NotNull Sniper sniper;
 
     public ForgePlayer(ServerPlayer player) {
         super(player);
         this.player = player;
+        this.sniper = new Sniper(this);
     }
 
     @Override
@@ -137,6 +140,12 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
         var itemStack = player.getMainHandItem();
         ResourceLocation item = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
         return item != null ? VoxelMaterial.getMaterial(item.getNamespace(), item.getPath()) : VoxelMaterial.AIR;
+    }
+
+    @NotNull
+    @Override
+    public Sniper getSniper() {
+        return this.sniper;
     }
 
     @Override
