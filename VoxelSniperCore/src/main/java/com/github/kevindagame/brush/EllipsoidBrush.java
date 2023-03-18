@@ -22,12 +22,6 @@ public class EllipsoidBrush extends PerformerBrush {
     private double yRad;
     private double zRad;
 
-    /**
-     *
-     */
-    public EllipsoidBrush() {
-        this.setName("Ellipsoid");
-    }
 
     private void execute(final SnipeData v) {
         positions.add(getTargetBlock().getLocation());
@@ -135,10 +129,5 @@ public class EllipsoidBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.ellipsoid";
     }
 }

@@ -1,7 +1,6 @@
 package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.VoxelBrushManager;
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -73,8 +72,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
         this.fileHandler = new SpigotFileHandler(this);
 
-        // Initialize profile manager (Sniper)
-        VoxelProfileManager.initialize();
         SpigotPermissionManager.register();
 
         // Initialize messages

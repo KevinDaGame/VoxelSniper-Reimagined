@@ -27,9 +27,7 @@ public class OverlayBrush extends PerformerBrush {
     private boolean allBlocks = false;
     private boolean useVoxelList = false;
 
-    public OverlayBrush() {
-        this.setName("Overlay (Topsoil Filling)");
-    }
+
 
     private void overlay(final SnipeData v) {
         final int brushSize = v.getBrushSize();
@@ -191,10 +189,5 @@ public class OverlayBrush extends PerformerBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.overlay";
     }
 }

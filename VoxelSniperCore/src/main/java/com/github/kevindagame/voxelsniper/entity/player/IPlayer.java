@@ -1,5 +1,6 @@
 package com.github.kevindagame.voxelsniper.entity.player;
 
+import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
@@ -31,6 +32,9 @@ public interface IPlayer extends IEntity, Audience {
     IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
 
     VoxelMaterial getItemInHand();
+
+    @NotNull
+    Sniper getSniper();
 
     @Override
     void sendMessage(final @NotNull Identity source, final @NotNull Component message, final @NotNull MessageType type);

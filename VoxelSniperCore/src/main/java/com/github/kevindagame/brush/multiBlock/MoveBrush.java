@@ -37,13 +37,6 @@ public class MoveBrush extends AbstractBrush {
     private Selection selection = null;
 
     /**
-     *
-     */
-    public MoveBrush() {
-        this.setName("Move");
-    }
-
-    /**
      * Moves the given selection blockPositionY the amount given in direction and saves an undo for the player.
      *
      * @param v
@@ -175,11 +168,6 @@ public class MoveBrush extends AbstractBrush {
         argumentValues.put("z", Lists.newArrayList("[number]"));
 
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.move";
     }
 
     private static class ComponentException extends Exception implements ComponentLike {

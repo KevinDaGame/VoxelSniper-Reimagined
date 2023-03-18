@@ -24,13 +24,6 @@ public class ExtrudeBrush extends AbstractBrush {
     private static final double VOXEL_CIRCLE_VALUE = 0.0;
     private boolean smoothCircle = false;
 
-    /**
-     *
-     */
-    public ExtrudeBrush() {
-        this.setName("Extrude");
-    }
-
     private void extrudeUpOrDown(final SnipeData v, boolean isUp) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
@@ -169,10 +162,5 @@ public class ExtrudeBrush extends AbstractBrush {
     public List<String> registerArguments() {
 
         return new ArrayList<>(Lists.newArrayList("smooth"));
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.extrude";
     }
 }

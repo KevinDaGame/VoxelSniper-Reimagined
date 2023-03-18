@@ -12,9 +12,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
  */
 public class SplatterVoxelBrush extends SplatterBrushBase {
 
-    public SplatterVoxelBrush() {
-        this.setName("Splatter Voxel");
-    }
+
 
     private void vSplatterBall(final SnipeData v, IBlock targetBlock) {
         final int brushSize = v.getBrushSize();
@@ -48,10 +46,5 @@ public class SplatterVoxelBrush extends SplatterBrushBase {
 
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.splattervoxel";
     }
 }

@@ -8,15 +8,18 @@ import com.github.kevindagame.voxelsniper.events.HandlerList;
 
 import java.util.function.Consumer;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class PlayerBrushChangedEvent extends PlayerEvent<PlayerBrushChangedEvent> implements Cancellable {
 
     private static final HandlerList<PlayerBrushChangedEvent> handlers = new HandlerList<>();
-    private final IBrush oldBrush;
-    private final IBrush newBrush;
+    private final @Nullable IBrush oldBrush;
+    private final @NotNull IBrush newBrush;
     private final String toolId;
     private EventResult status;
 
-    public PlayerBrushChangedEvent(IPlayer p, String toolId, IBrush oldBrush, IBrush newBrush) {
+    public PlayerBrushChangedEvent(IPlayer p, String toolId, @Nullable IBrush oldBrush, @NotNull IBrush newBrush) {
         super(p);
         this.oldBrush = oldBrush;
         this.newBrush = newBrush;
@@ -31,10 +34,12 @@ public class PlayerBrushChangedEvent extends PlayerEvent<PlayerBrushChangedEvent
         handlers.registerListener(priority, handler);
     }
 
+    @Nullable
     public IBrush getOldBrush() {
         return oldBrush;
     }
 
+    @NotNull
     public IBrush getNewBrush() {
         return newBrush;
     }

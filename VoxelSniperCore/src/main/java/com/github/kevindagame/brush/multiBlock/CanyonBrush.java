@@ -27,13 +27,6 @@ public class CanyonBrush extends AbstractBrush {
     private int yLevel = -53;
 
     /**
-     *
-     */
-    public CanyonBrush() {
-        this.setName("Canyon");
-    }
-
-    /**
      * @param chunk
      */
     protected final void canyon(final IChunk chunk) {
@@ -130,10 +123,5 @@ public class CanyonBrush extends AbstractBrush {
 
     protected final void setYLevel(int yLevel) {
         this.yLevel = yLevel;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.canyon";
     }
 }

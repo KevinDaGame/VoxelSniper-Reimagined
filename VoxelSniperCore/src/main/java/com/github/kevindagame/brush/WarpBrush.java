@@ -11,12 +11,6 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
  */
 public class WarpBrush extends AbstractBrush {
 
-    /**
-     *
-     */
-    public WarpBrush() {
-        this.setName("Warp");
-    }
 
     @Override
     public final void info(final VoxelMessage vm) {
@@ -42,10 +36,5 @@ public class WarpBrush extends AbstractBrush {
         location.setPitch(playerLocation.getPitch());
         location.setYaw(playerLocation.getYaw());
         player.teleport(location);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.warp";
     }
 }

@@ -20,12 +20,6 @@ public class LineBrush extends PerformerBrush {
     private VoxelVector targetCoords = new VoxelVector();
     private IWorld targetWorld;
 
-    /**
-     *
-     */
-    public LineBrush() {
-        this.setName("Line");
-    }
 
     @Override
     public final void info(final VoxelMessage vm) {
@@ -62,10 +56,5 @@ public class LineBrush extends PerformerBrush {
             this.targetCoords = this.getTargetBlock().getLocation().toVector();
             this.linePowder(v);
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.line";
     }
 }

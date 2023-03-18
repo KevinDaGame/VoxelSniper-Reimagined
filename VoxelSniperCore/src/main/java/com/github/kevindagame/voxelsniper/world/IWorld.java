@@ -84,4 +84,8 @@ public interface IWorld {
     Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
 
     VoxelBiome getBiome(BaseLocation location);
+
+    default boolean isInWorldHeight(int height) {
+        return this.getMinWorldHeight() <= height && this.getMaxWorldHeight() >height;
+    }
 }

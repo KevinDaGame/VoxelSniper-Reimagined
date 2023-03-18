@@ -25,12 +25,6 @@ public class FillDownBrush extends PerformerBrush {
     private boolean fillLiquid = true;
     private boolean fromExisting = false;
 
-    /**
-     *
-     */
-    public FillDownBrush() {
-        this.setName("Fill Down");
-    }
 
     private void fillDown(final SnipeData v, final IBlock b) {
         final int brushSize = v.getBrushSize();
@@ -130,10 +124,5 @@ public class FillDownBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.filldown";
     }
 }

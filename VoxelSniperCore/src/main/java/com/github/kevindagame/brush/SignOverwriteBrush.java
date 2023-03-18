@@ -41,8 +41,6 @@ public class SignOverwriteBrush extends CustomBrush {
      *
      */
     public SignOverwriteBrush() {
-        this.setName("Sign Overwrite Brush");
-
         clearBuffer();
         resetStates();
     }
@@ -373,11 +371,6 @@ public class SignOverwriteBrush extends CustomBrush {
             vm.size();
             vm.height();
         }
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.signoverwrite";
     }
 
     @Override

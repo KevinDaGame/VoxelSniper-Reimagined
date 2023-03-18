@@ -1,6 +1,5 @@
 package com.github.kevindagame.command;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -18,7 +17,7 @@ public class VoxelDefaultCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(IPlayer player, String[] args) {
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
 
         // Default command
         // Command: /d info, /d help

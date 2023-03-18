@@ -48,12 +48,6 @@ public class BlockResetBrush extends AbstractBrush {
         BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
     }
 
-    /**
-     *
-     */
-    public BlockResetBrush() {
-        this.setName("Block Reset Brush");
-    }
 
     private void applyBrush(final SnipeData v) {
         addOperations(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)
@@ -73,10 +67,5 @@ public class BlockResetBrush extends AbstractBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.blockreset";
     }
 }

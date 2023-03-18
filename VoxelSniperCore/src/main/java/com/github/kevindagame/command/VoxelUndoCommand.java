@@ -1,6 +1,5 @@
 package com.github.kevindagame.command;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
@@ -20,8 +19,7 @@ public class VoxelUndoCommand extends VoxelCommand {
 
     @Override
     public boolean doCommand(IPlayer player, String[] args) {
-        VoxelProfileManager profileManager = VoxelProfileManager.getInstance();
-        Sniper sniper = profileManager.getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
 
         if ((args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) || args.length > 2) {
             sniper.sendMessage(Messages.VOXEL_UNDO_COMMAND_USAGE_START.replace("%alias%", getActiveAlias()).replace("%name%", getName()));
@@ -61,7 +59,7 @@ public class VoxelUndoCommand extends VoxelCommand {
                 return true;
             }
 
-            Sniper targetSniper = profileManager.getSniperForPlayer(targetPlayer);
+            Sniper targetSniper = targetPlayer.getSniper();
             int undoAmount = 1;
 
             // Command: /u [playerName] [amount]    <- Undo the previous [amount] changes made by [playerName].

@@ -2,6 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
 
 /**
@@ -12,12 +13,10 @@ import com.github.kevindagame.util.Shapes;
 public class SplatterDiscBrush extends SplatterBrushBase {
 
 
-    public SplatterDiscBrush() {
-        this.setName("Splatter Disc");
-    }
+
 
     private void splatterDisc(final SnipeData v) {
-        var positions = Shapes.disc(this.getTargetBlock().getLocation(), v.getBrushSize(), false);
+        var positions = Shapes.disc(this.getTargetBlock().getLocation(), RotationAxis.Y, v.getBrushSize(), false);
         var splat = splatter2D(v);
         final int brushSize = v.getBrushSize();
         for (var position : positions) {
@@ -47,10 +46,5 @@ public class SplatterDiscBrush extends SplatterBrushBase {
         }
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.splatterdisc";
     }
 }

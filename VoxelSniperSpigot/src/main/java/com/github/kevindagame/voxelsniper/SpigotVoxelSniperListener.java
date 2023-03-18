@@ -1,6 +1,5 @@
 package com.github.kevindagame.voxelsniper;
 
-import com.github.kevindagame.VoxelProfileManager;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
@@ -46,7 +45,7 @@ public class SpigotVoxelSniperListener implements Listener {
         if (!player.hasPermission(SNIPER_PERMISSION)) return;
         if (cooldown.contains(player.getUniqueId())) return;
         try {
-            Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+            Sniper sniper = player.getSniper();
             if (sniper.isEnabled() && sniper.snipe(
                     Sniper.Action.valueOf(event.getAction().name()),
                     VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()),
@@ -67,7 +66,7 @@ public class SpigotVoxelSniperListener implements Listener {
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
         IPlayer player = SpigotVoxelSniper.getInstance().getPlayer(event.getPlayer());
-        Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);
+        Sniper sniper = player.getSniper();
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
             sniper.displayInfo();

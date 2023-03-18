@@ -26,13 +26,6 @@ public class FlatOceanBrush extends AbstractBrush {
     private int waterLevel = DEFAULT_WATER_LEVEL;
     private int floorLevel = DEFAULT_FLOOR_LEVEL;
 
-    /**
-     *
-     */
-    public FlatOceanBrush() {
-        this.setName("FlatOcean");
-    }
-
     private void flatOcean(final IChunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
@@ -134,10 +127,5 @@ public class FlatOceanBrush extends AbstractBrush {
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.flatocean";
     }
 }

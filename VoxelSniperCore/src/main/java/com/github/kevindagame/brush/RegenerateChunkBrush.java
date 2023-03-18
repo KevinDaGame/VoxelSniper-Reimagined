@@ -20,9 +20,7 @@ import org.jetbrains.annotations.NotNull;
 public class RegenerateChunkBrush extends CustomBrush {
     private int originalSize;
 
-    public RegenerateChunkBrush() {
-        this.setName("Chunk Generator 40k");
-    }
+
 
     private void generateChunk(final SnipeData v) {
         final IChunk chunk = this.getTargetBlock().getChunk();
@@ -53,14 +51,9 @@ public class RegenerateChunkBrush extends CustomBrush {
     }
 
     @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.regeneratechunk";
-    }
-
-    @Override
     public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         final IChunk chunk = this.getTargetBlock().getChunk();
-        //check if no operation has been cancelled by comparing the size to the amount of loops
+        //check if no operationType has been cancelled by comparing the size to the amount of loops
         if (operations.stream().filter(o -> !o.isCancelled()).count() != originalSize) {
             return false;
         }

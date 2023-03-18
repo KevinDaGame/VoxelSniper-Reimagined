@@ -27,9 +27,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     /**
      * Default Constructor.
      */
-    public ThreePointCircleBrush() {
-        this.setName("3-Point Circle");
-    }
+
 
     @Override
     protected final void doArrow(final SnipeData v) {
@@ -175,11 +173,6 @@ public class ThreePointCircleBrush extends PerformerBrush {
 
         arguments.addAll(super.registerArguments());
         return arguments;
-    }
-
-    @Override
-    public String getPermissionNode() {
-        return "voxelsniper.brush.threepointcircle";
     }
 
     /**

@@ -58,7 +58,7 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.4.2"
+version = "8.5.0"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile> {
@@ -85,6 +85,7 @@ tasks {
         relocate("com.google", "com.github.kevindagame.voxelsniper.libs.com.google")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
         relocate("org.yaml.snakeyaml", "com.github.kevindagame.voxelsniper.libs.org.yaml.snakeyaml")
+        relocate("kotlin", "com.github.kevindagame.voxelsniper.libs.kotlin")
     }
 
     build {
