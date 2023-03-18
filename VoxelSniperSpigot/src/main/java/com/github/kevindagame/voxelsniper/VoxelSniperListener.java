@@ -44,6 +44,8 @@ public class VoxelSniperListener implements Listener {
 
         if (!player.hasPermission(SNIPER_PERMISSION)) return;
         if (cooldown.contains(player.getUniqueId())) return;
+        cooldown.add(player.getUniqueId());
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 1);
         try {
             Sniper sniper = player.getSniper();
             if (sniper.isEnabled() && sniper.snipe(
@@ -52,8 +54,6 @@ public class VoxelSniperListener implements Listener {
                     event.getClickedBlock() != null ? new SpigotBlock(event.getClickedBlock()) : null,
                     BlockFace.valueOf(event.getBlockFace().name()))) {
                 event.setCancelled(true);
-                cooldown.add(player.getUniqueId());
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 1);
             }
         } catch (final Exception e) {
             e.printStackTrace();
