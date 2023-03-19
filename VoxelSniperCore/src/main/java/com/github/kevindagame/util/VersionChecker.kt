@@ -46,6 +46,7 @@ class VersionChecker() {
             conn.disconnect()
             releases.toList()
         } catch (e: Exception) {
+            System.err.println("Failed to check for a new version of VoxelSniper-Reimagined.")
             emptyList()
         }
     }
