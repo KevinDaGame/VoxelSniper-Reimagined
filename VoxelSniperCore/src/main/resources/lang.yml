@@ -588,3 +588,6 @@ UNDERLAY_ON_MODE_DEPTH: <blue>Will underlay on %mode% blocks, %depth% blocks dee
 POLY_BRUSH_USAGE: <gold>%brushName% brush parameters</gold>
 POLY_BRUSH_USAGE_LINE: <aqua>%triggerHandle% %property% -- %description%</aqua>
 ACTION_CANCELLED: <red>The action was cancelled
+UPDATE_AVAILABLE: |- 
+  <gold>An update is available for VoxelSniper. You are running version <red>%currentVersion%</red> and the latest version is <green>%latestVersion%</green>.
+  Download the latest version <green><click:OPEN_URL:%downloadUrl%><hover:show_text:Click me!>here</hover></click></green>!</gold> 
