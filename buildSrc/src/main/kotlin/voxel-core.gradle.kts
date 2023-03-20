@@ -34,6 +34,7 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.google.guava:guava:31.1-jre")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.yaml:snakeyaml:1.31")
 
     testImplementation("junit:junit:4.13.2")
@@ -71,7 +72,7 @@ tasks {
 
     shadowJar {
         minimize()
-        relocate("com.google.common", "com.github.kevindagame.voxelsniper.libs.com.google.common")
+        relocate("com.google", "com.github.kevindagame.voxelsniper.libs.com.google")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
         relocate("org.yaml.snakeyaml", "com.github.kevindagame.voxelsniper.libs.org.yaml.snakeyaml")
         relocate("kotlin", "com.github.kevindagame.voxelsniper.libs.kotlin")
