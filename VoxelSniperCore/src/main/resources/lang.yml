@@ -588,3 +588,4 @@ UNDERLAY_ON_MODE_DEPTH: <blue>Will underlay on %mode% blocks, %depth% blocks dee
 POLY_BRUSH_USAGE: <gold>%brushName% brush parameters</gold>
 POLY_BRUSH_USAGE_LINE: <aqua>%triggerHandle% %property% -- %description%</aqua>
 ACTION_CANCELLED: <red>The action was cancelled
+POLY_BRUSH_INFO_LINE: "<aqua>%property%: %value%</aqua>"
