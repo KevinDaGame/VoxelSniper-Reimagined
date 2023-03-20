@@ -24,7 +24,7 @@ class VersionChecker() {
             return null
         }
         val latestRelease = releases[0]
-        val latestVersion = latestRelease.tag_name.removePrefix("v")
+        val latestVersion = latestRelease.tag_name.lowercase().removePrefix("v")
         if (isOutdated(currentVersion, latestVersion)) {
             val downloadUrl = latestRelease.html_url
             LATEST_VERSION = VersionInfo(latestVersion, downloadUrl)
@@ -71,7 +71,7 @@ class VersionChecker() {
      * @return The parsed version.
      */
     private fun parseVersion(version: String): Version {
-        val versionParts = version.removePrefix("v").split(".")
+        val versionParts = version.lowercase().removePrefix("v").split(".")
         val major = versionParts.getOrElse(0) { "0" }.toInt()
         val minor = versionParts.getOrElse(1) { "0" }.toInt()
         val patch = versionParts.getOrElse(2) { "0" }.toInt()
