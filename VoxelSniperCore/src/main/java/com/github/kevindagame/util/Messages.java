@@ -6,7 +6,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
