@@ -1,8 +1,5 @@
 package com.github.kevindagame.brush.polymorphic.property
 
-import com.github.kevindagame.brush.perform.BasePerformer
-import com.github.kevindagame.brush.perform.Performer
-import com.github.kevindagame.brush.perform.pMaterial
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome
 
 class BiomeProperty : PolyProperty<VoxelBiome>("biome", "Set the biome", VoxelBiome.PLAINS) {

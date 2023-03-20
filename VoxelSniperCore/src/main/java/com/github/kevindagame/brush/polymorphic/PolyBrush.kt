@@ -54,6 +54,9 @@ class PolyBrush(
     override fun info(vm: VoxelMessage) {
         vm.brushName(name)
         vm.size()
+        for (property in properties) {
+            vm.custom(Messages.POLY_BRUSH_INFO_LINE.replace("%property%", property.name).replace("%value%", property.getAsString()))
+        }
     }
 
     override fun arrow(v: SnipeData) {
