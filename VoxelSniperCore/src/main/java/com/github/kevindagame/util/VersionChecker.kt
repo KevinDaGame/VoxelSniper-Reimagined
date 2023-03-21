@@ -23,11 +23,20 @@ class VersionChecker() {
         if (releases.isEmpty()) {
             return null
         }
-        val latestRelease = releases[0]
-        val latestVersion = latestRelease.tag_name.removePrefix("v")
-        if (isOutdated(currentVersion, latestVersion)) {
+        var latestRelease: Release? = null
+
+        for (release in releases) {
+            val version = release.tag_name.lowercase().removePrefix("v")
+            if (isOutdated(currentVersion, version) && (latestRelease == null || isOutdated(latestRelease.tag_name, version))) {
+                latestRelease = release
+            }
+        }
+
+        if (latestRelease != null) {
+            val latestVersion = latestRelease.tag_name.lowercase().removePrefix("v")
             val downloadUrl = latestRelease.html_url
             LATEST_VERSION = VersionInfo(latestVersion, downloadUrl)
+            return LATEST_VERSION
         }
         return null
     }
@@ -44,7 +53,7 @@ class VersionChecker() {
             val releases = Gson().fromJson(reader, Array<Release>::class.java)
             reader.close()
             conn.disconnect()
-            releases.toList()
+            releases.filterNot { it.prerelease }.toList()
         } catch (e: Exception) {
             System.err.println("Failed to check for a new version of VoxelSniper-Reimagined.")
             emptyList()
@@ -111,7 +120,8 @@ data class Version(val major: Int, val minor: Int, val patch: Int) : Comparable<
 data class Release(
     val html_url: String,
     val tag_name: String,
-    val assets: List<Asset>
+    val assets: List<Asset>,
+    val prerelease: Boolean
 )
 
 data class Asset(
