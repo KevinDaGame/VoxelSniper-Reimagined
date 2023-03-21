@@ -3,7 +3,8 @@ package com.github.kevindagame.command;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
 import com.github.kevindagame.brush.perform.Performer;
-import com.github.kevindagame.snipe.SnipeData;
+import com.github.kevindagame.brush.polymorphic.PolyBrush;
+import com.github.kevindagame.brush.polymorphic.property.PerformerProperty;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -28,7 +29,6 @@ public class VoxelPerformerCommand extends VoxelCommand {
     @Override
     public boolean doCommand(IPlayer player, String[] args) {
         Sniper sniper = player.getSniper();
-        SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
         // Default command
         // Command: /p info, /p help
@@ -37,31 +37,36 @@ public class VoxelPerformerCommand extends VoxelCommand {
             return true;
         }
 
-
+        IBrush brush = sniper.getBrush(sniper.getCurrentToolId());
         if (args.length == 0) {
-            IBrush brush = sniper.getBrush(sniper.getCurrentToolId());
-            if (brush instanceof IPerformerBrush) {
-                ((IPerformerBrush) brush).parsePerformer("m", snipeData);
-            } else {
-                sniper.sendMessage(Messages.THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH);
-            }
-            return true;
+            return setPerformer(brush, "m", sniper);
         }
 
         if (args.length == 1) {
-            IBrush brush = sniper.getBrush(sniper.getCurrentToolId());
-            if (brush instanceof IPerformerBrush) {
-                boolean success = ((IPerformerBrush) brush).parsePerformer(args[0], snipeData);
-                if (!success) {
-                    sniper.sendMessage(Messages.NO_SUCH_PERFORMER.replace("%arg%", args[0]));
+            return setPerformer(brush, args[0], sniper);
+        }
+        return false;
+    }
+
+    private boolean setPerformer(IBrush brush, String performer, Sniper sniper) {
+        if (brush instanceof IPerformerBrush) {
+            return ((IPerformerBrush) brush).parsePerformer(performer, sniper.getSnipeData(sniper.getCurrentToolId()));
+        } else if (brush instanceof PolyBrush) {
+            var properties = ((PolyBrush) brush).getProperties();
+            for (var property : properties) {
+                if (property instanceof PerformerProperty) {
+                    (property).set(performer);
+                    brush.info(sniper.getSnipeData(sniper.getCurrentToolId()).getVoxelMessage());
+                    return true;
                 }
-            } else {
-                sniper.sendMessage(Messages.THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH);
             }
-            return true;
+            sniper.sendMessage(Messages.THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH);
+            return false;
+        } else {
+            sniper.sendMessage(Messages.THE_ACTIVE_BRUSH_IS_NOT_A_PERFORMER_BRUSH);
+            return false;
         }
 
-        return false;
     }
 
     @Override

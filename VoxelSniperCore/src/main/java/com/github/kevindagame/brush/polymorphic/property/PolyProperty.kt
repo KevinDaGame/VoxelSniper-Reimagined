@@ -12,4 +12,7 @@ abstract class PolyProperty<T>(val name: String, val description: String, defaul
     abstract fun set(value: String?)
 
     abstract fun getValues(): List<String>
+    open fun getAsString(): String {
+        return value.toString()
+    }
 }
