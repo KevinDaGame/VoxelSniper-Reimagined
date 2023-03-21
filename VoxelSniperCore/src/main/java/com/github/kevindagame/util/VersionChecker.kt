@@ -36,7 +36,6 @@ class VersionChecker() {
             val latestVersion = latestRelease.tag_name.lowercase().removePrefix("v")
             val downloadUrl = latestRelease.html_url
             LATEST_VERSION = VersionInfo(latestVersion, downloadUrl)
-            return LATEST_VERSION
         }
         return null
     }
