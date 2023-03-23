@@ -1,6 +1,8 @@
 package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.snipe.Sniper;
+import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.VersionChecker;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -70,6 +72,14 @@ public class VoxelSniperListener implements Listener {
 
         if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
             sniper.displayInfo();
+        }
+        //if player is operator
+        if (event.getPlayer().isOp()) {
+            var latestVersion = VersionChecker.Companion.getLATEST_VERSION();
+            //if update is available
+            if (latestVersion != null) {
+                player.sendMessage(Messages.UPDATE_AVAILABLE.replace("%currentVersion%", plugin.getDescription().getVersion()).replace("%latestVersion%", latestVersion.getLatestVersion()).replace("%downloadUrl%", latestVersion.getDownloadUrl()));
+            }
         }
     }
 
