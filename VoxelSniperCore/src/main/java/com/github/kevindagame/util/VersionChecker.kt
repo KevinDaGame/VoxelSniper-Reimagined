@@ -80,7 +80,7 @@ class VersionChecker() {
      * @return The parsed version.
      */
     private fun parseVersion(version: String): Version {
-        val versionParts = version.removePrefix("v").split(".")
+        val versionParts = version.lowercase().removePrefix("v").split(".")
         val major = versionParts.getOrElse(0) { "0" }.toInt()
         val minor = versionParts.getOrElse(1) { "0" }.toInt()
         val patch = versionParts.getOrElse(2) { "0" }.toInt()
