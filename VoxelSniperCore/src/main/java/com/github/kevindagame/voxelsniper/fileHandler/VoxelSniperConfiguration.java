@@ -15,6 +15,7 @@ public class VoxelSniperConfiguration {
     public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
     private static final boolean DEFAULT_USE_PLOTSQUARED = false;
     private static final boolean DEFAULT_USE_WORLDGUARD = false;
+    private static final boolean DEFAULT_USE_UPDATE_CHECKER = true;
     private final YamlConfiguration configuration;
 
     /**
@@ -60,11 +61,30 @@ public class VoxelSniperConfiguration {
         configuration.set(CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED, enabled);
     }
 
+    /**
+     * Returns if PlotSquared integration is enabled.
+     *
+     * @return whether PlotSquared integration is enabled
+     */
     public boolean isPlotSquaredIntegrationEnabled() {
         return configuration.getBoolean("plotsquared-integration-enabled", DEFAULT_USE_PLOTSQUARED);
     }
 
+    /**
+     * Returns if WorldGuard integration is enabled.
+     *
+     * @return whether WorldGuard integration is enabled
+     */
     public boolean isWorldGuardIntegrationEnabled() {
         return configuration.getBoolean("worldguard-integration-enabled", DEFAULT_USE_WORLDGUARD);
+    }
+
+    /**
+     * Returns if the update checker is enabled.
+     *
+     * @return whether the update checker is enabled
+     */
+    public boolean isUpdateCheckerEnabled() {
+        return configuration.getBoolean("update-checker-enabled", DEFAULT_USE_UPDATE_CHECKER);
     }
 }

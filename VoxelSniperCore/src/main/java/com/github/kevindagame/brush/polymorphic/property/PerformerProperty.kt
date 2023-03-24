@@ -15,4 +15,8 @@ class PerformerProperty : PolyProperty<BasePerformer>("performer", "Set the perf
     override fun getValues(): List<String> {
         return Performer.getPerformerHandles().toList()
     }
+
+    override fun getAsString(): String {
+        return value.name
+    }
 }
