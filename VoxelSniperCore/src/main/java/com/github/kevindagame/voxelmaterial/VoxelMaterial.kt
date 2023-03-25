@@ -17,5 +17,5 @@ abstract class VoxelMaterial {
         this.lowerBound = lowerBound
         this.upperBound = upperBound
     }
-    abstract fun getMaterial(x: Int, y: Int, z: Int): VoxelMaterialType
+    abstract fun getMaterial(location: BaseLocation): VoxelMaterialType
 }
