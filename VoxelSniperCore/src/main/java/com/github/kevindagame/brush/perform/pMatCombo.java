@@ -9,14 +9,14 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 /**
  * @author Voxel
  */
 public class pMatCombo extends BasePerformer {
 
-    private VoxelMaterial voxelMaterial;
+    private VoxelMaterialType voxelMaterialType;
     private IBlockData targetSubstance;
 
     public pMatCombo() {
@@ -26,7 +26,7 @@ public class pMatCombo extends BasePerformer {
     @Override
     public void init(SnipeData v) {
         w = v.getWorld();
-        voxelMaterial = v.getVoxelMaterial();
+        voxelMaterialType = v.getVoxelMaterial();
         targetSubstance = v.getReplaceSubstance();
     }
 
@@ -45,7 +45,7 @@ public class pMatCombo extends BasePerformer {
 
     @Override
     public BlockOperation perform(IBlock b) {
-        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterial.createBlockData());
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterialType.createBlockData());
     }
 
     @Override

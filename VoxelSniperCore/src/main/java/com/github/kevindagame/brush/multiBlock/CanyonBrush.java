@@ -7,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,10 +43,10 @@ public class CanyonBrush extends AbstractBrush {
                 }
                 for (int y = currentYLevel; y < this.getMaxHeight(); y++) {
                     var block = chunk.getBlock(x, y, z);
-                    addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                    addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterialType.AIR.createBlockData()));
                 }
                 var block = chunk.getBlock(x, this.getMinHeight(), z);
-                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.BEDROCK.createBlockData()));
+                addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterialType.BEDROCK.createBlockData()));
             }
         }
     }

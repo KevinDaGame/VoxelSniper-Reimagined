@@ -6,7 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,15 +37,15 @@ public class OverlayBrush extends PerformerBrush {
             for (int x = brushSize; x >= -brushSize; x--) {
                 // check if column is valid
                 // column is valid if it has no solid block right above the clicked layer
-                final VoxelMaterial material = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + 1, this.getTargetBlock().getZ() + z);
+                final VoxelMaterialType material = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + 1, this.getTargetBlock().getZ() + z);
                 if (isIgnoredBlock(material)) {
                     if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) {
                         for (int y = this.getTargetBlock().getY(); y > this.getMinHeight(); y--) {
                             // check for surface
-                            final VoxelMaterial layerBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            final VoxelMaterialType layerBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (!isIgnoredBlock(layerBlock)) {
                                 for (int currentDepth = y; y - currentDepth < depth; currentDepth--) {
-                                    final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
+                                    final VoxelMaterialType currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z);
                                     if (isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, currentDepth, this.getTargetBlock().getZ() + z));
                                     }
@@ -73,7 +73,7 @@ public class OverlayBrush extends PerformerBrush {
                             if (!this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z).isAir()) { // if not a floating block (like one of Notch'world pools)
                                 if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z).isAir()) { // must start at surface... this prevents it filling stuff in if
                                     // you click in a wall and it starts out below surface.
-                                    final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                    final VoxelMaterialType currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         for (int d = 1; (d < this.depth + 1); d++) {
                                             positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify
@@ -91,11 +91,11 @@ public class OverlayBrush extends PerformerBrush {
         }
     }
 
-    private boolean isIgnoredBlock(VoxelMaterial material) {
-        return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material == VoxelMaterial.CACTUS;
+    private boolean isIgnoredBlock(VoxelMaterialType material) {
+        return material.equals(VoxelMaterialType.WATER) || material.isTransparent() || material == VoxelMaterialType.CACTUS;
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterialType material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
@@ -103,7 +103,7 @@ public class OverlayBrush extends PerformerBrush {
         if (allBlocks && !(material.isAir())) {
             return true;
         }
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
+        return VoxelMaterialType.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override

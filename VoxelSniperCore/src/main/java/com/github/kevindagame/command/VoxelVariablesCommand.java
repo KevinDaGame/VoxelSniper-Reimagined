@@ -4,7 +4,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -133,9 +133,9 @@ public class VoxelVariablesCommand extends MaterialCommand {
 
     private void checkMaterial(String string, List<String> invalidMaterials, SnipeData snipeData) {
         boolean remove = string.contains("-");
-        VoxelMaterial material = new VoxelMaterial(string.toLowerCase().replace("-", ""));
-        //if the material is not yet defined in VoxelMaterial means that it is an item and not a block
-        if (VoxelMaterial.getMaterial(material.getKey()) == null) {
+        VoxelMaterialType material = new VoxelMaterialType(string.toLowerCase().replace("-", ""));
+        //if the material is not yet defined in VoxelMaterialType means that it is an item and not a block
+        if (VoxelMaterialType.getMaterial(material.getKey()) == null) {
             invalidMaterials.add(string.replace("-", ""));
             return;
         }

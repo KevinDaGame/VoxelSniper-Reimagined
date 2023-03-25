@@ -1,7 +1,7 @@
 package com.github.kevindagame.command;
 
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public abstract class MaterialCommand extends VoxelCommand {
 
     @Override
     public final List<String> registerTabCompletion() {
-        return VoxelMaterial.getMaterials().stream().filter(VoxelMaterial::isBlock).map(VoxelMaterial::getKey).toList();
+        return VoxelMaterialType.getMaterials().stream().filter(VoxelMaterialType::isBlock).map(VoxelMaterialType::getKey).toList();
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.github.kevindagame.util.brushOperation.BlockOperation
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent
 import com.github.kevindagame.voxelsniper.location.BaseLocation
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType
 import kotlin.math.pow
 
 class PolyBrush(
@@ -90,9 +90,9 @@ class PolyBrush(
             val brushSize = v.brushSize
             val newMaterials = operation.apply(brushSize, this, excludeAir, excludeWater)
             for (position in positions) {
-                val material: VoxelMaterial =
+                val material: VoxelMaterialType =
                     newMaterials[position.blockX - targetBlock.x + brushSize][position.blockY - targetBlock.y + brushSize][position.blockZ - targetBlock.z + brushSize]
-                if (!(excludeAir && material.isAir) && !(excludeWater && material === VoxelMaterial.WATER)) {
+                if (!(excludeAir && material.isAir) && !(excludeWater && material === VoxelMaterialType.WATER)) {
                     addOperation(BlockOperation(position, position.block.blockData, material.createBlockData()))
                 }
             }

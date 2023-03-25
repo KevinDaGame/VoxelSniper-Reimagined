@@ -8,7 +8,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
@@ -60,7 +60,7 @@ public class MoveBrush extends AbstractBrush {
             }
 
             for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
-                addOperation(new BlockOperation(blockWrapper.getLocation(), blockWrapper.getLocation().getBlock().getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(blockWrapper.getLocation(), blockWrapper.getLocation().getBlock().getBlockData(), VoxelMaterialType.AIR.createBlockData()));
             }
             for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
                 var block = world.getBlock(blockWrapper.getX() + direction[0], blockWrapper.getY() + direction[1], blockWrapper.getZ() + direction[2]);

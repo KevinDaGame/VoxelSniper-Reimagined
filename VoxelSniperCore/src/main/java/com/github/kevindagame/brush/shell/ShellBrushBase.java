@@ -3,7 +3,7 @@ package com.github.kevindagame.brush.shell;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 /**
  * THIS BRUSH SHOULD NOT USE PERFORMERS. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#shell-ball-brush">...</a>
@@ -18,11 +18,11 @@ public abstract class ShellBrushBase extends AbstractBrush {
      */
     protected abstract void shell(SnipeData v);
 
-    protected VoxelMaterial[][][] bShell(final SnipeData v) {
+    protected VoxelMaterialType[][][] bShell(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final int brushSizeDoubled = 2 * brushSize;
-        final VoxelMaterial[][][] oldMaterials = new VoxelMaterial[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
-        final VoxelMaterial[][][] newMaterials = new VoxelMaterial[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the hollowed materials
+        final VoxelMaterialType[][][] oldMaterials = new VoxelMaterialType[2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1][2 * (brushSize + 1) + 1]; // Array that holds the original materials plus a buffer
+        final VoxelMaterialType[][][] newMaterials = new VoxelMaterialType[brushSizeDoubled + 1][brushSizeDoubled + 1][brushSizeDoubled + 1]; // Array that holds the hollowed materials
         final var targetBlock = getTargetBlock();
 
         int blockPositionX = targetBlock.getX();

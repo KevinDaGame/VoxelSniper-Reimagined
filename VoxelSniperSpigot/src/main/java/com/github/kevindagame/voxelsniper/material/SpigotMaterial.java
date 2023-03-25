@@ -6,9 +6,9 @@ import org.bukkit.Material;
 
 public record SpigotMaterial(Material material) implements IMaterial {
 
-    public static VoxelMaterial fromSpigotMaterial(Material type) {
-        if (type == null || type.isAir()) return VoxelMaterial.AIR;
-        return VoxelMaterial.getMaterial(type.getKey().getNamespace(), type.getKey().getKey());
+    public static VoxelMaterialType fromSpigotMaterial(Material type) {
+        if (type == null || type.isAir()) return VoxelMaterialType.AIR;
+        return VoxelMaterialType.getMaterial(type.getKey().getNamespace(), type.getKey().getKey());
     }
 
     @Override
@@ -37,7 +37,7 @@ public record SpigotMaterial(Material material) implements IMaterial {
     }
 
     @Override
-    public boolean equals(VoxelMaterial material) {
+    public boolean equals(VoxelMaterialType material) {
         return this.material.getKey().getNamespace().equals(material.getNamespace()) && this.material.getKey().getKey().equals(material.getKey());
     }
 

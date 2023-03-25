@@ -6,7 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +38,7 @@ public class UnderlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y < this.getTargetBlock().getY() + this.depth; y++) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
-                            final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            final VoxelMaterialType currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = 0; (d < this.depth); d++) {
                                     var mat = getBlockMaterialAt(this.getTargetBlock().getX() + x, y + d, this.getTargetBlock().getZ() + z);
@@ -66,7 +66,7 @@ public class UnderlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y < this.getTargetBlock().getY() + this.depth; y++) { // start scanning from the height you clicked at
                     if (memory[x + v.getBrushSize()][z + v.getBrushSize()] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
-                            final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                            final VoxelMaterialType currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                             if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                 for (int d = -1; (d < this.depth - 1); d++) {
                                     positions.add(new BaseLocation(getWorld(), this.getTargetBlock().getX() + x, y - d, this.getTargetBlock().getZ() + z)); // fills down as many layers as you specify in
@@ -81,7 +81,7 @@ public class UnderlayBrush extends PerformerBrush {
         }
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterialType material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
@@ -90,7 +90,7 @@ public class UnderlayBrush extends PerformerBrush {
             return true;
         }
 
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
+        return VoxelMaterialType.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override

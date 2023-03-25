@@ -3,7 +3,7 @@ package com.github.kevindagame.util.brushOperation
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.location.BaseLocation
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType
 
 /**
  * Operation that is performed on a block. This operation modifies blockData.
@@ -27,7 +27,7 @@ class BlockOperation(location: BaseLocation, val oldData: IBlockData, var newDat
     /**
      * @param newMaterial the material to create blockData for
      */
-    fun setNewMaterial(newMaterial: VoxelMaterial) {
+    fun setNewMaterial(newMaterial: VoxelMaterialType) {
         newData = newMaterial.createBlockData()
     }
 

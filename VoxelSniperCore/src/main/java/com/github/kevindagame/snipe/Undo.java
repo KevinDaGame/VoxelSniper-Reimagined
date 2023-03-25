@@ -2,7 +2,7 @@ package com.github.kevindagame.snipe;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.google.common.collect.Sets;
 
@@ -16,9 +16,9 @@ import java.util.Set;
  */
 public class Undo {
 
-    private static final List<VoxelMaterial> FALLING_MATERIALS = Arrays.asList(
-            VoxelMaterial.WATER,
-            VoxelMaterial.LAVA);
+    private static final List<VoxelMaterialType> FALLING_MATERIALS = Arrays.asList(
+            VoxelMaterialType.WATER,
+            VoxelMaterialType.LAVA);
     private final Set<VoxelVector> containing = Sets.newHashSet();
     private final List<IBlockState> all;
     private final List<IBlockState> falloff;

@@ -10,7 +10,7 @@ import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.SpigotLocation;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
@@ -86,16 +86,16 @@ public class SpigotPlayer extends SpigotEntity implements IPlayer {
     }
 
     @Override
-    public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
+    public IBlock getTargetBlock(Set<VoxelMaterialType> transparent, int maxDistance) {
         Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((SpigotMaterial) m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
         return new SpigotBlock(player.getTargetBlock(materials, maxDistance));
     }
 
     @Override
-    public VoxelMaterial getItemInHand() {
+    public VoxelMaterialType getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
-        VoxelMaterial mat = VoxelMaterial.getMaterial(item.getType().getKey().getKey());
-        return mat != null ? mat : VoxelMaterial.AIR;
+        VoxelMaterialType mat = VoxelMaterialType.getMaterial(item.getType().getKey().getKey());
+        return mat != null ? mat : VoxelMaterialType.AIR;
     }
 
     @Override

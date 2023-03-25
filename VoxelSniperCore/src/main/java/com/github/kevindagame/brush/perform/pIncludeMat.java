@@ -9,7 +9,7 @@ import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 /**
  * @author Voxel
@@ -17,7 +17,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 public class pIncludeMat extends BasePerformer {
 
     private VoxelList includeList;
-    private VoxelMaterial voxelMaterial;
+    private VoxelMaterialType voxelMaterialType;
 
     public pIncludeMat() {
         name = "Include Material";
@@ -33,7 +33,7 @@ public class pIncludeMat extends BasePerformer {
     @Override
     public void init(SnipeData v) {
         w = v.getWorld();
-        voxelMaterial = v.getVoxelMaterial();
+        voxelMaterialType = v.getVoxelMaterial();
         includeList = v.getVoxelList();
     }
 
@@ -44,6 +44,6 @@ public class pIncludeMat extends BasePerformer {
 
     @Override
     public BlockOperation perform(IBlock b) {
-        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterial.createBlockData());
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterialType.createBlockData());
     }
 }

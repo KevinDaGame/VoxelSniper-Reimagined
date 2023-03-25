@@ -9,7 +9,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 /**
  * @author Voxel
@@ -17,7 +17,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 public class pComboMatNoPhysics extends BasePerformer {
 
     private IBlockData voxelSubstance;
-    private VoxelMaterial targetMaterial;
+    private VoxelMaterialType targetMaterial;
 
     public pComboMatNoPhysics() {
         name = "Combo-Mat, No Physics";

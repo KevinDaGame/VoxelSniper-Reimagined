@@ -3,7 +3,7 @@ package com.github.kevindagame.voxelsniper.blockstate;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
 public interface IBlockState {
@@ -17,7 +17,7 @@ public interface IBlockState {
 
     int getZ();
 
-    VoxelMaterial getMaterial();
+    VoxelMaterialType getMaterial();
 
     IBlockData getBlockData();
 

@@ -7,7 +7,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
@@ -27,61 +27,61 @@ public class OceanBrush extends AbstractBrush {
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
     private static final int WATER_LEVEL_MIN = 12;
     private static final int LOW_CUT_LEVEL = 12;
-    private static final List<VoxelMaterial> EXCLUDED_MATERIALS = new LinkedList<>();
+    private static final List<VoxelMaterialType> EXCLUDED_MATERIALS = new LinkedList<>();
 
     static {
-        EXCLUDED_MATERIALS.add(VoxelMaterial.AIR);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.CAVE_AIR);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.VOID_AIR);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.WATER);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.LAVA);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DANDELION);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.POPPY);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BLUE_ORCHID);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ALLIUM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.AZURE_BLUET);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.RED_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ORANGE_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.WHITE_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.PINK_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OXEYE_DAISY);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.RED_MUSHROOM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BROWN_MUSHROOM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.MELON);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.MELON_STEM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.PUMPKIN);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.PUMPKIN_STEM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.COCOA);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SNOW);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SNOW_BLOCK);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ICE);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SUGAR_CANE);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.TALL_GRASS);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SNOW);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.AIR);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.CAVE_AIR);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.VOID_AIR);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.OAK_SAPLING);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ACACIA_SAPLING);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.BIRCH_SAPLING);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.DARK_OAK_SAPLING);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.JUNGLE_SAPLING);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SPRUCE_SAPLING);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.OAK_LEAVES);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ACACIA_LEAVES);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.BIRCH_LEAVES);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.DARK_OAK_LEAVES);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.JUNGLE_LEAVES);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SPRUCE_LEAVES);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.OAK_LOG);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ACACIA_LOG);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.BIRCH_LOG);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.DARK_OAK_LOG);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.JUNGLE_LOG);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SPRUCE_LOG);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.OAK_WOOD);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ACACIA_WOOD);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.BIRCH_WOOD);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.DARK_OAK_WOOD);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.JUNGLE_WOOD);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SPRUCE_WOOD);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.WATER);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.LAVA);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.DANDELION);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.POPPY);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.BLUE_ORCHID);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ALLIUM);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.AZURE_BLUET);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.RED_TULIP);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ORANGE_TULIP);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.WHITE_TULIP);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.PINK_TULIP);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.OXEYE_DAISY);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.RED_MUSHROOM);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.BROWN_MUSHROOM);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.MELON);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.MELON_STEM);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.PUMPKIN);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.PUMPKIN_STEM);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.COCOA);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SNOW);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SNOW_BLOCK);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.ICE);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SUGAR_CANE);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.TALL_GRASS);
+        EXCLUDED_MATERIALS.add(VoxelMaterialType.SNOW);
     }
 
     private int waterLevel = WATER_LEVEL_DEFAULT;
@@ -90,7 +90,7 @@ public class OceanBrush extends AbstractBrush {
 
     private int getHeight(final int bx, final int bz) {
         for (int y = this.getWorld().getHighestBlockYAt(bx, bz); y > this.getMinHeight(); y--) {
-            final VoxelMaterial material = getWorld().getBlock(bx, y, bz).getMaterial();
+            final VoxelMaterialType material = getWorld().getBlock(bx, y, bz).getMaterial();
             if (!EXCLUDED_MATERIALS.contains(material)) {
                 return y;
             }
@@ -122,15 +122,15 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().isAir()) {
-                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterialType.AIR.createBlockData()));
                     }
                 }
 
                 // go down from water level to new sea level
                 for (int y = this.waterLevel; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
-                    if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
-                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.WATER.createBlockData()));
+                    if (!block.getMaterial().equals(VoxelMaterialType.WATER)) {
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterialType.WATER.createBlockData()));
                     }
                 }
 

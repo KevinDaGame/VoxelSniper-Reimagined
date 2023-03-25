@@ -5,7 +5,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.MessageType;
@@ -31,9 +31,9 @@ public interface IPlayer extends IEntity, Audience {
 
     IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
 
-    IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);
+    IBlock getTargetBlock(Set<VoxelMaterialType> transparent, int maxDistance);
 
-    VoxelMaterial getItemInHand();
+    VoxelMaterialType getItemInHand();
 
     @NotNull
     Sniper getSniper();

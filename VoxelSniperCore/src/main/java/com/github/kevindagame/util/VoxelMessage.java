@@ -1,7 +1,7 @@
 package com.github.kevindagame.util;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import net.kyori.adventure.text.ComponentLike;
 
 import java.util.stream.Collectors;
@@ -137,7 +137,7 @@ public record VoxelMessage(SnipeData snipeData) {
             snipeData.sendMessage(Messages.VOXEL_LIST_EMPTY);
         } else {
 
-            String blocks = snipeData.getVoxelList().getList().stream().map(VoxelMaterial::getKey).collect(Collectors.joining(","));
+            String blocks = snipeData.getVoxelList().getList().stream().map(VoxelMaterialType::getKey).collect(Collectors.joining(","));
             snipeData.sendMessage(Messages.VOXEL_LIST.replace("%blocks%", blocks));
         }
     }

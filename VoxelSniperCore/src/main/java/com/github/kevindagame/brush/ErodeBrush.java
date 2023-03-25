@@ -6,7 +6,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.google.common.base.Objects;
@@ -80,7 +80,7 @@ public class ErodeBrush extends AbstractBrush {
                         }
 
                         if (count >= erosionPreset.getErosionFaces()) {
-                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), VoxelMaterial.AIR), currentIteration);
+                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), VoxelMaterialType.AIR), currentIteration);
                         }
                     }
                 }
@@ -120,7 +120,7 @@ public class ErodeBrush extends AbstractBrush {
                             }
                         }
 
-                        BlockWrapper currentMaterial = new BlockWrapper(null, VoxelMaterial.AIR);
+                        BlockWrapper currentMaterial = new BlockWrapper(null, VoxelMaterialType.AIR);
                         int amount = 0;
 
                         for (final BlockWrapper wrapper : blockCount.keySet()) {
@@ -277,7 +277,7 @@ public class ErodeBrush extends AbstractBrush {
             this.blockData = block.getBlockData();
         }
 
-        public BlockWrapper(final IBlock block, final VoxelMaterial material) {
+        public BlockWrapper(final IBlock block, final VoxelMaterialType material) {
             this.block = block;
             this.blockData = material.createBlockData();
         }
@@ -299,7 +299,7 @@ public class ErodeBrush extends AbstractBrush {
         /**
          * @return the material
          */
-        public VoxelMaterial getMaterial() {
+        public VoxelMaterialType getMaterial() {
             return this.blockData.getMaterial();
         }
 

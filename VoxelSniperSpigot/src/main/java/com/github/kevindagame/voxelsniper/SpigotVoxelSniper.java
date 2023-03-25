@@ -15,7 +15,7 @@ import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredInt
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -170,7 +170,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     }
 
     @Override
-    public IMaterial getMaterial(VoxelMaterial material) {
+    public IMaterial getMaterial(VoxelMaterialType material) {
         Material mat = Material.matchMaterial(material.getKey());
         if (mat != null) return new SpigotMaterial(mat);
         return null;

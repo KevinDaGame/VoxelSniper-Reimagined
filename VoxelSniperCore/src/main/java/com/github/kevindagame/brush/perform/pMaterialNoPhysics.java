@@ -8,14 +8,14 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 /**
  * @author Voxel
  */
 public class pMaterialNoPhysics extends BasePerformer {
 
-    private VoxelMaterial voxelMaterial;
+    private VoxelMaterialType voxelMaterialType;
 
     public pMaterialNoPhysics() {
         name = "Material, No Physics";
@@ -24,12 +24,12 @@ public class pMaterialNoPhysics extends BasePerformer {
     @Override
     public void init(SnipeData v) {
         w = v.getWorld();
-        voxelMaterial = v.getVoxelMaterial();
+        voxelMaterialType = v.getVoxelMaterial();
     }
 
     @Override
     public boolean test(IBlock b) {
-        return b.getMaterial() != voxelMaterial;
+        return b.getMaterial() != voxelMaterialType;
     }
 
     @Override
@@ -40,6 +40,6 @@ public class pMaterialNoPhysics extends BasePerformer {
 
     @Override
     public BlockOperation perform(IBlock b) {
-        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterial.createBlockData(), false);
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterialType.createBlockData(), false);
     }
 }

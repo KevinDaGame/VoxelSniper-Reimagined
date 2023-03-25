@@ -4,7 +4,7 @@ import com.github.kevindagame.voxelsniper.blockdata.leaves.SpigotLeaves;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.SpigotRedstoneWire;
 import com.github.kevindagame.voxelsniper.blockdata.waterlogged.SpigotWaterlogged;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Leaves;
@@ -32,7 +32,7 @@ public class SpigotBlockData implements IBlockData {
     }
 
     @Override
-    public VoxelMaterial getMaterial() {
+    public VoxelMaterialType getMaterial() {
         return SpigotMaterial.fromSpigotMaterial(blockData.getMaterial());
     }
 

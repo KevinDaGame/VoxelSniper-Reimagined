@@ -7,7 +7,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,11 +34,11 @@ public class FlatOceanBrush extends AbstractBrush {
                     var block = chunk.getBlock(x, y, z);
                     var blockWrapper = new BlockWrapper(block);
                     if (y <= this.floorLevel) {
-                        blockWrapper.setBlockData(VoxelMaterial.DIRT.createBlockData());
+                        blockWrapper.setBlockData(VoxelMaterialType.DIRT.createBlockData());
                     } else if (y <= this.waterLevel) {
-                        blockWrapper.setBlockData(VoxelMaterial.WATER.createBlockData());
+                        blockWrapper.setBlockData(VoxelMaterialType.WATER.createBlockData());
                     } else {
-                        blockWrapper.setBlockData(VoxelMaterial.AIR.createBlockData());
+                        blockWrapper.setBlockData(VoxelMaterialType.AIR.createBlockData());
                     }
                     addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), blockWrapper.getBlockData()));
                 }

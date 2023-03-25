@@ -7,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -139,7 +139,7 @@ public class PullBrush extends AbstractBrush {
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
                 IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterialType.AIR.createBlockData()));
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
@@ -154,7 +154,7 @@ public class PullBrush extends AbstractBrush {
         addOperation(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
             IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterialType.AIR.createBlockData()));
         }
     }
 
@@ -227,7 +227,7 @@ public class PullBrush extends AbstractBrush {
                                 }
                                 lastStr = (int) (vh * str);
                                 int newY = actualY + lastStr;
-                                VoxelMaterial material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
+                                VoxelMaterialType material = this.getWorld().getBlock(actualX, actualY, actualZ).getMaterial();
                                 for (int i = newY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
                                     addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), material.createBlockData()));
@@ -258,7 +258,7 @@ public class PullBrush extends AbstractBrush {
                             volume = (xSquared + Math.pow(y, 2) + zSquared);
                             while (volume <= brushSizeSquared) {
                                 final int blockY = this.getTargetBlock().getY() + y + (int) (vh * this.getStr(volume / brushSizeSquared));
-                                final VoxelMaterial blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
+                                final VoxelMaterialType blockMaterial = this.getWorld().getBlock(actualX, this.getTargetBlock().getY() + y, actualZ).getMaterial();
                                 for (int i = blockY; i < lastY; i++) {
                                     b = this.getWorld().getBlock(actualX, i, actualZ);
                                     addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), blockMaterial.createBlockData()));
@@ -308,7 +308,7 @@ public class PullBrush extends AbstractBrush {
         /**
          * @return the id
          */
-        public VoxelMaterial getMaterial() {
+        public VoxelMaterialType getMaterial() {
             return this.blockData.getMaterial();
         }
 

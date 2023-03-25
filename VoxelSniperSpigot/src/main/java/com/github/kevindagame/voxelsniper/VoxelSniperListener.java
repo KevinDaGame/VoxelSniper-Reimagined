@@ -6,7 +6,7 @@ import com.github.kevindagame.util.VersionChecker;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,7 +52,7 @@ public class VoxelSniperListener implements Listener {
             Sniper sniper = player.getSniper();
             if (sniper.isEnabled() && sniper.snipe(
                     Sniper.Action.valueOf(event.getAction().name()),
-                    VoxelMaterial.getMaterial(event.getMaterial().getKey().getKey()),
+                    VoxelMaterialType.getMaterial(event.getMaterial().getKey().getKey()),
                     event.getClickedBlock() != null ? new SpigotBlock(event.getClickedBlock()) : null,
                     BlockFace.valueOf(event.getBlockFace().name()))) {
                 event.setCancelled(true);

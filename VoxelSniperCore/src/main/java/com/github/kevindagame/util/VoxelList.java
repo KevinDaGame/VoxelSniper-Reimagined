@@ -1,6 +1,6 @@
 package com.github.kevindagame.util;
 
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
@@ -11,21 +11,21 @@ import java.util.List;
  */
 public class VoxelList {
 
-    private final List<VoxelMaterial> materials = new ArrayList<>();
+    private final List<VoxelMaterialType> materials = new ArrayList<>();
 
-    public void add(VoxelMaterial material) {
+    public void add(VoxelMaterialType material) {
         if (!materials.contains(material)) {
             this.materials.add(material);
         }
     }
 
-    public void remove(VoxelMaterial material) {
+    public void remove(VoxelMaterialType material) {
         if (materials.contains(material)) {
             this.materials.remove(material);
         }
     }
 
-    public boolean contains(VoxelMaterial material) {
+    public boolean contains(VoxelMaterialType material) {
         return this.materials.contains(material);
     }
 
@@ -50,7 +50,7 @@ public class VoxelList {
      *
      * @return defensive copy of the List with pairs
      */
-    public List<VoxelMaterial> getList() {
+    public List<VoxelMaterialType> getList() {
         return ImmutableList.copyOf(materials);
     }
 

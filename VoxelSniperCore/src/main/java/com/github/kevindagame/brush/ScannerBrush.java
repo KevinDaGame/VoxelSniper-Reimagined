@@ -7,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
@@ -39,14 +39,14 @@ public class ScannerBrush extends CustomBrush {
         if (bf == null) {
             return;
         }
-        VoxelMaterial checkFor = v.getVoxelMaterial();
+        VoxelMaterialType checkFor = v.getVoxelMaterial();
 
         for (int i = 1; i < this.depth + 1; i++) {
             int y = this.getTargetBlock().getY() + (bf.getModY() * i * -1);
             if (y >= this.getMaxHeight() || y < this.getMinHeight()) {
                 break;
             }
-            VoxelMaterial mat = getWorld().getBlock(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
+            VoxelMaterialType mat = getWorld().getBlock(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
             if (mat == checkFor) {
                 v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getName()).replace("%i%", Integer.toString(i)));
                 return;

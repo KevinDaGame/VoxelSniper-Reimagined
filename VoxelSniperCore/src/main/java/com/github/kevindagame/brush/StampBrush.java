@@ -6,7 +6,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public class StampBrush extends AbstractBrush {
      * @param material
      * @return whether this material falls or is a fluid
      */
-    protected final boolean falling(final VoxelMaterial material) {
+    protected final boolean falling(final VoxelMaterialType material) {
         return material.hasGravity() || material.isFluid();
     }
 

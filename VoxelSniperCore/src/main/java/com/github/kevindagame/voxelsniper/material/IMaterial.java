@@ -13,7 +13,7 @@ public interface IMaterial extends Comparable<IMaterial> {
 
     String getName();
 
-    boolean equals(VoxelMaterial material);
+    boolean equals(VoxelMaterialType material);
 
     boolean isTransparent();
 

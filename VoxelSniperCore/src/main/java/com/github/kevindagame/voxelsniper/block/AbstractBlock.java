@@ -1,20 +1,20 @@
 package com.github.kevindagame.voxelsniper.block;
 
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 public abstract class AbstractBlock implements IBlock {
     final BaseLocation location;
-    VoxelMaterial material;
+    VoxelMaterialType material;
 
-    public AbstractBlock(BaseLocation location, VoxelMaterial material) {
+    public AbstractBlock(BaseLocation location, VoxelMaterialType material) {
         this.location = location;
         this.material = material;
     }
 
     @Override
-    public final VoxelMaterial getMaterial() {
-        if (this.material.isAir()) return VoxelMaterial.AIR;
+    public final VoxelMaterialType getMaterial() {
+        if (this.material.isAir()) return VoxelMaterialType.AIR;
         return this.material;
     }
 

@@ -13,7 +13,7 @@ import com.github.kevindagame.voxelsniper.block.BlockFace
 import com.github.kevindagame.voxelsniper.block.IBlock
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType
 import com.github.kevindagame.voxelsniper.world.IWorld
 import com.google.common.collect.ImmutableList
 
@@ -236,8 +236,8 @@ abstract class AbstractBrush : IBrush {
      * @param z Z coordinate
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
-    fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterial {
-        return if (isInWorldHeight(y)) world.getBlock(x, y, z).material else VoxelMaterial.AIR
+    fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterialType {
+        return if (isInWorldHeight(y)) world.getBlock(x, y, z).material else VoxelMaterialType.AIR
     }
 
     /**
@@ -249,18 +249,18 @@ abstract class AbstractBrush : IBrush {
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
     protected fun getBlockDataAt(x: Int, y: Int, z: Int): IBlockData {
-        return if (isInWorldHeight(y)) world.getBlock(x, y, z).blockData else VoxelMaterial.AIR.createBlockData()
+        return if (isInWorldHeight(y)) world.getBlock(x, y, z).blockData else VoxelMaterialType.AIR.createBlockData()
     }
 
     /**
-     * Sets the VoxelMaterial of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
+     * Sets the VoxelMaterialType of the block at the passed coordinate. This function will automatically create use the default BlockData for that Material.
      *
      * @param x        X coordinate
      * @param y        Y coordinate
      * @param z        Z coordinate
      * @param material the material to set this block to
      */
-    protected fun setBlockMaterialAt(x: Int, y: Int, z: Int, material: VoxelMaterial) {
+    protected fun setBlockMaterialAt(x: Int, y: Int, z: Int, material: VoxelMaterialType) {
         if (isInWorldHeight(y)) {
             world.getBlock(x, y, z).blockData = material.createBlockData()
         }

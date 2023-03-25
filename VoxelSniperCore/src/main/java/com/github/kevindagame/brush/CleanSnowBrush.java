@@ -7,7 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,8 +29,8 @@ public class CleanSnowBrush extends AbstractBrush {
         for (var position : positions) {
             IBlock b = position.getBlock();
             IBlock blockDown = b.getRelative(BlockFace.DOWN);
-            if ((b.getMaterial() == VoxelMaterial.SNOW) && ((blockDown.getMaterial() == VoxelMaterial.SNOW) || (blockDown.getMaterial().isAir()))) {
-                addOperation(new BlockOperation(position, b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            if ((b.getMaterial() == VoxelMaterialType.SNOW) && ((blockDown.getMaterial() == VoxelMaterialType.SNOW) || (blockDown.getMaterial().isAir()))) {
+                addOperation(new BlockOperation(position, b.getBlockData(), VoxelMaterialType.AIR.createBlockData()));
             }
         }
     }

@@ -7,7 +7,7 @@ import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.SpigotBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,13 +21,13 @@ public class SpigotBlock extends AbstractBlock {
     }
 
     @Override
-    public void setMaterial(VoxelMaterial material) {
+    public void setMaterial(VoxelMaterialType material) {
         this.material = material;
         block.setType(((SpigotMaterial) material.getIMaterial()).material());
     }
 
     @Override
-    public void setMaterial(VoxelMaterial material, boolean applyPhysics) {
+    public void setMaterial(VoxelMaterialType material, boolean applyPhysics) {
         this.material = material;
         block.setType(((SpigotMaterial) material.getIMaterial()).material(), applyPhysics);
     }

@@ -5,7 +5,7 @@ import com.github.kevindagame.util.Shapes;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -16,36 +16,36 @@ import java.util.stream.Collectors;
  */
 public class BlockResetBrush extends AbstractBrush {
 
-    private static final ArrayList<VoxelMaterial> DENIED_UPDATES = new ArrayList<>();
+    private static final ArrayList<VoxelMaterialType> DENIED_UPDATES = new ArrayList<>();
 
     static {
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.CHEST);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.FURNACE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_TORCH);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WALL_TORCH);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WIRE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REPEATER);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.IRON_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.ACACIA_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.BIRCH_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.DARK_OAK_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.JUNGLE_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.OAK_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.ACACIA_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.BIRCH_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.DARK_OAK_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.JUNGLE_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.OAK_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.CHEST);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.FURNACE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.REDSTONE_TORCH);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.REDSTONE_WALL_TORCH);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.REDSTONE_WIRE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.REPEATER);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.ACACIA_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.BIRCH_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.DARK_OAK_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.JUNGLE_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.OAK_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.IRON_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.ACACIA_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.BIRCH_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.DARK_OAK_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.JUNGLE_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterialType.OAK_FENCE_GATE);
     }
 
 

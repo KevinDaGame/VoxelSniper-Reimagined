@@ -6,7 +6,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import com.github.kevindagame.voxelsniper.blockstate.sign.SpigotSign;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 
@@ -29,7 +29,7 @@ public class SpigotBlockState extends AbstractBlockState {
     }
 
     @Override
-    public VoxelMaterial getMaterial() {
+    public VoxelMaterialType getMaterial() {
         return SpigotMaterial.fromSpigotMaterial(blockState.getType());
     }
 

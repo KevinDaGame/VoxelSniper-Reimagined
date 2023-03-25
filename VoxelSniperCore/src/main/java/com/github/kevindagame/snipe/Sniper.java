@@ -12,7 +12,7 @@ import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Maps;
 import net.kyori.adventure.text.ComponentLike;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  *
@@ -35,16 +34,16 @@ public class Sniper {
     public Sniper(IPlayer player) {
         this.player = player;
         SnipeTool sniperTool = new SnipeTool(this);
-        sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
-        sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterial("gunpowder"));
+        sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterialType("arrow"));
+        sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterialType("gunpowder"));
         tools.put(null, sniperTool);
     }
 
     public String getCurrentToolId() {
-        return getToolId((player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR);
+        return getToolId((player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterialType.AIR);
     }
 
-    public String getToolId(VoxelMaterial itemInHand) {
+    public String getToolId(VoxelMaterialType itemInHand) {
         if (itemInHand == null) {
             return null;
         }
@@ -66,7 +65,7 @@ public class Sniper {
      * @param clickedFace  Face of that targeted Block
      * @return true if command visibly processed, false otherwise.
      */
-    public boolean snipe(Action action, VoxelMaterial itemInHand, IBlock clickedBlock, BlockFace clickedFace) {
+    public boolean snipe(Action action, VoxelMaterialType itemInHand, IBlock clickedBlock, BlockFace clickedFace) {
         String toolId = getToolId(itemInHand);
         SnipeTool sniperTool = tools.get(toolId);
 
@@ -180,7 +179,7 @@ public class Sniper {
         return tools.get(toolId).previousBrush();
     }
 
-    public boolean setTool(String toolId, SnipeAction action, VoxelMaterial itemInHand) {
+    public boolean setTool(String toolId, SnipeAction action, VoxelMaterialType itemInHand) {
         for (Map.Entry<String, SnipeTool> entry : tools.entrySet()) {
             if (entry.getKey() != toolId && entry.getValue().hasToolAssigned(itemInHand)) {
                 return false;
@@ -195,7 +194,7 @@ public class Sniper {
         return true;
     }
 
-    public void removeTool(String toolId, VoxelMaterial itemInHand) {
+    public void removeTool(String toolId, VoxelMaterialType itemInHand) {
         if (!tools.containsKey(toolId)) {
             SnipeTool tool = new SnipeTool(this);
             tools.put(toolId, tool);
@@ -258,7 +257,7 @@ public class Sniper {
         SnipeTool backup = tools.remove(toolId);
         SnipeTool newTool = new SnipeTool(this);
 
-        for (Map.Entry<SnipeAction, VoxelMaterial> entry : backup.getActionTools().entrySet()) {
+        for (Map.Entry<SnipeAction, VoxelMaterialType> entry : backup.getActionTools().entrySet()) {
             newTool.assignAction(entry.getKey(), entry.getValue());
         }
         tools.put(toolId, newTool);

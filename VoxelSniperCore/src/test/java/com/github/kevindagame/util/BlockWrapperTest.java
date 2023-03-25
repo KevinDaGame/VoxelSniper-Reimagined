@@ -2,7 +2,7 @@ package com.github.kevindagame.util;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import junit.framework.TestCase;
 import org.mockito.Mockito;
 
@@ -12,7 +12,7 @@ public class BlockWrapperTest extends TestCase {
 
     public void testTestClone() {
         var blockdata = Mockito.mock(IBlockData.class);
-        when(blockdata.getMaterial()).thenReturn(Mockito.mock(VoxelMaterial.class));
+        when(blockdata.getMaterial()).thenReturn(Mockito.mock(VoxelMaterialType.class));
         var mock = Mockito.mock(IBlock.class);
         when(mock.getBlockData()).thenReturn(blockdata);
 

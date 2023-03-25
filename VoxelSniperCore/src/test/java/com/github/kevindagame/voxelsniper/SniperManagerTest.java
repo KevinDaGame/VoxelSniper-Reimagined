@@ -5,7 +5,7 @@ import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,11 +31,11 @@ public class SniperManagerTest {
         Mockito.when(main.getPlayer(uuid)).thenReturn(absplayer);
 
         IBlockData airBlockData = Mockito.mock(IBlockData.class);
-        Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterial.AIR);
+        Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterialType.AIR);
         IMaterial mat = Mockito.mock(IMaterial.class);
         Mockito.when(mat.createBlockData()).thenReturn(airBlockData);
 
-        Mockito.when(main.getMaterial(VoxelMaterial.AIR)).thenReturn(mat);
+        Mockito.when(main.getMaterial(VoxelMaterialType.AIR)).thenReturn(mat);
 
         VoxelSniper.voxelsniper = main;
 

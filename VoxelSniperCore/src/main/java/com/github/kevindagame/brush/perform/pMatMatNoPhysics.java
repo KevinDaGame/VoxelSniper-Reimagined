@@ -8,15 +8,15 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 /**
  * @author Voxel
  */
 public class pMatMatNoPhysics extends BasePerformer {
 
-    private VoxelMaterial voxelMaterial;
-    private VoxelMaterial targetMaterial;
+    private VoxelMaterialType voxelMaterialType;
+    private VoxelMaterialType targetMaterial;
 
     public pMatMatNoPhysics() {
         name = "Mat-Mat, No Physics";
@@ -25,7 +25,7 @@ public class pMatMatNoPhysics extends BasePerformer {
     @Override
     public void init(SnipeData v) {
         w = v.getWorld();
-        voxelMaterial = v.getVoxelMaterial();
+        voxelMaterialType = v.getVoxelMaterial();
         targetMaterial = v.getReplaceMaterial();
     }
 
@@ -43,7 +43,7 @@ public class pMatMatNoPhysics extends BasePerformer {
 
     @Override
     public BlockOperation perform(IBlock b) {
-        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterial.createBlockData(), false);
+        return new BlockOperation(b.getLocation(), b.getBlockData(), voxelMaterialType.createBlockData(), false);
     }
 
     @Override

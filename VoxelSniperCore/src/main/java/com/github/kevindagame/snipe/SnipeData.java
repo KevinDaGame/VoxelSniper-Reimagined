@@ -3,7 +3,7 @@ package com.github.kevindagame.snipe;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.text.ComponentLike;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +17,8 @@ public class SnipeData {
     public static final int DEFAULT_CYLINDER_CENTER = 0;
     public static final int DEFAULT_VOXEL_HEIGHT = 1;
     public static final int DEFAULT_BRUSH_SIZE = 3;
-    public static final IBlockData DEFAULT_VOXEL_SUBSTANCE = VoxelMaterial.AIR.createBlockData();
-    public static final IBlockData DEFAULT_TARGET_SUBSTANCE = VoxelMaterial.AIR.createBlockData();
+    public static final IBlockData DEFAULT_VOXEL_SUBSTANCE = VoxelMaterialType.AIR.createBlockData();
+    public static final IBlockData DEFAULT_TARGET_SUBSTANCE = VoxelMaterialType.AIR.createBlockData();
 
     // Sniper variables
     private final Sniper owner;
@@ -81,7 +81,7 @@ public class SnipeData {
         this.voxelSubstance = voxelSubstance;
     }
 
-    public VoxelMaterial getVoxelMaterial() {
+    public VoxelMaterialType getVoxelMaterial() {
         return voxelSubstance.getMaterial();
     }
 
@@ -93,7 +93,7 @@ public class SnipeData {
         this.replaceSubstance = targetSubstance;
     }
 
-    public VoxelMaterial getReplaceMaterial() {
+    public VoxelMaterialType getReplaceMaterial() {
         return replaceSubstance.getMaterial();
     }
 

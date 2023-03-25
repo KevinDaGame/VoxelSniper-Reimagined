@@ -4,7 +4,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,11 +39,11 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
                         // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) {
                             // if inside of the column && if to be splattered
-                            final VoxelMaterial check = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
-                            if (check.isAir() || check == VoxelMaterial.WATER) {
+                            final VoxelMaterialType check = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
+                            if (check.isAir() || check == VoxelMaterialType.WATER) {
                                 // must start at surface... this prevents it filling stuff in if you click in a wall
                                 // and it starts out below surface.
-                                final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                final VoxelMaterialType currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                 if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                     final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
 
@@ -77,7 +77,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) { // if inside of the column...&& if to be splattered
                             if (!this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z).isAir()) { // if not a floating block (like one of Notch'world pools)
                                 if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z).isAir()) { // must start at surface... this prevents it filling stuff in if
-                                    final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
+                                    final VoxelMaterialType currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         final int depth = this.randomizeHeight ? generator.nextInt(this.depth) : this.depth;
                                         for (int d = 1; (d < depth + 1); d++) {
@@ -94,7 +94,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
         }
     }
 
-    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
+    private boolean isOverrideableMaterial(VoxelList list, VoxelMaterialType material) {
         if (this.useVoxelList) {
             return list.contains(material);
         }
@@ -103,7 +103,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
             return true;
         }
 
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
+        return VoxelMaterialType.OVERRIDABLE_MATERIALS.contains(material);
     }
 
     @Override

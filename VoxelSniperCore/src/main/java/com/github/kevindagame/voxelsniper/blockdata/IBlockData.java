@@ -1,9 +1,9 @@
 package com.github.kevindagame.voxelsniper.blockdata;
 
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 public interface IBlockData {
-    VoxelMaterial getMaterial();
+    VoxelMaterialType getMaterial();
 
     boolean matches(IBlockData blockData);
 

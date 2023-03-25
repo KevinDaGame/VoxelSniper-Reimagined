@@ -4,7 +4,7 @@ import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                VoxelMaterial itemInHand = (player.getItemInHand() != null) ? (player.getItemInHand()) : VoxelMaterial.AIR;
+                VoxelMaterialType itemInHand = (player.getItemInHand() != null) ? (player.getItemInHand()) : VoxelMaterialType.AIR;
 
                 if (itemInHand == null) {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM);
@@ -75,7 +75,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
 
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            VoxelMaterial itemInHand = (player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR;
+            VoxelMaterialType itemInHand = (player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterialType.AIR;
 
             if (itemInHand == null) {
                 sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN);

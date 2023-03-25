@@ -7,7 +7,7 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.player.materialChange.PlayerMaterialChangedEvent;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 
 
 public class VoxelVoxelCommand extends MaterialCommand {
@@ -45,7 +45,7 @@ public class VoxelVoxelCommand extends MaterialCommand {
         }
 
         // Command: /v [material]       <- Sets the defined material as voxel substance.
-        VoxelMaterial material = VoxelMaterial.getMaterial(args[0]);
+        VoxelMaterialType material = VoxelMaterialType.getMaterial(args[0]);
 
         if (material != null && material.isBlock()) {
             if (!new PlayerMaterialChangedEvent(sniper.getPlayer(), sniper.getSnipeData(sniper.getCurrentToolId()).getVoxelSubstance(), material.createBlockData()).callEvent().isCancelled()) {
