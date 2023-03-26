@@ -25,7 +25,7 @@ public class pComboCombo extends BasePerformer {
     @Override
     public void init(SnipeData v) {
         w = v.getWorld();
-        voxelSubstance = v.getVoxelSubstance();
+        voxelSubstance = v.getVoxelSubstance().getMaterial();
         targetSubstance = v.getReplaceSubstance();
     }
 

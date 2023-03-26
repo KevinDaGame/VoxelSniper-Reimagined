@@ -31,7 +31,7 @@ public abstract class VoxelCommandManager {
         this.registerCommand(new VoxelUndoCommand());
         this.registerCommand(new VoxelVariablesCommand());
         this.registerCommand(new VoxelVoxCommand());
-        this.registerCommand(new VoxelVoxelCommand());
+        this.registerCommand(new VoxelMaterialCommand());
 
         this.registerBrushSubcommands();
     }

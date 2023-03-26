@@ -2,7 +2,10 @@ package com.github.kevindagame.snipe;
 
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.voxelmaterial.BasicVoxelMaterial;
+import com.github.kevindagame.voxelmaterial.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
+import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterialType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.text.ComponentLike;
@@ -17,7 +20,7 @@ public class SnipeData {
     public static final int DEFAULT_CYLINDER_CENTER = 0;
     public static final int DEFAULT_VOXEL_HEIGHT = 1;
     public static final int DEFAULT_BRUSH_SIZE = 3;
-    public static final IBlockData DEFAULT_VOXEL_SUBSTANCE = VoxelMaterialType.AIR.createBlockData();
+    public static final VoxelMaterial DEFAULT_VOXEL_SUBSTANCE = new BasicVoxelMaterial(VoxelMaterialType.AIR);
     public static final IBlockData DEFAULT_TARGET_SUBSTANCE = VoxelMaterialType.AIR.createBlockData();
 
     // Sniper variables
@@ -29,7 +32,7 @@ public class SnipeData {
     private int brushSize = SnipeData.DEFAULT_BRUSH_SIZE;
 
     // Voxel and ReplaceTarget Materials & BlockData
-    private IBlockData voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
+    private VoxelMaterial voxelSubstance = SnipeData.DEFAULT_VOXEL_SUBSTANCE;
     private IBlockData replaceSubstance = SnipeData.DEFAULT_TARGET_SUBSTANCE;
 
     // Others
@@ -73,16 +76,19 @@ public class SnipeData {
         this.voxelHeight = voxelHeight;
     }
 
-    public IBlockData getVoxelSubstance() {
+    public VoxelMaterial getVoxelSubstance() {
         return voxelSubstance;
     }
 
-    public void setVoxelSubstance(IBlockData voxelSubstance) {
+    public void setVoxelSubstance(VoxelMaterial voxelSubstance) {
         this.voxelSubstance = voxelSubstance;
     }
 
+    public VoxelMaterialType getVoxelMaterial(BaseLocation location) {
+        return voxelSubstance.getMaterial(location).getMaterial();
+    }
     public VoxelMaterialType getVoxelMaterial() {
-        return voxelSubstance.getMaterial();
+        return voxelSubstance.getMaterial().getMaterial();
     }
 
     public IBlockData getReplaceSubstance() {

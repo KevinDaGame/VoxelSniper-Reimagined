@@ -8,6 +8,7 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.brush.polymorphic.PolyBrush;
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.voxelmaterial.BasicVoxelMaterial;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
@@ -136,12 +137,12 @@ public class Sniper {
         IBlockData oldSubstance, newSubstance;
         switch (snipeAction) {
             case GUNPOWDER:
-                snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                snipeData.setReplaceSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_TARGET_SUBSTANCE);
 
                 snipeData.getVoxelMessage().replace();
                 return true;
             case ARROW:
-                snipeData.setVoxelSubstance(targetBlock != null ? targetBlock.getBlockData() : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
+                snipeData.setVoxelSubstance(targetBlock != null ? new BasicVoxelMaterial(targetBlock.getBlockData()) : SnipeData.DEFAULT_VOXEL_SUBSTANCE);
                 snipeData.getVoxelMessage().voxel();
                 return true;
             default:

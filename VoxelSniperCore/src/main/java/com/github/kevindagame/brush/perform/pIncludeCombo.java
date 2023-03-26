@@ -35,7 +35,7 @@ public class pIncludeCombo extends BasePerformer {
     public void init(SnipeData v) {
         w = v.getWorld();
         includeList = v.getVoxelList();
-        voxelSubstance = v.getVoxelSubstance();
+        voxelSubstance = v.getVoxelSubstance().getMaterial();
     }
 
     @Override

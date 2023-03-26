@@ -17,7 +17,7 @@ public abstract class MaterialCommand extends VoxelCommand {
     }
 
     @Override
-    public final List<String> registerTabCompletion() {
+    public List<String> registerTabCompletion() {
         return VoxelMaterialType.getMaterials().stream().filter(VoxelMaterialType::isBlock).map(VoxelMaterialType::getKey).toList();
     }
 

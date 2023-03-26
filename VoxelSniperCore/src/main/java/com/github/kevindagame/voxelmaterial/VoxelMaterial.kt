@@ -1,5 +1,6 @@
 package com.github.kevindagame.voxelmaterial
 
+import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterialType
 
@@ -17,5 +18,9 @@ abstract class VoxelMaterial {
         this.lowerBound = lowerBound
         this.upperBound = upperBound
     }
-    abstract fun getMaterial(location: BaseLocation): VoxelMaterialType
+    abstract fun getMaterial(location: BaseLocation): IBlockData
+
+    fun getMaterial(): IBlockData {
+        return getMaterial(BaseLocation(null, 0.0, 0.0, 0.0))
+    }
 }

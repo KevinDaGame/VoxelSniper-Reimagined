@@ -60,7 +60,7 @@ public record VoxelMessage(SnipeData snipeData) {
      * Display data value.
      */
     public void data() {
-        snipeData.sendMessage(Messages.VOXEL_DATA.replace("%data%", snipeData.getVoxelSubstance().getAsString()));
+        snipeData.sendMessage(Messages.VOXEL_DATA.replace("%data%", snipeData.getVoxelSubstance().getMaterial().getAsString()));
     }
 
     /**

@@ -79,6 +79,10 @@ class PolyBrush(
 
 
     fun executeBrush(v: SnipeData) {
+        val lowerBound = targetBlock.getRelative(-v.brushSize, -v.brushSize, -v.brushSize).location
+        val upperBound = targetBlock.getRelative(v.brushSize, v.brushSize, v.brushSize).location
+        v.voxelSubstance.initMaterial(lowerBound, upperBound)
+
         this.positions = getPositions(v)
         if (operationType == PolyOperationType.BIOME) {
             for (position in positions) {

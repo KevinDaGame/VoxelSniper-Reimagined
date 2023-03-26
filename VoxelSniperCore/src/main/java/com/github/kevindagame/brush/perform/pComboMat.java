@@ -26,7 +26,7 @@ public class pComboMat extends BasePerformer {
     @Override
     public void init(SnipeData v) {
         w = v.getWorld();
-        voxelSubstance = v.getVoxelSubstance();
+        voxelSubstance = v.getVoxelSubstance().getMaterial();
         targetMaterial = v.getReplaceMaterial();
     }
 

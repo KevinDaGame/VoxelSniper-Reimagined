@@ -1,88 +1,64 @@
 package com.github.kevindagame.voxelmaterial
 
+import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterialType
+import kotlin.math.abs
 
-class GradientVoxelMaterial(private val materials: List<GradientVoxelMaterialMaterial>, val direction: GradientVoxelMaterialDirection): VoxelMaterial() {
-    private lateinit var gradient: Array<Array<Array<VoxelMaterialType?>>>
+class GradientVoxelMaterial(
+    private val materials: List<GradientVoxelMaterialMaterial>,
+    val direction: GradientVoxelMaterialDirection
+) : VoxelMaterial() {
+    private lateinit var gradient: Array<IBlockData?>
 
     /**
      * returns the material at the location
      * @param location The location of the material
      */
-    override fun getMaterial(location: BaseLocation): VoxelMaterialType {
-        val x = location.blockX - lowerBound.blockX
-        val y = location.blockY - lowerBound.blockY
-        val z = location.blockZ - lowerBound.blockZ
-
-        if (x < 0 || x >= gradient.size || y < 0 || y >= gradient[x].size || z < 0 || z >= gradient[x][y].size) {
-            throw IllegalArgumentException("Location is outside the bounds of the gradient")
+    override fun getMaterial(location: BaseLocation): IBlockData {
+        val index = when (direction) {
+            GradientVoxelMaterialDirection.NORTH -> abs(location.blockZ - lowerBound.blockZ)
+            GradientVoxelMaterialDirection.SOUTH -> abs(location.blockZ - upperBound.blockZ)
+            GradientVoxelMaterialDirection.EAST -> abs(location.blockX - upperBound.blockX)
+            GradientVoxelMaterialDirection.WEST -> abs(location.blockX - lowerBound.blockX)
+            GradientVoxelMaterialDirection.UP -> abs(location.blockY - upperBound.blockY)
+            GradientVoxelMaterialDirection.DOWN -> abs(location.blockY - lowerBound.blockY)
         }
+        val material = gradient[index]
+        return material ?: VoxelMaterialType.SPONGE.createBlockData()
 
-        return gradient[x][y][z] ?: throw IllegalStateException("VoxelMaterial at location ($x, $y, $z) is null")
     }
 
 
     override fun initMaterial(lowerBound: BaseLocation, upperBound: BaseLocation) {
         super.initMaterial(lowerBound, upperBound)
-        val sizeX = upperBound.blockX - lowerBound.blockX
-        val sizeY = upperBound.blockY - lowerBound.blockY
-        val sizeZ = upperBound.blockZ - lowerBound.blockZ
-        gradient = Array(sizeX) { Array(sizeY) { arrayOfNulls(sizeZ) } }
-        interpolateGradient()
-        }
-
-    private fun interpolateGradient() {
-        // Calculate the total weight of all materials
-        val totalWeight = materials.sumOf { it.weight }
-
-        // Calculate the step size for each material based on its weight
-        val stepSizes = materials.map { it.weight.toDouble() / totalWeight }
-
-        // Calculate the starting position for the gradient based on the direction
-        var posX = 0
-        var posY = 0
-        var posZ = 0
-        when (direction) {
-            GradientVoxelMaterialDirection.NORTH -> posZ = gradient[0][0].size - 1
-            GradientVoxelMaterialDirection.SOUTH -> posZ = 0
-            GradientVoxelMaterialDirection.EAST -> posX = 0
-            GradientVoxelMaterialDirection.WEST -> posX = gradient.size - 1
-            GradientVoxelMaterialDirection.UP -> posY = 0
-            GradientVoxelMaterialDirection.DOWN -> posY = gradient[0].size - 1
-        }
-
-        // Iterate over each element in the gradient and set its material based on the step size
-        var stepIndex = 0
-        for (x in gradient.indices) {
-            for (y in gradient[x].indices) {
-                for (z in gradient[x][y].indices) {
-                    // Calculate the material index based on the step size and the current step index
-                    val materialIndex = (stepIndex / stepSizes.size) % stepSizes.size
-                    val stepSize = stepSizes[materialIndex]
-
-                    // Set the material for the current element in the gradient
-                    gradient[x][y][z] = materials[materialIndex].material
-
-                    // Update the step index based on the step size
-                    stepIndex += (stepSize * totalWeight).toInt()
-
-                    // Update the position based on the direction
-                    posX += direction.x
-                    posY += direction.y
-                    posZ += direction.z
-
-                    // Check if the position is outside the bounds of the gradient
-                    if (posX !in gradient.indices || posY !in gradient[x].indices || posZ !in gradient[x][y].indices) {
-                        // If so, stop iterating over the gradient
-                        return
-                    }
-                }
-            }
-        }
+        calculateGradient()
     }
 
+    private fun calculateGradient() {
+        val totalWeight = materials.sumOf { it.weight }
+        val gradientSize = when (direction) {
+            GradientVoxelMaterialDirection.NORTH, GradientVoxelMaterialDirection.SOUTH -> {
+                abs(upperBound.blockZ - lowerBound.blockZ) + 1
+            }
+            GradientVoxelMaterialDirection.EAST, GradientVoxelMaterialDirection.WEST -> {
+                abs(upperBound.blockX - lowerBound.blockX) + 1
+            }
+            GradientVoxelMaterialDirection.UP, GradientVoxelMaterialDirection.DOWN -> {
+                abs(upperBound.blockY - lowerBound.blockY) + 1
+            }
+        }
+        gradient = Array(gradientSize) { null }
+        var index = 0
+        for (material in materials) {
+            val amount = (material.weight.toDouble() / totalWeight * gradientSize).toInt()
+            for (i in 0 until amount) {
+                gradient[index] = material.material
+                index++
+            }
+        }
 
+    }
 }
 
 /**
@@ -90,7 +66,7 @@ class GradientVoxelMaterial(private val materials: List<GradientVoxelMaterialMat
  * @param material The material
  * @param weight The weight of the material. The weight will determine how many times the material will be used relative to the other materials
  */
-data class GradientVoxelMaterialMaterial(val material: VoxelMaterialType, val weight: Int)
+data class GradientVoxelMaterialMaterial(val material: IBlockData, val weight: Int)
 
 /**
  * The direction the gradient will go.
@@ -108,5 +84,5 @@ enum class GradientVoxelMaterialDirection(val x: Int, val y: Int, val z: Int) {
     EAST(1, 0, 0),
     WEST(-1, 0, 0),
     UP(0, 1, 0),
-    DOWN(0, -1, 0)
+    DOWN(0, -1, 0);
 }

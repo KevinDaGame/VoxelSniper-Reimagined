@@ -4,6 +4,7 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.voxelmaterial.BasicVoxelMaterial;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -38,7 +39,7 @@ public class VoxelInkCommand extends VoxelCommand {
                 if (selectedBlock.getMaterial() != snipeData.getVoxelMaterial()) {
                     sniper.sendMessage(Messages.VOXEL_INK_DIFFERENT_TYPE);
                 } else {
-                    snipeData.setVoxelSubstance(selectedBlock.getBlockData());
+                    snipeData.setVoxelSubstance(new BasicVoxelMaterial(selectedBlock.getBlockData()));
                     snipeData.getVoxelMessage().data();
                 }
             } else {
@@ -50,9 +51,9 @@ public class VoxelInkCommand extends VoxelCommand {
         // Command: /vi [material]      <- Sets the defined material as voxel substance.
         try {
             IBlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
-            IBlockData activeData = snipeData.getVoxelSubstance();
+            IBlockData activeData = snipeData.getVoxelSubstance().getMaterial();
 
-            snipeData.setVoxelSubstance(activeData.merge(newData));
+            snipeData.setVoxelSubstance(new BasicVoxelMaterial(newData));
             snipeData.getVoxelMessage().data();
         } catch (IllegalArgumentException e) {
             sniper.sendMessage(Messages.VOXEL_INK_CANT_IMITATE_DATA);
@@ -67,7 +68,7 @@ public class VoxelInkCommand extends VoxelCommand {
         Sniper sniper = player.getSniper();
         SnipeData snipeData = sniper.getSnipeData(sniper.getCurrentToolId());
 
-        String[] a = snipeData.getVoxelSubstance().getAsString().split("\\[");
+        String[] a = snipeData.getVoxelSubstance().getMaterial().getAsString().split("\\[");
 
         if (a.length == 2) {
             List<String> possibleDataValues = new ArrayList<>();
