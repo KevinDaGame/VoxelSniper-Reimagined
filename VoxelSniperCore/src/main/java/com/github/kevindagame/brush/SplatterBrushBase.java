@@ -288,9 +288,9 @@ public abstract class SplatterBrushBase extends PerformerBrush {
         // Number variables
         argumentValues.put("recursion", Lists.newArrayList("[number]"));
 
-        // Decimal variables
-        argumentValues.put("seed", Lists.newArrayList("[decimal]"));
-        argumentValues.put("growth", Lists.newArrayList("[decimal]"));
+        // Number variables
+        argumentValues.put("seed", Lists.newArrayList("[number]"));
+        argumentValues.put("growth", Lists.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

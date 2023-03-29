@@ -4,8 +4,8 @@ TREESNIPE_USAGE: |-
   </gold><aqua>/b %triggerHandle% [treeType]  -- Change tree type
 SPLATTER_VOXEL_DISC_BRUSH_USAGE: |-
   <gold>Splatter Voxel Disc Brush Parameters:
-  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
-  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </gold><aqua>/b %triggerHandle% seed [number]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [number]  -- Set a growth percentage
   </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
   </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
 CHECKER_USING_WORLD_CORDS: '<aqua>Using world coordinates: %useWorldCoordinates%'
@@ -14,8 +14,8 @@ EXTRUDE_BRUSH_USAGE: |-
   </gold><aqua>/b %triggerHandle% smooth  -- Toggle smooth circle (default: false)
 SPLATTER_FOXEL_BRUSH_USAGE: |-
   <gold>Splatter Voxel Brush Parameters:
-  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
-  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </gold><aqua>/b %triggerHandle% seed [number]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [number]  -- Set a growth percentage
   </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
   </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
 JAGGED_LINE_BRUSH_RECURSION_RANGE: <red>Recursion must be between %RECURSION_MIN% - %RECURSION_MAX%
@@ -212,8 +212,8 @@ SPLATTER_OVERLAY_BRUSH_USAGE: |-
   <gold>Splatter Overlay Brush Parameters:
   </gold><aqua>/b %triggerHandle% depth [number]  -- Depth of blocks to overlay from surface
   </aqua><aqua>/b %triggerHandle% mode  -- Toggle between overlaying natural blocks or all blocks.
-  </aqua><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
-  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </aqua><aqua>/b %triggerHandle% seed [number]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [number]  -- Set a growth percentage
   </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
   </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
 ROT3D_BRUSH_MESSAGE: Rotates Yaw (XZ), then Pitch(XY), then Roll(ZY), in order.
@@ -226,8 +226,8 @@ BALLBRUSH_USAGE: |-
 ELLIPSEBRUSH_FILL_MODE: <aqua>Fill mode is %state%
 SPLATTER_DISC_BRUSH_USAGE: |-
   <gold>Splatter Disc Brush Parameters:
-  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
-  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </gold><aqua>/b %triggerHandle% seed [number]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [number]  -- Set a growth percentage
   </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
   </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
 DEFAULT_STAMP: Default Stamp
@@ -247,8 +247,8 @@ STAMP_ERROR: <dark_red>Error while stamping! Report
 BRUSH_NO_UNDO: <red>THIS BRUSH DOES NOT UNDO.
 SPLATTER_BALL_BRUSH_USAGE: |-
   <gold>Splatter Ball Brush Parameters:
-  </gold><aqua>/b %triggerHandle% seed [decimal]  -- Set a seed percentage
-  </aqua><aqua>/b %triggerHandle% growth [decimal]  -- Set a growth percentage
+  </gold><aqua>/b %triggerHandle% seed [number]  -- Set a seed percentage
+  </aqua><aqua>/b %triggerHandle% growth [number]  -- Set a growth percentage
   </aqua><aqua>/b %triggerHandle% recursion [number]  -- Set a recursion value
   </aqua><aqua>/b %triggerHandle% reset  -- Resets to default values
 BRUSH_NAME: '<aqua>Brush Type: <light_purple>%name%</light_purple></aqua>'
@@ -379,7 +379,7 @@ SHELL_BRUSH_COMPLETE: <aqua>Shell complete.
 BRUSH_SEED_PERCENT_SET: '<blue>Seed percent set to: %val%%'
 BRUSH_RECURSION_SET: '<blue>Recursions set to: %val%'
 SPLATTER_BALL_BRUSH_RECURSION_RANGE: <red>Recursions must be an number between 1 - 10!
-SEED_PERCENT_RANGE: <red>Seed percent must be a decimal between 0.01 - 99.99!
+SEED_PERCENT_RANGE: <red>Seed percent must be a number between 1 and 99!
 Y_OFFSET_SET: '<blue>Y-Offset set to: %yOffset%'
 BLOCK_NOT_IN_ENDPOINT_SELECTION: <red>That block is not in the endpoint selection set.
 BLOCK_NOT_IN_CONTROL_POINT_SELECTION: <red>That block is not in the control point selection set.
@@ -403,8 +403,8 @@ PULLBRUSH_BUBBLE: <aqua>Bubble %val%
 NUMBER_OUT_OF_RANGE: '<red>%arg% must be between %min% and %max%'
 PULLBRUSH_USAGE: |-
   <gold>Pull Brush Parameters:
-  </gold><aqua>/b %triggerHandle% pinch [decimal]  -- Set a pinch amount
-  </aqua><aqua>/b %triggerHandle% bubble [decimal]  -- Set a bubble amount
+  </gold><aqua>/b %triggerHandle% pinch [number]  -- Set a pinch amount
+  </aqua><aqua>/b %triggerHandle% bubble [number]  -- Set a bubble amount
 RULER_BRUSH_POWDER: |
   <blue>Format = (second coord - first coord)
   </blue><aqua>X change: %x%
