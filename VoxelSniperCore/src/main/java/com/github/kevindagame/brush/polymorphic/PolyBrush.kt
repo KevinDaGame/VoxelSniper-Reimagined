@@ -169,16 +169,16 @@ class PolyBrush(
 
     override fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData) {
         if (params[0].equals("info", ignoreCase = true)) {
-            val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name)
+            val info = Messages.POLY_BRUSH_USAGE.replace("%brushName%", name)
             for (property in properties) {
                 info.append(
-                    Messages.POLY_BRUSH_USAGE_LINE.replace("brushHandle", triggerHandle)
-                        .replace("parameter", property.name).replace("description", property.description).toString()
+                    Messages.POLY_BRUSH_USAGE_LINE.replace("%triggerHandle%", triggerHandle)
+                        .replace("%property%", property.name).replace("%description%", property.description).toString()
                 )
             }
         }
         if (params.size == 1) {
-            v.owner().player.sendMessage(Messages.PARAMETER_PARSE_ERROR.replace("parameter", params[0]))
+            v.owner().player.sendMessage(Messages.PARAMETER_PARSE_ERROR.replace("%parameter%", params[0]))
             return
         }
         for (property in properties) {
