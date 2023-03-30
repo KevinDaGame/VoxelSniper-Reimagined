@@ -184,8 +184,6 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
         // Number variables
         argumentValues.put("recursion", Lists.newArrayList("[number]"));
         argumentValues.put("depth", Lists.newArrayList("[number]"));
-
-        // Number variables
         argumentValues.put("seed", Lists.newArrayList("[number]"));
         argumentValues.put("growth", Lists.newArrayList("[number]"));
 
