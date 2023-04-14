@@ -5,8 +5,7 @@ The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigo
 
 Discord 
 -------
-For the latest updates, and quick responses to questions, join our discord server!
-https://discord.com/invite/YDjykYsAFF
+For the latest updates, and quick responses to questions, join our [discord server](https://discord.com/invite/YDjykYsAFF)!
 
 Minecraft Version
 ------------------
