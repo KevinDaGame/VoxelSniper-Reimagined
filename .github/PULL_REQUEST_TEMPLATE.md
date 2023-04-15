@@ -21,6 +21,7 @@ images._
 - [ ] No, and this is why: _please replace this line with details on why tests
   have not been included_
 - [ ] I need help with writing tests
+- [ ] Not needed
 
 ## [optional] What gif best describes this PR or how it makes you feel?
 
