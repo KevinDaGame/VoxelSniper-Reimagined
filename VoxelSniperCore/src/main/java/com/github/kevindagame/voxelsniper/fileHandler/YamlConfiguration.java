@@ -55,6 +55,10 @@ public class YamlConfiguration {
     }
 
     public String getString(String path) {
+        return getString(path, null);
+    }
+
+    public String getString(String path, String defaultValue) {
         // head:a.b.c
         Object head = contents;
         String[] steps = path.split("\\.");
@@ -62,10 +66,10 @@ public class YamlConfiguration {
             if (head instanceof Map) {
                 head = ((Map<?, ?>) head).get(step);
             } else {
-                return null;
+                return defaultValue;
             }
         }
-        return (head instanceof String) ? (String) head : null;
+        return (head instanceof String) ? (String) head : defaultValue;
     }
 
     public int getInt(String path, int defaultValue) {

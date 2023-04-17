@@ -21,6 +21,7 @@ public class VoxelSniperConfiguration {
     private static final boolean DEFAULT_USE_PLOTSQUARED = false;
     private static final boolean DEFAULT_USE_WORLDGUARD = false;
     private static final boolean DEFAULT_USE_UPDATE_CHECKER = true;
+    private static final String DEFAULT_BRUSH = "snipe";
     private final YamlConfiguration configuration;
 
     /**
@@ -72,7 +73,7 @@ public class VoxelSniperConfiguration {
      * @return the default brush.
      */
     public String getDefaultBrush() {
-        return configuration.getString(CONFIG_IDENTIFIER_DEFAULT_BRUSH);
+        return configuration.getString(CONFIG_IDENTIFIER_DEFAULT_BRUSH, DEFAULT_BRUSH);
     }
 
     /**
