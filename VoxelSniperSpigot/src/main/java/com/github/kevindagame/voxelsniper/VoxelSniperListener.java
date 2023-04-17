@@ -68,11 +68,10 @@ public class VoxelSniperListener implements Listener {
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
         IPlayer player = SpigotVoxelSniper.getInstance().getPlayer(event.getPlayer());
+        if(!player.hasPermission(SNIPER_PERMISSION)) return;
+
         Sniper sniper = player.getSniper();
 
-        if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
-            sniper.displayInfo();
-        }
         //if player is operator
         if (event.getPlayer().isOp()) {
             var latestVersion = VersionChecker.Companion.getLATEST_VERSION();
@@ -80,6 +79,9 @@ public class VoxelSniperListener implements Listener {
             if (latestVersion != null) {
                 player.sendMessage(Messages.UPDATE_AVAILABLE.replace("%currentVersion%", plugin.getDescription().getVersion()).replace("%latestVersion%", latestVersion.getLatestVersion()).replace("%downloadUrl%", latestVersion.getDownloadUrl()));
             }
+        }
+        if (plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
+            sniper.displayInfo();
         }
     }
 

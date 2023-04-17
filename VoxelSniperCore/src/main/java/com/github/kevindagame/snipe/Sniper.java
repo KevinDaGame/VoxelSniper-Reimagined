@@ -20,7 +20,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  *
@@ -313,6 +312,9 @@ public class Sniper {
      * @return {IBrush} The brush instance
      **/
     public @Nullable IBrush instantiateBrush(BrushData brushData, boolean force) {
+        if (brushData == null) {
+            return null;
+        }
         var brushInstance = brushData.getSupplier().get();
         if (!(brushInstance instanceof PolyBrush)) {
             brushInstance.setPermissionNode(brushData.getPermission());

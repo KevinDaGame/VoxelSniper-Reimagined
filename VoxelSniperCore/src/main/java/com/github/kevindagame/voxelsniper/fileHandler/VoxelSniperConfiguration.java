@@ -11,6 +11,11 @@ public class VoxelSniperConfiguration {
 
     public static final String CONFIG_IDENTIFIER_UNDO_CACHE_SIZE = "undo-cache-size";
     public static final String CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED = "message-on-login-enabled";
+    public static final String CONFIG_IDENTIFIER_DEFAULT_BRUSH = "default-brush";
+    public static final String CONFIG_IDENTIFIER_PLOTSQUARED_INTEGRATION_ENABLED = "plotsquared-integration-enabled";
+    public static final String CONFIG_IDENTIFIER_WORLDGUARD_INTEGRATION_ENABLED = "worldguard-integration-enabled";
+    public static final String CONFIG_IDENTIFIER_UPDATE_CHECKER_ENABLED = "update-checker-enabled";
+
     public static final int DEFAULT_UNDO_CACHE_SIZE = 20;
     public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
     private static final boolean DEFAULT_USE_PLOTSQUARED = false;
@@ -62,12 +67,21 @@ public class VoxelSniperConfiguration {
     }
 
     /**
+     * Returns the default brush.
+     *
+     * @return the default brush.
+     */
+    public String getDefaultBrush() {
+        return configuration.getString(CONFIG_IDENTIFIER_DEFAULT_BRUSH);
+    }
+
+    /**
      * Returns if PlotSquared integration is enabled.
      *
      * @return whether PlotSquared integration is enabled
      */
     public boolean isPlotSquaredIntegrationEnabled() {
-        return configuration.getBoolean("plotsquared-integration-enabled", DEFAULT_USE_PLOTSQUARED);
+        return configuration.getBoolean(CONFIG_IDENTIFIER_PLOTSQUARED_INTEGRATION_ENABLED, DEFAULT_USE_PLOTSQUARED);
     }
 
     /**
@@ -76,7 +90,7 @@ public class VoxelSniperConfiguration {
      * @return whether WorldGuard integration is enabled
      */
     public boolean isWorldGuardIntegrationEnabled() {
-        return configuration.getBoolean("worldguard-integration-enabled", DEFAULT_USE_WORLDGUARD);
+        return configuration.getBoolean(CONFIG_IDENTIFIER_WORLDGUARD_INTEGRATION_ENABLED, DEFAULT_USE_WORLDGUARD);
     }
 
     /**
@@ -85,6 +99,6 @@ public class VoxelSniperConfiguration {
      * @return whether the update checker is enabled
      */
     public boolean isUpdateCheckerEnabled() {
-        return configuration.getBoolean("update-checker-enabled", DEFAULT_USE_UPDATE_CHECKER);
+        return configuration.getBoolean(CONFIG_IDENTIFIER_UPDATE_CHECKER_ENABLED, DEFAULT_USE_UPDATE_CHECKER);
     }
 }

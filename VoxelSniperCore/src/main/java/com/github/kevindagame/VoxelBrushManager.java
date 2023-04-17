@@ -418,7 +418,9 @@ public class VoxelBrushManager {
      * @return Brush class
      */
     public BrushData getBrushForHandle(String handle) {
-        Preconditions.checkNotNull(handle, "Brushhandle can not be null.");
+        if(handle == null || handle.isEmpty()) {
+            return null;
+        }
 
         return brushes.get(handle.toLowerCase());
     }
@@ -462,7 +464,8 @@ public class VoxelBrushManager {
      * @return The brush data for the default brush.
      */
     public BrushData getDefaultBrush() {
-        return brushes.get("snipe");
+        var defaultBrush = VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getDefaultBrush();
+        return getBrushForHandle(defaultBrush);
     }
 
     public List<String> getBrushHandles() {
