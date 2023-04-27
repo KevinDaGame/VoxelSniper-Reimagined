@@ -104,7 +104,11 @@ class PolyBrush(
     private fun getPositions(v: SnipeData): MutableList<BaseLocation> {
         val positions = initPositions(v)
         val newPositions = mutableListOf<BaseLocation>()
-        val radiusSquared = (v.brushSize + if (smooth) SMOOTH_CIRCLE_VALUE else VOXEL_CIRCLE_VALUE).pow(2)
+        var radiusSquared = 0.0
+        try {
+            radiusSquared = (v.brushSize + if (smooth) SMOOTH_CIRCLE_VALUE else VOXEL_CIRCLE_VALUE).pow(2)
+        } catch (ignored: IllegalStateException) {
+        }
         val center = targetBlock
 
         for (position in positions) {
