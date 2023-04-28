@@ -15,12 +15,12 @@ dependencies {
 
     implementation(platform("com.intellectualsites.bom:bom-1.18.x:1.20"))
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.2.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     implementation(kotlin("stdlib-jdk8"))
 
     shadow("org.bstats:bstats-bukkit:3.0.0")
 
-    testImplementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+    testImplementation("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
 }
 
 description = "VoxelSniperSpigot"
@@ -41,7 +41,7 @@ tasks {
         relocate("org.bstats", "com.github.kevindagame.voxelsniper.libs.org.bstats")
     }
     runServer {
-        minecraftVersion("1.16.5")
+        minecraftVersion("1.19.4")
     }
 }
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run17") {

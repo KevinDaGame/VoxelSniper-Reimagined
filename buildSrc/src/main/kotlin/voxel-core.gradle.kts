@@ -28,14 +28,14 @@ repositories {
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
 
-    implementation("net.kyori:adventure-api:4.12.0")
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
-    implementation("net.kyori:adventure-text-serializer-legacy:4.12.0")
+    implementation("net.kyori:adventure-api:4.13.1")
+    implementation("net.kyori:adventure-text-minimessage:4.13.1")
+    implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.google.guava:guava:31.1-jre")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("org.yaml:snakeyaml:1.31")
+    implementation("org.yaml:snakeyaml:1.33")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.5.1")
@@ -49,7 +49,7 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.6.0"
+version = "8.7.0"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile> {
