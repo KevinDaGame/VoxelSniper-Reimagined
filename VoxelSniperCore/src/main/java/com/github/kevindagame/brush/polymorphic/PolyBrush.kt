@@ -141,14 +141,15 @@ class PolyBrush(
         return positions
     }
 
-    private inline fun <reified T, reified RET> getPropertyValue(): RET {
-        for (property in properties) {
-            if (property is T) {
-                return property.value as RET
-            }
-        }
-        val classname = T::class.simpleName
-        throw IllegalStateException("The requested property is not defined: $classname")
+    /**
+     * Get the value of a property
+     * @param T The type of the property
+     * @param RET The return type of the property
+     * @return The value of the property. If the property is not found, the default value of the property is returned
+     */
+    private inline fun <reified T, reified RET> getPropertyValue(): RET where T : PolyProperty<RET> {
+        return properties.find { it is T }?.let { (it as T).value } ?: T::class.java.getDeclaredConstructor()
+            .newInstance().default
     }
 
     private val smooth: Boolean get() = getPropertyValue<SmoothProperty, Boolean>()
