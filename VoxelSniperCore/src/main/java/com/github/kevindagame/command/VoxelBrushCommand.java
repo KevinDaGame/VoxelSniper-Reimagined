@@ -1,6 +1,7 @@
 package com.github.kevindagame.command;
 
 import com.github.kevindagame.VoxelBrushManager;
+import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.BrushData;
 import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.perform.IPerformerBrush;
@@ -58,10 +59,14 @@ public class VoxelBrushCommand extends VoxelCommand {
         try {
             int originalSize = snipeData.getBrushSize();
             int newSize = Integer.parseInt(args[0]);
-
             var brush = sniper.getBrush(currentToolId);
             if (brush == null) {
                 snipeData.sendMessage(Messages.NO_BRUSH_SELECTED);
+                return true;
+            }
+
+            if(newSize > VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getMaxBrushSize()){
+                snipeData.sendMessage(Messages.BRUSH_SIZE_TOO_LARGE.replace("%maxBrushSize%", String.valueOf(VoxelSniper.voxelsniper.getVoxelSniperConfiguration().getMaxBrushSize())));
                 return true;
             }
 
