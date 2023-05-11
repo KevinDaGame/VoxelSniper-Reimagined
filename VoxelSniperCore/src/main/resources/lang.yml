@@ -592,4 +592,4 @@ ACTION_CANCELLED: <red>The action was cancelled
 UPDATE_AVAILABLE: |- 
   <gold>An update is available for VoxelSniper. You are running version <red>%currentVersion%</red> and the latest version is <green>%latestVersion%</green>.
   Download the latest version <green><click:OPEN_URL:%downloadUrl%><hover:show_text:Click me!>here</hover></click></green>!</gold> 
-
+BRUSH_SIZE_TOO_LARGE: <red>Brush size is too large. Maximum brush size is %maxBrushSize%.

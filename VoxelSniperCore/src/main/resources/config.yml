@@ -1,5 +1,6 @@
 
 undo-cache-size: 20
+max-brush-size: 20
 message-on-login-enabled: true
 
 # The default brush to use when a player joins the server. Default: snipe. To have no brush selected on login, set this to none.

@@ -10,6 +10,7 @@ import java.io.File;
 public class VoxelSniperConfiguration {
 
     public static final String CONFIG_IDENTIFIER_UNDO_CACHE_SIZE = "undo-cache-size";
+    public static final String CONFIG_IDENTIFIER_MAX_BRUSH_SIZE = "max-brush-size";
     public static final String CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED = "message-on-login-enabled";
     public static final String CONFIG_IDENTIFIER_DEFAULT_BRUSH = "default-brush";
     public static final String CONFIG_IDENTIFIER_PLOTSQUARED_INTEGRATION_ENABLED = "plotsquared-integration-enabled";
@@ -17,6 +18,7 @@ public class VoxelSniperConfiguration {
     public static final String CONFIG_IDENTIFIER_UPDATE_CHECKER_ENABLED = "update-checker-enabled";
 
     public static final int DEFAULT_UNDO_CACHE_SIZE = 20;
+    public static final int DEFAULT_MAX_BRUSH_SIZE = 20;
     public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
     private static final boolean DEFAULT_USE_PLOTSQUARED = false;
     private static final boolean DEFAULT_USE_WORLDGUARD = false;
@@ -47,6 +49,15 @@ public class VoxelSniperConfiguration {
      */
     public void setUndoCacheSize(int size) {
         configuration.set(CONFIG_IDENTIFIER_UNDO_CACHE_SIZE, size);
+    }
+
+    /**
+     * Returns the maximum brush size.
+     *
+     * @return the maximum brush size
+     */
+    public int getMaxBrushSize() {
+        return configuration.getInt(CONFIG_IDENTIFIER_MAX_BRUSH_SIZE, DEFAULT_MAX_BRUSH_SIZE);
     }
 
     /**
