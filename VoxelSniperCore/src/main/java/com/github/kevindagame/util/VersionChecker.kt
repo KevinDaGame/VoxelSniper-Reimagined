@@ -68,9 +68,14 @@ class VersionChecker() {
      * @return True if the current version is outdated, false otherwise.
      */
     private fun isOutdated(currentVersion: String, latestVersion: String): Boolean {
-        val current = parseVersion(currentVersion)
-        val latest = parseVersion(latestVersion)
-        return current < latest
+        return try {
+
+            val current = parseVersion(currentVersion)
+            val latest = parseVersion(latestVersion)
+            current < latest
+        } catch (e: NumberFormatException) {
+            false
+        }
     }
 
     /**
@@ -80,6 +85,7 @@ class VersionChecker() {
      * @return The parsed version.
      */
     private fun parseVersion(version: String): Version {
+
         val versionParts = version.lowercase().removePrefix("v").split(".")
         val major = versionParts.getOrElse(0) { "0" }.toInt()
         val minor = versionParts.getOrElse(1) { "0" }.toInt()
