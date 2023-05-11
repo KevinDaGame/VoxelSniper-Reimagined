@@ -49,7 +49,7 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.7.0"
+version = findProperty("voxelsniper.version") ?: "unspecified"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile> {
