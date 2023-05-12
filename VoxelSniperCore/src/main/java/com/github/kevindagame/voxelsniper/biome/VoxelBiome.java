@@ -118,4 +118,9 @@ public record VoxelBiome(String namespace, String key, Version version) {
     private Version getVersion() {
         return version;
     }
+
+    @Override
+    public String toString() {
+        return (!namespace.equals(DEFAULT_NAMESPACE) ? namespace + ":" : "") + key;
+    }
 }

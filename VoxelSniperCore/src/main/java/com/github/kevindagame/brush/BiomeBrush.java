@@ -18,8 +18,6 @@ public class BiomeBrush extends AbstractBrush {
 
     private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
 
-
-
     private void biome(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize, 2);
@@ -28,8 +26,11 @@ public class BiomeBrush extends AbstractBrush {
             final double xSquared = Math.pow(x, 2);
             for (int z = -brushSize; z <= brushSize; z++) {
                 if ((xSquared + Math.pow(z, 2)) <= brushSizeSquared) {
-                    var location = new BaseLocation(this.getWorld(), this.getTargetBlock().getX() + x, 0, this.getTargetBlock().getZ() + z);
+                    for ( int y = getMinHeight(); y <= getMaxHeight(); y++) {
+                    var location = new BaseLocation(this.getWorld(), this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                     this.addOperation(new BiomeOperation(location, getWorld().getBiome(location), this.selectedBiome));
+
+                    }
                 }
             }
         }
@@ -51,7 +52,7 @@ public class BiomeBrush extends AbstractBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
+        vm.custom(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.toString()));
     }
 
     @Override
