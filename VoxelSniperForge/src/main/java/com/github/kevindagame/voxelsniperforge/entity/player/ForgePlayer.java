@@ -12,9 +12,8 @@ import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 import com.google.common.base.Preconditions;
 
-import net.kyori.adventure.audience.MessageType;
-import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -53,14 +52,19 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
         this.player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
     }
 
-    public static MutableComponent toNative(@NotNull Component component) {
-        if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
-        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
+    @Override
+    public void sendMessage(@NotNull Component message) {
+        this.player.sendSystemMessage(toNative(message));
     }
 
     @Override
-    public void sendMessage(@NotNull Identity source, @NotNull Component message, @NotNull MessageType type) {
-        this.player.sendSystemMessage(toNative(message));
+    public void sendMessage(@NotNull ComponentLike message) {
+        IPlayer.super.sendMessage(message);
+    }
+
+    public static MutableComponent toNative(@NotNull Component component) {
+        if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
+        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
     }
 
     @Override

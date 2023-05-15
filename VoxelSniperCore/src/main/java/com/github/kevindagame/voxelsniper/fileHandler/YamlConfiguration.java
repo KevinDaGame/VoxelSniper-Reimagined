@@ -1,7 +1,6 @@
 package com.github.kevindagame.voxelsniper.fileHandler;
 
 import com.github.kevindagame.VoxelSniper;
-
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -18,10 +17,18 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
-public class YamlConfiguration {
-    private final Map<String, Object> contents;
+public class YamlConfiguration extends ConfigurationSection {
 
     public YamlConfiguration(ClassLoader loader, String fileName) {
+        super(loadConfiguration(loader, fileName));
+    }
+
+    public YamlConfiguration(File file) {
+        super(loadConfiguration(file));
+    }
+
+    @NotNull
+    private static Map<String, Object> loadConfiguration(ClassLoader loader, String fileName) {
         Map<String, Object> contents = null;
         try (InputStream inputStream = loader.getResourceAsStream(fileName)) {
             if (inputStream != null) {
@@ -31,20 +38,19 @@ public class YamlConfiguration {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            this.contents = contents != null ? contents : new HashMap<>();
         }
+        return contents != null ? contents : new HashMap<>();
     }
 
-    public YamlConfiguration(File file) {
+    @NotNull
+    private static Map<String, Object> loadConfiguration(File file) {
         Map<String, Object> contents = null;
         try (InputStream inputStream = Files.newInputStream(file.toPath())) {
             contents = getYaml().load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            this.contents = contents != null ? contents : new HashMap<>();
         }
+        return contents != null ? contents : new HashMap<>();
     }
 
     private static Yaml getYaml() {
