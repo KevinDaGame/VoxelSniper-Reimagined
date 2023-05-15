@@ -10,6 +10,7 @@ import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 
 import java.util.List;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -57,7 +58,8 @@ public class ForgeEntity implements IEntity {
 
     @Override
     public IWorld getWorld() {
-        return new ForgeWorld(this.entity.getLevel());
+        //TODO check if this is correct
+        return new ForgeWorld((ServerLevel) this.entity.getLevel());
     }
 
     @Override

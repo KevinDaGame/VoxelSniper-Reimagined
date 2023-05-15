@@ -11,7 +11,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import java.util.Map;
 
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,11 +47,10 @@ public class ForgeBlockData implements IBlockData, Cloneable {
         if (newData == null) {
             return false;
         }
-        if (!(newData instanceof ForgeBlockData)) {
+        if (!(newData instanceof ForgeBlockData forge)) {
             return false;
         }
 
-        ForgeBlockData forge = (ForgeBlockData) newData;
         if (this.state.getBlock() != forge.state.getBlock()) {
             return false;
         }
@@ -117,7 +116,7 @@ public class ForgeBlockData implements IBlockData, Cloneable {
                 }
 
                 StringReader reader = new StringReader(data);
-                BlockStateParser.BlockResult arg = BlockStateParser.parseForBlock(Registry.BLOCK, reader, false);
+                BlockStateParser.BlockResult arg = BlockStateParser.parseForBlock(BuiltInRegistries.BLOCK.asLookup(), reader, false);
                 Preconditions.checkArgument(!reader.canRead(), "Found trailing data: " + data);
 
                 blockData = arg.blockState();

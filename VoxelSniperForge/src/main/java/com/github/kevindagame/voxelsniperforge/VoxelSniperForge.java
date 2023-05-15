@@ -32,10 +32,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.server.permission.events.PermissionGatherEvent;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,6 +50,7 @@ public class VoxelSniperForge implements IVoxelsniper {
     private VoxelSniperConfiguration voxelSniperConfiguration;
     private static VoxelSniperForge instance;
 
+    private final Map<UUID, ForgePlayer> players = new HashMap<>();
     public static VoxelSniperForge getInstance() {
         return instance;
     }
@@ -119,10 +120,11 @@ public class VoxelSniperForge implements IVoxelsniper {
         return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name));
     }
 
-    public IPlayer getPlayer(ServerPlayer p) {
-        if (p == null) return null;
-        // TODO keep track of players
-        return new ForgePlayer(p);
+    public IPlayer getPlayer(@NotNull ServerPlayer p) {
+        if (this.players.get(p.getUUID()) != null) return this.players.get(p.getUUID());
+        ForgePlayer res = new ForgePlayer(p);
+        this.players.put(res.getUniqueId(), res);
+        return res;
     }
 
     @Override
