@@ -53,30 +53,4 @@ public class SplatterBallBrush extends SplatterBrushBase {
         v.sendMessage(Messages.BRUSH_INVALID_PARAM.replace("%triggerHandle%", triggerHandle));
         sendPerformerMessage(triggerHandle, v);
     }
-
-    @NotNull
-    @Override
-    public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("recursion", "growth", "seed", "reset"));
-
-        arguments.addAll(super.registerArguments());
-        return arguments;
-    }
-
-    @NotNull
-    @Override
-    public HashMap<String, List<String>> registerArgumentValues() {
-        HashMap<String, List<String>> argumentValues = new HashMap<>();
-
-        // Number variables
-        argumentValues.put("recursion", Lists.newArrayList("[number]"));
-
-        // Decimal variables
-        argumentValues.put("seed", Lists.newArrayList("[decimal]"));
-        argumentValues.put("growth", Lists.newArrayList("[decimal]"));
-
-        argumentValues.putAll(super.registerArgumentValues());
-        return argumentValues;
-    }
 }

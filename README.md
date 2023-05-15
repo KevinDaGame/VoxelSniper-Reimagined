@@ -5,8 +5,7 @@ The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigo
 
 Discord 
 -------
-For the latest updates, and quick responses to questions, join our discord server!
-https://discord.com/invite/YDjykYsAFF
+For the latest updates, and quick responses to questions, join our [discord server](https://discord.com/invite/YDjykYsAFF)!
 
 Minecraft Version
 ------------------
@@ -14,12 +13,12 @@ VoxelSniper is being built against the Spigot 1.19 API.
 
 What version do I pick?
 
-| Minecraft version | VoxelSniper version                                                                |
-|-------------------|------------------------------------------------------------------------------------|
-| *1.16*\*          | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) |
-| *1.17*\*          | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) |
-| 1.18              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    |
-| 1.19              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    |
+| Minecraft version | VoxelSniper version                                                                | Java version   |
+|-------------------|------------------------------------------------------------------------------------|----------------|
+| *1.16*\*          | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) | Java 16        |
+| *1.17*\*          | [8.3.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.0) | Java 16        |
+| 1.18              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
+| 1.19              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
 
 \* Please note that we will not provide support when using Minecraft 1.16 or 1.17
 

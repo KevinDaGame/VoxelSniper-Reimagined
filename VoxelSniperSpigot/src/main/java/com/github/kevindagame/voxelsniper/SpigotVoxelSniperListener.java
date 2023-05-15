@@ -1,6 +1,8 @@
 package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.snipe.Sniper;
+import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.VersionChecker;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -21,7 +23,7 @@ import java.util.UUID;
 /**
  * @author Voxel
  */
-public class SpigotVoxelSniperListener implements Listener {
+public class VoxelSniperListener implements Listener {
 
     private static final String SNIPER_PERMISSION = "voxelsniper.sniper";
     private final SpigotVoxelSniper plugin;
@@ -30,7 +32,7 @@ public class SpigotVoxelSniperListener implements Listener {
     /**
      * @param plugin The plugin
      */
-    public SpigotVoxelSniperListener(final SpigotVoxelSniper plugin) {
+    public VoxelSniperListener(final SpigotVoxelSniper plugin) {
         this.plugin = plugin;
     }
 
@@ -44,6 +46,8 @@ public class SpigotVoxelSniperListener implements Listener {
 
         if (!player.hasPermission(SNIPER_PERMISSION)) return;
         if (cooldown.contains(player.getUniqueId())) return;
+        cooldown.add(player.getUniqueId());
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 1);
         try {
             Sniper sniper = player.getSniper();
             if (sniper.isEnabled() && sniper.snipe(
@@ -52,8 +56,6 @@ public class SpigotVoxelSniperListener implements Listener {
                     event.getClickedBlock() != null ? new SpigotBlock(event.getClickedBlock()) : null,
                     BlockFace.valueOf(event.getBlockFace().name()))) {
                 event.setCancelled(true);
-                cooldown.add(player.getUniqueId());
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 10);
             }
         } catch (final Exception e) {
             e.printStackTrace();
@@ -66,9 +68,19 @@ public class SpigotVoxelSniperListener implements Listener {
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent event) {
         IPlayer player = SpigotVoxelSniper.getInstance().getPlayer(event.getPlayer());
+        if(!player.hasPermission(SNIPER_PERMISSION)) return;
+
         Sniper sniper = player.getSniper();
 
-        if (player.hasPermission(SNIPER_PERMISSION) && plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
+        //if player is operator
+        if (event.getPlayer().isOp()) {
+            var latestVersion = VersionChecker.Companion.getLATEST_VERSION();
+            //if update is available
+            if (latestVersion != null) {
+                player.sendMessage(Messages.UPDATE_AVAILABLE.replace("%currentVersion%", plugin.getDescription().getVersion()).replace("%latestVersion%", latestVersion.getLatestVersion()).replace("%downloadUrl%", latestVersion.getDownloadUrl()));
+            }
+        }
+        if (plugin.getVoxelSniperConfiguration().isMessageOnLoginEnabled()) {
             sniper.displayInfo();
         }
     }

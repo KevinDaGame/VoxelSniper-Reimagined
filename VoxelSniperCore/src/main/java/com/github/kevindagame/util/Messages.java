@@ -356,7 +356,10 @@ public enum Messages implements ComponentLike {
     UNDERLAY_ON_MODE_DEPTH,
     POLY_BRUSH_USAGE,
     POLY_BRUSH_USAGE_LINE,
+    POLY_BRUSH_INFO_LINE,
     ACTION_CANCELLED,
+    UPDATE_AVAILABLE,
+    BRUSH_SIZE_TOO_LARGE,
     ;
     //</editor-fold>
 

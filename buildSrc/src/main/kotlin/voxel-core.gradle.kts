@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
@@ -26,30 +25,22 @@ repositories {
     }
 }
 
-val shadowNoRuntime by configurations.creating {
-    extendsFrom(configurations.shadow.get())
-}
-
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
-    compileOnly("com.google.guava:guava:31.1-jre")
 
-    shadow("net.kyori:adventure-api:4.12.0")
-    shadow("net.kyori:adventure-text-minimessage:4.12.0")
-    shadow("net.kyori:adventure-text-serializer-legacy:4.12.0")
+    implementation("net.kyori:adventure-api:4.13.1")
+    implementation("net.kyori:adventure-text-minimessage:4.13.1")
+    implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
 
     implementation(kotlin("stdlib-jdk8"))
-    shadowNoRuntime("com.google.guava:guava:31.1-jre")
-    shadow("org.yaml:snakeyaml:1.31")
+    implementation("com.google.guava:guava:31.1-jre")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.yaml:snakeyaml:1.33")
 
-    testImplementation("com.google.guava:guava:31.1-jre")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.5.1")
     testImplementation("org.mockito:mockito-inline:4.5.1")
 }
-
-configurations.testImplementation.extendsFrom(shadowNoRuntime)
-configurations.runtimeClasspath.extendsFrom(configurations.shadow.get())
 
 java {
     toolchain {
@@ -58,7 +49,7 @@ java {
 }
 
 group = "com.github.kevindagame"
-version = "8.5.0"
+version = findProperty("voxelsniper.version") ?: "unspecified"
 //java.sourceCompatibility = JavaVersion.VERSION_16
 
 tasks.withType<JavaCompile> {
@@ -80,7 +71,6 @@ tasks {
     }
 
     shadowJar {
-        configurations = listOf(shadowNoRuntime)
         minimize()
         relocate("com.google", "com.github.kevindagame.voxelsniper.libs.com.google")
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")

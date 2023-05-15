@@ -1,9 +1,11 @@
 package com.github.kevindagame.voxelsniper;
 
+import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
+import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.junit.Assert;
@@ -28,6 +30,9 @@ public class SniperManagerTest {
         Mockito.when(absplayer.hasPermission(Mockito.any(String.class))).thenReturn(true);
 
         var main = Mockito.mock(IVoxelsniper.class);
+        var config = Mockito.mock(VoxelSniperConfiguration.class);
+        Mockito.when(config.getDefaultBrush()).thenReturn("snipe");
+        Mockito.when(main.getVoxelSniperConfiguration()).thenReturn(config);
         Mockito.when(main.getPlayer(uuid)).thenReturn(absplayer);
 
         IBlockData airBlockData = Mockito.mock(IBlockData.class);
@@ -38,6 +43,7 @@ public class SniperManagerTest {
         Mockito.when(main.getMaterial(VoxelMaterial.AIR)).thenReturn(mat);
 
         VoxelSniper.voxelsniper = main;
+        VoxelBrushManager.initialize();
 
         Sniper sniper = new Sniper(absplayer);
         Mockito.when(absplayer.getSniper()).thenReturn(sniper);

@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 public class SnipeTool {
 
     private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
-    private @NotNull IBrush currentBrush;
+    private IBrush currentBrush;
     private IBrush previousBrush = null;
     private final VoxelMessage messageHelper;
     private final SnipeData snipeData;
@@ -36,7 +36,7 @@ public class SnipeTool {
         this.currentBrush = brush;
     }
 
-    public @NotNull IBrush getCurrentBrush() {
+    public IBrush getCurrentBrush() {
         return currentBrush;
     }
 
@@ -67,7 +67,7 @@ public class SnipeTool {
         actionTools.inverse().remove(itemInHand);
     }
 
-    public @NotNull IBrush setCurrentBrush(@NotNull IBrush brush) {
+    public IBrush setCurrentBrush(IBrush brush) {
         previousBrush = currentBrush;
         currentBrush = brush;
         return brush;

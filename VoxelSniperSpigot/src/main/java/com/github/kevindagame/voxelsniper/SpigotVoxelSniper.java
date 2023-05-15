@@ -3,6 +3,7 @@ package com.github.kevindagame.voxelsniper;
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.VersionChecker;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
@@ -114,6 +115,15 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
 //        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
         metrics.addCustomChart(new SingleLineChart("total_snipers", BrushUsersCounter.Companion::getTotalBrushUses));
+
+        // Do update check
+        if (voxelSniperConfiguration.isUpdateCheckerEnabled()) {
+            // Do update check asynchronously to prevent lag
+            new Thread(() -> {
+                Bukkit.getLogger().info("Checking for updates...");
+                new VersionChecker().getLatestVersionInfo(this.getDescription().getVersion());
+            }).start();
+        }
     }
 
     @Override

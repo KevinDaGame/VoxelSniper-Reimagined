@@ -54,6 +54,9 @@ class PolyBrush(
     override fun info(vm: VoxelMessage) {
         vm.brushName(name)
         vm.size()
+        for (property in properties) {
+            vm.custom(Messages.POLY_BRUSH_INFO_LINE.replace("%property%", property.name).replace("%value%", property.getAsString()))
+        }
     }
 
     override fun arrow(v: SnipeData) {
@@ -138,14 +141,15 @@ class PolyBrush(
         return positions
     }
 
-    private inline fun <reified T, reified RET> getPropertyValue(): RET {
-        for (property in properties) {
-            if (property is T) {
-                return property.value as RET
-            }
-        }
-        val classname = T::class.simpleName
-        throw IllegalStateException("The requested property is not defined: $classname")
+    /**
+     * Get the value of a property
+     * @param T The type of the property
+     * @param RET The return type of the property
+     * @return The value of the property. If the property is not found, the default value of the property is returned
+     */
+    private inline fun <reified T, reified RET> getPropertyValue(): RET where T : PolyProperty<RET> {
+        return properties.find { it is T }?.let { (it as T).value } ?: T::class.java.getDeclaredConstructor()
+            .newInstance().default
     }
 
     private val smooth: Boolean get() = getPropertyValue<SmoothProperty, Boolean>()
@@ -166,16 +170,16 @@ class PolyBrush(
 
     override fun parseParameters(triggerHandle: String, params: Array<String>, v: SnipeData) {
         if (params[0].equals("info", ignoreCase = true)) {
-            val info = Messages.POLY_BRUSH_USAGE.replace("brushName", name)
+            val info = Messages.POLY_BRUSH_USAGE.replace("%brushName%", name)
             for (property in properties) {
                 info.append(
-                    Messages.POLY_BRUSH_USAGE_LINE.replace("brushHandle", triggerHandle)
-                        .replace("parameter", property.name).replace("description", property.description).toString()
+                    Messages.POLY_BRUSH_USAGE_LINE.replace("%triggerHandle%", triggerHandle)
+                        .replace("%property%", property.name).replace("%description%", property.description).toString()
                 )
             }
         }
         if (params.size == 1) {
-            v.owner().player.sendMessage(Messages.PARAMETER_PARSE_ERROR.replace("parameter", params[0]))
+            v.owner().player.sendMessage(Messages.PARAMETER_PARSE_ERROR.replace("%parameter%", params[0]))
             return
         }
         for (property in properties) {

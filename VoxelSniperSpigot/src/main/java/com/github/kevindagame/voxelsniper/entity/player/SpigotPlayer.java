@@ -99,8 +99,8 @@ public class SpigotPlayer extends SpigotEntity implements IPlayer {
     }
 
     @Override
-    public void sendMessage(@NotNull Identity source, @NotNull Component message, @NotNull MessageType type) {
-        SpigotVoxelSniper.getAdventure().player(this.player).sendMessage(source, message, type);
+    public void sendMessage(final @NotNull Component message) {
+        SpigotVoxelSniper.getAdventure().player(this.player).sendMessage(message);
     }
 
     @Override

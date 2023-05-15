@@ -19,6 +19,7 @@ public class YamlTest {
 
         Assert.assertNull(config.getString("nonexistent"));
         Assert.assertEquals("default3763654", config.getString("nonexistent.test", "default3763654"));
+        Assert.assertEquals(config.getString("nonexistent", "Hello World!"), "Hello World!");
         Assert.assertSame(42, config.getInt("nonexistent", 42));
         Assert.assertTrue(config.getBoolean("nonexistent", true));
         Assert.assertFalse(config.getBoolean("nonexistent", false));
