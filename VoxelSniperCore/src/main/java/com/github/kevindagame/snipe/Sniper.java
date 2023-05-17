@@ -257,8 +257,8 @@ public class Sniper {
         SnipeTool backup = tools.remove(toolId);
         SnipeTool newTool = new SnipeTool(this);
 
-        for (Map.Entry<SnipeAction, VoxelMaterial> entry : backup.getActionTools().entrySet()) {
-            newTool.assignAction(entry.getKey(), entry.getValue());
+        for (Map.Entry<VoxelMaterial, SnipeAction> entry : backup.getActionTools().entrySet()) {
+            newTool.assignAction(entry.getValue(), entry.getKey());
         }
         tools.put(toolId, newTool);
     }
