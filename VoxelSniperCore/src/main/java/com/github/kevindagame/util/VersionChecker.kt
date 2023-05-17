@@ -1,16 +1,13 @@
 package com.github.kevindagame.util
 
-import com.google.gson.Gson
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+import com.github.kevindagame.service.GithubService
 
 /**
  * @author KevinDaGame
  * A class that checks for the latest version of VoxelSniper-Reimagined on GitHub.
  */
-class VersionChecker() {
-    private val releasesApiUrl = "https://api.github.com/repos/$REPOSITORY_OWNER/$REPOSITORY_NAME/releases"
+class VersionChecker(private val service: GithubService = GithubService()) {
+
 
     /**
      * Gets the latest version info from the GitHub API.
@@ -19,7 +16,7 @@ class VersionChecker() {
      * @return The latest version info, or null if the current version is the latest.
      */
     fun getLatestVersionInfo(currentVersion: String): VersionInfo? {
-        val releases = getReleasesFromApi()
+        val releases = service.getReleasesFromApi()
         if (releases.isEmpty()) {
             return null
         }
@@ -41,24 +38,6 @@ class VersionChecker() {
         return null
     }
 
-    /**
-     * Gets the latest version info from the GitHub API.
-     * @return The latest version info as a list of releases.
-     */
-    private fun getReleasesFromApi(): List<Release> {
-        return try {
-            val conn = URL(releasesApiUrl).openConnection() as HttpURLConnection
-            conn.addRequestProperty("User-Agent", "Mozilla/5.0")
-            val reader = InputStreamReader(conn.inputStream)
-            val releases = Gson().fromJson(reader, Array<Release>::class.java)
-            reader.close()
-            conn.disconnect()
-            releases.filterNot { it.prerelease }.toList()
-        } catch (e: Exception) {
-            System.err.println("Failed to check for a new version of VoxelSniper-Reimagined.")
-            emptyList()
-        }
-    }
 
     /**
      * Checks if the current version is outdated.
@@ -68,9 +47,14 @@ class VersionChecker() {
      * @return True if the current version is outdated, false otherwise.
      */
     private fun isOutdated(currentVersion: String, latestVersion: String): Boolean {
-        val current = parseVersion(currentVersion)
-        val latest = parseVersion(latestVersion)
-        return current < latest
+        return try {
+
+            val current = parseVersion(currentVersion)
+            val latest = parseVersion(latestVersion)
+            current < latest
+        } catch (e: NumberFormatException) {
+            false
+        }
     }
 
     /**
@@ -80,6 +64,7 @@ class VersionChecker() {
      * @return The parsed version.
      */
     private fun parseVersion(version: String): Version {
+
         val versionParts = version.lowercase().removePrefix("v").split(".")
         val major = versionParts.getOrElse(0) { "0" }.toInt()
         val minor = versionParts.getOrElse(1) { "0" }.toInt()

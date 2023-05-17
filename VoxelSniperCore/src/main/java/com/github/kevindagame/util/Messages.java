@@ -359,6 +359,7 @@ public enum Messages implements ComponentLike {
     POLY_BRUSH_INFO_LINE,
     ACTION_CANCELLED,
     UPDATE_AVAILABLE,
+    BRUSH_SIZE_TOO_LARGE,
     ;
     //</editor-fold>
 
