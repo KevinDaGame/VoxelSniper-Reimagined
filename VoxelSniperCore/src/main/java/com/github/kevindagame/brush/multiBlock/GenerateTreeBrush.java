@@ -3,6 +3,7 @@ package com.github.kevindagame.brush.multiBlock;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -10,7 +11,6 @@ import com.github.kevindagame.voxelsniper.blockdata.leaves.ILeaves;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -548,7 +548,7 @@ public class GenerateTreeBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
+        return new ArrayList<>(Utils.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
                 "rootFloat", "info", "rootMin", "rootMax", "minHeight", "maxHeight", "leavesMin", "leavesMax", "default"));
     }
 
@@ -558,23 +558,23 @@ public class GenerateTreeBrush extends AbstractBrush {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         // Number variables
-        argumentValues.put("thickness", Lists.newArrayList("[number]"));
-        argumentValues.put("startHeight", Lists.newArrayList("[number]"));
-        argumentValues.put("slope", Lists.newArrayList("[number]"));
-        argumentValues.put("branchLength", Lists.newArrayList("[number]"));
-        argumentValues.put("rootLength", Lists.newArrayList("[number]"));
-        argumentValues.put("rootMin", Lists.newArrayList("[number]"));
-        argumentValues.put("rootMax", Lists.newArrayList("[number]"));
-        argumentValues.put("minHeight", Lists.newArrayList("[number]"));
-        argumentValues.put("maxHeight", Lists.newArrayList("[number]"));
-        argumentValues.put("leavesMin", Lists.newArrayList("[number]"));
-        argumentValues.put("leavesMax", Lists.newArrayList("[number]"));
+        argumentValues.put("thickness", Utils.newArrayList("[number]"));
+        argumentValues.put("startHeight", Utils.newArrayList("[number]"));
+        argumentValues.put("slope", Utils.newArrayList("[number]"));
+        argumentValues.put("branchLength", Utils.newArrayList("[number]"));
+        argumentValues.put("rootLength", Utils.newArrayList("[number]"));
+        argumentValues.put("rootMin", Utils.newArrayList("[number]"));
+        argumentValues.put("rootMax", Utils.newArrayList("[number]"));
+        argumentValues.put("minHeight", Utils.newArrayList("[number]"));
+        argumentValues.put("maxHeight", Utils.newArrayList("[number]"));
+        argumentValues.put("leavesMin", Utils.newArrayList("[number]"));
+        argumentValues.put("leavesMax", Utils.newArrayList("[number]"));
 
         // Info variables
-        argumentValues.put("info", Lists.newArrayList("1", "2"));
+        argumentValues.put("info", Utils.newArrayList("1", "2"));
 
         // True/false variable
-        argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
+        argumentValues.put("rootFloat", Utils.newArrayList("true", "false"));
 
         // Wood material variables
         argumentValues.put("wood", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));

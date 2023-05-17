@@ -10,14 +10,21 @@ import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
-import com.google.common.collect.ImmutableList;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
-import java.util.Arrays;
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Overwrites signs. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#sign-overwrite-brush-brush">...</a>
@@ -374,7 +381,7 @@ public class SignOverwriteBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch (Objects.requireNonNull(getSnipeAction())) {
             case ARROW -> {
                 return false;

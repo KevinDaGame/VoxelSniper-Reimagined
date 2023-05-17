@@ -6,12 +6,13 @@ import com.github.kevindagame.util.Actions;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Piotr
@@ -63,6 +64,6 @@ public class Rot2DBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("[number]"));
+        return new ArrayList<>(Utils.newArrayList("[number]"));
     }
 }

@@ -3,11 +3,11 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -119,7 +119,7 @@ public class JaggedLineBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("recursion", "spread"));
+        arguments.addAll(Utils.newArrayList("recursion", "spread"));
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -130,8 +130,8 @@ public class JaggedLineBrush extends PerformerBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("recursion", Lists.newArrayList("[number]"));
-        argumentValues.put("spread", Lists.newArrayList("[number]"));
+        argumentValues.put("recursion", Utils.newArrayList("[number]"));
+        argumentValues.put("spread", Utils.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

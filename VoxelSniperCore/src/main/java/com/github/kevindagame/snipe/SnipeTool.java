@@ -2,16 +2,12 @@ package com.github.kevindagame.snipe;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.brush.IBrush;
-import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 
-import java.util.Objects;
-
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**

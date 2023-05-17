@@ -3,14 +3,15 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
 
 public abstract class SplatterBrushBase extends PerformerBrush {
     private static final int GROW_PERCENT_MIN = 1;
@@ -274,7 +275,7 @@ public abstract class SplatterBrushBase extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("recursion", "growth", "seed", "reset"));
+        arguments.addAll(Utils.newArrayList("recursion", "growth", "seed", "reset"));
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -286,9 +287,9 @@ public abstract class SplatterBrushBase extends PerformerBrush {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         // Number variables
-        argumentValues.put("recursion", Lists.newArrayList("[number]"));
-        argumentValues.put("seed", Lists.newArrayList("[number]"));
-        argumentValues.put("growth", Lists.newArrayList("[number]"));
+        argumentValues.put("recursion", Utils.newArrayList("[number]"));
+        argumentValues.put("seed", Utils.newArrayList("[number]"));
+        argumentValues.put("growth", Utils.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

@@ -15,8 +15,9 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
-import com.google.common.collect.ImmutableList
-
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * Abstract implementation of the [IBrush] interface.
@@ -86,14 +87,14 @@ abstract class AbstractBrush : IBrush {
         val event = PlayerSnipeEvent(
             data.owner().player,
             this,
-            ImmutableList.copyOf(operations),
+            Collections.unmodifiableList(operations),
             operations.any { o -> o is CustomOperation }).callEvent()
         if (!event.isCancelled) {
             val undo = Undo()
             var reloadArea = false
             if (event.isCustom && this is CustomBrush) {
                 this.perform(event.operations.stream().filter { o -> !o.isCancelled && o is CustomOperation }
-                    .map { o -> o as CustomOperation }.collect(ImmutableList.toImmutableList()), data, undo)
+                    .map { o -> o as CustomOperation }.toList(), data, undo)
             } else {
                 for (operation in event.operations) {
                     if (!operation.isCancelled) {
