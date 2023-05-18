@@ -42,9 +42,9 @@ public class YamlTest {
             List<ConfigurationSection> lst = config.getSectionList("test.testObjectList");
             Assert.assertSame(3, lst.size());
 
-            Assert.assertTrue(lst.get(0) instanceof ConfigurationSection);
-            Assert.assertTrue(lst.get(1) instanceof ConfigurationSection);
-            Assert.assertTrue(lst.get(2) instanceof ConfigurationSection);
+            Assert.assertNotNull(lst.get(0));
+            Assert.assertNotNull(lst.get(1));
+            Assert.assertNotNull(lst.get(2));
 
             Assert.assertEquals("Hello World!", lst.get(0).getString("name"));
             Assert.assertEquals("testDesc", lst.get(0).getString("description"));
@@ -55,5 +55,13 @@ public class YamlTest {
             Assert.assertEquals("third", lst.get(2).getString("name"));
             Assert.assertNull(lst.get(2).getString("description"));
         }
+        // test set (don't save)
+        Assert.assertSame(0, config.getInt("a.b.c.nonexistent", 0));
+        config.set("a.b.c.nonexistent", 1);
+        Assert.assertSame(1, config.getInt("a.b.c.nonexistent", 0));
+
+        Assert.assertSame(0, config.getInt("nonexistent", 0));
+        config.set("nonexistent", 13);
+        Assert.assertSame(13, config.getInt("nonexistent", 0));
     }
 }

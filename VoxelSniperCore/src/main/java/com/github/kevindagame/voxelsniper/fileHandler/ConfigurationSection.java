@@ -1,6 +1,7 @@
 package com.github.kevindagame.voxelsniper.fileHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,16 +22,16 @@ public class ConfigurationSection {
         String[] steps = name.split("\\.");
         if (steps.length < 1) return;
         for (int i = 0; i < (steps.length - 1); i++) {
-            if (head instanceof Map) {
-                head = ((Map<?, ?>) head).get(steps[i]);
-            } else {
-                return;
+            Map<String,Object> oldHead = (Map<String,Object>) head;
+            head = ((Map<?, ?>) head).get(steps[i]);
+            if (!(head instanceof Map)) {
+                head = new HashMap<String,Object>();
+                oldHead.put(steps[i], head);
             }
         }
-        if (head instanceof Map) {
+        if (head != null) {
             ((Map) head).put(steps[steps.length - 1], value);
         }
-
     }
 
     @Nullable
@@ -38,45 +39,18 @@ public class ConfigurationSection {
         return getString(path, null);
     }
 
-    public String getString(String path, String def) {
-        // head:a.b.c
-        Object head = contents;
-        String[] steps = path.split("\\.");
-        for (String step : steps) {
-            if (head instanceof Map) {
-                head = ((Map<?, ?>) head).get(step);
-            } else {
-                return def;
-            }
-        }
-        return (head instanceof String) ? (String) head : def;
+    public String getString(String path, String defaultValue) {
+        Object head = get(path, defaultValue);
+        return (head instanceof String) ? (String) head : defaultValue;
     }
 
     public int getInt(String path, int defaultValue) {
-        // head:a.b.c
-        Object head = contents;
-        String[] steps = path.split("\\.");
-        for (String step : steps) {
-            if (head instanceof Map) {
-                head = ((Map<?, ?>) head).get(step);
-            } else {
-                return defaultValue;
-            }
-        }
+        Object head = get(path, defaultValue);
         return (head instanceof Number) ? ((Number) head).intValue() : defaultValue;
     }
 
     public boolean getBoolean(String path, boolean defaultValue) {
-        // head:a.b.c
-        Object head = contents;
-        String[] steps = path.split("\\.");
-        for (String step : steps) {
-            if (head instanceof Map) {
-                head = ((Map<?, ?>) head).get(step);
-            } else {
-                return defaultValue;
-            }
-        }
+        Object head = get(path, defaultValue);
         return (head instanceof Boolean) ? (Boolean) head : defaultValue;
     }
 
@@ -100,6 +74,16 @@ public class ConfigurationSection {
 
     @NotNull
     private List<?> getList(String path) {
+        var head = get(path, null);
+        if (head instanceof List<?> lst) {
+            return lst;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    private Object get(String path, Object defaultValue) {
+        System.out.println("path: " + path);
         // head:a.b.c
         Object head = contents;
         String[] steps = path.split("\\.");
@@ -107,14 +91,10 @@ public class ConfigurationSection {
             if (head instanceof Map) {
                 head = ((Map<?, ?>) head).get(step);
             } else {
-                return new ArrayList<>();
+                return defaultValue;
             }
         }
-        if (head instanceof List<?> lst) {
-            return lst;
-        } else {
-            return new ArrayList<>();
-        }
+        return head;
     }
 
     private boolean isPrimitiveWrapperOrString(@Nullable Object input) {
