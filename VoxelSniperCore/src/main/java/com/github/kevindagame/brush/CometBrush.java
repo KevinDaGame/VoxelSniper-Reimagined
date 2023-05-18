@@ -3,13 +3,12 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class CometBrush extends CustomBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("big", "small"));
+        return new ArrayList<>(Utils.newArrayList("big", "small"));
     }
 
     @Override
@@ -81,7 +80,7 @@ public class CometBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if (operations.size() != 2) {
             return false;
         }

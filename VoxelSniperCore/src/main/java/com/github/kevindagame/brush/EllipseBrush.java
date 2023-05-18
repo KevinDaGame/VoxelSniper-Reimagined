@@ -3,9 +3,9 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -239,7 +239,7 @@ public class EllipseBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("x", "y", "t", "fill"));
+        arguments.addAll(Utils.newArrayList("x", "y", "t", "fill"));
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -250,9 +250,9 @@ public class EllipseBrush extends PerformerBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("x", Lists.newArrayList("[number]"));
-        argumentValues.put("y", Lists.newArrayList("[number]"));
-        argumentValues.put("t", Lists.newArrayList("[number]"));
+        argumentValues.put("x", Utils.newArrayList("[number]"));
+        argumentValues.put("y", Utils.newArrayList("[number]"));
+        argumentValues.put("t", Utils.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

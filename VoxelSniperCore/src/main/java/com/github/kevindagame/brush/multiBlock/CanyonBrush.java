@@ -3,12 +3,12 @@ package com.github.kevindagame.brush.multiBlock;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ public class CanyonBrush extends AbstractBrush {
     @NotNull
     @Override
     public List<String> registerArguments() {
-        return new ArrayList<>(Lists.newArrayList("y"));
+        return new ArrayList<>(Utils.newArrayList("y"));
     }
 
     @NotNull
@@ -112,7 +112,7 @@ public class CanyonBrush extends AbstractBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("y", Lists.newArrayList("[number]"));
+        argumentValues.put("y", Utils.newArrayList("[number]"));
 
         return argumentValues;
     }

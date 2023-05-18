@@ -32,7 +32,7 @@ val shadowNoRuntime by configurations.creating {
 
 dependencies {
     compileOnly("org.jetbrains:annotations-java5:23.0.0")
-    compileOnly("com.google.guava:guava:31.1-jre")
+
     compileOnly("com.google.code.gson:gson:2.10.1")
 
     shadow("net.kyori:adventure-api:4.13.1")
@@ -40,11 +40,9 @@ dependencies {
     shadow("net.kyori:adventure-text-serializer-legacy:4.13.1")
 
     implementation(kotlin("stdlib-jdk8"))
-    shadowNoRuntime("com.google.guava:guava:31.1-jre")
     shadowNoRuntime("com.google.code.gson:gson:2.10.1")
     shadow("org.yaml:snakeyaml:1.33")
 
-    testImplementation("com.google.guava:guava:31.1-jre")
     testImplementation("com.google.code.gson:gson:2.10.1")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.5.1")

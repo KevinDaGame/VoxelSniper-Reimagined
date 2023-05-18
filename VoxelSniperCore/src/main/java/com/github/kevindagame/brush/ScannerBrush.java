@@ -3,18 +3,18 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author DivineRage
@@ -89,7 +89,7 @@ public class ScannerBrush extends CustomBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("depth"));
+        return new ArrayList<>(Utils.newArrayList("depth"));
     }
 
     @NotNull
@@ -98,13 +98,13 @@ public class ScannerBrush extends CustomBrush {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("depth", Lists.newArrayList("[number]"));
+        argumentValues.put("depth", Utils.newArrayList("[number]"));
 
         return argumentValues;
     }
 
     @Override
-    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if (operations.size() != 1) {
             return false;
         }

@@ -3,8 +3,8 @@ package com.github.kevindagame.command;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +78,12 @@ public class VoxelSniperCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
-            return Lists.newArrayList("enable", "disable", "range");
+            return Utils.newArrayList("enable", "disable", "range");
         }
 
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("range")) {
-                return Lists.newArrayList("[number]");
+                return Utils.newArrayList("[number]");
             }
         }
 

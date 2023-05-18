@@ -6,20 +6,20 @@ import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.Cancellable;
 import com.github.kevindagame.voxelsniper.events.EventPriority;
 import com.github.kevindagame.voxelsniper.events.HandlerList;
-import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements Cancellable {
 
     private static final HandlerList<PlayerSnipeEvent> handlers = new HandlerList<>();
     private final IBrush brush;
-    private final ImmutableList<BrushOperation> operations;
+    private final List<BrushOperation> operations;
     private boolean isCustom;
     private EventResult status;
 
-    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, ImmutableList<BrushOperation> operations) {
+    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, List<BrushOperation> operations) {
         super(p);
         this.brush = brush;
         this.status = EventResult.DEFAULT;
@@ -27,7 +27,7 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
         this.isCustom = false;
     }
 
-    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, ImmutableList<BrushOperation> operations, boolean isCustom) {
+    public PlayerSnipeEvent(final IPlayer p, final IBrush brush, List<BrushOperation> operations, boolean isCustom) {
         this(p, brush, operations);
         this.isCustom = isCustom;
     }
@@ -44,7 +44,7 @@ public class PlayerSnipeEvent extends PlayerEvent<PlayerSnipeEvent> implements C
         return brush;
     }
 
-    public ImmutableList<BrushOperation> getOperations() {
+    public List<BrushOperation> getOperations() {
         return operations;
     }
 
