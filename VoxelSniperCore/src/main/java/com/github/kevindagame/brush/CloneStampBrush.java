@@ -5,10 +5,10 @@ import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.RotationAxis;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -115,6 +115,6 @@ public class CloneStampBrush extends StampBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("air", "fill", "default"));
+        return Utils.newArrayList("air", "fill", "default");
     }
 }

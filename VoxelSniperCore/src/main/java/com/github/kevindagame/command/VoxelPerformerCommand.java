@@ -7,8 +7,8 @@ import com.github.kevindagame.brush.polymorphic.PolyBrush;
 import com.github.kevindagame.brush.polymorphic.property.PerformerProperty;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
 
     @Override
     public List<String> registerTabCompletion() {
-        return Lists.newArrayList(Performer.getPerformerHandles());
+        return Utils.newArrayList(Performer.getPerformerHandles());
     }
 
     @Override

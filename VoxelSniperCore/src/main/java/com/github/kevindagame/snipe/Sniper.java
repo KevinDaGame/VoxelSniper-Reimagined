@@ -13,11 +13,11 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Maps;
 import net.kyori.adventure.text.ComponentLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class Sniper {
 
     public final IPlayer player;
     private final LinkedList<Undo> undoList = new LinkedList<>();
-    private final Map<String, SnipeTool> tools = Maps.newHashMap();
+    private final Map<String, SnipeTool> tools = new HashMap<>();
     private boolean enabled = true;
 
     public Sniper(IPlayer player) {
@@ -257,8 +257,8 @@ public class Sniper {
         SnipeTool backup = tools.remove(toolId);
         SnipeTool newTool = new SnipeTool(this);
 
-        for (Map.Entry<SnipeAction, VoxelMaterial> entry : backup.getActionTools().entrySet()) {
-            newTool.assignAction(entry.getKey(), entry.getValue());
+        for (Map.Entry<VoxelMaterial, SnipeAction> entry : backup.getActionTools().entrySet()) {
+            newTool.assignAction(entry.getValue(), entry.getKey());
         }
         tools.put(toolId, newTool);
     }

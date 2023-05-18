@@ -7,10 +7,10 @@ package com.github.kevindagame.brush.perform;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("p"));
+        return new ArrayList<>(Utils.newArrayList("p"));
     }
 
     @NotNull
@@ -77,7 +77,7 @@ public abstract class PerformerBrush extends AbstractBrush implements IPerformer
     public HashMap<String, List<String>> registerArgumentValues() {        // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("p", Lists.newArrayList(Performer.getPerformerHandles()));
+        argumentValues.put("p", Utils.newArrayList(Performer.getPerformerHandles()));
 
         return argumentValues;
     }

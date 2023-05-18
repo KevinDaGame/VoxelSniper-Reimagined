@@ -3,9 +3,9 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ public class FillDownBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("smooth", "liquid", "existing"));
+        arguments.addAll(Utils.newArrayList("smooth", "liquid", "existing"));
 
         arguments.addAll(super.registerArguments());
         return arguments;

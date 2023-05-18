@@ -4,9 +4,9 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-import com.google.common.collect.Sets;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +19,7 @@ public class Undo {
     private static final List<VoxelMaterial> FALLING_MATERIALS = Arrays.asList(
             VoxelMaterial.WATER,
             VoxelMaterial.LAVA);
-    private final Set<VoxelVector> containing = Sets.newHashSet();
+    private final Set<VoxelVector> containing = new HashSet<>();
     private final List<IBlockState> all;
     private final List<IBlockState> falloff;
     private final List<IBlockState> dropdown;

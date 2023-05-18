@@ -2,15 +2,16 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#splatter-overlay-brush">...</a>
@@ -170,7 +171,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("recursion", "growth", "seed", "reset", "depth", "mode"));
+        arguments.addAll(Utils.newArrayList("recursion", "growth", "seed", "reset", "depth", "mode"));
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -182,10 +183,10 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         // Number variables
-        argumentValues.put("recursion", Lists.newArrayList("[number]"));
-        argumentValues.put("depth", Lists.newArrayList("[number]"));
-        argumentValues.put("seed", Lists.newArrayList("[number]"));
-        argumentValues.put("growth", Lists.newArrayList("[number]"));
+        argumentValues.put("recursion", Utils.newArrayList("[number]"));
+        argumentValues.put("depth", Utils.newArrayList("[number]"));
+        argumentValues.put("seed", Utils.newArrayList("[number]"));
+        argumentValues.put("growth", Utils.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

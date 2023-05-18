@@ -1,8 +1,8 @@
 package com.github.kevindagame.command;
 
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public abstract class MaterialCommand extends VoxelCommand {
             if (args[0].startsWith("minecraft:")) {
                 return getTabCompletion(1).stream().map(e -> "minecraft:" + e).toList();
             } else if (args[0].startsWith("mi")) {
-                return Lists.newArrayList("minecraft:");
+                return Utils.newArrayList("minecraft:");
             } else {
                 return getTabCompletion(1);
             }

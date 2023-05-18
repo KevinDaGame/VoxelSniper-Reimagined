@@ -3,6 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
@@ -10,8 +11,6 @@ import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -149,11 +148,11 @@ public class JockeyBrush extends CustomBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal"));
+        return new ArrayList<>(Utils.newArrayList("inverse", "stack", "normal"));
     }
 
     @Override
-    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if (operations.size() != 1) return false;
         switch (Objects.requireNonNull(getSnipeAction())) {
             case GUNPOWDER:

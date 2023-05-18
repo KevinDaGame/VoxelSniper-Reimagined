@@ -2,9 +2,9 @@ package com.github.kevindagame.command;
 
 import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,30 +113,30 @@ public class VoxelVoxCommand extends VoxelCommand {
     public List<String> doSuggestion(IPlayer player, String[] args) {
         if (getActiveAlias().equalsIgnoreCase("painting")) {
             if (args.length == 1) {
-                return Lists.newArrayList("[number]");
+                return Utils.newArrayList("[number]");
             }
         }
 
         if (getActiveAlias().equalsIgnoreCase("goto")) {
             if (args.length <= 2) {
-                return Lists.newArrayList("[number]");
+                return Utils.newArrayList("[number]");
             }
         }
 
         if (getActiveIdentifier().equalsIgnoreCase("vox")) {
             if (args.length == 1) {
-                return Lists.newArrayList("goto", "painting", "chunk");
+                return Utils.newArrayList("goto", "painting", "chunk");
             }
 
             if (args[0].equalsIgnoreCase("painting")) {
                 if (args.length == 2) {
-                    return Lists.newArrayList("[number]");
+                    return Utils.newArrayList("[number]");
                 }
             }
 
             if (args[0].equalsIgnoreCase("goto")) {
                 if (args.length <= 3) {
-                    return Lists.newArrayList("[number]");
+                    return Utils.newArrayList("[number]");
                 }
             }
         }

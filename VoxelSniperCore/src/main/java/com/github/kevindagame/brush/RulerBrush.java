@@ -7,10 +7,11 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-import com.google.common.collect.ImmutableList;
-import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ruler-brush">...</a>
@@ -58,7 +59,7 @@ public class RulerBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         if (operations.size() != 1) {
             return false;
         }

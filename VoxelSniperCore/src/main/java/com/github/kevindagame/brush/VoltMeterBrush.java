@@ -9,10 +9,11 @@ import com.github.kevindagame.util.brushOperation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.redstoneWire.IRedstoneWire;
-import com.google.common.collect.ImmutableList;
-import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#voltmeter-brush">...</a>
@@ -59,7 +60,7 @@ public class VoltMeterBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch (Objects.requireNonNull(this.getSnipeAction())) {
             case ARROW:
                 volt(snipeData);
