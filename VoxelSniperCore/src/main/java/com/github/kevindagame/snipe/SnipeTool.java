@@ -74,10 +74,6 @@ public class SnipeTool {
         return actionTools.get(itemInHand);
     }
 
-//    public VoxelMaterial getToolAssigned(SnipeAction action) {
-//        return actionTools.get(action);
-//    }
-
     public Map<VoxelMaterial, SnipeAction> getActionTools() {
         return Collections.unmodifiableMap(this.actionTools);
     }
