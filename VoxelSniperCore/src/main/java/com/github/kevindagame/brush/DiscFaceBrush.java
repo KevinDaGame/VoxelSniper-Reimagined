@@ -4,8 +4,8 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class DiscFaceBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("smooth"));
+        arguments.addAll(Utils.newArrayList("smooth"));
 
         arguments.addAll(super.registerArguments());
         return arguments;

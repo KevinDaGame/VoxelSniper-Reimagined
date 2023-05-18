@@ -4,13 +4,14 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Actions;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#3d-rotation-brush">...</a>
@@ -73,7 +74,7 @@ public class Rot3DBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("pitch", "roll", "yaw"));
+        return new ArrayList<>(Utils.newArrayList("pitch", "roll", "yaw"));
     }
 
     @NotNull
@@ -82,9 +83,9 @@ public class Rot3DBrush extends AbstractBrush {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("pitch", Lists.newArrayList("[1-359]"));
-        argumentValues.put("roll", Lists.newArrayList("[1-359]"));
-        argumentValues.put("yaw", Lists.newArrayList("[1-359]"));
+        argumentValues.put("pitch", Utils.newArrayList("[1-359]"));
+        argumentValues.put("roll", Utils.newArrayList("[1-359]"));
+        argumentValues.put("yaw", Utils.newArrayList("[1-359]"));
 
         return argumentValues;
     }

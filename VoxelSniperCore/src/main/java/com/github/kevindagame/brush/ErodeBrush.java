@@ -2,6 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -9,11 +10,15 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
-import com.google.common.base.Objects;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#erode-brush">...</a>
@@ -331,14 +336,14 @@ public class ErodeBrush extends AbstractBrush {
 
         @Override
         public int hashCode() {
-            return Objects.hashCode(erosionFaces, erosionRecursion, fillFaces, fillRecursion);
+            return Utils.hashCode(erosionFaces, erosionRecursion, fillFaces, fillRecursion);
         }
 
         @Override
         public boolean equals(final Object obj) {
             if (obj instanceof ErosionPreset) {
                 ErosionPreset other = (ErosionPreset) obj;
-                return Objects.equal(this.erosionFaces, other.erosionFaces) && Objects.equal(this.erosionRecursion, other.erosionRecursion) && Objects.equal(this.fillFaces, other.fillFaces) && Objects.equal(this.fillRecursion, other.fillRecursion);
+                return this.erosionFaces == other.erosionFaces && this.erosionRecursion == other.erosionRecursion && this.fillFaces == other.fillFaces && this.fillRecursion == other.fillRecursion;
             }
             return false;
         }

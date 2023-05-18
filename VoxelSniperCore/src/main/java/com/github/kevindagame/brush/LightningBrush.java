@@ -6,7 +6,9 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
-import com.google.common.collect.ImmutableList;
+
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,7 +35,7 @@ public class LightningBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         operations.forEach(operation -> operation.getLocation().getWorld().strikeLightning(operation.getLocation()));
         return true;
     }

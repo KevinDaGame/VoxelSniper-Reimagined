@@ -4,13 +4,13 @@ import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
-import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -155,7 +155,7 @@ public class MoveBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("reset", "x", "y", "z"));
+        return new ArrayList<>(Utils.newArrayList("reset", "x", "y", "z"));
     }
 
     @NotNull
@@ -163,9 +163,9 @@ public class MoveBrush extends AbstractBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("x", Lists.newArrayList("[number]"));
-        argumentValues.put("y", Lists.newArrayList("[number]"));
-        argumentValues.put("z", Lists.newArrayList("[number]"));
+        argumentValues.put("x", Utils.newArrayList("[number]"));
+        argumentValues.put("y", Utils.newArrayList("[number]"));
+        argumentValues.put("z", Utils.newArrayList("[number]"));
 
         return argumentValues;
     }

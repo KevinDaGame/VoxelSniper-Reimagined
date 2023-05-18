@@ -33,7 +33,6 @@ dependencies {
     implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
 
     implementation(kotlin("stdlib-jdk8"))
-    implementation("com.google.guava:guava:31.1-jre")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.yaml:snakeyaml:1.33")
 

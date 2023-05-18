@@ -1,9 +1,9 @@
 package com.github.kevindagame.util;
 
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +51,7 @@ public class VoxelList {
      * @return defensive copy of the List with pairs
      */
     public List<VoxelMaterial> getList() {
-        return ImmutableList.copyOf(materials);
+        return Collections.unmodifiableList(materials);
     }
 
 }

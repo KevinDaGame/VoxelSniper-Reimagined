@@ -4,18 +4,19 @@ import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushe">...</a>s#ocean-brush
@@ -193,7 +194,7 @@ public class OceanBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("water", "floor"));
+        return new ArrayList<>(Utils.newArrayList("water", "floor"));
     }
 
     @NotNull
@@ -202,10 +203,10 @@ public class OceanBrush extends AbstractBrush {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
         // Floor values
-        argumentValues.put("floor", Lists.newArrayList("true", "false"));
+        argumentValues.put("floor", Utils.newArrayList("true", "false"));
 
         // Number values
-        argumentValues.put("water", Lists.newArrayList("[number]"));
+        argumentValues.put("water", Utils.newArrayList("[number]"));
 
         return argumentValues;
     }

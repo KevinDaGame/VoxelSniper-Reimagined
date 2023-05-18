@@ -4,11 +4,11 @@ import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class FlatOceanBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("water", "floor"));
+        return new ArrayList<>(Utils.newArrayList("water", "floor"));
     }
 
     @NotNull
@@ -122,8 +122,8 @@ public class FlatOceanBrush extends AbstractBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("water", Lists.newArrayList("[number]"));
-        argumentValues.put("floor", Lists.newArrayList("[number]"));
+        argumentValues.put("water", Utils.newArrayList("[number]"));
+        argumentValues.put("floor", Utils.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

@@ -4,11 +4,11 @@ import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -180,7 +180,7 @@ public class CopyPastaBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return new ArrayList<>(Lists.newArrayList("rotate", "air"));
+        return new ArrayList<>(Utils.newArrayList("rotate", "air"));
     }
 
     @NotNull
@@ -189,7 +189,7 @@ public class CopyPastaBrush extends AbstractBrush {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
 
-        argumentValues.put("rotate", Lists.newArrayList("0", "90", "180", "270"));
+        argumentValues.put("rotate", Utils.newArrayList("0", "90", "180", "270"));
 
         return argumentValues;
     }

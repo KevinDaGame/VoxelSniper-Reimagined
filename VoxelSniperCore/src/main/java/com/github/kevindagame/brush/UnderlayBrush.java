@@ -3,16 +3,17 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#underlay-reverse-overlay-brush">...</a>
@@ -158,7 +159,7 @@ public class UnderlayBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("depth", "mode"));
+        arguments.addAll(Utils.newArrayList("depth", "mode"));
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -169,7 +170,7 @@ public class UnderlayBrush extends PerformerBrush {
     public HashMap<String, List<String>> registerArgumentValues() {
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("depth", Lists.newArrayList("[number]"));
+        argumentValues.put("depth", Utils.newArrayList("[number]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

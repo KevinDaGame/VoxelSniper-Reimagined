@@ -6,10 +6,11 @@ import com.github.kevindagame.util.BlockHelper;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.CustomOperation;
 import com.github.kevindagame.util.brushOperation.CustomOperationContext;
-import com.google.common.collect.ImmutableList;
-import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Painting scrolling Brush. <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#painting-brush">...</a>
@@ -45,7 +46,7 @@ public class PaintingBrush extends CustomBrush {
     }
 
     @Override
-    public boolean perform(@NotNull ImmutableList<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
+    public boolean perform(@NotNull List<CustomOperation> operations, @NotNull SnipeData snipeData, @NotNull Undo undo) {
         switch (Objects.requireNonNull(getSnipeAction())) {
             case ARROW:
                 BlockHelper.painting(snipeData.owner().getPlayer(), true, false, 0);

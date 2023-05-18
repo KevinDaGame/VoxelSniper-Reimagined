@@ -4,14 +4,15 @@ import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Shapes;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#ring-brush">...</a>
@@ -80,7 +81,7 @@ public class RingBrush extends PerformerBrush {
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.addAll(Lists.newArrayList("smooth", "inner"));
+        arguments.addAll(Utils.newArrayList("smooth", "inner"));
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -92,7 +93,7 @@ public class RingBrush extends PerformerBrush {
         // Number variables
         HashMap<String, List<String>> argumentValues = new HashMap<>();
 
-        argumentValues.put("inner", Lists.newArrayList("[decimal]"));
+        argumentValues.put("inner", Utils.newArrayList("[decimal]"));
 
         argumentValues.putAll(super.registerArgumentValues());
         return argumentValues;

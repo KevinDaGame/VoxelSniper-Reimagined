@@ -3,9 +3,9 @@ package com.github.kevindagame.command;
 import com.github.kevindagame.snipe.SnipeAction;
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,18 +98,18 @@ public class VoxelBrushToolCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
-            return Lists.newArrayList("assign", "remove");
+            return Utils.newArrayList("assign", "remove");
         }
 
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("assign")) {
-                return Lists.newArrayList("arrow", "powder");
+                return Utils.newArrayList("arrow", "powder");
             }
         }
 
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("assign")) {
-                return Lists.newArrayList("[label]");
+                return Utils.newArrayList("[label]");
             }
         }
 

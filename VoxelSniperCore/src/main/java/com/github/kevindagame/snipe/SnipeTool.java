@@ -2,16 +2,13 @@ package com.github.kevindagame.snipe;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.brush.IBrush;
-import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableBiMap;
 
-import java.util.Objects;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -19,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SnipeTool {
 
-    private final BiMap<SnipeAction, VoxelMaterial> actionTools = HashBiMap.create();
+    private final Map<VoxelMaterial, SnipeAction> actionTools = new HashMap<>();
     private IBrush currentBrush;
     private IBrush previousBrush = null;
     private final VoxelMessage messageHelper;
@@ -45,7 +42,7 @@ public class SnipeTool {
     }
 
     public boolean hasToolAssigned(VoxelMaterial material) {
-        return actionTools.containsValue(material);
+        return actionTools.containsKey(material);
     }
 
     public VoxelMessage getMessageHelper() {
@@ -64,7 +61,7 @@ public class SnipeTool {
     }
 
     public void unassignAction(VoxelMaterial itemInHand) {
-        actionTools.inverse().remove(itemInHand);
+        actionTools.remove(itemInHand);
     }
 
     public IBrush setCurrentBrush(IBrush brush) {
@@ -74,20 +71,16 @@ public class SnipeTool {
     }
 
     public SnipeAction getActionAssigned(VoxelMaterial itemInHand) {
-        return actionTools.inverse().get(itemInHand);
+        return actionTools.get(itemInHand);
     }
 
-    public VoxelMaterial getToolAssigned(SnipeAction action) {
-        return actionTools.get(action);
-    }
-
-    public BiMap<SnipeAction, VoxelMaterial> getActionTools() {
-        return ImmutableBiMap.copyOf(actionTools);
+    public Map<VoxelMaterial, SnipeAction> getActionTools() {
+        return Collections.unmodifiableMap(this.actionTools);
     }
 
 
     public void assignAction(SnipeAction action, VoxelMaterial itemInHand) {
-        actionTools.forcePut(action, itemInHand);
+        actionTools.put(itemInHand, action);
     }
 
 }
