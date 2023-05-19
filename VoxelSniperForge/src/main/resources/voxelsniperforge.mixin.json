@@ -3,7 +3,6 @@
   "package": "com.github.kevindagame.voxelsniperforge.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "MixinBlockStateBase"
   ],
   "injectors": {
     "defaultRequire": 1

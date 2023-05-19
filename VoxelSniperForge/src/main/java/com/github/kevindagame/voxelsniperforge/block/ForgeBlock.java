@@ -63,13 +63,7 @@ public class ForgeBlock extends AbstractBlock {
         if (applyPhysics) {
             world.setBlock(this.pos, newState, 3);
         } else {
-            if (newState instanceof ExtendedBlockState extend) {
-                extend.setShouldUpdate(false);
-                world.setBlock(this.pos, newState, 3);
-                extend.setShouldUpdate(true);
-            } else {
-                throw new UnsupportedOperationException("Not implemented yet");
-            }
+            throw new UnsupportedOperationException("Not implemented yet");
         }
         world.setBlock(this.pos, newState, 3);
 
