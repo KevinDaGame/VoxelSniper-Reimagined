@@ -36,7 +36,7 @@ public class SpigotBlock extends AbstractBlock {
     @Nullable
     public BlockFace getFace(IBlock block) {
         var face = this.block.getFace(((SpigotBlock) block).block);
-        return face == null ? null : BlockFace.valueOf(face.toString());
+        return face == null ? null : BlockFace.valueOf(face.name());
     }
 
     @Override
@@ -46,11 +46,13 @@ public class SpigotBlock extends AbstractBlock {
 
     @Override
     public void setBlockData(IBlockData blockData) {
+        this.material = blockData.getMaterial();
         block.setBlockData(((SpigotBlockData) blockData).getBlockData());
     }
 
     @Override
     public void setBlockData(IBlockData blockData, boolean applyPhysics) {
+        this.material = blockData.getMaterial();
         block.setBlockData(((SpigotBlockData) blockData).getBlockData(), applyPhysics);
     }
 

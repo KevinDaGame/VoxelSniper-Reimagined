@@ -16,9 +16,11 @@ import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardInteg
 import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.github.kevindagame.voxelsniper.permissions.SpigotPermissionManager;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
+import com.github.kevindagame.voxelsniper.world.IWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
@@ -47,7 +49,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     private static SpigotVoxelSniper instance;
     private static BukkitAudiences adventure;
 
-    private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
+    private final SpigotVoxelSniperListener voxelSniperListener = new SpigotVoxelSniperListener(this);
     private final Map<String, IWorld> worlds = new HashMap<>();
     private final Map<UUID, SpigotPlayer> players = new HashMap<>();
     private VoxelSniperConfiguration voxelSniperConfiguration;
@@ -70,6 +72,8 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         SpigotVoxelSniper.instance = this;
 
         this.fileHandler = new SpigotFileHandler(this);
+
+        SpigotPermissionManager.register();
 
         // Initialize messages
         Messages.load(this);
