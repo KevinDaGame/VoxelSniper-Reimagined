@@ -8,12 +8,11 @@ import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#underlay-reverse-overlay-brush">...</a>
@@ -91,7 +90,7 @@ public class UnderlayBrush extends PerformerBrush {
             return true;
         }
 
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
+        return VoxelMaterial.getOVERRIDABLE_MATERIALS().contains(material);
     }
 
     @Override

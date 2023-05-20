@@ -13,14 +13,12 @@ import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsersCounter;
 import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredIntegration;
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
-import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.permissions.SpigotPermissionManager;
-import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
@@ -35,11 +33,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 /**
  * SPIGOT extension point.
@@ -174,10 +170,15 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     }
 
     @Override
-    public IMaterial getMaterial(VoxelMaterial material) {
-        Material mat = Material.matchMaterial(material.getKey());
+    public VoxelMaterial getMaterial(String namespace, String key) {
+        Material mat = Material.matchMaterial(key);
         if (mat != null) return new SpigotMaterial(mat);
         return null;
+    }
+
+    @Override
+    public List<VoxelMaterial> getMaterials() {
+        return Arrays.stream(Material.values()).map(SpigotMaterial::new).collect(Collectors.toList());
     }
 
     @Override

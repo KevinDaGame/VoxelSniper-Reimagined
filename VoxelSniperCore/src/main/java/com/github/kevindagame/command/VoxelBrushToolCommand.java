@@ -46,7 +46,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
                     return false;
                 }
 
-                VoxelMaterial itemInHand = (player.getItemInHand() != null) ? (player.getItemInHand()) : VoxelMaterial.AIR;
+                VoxelMaterial itemInHand = (player.getItemInHand() != null) ? (player.getItemInHand()) : VoxelMaterial.AIR();
 
                 if (itemInHand == null) {
                     sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_ITEM);
@@ -75,7 +75,7 @@ public class VoxelBrushToolCommand extends VoxelCommand {
 
         // Command: /btool remove
         if (args[0].equalsIgnoreCase("remove")) {
-            VoxelMaterial itemInHand = (player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR;
+            VoxelMaterial itemInHand = (player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR();
 
             if (itemInHand == null) {
                 sniper.sendMessage(Messages.VOXEL_BRUSH_TOOL_COMMAND_HOLD_UNASSIGN);

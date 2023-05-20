@@ -56,7 +56,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
             VoxelMaterial.getMaterial("dark_oak_fence_gate"),
             VoxelMaterial.getMaterial("jungle_fence_gate"),
             VoxelMaterial.getMaterial("oak_fence_gate"),
-            VoxelMaterial.getMaterial("air"),
+            VoxelMaterial.AIR(),
             VoxelMaterial.getMaterial("void_air"),
             VoxelMaterial.getMaterial("cave_air")
     );

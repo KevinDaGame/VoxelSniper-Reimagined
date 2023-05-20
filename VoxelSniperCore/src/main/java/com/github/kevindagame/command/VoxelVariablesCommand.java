@@ -133,8 +133,7 @@ public class VoxelVariablesCommand extends MaterialCommand {
 
     private void checkMaterial(String string, List<String> invalidMaterials, SnipeData snipeData) {
         boolean remove = string.contains("-");
-        VoxelMaterial material = new VoxelMaterial(string.toLowerCase().replace("-", ""));
-        //if the material is not yet defined in VoxelMaterial means that it is an item and not a block
+        VoxelMaterial material = VoxelMaterial.getMaterial(string.toLowerCase().replace("-", ""));
         if (VoxelMaterial.getMaterial(material.getKey()) == null) {
             invalidMaterials.add(string.replace("-", ""));
             return;

@@ -11,7 +11,6 @@ import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 import com.google.common.base.Preconditions;
-
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -26,7 +25,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.permission.PermissionAPI;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -143,7 +141,7 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
     public VoxelMaterial getItemInHand() {
         var itemStack = player.getMainHandItem();
         ResourceLocation item = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
-        return item != null ? VoxelMaterial.getMaterial(item.getNamespace(), item.getPath()) : VoxelMaterial.AIR;
+        return item != null ? VoxelMaterial.getMaterial(item.getNamespace(), item.getPath()) : VoxelMaterial.AIR();
     }
 
     @NotNull

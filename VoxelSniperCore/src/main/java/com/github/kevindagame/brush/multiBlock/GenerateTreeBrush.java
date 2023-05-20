@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush.multiBlock;
 
+import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -31,8 +32,8 @@ public class GenerateTreeBrush extends AbstractBrush {
     private final HashSet<BaseLocation> placedLocations = new HashSet<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     // If these default values are edited. Remember to change default values in the default preset.
-    private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
-    private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD;
+    private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES();
+    private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD();
     private boolean rootFloat = false;
     private int startHeight = 0;
     private int rootLength = 9;
@@ -532,8 +533,8 @@ public class GenerateTreeBrush extends AbstractBrush {
         }
 
         if (params[0].equalsIgnoreCase("default")) { // Default settings.
-            this.leavesMaterial = VoxelMaterial.OAK_LEAVES;
-            this.woodMaterial = VoxelMaterial.OAK_WOOD;
+            this.leavesMaterial = VoxelMaterial.OAK_LEAVES();
+            this.woodMaterial = VoxelMaterial.OAK_WOOD();
             this.rootFloat = false;
             this.startHeight = 0;
             this.rootLength = 9;
@@ -586,10 +587,10 @@ public class GenerateTreeBrush extends AbstractBrush {
         argumentValues.put("rootFloat", Utils.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
+        argumentValues.put("wood", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         // Leaves material variables
-        argumentValues.put("leaves", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
+        argumentValues.put("leaves", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
 
         return argumentValues;
     }

@@ -8,12 +8,11 @@ import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#overlay-topsoil-filling-brush">...</a>
@@ -93,7 +92,7 @@ public class OverlayBrush extends PerformerBrush {
     }
 
     private boolean isIgnoredBlock(VoxelMaterial material) {
-        return material.equals(VoxelMaterial.WATER) || material.isTransparent() || material == VoxelMaterial.getMaterial("cactus");
+        return material.equals(VoxelMaterial.WATER()) || material.isTransparent() || material == VoxelMaterial.getMaterial("cactus");
     }
 
     private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {
@@ -104,7 +103,7 @@ public class OverlayBrush extends PerformerBrush {
         if (allBlocks && !(material.isAir())) {
             return true;
         }
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
+        return VoxelMaterial.getOVERRIDABLE_MATERIALS().contains(material);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class OceanBrush extends AbstractBrush {
      * This list is incomplete and will be removed in the future.
      */
     private static final List<VoxelMaterial> EXCLUDED_MATERIALS = List.of(
-            VoxelMaterial.getMaterial("air"),
+            VoxelMaterial.AIR(),
             VoxelMaterial.getMaterial("cave_air"),
             VoxelMaterial.getMaterial("void_air"),
             VoxelMaterial.getMaterial("oak_sapling"),
@@ -125,15 +125,15 @@ public class OceanBrush extends AbstractBrush {
                 for (int y = highestY; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
                     if (!block.getMaterial().isAir()) {
-                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.AIR().createBlockData()));
                     }
                 }
 
                 // go down from water level to new sea level
                 for (int y = this.waterLevel; y > newSeaFloorLevel; y--) {
                     final IBlock block = world.getBlock(x, y, z);
-                    if (!block.getMaterial().equals(VoxelMaterial.WATER)) {
-                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.WATER.createBlockData()));
+                    if (!block.getMaterial().equals(VoxelMaterial.WATER())) {
+                        addOperation(new BlockOperation(block.getLocation(), block.getBlockData(), VoxelMaterial.WATER().createBlockData()));
                     }
                 }
 

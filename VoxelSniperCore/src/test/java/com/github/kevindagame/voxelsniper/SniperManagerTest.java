@@ -36,11 +36,9 @@ public class SniperManagerTest {
         Mockito.when(main.getPlayer(uuid)).thenReturn(absplayer);
 
         IBlockData airBlockData = Mockito.mock(IBlockData.class);
-        Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterial.AIR);
+        Mockito.when(airBlockData.getMaterial()).thenReturn(VoxelMaterial.AIR());
         IMaterial mat = Mockito.mock(IMaterial.class);
         Mockito.when(mat.createBlockData()).thenReturn(airBlockData);
-
-        Mockito.when(main.getMaterial(VoxelMaterial.AIR)).thenReturn(mat);
 
         VoxelSniper.voxelsniper = main;
         VoxelBrushManager.initialize();

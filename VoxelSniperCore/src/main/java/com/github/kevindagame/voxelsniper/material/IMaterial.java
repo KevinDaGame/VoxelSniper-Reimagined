@@ -15,6 +15,12 @@ public interface IMaterial extends Comparable<IMaterial> {
 
     boolean equals(VoxelMaterial material);
 
+    boolean isAir();
+
+    boolean fallsOff();
+
+    boolean isFluid();
+
     boolean isTransparent();
 
     boolean isBlock();

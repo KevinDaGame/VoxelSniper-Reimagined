@@ -1,11 +1,17 @@
 package com.github.kevindagame.voxelsniperforge.material;
 
-import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-
 import net.minecraft.resources.ResourceLocation;
 
-public abstract class AbstractForgeMaterial implements IMaterial {
+public abstract class AbstractForgeMaterial extends VoxelMaterial {
+
+    public AbstractForgeMaterial(String namespace, String key) {
+        super(namespace, key);
+    }
+
+    public AbstractForgeMaterial(String key) {
+        super(key);
+    }
 
     abstract ResourceLocation getResourceLocation();
 

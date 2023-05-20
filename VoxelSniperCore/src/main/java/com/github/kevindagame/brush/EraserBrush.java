@@ -7,6 +7,7 @@ import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,8 +16,8 @@ import java.util.Set;
  * @author Voxel
  */
 public class EraserBrush extends AbstractBrush {
-    private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
-            VoxelMaterial.getMaterial("air"),
+    private static final List<VoxelMaterial> EXCLUSIVE_MATERIALS = List.of(
+            VoxelMaterial.AIR(),
             VoxelMaterial.getMaterial("cave_air"),
             VoxelMaterial.getMaterial("void_air"),
             VoxelMaterial.getMaterial("stone"),
@@ -28,7 +29,7 @@ public class EraserBrush extends AbstractBrush {
             VoxelMaterial.getMaterial("deepslate")
     );
     private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
-            VoxelMaterial.WATER, VoxelMaterial.LAVA);
+            VoxelMaterial.WATER(), VoxelMaterial.LAVA());
 
 
     private void doErase(final SnipeData v) {
@@ -40,7 +41,7 @@ public class EraserBrush extends AbstractBrush {
                     || (getSnipeAction() == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
                 continue;
             }
-            addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR().createBlockData()));
         }
     }
 

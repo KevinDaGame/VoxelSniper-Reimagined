@@ -9,11 +9,10 @@ import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Piotr
@@ -140,7 +139,7 @@ public class PullBrush extends AbstractBrush {
         if (this.getBlockMaterialAt(block.getX(), block.getY() - 1, block.getZ()).isAir()) {
             for (int y = block.getY(); y < currentBlock.getY(); y++) {
                 IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-                addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR().createBlockData()));
             }
         } else {
             for (int y = block.getY() - 1; y < currentBlock.getY(); y++) {
@@ -155,7 +154,7 @@ public class PullBrush extends AbstractBrush {
         addOperation(new BlockOperation(currentBlock.getLocation(), currentBlock.getBlockData(), block.getBlockData()));
         for (int y = block.getY(); y > currentBlock.getY(); y--) {
             IBlock b = this.getWorld().getBlock(block.getX(), y, block.getZ());
-            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR.createBlockData()));
+            addOperation(new BlockOperation(b.getLocation(), b.getBlockData(), VoxelMaterial.AIR().createBlockData()));
         }
     }
 

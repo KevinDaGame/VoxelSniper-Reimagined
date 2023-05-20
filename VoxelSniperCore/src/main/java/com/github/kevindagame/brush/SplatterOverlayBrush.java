@@ -6,12 +6,11 @@ import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelList;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#splatter-overlay-brush">...</a>
@@ -41,7 +40,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared && splat[x + v.getBrushSize()][z + v.getBrushSize()] == 1) {
                             // if inside of the column && if to be splattered
                             final VoxelMaterial check = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z);
-                            if (check.isAir() || check == VoxelMaterial.WATER) {
+                            if (check.isAir() || check == VoxelMaterial.WATER()) {
                                 // must start at surface... this prevents it filling stuff in if you click in a wall
                                 // and it starts out below surface.
                                 final VoxelMaterial currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
@@ -104,7 +103,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
             return true;
         }
 
-        return VoxelMaterial.OVERRIDABLE_MATERIALS.contains(material);
+        return VoxelMaterial.getOVERRIDABLE_MATERIALS().contains(material);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
+import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -91,8 +92,9 @@ public class ForgeVoxelSniperListener {
     private @Nullable
     VoxelMaterial getItemStack(PlayerInteractEvent event) {
         var itemKey = ForgeRegistries.ITEMS.getKey(event.getItemStack().getItem());
+        var item = ForgeRegistries.ITEMS.getValue(itemKey);
         if (itemKey == null) return null;
-        return new VoxelMaterial(itemKey.getNamespace(), itemKey.getPath());
+        return new ItemMaterial(item, itemKey.getNamespace(), itemKey.getPath());
     }
 
     private Sniper.Action getAction(PlayerInteractEvent event) {

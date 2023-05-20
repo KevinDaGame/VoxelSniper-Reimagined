@@ -1,19 +1,17 @@
 package com.github.kevindagame.voxelsniperforge.material;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
-import com.github.kevindagame.voxelsniper.material.IMaterial;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-
-import java.util.Objects;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
 public final class ItemMaterial extends AbstractForgeMaterial {
     private final Item item;
 
-    public ItemMaterial(Item item) {
+    public ItemMaterial(Item item, String namespace, String key) {
+        super(namespace, key);
         this.item = item;
     }
 
@@ -48,6 +46,21 @@ public final class ItemMaterial extends AbstractForgeMaterial {
     }
 
     @Override
+    public boolean isAir() {
+        return false;
+    }
+
+    @Override
+    public boolean fallsOff() {
+        return false;
+    }
+
+    @Override
+    public boolean isFluid() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
@@ -58,12 +71,6 @@ public final class ItemMaterial extends AbstractForgeMaterial {
     @Override
     public int hashCode() {
         return Objects.hash(item);
-    }
-
-    @Override
-    public String toString() {
-        return "ItemMaterial[" +
-                "item=" + item + ']';
     }
 
     @Override
