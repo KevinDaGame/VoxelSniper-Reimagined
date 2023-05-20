@@ -10,13 +10,11 @@ import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushe">...</a>s#ocean-brush
@@ -28,62 +26,66 @@ public class OceanBrush extends AbstractBrush {
     private static final int WATER_LEVEL_DEFAULT = 62; // y=63 -- we are using array indices here
     private static final int WATER_LEVEL_MIN = 12;
     private static final int LOW_CUT_LEVEL = 12;
-    private static final List<VoxelMaterial> EXCLUDED_MATERIALS = new LinkedList<>();
-
-    static {
-        EXCLUDED_MATERIALS.add(VoxelMaterial.AIR);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.CAVE_AIR);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.VOID_AIR);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_SAPLING);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_LEAVES);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_LOG);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OAK_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ACACIA_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BIRCH_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DARK_OAK_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.JUNGLE_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SPRUCE_WOOD);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.WATER);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.LAVA);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.DANDELION);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.POPPY);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BLUE_ORCHID);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ALLIUM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.AZURE_BLUET);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.RED_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ORANGE_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.WHITE_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.PINK_TULIP);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.OXEYE_DAISY);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.RED_MUSHROOM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.BROWN_MUSHROOM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.MELON);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.MELON_STEM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.PUMPKIN);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.PUMPKIN_STEM);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.COCOA);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SNOW);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SNOW_BLOCK);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.ICE);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SUGAR_CANE);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.TALL_GRASS);
-        EXCLUDED_MATERIALS.add(VoxelMaterial.SNOW);
-    }
+    @Deprecated()
+    /**
+     * This list is incomplete and will be removed in the future.
+     */
+    private static final List<VoxelMaterial> EXCLUDED_MATERIALS = List.of(
+            VoxelMaterial.getMaterial("air"),
+            VoxelMaterial.getMaterial("cave_air"),
+            VoxelMaterial.getMaterial("void_air"),
+            VoxelMaterial.getMaterial("oak_sapling"),
+            VoxelMaterial.getMaterial("acacia_sapling"),
+            VoxelMaterial.getMaterial("birch_sapling"),
+            VoxelMaterial.getMaterial("dark_oak_sapling"),
+            VoxelMaterial.getMaterial("jungle_sapling"),
+            VoxelMaterial.getMaterial("spruce_sapling"),
+            VoxelMaterial.getMaterial("oak_leaves"),
+            VoxelMaterial.getMaterial("acacia_leaves"),
+            VoxelMaterial.getMaterial("birch_leaves"),
+            VoxelMaterial.getMaterial("dark_oak_leaves"),
+            VoxelMaterial.getMaterial("jungle_leaves"),
+            VoxelMaterial.getMaterial("spruce_leaves"),
+            VoxelMaterial.getMaterial("oak_log"),
+            VoxelMaterial.getMaterial("acacia_log"),
+            VoxelMaterial.getMaterial("birch_log"),
+            VoxelMaterial.getMaterial("dark_oak_log"),
+            VoxelMaterial.getMaterial("jungle_log"),
+            VoxelMaterial.getMaterial("spruce_log"),
+            VoxelMaterial.getMaterial("oak_wood"),
+            VoxelMaterial.getMaterial("acacia_wood"),
+            VoxelMaterial.getMaterial("birch_wood"),
+            VoxelMaterial.getMaterial("dark_oak_wood"),
+            VoxelMaterial.getMaterial("jungle_wood"),
+            VoxelMaterial.getMaterial("spruce_wood"),
+            VoxelMaterial.getMaterial("water"),
+            VoxelMaterial.getMaterial("lava"),
+            VoxelMaterial.getMaterial("dandelion"),
+            VoxelMaterial.getMaterial("poppy"),
+            VoxelMaterial.getMaterial("blue_orchid"),
+            VoxelMaterial.getMaterial("allium"),
+            VoxelMaterial.getMaterial("azure_bluet"),
+            VoxelMaterial.getMaterial("red_tulip"),
+            VoxelMaterial.getMaterial("orange_tulip"),
+            VoxelMaterial.getMaterial("white_tulip"),
+            VoxelMaterial.getMaterial("pink_tulip"),
+            VoxelMaterial.getMaterial("oxeye_daisy"),
+            VoxelMaterial.getMaterial("cornflower"),
+            VoxelMaterial.getMaterial("lily_of_the_valley"),
+            VoxelMaterial.getMaterial("wither_rose"),
+            VoxelMaterial.getMaterial("red_mushroom"),
+            VoxelMaterial.getMaterial("brown_mushroom"),
+            VoxelMaterial.getMaterial("melon"),
+            VoxelMaterial.getMaterial("melon_stem"),
+            VoxelMaterial.getMaterial("pumpkin"),
+            VoxelMaterial.getMaterial("pumpkin_stem"),
+            VoxelMaterial.getMaterial("cocoa"),
+            VoxelMaterial.getMaterial("snow"),
+            VoxelMaterial.getMaterial("ice"),
+            VoxelMaterial.getMaterial("sugar_cane"),
+            VoxelMaterial.getMaterial("tall_grass"),
+            VoxelMaterial.getMaterial("snow")
+    );
 
     private int waterLevel = WATER_LEVEL_DEFAULT;
     private boolean coverFloor = false;

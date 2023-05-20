@@ -174,7 +174,16 @@ public class GenerateTreeBrush extends AbstractBrush {
                     placedLocations.add(location.getBlock().getLocation());
                     addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 }
-                List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
+                List<VoxelMaterial> blocks = Arrays.asList(
+                        VoxelMaterial.getMaterial("water"),
+                        VoxelMaterial.getMaterial("snow"),
+                        VoxelMaterial.getMaterial("oak_log"),
+                        VoxelMaterial.getMaterial("birch_log"),
+                        VoxelMaterial.getMaterial("acacia_log"),
+                        VoxelMaterial.getMaterial("dark_oak_log"),
+                        VoxelMaterial.getMaterial("spruce_log"),
+                        VoxelMaterial.getMaterial("jungle_log")
+                );
                 // Checks is block below is solid
                 if (blocks.contains(location.getBlock().getRelative(0, -1, 0).getMaterial())) {
                     // Move down if solid.

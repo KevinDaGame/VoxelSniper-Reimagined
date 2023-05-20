@@ -8,6 +8,8 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,38 +18,43 @@ import java.util.stream.Collectors;
  */
 public class BlockResetBrush extends AbstractBrush {
 
-    private static final ArrayList<VoxelMaterial> DENIED_UPDATES = new ArrayList<>();
-
-    static {
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_WALL_SIGN);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.CHEST);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.FURNACE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_TORCH);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WALL_TORCH);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WIRE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.REPEATER);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.IRON_DOOR);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_FENCE_GATE);
-        BlockResetBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
-    }
-
+    private static final List<VoxelMaterial> DENIED_UPDATES = Arrays.asList(
+            VoxelMaterial.getMaterial("acacia_sign"),
+            VoxelMaterial.getMaterial("birch_sign"),
+            VoxelMaterial.getMaterial("dark_oak_sign"),
+            VoxelMaterial.getMaterial("jungle_sign"),
+            VoxelMaterial.getMaterial("oak_sign"),
+            VoxelMaterial.getMaterial("spruce_sign"),
+            VoxelMaterial.getMaterial("acacia_wall_sign"),
+            VoxelMaterial.getMaterial("birch_wall_sign"),
+            VoxelMaterial.getMaterial("dark_oak_wall_sign"),
+            VoxelMaterial.getMaterial("jungle_wall_sign"),
+            VoxelMaterial.getMaterial("oak_wall_sign"),
+            VoxelMaterial.getMaterial("spruce_wall_sign"),
+            VoxelMaterial.getMaterial("chest"),
+            VoxelMaterial.getMaterial("furnace"),
+            VoxelMaterial.getMaterial("redstone_torch"),
+            VoxelMaterial.getMaterial("redstone_wall_torch"),
+            VoxelMaterial.getMaterial("redstone_wire"),
+            VoxelMaterial.getMaterial("repeater"),
+            VoxelMaterial.getMaterial("acacia_door"),
+            VoxelMaterial.getMaterial("birch_door"),
+            VoxelMaterial.getMaterial("dark_oak_door"),
+            VoxelMaterial.getMaterial("jungle_door"),
+            VoxelMaterial.getMaterial("oak_door"),
+            VoxelMaterial.getMaterial("spruce_door"),
+            VoxelMaterial.getMaterial("acacia_trapdoor"),
+            VoxelMaterial.getMaterial("birch_trapdoor"),
+            VoxelMaterial.getMaterial("dark_oak_trapdoor"),
+            VoxelMaterial.getMaterial("jungle_trapdoor"),
+            VoxelMaterial.getMaterial("oak_trapdoor"),
+            VoxelMaterial.getMaterial("spruce_trapdoor"),
+            VoxelMaterial.getMaterial("acacia_fence_gate"),
+            VoxelMaterial.getMaterial("birch_fence_gate"),
+            VoxelMaterial.getMaterial("dark_oak_fence_gate"),
+            VoxelMaterial.getMaterial("jungle_fence_gate"),
+            VoxelMaterial.getMaterial("oak_fence_gate")
+    );
 
     private void applyBrush(final SnipeData v) {
         addOperations(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)

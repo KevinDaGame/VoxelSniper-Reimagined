@@ -16,7 +16,17 @@ import java.util.Set;
  */
 public class EraserBrush extends AbstractBrush {
     private static final Set<VoxelMaterial> EXCLUSIVE_MATERIALS = Set.of(
-            VoxelMaterial.AIR, VoxelMaterial.CAVE_AIR, VoxelMaterial.VOID_AIR, VoxelMaterial.STONE, VoxelMaterial.GRASS_BLOCK, VoxelMaterial.DIRT, VoxelMaterial.SAND, VoxelMaterial.GRAVEL, VoxelMaterial.SANDSTONE, VoxelMaterial.DEEPSLATE);
+            VoxelMaterial.getMaterial("air"),
+            VoxelMaterial.getMaterial("cave_air"),
+            VoxelMaterial.getMaterial("void_air"),
+            VoxelMaterial.getMaterial("stone"),
+            VoxelMaterial.getMaterial("grass_block"),
+            VoxelMaterial.getMaterial("dirt"),
+            VoxelMaterial.getMaterial("sand"),
+            VoxelMaterial.getMaterial("gravel"),
+            VoxelMaterial.getMaterial("sandstone"),
+            VoxelMaterial.getMaterial("deepslate")
+    );
     private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
             VoxelMaterial.WATER, VoxelMaterial.LAVA);
 
