@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
-public final class BlockMaterial extends AbstractForgeMaterial {
+public final class BlockMaterial extends VoxelMaterial {
     private final Block block;
 
     public BlockMaterial(Block block, String namespace, String key) {
@@ -93,8 +93,4 @@ public final class BlockMaterial extends AbstractForgeMaterial {
     }
 
 
-    @Override
-    ResourceLocation getResourceLocation() {
-        return ForgeRegistries.BLOCKS.getKey(block);
-    }
 }

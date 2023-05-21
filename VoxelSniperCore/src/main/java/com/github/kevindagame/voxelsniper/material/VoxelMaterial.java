@@ -42,9 +42,6 @@ public abstract class VoxelMaterial implements IMaterial {
         return getMaterial("minecraft", "oak_leaves");
     }
 
-    private final String key;
-    private final String namespace;
-
     public static List<VoxelMaterial> getOVERRIDABLE_MATERIALS() {
 
         return Arrays.asList(
@@ -67,10 +64,6 @@ public abstract class VoxelMaterial implements IMaterial {
         );
     }
 
-    public VoxelMaterial(String key) {
-        this("minecraft", key);
-    }
-
     public static VoxelMaterial getMaterial(String key) {
         if (key.contains(":")) {
             String[] components = key.split(":");
@@ -82,6 +75,15 @@ public abstract class VoxelMaterial implements IMaterial {
     public static VoxelMaterial getMaterial(String namespace, String key) {
         return VoxelSniper.voxelsniper.getMaterial(namespace, key);
     }
+
+    private final String key;
+    private final String namespace;
+
+
+    public VoxelMaterial(String key) {
+        this("minecraft", key);
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -101,16 +103,24 @@ public abstract class VoxelMaterial implements IMaterial {
         return namespace + ":" + key;
     }
 
+    @Override
     public String getKey() {
         return key;
     }
 
     @Override
-    public String getName() {
-        return this.getKey();
-    }
 
     public String getNamespace() {
         return namespace;
+    }
+
+    @Override
+    public boolean equals(String namespace, String key) {
+        return this.namespace.equals(namespace) && this.key.equals(key);
+    }
+
+    @Override
+    public boolean equals(VoxelMaterial material) {
+        return this.namespace.equals(material.namespace) && this.key.equals(material.key);
     }
 }

@@ -28,18 +28,8 @@ public class SpigotMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean equals(String key) {
-        return getKey().equals(key);
-    }
-
-    @Override
     public IBlockData createBlockData() {
         return SpigotBlockData.fromSpigotData(material.createBlockData());
-    }
-
-    @Override
-    public String getName() {
-        return material.name();
     }
 
     @Override

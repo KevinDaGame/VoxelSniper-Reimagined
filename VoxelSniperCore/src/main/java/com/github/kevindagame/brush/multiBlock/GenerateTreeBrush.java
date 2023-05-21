@@ -418,7 +418,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
                 if (material == null) throw new IllegalArgumentException();
                 this.leavesMaterial = material;
-                v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
+                v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getKey())));
                 return;
             }
 
@@ -427,7 +427,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 if (material == null) throw new IllegalArgumentException();
 
                 this.woodMaterial = material;
-                v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
+                v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getKey())));
                 return;
             }
         } catch (IllegalArgumentException e) {
@@ -587,10 +587,10 @@ public class GenerateTreeBrush extends AbstractBrush {
         argumentValues.put("rootFloat", Utils.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
+        argumentValues.put("wood", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getKey).collect(Collectors.toList()));
 
         // Leaves material variables
-        argumentValues.put("leaves", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
+        argumentValues.put("leaves", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getKey).collect(Collectors.toList()));
 
         return argumentValues;
     }

@@ -19,6 +19,7 @@ public abstract class MaterialCommand extends VoxelCommand {
 
     @Override
     public final List<String> registerTabCompletion() {
+        // Returns all available materials. It will return the list of materials with the format "modid:material". for materials starting with "minecraft:", it will also append the material name without the "minecraft:" prefix. This way you can type "minecraft:stone" or "stone" and it will both work.
         var materials = VoxelSniper.voxelsniper.getMaterials().stream().filter(VoxelMaterial::isBlock).map(VoxelMaterial::toString).collect(Collectors.toList());
         materials.addAll(materials.stream().filter(material -> material.startsWith("minecraft:")).map(material -> material.replace("minecraft:", "")).toList());
         return materials;
@@ -27,7 +28,6 @@ public abstract class MaterialCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(IPlayer player, String[] args) {
         if (args.length == 1) {
-            // Preprocess the string for partial matching
             args[0] = args[0].toLowerCase();
             return getTabCompletion(1);
         }

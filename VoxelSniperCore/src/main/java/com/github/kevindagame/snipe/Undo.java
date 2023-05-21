@@ -11,10 +11,6 @@ import java.util.*;
  * Holds BlockStates that can be later on used to reset those block locations back to the recorded states.
  */
 public class Undo {
-
-    private static final List<VoxelMaterial> FALLING_MATERIALS = Arrays.asList(
-            VoxelMaterial.WATER(),
-            VoxelMaterial.LAVA());
     private final Set<VoxelVector> containing = new HashSet<>();
     private final List<IBlockState> all;
     private final List<IBlockState> falloff;
@@ -58,7 +54,7 @@ public class Undo {
             return;
         }
         this.containing.add(pos);
-        if (Undo.FALLING_MATERIALS.contains(state.getMaterial())) {
+        if (state.getMaterial().isFluid()) {
             dropdown.add(state);
         } else if (state.getMaterial().fallsOff()) {
             falloff.add(state);

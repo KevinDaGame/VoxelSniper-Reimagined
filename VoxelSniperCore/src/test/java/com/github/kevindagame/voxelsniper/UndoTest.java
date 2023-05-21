@@ -24,6 +24,7 @@ public class UndoTest {
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.SPIGOT);
         Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
+        Mockito.when(main.getMaterial(Mockito.anyString(), Mockito.anyString())).thenReturn(Mockito.mock(VoxelMaterial.class));
         VoxelSniper.voxelsniper = main;
         undo = new Undo();
     }
@@ -90,12 +91,15 @@ public class UndoTest {
         IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE());
         IBlockState normalBlockState = normalBlock.getState();
 
+        var fragileMaterial = Mockito.mock(VoxelMaterial.class);
+        Mockito.when(fragileMaterial.fallsOff()).thenReturn(true);
         BaseLocation fragileBlockLocation = new BaseLocation(world, 0, 0, 1);
-        IBlock fragileBlock = mockBlock(fragileBlockLocation, VoxelMaterial.getMaterial("torch"));
+        IBlock fragileBlock = mockBlock(fragileBlockLocation, fragileMaterial);
         IBlockState fragileBlockState = fragileBlock.getState();
-
+        var waterMaterial = Mockito.mock(VoxelMaterial.class);
+        Mockito.when(waterMaterial.isFluid()).thenReturn(true);
         BaseLocation waterBlockLocation = new BaseLocation(world, 0, 0, 2);
-        IBlock waterBlock = mockBlock(waterBlockLocation, VoxelMaterial.WATER());
+        IBlock waterBlock = mockBlock(waterBlockLocation, waterMaterial);
         IBlockState waterBlockState = waterBlock.getState();
 
 
