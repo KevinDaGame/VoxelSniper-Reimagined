@@ -58,7 +58,7 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
 
                     // Find most common neighbouring material
                     for ((key, value) in materialFrequency) {
-                        if (value > highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key === VoxelMaterial.WATER())) {
+                        if (value > highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key!!.equals(VoxelMaterial.WATER()))) {
                             highestMaterialCount = value
                             highestMaterial = key
                         }
@@ -66,8 +66,8 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
 
                     // Make sure that there's no tie in the highest material
                     for ((key, value) in materialFrequency) {
-                        if (value == highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key === VoxelMaterial.WATER())) {
-                            if (key === highestMaterial) {
+                        if (value == highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key!!.equals(VoxelMaterial.WATER()))) {
+                            if (key!!.equals(highestMaterial)) {
                                 continue
                             }
                             tiecheck = false

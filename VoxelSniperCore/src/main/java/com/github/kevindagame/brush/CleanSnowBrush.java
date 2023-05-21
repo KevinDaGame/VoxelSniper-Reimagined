@@ -30,7 +30,7 @@ public class CleanSnowBrush extends AbstractBrush {
             IBlock b = position.getBlock();
             IBlock blockDown = b.getRelative(BlockFace.DOWN);
             var snowMaterial = VoxelMaterial.getMaterial("snow");
-            if ((b.getMaterial() == snowMaterial) && ((blockDown.getMaterial() == snowMaterial) || (blockDown.getMaterial().isAir()))) {
+            if ((b.getMaterial().equals(snowMaterial)) && ((blockDown.getMaterial().equals(snowMaterial)) || (blockDown.getMaterial().isAir()))) {
                 addOperation(new BlockOperation(position, b.getBlockData(), VoxelMaterial.AIR().createBlockData()));
             }
         }

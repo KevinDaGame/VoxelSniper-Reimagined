@@ -113,7 +113,7 @@ public class ForgeBlock extends AbstractBlock {
         int power = this.getLevel().getSignal(this.pos, blockFaceToDirection(face));
 
         ForgeBlock relative = (ForgeBlock) this.getRelative(face);
-        if (relative.getMaterial() == VoxelMaterial.getMaterial("redstone_wire")) {
+        if (relative.getMaterial().equals(VoxelMaterial.getMaterial("redstone_wire"))) {
             int relativePower = relative.getLevel().getSignal(this.pos, blockFaceToDirection(face));
             return Math.max(power, relativePower) > 0;
         }

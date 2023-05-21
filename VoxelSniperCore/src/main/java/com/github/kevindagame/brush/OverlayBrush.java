@@ -92,7 +92,7 @@ public class OverlayBrush extends PerformerBrush {
     }
 
     private boolean isIgnoredBlock(VoxelMaterial material) {
-        return material.equals(VoxelMaterial.WATER()) || material.isTransparent() || material == VoxelMaterial.getMaterial("cactus");
+        return material.equals(VoxelMaterial.WATER()) || material.isTransparent() || material.equals(VoxelMaterial.getMaterial("cactus"));
     }
 
     private boolean isOverrideableMaterial(VoxelList list, VoxelMaterial material) {

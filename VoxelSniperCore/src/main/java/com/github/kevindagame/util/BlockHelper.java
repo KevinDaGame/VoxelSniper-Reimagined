@@ -94,7 +94,7 @@ public class BlockHelper {
         double bestDistanceMatch = 50.0;
         IPainting bestMatch = null;
         for (IEntity entity : paintingChunk.getEntities()) {
-            if (entity.getType() == VoxelEntityType.PAINTING) {
+            if (entity.getType().equals(VoxelEntityType.PAINTING)) {
                 double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;

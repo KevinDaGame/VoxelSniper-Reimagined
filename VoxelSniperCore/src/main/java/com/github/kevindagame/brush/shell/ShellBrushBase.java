@@ -53,22 +53,22 @@ public abstract class ShellBrushBase extends AbstractBrush {
                 for (int z = 0; z <= brushSizeDoubled; z++) {
                     temp = 0;
 
-                    if (oldMaterials[x + 1 + 1][y + 1][z + 1] == v.getReplaceMaterial()) {
+                    if (oldMaterials[x + 1 + 1][y + 1][z + 1].equals(v.getReplaceMaterial())) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1 - 1][y + 1][z + 1] == v.getReplaceMaterial()) {
+                    if (oldMaterials[x + 1 - 1][y + 1][z + 1].equals(v.getReplaceMaterial())) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1 + 1][z + 1] == v.getReplaceMaterial()) {
+                    if (oldMaterials[x + 1][y + 1 + 1][z + 1].equals(v.getReplaceMaterial())) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1 - 1][z + 1] == v.getReplaceMaterial()) {
+                    if (oldMaterials[x + 1][y + 1 - 1][z + 1].equals(v.getReplaceMaterial())) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1][z + 1 + 1] == v.getReplaceMaterial()) {
+                    if (oldMaterials[x + 1][y + 1][z + 1 + 1].equals(v.getReplaceMaterial())) {
                         temp++;
                     }
-                    if (oldMaterials[x + 1][y + 1][z + 1 - 1] == v.getReplaceMaterial()) {
+                    if (oldMaterials[x + 1][y + 1][z + 1 - 1].equals(v.getReplaceMaterial())) {
                         temp++;
                     }
 
