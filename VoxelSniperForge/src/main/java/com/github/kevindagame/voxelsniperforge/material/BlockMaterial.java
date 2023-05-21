@@ -76,7 +76,7 @@ public final class BlockMaterial extends VoxelMaterial {
 
     @Override
     public boolean isFluid() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return ForgeRegistries.FLUIDS.containsKey(new ResourceLocation(getNamespace(), getKey()));
     }
 
     @Override

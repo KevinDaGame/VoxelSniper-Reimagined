@@ -49,7 +49,7 @@ public class SpigotMaterial extends VoxelMaterial {
 
     @Override
     public boolean isFluid() {
-        return false;
+        return getKey().equals("water") || getKey().equals("lava");
     }
 
     @Override
