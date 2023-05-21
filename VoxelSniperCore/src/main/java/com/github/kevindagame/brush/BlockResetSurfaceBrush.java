@@ -29,37 +29,39 @@ import java.util.List;
  */
 public class BlockResetSurfaceBrush extends AbstractBrush {
 
-    private static final List<VoxelMaterial> DENIED_UPDATES = List.of(
-            VoxelMaterial.getMaterial("acacia_sign"),
-            VoxelMaterial.getMaterial("birch_sign"),
-            VoxelMaterial.getMaterial("dark_oak_sign"),
-            VoxelMaterial.getMaterial("jungle_sign"),
-            VoxelMaterial.getMaterial("oak_sign"),
-            VoxelMaterial.getMaterial("acacia_wall_sign"),
-            VoxelMaterial.getMaterial("birch_wall_sign"),
-            VoxelMaterial.getMaterial("dark_oak_wall_sign"),
-            VoxelMaterial.getMaterial("jungle_wall_sign"),
-            VoxelMaterial.getMaterial("oak_wall_sign"),
-            VoxelMaterial.getMaterial("chest"),
-            VoxelMaterial.getMaterial("furnace"),
-            VoxelMaterial.getMaterial("redstone_torch"),
-            VoxelMaterial.getMaterial("redstone_wire"),
-            VoxelMaterial.getMaterial("repeater"),
-            VoxelMaterial.getMaterial("acacia_door"),
-            VoxelMaterial.getMaterial("birch_door"),
-            VoxelMaterial.getMaterial("dark_oak_door"),
-            VoxelMaterial.getMaterial("jungle_door"),
-            VoxelMaterial.getMaterial("oak_door"),
-            VoxelMaterial.getMaterial("iron_door"),
-            VoxelMaterial.getMaterial("acacia_fence_gate"),
-            VoxelMaterial.getMaterial("birch_fence_gate"),
-            VoxelMaterial.getMaterial("dark_oak_fence_gate"),
-            VoxelMaterial.getMaterial("jungle_fence_gate"),
-            VoxelMaterial.getMaterial("oak_fence_gate"),
-            VoxelMaterial.AIR(),
-            VoxelMaterial.getMaterial("void_air"),
-            VoxelMaterial.getMaterial("cave_air")
-    );
+    private static List<VoxelMaterial> getDENIED_UPDATES() {
+        return List.of(
+                VoxelMaterial.getMaterial("acacia_sign"),
+                VoxelMaterial.getMaterial("birch_sign"),
+                VoxelMaterial.getMaterial("dark_oak_sign"),
+                VoxelMaterial.getMaterial("jungle_sign"),
+                VoxelMaterial.getMaterial("oak_sign"),
+                VoxelMaterial.getMaterial("acacia_wall_sign"),
+                VoxelMaterial.getMaterial("birch_wall_sign"),
+                VoxelMaterial.getMaterial("dark_oak_wall_sign"),
+                VoxelMaterial.getMaterial("jungle_wall_sign"),
+                VoxelMaterial.getMaterial("oak_wall_sign"),
+                VoxelMaterial.getMaterial("chest"),
+                VoxelMaterial.getMaterial("furnace"),
+                VoxelMaterial.getMaterial("redstone_torch"),
+                VoxelMaterial.getMaterial("redstone_wire"),
+                VoxelMaterial.getMaterial("repeater"),
+                VoxelMaterial.getMaterial("acacia_door"),
+                VoxelMaterial.getMaterial("birch_door"),
+                VoxelMaterial.getMaterial("dark_oak_door"),
+                VoxelMaterial.getMaterial("jungle_door"),
+                VoxelMaterial.getMaterial("oak_door"),
+                VoxelMaterial.getMaterial("iron_door"),
+                VoxelMaterial.getMaterial("acacia_fence_gate"),
+                VoxelMaterial.getMaterial("birch_fence_gate"),
+                VoxelMaterial.getMaterial("dark_oak_fence_gate"),
+                VoxelMaterial.getMaterial("jungle_fence_gate"),
+                VoxelMaterial.getMaterial("oak_fence_gate"),
+                VoxelMaterial.AIR(),
+                VoxelMaterial.getMaterial("void_air"),
+                VoxelMaterial.getMaterial("cave_air")
+        );
+    }
 
 
     private void applyBrush(final SnipeData v) {
@@ -69,7 +71,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
+                    if (BlockResetSurfaceBrush.getDENIED_UPDATES().contains(block.getMaterial())) {
                         continue;
                     }
 

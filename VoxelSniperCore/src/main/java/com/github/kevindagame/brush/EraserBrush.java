@@ -16,20 +16,25 @@ import java.util.Set;
  * @author Voxel
  */
 public class EraserBrush extends AbstractBrush {
-    private static final List<VoxelMaterial> EXCLUSIVE_MATERIALS = List.of(
-            VoxelMaterial.AIR(),
-            VoxelMaterial.getMaterial("cave_air"),
-            VoxelMaterial.getMaterial("void_air"),
-            VoxelMaterial.getMaterial("stone"),
-            VoxelMaterial.getMaterial("grass_block"),
-            VoxelMaterial.getMaterial("dirt"),
-            VoxelMaterial.getMaterial("sand"),
-            VoxelMaterial.getMaterial("gravel"),
-            VoxelMaterial.getMaterial("sandstone"),
-            VoxelMaterial.getMaterial("deepslate")
-    );
-    private static final Set<VoxelMaterial> EXCLUSIVE_LIQUIDS = Set.of(
+    private static List<VoxelMaterial> getEXCLUSIVE_MATERIALS() {
+        return List.of(
+                VoxelMaterial.AIR(),
+                VoxelMaterial.getMaterial("cave_air"),
+                VoxelMaterial.getMaterial("void_air"),
+                VoxelMaterial.getMaterial("stone"),
+                VoxelMaterial.getMaterial("grass_block"),
+                VoxelMaterial.getMaterial("dirt"),
+                VoxelMaterial.getMaterial("sand"),
+                VoxelMaterial.getMaterial("gravel"),
+                VoxelMaterial.getMaterial("sandstone"),
+                VoxelMaterial.getMaterial("deepslate")
+        );
+    }
+
+    private static Set<VoxelMaterial> getEXCLUSIVE_LIQUIDS() {
+        return Set.of(
             VoxelMaterial.WATER(), VoxelMaterial.LAVA());
+    }
 
 
     private void doErase(final SnipeData v) {
@@ -37,8 +42,8 @@ public class EraserBrush extends AbstractBrush {
         var positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
         for (var pos : positions) {
             var currentBlock = pos.getBlock();
-            if (EXCLUSIVE_MATERIALS.contains(currentBlock.getMaterial())
-                    || (getSnipeAction() == SnipeAction.GUNPOWDER && EXCLUSIVE_LIQUIDS.contains(currentBlock.getMaterial()))) {
+            if (getEXCLUSIVE_MATERIALS().contains(currentBlock.getMaterial())
+                    || (getSnipeAction() == SnipeAction.GUNPOWDER && getEXCLUSIVE_LIQUIDS().contains(currentBlock.getMaterial()))) {
                 continue;
             }
             addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR().createBlockData()));
