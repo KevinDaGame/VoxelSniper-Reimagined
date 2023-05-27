@@ -141,9 +141,10 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
 
     @Override
     public IMaterial getMaterial(VoxelMaterial material) {
-        Material mat = Material.matchMaterial(material.getKey());
-        if (mat != null) return new SpigotMaterial(mat);
-        return null;
+        Material mat = material.getNamespace().equals("minecraft") ?
+                Material.getMaterial(material.getKey().toUpperCase()) :
+                Material.getMaterial(material.getNamespace().toUpperCase() + "_" + material.getKey().toUpperCase()); // In case of arclight, which uses the syntax "<NAMESPACE>_<KEY>"
+        return mat == null ? null : new SpigotMaterial(mat);
     }
 
     @Override
