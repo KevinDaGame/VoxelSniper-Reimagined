@@ -91,27 +91,18 @@ public class UndoTest {
         IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE());
         IBlockState normalBlockState = normalBlock.getState();
 
-        var fragileMaterial = Mockito.mock(VoxelMaterial.class);
-        Mockito.when(fragileMaterial.fallsOff()).thenReturn(true);
-        BaseLocation fragileBlockLocation = new BaseLocation(world, 0, 0, 1);
-        IBlock fragileBlock = mockBlock(fragileBlockLocation, fragileMaterial);
-        IBlockState fragileBlockState = fragileBlock.getState();
-        var waterMaterial = Mockito.mock(VoxelMaterial.class);
-        Mockito.when(waterMaterial.isFluid()).thenReturn(true);
-        BaseLocation waterBlockLocation = new BaseLocation(world, 0, 0, 2);
-        IBlock waterBlock = mockBlock(waterBlockLocation, waterMaterial);
-        IBlockState waterBlockState = waterBlock.getState();
+        BaseLocation secondBlockLocation = new BaseLocation(world, 0, 0, 1);
+        IBlock secondBlock = mockBlock(secondBlockLocation, VoxelMaterial.AIR());
+        IBlockState secondBlockState = secondBlock.getState();
 
 
-        undo.put(waterBlock);
-        undo.put(fragileBlock);
         undo.put(normalBlock);
+        undo.put(secondBlock);
         undo.undo();
 
-        InOrder inOrder = Mockito.inOrder(normalBlockState, waterBlockState, fragileBlockState);
+        InOrder inOrder = Mockito.inOrder(normalBlockState, secondBlockState);
         // first stone, then torch, then water
         inOrder.verify(normalBlockState).update(true, false);
-        inOrder.verify(fragileBlockState).update(true, false);
-        inOrder.verify(waterBlockState).update(true, false);
+        inOrder.verify(secondBlockState).update(true, false);
     }
 }

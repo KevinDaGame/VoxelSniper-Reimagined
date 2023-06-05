@@ -17,8 +17,6 @@ public interface IMaterial extends Comparable<IMaterial> {
 
     boolean isAir();
 
-    boolean fallsOff();
-
     boolean isFluid();
 
     boolean isTransparent();

@@ -2,27 +2,25 @@ package com.github.kevindagame.snipe;
 
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Holds BlockStates that can be later on used to reset those block locations back to the recorded states.
  */
 public class Undo {
     private final Set<VoxelVector> containing = new HashSet<>();
-    private final List<IBlockState> all;
-    private final List<IBlockState> falloff;
-    private final List<IBlockState> dropdown;
+    private final List<IBlockState> undoList;
 
     /**
      * Default constructor of a Undo container.
      */
     public Undo() {
-        all = new LinkedList<>();
-        falloff = new LinkedList<>();
-        dropdown = new LinkedList<>();
+        undoList = new LinkedList<>();
     }
 
     /**
@@ -54,29 +52,14 @@ public class Undo {
             return;
         }
         this.containing.add(pos);
-        if (state.getMaterial().isFluid()) {
-            dropdown.add(state);
-        } else if (state.getMaterial().fallsOff()) {
-            falloff.add(state);
-        } else {
-            all.add(state);
-        }
+            undoList.add(state);
     }
 
     /**
      * Set the blockstates of all recorded blocks back to the state when they were inserted.
      */
     public void undo() {
-
-        for (IBlockState blockState : all) {
-            blockState.update(true, false);
-        }
-
-        for (IBlockState blockState : falloff) {
-            blockState.update(true, false);
-        }
-
-        for (IBlockState blockState : dropdown) {
+        for (IBlockState blockState : undoList) {
             blockState.update(true, false);
         }
     }

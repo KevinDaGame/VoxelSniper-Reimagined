@@ -2,9 +2,7 @@ package com.github.kevindagame.voxelsniperforge.material;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
@@ -48,11 +46,6 @@ public final class ItemMaterial extends VoxelMaterial {
 
     @Override
     public boolean isAir() {
-        return false;
-    }
-
-    @Override
-    public boolean fallsOff() {
         return false;
     }
 

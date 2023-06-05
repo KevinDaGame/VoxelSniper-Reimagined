@@ -70,11 +70,6 @@ public final class BlockMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean fallsOff() {
-        return false;
-    }
-
-    @Override
     public boolean isFluid() {
         return ForgeRegistries.FLUIDS.containsKey(new ResourceLocation(getNamespace(), getKey()));
     }
