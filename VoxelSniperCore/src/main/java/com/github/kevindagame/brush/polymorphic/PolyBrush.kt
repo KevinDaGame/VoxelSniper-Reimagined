@@ -92,7 +92,7 @@ class PolyBrush(
             for (position in positions) {
                 val material: VoxelMaterial =
                     newMaterials[position.blockX - targetBlock.x + brushSize][position.blockY - targetBlock.y + brushSize][position.blockZ - targetBlock.z + brushSize]
-                if (!(excludeAir && material.isAir) && !(excludeWater && material === VoxelMaterial.WATER)) {
+                if (!(excludeAir && material.isAir) && !(excludeWater && material.equals(VoxelMaterial.WATER()))) {
                     addOperation(BlockOperation(position, position.block.blockData, material.createBlockData()))
                 }
             }

@@ -47,8 +47,8 @@ public class ScannerBrush extends CustomBrush {
                 break;
             }
             VoxelMaterial mat = getWorld().getBlock(this.getTargetBlock().getX() + (bf.getModX() * i * -1), y, this.getTargetBlock().getZ() + (bf.getModZ() * i * -1)).getMaterial();
-            if (mat == checkFor) {
-                v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getName()).replace("%i%", Integer.toString(i)));
+            if (mat.equals(checkFor)) {
+                v.sendMessage(Messages.SCANNER_FOUND_BLOCKS.replace("%checkFor%", checkFor.getKey()).replace("%i%", Integer.toString(i)));
                 return;
             }
         }

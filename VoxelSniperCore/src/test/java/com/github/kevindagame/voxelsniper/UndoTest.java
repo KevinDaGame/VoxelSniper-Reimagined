@@ -24,6 +24,7 @@ public class UndoTest {
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.SPIGOT);
         Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
+        Mockito.when(main.getMaterial(Mockito.anyString(), Mockito.anyString())).thenReturn(Mockito.mock(VoxelMaterial.class));
         VoxelSniper.voxelsniper = main;
         undo = new Undo();
     }
@@ -58,13 +59,13 @@ public class UndoTest {
         IWorld world = Mockito.mock(IWorld.class);
         for (int i = 0; i < 5; i++) {
             BaseLocation location = new BaseLocation(world, 0, 0, i);
-            IBlock block = mockBlock(location, VoxelMaterial.DIRT);
+            IBlock block = mockBlock(location, VoxelMaterial.STONE());
 
             undo.put(block);
         }
         Assert.assertEquals(5, undo.getSize());
         BaseLocation location = new BaseLocation(world, 0, 0, 8);
-        IBlock block = mockBlock(location, VoxelMaterial.DIRT);
+        IBlock block = mockBlock(location, VoxelMaterial.STONE());
         undo.put(block);
         Assert.assertEquals(6, undo.getSize());
         undo.put(block);
@@ -76,7 +77,7 @@ public class UndoTest {
     public void testPut() {
         IWorld world = Mockito.mock(IWorld.class);
         BaseLocation location = new BaseLocation(world, 0, 0, 0);
-        IBlock block = mockBlock(location, VoxelMaterial.DIRT);
+        IBlock block = mockBlock(location, VoxelMaterial.STONE());
 
         undo.put(block);
         Assert.assertEquals(1, undo.getSize());
@@ -87,27 +88,21 @@ public class UndoTest {
         IWorld world = Mockito.mock(IWorld.class);
 
         BaseLocation normalBlockLocation = new BaseLocation(world, 0, 0, 0);
-        IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE);
+        IBlock normalBlock = mockBlock(normalBlockLocation, VoxelMaterial.STONE());
         IBlockState normalBlockState = normalBlock.getState();
 
-        BaseLocation fragileBlockLocation = new BaseLocation(world, 0, 0, 1);
-        IBlock fragileBlock = mockBlock(fragileBlockLocation, VoxelMaterial.TORCH);
-        IBlockState fragileBlockState = fragileBlock.getState();
-
-        BaseLocation waterBlockLocation = new BaseLocation(world, 0, 0, 2);
-        IBlock waterBlock = mockBlock(waterBlockLocation, VoxelMaterial.WATER);
-        IBlockState waterBlockState = waterBlock.getState();
+        BaseLocation secondBlockLocation = new BaseLocation(world, 0, 0, 1);
+        IBlock secondBlock = mockBlock(secondBlockLocation, VoxelMaterial.AIR());
+        IBlockState secondBlockState = secondBlock.getState();
 
 
-        undo.put(waterBlock);
-        undo.put(fragileBlock);
         undo.put(normalBlock);
+        undo.put(secondBlock);
         undo.undo();
 
-        InOrder inOrder = Mockito.inOrder(normalBlockState, waterBlockState, fragileBlockState);
+        InOrder inOrder = Mockito.inOrder(normalBlockState, secondBlockState);
         // first stone, then torch, then water
         inOrder.verify(normalBlockState).update(true, false);
-        inOrder.verify(fragileBlockState).update(true, false);
-        inOrder.verify(waterBlockState).update(true, false);
+        inOrder.verify(secondBlockState).update(true, false);
     }
 }

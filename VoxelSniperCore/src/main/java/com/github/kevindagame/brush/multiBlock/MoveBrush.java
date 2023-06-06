@@ -60,7 +60,7 @@ public class MoveBrush extends AbstractBrush {
             }
 
             for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
-                addOperation(new BlockOperation(blockWrapper.getLocation(), blockWrapper.getLocation().getBlock().getBlockData(), VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(blockWrapper.getLocation(), blockWrapper.getLocation().getBlock().getBlockData(), VoxelMaterial.AIR().createBlockData()));
             }
             for (final BlockWrapper blockWrapper : selection.getBlockWrappers()) {
                 var block = world.getBlock(blockWrapper.getX() + direction[0], blockWrapper.getY() + direction[1], blockWrapper.getZ() + direction[2]);

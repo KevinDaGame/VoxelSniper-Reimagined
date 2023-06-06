@@ -3,26 +3,26 @@ package com.github.kevindagame.voxelsniperforge.material;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
-
-import java.util.Objects;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class BlockMaterial extends AbstractForgeMaterial {
+import java.util.Objects;
+
+public final class BlockMaterial extends VoxelMaterial {
     private final Block block;
+
+    public BlockMaterial(Block block, String namespace, String key) {
+        super(namespace, key);
+        this.block = block;
+    }
 
     public static VoxelMaterial fromForgeBlock(Block block) {
         var tag = ForgeRegistries.BLOCKS.getKey(block);
-        if (tag == null || block.defaultBlockState().isAir()) return VoxelMaterial.AIR;
+        if (tag == null || block.defaultBlockState().isAir()) return VoxelMaterial.AIR();
         return VoxelMaterial.getMaterial(tag.getNamespace(), tag.getPath());
-    }
-
-    public BlockMaterial(Block block) {
-        this.block = block;
     }
 
     public Block getBlock() {
@@ -56,12 +56,22 @@ public final class BlockMaterial extends AbstractForgeMaterial {
 
     @Override
     public IBlockData createBlockData(String s) {
-       return ForgeBlockData.createNewData(this, s);
+        return ForgeBlockData.createNewData(this, s);
     }
 
     @Override
     public IBlockData createBlockData() {
         return this.createBlockData(null);
+    }
+
+    @Override
+    public boolean isAir() {
+        return block.defaultBlockState().isAir();
+    }
+
+    @Override
+    public boolean isFluid() {
+        return ForgeRegistries.FLUIDS.containsKey(new ResourceLocation(getNamespace(), getKey()));
     }
 
     @Override
@@ -77,14 +87,5 @@ public final class BlockMaterial extends AbstractForgeMaterial {
         return Objects.hash(block);
     }
 
-    @Override
-    public String toString() {
-        return "BlockMaterial[" +
-                "block=" + block + ']';
-    }
 
-    @Override
-    ResourceLocation getResourceLocation() {
-        return ForgeRegistries.BLOCKS.getKey(block);
-    }
 }

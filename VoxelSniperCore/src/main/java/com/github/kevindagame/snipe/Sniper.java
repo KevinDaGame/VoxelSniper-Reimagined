@@ -34,13 +34,13 @@ public class Sniper {
     public Sniper(IPlayer player) {
         this.player = player;
         SnipeTool sniperTool = new SnipeTool(this);
-        sniperTool.assignAction(SnipeAction.ARROW, new VoxelMaterial("arrow"));
-        sniperTool.assignAction(SnipeAction.GUNPOWDER, new VoxelMaterial("gunpowder"));
+        sniperTool.assignAction(SnipeAction.ARROW, VoxelMaterial.getMaterial("arrow"));
+        sniperTool.assignAction(SnipeAction.GUNPOWDER, VoxelMaterial.getMaterial("gunpowder"));
         tools.put(null, sniperTool);
     }
 
     public String getCurrentToolId() {
-        return getToolId((player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR);
+        return getToolId((player.getItemInHand() != null) ? player.getItemInHand() : VoxelMaterial.AIR());
     }
 
     public String getToolId(VoxelMaterial itemInHand) {

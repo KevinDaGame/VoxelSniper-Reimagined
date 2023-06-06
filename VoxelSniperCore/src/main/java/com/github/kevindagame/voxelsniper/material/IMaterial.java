@@ -6,14 +6,18 @@ public interface IMaterial extends Comparable<IMaterial> {
     boolean isSolid();
 
     String getKey();
+    String getNamespace();
 
-    boolean equals(String key);
+    boolean equals(String namespace, String key);
 
     IBlockData createBlockData();
 
-    String getName();
 
     boolean equals(VoxelMaterial material);
+
+    boolean isAir();
+
+    boolean isFluid();
 
     boolean isTransparent();
 

@@ -1,5 +1,6 @@
 package com.github.kevindagame.brush.multiBlock;
 
+import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.brush.AbstractBrush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
@@ -31,8 +32,8 @@ public class GenerateTreeBrush extends AbstractBrush {
     private final HashSet<BaseLocation> placedLocations = new HashSet<>();
     private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
     // If these default values are edited. Remember to change default values in the default preset.
-    private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES;
-    private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD;
+    private VoxelMaterial leavesMaterial = VoxelMaterial.OAK_LEAVES();
+    private VoxelMaterial woodMaterial = VoxelMaterial.OAK_WOOD();
     private boolean rootFloat = false;
     private int startHeight = 0;
     private int rootLength = 9;
@@ -174,7 +175,16 @@ public class GenerateTreeBrush extends AbstractBrush {
                     placedLocations.add(location.getBlock().getLocation());
                     addOperation(new BlockOperation(location.clone(), location.getBlock().getBlockData(), this.woodMaterial.createBlockData()));
                 }
-                List<VoxelMaterial> blocks = Arrays.asList(VoxelMaterial.WATER, VoxelMaterial.SNOW, VoxelMaterial.OAK_LOG, VoxelMaterial.BIRCH_LOG, VoxelMaterial.ACACIA_LOG, VoxelMaterial.DARK_OAK_LOG, VoxelMaterial.SPRUCE_LOG, VoxelMaterial.JUNGLE_LOG);
+                List<VoxelMaterial> blocks = Arrays.asList(
+                        VoxelMaterial.getMaterial("water"),
+                        VoxelMaterial.getMaterial("snow"),
+                        VoxelMaterial.getMaterial("oak_log"),
+                        VoxelMaterial.getMaterial("birch_log"),
+                        VoxelMaterial.getMaterial("acacia_log"),
+                        VoxelMaterial.getMaterial("dark_oak_log"),
+                        VoxelMaterial.getMaterial("spruce_log"),
+                        VoxelMaterial.getMaterial("jungle_log")
+                );
                 // Checks is block below is solid
                 if (blocks.contains(location.getBlock().getRelative(0, -1, 0).getMaterial())) {
                     // Move down if solid.
@@ -408,7 +418,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 VoxelMaterial material = VoxelMaterial.getMaterial(params[1]);
                 if (material == null) throw new IllegalArgumentException();
                 this.leavesMaterial = material;
-                v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getName())));
+                v.sendMessage(Messages.LEAVES_MAT_SET.replace("%leavesMaterial.name%", String.valueOf(this.leavesMaterial.getKey())));
                 return;
             }
 
@@ -417,7 +427,7 @@ public class GenerateTreeBrush extends AbstractBrush {
                 if (material == null) throw new IllegalArgumentException();
 
                 this.woodMaterial = material;
-                v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getName())));
+                v.sendMessage(Messages.WOOD_LOG_MAT_SET.replace("%woodMaterial.name%", String.valueOf(this.woodMaterial.getKey())));
                 return;
             }
         } catch (IllegalArgumentException e) {
@@ -523,8 +533,8 @@ public class GenerateTreeBrush extends AbstractBrush {
         }
 
         if (params[0].equalsIgnoreCase("default")) { // Default settings.
-            this.leavesMaterial = VoxelMaterial.OAK_LEAVES;
-            this.woodMaterial = VoxelMaterial.OAK_WOOD;
+            this.leavesMaterial = VoxelMaterial.OAK_LEAVES();
+            this.woodMaterial = VoxelMaterial.OAK_WOOD();
             this.rootFloat = false;
             this.startHeight = 0;
             this.rootLength = 9;
@@ -577,10 +587,10 @@ public class GenerateTreeBrush extends AbstractBrush {
         argumentValues.put("rootFloat", Utils.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
+        argumentValues.put("wood", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getKey).collect(Collectors.toList()));
 
         // Leaves material variables
-        argumentValues.put("leaves", VoxelMaterial.getMaterials().stream().map(VoxelMaterial::getName).collect(Collectors.toList()));
+        argumentValues.put("leaves", VoxelSniper.voxelsniper.getMaterials().stream().map(VoxelMaterial::getKey).collect(Collectors.toList()));
 
         return argumentValues;
     }

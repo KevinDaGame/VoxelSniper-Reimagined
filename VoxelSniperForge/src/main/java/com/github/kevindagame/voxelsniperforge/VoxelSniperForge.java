@@ -9,35 +9,33 @@ import com.github.kevindagame.voxelsniper.Version;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
-import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
 import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.server.permission.events.PermissionGatherEvent;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(VoxelSniperForge.MODID)
@@ -59,6 +57,7 @@ public class VoxelSniperForge implements IVoxelsniper {
         LOGGER = Logger.getLogger(MODID);
         VoxelSniper.voxelsniper = this;
         VoxelSniperForge.instance = this;
+
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
@@ -160,17 +159,22 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     @Nullable
     @Override
-    public IMaterial getMaterial(VoxelMaterial material) {
-        var key = new ResourceLocation(material.getNamespace(), material.getKey());
-        if (ForgeRegistries.BLOCKS.containsKey(key)) {
-            var item = ForgeRegistries.BLOCKS.getValue(key);
-            return new BlockMaterial(item);
+    public VoxelMaterial getMaterial(String namespace, String key) {
+        var resourceLocation = new ResourceLocation(namespace, key);
+        if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
+            var block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
+            return new BlockMaterial(block, namespace, key);
         }
-        if (ForgeRegistries.ITEMS.containsKey(key)) {
-            var item = ForgeRegistries.ITEMS.getValue(key);
-            return new ItemMaterial(item);
+        if (ForgeRegistries.ITEMS.containsKey(resourceLocation)) {
+            var item = ForgeRegistries.ITEMS.getValue(resourceLocation);
+            return new ItemMaterial(item, namespace, key);
         }
         throw new IllegalArgumentException("Requested material does not exist");
+    }
+
+    @Override
+    public List<VoxelMaterial> getMaterials() {
+        return ForgeRegistries.BLOCKS.getEntries().stream().map(block -> new BlockMaterial(block.getValue(), block.getKey().location().getNamespace(), block.getKey().location().getPath())).collect(Collectors.toList());
     }
 
 }

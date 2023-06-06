@@ -3,7 +3,6 @@ package com.github.kevindagame.voxelsniper;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
-import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,5 +30,7 @@ public interface IVoxelsniper {
     List<String> getOnlinePlayerNames();
 
     @Nullable
-    IMaterial getMaterial(VoxelMaterial material);
+    VoxelMaterial getMaterial(String namespace, String key);
+
+    List<VoxelMaterial> getMaterials();
 }

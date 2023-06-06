@@ -55,7 +55,7 @@ public class Actions {
                 final int oldY = target.getY() + (int) Math.round((oldxyY * cosRoll) - (oldxzZ * sinRoll));
                 final int oldZ = target.getZ() + (int) Math.round((oldxyY * sinRoll) + (oldxzZ * cosRoll));
 
-                final IBlockData oldPosBlockData = world.isInWorldHeight(oldY) ? world.getBlock(oldX, oldY, oldZ).getBlockData() : VoxelMaterial.AIR.createBlockData();
+                final IBlockData oldPosBlockData = world.isInWorldHeight(oldY) ? world.getBlock(oldX, oldY, oldZ).getBlockData() : VoxelMaterial.AIR().createBlockData();
                 final IBlockData newPosBlockData = newPos.getBlock().getBlockData();
 
                 if (!newPosBlockData.matches(oldPosBlockData))

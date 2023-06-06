@@ -4,10 +4,16 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import org.bukkit.Material;
 
-public record SpigotMaterial(Material material) implements IMaterial {
+public class SpigotMaterial extends VoxelMaterial {
+    private final Material material;
+
+    public SpigotMaterial(Material material) {
+        super(material.getKey().getNamespace(), material.getKey().getKey());
+        this.material = material;
+    }
 
     public static VoxelMaterial fromSpigotMaterial(Material type) {
-        if (type == null || type.isAir()) return VoxelMaterial.AIR;
+        if (type == null || type.isAir()) return VoxelMaterial.AIR();
         return VoxelMaterial.getMaterial(type.getKey().getNamespace(), type.getKey().getKey());
     }
 
@@ -22,23 +28,23 @@ public record SpigotMaterial(Material material) implements IMaterial {
     }
 
     @Override
-    public boolean equals(String key) {
-        return getKey().equals(key);
-    }
-
-    @Override
     public IBlockData createBlockData() {
         return SpigotBlockData.fromSpigotData(material.createBlockData());
     }
 
     @Override
-    public String getName() {
-        return material.name();
+    public boolean equals(VoxelMaterial material) {
+        return this.material.getKey().getNamespace().equals(material.getNamespace()) && this.material.getKey().getKey().equals(material.getKey());
     }
 
     @Override
-    public boolean equals(VoxelMaterial material) {
-        return this.material.getKey().getNamespace().equals(material.getNamespace()) && this.material.getKey().getKey().equals(material.getKey());
+    public boolean isAir() {
+        return material.isAir();
+    }
+
+    @Override
+    public boolean isFluid() {
+        return getKey().equals("water") || getKey().equals("lava");
     }
 
     @Override
@@ -59,5 +65,9 @@ public record SpigotMaterial(Material material) implements IMaterial {
     @Override
     public IBlockData createBlockData(String s) {
         return SpigotBlockData.fromSpigotData(material.createBlockData(s));
+    }
+
+    public Material getMaterial() {
+        return material;
     }
 }

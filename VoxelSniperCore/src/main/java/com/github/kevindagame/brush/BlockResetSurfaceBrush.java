@@ -8,7 +8,7 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This brush only looks for solid blocks, and then changes those plus any air blocks touching them. If it works, this brush should be faster than the original
@@ -29,38 +29,38 @@ import java.util.ArrayList;
  */
 public class BlockResetSurfaceBrush extends AbstractBrush {
 
-    private static final ArrayList<VoxelMaterial> DENIED_UPDATES = new ArrayList<>();
-
-    static {
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_WALL_SIGN);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CHEST);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.FURNACE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_TORCH);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REDSTONE_WIRE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.REPEATER);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.IRON_DOOR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.ACACIA_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.BIRCH_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.DARK_OAK_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.JUNGLE_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.OAK_FENCE_GATE);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.AIR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.VOID_AIR);
-        BlockResetSurfaceBrush.DENIED_UPDATES.add(VoxelMaterial.CAVE_AIR);
+    private static List<VoxelMaterial> getDeniedUpdates() {
+        return List.of(
+                VoxelMaterial.getMaterial("acacia_sign"),
+                VoxelMaterial.getMaterial("birch_sign"),
+                VoxelMaterial.getMaterial("dark_oak_sign"),
+                VoxelMaterial.getMaterial("jungle_sign"),
+                VoxelMaterial.getMaterial("oak_sign"),
+                VoxelMaterial.getMaterial("acacia_wall_sign"),
+                VoxelMaterial.getMaterial("birch_wall_sign"),
+                VoxelMaterial.getMaterial("dark_oak_wall_sign"),
+                VoxelMaterial.getMaterial("jungle_wall_sign"),
+                VoxelMaterial.getMaterial("oak_wall_sign"),
+                VoxelMaterial.getMaterial("chest"),
+                VoxelMaterial.getMaterial("furnace"),
+                VoxelMaterial.getMaterial("redstone_torch"),
+                VoxelMaterial.getMaterial("redstone_wire"),
+                VoxelMaterial.getMaterial("repeater"),
+                VoxelMaterial.getMaterial("acacia_door"),
+                VoxelMaterial.getMaterial("birch_door"),
+                VoxelMaterial.getMaterial("dark_oak_door"),
+                VoxelMaterial.getMaterial("jungle_door"),
+                VoxelMaterial.getMaterial("oak_door"),
+                VoxelMaterial.getMaterial("iron_door"),
+                VoxelMaterial.getMaterial("acacia_fence_gate"),
+                VoxelMaterial.getMaterial("birch_fence_gate"),
+                VoxelMaterial.getMaterial("dark_oak_fence_gate"),
+                VoxelMaterial.getMaterial("jungle_fence_gate"),
+                VoxelMaterial.getMaterial("oak_fence_gate"),
+                VoxelMaterial.AIR(),
+                VoxelMaterial.getMaterial("void_air"),
+                VoxelMaterial.getMaterial("cave_air")
+        );
     }
 
 
@@ -71,7 +71,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetSurfaceBrush.DENIED_UPDATES.contains(block.getMaterial())) {
+                    if (BlockResetSurfaceBrush.getDeniedUpdates().contains(block.getMaterial())) {
                         continue;
                     }
 
