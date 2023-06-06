@@ -1,8 +1,11 @@
 
 VoxelSniper Reimagined
 ============
-The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), most Bukkit-based server distributions and [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/). 
-**Please note: Our Forge version is in beta**
+The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), 
+most Bukkit-based server distributions and [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/).   
+
+**Please note: Our Forge version is in beta**  
+
 Discord 
 -------
 For the latest updates, and quick responses to questions, join our [discord server](https://discord.com/invite/YDjykYsAFF)!
