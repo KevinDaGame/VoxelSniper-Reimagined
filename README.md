@@ -1,7 +1,10 @@
 
 VoxelSniper Reimagined
 ============
-The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), and most Bukkit-based server distributions. 
+The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), 
+most Bukkit-based server distributions and [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/).   
+
+**Please note: Our Forge version is in beta**  
 
 Discord 
 -------
@@ -9,9 +12,13 @@ For the latest updates, and quick responses to questions, join our [discord serv
 
 Minecraft Version
 ------------------
-VoxelSniper is being built against the Spigot 1.19 API.
+VoxelSniper is being built against the Spigot 1.19 API, and the latest Forge version.
 
 What version do I pick?
+
+### Spigot/Paper
+<details>
+  <summary>Spigot versions</summary>
 
 | Minecraft version | VoxelSniper version                                                                | Java version   |
 |-------------------|------------------------------------------------------------------------------------|----------------|
@@ -19,8 +26,21 @@ What version do I pick?
 | *1.17*\*          | [8.3.1](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.1) | Java 16        |
 | 1.18              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
 | 1.19              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
-
 \* Please note that we will not provide support when using Minecraft 1.16 or 1.17
+</details>
+
+### Forge
+
+<details>
+  <summary>Forge versions</summary>
+
+| Minecraft version | Voxelsniper version                                                             |
+|-------------------|---------------------------------------------------------------------------------|
+| 1.16, 1.17, 1.18  | Not available                                                                   |
+| 1.19.4            | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest) |
+
+</details>
+
 
 Compilation
 -----------
