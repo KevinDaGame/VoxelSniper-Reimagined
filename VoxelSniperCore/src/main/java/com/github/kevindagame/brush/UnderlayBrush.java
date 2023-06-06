@@ -90,7 +90,7 @@ public class UnderlayBrush extends PerformerBrush {
             return true;
         }
 
-        return VoxelMaterial.getOVERRIDABLE_MATERIALS().contains(material);
+        return VoxelMaterial.getOverridableMaterials().contains(material);
     }
 
     @Override

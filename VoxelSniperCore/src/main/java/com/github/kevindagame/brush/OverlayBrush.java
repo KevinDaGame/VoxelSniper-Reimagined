@@ -103,7 +103,7 @@ public class OverlayBrush extends PerformerBrush {
         if (allBlocks && !(material.isAir())) {
             return true;
         }
-        return VoxelMaterial.getOVERRIDABLE_MATERIALS().contains(material);
+        return VoxelMaterial.getOverridableMaterials().contains(material);
     }
 
     @Override

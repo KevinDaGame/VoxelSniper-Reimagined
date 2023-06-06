@@ -42,7 +42,7 @@ public abstract class VoxelMaterial implements IMaterial {
         return getMaterial("minecraft", "oak_leaves");
     }
 
-    public static List<VoxelMaterial> getOVERRIDABLE_MATERIALS() {
+    public static List<VoxelMaterial> getOverridableMaterials() {
 
         return Arrays.asList(
                 VoxelMaterial.STONE(),

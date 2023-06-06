@@ -8,7 +8,6 @@ import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#eraser-brush">...</a>
@@ -16,7 +15,7 @@ import java.util.Set;
  * @author Voxel
  */
 public class EraserBrush extends AbstractBrush {
-    private static List<VoxelMaterial> getEXCLUSIVE_MATERIALS() {
+    private static List<VoxelMaterial> getExclusiveMaterials() {
         return List.of(
                 VoxelMaterial.AIR(),
                 VoxelMaterial.getMaterial("cave_air"),
@@ -31,10 +30,6 @@ public class EraserBrush extends AbstractBrush {
         );
     }
 
-    private static Set<VoxelMaterial> getEXCLUSIVE_LIQUIDS() {
-        return Set.of(
-            VoxelMaterial.WATER(), VoxelMaterial.LAVA());
-    }
 
 
     private void doErase(final SnipeData v) {
@@ -42,8 +37,8 @@ public class EraserBrush extends AbstractBrush {
         var positions = Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize());
         for (var pos : positions) {
             var currentBlock = pos.getBlock();
-            if (getEXCLUSIVE_MATERIALS().contains(currentBlock.getMaterial())
-                    || (getSnipeAction() == SnipeAction.GUNPOWDER && getEXCLUSIVE_LIQUIDS().contains(currentBlock.getMaterial()))) {
+            if (getExclusiveMaterials().contains(currentBlock.getMaterial())
+                    || (getSnipeAction() == SnipeAction.GUNPOWDER && currentBlock.getMaterial().isFluid())) {
                 continue;
             }
             addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR().createBlockData()));

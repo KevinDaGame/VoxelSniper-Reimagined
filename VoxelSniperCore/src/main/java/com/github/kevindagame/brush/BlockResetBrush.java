@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class BlockResetBrush extends AbstractBrush {
 
-    private static List<VoxelMaterial> getDENIED_UPDATES() {
+    private static List<VoxelMaterial> getDeniedUpdates() {
         return Arrays.asList(
                 VoxelMaterial.getMaterial("acacia_sign"),
                 VoxelMaterial.getMaterial("birch_sign"),
@@ -59,7 +59,7 @@ public class BlockResetBrush extends AbstractBrush {
 
     private void applyBrush(final SnipeData v) {
         addOperations(Shapes.voxel(this.getTargetBlock().getLocation(), v.getBrushSize()).stream().map(BaseLocation::getBlock)
-                .filter(block -> BlockResetBrush.getDENIED_UPDATES().contains(block.getMaterial())).map(b -> new BlockOperation(b.getLocation(), b.getBlockData(), b.getBlockData().getMaterial().createBlockData())).collect(Collectors.toList()));
+                .filter(block -> BlockResetBrush.getDeniedUpdates().contains(block.getMaterial())).map(b -> new BlockOperation(b.getLocation(), b.getBlockData(), b.getBlockData().getMaterial().createBlockData())).collect(Collectors.toList()));
     }
 
     @Override

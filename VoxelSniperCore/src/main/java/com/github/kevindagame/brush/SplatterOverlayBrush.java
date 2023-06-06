@@ -103,7 +103,7 @@ public class SplatterOverlayBrush extends SplatterBrushBase {
             return true;
         }
 
-        return VoxelMaterial.getOVERRIDABLE_MATERIALS().contains(material);
+        return VoxelMaterial.getOverridableMaterials().contains(material);
     }
 
     @Override

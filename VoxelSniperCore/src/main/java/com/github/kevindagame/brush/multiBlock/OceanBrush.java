@@ -30,7 +30,7 @@ public class OceanBrush extends AbstractBrush {
     /**
      * This list is incomplete and will be removed in the future.
      */
-    private static List<VoxelMaterial> getEXCLUDED_MATERIALS() {
+    private static List<VoxelMaterial> getExcludedMaterials() {
         return List.of(
                 VoxelMaterial.AIR(),
                 VoxelMaterial.getMaterial("cave_air"),
@@ -96,7 +96,7 @@ public class OceanBrush extends AbstractBrush {
     private int getHeight(final int bx, final int bz) {
         for (int y = this.getWorld().getHighestBlockYAt(bx, bz); y > this.getMinHeight(); y--) {
             final VoxelMaterial material = getWorld().getBlock(bx, y, bz).getMaterial();
-            if (!getEXCLUDED_MATERIALS().contains(material)) {
+            if (!getExcludedMaterials().contains(material)) {
                 return y;
             }
         }

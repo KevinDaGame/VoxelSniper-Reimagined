@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class BlockResetSurfaceBrush extends AbstractBrush {
 
-    private static List<VoxelMaterial> getDENIED_UPDATES() {
+    private static List<VoxelMaterial> getDeniedUpdates() {
         return List.of(
                 VoxelMaterial.getMaterial("acacia_sign"),
                 VoxelMaterial.getMaterial("birch_sign"),
@@ -71,7 +71,7 @@ public class BlockResetSurfaceBrush extends AbstractBrush {
             for (int x = -v.getBrushSize(); x <= v.getBrushSize(); x++) {
                 for (int y = -v.getBrushSize(); y <= v.getBrushSize(); y++) {
                     IBlock block = world.getBlock(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                    if (BlockResetSurfaceBrush.getDENIED_UPDATES().contains(block.getMaterial())) {
+                    if (BlockResetSurfaceBrush.getDeniedUpdates().contains(block.getMaterial())) {
                         continue;
                     }
 
