@@ -2,20 +2,14 @@ package com.github.kevindagame.voxelsniper.entity.player;
 
 import com.github.kevindagame.snipe.Sniper;
 import com.github.kevindagame.voxelsniper.SpigotVoxelSniper;
-import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.block.SpigotBlock;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.SpigotEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.SpigotLocation;
-import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
-import net.kyori.adventure.audience.MessageType;
-import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -25,9 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class SpigotPlayer extends SpigotEntity implements IPlayer {
     private final Player player;
@@ -86,16 +78,10 @@ public class SpigotPlayer extends SpigotEntity implements IPlayer {
     }
 
     @Override
-    public IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance) {
-        Set<Material> materials = transparent != null ? transparent.stream().map(m -> ((SpigotMaterial) m.getIMaterial()).material()).collect(Collectors.toSet()) : null;
-        return new SpigotBlock(player.getTargetBlock(materials, maxDistance));
-    }
-
-    @Override
     public VoxelMaterial getItemInHand() {
         var item = player.getInventory().getItemInMainHand();
         VoxelMaterial mat = VoxelMaterial.getMaterial(item.getType().getKey().getKey());
-        return mat != null ? mat : VoxelMaterial.AIR;
+        return mat != null ? mat : VoxelMaterial.AIR();
     }
 
     @Override

@@ -32,7 +32,7 @@ public class pComboMatNoPhysics extends BasePerformer {
 
     @Override
     public boolean test(IBlock b) {
-        return b.getMaterial() == targetMaterial;
+        return b.getMaterial().equals(targetMaterial);
     }
 
     @Override

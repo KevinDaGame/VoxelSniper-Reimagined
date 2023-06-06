@@ -34,8 +34,6 @@ public interface IPlayer extends IEntity {
 
     IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity);
 
-    IBlock getTargetBlock(Set<VoxelMaterial> transparent, int maxDistance);
-
     VoxelMaterial getItemInHand();
 
     @NotNull

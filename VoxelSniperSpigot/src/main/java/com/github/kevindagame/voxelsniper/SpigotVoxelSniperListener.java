@@ -23,7 +23,7 @@ import java.util.UUID;
 /**
  * @author Voxel
  */
-public class VoxelSniperListener implements Listener {
+public class SpigotVoxelSniperListener implements Listener {
 
     private static final String SNIPER_PERMISSION = "voxelsniper.sniper";
     private final SpigotVoxelSniper plugin;
@@ -32,7 +32,7 @@ public class VoxelSniperListener implements Listener {
     /**
      * @param plugin The plugin
      */
-    public VoxelSniperListener(final SpigotVoxelSniper plugin) {
+    public SpigotVoxelSniperListener(final SpigotVoxelSniper plugin) {
         this.plugin = plugin;
     }
 

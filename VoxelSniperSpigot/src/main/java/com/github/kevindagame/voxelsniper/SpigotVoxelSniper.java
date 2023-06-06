@@ -13,9 +13,9 @@ import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsersCounter;
 import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredIntegration;
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
-import com.github.kevindagame.voxelsniper.material.IMaterial;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.permissions.SpigotPermissionManager;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -33,11 +33,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 /**
  * SPIGOT extension point.
@@ -47,7 +45,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     private static SpigotVoxelSniper instance;
     private static BukkitAudiences adventure;
 
-    private final VoxelSniperListener voxelSniperListener = new VoxelSniperListener(this);
+    private final SpigotVoxelSniperListener voxelSniperListener = new SpigotVoxelSniperListener(this);
     private final Map<String, IWorld> worlds = new HashMap<>();
     private final Map<UUID, SpigotPlayer> players = new HashMap<>();
     private VoxelSniperConfiguration voxelSniperConfiguration;
@@ -70,6 +68,8 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         SpigotVoxelSniper.instance = this;
 
         this.fileHandler = new SpigotFileHandler(this);
+
+        SpigotPermissionManager.register();
 
         // Initialize messages
         Messages.load(this);
@@ -170,10 +170,17 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     }
 
     @Override
-    public IMaterial getMaterial(VoxelMaterial material) {
-        Material mat = Material.matchMaterial(material.getKey());
+    public VoxelMaterial getMaterial(String namespace, String key) {
+        Material mat = namespace.equals("minecraft") ?
+                Material.getMaterial(key.toUpperCase()) :
+                Material.getMaterial(namespace.toUpperCase() + "_" + key.toUpperCase()); // In case of arclight, which uses the syntax "<NAMESPACE>_<KEY>"
         if (mat != null) return new SpigotMaterial(mat);
         return null;
+    }
+
+    @Override
+    public List<VoxelMaterial> getMaterials() {
+        return Arrays.stream(Material.values()).map(SpigotMaterial::new).collect(Collectors.toList());
     }
 
     @Override

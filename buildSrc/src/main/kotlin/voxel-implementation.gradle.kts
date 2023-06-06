@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":VoxelSniperCore"))
+    shadow(project(":VoxelSniperCore"))
 }
 
 

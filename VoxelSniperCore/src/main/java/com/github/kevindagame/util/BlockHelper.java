@@ -89,12 +89,12 @@ public class BlockHelper {
      * @param choice Chosen index to set the painting to
      */
     public static void painting(final IPlayer p, final boolean auto, final boolean back, final int choice) {
-        BaseLocation targetLocation = p.getTargetBlock(null, 4).getLocation();
+        BaseLocation targetLocation = new BlockHelper(p).getTargetBlock().getLocation();
         IChunk paintingChunk = targetLocation.getChunk();
         double bestDistanceMatch = 50.0;
         IPainting bestMatch = null;
         for (IEntity entity : paintingChunk.getEntities()) {
-            if (entity.getType() == VoxelEntityType.PAINTING) {
+            if (entity.getType().equals(VoxelEntityType.PAINTING)) {
                 double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;

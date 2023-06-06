@@ -16,8 +16,6 @@ import com.github.kevindagame.voxelsniper.events.player.PlayerSnipeEvent
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.world.IWorld
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * Abstract implementation of the [IBrush] interface.
@@ -238,7 +236,7 @@ abstract class AbstractBrush : IBrush {
      * @return Type ID of Block at given coordinates in the world of the targeted Block.
      */
     fun getBlockMaterialAt(x: Int, y: Int, z: Int): VoxelMaterial {
-        return if (isInWorldHeight(y)) world.getBlock(x, y, z).material else VoxelMaterial.AIR
+        return if (isInWorldHeight(y)) world.getBlock(x, y, z).material else VoxelMaterial.AIR()
     }
 
     /**
@@ -250,7 +248,7 @@ abstract class AbstractBrush : IBrush {
      * @return Block Data Value of Block at given coordinates in the world of the targeted Block.
      */
     protected fun getBlockDataAt(x: Int, y: Int, z: Int): IBlockData {
-        return if (isInWorldHeight(y)) world.getBlock(x, y, z).blockData else VoxelMaterial.AIR.createBlockData()
+        return if (isInWorldHeight(y)) world.getBlock(x, y, z).blockData else VoxelMaterial.AIR().createBlockData()
     }
 
     /**

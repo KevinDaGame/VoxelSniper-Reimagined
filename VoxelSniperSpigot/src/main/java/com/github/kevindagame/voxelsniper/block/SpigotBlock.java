@@ -23,20 +23,20 @@ public class SpigotBlock extends AbstractBlock {
     @Override
     public void setMaterial(VoxelMaterial material) {
         this.material = material;
-        block.setType(((SpigotMaterial) material.getIMaterial()).material());
+        block.setType(((SpigotMaterial) material).getMaterial());
     }
 
     @Override
     public void setMaterial(VoxelMaterial material, boolean applyPhysics) {
         this.material = material;
-        block.setType(((SpigotMaterial) material.getIMaterial()).material(), applyPhysics);
+        block.setType(((SpigotMaterial) material).getMaterial(), applyPhysics);
     }
 
     @Override
     @Nullable
     public BlockFace getFace(IBlock block) {
         var face = this.block.getFace(((SpigotBlock) block).block);
-        return face == null ? null : BlockFace.valueOf(face.toString());
+        return face == null ? null : BlockFace.valueOf(face.name());
     }
 
     @Override
@@ -46,11 +46,13 @@ public class SpigotBlock extends AbstractBlock {
 
     @Override
     public void setBlockData(IBlockData blockData) {
+        this.material = blockData.getMaterial();
         block.setBlockData(((SpigotBlockData) blockData).getBlockData());
     }
 
     @Override
     public void setBlockData(IBlockData blockData, boolean applyPhysics) {
+        this.material = blockData.getMaterial();
         block.setBlockData(((SpigotBlockData) blockData).getBlockData(), applyPhysics);
     }
 

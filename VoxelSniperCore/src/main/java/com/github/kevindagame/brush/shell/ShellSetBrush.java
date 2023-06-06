@@ -47,13 +47,13 @@ public class ShellSetBrush extends ShellBrushBase {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
                         for (int z = lowZ; z <= highZ; z++) {
-                            if (this.getWorld().getBlock(x, y, z).getMaterial() == v.getReplaceMaterial()) {
-                            } else if (this.getWorld().getBlock(x + 1, y, z).getMaterial() == v.getReplaceMaterial()) {
-                            } else if (this.getWorld().getBlock(x - 1, y, z).getMaterial() == v.getReplaceMaterial()) {
-                            } else if (this.getWorld().getBlock(x, y, z + 1).getMaterial() == v.getReplaceMaterial()) {
-                            } else if (this.getWorld().getBlock(x, y, z - 1).getMaterial() == v.getReplaceMaterial()) {
-                            } else if (this.getWorld().getBlock(x, y + 1, z).getMaterial() == v.getReplaceMaterial()) {
-                            } else if (this.getWorld().getBlock(x, y - 1, z).getMaterial() == v.getReplaceMaterial()) {
+                            if (this.getWorld().getBlock(x, y, z).getMaterial().equals(v.getReplaceMaterial())) {
+                            } else if (this.getWorld().getBlock(x + 1, y, z).getMaterial().equals(v.getReplaceMaterial())) {
+                            } else if (this.getWorld().getBlock(x - 1, y, z).getMaterial().equals(v.getReplaceMaterial())) {
+                            } else if (this.getWorld().getBlock(x, y, z + 1).getMaterial().equals(v.getReplaceMaterial())) {
+                            } else if (this.getWorld().getBlock(x, y, z - 1).getMaterial().equals(v.getReplaceMaterial())) {
+                            } else if (this.getWorld().getBlock(x, y + 1, z).getMaterial().equals(v.getReplaceMaterial())) {
+                            } else if (this.getWorld().getBlock(x, y - 1, z).getMaterial().equals(v.getReplaceMaterial())) {
                             } else {
                                 blocks.add(this.getWorld().getBlock(x, y, z));
                             }

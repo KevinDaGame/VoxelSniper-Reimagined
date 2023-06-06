@@ -10,15 +10,10 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <a href="https://github.com/KevinDaGame/VoxelSniper-Reimagined/wiki/Brushes#erode-brush">...</a>
@@ -85,7 +80,7 @@ public class ErodeBrush extends AbstractBrush {
                         }
 
                         if (count >= erosionPreset.getErosionFaces()) {
-                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), VoxelMaterial.AIR), currentIteration);
+                            blockChangeTracker.put(currentPosition, new BlockWrapper(currentBlock.getBlock(), VoxelMaterial.AIR()), currentIteration);
                         }
                     }
                 }
@@ -125,7 +120,7 @@ public class ErodeBrush extends AbstractBrush {
                             }
                         }
 
-                        BlockWrapper currentMaterial = new BlockWrapper(null, VoxelMaterial.AIR);
+                        BlockWrapper currentMaterial = new BlockWrapper(null, VoxelMaterial.AIR());
                         int amount = 0;
 
                         for (final BlockWrapper wrapper : blockCount.keySet()) {

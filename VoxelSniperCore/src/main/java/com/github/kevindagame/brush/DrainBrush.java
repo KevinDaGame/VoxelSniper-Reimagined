@@ -1,11 +1,7 @@
 package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
-import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.RotationAxis;
-import com.github.kevindagame.util.Shapes;
-import com.github.kevindagame.util.Utils;
-import com.github.kevindagame.util.VoxelMessage;
+import com.github.kevindagame.util.*;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.blockdata.waterlogged.IWaterlogged;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
@@ -32,7 +28,7 @@ public class DrainBrush extends AbstractBrush {
             var block = pos.getBlock();
             var blockData = block.getBlockData();
             if (blockData.getMaterial().isFluid()) {
-                addOperation(new BlockOperation(pos, blockData, VoxelMaterial.AIR.createBlockData()));
+                addOperation(new BlockOperation(pos, blockData, VoxelMaterial.AIR().createBlockData()));
             } else if (blockData instanceof IWaterlogged waterlogged && waterlogged.isWaterlogged()) {
                 var newData = (IWaterlogged) waterlogged.getCopy();
                 newData.setWaterlogged(false);
