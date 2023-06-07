@@ -12,7 +12,7 @@ For the latest updates, and quick responses to questions, join our [discord serv
 
 Minecraft Version
 ------------------
-VoxelSniper is being built against the Spigot 1.19 API, and the latest Forge version.
+VoxelSniper is being built against the Spigot 1.20 API, and the latest Forge version.
 
 What version do I pick?
 
@@ -26,6 +26,7 @@ What version do I pick?
 | *1.17*\*          | [8.3.1](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.3.1) | Java 16        |
 | 1.18              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
 | 1.19              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
+| 1.20              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)    | Java 17-latest |
 \* Please note that we will not provide support when using Minecraft 1.16 or 1.17
 </details>
 
@@ -38,6 +39,7 @@ What version do I pick?
 |-------------------|---------------------------------------------------------------------------------|
 | 1.16, 1.17, 1.18  | Not available                                                                   |
 | 1.19.4            | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest) |
+| 1.20              | Coming soon                                                                     |
 
 </details>
 

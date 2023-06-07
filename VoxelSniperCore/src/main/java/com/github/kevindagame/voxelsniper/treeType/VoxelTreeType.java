@@ -92,7 +92,8 @@ public enum VoxelTreeType {
     /**
      * Tall mangrove tree
      */
-    TALL_MANGROVE(Version.V1_19);
+    TALL_MANGROVE(Version.V1_19),
+    CHERRY(Version.V1_20);
 
     private final Version version;
 
