@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") // newest worldguard that supports 1.16.5
+    compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
     compileOnly("com.plotsquared:PlotSquared-Core")
 
     shadow(platform("com.intellectualsites.bom:bom-1.18.x:1.20"))
