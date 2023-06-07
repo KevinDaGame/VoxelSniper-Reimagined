@@ -73,6 +73,7 @@ public record VoxelBiome(String namespace, String key, Version version) {
     public static VoxelBiome FROZEN_PEAKS = register("frozen_peaks", Version.V1_18);
     public static VoxelBiome JAGGED_PEAKS = register("jagged_peaks", Version.V1_18);
     public static VoxelBiome STONY_PEAKS = register("stony_peaks", Version.V1_18);
+    public static VoxelBiome CHERRY_GROVE = register("cherry_grove", Version.V1_20);
 
     public VoxelBiome(String key) {
         this(DEFAULT_NAMESPACE, key, Version.V1_16);

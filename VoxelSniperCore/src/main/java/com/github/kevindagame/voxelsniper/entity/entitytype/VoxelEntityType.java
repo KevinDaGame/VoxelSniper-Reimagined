@@ -128,6 +128,8 @@ public record VoxelEntityType(String namespace, String key, Version version) {
     public static VoxelEntityType FISHING_HOOK = register("fishing_bobber");
     public static VoxelEntityType LIGHTNING = register("lightning_bolt");
     public static VoxelEntityType PLAYER = register("player");
+    public static VoxelEntityType SNIFFER = register("sniffer", Version.V1_20);
+    public static VoxelEntityType CAMEL = register("camel", Version.V1_20);
 
     public VoxelEntityType(String key) {
         this(DEFAULT_NAMESPACE, key, Version.V1_16);
