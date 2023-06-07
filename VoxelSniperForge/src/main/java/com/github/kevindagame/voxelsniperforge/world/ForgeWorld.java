@@ -151,11 +151,6 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     }
 
     @Override
-    public Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
     public VoxelBiome getBiome(BaseLocation location) {
         var biome = level.getBiome(new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
         var biomeId = biome.unwrapKey().get().location();

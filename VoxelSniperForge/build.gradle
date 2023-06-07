@@ -7,7 +7,7 @@ plugins {
 
 description='VoxelSniperForge'
 ext {
-    platform = "forge"
+    platform = "forge-beta"
 }
 
 java {

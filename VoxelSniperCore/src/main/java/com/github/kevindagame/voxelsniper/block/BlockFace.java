@@ -48,4 +48,28 @@ public enum BlockFace {
         return this.modZ;
     }
 
+    public BlockFace opposite() {
+        return switch (this) {
+            case NORTH -> SOUTH;
+            case EAST -> WEST;
+            case SOUTH -> NORTH;
+            case WEST -> EAST;
+            case UP -> DOWN;
+            case DOWN -> UP;
+            case NORTH_EAST -> SOUTH_WEST;
+            case NORTH_WEST -> SOUTH_EAST;
+            case SOUTH_EAST -> NORTH_WEST;
+            case SOUTH_WEST -> NORTH_EAST;
+            case WEST_NORTH_WEST -> EAST_SOUTH_EAST;
+            case NORTH_NORTH_WEST -> SOUTH_SOUTH_EAST;
+            case NORTH_NORTH_EAST -> SOUTH_SOUTH_WEST;
+            case EAST_NORTH_EAST -> WEST_SOUTH_WEST;
+            case EAST_SOUTH_EAST -> WEST_NORTH_WEST;
+            case SOUTH_SOUTH_EAST -> NORTH_NORTH_WEST;
+            case SOUTH_SOUTH_WEST -> NORTH_NORTH_EAST;
+            case WEST_SOUTH_WEST -> EAST_NORTH_EAST;
+            case SELF -> SELF;
+        };
+    }
+
 }
