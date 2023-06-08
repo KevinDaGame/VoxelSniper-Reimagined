@@ -6,6 +6,7 @@ import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -45,4 +46,9 @@ public interface IVoxelsniper {
     VoxelEntityType getEntityType(String namespace, String key);
 
     List<VoxelEntityType> getEntityTypes();
+
+    @Nullable
+    VoxelTreeType getTreeType(String namespace, String key);
+
+    List<VoxelTreeType> getTreeTypes();
 }

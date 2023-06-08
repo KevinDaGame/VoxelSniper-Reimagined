@@ -18,6 +18,7 @@ import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardInteg
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.permissions.SpigotPermissionManager;
+import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -207,6 +208,25 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         var entityTypes = new ArrayList<VoxelEntityType>();
         Registry.ENTITY_TYPE.forEach(entityType -> entityTypes.add(new VoxelEntityType(entityType.getKey().getNamespace(), entityType.getKey().getKey())));
         return entityTypes;
+    }
+
+    @Nullable
+    @Override
+    public VoxelTreeType getTreeType(String namespace, String key) {
+        try {
+            var treeType = namespace.equals("minecraft") ?
+                    TreeType.valueOf(key.toUpperCase()) :
+                    TreeType.valueOf(namespace.toUpperCase() + "_" + key.toUpperCase()); // In case of arclight, which uses the syntax "<NAMESPACE>_<KEY>"
+            //it'll be either non null or throw, so we know that the namespace + key are valid
+            return new VoxelTreeType(namespace, key);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<VoxelTreeType> getTreeTypes() {
+        return Arrays.stream(TreeType.values()).map(treeType -> new VoxelTreeType("minecraft", treeType.name())).collect(Collectors.toList());
     }
 
     @Override

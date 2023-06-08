@@ -12,6 +12,7 @@ import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniperforge.entity.player.ForgePlayer;
 import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
@@ -200,6 +201,17 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Override
     public List<VoxelEntityType> getEntityTypes() {
         return ForgeRegistries.ENTITY_TYPES.getEntries().stream().map(entityType -> new VoxelEntityType(entityType.getKey().location().getNamespace(), entityType.getKey().location().getPath())).collect(Collectors.toList());
+    }
+
+    @Nullable
+    @Override
+    public VoxelTreeType getTreeType(String namespace, String key) {
+        return ForgeRegistries.TREE_DECORATOR_TYPES.containsKey(new ResourceLocation(namespace, key)) ? new VoxelTreeType(namespace, key) : null;
+    }
+
+    @Override
+    public List<VoxelTreeType> getTreeTypes() {
+        return ForgeRegistries.TREE_DECORATOR_TYPES.getEntries().stream().map(treeType -> new VoxelTreeType(treeType.getKey().location().getNamespace(), treeType.getKey().location().getPath())).collect(Collectors.toList());
     }
 
 }
