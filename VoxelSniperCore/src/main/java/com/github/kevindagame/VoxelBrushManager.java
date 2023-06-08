@@ -366,7 +366,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData treeSnipeBrush() {
-        return new BrushBuilder().name("Treesnipe").alias("t", "treesnipe").setSupplier(TreeSnipeBrush::new).setPermission("voxelsniper.brush.t").build();
+        return new BrushBuilder().name("Treesnipe").alias("t", "treesnipe").setSupplier(TreeSnipeBrush::new).setPermission("voxelsniper.brush.treesnipe").build();
     }
 
     private static BrushData triangleBrush() {
