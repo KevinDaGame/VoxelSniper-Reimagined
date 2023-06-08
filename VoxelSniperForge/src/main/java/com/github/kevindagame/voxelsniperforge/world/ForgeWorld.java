@@ -77,8 +77,7 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     @Override
     public List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z) {
         var aabb = new AABB(location.getX()-x, location.getY()-y, location.getZ()-z, location.getX()+x, location.getY()+y, location.getZ()+z);
-        List<Entity> notchEntityList = this.level.getEntities(null, aabb);
-        return notchEntityList.stream().map(ForgeEntity::fromForgeEntity).toList();
+        return this.level.getEntities(null, aabb).stream().map(ForgeEntity::fromForgeEntity).toList();
     }
 
     @Override
