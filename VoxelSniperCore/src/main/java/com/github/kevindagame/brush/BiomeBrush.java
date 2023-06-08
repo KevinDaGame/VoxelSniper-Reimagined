@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class BiomeBrush extends AbstractBrush {
 
-    private VoxelBiome selectedBiome = VoxelBiome.PLAINS;
+    private VoxelBiome selectedBiome = VoxelBiome.PLAINS();
 
     private void biome(final SnipeData v) {
         final int brushSize = v.getBrushSize();
@@ -62,18 +62,19 @@ public class BiomeBrush extends AbstractBrush {
             return;
         }
 
-        try {
-            this.selectedBiome = VoxelBiome.getBiome(params[0].toLowerCase());
-            v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
-        } catch (IllegalArgumentException e) {
+        var biome = VoxelBiome.getBiome(params[0].toLowerCase());
+        if (biome == null) {
             v.sendMessage(Messages.BIOME_DOES_NOT_EXIST);
+            return;
         }
+        this.selectedBiome = biome;
+        v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
     }
 
     @NotNull
     @Override
     public List<String> registerArguments() {
 
-        return VoxelBiome.BIOMES.values().stream().map(VoxelBiome::getKey).collect(Collectors.toList());
+        return VoxelBiome.getBiomes().stream().map(VoxelBiome::key).collect(Collectors.toList());
     }
 }

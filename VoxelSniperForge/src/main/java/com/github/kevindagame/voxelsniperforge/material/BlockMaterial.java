@@ -71,7 +71,7 @@ public final class BlockMaterial extends VoxelMaterial {
 
     @Override
     public boolean isFluid() {
-        return ForgeRegistries.FLUIDS.containsKey(new ResourceLocation(getNamespace(), getKey()));
+        return ForgeRegistries.FLUIDS.containsKey(new ResourceLocation(getNameSpace(), getKey()));
     }
 
     @Override

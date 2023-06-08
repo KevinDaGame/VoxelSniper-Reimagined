@@ -2,7 +2,6 @@ package com.github.kevindagame.voxelsniper.biome;
 
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
-import com.github.kevindagame.voxelsniper.Version;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.mockito.Mockito;
@@ -15,9 +14,8 @@ public class VoxelBiomeTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         var main = Mockito.mock(IVoxelsniper.class);
-        Mockito.when(main.getVersion()).thenReturn(Version.V1_16);
         VoxelSniper.voxelsniper = main;
-        this.biome = new VoxelBiome("namespace", "key", Version.V1_16);
+        this.biome = new VoxelBiome("namespace", "key");
     }
 
     public void testGetNamespace() {
@@ -33,10 +31,10 @@ public class VoxelBiomeTest extends TestCase {
     }
 
     public void testGetBiome() {
-        Assert.assertEquals(VoxelBiome.getBiome("plains"), VoxelBiome.PLAINS);
+        Assert.assertEquals(VoxelBiome.getBiome("plains"), VoxelBiome.PLAINS());
     }
 
     public void testTestGetBiome() {
-        Assert.assertEquals(VoxelBiome.getBiome("minecraft", "plains"), VoxelBiome.PLAINS);
+        Assert.assertEquals(VoxelBiome.getBiome("minecraft", "plains"), VoxelBiome.PLAINS());
     }
 }

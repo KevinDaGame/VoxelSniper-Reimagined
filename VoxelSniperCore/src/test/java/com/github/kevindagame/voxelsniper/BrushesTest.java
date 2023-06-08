@@ -8,6 +8,7 @@ import com.github.kevindagame.brush.IBrush;
 import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
+import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,7 @@ public class BrushesTest {
     public void setUp() {
         var main = Mockito.mock(IVoxelsniper.class);
         Mockito.when(main.getEnvironment()).thenReturn(Environment.SPIGOT);
+        Mockito.when(main.getBiome("minecraft", "plains")).thenReturn(new VoxelBiome("minecraft", "plains"));
         VoxelSniper.voxelsniper = main;
         brushes = new VoxelBrushManager();
     }

@@ -3,6 +3,7 @@ package com.github.kevindagame.voxelsniper.material;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.blockdata.SpigotBlockData;
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 
 public class SpigotMaterial extends VoxelMaterial {
     private final Material material;
@@ -22,6 +23,7 @@ public class SpigotMaterial extends VoxelMaterial {
         return material.isSolid();
     }
 
+    @NotNull
     @Override
     public String getKey() {
         return this.material.getKey().toString();
@@ -30,11 +32,6 @@ public class SpigotMaterial extends VoxelMaterial {
     @Override
     public IBlockData createBlockData() {
         return SpigotBlockData.fromSpigotData(material.createBlockData());
-    }
-
-    @Override
-    public boolean equals(VoxelMaterial material) {
-        return this.material.getKey().getNamespace().equals(material.getNamespace()) && this.material.getKey().getKey().equals(material.getKey());
     }
 
     @Override

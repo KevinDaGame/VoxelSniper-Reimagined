@@ -1,19 +1,12 @@
 package com.github.kevindagame.voxelsniper.material;
 
+import com.github.kevindagame.IKeyed;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 
-public interface IMaterial extends Comparable<IMaterial> {
+public interface IMaterial extends IKeyed {
     boolean isSolid();
 
-    String getKey();
-    String getNamespace();
-
-    boolean equals(String namespace, String key);
-
     IBlockData createBlockData();
-
-
-    boolean equals(VoxelMaterial material);
 
     boolean isAir();
 
@@ -26,9 +19,4 @@ public interface IMaterial extends Comparable<IMaterial> {
     boolean hasGravity();
 
     IBlockData createBlockData(String s);
-
-    @Override
-    default int compareTo(IMaterial m) {
-        return getKey().compareTo(m.getKey());
-    }
 }

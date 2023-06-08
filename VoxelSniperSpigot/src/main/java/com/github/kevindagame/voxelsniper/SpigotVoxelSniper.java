@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VersionChecker;
+import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
@@ -22,9 +23,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -181,6 +180,21 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @Override
     public List<VoxelMaterial> getMaterials() {
         return Arrays.stream(Material.values()).map(SpigotMaterial::new).collect(Collectors.toList());
+    }
+
+    @Nullable
+    @Override
+    public VoxelBiome getBiome(String namespace, String key) {
+        var biome = Registry.BIOME.get(new NamespacedKey(namespace, key));
+        if (biome != null) return new VoxelBiome(namespace, key);
+        return null;
+    }
+
+    @Override
+    public List<VoxelBiome> getBiomes() {
+        var biomes = new ArrayList<VoxelBiome>();
+        Registry.BIOME.forEach(biome -> biomes.add(new VoxelBiome(biome.getKey().getNamespace(), biome.getKey().getKey())));
+        return biomes;
     }
 
     @Override
