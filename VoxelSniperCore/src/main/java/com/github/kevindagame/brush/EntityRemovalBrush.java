@@ -33,22 +33,22 @@ public class EntityRemovalBrush extends AbstractBrush {
     private void defaultValues() {
         exclusionList.clear();
 
-        exclusionList.add(VoxelEntityType.ARMOR_STAND);
-        exclusionList.add(VoxelEntityType.BOAT);
-        exclusionList.add(VoxelEntityType.DROPPED_ITEM);
-        exclusionList.add(VoxelEntityType.ITEM_FRAME);
-        exclusionList.add(VoxelEntityType.LEASH_HITCH);
-        exclusionList.add(VoxelEntityType.MINECART);
-        exclusionList.add(VoxelEntityType.MINECART_CHEST);
-        exclusionList.add(VoxelEntityType.MINECART_COMMAND);
-        exclusionList.add(VoxelEntityType.MINECART_FURNACE);
-        exclusionList.add(VoxelEntityType.MINECART_HOPPER);
-        exclusionList.add(VoxelEntityType.MINECART_MOB_SPAWNER);
-        exclusionList.add(VoxelEntityType.MINECART_TNT);
-        exclusionList.add(VoxelEntityType.PAINTING);
-        exclusionList.add(VoxelEntityType.PLAYER);
-        exclusionList.add(VoxelEntityType.VILLAGER);
-        exclusionList.add(VoxelEntityType.WANDERING_TRADER);
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "armor_stand"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "boat"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "dropped_item"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "item_frame"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "leash_hitch"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart_chest"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart_command"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart_furnace"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart_hopper"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart_mob_spawner"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "minecart_tnt"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "painting"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "player"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "villager"));
+        exclusionList.add(VoxelEntityType.getEntityType("minecraft", "wandering_trader"));
 
     }
 
@@ -124,7 +124,7 @@ public class EntityRemovalBrush extends AbstractBrush {
 
         if (params[0].equalsIgnoreCase("clear")) {
             exclusionList.clear();
-            exclusionList.add(VoxelEntityType.PLAYER);
+            exclusionList.add(VoxelEntityType.getEntityType("minecraft", "player"));
             v.sendMessage(Messages.ENTITY_REMOVAL_CLEAR);
             return;
         }
@@ -174,9 +174,8 @@ public class EntityRemovalBrush extends AbstractBrush {
 
         List<String> entities = new ArrayList<>();
 
-        for (VoxelEntityType entity : VoxelEntityType.ENTITYTYPES.values()) {
-            //TODO How to add compatibility for modded entities? Right now it won't handle namepaces
-            entities.add(entity.key());
+        for (VoxelEntityType entity : VoxelEntityType.getEntityTypes()) {
+            entities.add(entity.toString());
         }
 
 

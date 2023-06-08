@@ -5,6 +5,7 @@ import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VersionChecker;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
@@ -185,9 +186,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @Nullable
     @Override
     public VoxelBiome getBiome(String namespace, String key) {
-        var biome = Registry.BIOME.get(new NamespacedKey(namespace, key));
-        if (biome != null) return new VoxelBiome(namespace, key);
-        return null;
+        return Registry.BIOME.get(new NamespacedKey(namespace, key)) != null ? new VoxelBiome(namespace, key) : null;
     }
 
     @Override
@@ -195,6 +194,19 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         var biomes = new ArrayList<VoxelBiome>();
         Registry.BIOME.forEach(biome -> biomes.add(new VoxelBiome(biome.getKey().getNamespace(), biome.getKey().getKey())));
         return biomes;
+    }
+
+    @Nullable
+    @Override
+    public VoxelEntityType getEntityType(String namespace, String key) {
+        return Registry.ENTITY_TYPE.get(new NamespacedKey(namespace, key)) != null ? new VoxelEntityType(namespace, key) : null;
+    }
+
+    @Override
+    public List<VoxelEntityType> getEntityTypes() {
+        var entityTypes = new ArrayList<VoxelEntityType>();
+        Registry.ENTITY_TYPE.forEach(entityType -> entityTypes.add(new VoxelEntityType(entityType.getKey().getNamespace(), entityType.getKey().getKey())));
+        return entityTypes;
     }
 
     @Override

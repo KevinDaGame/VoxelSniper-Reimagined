@@ -7,6 +7,7 @@ import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.Version;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
@@ -187,6 +188,18 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Override
     public List<VoxelBiome> getBiomes() {
         return ForgeRegistries.BIOMES.getEntries().stream().map(biome -> new VoxelBiome(biome.getKey().location().getNamespace(), biome.getKey().location().getPath())).collect(Collectors.toList());
+    }
+
+    @Nullable
+    @Override
+    public VoxelEntityType getEntityType(String namespace, String key) {
+        var entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(namespace, key));
+        return entityType != null ? new VoxelEntityType(namespace, key) : null;
+    }
+
+    @Override
+    public List<VoxelEntityType> getEntityTypes() {
+        return ForgeRegistries.ENTITY_TYPES.getEntries().stream().map(entityType -> new VoxelEntityType(entityType.getKey().location().getNamespace(), entityType.getKey().location().getPath())).collect(Collectors.toList());
     }
 
 }

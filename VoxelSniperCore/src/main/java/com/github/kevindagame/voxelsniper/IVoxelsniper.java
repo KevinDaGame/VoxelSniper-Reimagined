@@ -1,6 +1,7 @@
 package com.github.kevindagame.voxelsniper;
 
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
@@ -39,4 +40,9 @@ public interface IVoxelsniper {
     VoxelBiome getBiome(String namespace, String key);
 
     List<VoxelBiome> getBiomes();
+
+    @Nullable
+    VoxelEntityType getEntityType(String namespace, String key);
+
+    List<VoxelEntityType> getEntityTypes();
 }

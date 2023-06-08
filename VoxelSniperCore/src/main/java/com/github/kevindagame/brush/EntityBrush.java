@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class EntityBrush extends AbstractBrush {
 
-    private VoxelEntityType entityType = VoxelEntityType.ZOMBIE;
+    private VoxelEntityType entityType = VoxelEntityType.ZOMBIE();
 
 
     private void spawn(final SnipeData v) {
@@ -74,7 +74,7 @@ public class EntityBrush extends AbstractBrush {
     public List<String> registerArguments() {
         List<String> entities = new ArrayList<>();
 
-        for (VoxelEntityType entity : VoxelEntityType.ENTITYTYPES.values()) {
+        for (VoxelEntityType entity : VoxelEntityType.getEntityTypes()) {
             if (entity != null)
                 entities.add(entity.getKey());
         }

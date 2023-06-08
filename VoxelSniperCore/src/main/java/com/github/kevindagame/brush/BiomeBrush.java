@@ -75,6 +75,6 @@ public class BiomeBrush extends AbstractBrush {
     @Override
     public List<String> registerArguments() {
 
-        return VoxelBiome.getBiomes().stream().map(VoxelBiome::key).collect(Collectors.toList());
+        return VoxelBiome.getBiomes().stream().map(VoxelBiome::toString).collect(Collectors.toList());
     }
 }
