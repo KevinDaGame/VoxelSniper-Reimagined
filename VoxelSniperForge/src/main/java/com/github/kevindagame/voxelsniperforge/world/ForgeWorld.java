@@ -13,6 +13,8 @@ import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
+import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
@@ -30,6 +32,8 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.phys.AABB;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
@@ -72,13 +76,15 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
 
     @Override
     public List<IEntity> getNearbyEntities(BaseLocation location, double x, double y, double z) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        var aabb = new AABB(location.getX()-x, location.getY()-y, location.getZ()-z, location.getX()+x, location.getY()+y, location.getZ()+z);
+        return this.level.getEntities(null, aabb).stream().map(ForgeEntity::fromForgeEntity).toList();
     }
 
     @Override
     public void refreshChunk(int x, int z) {
         var chunk = level.getChunk(x, z, ChunkStatus.FULL, false);
-        level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunk));
+        if (chunk != null)
+            level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunk));
     }
 
     @Override
@@ -147,11 +153,6 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
 
     @Override
     public List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean b) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
-    public Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
