@@ -26,7 +26,6 @@ public class BrushesTest {
     @Before
     public void setUp() {
         var main = Mockito.mock(IVoxelsniper.class);
-        Mockito.when(main.getEnvironment()).thenReturn(Environment.SPIGOT);
         Mockito.when(main.getBiome("minecraft", "plains")).thenReturn(new VoxelBiome("minecraft", "plains"));
         VoxelSniper.voxelsniper = main;
         brushes = new VoxelBrushManager();
