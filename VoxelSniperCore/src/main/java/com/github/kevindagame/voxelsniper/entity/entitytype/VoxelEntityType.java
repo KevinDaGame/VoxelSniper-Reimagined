@@ -22,6 +22,10 @@ public record VoxelEntityType(String namespace, String key) implements IKeyed {
     }
 
     public static VoxelEntityType getEntityType(String key) {
+        if(key.contains(":")) {
+            String[] split = key.split(":");
+            return getEntityType(split[0], split[1]);
+        }
         return getEntityType("minecraft", key.toLowerCase(Locale.ROOT));
     }
 
