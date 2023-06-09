@@ -14,16 +14,17 @@ public class VoxelBiomeTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         var main = Mockito.mock(IVoxelsniper.class);
+        Mockito.when(main.getBiome(Mockito.anyString(), Mockito.anyString())).thenReturn(new VoxelBiome("minecraft", "plains"));
         VoxelSniper.voxelsniper = main;
         this.biome = new VoxelBiome("namespace", "key");
     }
 
     public void testGetNamespace() {
-        Assert.assertEquals(biome.namespace(), "namespace");
+        Assert.assertEquals(biome.getNameSpace(), "namespace");
     }
 
     public void testGetKey() {
-        Assert.assertEquals(biome.key(), "key");
+        Assert.assertEquals(biome.getKey(), "key");
     }
 
     public void testTestGetName() {

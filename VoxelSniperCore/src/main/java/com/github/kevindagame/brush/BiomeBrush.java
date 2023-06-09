@@ -68,7 +68,7 @@ public class BiomeBrush extends AbstractBrush {
             return;
         }
         this.selectedBiome = biome;
-        v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.key()));
+        v.sendMessage(Messages.SELECTED_BIOME_TYPE.replace("%selectedBiome%", this.selectedBiome.getKey()));
     }
 
     @NotNull

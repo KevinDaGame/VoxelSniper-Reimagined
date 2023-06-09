@@ -80,12 +80,12 @@ public record SpigotWorld(World world) implements IWorld {
 
     @Override
     public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
+        world.setBiome(x, z, Biome.valueOf(selectedBiome.getKey().toUpperCase()));
     }
 
     @Override
     public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, y, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
+        world.setBiome(x, y, z, Biome.valueOf(selectedBiome.getKey().toUpperCase()));
     }
 
     @Override
