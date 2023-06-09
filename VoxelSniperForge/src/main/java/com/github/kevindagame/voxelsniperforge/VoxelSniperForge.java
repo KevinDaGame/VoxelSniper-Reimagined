@@ -2,6 +2,7 @@ package com.github.kevindagame.voxelsniperforge;
 
 import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
+import com.github.kevindagame.command.VoxelCommandManager;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
@@ -18,8 +19,11 @@ import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -44,6 +48,7 @@ import java.util.stream.Collectors;
 @Mod(VoxelSniperForge.MODID)
 public class VoxelSniperForge implements IVoxelsniper {
 
+    private Registry<Biome> biomeRegistry;
     // Define mod id in a common place for everything to reference
     public static final String MODID = "voxelsniperforge";
     private final Logger LOGGER;
@@ -98,6 +103,11 @@ public class VoxelSniperForge implements IVoxelsniper {
 //        Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
 //        Bukkit.getPluginManager().registerEvents(this, this);
 //        getLogger().info("Registered Sniper Listener.");
+
+        var level = ServerLifecycleHooks.getCurrentServer().getAllLevels().iterator().next();
+        this.biomeRegistry = level.registryAccess().registryOrThrow(Registries.BIOME);
+        VoxelCommandManager.getInstance().registerBrushSubcommands();
+
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -183,12 +193,12 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public VoxelBiome getBiome(String namespace, String key) {
-        return ForgeRegistries.BIOMES.containsKey(new ResourceLocation(namespace, key)) ? new VoxelBiome(namespace, key) : null;
+        return biomeRegistry.get(new ResourceLocation(namespace, key)) != null ? new VoxelBiome(namespace, key) : null;
     }
 
     @Override
     public List<VoxelBiome> getBiomes() {
-        return ForgeRegistries.BIOMES.getEntries().stream().map(biome -> new VoxelBiome(biome.getKey().location().getNamespace(), biome.getKey().location().getPath())).collect(Collectors.toList());
+        return biomeRegistry.keySet().stream().map(resourceLocation -> new VoxelBiome(resourceLocation.getNamespace(), resourceLocation.getPath())).collect(Collectors.toList());
     }
 
     @Nullable

@@ -12,6 +12,7 @@ public final class SpigotCommandManager extends VoxelCommandManager {
         // Instantiate Command Manager if it's not yet instantiated.
         if (getInstance() == null) {
             instance = new SpigotCommandManager();
+            instance.registerBrushSubcommands();
         }
     }
 

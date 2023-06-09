@@ -13,6 +13,10 @@ public record VoxelBiome(String namespace, String key) implements IKeyed {
     }
 
     public static VoxelBiome getBiome(String key) {
+        if(key.contains(":")) {
+            String[] split = key.split(":");
+            return getBiome(split[0], split[1]);
+        }
         return getBiome("minecraft", key);
     }
 
