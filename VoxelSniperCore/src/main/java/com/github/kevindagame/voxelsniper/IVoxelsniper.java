@@ -22,8 +22,6 @@ public interface IVoxelsniper {
 
     Environment getEnvironment();
 
-    Version getVersion();
-
     VoxelSniperConfiguration getVoxelSniperConfiguration();
 
     IFileHandler getFileHandler();

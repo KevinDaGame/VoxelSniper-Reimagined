@@ -6,7 +6,6 @@ import com.github.kevindagame.command.VoxelCommandManager;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
-import com.github.kevindagame.voxelsniper.Version;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -142,11 +141,6 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Override
     public Environment getEnvironment() {
         return Environment.FORGE;
-    }
-
-    @Override
-    public Version getVersion() {
-        return Version.V1_19; // TODO is this always 1.19?
     }
 
     @Override

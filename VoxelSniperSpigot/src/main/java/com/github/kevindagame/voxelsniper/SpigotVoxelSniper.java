@@ -234,13 +234,6 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return Environment.SPIGOT;
     }
 
-    @Override
-    public Version getVersion() {
-        //todo: Does this work?
-        String version = "V" + Bukkit.getBukkitVersion().substring(0, 4).replace('.', '_');
-        return Version.valueOf(version);
-    }
-
     /**
      * Returns object for accessing global VoxelSniper options.
      *
