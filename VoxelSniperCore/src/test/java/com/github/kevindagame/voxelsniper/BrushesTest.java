@@ -47,6 +47,14 @@ public class BrushesTest {
     }
 
     @Test
+    public void testGetBrushForHandle_empty_handle() {
+        var brushData = new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build();
+        brushes.registerSniperBrush(brushData);
+        Assert.assertNull(brushes.getBrushForHandle(""));
+        Assert.assertNull(brushes.getBrushForHandle(null));
+    }
+
+    @Test
     public void testRegisteredSniperBrushes() {
         brushes.registerSniperBrush(new BrushBuilder().name("mock").alias("mockhandle", "testhandle").setSupplier(SnipeBrush::new).build());
         Assert.assertEquals(2, brushes.registeredSniperBrushHandles());
