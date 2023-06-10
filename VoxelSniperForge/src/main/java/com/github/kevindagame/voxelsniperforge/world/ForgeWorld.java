@@ -1,6 +1,5 @@
 package com.github.kevindagame.voxelsniperforge.world;
 
-import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -160,6 +159,6 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     public VoxelBiome getBiome(BaseLocation location) {
         var biome = level.getBiome(new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
         var biomeId = biome.unwrapKey().get().location();
-        return new VoxelBiome(biomeId.getNamespace(), biomeId.getPath(), VoxelSniper.voxelsniper.getVersion());
+        return new VoxelBiome(biomeId.getNamespace(), biomeId.getPath());
     }
 }

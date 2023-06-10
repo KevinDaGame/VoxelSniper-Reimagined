@@ -4,6 +4,8 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VersionChecker;
+import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
@@ -16,15 +18,14 @@ import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardInteg
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.permissions.SpigotPermissionManager;
+import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -183,16 +184,54 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         return Arrays.stream(Material.values()).map(SpigotMaterial::new).collect(Collectors.toList());
     }
 
+    @Nullable
     @Override
-    public Environment getEnvironment() {
-        return Environment.SPIGOT;
+    public VoxelBiome getBiome(String namespace, String key) {
+        return Registry.BIOME.get(new NamespacedKey(namespace, key)) != null ? new VoxelBiome(namespace, key) : null;
     }
 
     @Override
-    public Version getVersion() {
-        //todo: Does this work?
-        String version = "V" + Bukkit.getBukkitVersion().substring(0, 4).replace('.', '_');
-        return Version.valueOf(version);
+    public List<VoxelBiome> getBiomes() {
+        var biomes = new ArrayList<VoxelBiome>();
+        Registry.BIOME.forEach(biome -> biomes.add(new VoxelBiome(biome.getKey().getNamespace(), biome.getKey().getKey())));
+        return biomes;
+    }
+
+    @Nullable
+    @Override
+    public VoxelEntityType getEntityType(String namespace, String key) {
+        return Registry.ENTITY_TYPE.get(new NamespacedKey(namespace, key)) != null ? new VoxelEntityType(namespace, key) : null;
+    }
+
+    @Override
+    public List<VoxelEntityType> getEntityTypes() {
+        var entityTypes = new ArrayList<VoxelEntityType>();
+        Registry.ENTITY_TYPE.forEach(entityType -> entityTypes.add(new VoxelEntityType(entityType.getKey().getNamespace(), entityType.getKey().getKey())));
+        return entityTypes;
+    }
+
+    @Nullable
+    @Override
+    public VoxelTreeType getTreeType(String namespace, String key) {
+        try {
+            var treeType = namespace.equals("minecraft") ?
+                    TreeType.valueOf(key.toUpperCase()) :
+                    TreeType.valueOf(namespace.toUpperCase() + "_" + key.toUpperCase()); // In case of arclight, which uses the syntax "<NAMESPACE>_<KEY>"
+            //it'll be either non null or throw, so we know that the namespace + key are valid
+            return new VoxelTreeType(namespace, key);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<VoxelTreeType> getTreeTypes() {
+        return Arrays.stream(TreeType.values()).map(treeType -> new VoxelTreeType("minecraft", treeType.name())).collect(Collectors.toList());
+    }
+
+    @Override
+    public Environment getEnvironment() {
+        return Environment.SPIGOT;
     }
 
     /**
