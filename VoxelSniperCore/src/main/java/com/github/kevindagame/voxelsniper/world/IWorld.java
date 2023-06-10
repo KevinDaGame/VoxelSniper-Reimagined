@@ -1,5 +1,6 @@
 package com.github.kevindagame.voxelsniper.world;
 
+import com.github.kevindagame.util.BlockIterator;
 import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
@@ -81,7 +82,9 @@ public interface IWorld {
         return generateTree(location, treeType, true);
     }
 
-    Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance);
+    default BlockIterator getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance) {
+        return new BlockIterator(this, origin, direction, yOffset, maxDistance);
+    }
 
     VoxelBiome getBiome(BaseLocation location);
 

@@ -12,15 +12,11 @@ import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.SpigotLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
-import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.Vector;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -114,23 +110,6 @@ public record SpigotWorld(World world) implements IWorld {
             }
             return logger.operations;
     }
-
-    @Override
-    public Iterator<IBlock> getBlockIterator(VoxelVector origin, VoxelVector direction, double yOffset, int maxDistance) {
-        BlockIterator bukkitIterator = new BlockIterator(this.world, new Vector(origin.getX(), origin.getY(), origin.getZ()), new Vector(direction.getX(), direction.getY(), direction.getZ()), yOffset, maxDistance);
-        return new Iterator<>() {
-            @Override
-            public boolean hasNext() {
-                return bukkitIterator.hasNext();
-            }
-
-            @Override
-            public IBlock next() {
-                return new SpigotBlock(bukkitIterator.next());
-            }
-        };
-    }
-
     @Override
     public VoxelBiome getBiome(BaseLocation location) {
         return VoxelBiome.getBiome(world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ()).getKey().getKey());
