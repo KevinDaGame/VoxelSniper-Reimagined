@@ -89,7 +89,7 @@ public class CometBrush extends CustomBrush {
         if (targetCoords.isEmpty() || playerCoords.isEmpty()) return false;
         final VoxelVector slope = targetCoords.get().getLocation().toVector().subtract(playerCoords.get().getLocation().toVector());
 
-        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL : VoxelEntityType.SMALL_FIREBALL);
+        final VoxelEntityType type = (useBigBalls ? VoxelEntityType.FIREBALL() : VoxelEntityType.SMALL_FIREBALL());
         snipeData.owner().getPlayer().launchProjectile(type, slope.normalize());
         return true;
 

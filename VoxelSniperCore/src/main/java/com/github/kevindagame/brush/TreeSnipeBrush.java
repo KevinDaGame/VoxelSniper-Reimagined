@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class TreeSnipeBrush extends AbstractBrush {
 
-    private VoxelTreeType treeType = VoxelTreeType.TREE;
+    private VoxelTreeType treeType = VoxelTreeType.getTreeType("minecraft", "tree");
 
 
     private void single(final SnipeData v, IBlock targetBlock) {
@@ -48,15 +48,13 @@ public class TreeSnipeBrush extends AbstractBrush {
         TextComponent.Builder printout = Component.text();
 
         boolean delimiterHelper = true;
-        for (final VoxelTreeType treeType : VoxelTreeType.values()) {
-            if (treeType.isSupported()) {
-                if (delimiterHelper) {
-                    delimiterHelper = false;
-                } else {
-                    printout.append(Component.text(", ").color(NamedTextColor.WHITE));
-                }
-                printout.append(Component.text(treeType.name().toLowerCase()).color(treeType.equals(this.treeType) ? NamedTextColor.GRAY : NamedTextColor.DARK_GRAY));
+        for (final VoxelTreeType treeType : VoxelTreeType.getTreeTypes()) {
+            if (delimiterHelper) {
+                delimiterHelper = false;
+            } else {
+                printout.append(Component.text(", ").color(NamedTextColor.WHITE));
             }
+            printout.append(Component.text(treeType.getKey().toLowerCase()).color(treeType.equals(this.treeType) ? NamedTextColor.GRAY : NamedTextColor.DARK_GRAY));
         }
 
         vm.custom(printout);
@@ -86,21 +84,20 @@ public class TreeSnipeBrush extends AbstractBrush {
             return;
         }
 
-        try {
-            this.treeType = VoxelTreeType.valueOf(params[0].toUpperCase());
-            if (treeType.isSupported())
-                this.printTreeType(v.getVoxelMessage());
-            else
-                throw new IllegalArgumentException("Not supported");
-        } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(Messages.TREESNIPE_BRUSH_MESSAGE.replace("%triggerHandle%", triggerHandle));
+        var treeType = VoxelTreeType.getTreeType(params[0]);
+        if (treeType != null) {
+            this.treeType = treeType;
+            this.printTreeType(v.getVoxelMessage());
+
+            return;
         }
+        v.getVoxelMessage().brushMessage(Messages.TREESNIPE_BRUSH_MESSAGE.replace("%triggerHandle%", triggerHandle));
+
     }
 
     @NotNull
     @Override
     public List<String> registerArguments() {
-
-        return Arrays.stream(VoxelTreeType.values()).filter(VoxelTreeType::isSupported).map(Enum::name).toList();
+        return Arrays.stream(VoxelTreeType.getTreeTypes().stream().map(VoxelTreeType::getKey).toArray(String[]::new)).toList();
     }
 }

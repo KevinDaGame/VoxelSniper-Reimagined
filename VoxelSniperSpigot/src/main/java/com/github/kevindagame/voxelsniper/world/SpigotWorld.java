@@ -76,12 +76,12 @@ public record SpigotWorld(World world) implements IWorld {
 
     @Override
     public void setBiome(int x, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
+        world.setBiome(x, z, Biome.valueOf(selectedBiome.getKey().toUpperCase()));
     }
 
     @Override
     public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
-        world.setBiome(x, y, z, Biome.valueOf(selectedBiome.key().toUpperCase()));
+        world.setBiome(x, y, z, Biome.valueOf(selectedBiome.getKey().toUpperCase()));
     }
 
     @Override
@@ -97,8 +97,8 @@ public record SpigotWorld(World world) implements IWorld {
 
     @Override
     public List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean updateBlocks) {
-        if (treeType.isSupported()) {
-            TreeType bukkitType = TreeType.valueOf(treeType.name());
+
+            TreeType bukkitType = TreeType.valueOf(treeType.getKey().toUpperCase(Locale.ROOT));
             var loc = SpigotLocation.toSpigotLocation(location);
             SpigotBlockLogger logger = new SpigotBlockLogger(this, updateBlocks);
             try {
@@ -109,8 +109,6 @@ public record SpigotWorld(World world) implements IWorld {
                 this.world.generateTree(loc, bukkitType, logger);
             }
             return logger.operations;
-        }
-        return null;
     }
     @Override
     public VoxelBiome getBiome(BaseLocation location) {

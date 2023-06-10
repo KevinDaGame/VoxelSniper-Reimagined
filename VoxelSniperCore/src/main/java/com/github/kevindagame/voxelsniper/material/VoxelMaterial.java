@@ -1,10 +1,10 @@
 package com.github.kevindagame.voxelsniper.material;
 
 import com.github.kevindagame.VoxelSniper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class VoxelMaterial implements IMaterial {
 
@@ -85,42 +85,36 @@ public abstract class VoxelMaterial implements IMaterial {
     }
 
 
+    @NotNull
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        VoxelMaterial that = (VoxelMaterial) o;
-        return key.equals(that.key) && namespace.equals(that.namespace);
+    public String getNameSpace() {
+        return namespace;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(key, namespace);
-    }
-
-    @Override
-    public String toString() {
-        return namespace + ":" + key;
-    }
-
+    @NotNull
     @Override
     public String getKey() {
         return key;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VoxelMaterial that)) return false;
 
-    public String getNamespace() {
-        return namespace;
+        if (!key.equals(that.key)) return false;
+        return namespace.equals(that.namespace);
     }
 
     @Override
-    public boolean equals(String namespace, String key) {
-        return this.namespace.equals(namespace) && this.key.equals(key);
+    public int hashCode() {
+        int result = key.hashCode();
+        result = 31 * result + namespace.hashCode();
+        return result;
     }
 
     @Override
-    public boolean equals(VoxelMaterial material) {
-        return this.namespace.equals(material.namespace) && this.key.equals(material.key);
+    public String toString() {
+        return namespace + ":" + key;
     }
 }
