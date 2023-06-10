@@ -6,7 +6,7 @@ import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
@@ -29,8 +29,8 @@ public final class BlockMaterial extends VoxelMaterial {
         return block;
     }
 
-    private Material getMaterial() {
-        return block.defaultBlockState().getMaterial();
+    private BlockState getMaterial() {
+        return block.defaultBlockState();
     }
 
     @Override
