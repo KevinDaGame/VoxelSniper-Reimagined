@@ -37,6 +37,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
@@ -164,7 +165,7 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
         if (treeType.isSupported()) {
             BlockPos pos = ForgeLocation.toForgeBlockPos(location);
             BlockStateListPopulator populator = new BlockStateListPopulator(this);
-            boolean result = this.generateTree(populator, this.level.getChunkSource().getGenerator(), pos, new RandomSourceWrapper(RANDOM), treeType);
+            boolean result = this.generateTree(populator, this.level.getChunkSource().getGenerator(), pos, new LegacyRandomSource(RANDOM.nextLong()), treeType);
             populator.refreshTiles();
             if (!result) return null;
 
