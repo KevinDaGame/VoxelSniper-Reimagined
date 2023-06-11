@@ -7,6 +7,8 @@ import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.util.BlockHelper
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
+import com.github.kevindagame.util.brushOperation.executor.OperationExecutor
+import com.github.kevindagame.util.brushOperation.executor.OperationExecutorStrategyFactory
 import com.github.kevindagame.util.brushOperation.operation.BrushOperation
 import com.github.kevindagame.util.brushOperation.operation.CustomOperation
 import com.github.kevindagame.voxelsniper.block.BlockFace
@@ -35,7 +37,7 @@ abstract class AbstractBrush : IBrush {
     /**
      * The operations this brush performs
      */
-    private val operations: MutableList<BrushOperation> = ArrayList()
+    private var operations: MutableList<BrushOperation> = mutableListOf()
 
     /**
      * Brush name.
@@ -82,6 +84,9 @@ abstract class AbstractBrush : IBrush {
 
     protected fun performOperations(data: SnipeData): Boolean {
         if (operations.size == 0) return false
+        if(operations.distinctBy { it::class.java }.size > 1) {
+            throw IllegalStateException("Brushes can only perform operations of one type")
+        }
         val event = PlayerSnipeEvent(
             data.owner().player,
             this,
@@ -89,6 +94,8 @@ abstract class AbstractBrush : IBrush {
             operations.any { o -> o is CustomOperation }).callEvent()
         if (!event.isCancelled) {
             val undo = Undo()
+            val strategy = OperationExecutorStrategyFactory.getStrategy(operations[0]::class.java)
+            val executor = OperationExecutor(strategy, operations, undo)
             var reloadArea = false
             if (event.isCustom && this is CustomBrush) {
                 this.perform(event.operations.stream().filter { o -> !o.isCancelled && o is CustomOperation }
