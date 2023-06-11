@@ -8,7 +8,6 @@ import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
-import com.github.kevindagame.voxelsniperforge.blockstate.ExtendedBlockState;
 import com.github.kevindagame.voxelsniperforge.blockstate.ForgeBlockState;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
@@ -16,6 +15,7 @@ import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -82,7 +82,7 @@ public class ForgeBlock extends AbstractBlock {
 
     @Override
     public boolean isLiquid() {
-        return getLevel().getBlockState(this.pos).getMaterial().isLiquid();
+         return getLevel().getBlockState(this.pos).getBlock() instanceof LiquidBlock;
     }
 
     @Override
