@@ -29,7 +29,7 @@ public final class BlockMaterial extends VoxelMaterial {
         return block;
     }
 
-    private BlockState getMaterial() {
+    private BlockState getBlockState() {
         return block.defaultBlockState();
     }
 
@@ -40,13 +40,13 @@ public final class BlockMaterial extends VoxelMaterial {
 
     @Override
     public boolean isSolid() {
-        return getMaterial().isSolid();
+        return getBlockState().isSolid();
     }
 
     @Override
     public boolean isTransparent() {
         // TODO is this correct?
-        return !getMaterial().isSolid();
+        return !getBlockState().isSolid();
     }
 
     @Override
