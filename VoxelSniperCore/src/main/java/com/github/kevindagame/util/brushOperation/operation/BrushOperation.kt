@@ -1,4 +1,4 @@
-package com.github.kevindagame.util.brushOperation
+package com.github.kevindagame.util.brushOperation.operation
 
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.voxelsniper.events.Cancellable
@@ -25,4 +25,10 @@ abstract class BrushOperation(val location: BaseLocation) : Cancellable {
      * @return whether to reload the brush area
      */
     internal abstract fun perform(undo: Undo): Boolean
+}
+
+enum class CustomOperationContext {
+    PLAYERLOCATION,
+    TARGETLOCATION,
+    OTHER
 }

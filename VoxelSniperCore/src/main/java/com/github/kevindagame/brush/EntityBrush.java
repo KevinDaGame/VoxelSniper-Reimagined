@@ -3,7 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.util.brushOperation.EntitySpawnOperation;
+import com.github.kevindagame.util.brushOperation.operation.EntitySpawnOperation;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import org.jetbrains.annotations.NotNull;
 

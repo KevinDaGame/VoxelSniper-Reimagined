@@ -4,8 +4,8 @@ import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.util.brushOperation.CustomOperation;
-import com.github.kevindagame.util.brushOperation.CustomOperationContext;
+import com.github.kevindagame.util.brushOperation.operation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.operation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 

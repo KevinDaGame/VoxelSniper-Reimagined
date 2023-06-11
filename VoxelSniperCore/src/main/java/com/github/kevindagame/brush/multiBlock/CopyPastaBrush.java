@@ -6,7 +6,7 @@ import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.operation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import org.jetbrains.annotations.NotNull;

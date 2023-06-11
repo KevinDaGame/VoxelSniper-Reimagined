@@ -1,6 +1,6 @@
 package com.github.kevindagame.voxelsniperforge.world;
 
-import com.github.kevindagame.util.brushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.operation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
@@ -8,7 +8,6 @@ import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
-import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
@@ -36,7 +35,6 @@ import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 

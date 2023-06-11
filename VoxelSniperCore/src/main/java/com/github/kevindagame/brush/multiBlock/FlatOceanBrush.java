@@ -6,7 +6,7 @@ import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.operation.BlockOperation;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.jetbrains.annotations.NotNull;

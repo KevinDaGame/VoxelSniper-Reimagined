@@ -3,7 +3,7 @@ package com.github.kevindagame.brush.shell;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.BlockWrapper;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.operation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 
 import java.util.ArrayList;
