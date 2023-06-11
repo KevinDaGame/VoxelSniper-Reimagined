@@ -115,7 +115,7 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
             this.player.closeContainer();
         }
 
-        ServerLevel toWorld = (ServerLevel) ((ForgeEntity) other).getEntity().getLevel();
+        ServerLevel toWorld = (ServerLevel) ((ForgeEntity) other).getEntity().level();
         this.player.teleportTo(toWorld, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
         return true;
     }
@@ -124,12 +124,12 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
     public IEntity launchProjectile(VoxelEntityType type, VoxelVector velocity) {
         var tag = EntityType.byString(type.getKey());
         if (tag.isPresent()){
-            Entity created = tag.get().create(player.getLevel());
+            Entity created = tag.get().create(player.level());
             if (created instanceof Projectile) {
                 created.setPos(player.getX(), player.getY(), player.getZ());
                 Vec3 vector = new Vec3(velocity.getX(), velocity.getY(), velocity.getZ());
                 created.setDeltaMovement(vector);
-                player.getLevel().addFreshEntity(created);
+                player.level().addFreshEntity(created);
             }
         } else {
             throw new IllegalArgumentException("Invalid entity type");

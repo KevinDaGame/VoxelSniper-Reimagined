@@ -58,8 +58,7 @@ public class ForgeEntity implements IEntity {
 
     @Override
     public IWorld getWorld() {
-        //TODO check if this is correct
-        return new ForgeWorld((ServerLevel) this.entity.getLevel());
+        return new ForgeWorld((ServerLevel) this.entity.level());
     }
 
     @Override
@@ -95,7 +94,7 @@ public class ForgeEntity implements IEntity {
 
     @Override
     public List<IEntity> getNearbyEntities(int x, int y, int z) {
-        List<Entity> notchEntityList = entity.level.getEntities(entity, this.entity.getBoundingBox().inflate(x, y, z), entity1 -> true);
+        List<Entity> notchEntityList = entity.level().getEntities(entity, this.entity.getBoundingBox().inflate(x, y, z), entity1 -> true);
         return notchEntityList.stream().map(ForgeEntity::fromForgeEntity).toList();
     }
 
