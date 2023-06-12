@@ -8,6 +8,7 @@ import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
+import com.github.kevindagame.voxelsniperforge.blockstate.ExtendedBlockState;
 import com.github.kevindagame.voxelsniperforge.blockstate.ForgeBlockState;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
@@ -63,7 +64,22 @@ public class ForgeBlock extends AbstractBlock {
         if (applyPhysics) {
             world.setBlock(this.pos, newState, 3);
         } else {
-            throw new UnsupportedOperationException("Not implemented yet");
+            try {
+                if (newState instanceof ExtendedBlockState s) {
+                    s.setShouldUpdate(false);
+                }
+                boolean success = world.setBlock(this.pos, newState, 2 | 16); // NOTIFY | NO_OBSERVER
+                if (success) {
+                    getLevel().sendBlockUpdated(
+                            this.pos,
+                            old,
+                            newState,
+                            3
+                    );
+                }
+            } finally {
+                if (newState instanceof ExtendedBlockState s) s.setShouldUpdate(true);
+            }
         }
         world.setBlock(this.pos, newState, 3);
 
