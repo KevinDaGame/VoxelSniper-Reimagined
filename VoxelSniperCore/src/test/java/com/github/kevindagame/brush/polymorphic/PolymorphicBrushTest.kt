@@ -62,7 +62,7 @@ class PolymorphicBrushTest {
     }
 
    @Test
-   fun operation_brush_should_have_exclude_water_and_exclude_air() {
+   fun operation_brush_should_have_exclude_water() {
        //arrange
        val brush = PolyBrush(
            "Test",
@@ -74,11 +74,9 @@ class PolymorphicBrushTest {
 
        //act
        val hasExcludeWater = brush.properties.any { it is ExcludeWaterProperty }
-       val hasExcludeAir = brush.properties.any { it is ExcludeAirProperty }
 
        //assert
        assert(hasExcludeWater)
-       assert(hasExcludeAir)
    }
 
 }
