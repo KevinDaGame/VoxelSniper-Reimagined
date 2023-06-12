@@ -18,11 +18,19 @@ import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
+
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.HugeFungusConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -48,6 +56,7 @@ import java.util.stream.Collectors;
 public class VoxelSniperForge implements IVoxelsniper {
 
     private Registry<Biome> biomeRegistry;
+    private Registry<ConfiguredFeature<?,?>> featureRegistry;
     // Define mod id in a common place for everything to reference
     public static final String MODID = "voxelsniperforge";
     private final Logger LOGGER;
@@ -105,6 +114,7 @@ public class VoxelSniperForge implements IVoxelsniper {
 
         var level = ServerLifecycleHooks.getCurrentServer().getAllLevels().iterator().next();
         this.biomeRegistry = level.registryAccess().registryOrThrow(Registries.BIOME);
+        this.featureRegistry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
         VoxelCommandManager.getInstance().registerBrushSubcommands();
 
     }
@@ -210,12 +220,27 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public VoxelTreeType getTreeType(String namespace, String key) {
-        return ForgeRegistries.TREE_DECORATOR_TYPES.containsKey(new ResourceLocation(namespace, key)) ? new VoxelTreeType(namespace, key) : null;
+        return featureRegistry.get(new ResourceLocation(namespace, key)) != null ? new VoxelTreeType(namespace, key) : null;
+    }
+
+    @Override
+    @NotNull
+    public VoxelTreeType getDefaultTreeType() {
+        return new VoxelTreeType("minecraft", "oak");
     }
 
     @Override
     public List<VoxelTreeType> getTreeTypes() {
-        return ForgeRegistries.TREE_DECORATOR_TYPES.getEntries().stream().map(treeType -> new VoxelTreeType(treeType.getKey().location().getNamespace(), treeType.getKey().location().getPath())).collect(Collectors.toList());
+        return featureRegistry.entrySet().stream().filter(e -> isTreeType(e.getValue())).map(e -> {
+                    var loc = e.getKey().location();
+                    return new VoxelTreeType(loc.getNamespace(), loc.getPath());
+                }).collect(Collectors.toList());
     }
 
+    public static boolean isTreeType(@NotNull ConfiguredFeature<?, ?> feature) {
+        return feature.config() instanceof TreeConfiguration ||
+                feature.config() instanceof HugeMushroomFeatureConfiguration ||
+                feature.config() instanceof HugeFungusConfiguration ||
+                feature.feature() instanceof ChorusPlantFeature;
+    }
 }

@@ -1,18 +1,21 @@
 package com.github.kevindagame.voxelsniperforge.world;
 
+import com.github.kevindagame.util.brushOperation.BlockStateOperation;
 import com.github.kevindagame.util.brushOperation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
+import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
 import com.github.kevindagame.voxelsniper.entity.IEntity;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
-import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import com.github.kevindagame.voxelsniper.world.IWorld;
+import com.github.kevindagame.voxelsniperforge.VoxelSniperForge;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.chunk.ForgeChunk;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
+import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -21,28 +24,33 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeResolver;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
-
-    public Level getLevel() {
+    private static final Random RANDOM = new Random();
+    public ServerLevel getLevel() {
         return level;
     }
 
@@ -151,8 +159,30 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     }
 
     @Override
-    public List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean b) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public List<BrushOperation> generateTree(BaseLocation location, VoxelTreeType treeType, boolean updateBlocks) {
+        BlockPos pos = ForgeLocation.toForgeBlockPos(location);
+        BlockStateListPopulator populator = new BlockStateListPopulator(this);
+        boolean result = this.generateTree(populator, this.level.getChunkSource().getGenerator(), pos, new LegacyRandomSource(RANDOM.nextLong()), treeType);
+        populator.refreshTiles();
+        if (!result) return null;
+
+        List<BrushOperation> ops = new ArrayList<>();
+        for (IBlockState newState : populator.getList()) {
+            var block = newState.getBlock();
+            var oldState = newState.getBlock().getState();
+            ops.add(new BlockStateOperation(new BaseLocation(this, block.getX(), block.getY(), block.getZ()), oldState, newState, true, true));
+            if (updateBlocks) {
+                newState.update(true, true);
+            }
+        }
+        return ops;
+    }
+
+    private boolean generateTree(WorldGenLevel access, ChunkGenerator chunkGenerator, BlockPos pos, RandomSource random, VoxelTreeType treeType) {
+        var resource = new ResourceLocation(treeType.getNameSpace(), treeType.key());
+        ConfiguredFeature<?, ?> feature = this.level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).get(resource);
+        if (feature == null || !VoxelSniperForge.isTreeType(feature)) return false;
+        return feature.place(access, chunkGenerator, random, pos);
     }
 
     @Override

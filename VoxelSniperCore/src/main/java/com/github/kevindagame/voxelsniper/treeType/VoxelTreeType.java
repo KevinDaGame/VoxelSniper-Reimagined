@@ -23,6 +23,13 @@ public record VoxelTreeType(String namespace, String key) implements IKeyed {
         return VoxelSniper.voxelsniper.getTreeTypes();
     }
 
+    /**
+     * The names for trees are different on spigot and forge, this should return the correct naming for an oak tree
+     */
+    public static VoxelTreeType getDefault() {
+        return VoxelSniper.voxelsniper.getDefaultTreeType();
+    }
+
     @NotNull
     @Override
     public String getNameSpace() {
