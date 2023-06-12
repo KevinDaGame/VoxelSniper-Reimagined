@@ -224,6 +224,12 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         }
     }
 
+    @NotNull
+    @Override
+    public VoxelTreeType getDefaultTreeType() {
+        return new VoxelTreeType("minecraft", "TREE");
+    }
+
     @Override
     public List<VoxelTreeType> getTreeTypes() {
         return Arrays.stream(TreeType.values()).map(treeType -> new VoxelTreeType("minecraft", treeType.name())).collect(Collectors.toList());

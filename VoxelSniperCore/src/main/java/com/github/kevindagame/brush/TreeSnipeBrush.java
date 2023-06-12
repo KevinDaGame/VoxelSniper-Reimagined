@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class TreeSnipeBrush extends AbstractBrush {
 
-    private VoxelTreeType treeType = VoxelTreeType.getTreeType("minecraft", "tree");
+    private VoxelTreeType treeType = VoxelTreeType.getDefault();
 
 
     private void single(final SnipeData v, IBlock targetBlock) {
