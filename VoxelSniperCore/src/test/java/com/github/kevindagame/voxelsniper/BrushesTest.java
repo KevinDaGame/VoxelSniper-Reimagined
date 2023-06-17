@@ -9,6 +9,9 @@ import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import com.github.kevindagame.voxelsniper.permissions.Permission;
+import com.github.kevindagame.voxelsniper.permissions.PermissionLoader;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -148,5 +151,21 @@ public class BrushesTest {
             }
         }
         System.out.println("Performer Arguments VALUES Test OK!");
+    }
+
+    @Test
+    public void testBrushPermissions() {
+        // Load all brushes and permissions
+        VoxelBrushManager brushes = VoxelBrushManager.initialize();
+        PermissionLoader permissions = PermissionLoader.getInstance();
+        permissions.load();
+
+        // check that every brush has a permission and that permission is registered in the permissions.yml file
+        for (Map.Entry<String, BrushData> e : brushes.getRegisteredBrushesMap().entrySet()) {
+            BrushData brushData = e.getValue();
+            Assert.assertNotNull("Brush permission must not be null (brush: " + brushData.getName() + ")", brushData.getPermission());
+            Permission permissionNode = permissions.getPermission(brushData.getPermission());
+            Assert.assertNotNull("Brush permission must be in permissions.yml (brush: " + brushData.getName() + ")", permissionNode);
+        }
     }
 }
