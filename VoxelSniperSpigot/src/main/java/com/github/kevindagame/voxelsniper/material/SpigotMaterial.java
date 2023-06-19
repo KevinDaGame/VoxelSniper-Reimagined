@@ -18,11 +18,6 @@ public class SpigotMaterial extends VoxelMaterial {
         return VoxelMaterial.getMaterial(type.getKey().getNamespace(), type.getKey().getKey());
     }
 
-    @Override
-    public boolean isSolid() {
-        return material.isSolid();
-    }
-
     @NotNull
     @Override
     public String getKey() {
@@ -40,11 +35,6 @@ public class SpigotMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean isFluid() {
-        return getKey().equals("water") || getKey().equals("lava");
-    }
-
-    @Override
     public boolean isTransparent() {
         return material.isTransparent();
     }
@@ -53,12 +43,6 @@ public class SpigotMaterial extends VoxelMaterial {
     public boolean isBlock() {
         return material.isBlock();
     }
-
-    @Override
-    public boolean hasGravity() {
-        return material.hasGravity();
-    }
-
     @Override
     public IBlockData createBlockData(String s) {
         return SpigotBlockData.fromSpigotData(material.createBlockData(s));

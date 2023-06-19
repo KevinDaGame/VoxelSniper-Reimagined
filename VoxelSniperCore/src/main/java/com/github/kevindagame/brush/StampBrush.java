@@ -6,7 +6,6 @@ import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.BlockOperation;
 import com.github.kevindagame.voxelsniper.block.IBlock;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -27,14 +26,6 @@ public class StampBrush extends AbstractBrush {
      */
     public final void reSort() {
         this.sorted = false;
-    }
-
-    /**
-     * @param material
-     * @return whether this material falls or is a fluid
-     */
-    protected final boolean falling(final VoxelMaterial material) {
-        return material.hasGravity() || material.isFluid();
     }
 
     /**
