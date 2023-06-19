@@ -4,7 +4,6 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -38,19 +37,9 @@ public final class BlockMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean isSolid() {
-        return getBlockState().isSolid();
-    }
-
-    @Override
     public boolean isTransparent() {
         // TODO is this correct?
         return !getBlockState().isSolid();
-    }
-
-    @Override
-    public boolean hasGravity() {
-        return (block instanceof FallingBlock);
     }
 
     @Override
