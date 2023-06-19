@@ -2,15 +2,19 @@ package com.github.kevindagame.brush.polymorphic.operation
 
 import com.github.kevindagame.brush.polymorphic.PolyBrush
 import com.github.kevindagame.brush.polymorphic.PolyOperationType
+import com.github.kevindagame.brush.polymorphic.property.PolyPropertiesEnum
+import com.github.kevindagame.snipe.SnipeAction
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 
 class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
     override fun apply(
         brushSize: Int,
         brush: PolyBrush,
+        snipeAction: SnipeAction,
         excludeAir: Boolean,
         excludeWater: Boolean
     ): Array<Array<Array<VoxelMaterial>>> {
+        val doExcludeAir = snipeAction == SnipeAction.GUNPOWDER
         val targetBlock = brush.targetBlock
         val brushSizeDoubled = 2 * brushSize
         // Array that holds the original materials plus a buffer
@@ -32,7 +36,6 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
                 }
             }
         }
-        //TODO: Validate that this is the correct way to clone the array
         //clone oldMaterials into newMaterials
         val newMaterials = oldMaterials.clone()
 
@@ -58,7 +61,7 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
 
                     // Find most common neighbouring material
                     for ((key, value) in materialFrequency) {
-                        if (value > highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key!!.equals(VoxelMaterial.WATER()))) {
+                        if (value > highestMaterialCount && !(doExcludeAir && key!!.isAir) && !(excludeWater && key!!.equals(VoxelMaterial.WATER()))) {
                             highestMaterialCount = value
                             highestMaterial = key
                         }
@@ -66,7 +69,7 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
 
                     // Make sure that there's no tie in the highest material
                     for ((key, value) in materialFrequency) {
-                        if (value == highestMaterialCount && !(excludeAir && key!!.isAir) && !(excludeWater && key!!.equals(VoxelMaterial.WATER()))) {
+                        if (value == highestMaterialCount && !(doExcludeAir && key!!.isAir) && !(excludeWater && key!!.equals(VoxelMaterial.WATER()))) {
                             if (key!!.equals(highestMaterial)) {
                                 continue
                             }
@@ -82,6 +85,10 @@ class BlendOperation: PolyOperation(listOf(PolyOperationType.BLOCK)) {
             }
         }
         return newMaterials as Array<Array<Array<VoxelMaterial>>>
+    }
+
+    override fun getProperties(): Collection<PolyPropertiesEnum> {
+        return listOf(PolyPropertiesEnum.EXCLUDEWATER)
     }
 
 }

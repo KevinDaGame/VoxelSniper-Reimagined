@@ -42,7 +42,7 @@ abstract class AbstractBrush : IBrush {
      */
     override var name by initOnce<String>()
     override var permissionNode: String by initOnce()
-    protected var snipeAction: SnipeAction? = null
+    protected lateinit var snipeAction: SnipeAction
 
     private fun preparePerform(v: SnipeData, clickedBlock: IBlock, clickedFace: BlockFace): Boolean {
         if (getTarget(v, clickedBlock, clickedFace)) {
