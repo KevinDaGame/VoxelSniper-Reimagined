@@ -10,8 +10,6 @@ public interface IMaterial extends IKeyed {
 
     boolean isAir();
 
-    boolean isFluid();
-
     boolean isTransparent();
 
     boolean isBlock();

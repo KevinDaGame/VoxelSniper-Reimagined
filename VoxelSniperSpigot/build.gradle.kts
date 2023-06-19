@@ -67,6 +67,6 @@ tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run19") {
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run20") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
-    minecraftVersion("1.20")
+    minecraftVersion("1.20.1")
     group = "run paper"
 }

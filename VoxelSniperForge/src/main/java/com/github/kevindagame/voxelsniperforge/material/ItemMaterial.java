@@ -50,11 +50,6 @@ public final class ItemMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean isFluid() {
-        return false;
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(item);
     }

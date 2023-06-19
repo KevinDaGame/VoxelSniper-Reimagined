@@ -3,7 +3,6 @@ package com.github.kevindagame.voxelsniperforge.material;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,11 +66,6 @@ public final class BlockMaterial extends VoxelMaterial {
     @Override
     public boolean isAir() {
         return block.defaultBlockState().isAir();
-    }
-
-    @Override
-    public boolean isFluid() {
-        return ForgeRegistries.FLUIDS.containsKey(new ResourceLocation(getNameSpace(), getKey()));
     }
 
     @Override
