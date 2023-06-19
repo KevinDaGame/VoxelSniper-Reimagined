@@ -35,6 +35,7 @@ public class VoxelBrushManager {
             brushManager = getInstance();
         }
 
+        brushManager.registerSniperBrush(testBrush());
         brushManager.registerSniperBrush(ballBrush());
         brushManager.registerSniperBrush(biomeBrush());
         brushManager.registerSniperBrush(biomeBallBrush());
@@ -119,6 +120,9 @@ public class VoxelBrushManager {
         return getInstance();
     }
 
+    private static BrushData testBrush() {
+        return new BrushBuilder().name("Test").alias("t", "test", "stencil").setSupplier(TestBrush::new).setPermission("voxelsniper.brush.test").build();
+    }
 
     // region <Brush Registration methods>
     private static BrushData ballBrush() {
