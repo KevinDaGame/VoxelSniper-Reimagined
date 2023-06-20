@@ -110,12 +110,6 @@ public class VoxelBrushManager {
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
 
-
-
-        //these brushes have an unknown status
-        //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
-        //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
-
         return getInstance();
     }
 
@@ -150,15 +144,15 @@ public class VoxelBrushManager {
     }
 
     private static BrushData blobBrush() {
-        return new BrushBuilder().name("Splatblob").alias("blob", "splatblob").setSupplier(BlobBrush::new).setPermission("voxelsniper.brush.splatblob").build();
+        return new BrushBuilder().name("Splatblob").alias("blob", "splatblob").setSupplier(BlobBrush::new).setPermission("voxelsniper.brush.blob").build();
     }
 
     private static BrushData blockResetBrush() {
-        return new BrushBuilder().name("Blockresetbrush").alias("brb", "blockresetbrush").setSupplier(BlockResetBrush::new).setPermission("voxelsniper.brush.blockresetbrush").build();
+        return new BrushBuilder().name("Blockresetbrush").alias("brb", "blockresetbrush").setSupplier(BlockResetBrush::new).setPermission("voxelsniper.brush.blockreset").build();
     }
 
     private static BrushData blockResetSurfaceBrush() {
-        return new BrushBuilder().name("Blockresetbrushsurface").alias("brbs", "blockresetbrushsurface").setSupplier(BlockResetSurfaceBrush::new).setPermission("voxelsniper.brush.blockresetbrushsurface").build();
+        return new BrushBuilder().name("Blockresetbrushsurface").alias("brbs", "blockresetbrushsurface").setSupplier(BlockResetSurfaceBrush::new).setPermission("voxelsniper.brush.blockresetsurface").build();
     }
 
     private static BrushData canyonBrush() {
@@ -202,7 +196,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData domeBrush() {
-        return new BrushBuilder().name("Domebrush").alias("dome", "domebrush").setSupplier(DomeBrush::new).setPermission("voxelsniper.brush.domebrush").build();
+        return new BrushBuilder().name("Domebrush").alias("dome", "domebrush").setSupplier(DomeBrush::new).setPermission("voxelsniper.brush.dome").build();
     }
 
     private static BrushData drainBrush() {
@@ -250,11 +244,11 @@ public class VoxelBrushManager {
     }
 
     private static BrushData jaggedLineBrush() {
-        return new BrushBuilder().name("Jagged").alias("j", "jagged").setSupplier(JaggedLineBrush::new).setPermission("voxelsniper.brush.jagged").build();
+        return new BrushBuilder().name("Jagged").alias("j", "jagged").setSupplier(JaggedLineBrush::new).setPermission("voxelsniper.brush.jaggedline").build();
     }
 
     private static BrushData jockeyBrush() {
-        return new BrushBuilder().name("jockey").setSupplier(JockeyBrush::new).setPermission("voxelsniper.brush.jockey").build();
+        return new BrushBuilder().name("jockey").alias("jockey").setSupplier(JockeyBrush::new).setPermission("voxelsniper.brush.jockey").build();
     }
 
     private static BrushData lightningBrush() {
@@ -330,7 +324,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData signOverwriteBrush() {
-        return new BrushBuilder().name("Signoverwriter").alias("sio", "signoverwriter").setSupplier(SignOverwriteBrush::new).setPermission("voxelsniper.brush.signoverwriter").build();
+        return new BrushBuilder().name("Signoverwriter").alias("sio", "signoverwriter").setSupplier(SignOverwriteBrush::new).setPermission("voxelsniper.brush.signoverwrite").build();
     }
 
     private static BrushData snipeBrush() {
@@ -338,11 +332,11 @@ public class VoxelBrushManager {
     }
 
     private static BrushData splatterBallBrush() {
-        return new BrushBuilder().name("Splatball").alias("sb", "splatball").setSupplier(SplatterBallBrush::new).setPermission("voxelsniper.brush.splatball").build();
+        return new BrushBuilder().name("Splatball").alias("sb", "splatball").setSupplier(SplatterBallBrush::new).setPermission("voxelsniper.brush.splatterball").build();
     }
 
     private static BrushData splatterDiscBrush() {
-        return new BrushBuilder().name("Splatdisc").alias("sd", "splatdisc").setSupplier(SplatterDiscBrush::new).setPermission("voxelsniper.brush.splatdisc").build();
+        return new BrushBuilder().name("Splatdisc").alias("sd", "splatdisc").setSupplier(SplatterDiscBrush::new).setPermission("voxelsniper.brush.splatterdisc").build();
     }
 
     private static BrushData splatterOverlayBrush() {
@@ -358,7 +352,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData splatterVoxelDiscBrush() {
-        return new BrushBuilder().name("Splatvoxeldisc").alias("svd", "splatvoxeldisc").setSupplier(SplatterVoxelDiscBrush::new).setPermission("voxelsniper.brush.splatvoxeldisc").build();
+        return new BrushBuilder().name("Splatvoxeldisc").alias("svd", "splatvoxeldisc").setSupplier(SplatterVoxelDiscBrush::new).setPermission("voxelsniper.brush.splattervoxeldisc").build();
     }
 
     private static BrushData threePointCircleBrush() {
@@ -405,6 +399,8 @@ public class VoxelBrushManager {
      * @param brushData The brush data to register.
      */
     public void registerSniperBrush(@NotNull BrushData brushData) {
+        if (brushData.getAliases().isEmpty())
+            throw new IllegalArgumentException("BrushData for brush " + brushData.getName() + " does not have aliases");
         for (String handle : brushData.getAliases()) {
             brushes.put(handle.toLowerCase(), brushData);
         }
