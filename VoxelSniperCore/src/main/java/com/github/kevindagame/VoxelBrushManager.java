@@ -110,12 +110,6 @@ public class VoxelBrushManager {
         //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
         //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
 
-
-
-        //these brushes have an unknown status
-        //brushManager.registerSniperBrush(SnowConeBrush.class, "snow", "snowcone");
-        //brushManager.registerSniperBrush(SpiralStaircaseBrush.class, "sstair", "spiralstaircase");
-
         return getInstance();
     }
 
@@ -254,7 +248,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData jockeyBrush() {
-        return new BrushBuilder().name("jockey").setSupplier(JockeyBrush::new).setPermission("voxelsniper.brush.jockey").build();
+        return new BrushBuilder().name("jockey").alias("jockey").setSupplier(JockeyBrush::new).setPermission("voxelsniper.brush.jockey").build();
     }
 
     private static BrushData lightningBrush() {
@@ -405,6 +399,8 @@ public class VoxelBrushManager {
      * @param brushData The brush data to register.
      */
     public void registerSniperBrush(@NotNull BrushData brushData) {
+        if (brushData.getAliases().isEmpty())
+            throw new IllegalArgumentException("BrushData for brush " + brushData.getName() + " does not have aliases");
         for (String handle : brushData.getAliases()) {
             brushes.put(handle.toLowerCase(), brushData);
         }
