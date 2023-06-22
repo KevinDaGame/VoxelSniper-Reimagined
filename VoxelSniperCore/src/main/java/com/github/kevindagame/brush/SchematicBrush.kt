@@ -12,8 +12,10 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 class SchematicBrush : AbstractBrush() {
     private lateinit var schematicName: String
     private lateinit var schematics: List<VoxelSchematic>
+    private var mode = PasteMode.FULL
+
     override fun info(vm: VoxelMessage) {
-        vm.brushMessage(Messages.ENTITY_BRUSH_MESSAGE)
+        //TODO: add info
         vm.size()
     }
 
@@ -31,27 +33,42 @@ class SchematicBrush : AbstractBrush() {
      * if there is only one schematic loaded, then it will paste that schematic
      * if there are multiple schematics loaded, then it will paste a random schematic from the loaded schematics
      */
-    fun paste(v: SnipeData) {
+    private fun paste(v: SnipeData) {
         if (!this::schematics.isInitialized || schematics.isEmpty()) {
             v.owner().player.sendMessage("No schematic loaded")
             return
         }
 
         if (schematics.size == 1) {
-            pasteSchematic(schematics[0], v)
+            pasteSchematic(schematics[0])
             return
         }
 
         val schematic = schematics.random()
-        pasteSchematic(schematic, v)
+        pasteSchematic(schematic)
     }
 
-    private fun pasteSchematic(schematic: VoxelSchematic, v: SnipeData) {
+    private fun pasteSchematic(schematic: VoxelSchematic) {
         val blocks = schematic.blocks
         for (block in blocks) {
             val blockLocation = BaseLocation(world, block.x + targetBlock.x, block.y + targetBlock.y, block.z + targetBlock.z)
-            println(blockLocation.toString())
-            addOperation(BlockOperation(blockLocation, blockLocation.block.blockData, VoxelMaterial.getMaterial(block.blockData.block).createBlockData()))
+            when(this.mode) {
+                PasteMode.FILL -> {
+                    if (blockLocation.block.blockData.material.isAir) {
+                        addOperation(BlockOperation(blockLocation, blockLocation.block.blockData, VoxelMaterial.getMaterial(block.blockData.block).createBlockData()))
+                    }
+                }
+
+                PasteMode.FULL -> {
+                    addOperation(BlockOperation(blockLocation, blockLocation.block.blockData, VoxelMaterial.getMaterial(block.blockData.block).createBlockData()))
+                }
+
+                PasteMode.REPLACE -> {
+                    if (!blockLocation.block.blockData.material.isAir) {
+                        addOperation(BlockOperation(blockLocation, blockLocation.block.blockData, VoxelMaterial.getMaterial(block.blockData.block).createBlockData()))
+                    }
+                }
+            }
         }
     }
 
@@ -88,7 +105,14 @@ class SchematicBrush : AbstractBrush() {
                 }
 
                 "mode" -> {
-                    throw IllegalArgumentException("Not implemented yet")
+                    if (params.size > 1) {
+                        try {
+                            this.mode = PasteMode.valueOf(params[1].uppercase())
+                            v.sendMessage("Mode set to ${this.mode.name.lowercase()}")
+                        } catch (e: IllegalArgumentException) {
+                            v.sendMessage(e.message)
+                        }
+                    }
                 }
 
             }
