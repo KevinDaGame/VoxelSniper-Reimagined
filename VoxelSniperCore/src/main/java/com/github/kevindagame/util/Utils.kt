@@ -3,12 +3,19 @@ package com.github.kevindagame.util
 import java.util.*
 
 object Utils {
+    @JvmStatic
     fun <T> unmodifiableList(): List<T> {
         return Collections.unmodifiableList(ArrayList<T>())
     }
 
+    @JvmStatic
     fun <T> unmodifiableList(arg: T): List<T> {
         return Collections.unmodifiableList(newArrayList(arg))
+    }
+
+    @JvmStatic
+    fun <T> unmodifiableList(vararg arg: T): List<T> {
+        return Collections.unmodifiableList(newArrayList(*arg))
     }
 
     @JvmStatic

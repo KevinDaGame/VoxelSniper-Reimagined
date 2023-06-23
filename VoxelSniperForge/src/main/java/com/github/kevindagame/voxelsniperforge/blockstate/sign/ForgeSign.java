@@ -4,7 +4,12 @@ import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
 import com.github.kevindagame.voxelsniperforge.block.ForgeBlock;
 import com.github.kevindagame.voxelsniperforge.blockstate.ForgeBlockState;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.level.block.state.BlockState;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,18 +23,35 @@ public class ForgeSign extends ForgeBlockState implements ISign {
         this.tileEntity = tileEntity;
     }
 
-    @NotNull
-    private static String translateColorCodesToAmpersand(@NotNull String textToTranslate) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    private SignText front() {
+        return tileEntity.getFrontText();
+    }
+
+    private void front(SignText text) {
+        boolean front = true;
+        tileEntity.setText(text, front);
     }
 
     @Override
     public void setLine(int line, String signText) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        Component comp = LegacyComponentSerializer.legacyAmpersand().deserialize(signText);
+        var text = front().setMessage(line, toNative(comp));
+        front(text);
     }
 
     @Override
     public String getLine(int line) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        boolean filtered = false;
+        Component text = fromNative(front().getMessage(line, filtered));
+        return LegacyComponentSerializer.legacyAmpersand().serialize(text);
+    }
+
+    public static MutableComponent toNative(@NotNull Component component) {
+        if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
+        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
+    }
+
+    public static Component fromNative(@NotNull net.minecraft.network.chat.Component component) {
+        return GsonComponentSerializer.gson().deserialize(net.minecraft.network.chat.Component.Serializer.toJson(component));
     }
 }
