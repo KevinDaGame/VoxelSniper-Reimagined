@@ -14,4 +14,4 @@ class VoxelSchematicBuilder {
     }
 }
 
-data class VoxelSchematicBlock(val x: Double, val y: Double, val z: Double, val blockData: SchematicBlock)
+data class VoxelSchematicBlock(var x: Double, var y: Double, var z: Double, val blockData: SchematicBlock)

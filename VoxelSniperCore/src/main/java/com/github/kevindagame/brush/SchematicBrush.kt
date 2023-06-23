@@ -6,6 +6,7 @@ import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.util.brushOperation.BlockOperation
 import com.github.kevindagame.util.schematic.SchematicReader
 import com.github.kevindagame.util.schematic.VoxelSchematic
+import com.github.kevindagame.util.schematic.VoxelSchematicBlock
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 
@@ -13,6 +14,8 @@ class SchematicBrush : AbstractBrush() {
     private lateinit var schematicName: String
     private lateinit var schematics: List<VoxelSchematic>
     private var mode = PasteMode.FULL
+    private var rotation = RotateMode.DEGREES_0
+    private var flip = FlipMode.NONE
 
     override fun info(vm: VoxelMessage) {
         //TODO: add info
@@ -49,7 +52,8 @@ class SchematicBrush : AbstractBrush() {
     }
 
     private fun pasteSchematic(schematic: VoxelSchematic) {
-        val blocks = schematic.blocks
+        val blocks = rotateAndFlip(schematic.blocks)
+
         for (block in blocks) {
             val blockLocation = BaseLocation(world, block.x + targetBlock.x, block.y + targetBlock.y, block.z + targetBlock.z)
             when(this.mode) {
@@ -69,6 +73,71 @@ class SchematicBrush : AbstractBrush() {
                     }
                 }
             }
+        }
+    }
+
+    private fun rotateAndFlip(blocks: List<VoxelSchematicBlock>): MutableList<VoxelSchematicBlock> {
+        val rotationDegrees = when (this.rotation) {
+            RotateMode.DEGREES_0 -> 0
+            RotateMode.DEGREES_90 -> 90
+            RotateMode.DEGREES_180 -> 180
+            RotateMode.DEGREES_270 -> 270
+            RotateMode.DEGREES_RANDOM -> (listOf(90, 180, 270, 0)).random()
+        }
+
+        val newBlocks = mutableListOf<VoxelSchematicBlock>()
+
+        for (block in blocks) {
+            val newBlock = rotateBlock(block, rotationDegrees)
+            flipBlock(newBlock)
+            newBlocks.add(newBlock)
+        }
+
+        return newBlocks
+    }
+
+    private fun rotateBlock(
+        block: VoxelSchematicBlock,
+        rotationDegrees: Int
+    ): VoxelSchematicBlock {
+        when (rotationDegrees) {
+            0 -> {
+                return VoxelSchematicBlock(block.x, block.y, block.z, block.blockData)
+            }
+
+            90 -> {
+                return VoxelSchematicBlock(-block.z, block.y, block.x, block.blockData)
+            }
+
+            180 -> {
+                return VoxelSchematicBlock(-block.x, block.y, -block.z, block.blockData)
+            }
+
+            270 -> {
+                return VoxelSchematicBlock(block.z, block.y, -block.x, block.blockData)
+            }
+
+        }
+        throw IllegalArgumentException("Invalid rotation degrees: $rotationDegrees")
+    }
+
+    private fun flipBlock(block: VoxelSchematicBlock) {
+            when (this.flip) {
+                FlipMode.NONE -> {
+                    return
+                }
+
+                FlipMode.X -> {
+                    block.x = -block.x
+                }
+
+                FlipMode.Y -> {
+                    block.y = -block.y
+                }
+
+                FlipMode.Z -> {
+                    block.z = -block.z
+                }
         }
     }
 
@@ -97,11 +166,25 @@ class SchematicBrush : AbstractBrush() {
                 }
 
                 "rotate" -> {
-                    throw IllegalArgumentException("Not implemented yet")
+                    if (params.size > 1) {
+                        try {
+                            this.rotation = RotateMode.valueOf("DEGREES_${params[1].uppercase()}")
+                            v.sendMessage("Rotation set to ${this.rotation.name.lowercase().replace("degrees_", "")}")
+                        } catch (e: IllegalArgumentException) {
+                            v.sendMessage(e.message)
+                        }
+                    }
                 }
 
                 "flip" -> {
-                    throw IllegalArgumentException("Not implemented yet")
+                    if (params.size > 1) {
+                        try {
+                            this.flip = FlipMode.valueOf(params[1].uppercase())
+                            v.sendMessage("Flip set to ${this.flip.name.lowercase()}")
+                        } catch (e: IllegalArgumentException) {
+                            v.sendMessage(e.message)
+                        }
+                    }
                 }
 
                 "mode" -> {
@@ -143,7 +226,8 @@ private enum class PasteMode {
 private enum class FlipMode {
     X,
     Y,
-    Z
+    Z,
+    NONE
 }
 
 private enum class RotateMode {
