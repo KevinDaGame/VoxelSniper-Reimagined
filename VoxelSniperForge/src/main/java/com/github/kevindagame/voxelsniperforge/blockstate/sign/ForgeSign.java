@@ -9,7 +9,6 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
-import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.level.block.state.BlockState;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,26 +22,18 @@ public class ForgeSign extends ForgeBlockState implements ISign {
         this.tileEntity = tileEntity;
     }
 
-    private SignText front() {
-        return tileEntity.getFrontText();
-    }
-
-    private void front(SignText text) {
-        boolean front = true;
-        tileEntity.setText(text, front);
-    }
-
     @Override
     public void setLine(int line, String signText) {
+        boolean front = true;
         Component comp = LegacyComponentSerializer.legacyAmpersand().deserialize(signText);
-        var text = front().setMessage(line, toNative(comp));
-        front(text);
+        var text = tileEntity.getFrontText().setMessage(line, toNative(comp));
+        tileEntity.setText(text, front);
     }
 
     @Override
     public String getLine(int line) {
         boolean filtered = false;
-        Component text = fromNative(front().getMessage(line, filtered));
+        Component text = fromNative(tileEntity.getFrontText().getMessage(line, filtered));
         return LegacyComponentSerializer.legacyAmpersand().serialize(text);
     }
 
