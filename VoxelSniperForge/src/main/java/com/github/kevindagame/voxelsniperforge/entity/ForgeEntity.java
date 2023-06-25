@@ -58,7 +58,7 @@ public class ForgeEntity implements IEntity {
 
     @Override
     public IWorld getWorld() {
-        return new ForgeWorld((ServerLevel) this.entity.level());
+        return VoxelSniperForge.getInstance().getWorld((ServerLevel) this.entity.level());
     }
 
     @Override
