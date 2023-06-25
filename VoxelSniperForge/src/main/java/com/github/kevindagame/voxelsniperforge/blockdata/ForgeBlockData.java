@@ -89,7 +89,7 @@ public class ForgeBlockData implements IBlockData, Cloneable {
 
     @Override
     public IBlockData getCopy() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.clone();
     }
 
     @Override
