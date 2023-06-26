@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.command.VoxelCommandManager;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.schematic.SchematicReader;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
@@ -19,10 +20,8 @@ import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
@@ -79,6 +78,7 @@ public class VoxelSniperForge implements IVoxelsniper {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+        SchematicReader.initialize();
         VoxelBrushManager brushManager = VoxelBrushManager.initialize();
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
 

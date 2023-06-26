@@ -67,7 +67,7 @@ object SchematicReader {
 
         //if name ends with .schem, then check if it exists. if yes, then call readFile with the file.
         if (name.endsWith(".schem")) {
-            val file = VoxelSniper.voxelsniper.fileHandler.getDataFile("stencils/$name")
+            val file = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics/$name")
             if (!file.exists()) {
                 throw IllegalArgumentException("File $name does not exist")
             }
@@ -75,13 +75,13 @@ object SchematicReader {
         }
 
         // If name does not end with .schem, then check if there is a folder with that name. If yes, then call readFolder with the folder.
-        val folder = VoxelSniper.voxelsniper.fileHandler.getDataFile("stencils/$name")
+        val folder = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics/$name")
         if (folder.exists()) {
             return readSchematics(folder)
         }
 
         // If no, check if there is a file with the name.schem. If yes, then call readFile with the file.
-        val file = VoxelSniper.voxelsniper.fileHandler.getDataFile("stencils/$name.schem")
+        val file = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics/$name.schem")
         if (file.exists()) {
             return listOf(readSchematic(file))
         }
@@ -92,7 +92,7 @@ object SchematicReader {
     }
 
     fun getPossibleNames(): List<String> {
-        val schematicsFolder = VoxelSniper.voxelsniper.fileHandler.getDataFile("stencils")
+        val schematicsFolder = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics")
         val schematics = mutableListOf<String>()
         if (schematicsFolder.exists()) {
             val files = schematicsFolder.listFiles()
@@ -111,5 +111,13 @@ object SchematicReader {
             }
         }
         return schematics
+    }
+
+    @JvmStatic
+    fun initialize() {
+        val schematicsFolder = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics")
+        if (!schematicsFolder.exists()) {
+            schematicsFolder.mkdir()
+        }
     }
 }
