@@ -1,8 +1,6 @@
 package com.github.kevindagame.brush.polymorphic.property
 
-import com.github.kevindagame.util.Utils
-
-abstract class PolyProperty<T>(val name: String, val description: String, val default: T, val aliases: List<String> = Utils.unmodifiableList()) {
+abstract class PolyProperty<T>(val name: String, val description: String, val default: T, val aliases: List<String> = listOf()) {
 
     var value: T = default
     fun get(): T {
