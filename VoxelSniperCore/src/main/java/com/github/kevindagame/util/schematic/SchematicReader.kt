@@ -11,6 +11,8 @@ object SchematicReader {
         val schematic = SchematicUtil.load(file)
         val voxelSchematicBuilder = VoxelSchematicBuilder()
 
+        voxelSchematicBuilder.name = file.nameWithoutExtension
+
         for (y in 0 until schematic.height) {
             for (x in 0 until schematic.width) {
                 for (z in 0 until schematic.length) {

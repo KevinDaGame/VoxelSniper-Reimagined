@@ -18,8 +18,11 @@ class SchematicBrush : AbstractBrush() {
     private var flip = FlipMode.NONE
 
     override fun info(vm: VoxelMessage) {
-        //TODO: add info
-        vm.size()
+        vm.brushName(this.name)
+        vm.custom(Messages.CHOSEN_SCHEMATIC.replace("%schematics%", if(this::schematics.isInitialized) schematics.joinToString(", ") { it.name } else "None"))
+        vm.custom(Messages.SCHEMATIC_MODE.replace("%mode%", mode.name.lowercase()))
+        vm.custom(Messages.SCHEMATIC_ROTATION.replace("%rotation%", rotation.name.lowercase().replace("degrees_", "")))
+        vm.custom(Messages.SCHEMATIC_FLIP.replace("%flip%", flip.name.lowercase()))
     }
 
     override fun arrow(v: SnipeData) {
@@ -145,7 +148,7 @@ class SchematicBrush : AbstractBrush() {
         if (params.isNotEmpty()) {
             when (params[0]) {
                 "list" -> {
-                    v.sendMessage("Schematics: ${SchematicReader.getPossibleNames().joinToString(", ")}")
+                    v.sendMessage(Messages.SCHEMATIC_LIST.replace("%schematics%", SchematicReader.getPossibleNames().joinToString(", ")))
                 }
 
                 "schem" -> {
@@ -155,12 +158,12 @@ class SchematicBrush : AbstractBrush() {
                             this.schematicName = params[1]
                             this.schematics = schematics
                             if (schematics.size == 1) {
-                                v.sendMessage("Loaded schematic ${params[1]}")
+                                v.sendMessage(Messages.SCHEMATIC_LOADED_ONE.replace("%schematic%", this.schematics.first().name))
                             } else {
-                                v.sendMessage("Loaded ${schematics.size} schematics from ${params[1]}")
+                                v.sendMessage(Messages.SCHEMATIC_LOADED_MULTIPLE.replace("%schematics%", this.schematics.joinToString(", ") { it.name }))
                             }
                         } catch (e: IllegalArgumentException) {
-                            v.sendMessage(e.message)
+                            v.sendMessage(Messages.INVALID_BRUSH_PARAM)
                         }
                     }
                 }
@@ -169,9 +172,9 @@ class SchematicBrush : AbstractBrush() {
                     if (params.size > 1) {
                         try {
                             this.rotation = RotateMode.valueOf("DEGREES_${params[1].uppercase()}")
-                            v.sendMessage("Rotation set to ${this.rotation.name.lowercase().replace("degrees_", "")}")
+                            v.sendMessage(Messages.SCHEMATIC_SET_ROTATION.replace("%rotation%", this.rotation.name.lowercase().replace("degrees_", "")))
                         } catch (e: IllegalArgumentException) {
-                            v.sendMessage(e.message)
+                            v.sendMessage(Messages.INVALID_BRUSH_PARAM)
                         }
                     }
                 }
@@ -180,9 +183,9 @@ class SchematicBrush : AbstractBrush() {
                     if (params.size > 1) {
                         try {
                             this.flip = FlipMode.valueOf(params[1].uppercase())
-                            v.sendMessage("Flip set to ${this.flip.name.lowercase()}")
+                            v.sendMessage(Messages.SCHEMATIC_SET_FLIP.replace("%flip%", this.flip.name.lowercase()))
                         } catch (e: IllegalArgumentException) {
-                            v.sendMessage(e.message)
+                            v.sendMessage(Messages.INVALID_BRUSH_PARAM)
                         }
                     }
                 }
@@ -191,9 +194,10 @@ class SchematicBrush : AbstractBrush() {
                     if (params.size > 1) {
                         try {
                             this.mode = PasteMode.valueOf(params[1].uppercase())
-                            v.sendMessage("Mode set to ${this.mode.name.lowercase()}")
+                            v.sendMessage(Messages.SCHEMATIC_SET_MODE.replace("%mode%", this.mode.name.lowercase()))
+
                         } catch (e: IllegalArgumentException) {
-                            v.sendMessage(e.message)
+                            v.sendMessage(Messages.INVALID_BRUSH_PARAM)
                         }
                     }
                 }
@@ -211,7 +215,7 @@ class SchematicBrush : AbstractBrush() {
             "schem" to SchematicReader.getPossibleNames(),
             "rotate" to RotateMode.values().map { it.name.lowercase().replace("degrees_", "") },
             "flip" to FlipMode.values().map { it.name.lowercase() },
-            "mode" to PasteMode.values().map { it.name.toLowerCase() },
+            "mode" to PasteMode.values().map { it.name.lowercase() },
             "list" to listOf(),
         )
     }
