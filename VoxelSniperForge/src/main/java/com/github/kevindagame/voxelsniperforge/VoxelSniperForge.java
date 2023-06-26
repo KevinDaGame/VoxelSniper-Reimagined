@@ -78,7 +78,6 @@ public class VoxelSniperForge implements IVoxelsniper {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        SchematicReader.initialize();
         VoxelBrushManager brushManager = VoxelBrushManager.initialize();
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
 
@@ -104,6 +103,7 @@ public class VoxelSniperForge implements IVoxelsniper {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         this.fileHandler = new ForgeFileHandler(this);
+        SchematicReader.initialize();
         MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
         Messages.load(this);
 

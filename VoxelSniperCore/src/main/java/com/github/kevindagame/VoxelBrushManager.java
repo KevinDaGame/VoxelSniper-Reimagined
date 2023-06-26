@@ -121,7 +121,7 @@ public class VoxelBrushManager {
     }
 
     private static BrushData schematicBrush() {
-        return new BrushBuilder().name("Schematic").alias("schematic", "schem", "stencil").setSupplier(SchematicBrush::new).setPermission("voxelsniper.brush.test").build();
+        return new BrushBuilder().name("Schematic").alias("schematic", "schem", "stencil").setSupplier(SchematicBrush::new).setPermission("voxelsniper.brush.schematic").build();
     }
 
     // region <Brush Registration methods>
