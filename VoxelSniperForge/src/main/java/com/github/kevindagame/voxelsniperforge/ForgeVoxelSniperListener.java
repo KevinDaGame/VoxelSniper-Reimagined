@@ -81,7 +81,7 @@ public class ForgeVoxelSniperListener {
     private @Nullable
     IBlock getClickedBlock(PlayerInteractEvent event) {
         if (event instanceof PlayerInteractEvent.LeftClickBlock || event instanceof PlayerInteractEvent.RightClickBlock) {
-            var world = new ForgeWorld(((ServerLevel) event.getLevel()));
+            var world = VoxelSniperForge.getInstance().getWorld(((ServerLevel) event.getLevel()));
             var pos = ForgeLocation.fromForgeBlockPos(world, event.getPos());
             return world.getBlock(pos);
 
