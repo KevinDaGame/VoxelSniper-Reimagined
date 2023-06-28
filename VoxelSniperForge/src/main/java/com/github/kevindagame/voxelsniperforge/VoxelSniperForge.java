@@ -247,8 +247,7 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     @NotNull
     public ForgeWorld getWorld(@NotNull ServerLevel level) {
-        var str = level.toString();
-        var name = str.substring("ServerLevel[".length(), str.length() - 1);
+        var name = level.toString();
         if (this.worlds.get(name) != null) return this.worlds.get(name);
         ForgeWorld res = new ForgeWorld(level);
         this.worlds.put(name, res);
