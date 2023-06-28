@@ -19,10 +19,12 @@ import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
+import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
@@ -64,6 +66,7 @@ public class VoxelSniperForge implements IVoxelsniper {
     private static VoxelSniperForge instance;
 
     private final Map<UUID, ForgePlayer> players = new HashMap<>();
+    private final Map<String, ForgeWorld> worlds = new HashMap<>();
     public static VoxelSniperForge getInstance() {
         return instance;
     }
@@ -242,5 +245,14 @@ public class VoxelSniperForge implements IVoxelsniper {
                 feature.config() instanceof HugeMushroomFeatureConfiguration ||
                 feature.config() instanceof HugeFungusConfiguration ||
                 feature.feature() instanceof ChorusPlantFeature;
+    }
+
+    @NotNull
+    public ForgeWorld getWorld(@NotNull ServerLevel level) {
+        var name = level.toString();
+        if (this.worlds.get(name) != null) return this.worlds.get(name);
+        ForgeWorld res = new ForgeWorld(level);
+        this.worlds.put(name, res);
+        return res;
     }
 }
