@@ -157,7 +157,10 @@ class SchematicBrush : AbstractBrush() {
                             val schematics = SchematicReader.read(params[1])
                             this.schematicName = params[1]
                             this.schematics = schematics
-                            if (schematics.size == 1) {
+                            if(schematics.isEmpty()) {
+                                v.sendMessage(Messages.SCHEMATIC_LOADED_NONE.replace("%schematic%", params[1]))
+                            }
+                            else if (schematics.size == 1) {
                                 v.sendMessage(Messages.SCHEMATIC_LOADED_ONE.replace("%schematic%", this.schematics.first().name))
                             } else {
                                 v.sendMessage(Messages.SCHEMATIC_LOADED_MULTIPLE.replace("%schematics%", this.schematics.joinToString(", ") { it.name }))
