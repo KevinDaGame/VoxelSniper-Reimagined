@@ -8,6 +8,16 @@ import java.io.File
 object SchematicReader {
 
     private fun readSchematic(file: File): VoxelSchematic {
+        if(!file.exists()) {
+            throw IllegalArgumentException("File $file does not exist")
+        }
+        if(file.isDirectory) {
+            throw IllegalArgumentException("File $file is a directory")
+        }
+        if(file.extension != "schem") {
+            throw IllegalArgumentException("File $file is not a schematic")
+        }
+
         val schematic = SchematicUtil.load(file)
         val voxelSchematicBuilder = VoxelSchematicBuilder()
 
@@ -26,7 +36,7 @@ object SchematicReader {
     }
 
     private fun readSchematics(folder: File): MutableList<VoxelSchematic> {
-        if (!folder.exists()) {
+        if (!folder.exists() || !folder.isDirectory) {
             throw IllegalArgumentException("Folder $folder does not exist")
         }
         val schematicFiles = folder.listFiles()
@@ -75,13 +85,13 @@ object SchematicReader {
 
         // If name does not end with .schem, then check if there is a folder with that name. If yes, then call readFolder with the folder.
         val folder = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics/$name")
-        if (folder.exists()) {
+        if (folder.exists() && folder.isDirectory) {
             return readSchematics(folder)
         }
 
         // If no, check if there is a file with the name.schem. If yes, then call readFile with the file.
         val file = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics/$name.schem")
-        if (file.exists()) {
+        if (file.exists() && file.isFile) {
             return listOf(readSchematic(file))
         }
 
