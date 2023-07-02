@@ -19,14 +19,14 @@ class VoxelSchematicBuilderTest {
     fun testBuild() {
         val builder = VoxelSchematicBuilder()
         builder.name = "test schematic"
-        val blockData1 = SchematicBlock("stone")
-        builder.addBlock(0.0, 1.0, 2.0, blockData1)
-        val blockData2 = SchematicBlock("air")
-        builder.addBlock(1.0, 0.0, 2.0, blockData2)
+        val stoneBlockData = SchematicBlock("stone")
+        builder.addBlock(0.0, 1.0, 2.0, stoneBlockData)
+        val airBlockData = SchematicBlock("air")
+        builder.addBlock(1.0, 0.0, 2.0, airBlockData)
         val schematic = builder.build()
         assertEquals(schematic.blocks.size, 2)
-        assertTrue(schematic.blocks.contains(VoxelSchematicBlock(0.0, 1.0, 2.0, blockData1)))
-        assertTrue(schematic.blocks.contains(VoxelSchematicBlock(1.0, 0.0, 2.0, blockData2)))
+        assertTrue(schematic.blocks.contains(VoxelSchematicBlock(0.0, 1.0, 2.0, stoneBlockData)))
+        assertTrue(schematic.blocks.contains(VoxelSchematicBlock(1.0, 0.0, 2.0, airBlockData)))
         assertEquals(schematic.name, "test schematic")
     }
 }
