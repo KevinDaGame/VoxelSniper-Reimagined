@@ -39,10 +39,9 @@ object SchematicReader {
         if (schematicFiles != null) {
             for (schematic in schematicFiles) {
                 if (schematic.isFile) {
-                    if (schematic.extension != "schem") {
-                        continue
+                    if (schematic.extension == "schem") {
+                        schematics.add(readSchematic(schematic))
                     }
-                    schematics.add(readSchematic(schematic))
                 }
             }
         }
