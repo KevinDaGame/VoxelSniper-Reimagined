@@ -35,6 +35,7 @@ public class VoxelBrushManager {
             brushManager = getInstance();
         }
 
+        brushManager.registerSniperBrush(schematicBrush());
         brushManager.registerSniperBrush(ballBrush());
         brushManager.registerSniperBrush(biomeBrush());
         brushManager.registerSniperBrush(biomeBallBrush());
@@ -113,8 +114,11 @@ public class VoxelBrushManager {
         return getInstance();
     }
 
-
     // region <Brush Registration methods>
+    private static BrushData schematicBrush() {
+        return new BrushBuilder().name("Schematic").alias("schematic", "schem", "stencil").setSupplier(SchematicBrush::new).setPermission("voxelsniper.brush.schematic").build();
+    }
+
     private static BrushData ballBrush() {
         return new PolyBrushBuilder().name("Ball").alias("b", "ball").permission("voxelsniper.brush.ball").shape(PolyBrushShape.BALL).build();
     }

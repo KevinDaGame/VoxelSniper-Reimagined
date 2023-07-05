@@ -576,7 +576,7 @@ CAN_T_PARSE_NUMBER: Can't parse number.
 VOXEL_SNIPER_IS_NOW_ENABLED_FOR_YOU: VoxelSniper is now enabled for you.
 VOXEL_SNIPER_IS_NOW_DISABLED_FOR_YOU: VoxelSniper is now disabled for you.
 NO_BRUSH_SELECTED: No Brush selected.
-CURRENT_TOOL: 'Current Tool: %tool%'
+CURRENT_TOOL: '<aqua>Current Tool:</aqua> %tool%'
 NO_PERMISSION_BRUSH: You are not allowed to use this brush. You're missing the permission node '%permissionNode%'
 NO_PERMISSION_MESSAGE: You do not have the '%permission%' permission node to do that.
 VOXEL_HEIGHT_MUST_NOT_BE_0: VoxelHeight must not be 0.
@@ -593,3 +593,14 @@ UPDATE_AVAILABLE: |-
   <gold>An update is available for VoxelSniper. You are running version <red>%currentVersion%</red> and the latest version is <green>%latestVersion%</green>.
   Download the latest version <green><click:OPEN_URL:%downloadUrl%><hover:show_text:Click me!>here</hover></click></green>!</gold> 
 BRUSH_SIZE_TOO_LARGE: <red>Brush size is too large. Maximum brush size is %maxBrushSize%.
+SCHEMATIC_BRUSH_MESSAGE: "<magenta>Schematic brush: </magenta>"
+CHOSEN_SCHEMATIC: "<aqua>Selected schematic(s):</aqua> %schematics%"
+SCHEMATIC_MODE: "<aqua>Paste mode:</aqua> %mode%"
+SCHEMATIC_ROTATION: "<aqua>Rotation:</aqua> %rotation% degrees"
+SCHEMATIC_FLIP: "<aqua>Flip:</aqua> %flip%"
+SCHEMATIC_LIST: "<aqua>Schematics:</aqua> %schematics%"
+SCHEMATIC_LOADED_ONE: "<aqua>Loaded schematic:</aqua> %schematic%"
+SCHEMATIC_LOADED_MULTIPLE: "<aqua>Loaded schematics:</aqua> %schematics%"
+SCHEMATIC_SET_ROTATION: "<aqua>Rotation set to:</aqua> %rotation% degrees"
+SCHEMATIC_SET_FLIP: "<aqua>Flip set to:</aqua> %flip%"
+SCHEMATIC_SET_MODE: "<aqua>Paste mode set to:</aqua> %mode%"

@@ -78,6 +78,7 @@ permissions:
 - name: voxelsniper.brush.voxeldiscface
 - name: voxelsniper.brush.warp
 - name: voxelsniper.brush.biomeball
+- name: voxelsniper.brush.schematic
 - name: voxelsniper.brush.*
   description: Allows player to use all brushes
 - name: voxelsniper.bypass.*
