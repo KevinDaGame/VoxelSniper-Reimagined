@@ -14,6 +14,13 @@ object ServerSizeCategoryCounter {
 
 
     )
+
+    /**
+     * Gets the data for the server size category chart.
+     * @param playerCount The amount of players online on the server.
+     * @return The data for the server size category chart.
+     * The data consists of a map with the label of the category, and a map with the exact value. The bstats docs do not explain the hardcoded 1. I assume this means that it's either 1 deep or a weight of 1
+     */
     fun getData(playerCount: Int): Map<String, Map<String, Int>> {
         val map = mutableMapOf<String, Map<String, Int>>()
         val entries = mutableMapOf<String, Int>()
