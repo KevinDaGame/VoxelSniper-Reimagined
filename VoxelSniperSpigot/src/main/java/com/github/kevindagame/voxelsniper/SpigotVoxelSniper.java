@@ -14,6 +14,7 @@ import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsersCounter;
+import com.github.kevindagame.voxelsniper.integration.bstats.ServerSizeCategoryCounter;
 import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredIntegration;
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
@@ -24,6 +25,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.DrilldownPie;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.*;
@@ -112,8 +114,8 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         metrics.addCustomChart(new SimplePie("worldguard_integration", () -> WorldGuardIntegration.Companion.getEnabled() ? "enabled" : "disabled"));
         metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> PlotSquaredIntegration.Companion.getEnabled() ? "enabled" : "disabled"));
         metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
-//        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
         metrics.addCustomChart(new SingleLineChart("total_snipers", BrushUsersCounter.Companion::getTotalBrushUses));
+        metrics.addCustomChart(new DrilldownPie("server_size_category_counter", () -> ServerSizeCategoryCounter.INSTANCE.getData(getServer().getOnlinePlayers().size())));
 
         // Do update check
         if (voxelSniperConfiguration.isUpdateCheckerEnabled()) {
