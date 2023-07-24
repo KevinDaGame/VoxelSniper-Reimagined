@@ -4,10 +4,10 @@ plugins {
     id 'org.spongepowered.mixin'
 }
 
-def forge_version = findProperty("voxelsniper.forge-version") ?: "unspecified"
+def forge_mc_version = findProperty("voxelsniper.forge.mc-version") ?: "unspecified"
 description='VoxelSniperForge'
 ext {
-    platform = "forge-" + forge_version
+    platform = "forge-" + forge_mc_version
 }
 
 java {
@@ -20,7 +20,7 @@ compileJava {
 }
 
 minecraft {
-    mappings channel: 'official', version: forge_version.toString()
+    mappings channel: 'official', version: forge_mc_version.toString()
     runs {
         client {
             workingDirectory project.file('run')
