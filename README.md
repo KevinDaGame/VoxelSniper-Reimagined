@@ -32,8 +32,8 @@ What version do I pick?
 | Minecraft version | Voxelsniper version                                                             |
 |-------------------|---------------------------------------------------------------------------------|
 | 1.16, 1.17, 1.18  | Not available                                                                   |
-| 1.19.4            | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest) |
-| 1.20              | Coming soon                                                                     |
+| 1.19.4            | [8.9.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.9.0) |
+| 1.20              | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest) |
 
 Compilation
 -----------
