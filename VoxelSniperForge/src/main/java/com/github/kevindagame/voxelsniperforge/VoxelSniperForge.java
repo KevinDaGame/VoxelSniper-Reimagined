@@ -35,6 +35,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -67,6 +68,7 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     private final Map<UUID, ForgePlayer> players = new HashMap<>();
     private final Map<String, ForgeWorld> worlds = new HashMap<>();
+
     public static VoxelSniperForge getInstance() {
         return instance;
     }
@@ -86,6 +88,7 @@ public class VoxelSniperForge implements IVoxelsniper {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -107,19 +110,20 @@ public class VoxelSniperForge implements IVoxelsniper {
     public void onServerStarting(ServerStartingEvent event) {
         this.fileHandler = new ForgeFileHandler(this);
         SchematicReader.initialize();
-        MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
         Messages.load(this);
 
         voxelSniperConfiguration = new VoxelSniperConfiguration(this);
-//        Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
-//        Bukkit.getPluginManager().registerEvents(this, this);
-//        getLogger().info("Registered Sniper Listener.");
 
         var level = ServerLifecycleHooks.getCurrentServer().getAllLevels().iterator().next();
         this.biomeRegistry = level.registryAccess().registryOrThrow(Registries.BIOME);
         this.featureRegistry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
         VoxelCommandManager.getInstance().registerBrushSubcommands();
+    }
 
+    @SubscribeEvent
+    public void onServerStopping(ServerStoppingEvent event) {
+        worlds.clear();
+        players.clear();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
