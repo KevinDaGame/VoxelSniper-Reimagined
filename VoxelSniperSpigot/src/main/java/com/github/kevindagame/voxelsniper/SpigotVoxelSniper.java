@@ -33,6 +33,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -138,6 +139,11 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         this.players.remove(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onWorldUnload(WorldUnloadEvent event) {
+        this.worlds.remove(event.getWorld().getName());
     }
 
     @NotNull
