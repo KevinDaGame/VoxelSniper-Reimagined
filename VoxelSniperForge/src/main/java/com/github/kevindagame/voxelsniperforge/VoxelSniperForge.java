@@ -162,7 +162,9 @@ public class VoxelSniperForge implements IVoxelsniper {
         return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name));
     }
 
-    public IPlayer getPlayer(@NotNull ServerPlayer p) {
+    @Nullable
+    public IPlayer getPlayer(@Nullable ServerPlayer p) {
+        if (p == null) return null;
         if (this.players.get(p.getUUID()) != null) return this.players.get(p.getUUID());
         ForgePlayer res = new ForgePlayer(p);
         this.players.put(res.getUniqueId(), res);
