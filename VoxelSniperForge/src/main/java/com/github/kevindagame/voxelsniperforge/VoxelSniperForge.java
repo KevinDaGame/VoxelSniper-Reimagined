@@ -34,6 +34,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFea
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
@@ -132,6 +133,11 @@ public class VoxelSniperForge implements IVoxelsniper {
         if (event.getLevel() instanceof ServerLevel) {
             worlds.remove(event.getLevel().toString());
         }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
+        players.remove(event.getEntity().getUUID());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
