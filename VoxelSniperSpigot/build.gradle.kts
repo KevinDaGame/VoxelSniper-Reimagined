@@ -44,23 +44,29 @@ tasks {
         minecraftVersion("1.19.4")
     }
 }
+
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run17") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
     minecraftVersion("1.17.1")
+    group = "run paper"
 }
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run18") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
     minecraftVersion("1.18.2")
+    group = "run paper"
 }
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run19") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
     minecraftVersion("1.19.4")
+    group = "run paper"
+
 }
 tasks.register<xyz.jpenilla.runpaper.task.RunServerTask>("run20") {
     dependsOn(tasks.shadowJar)
     pluginJars(File("../output/voxelsniper-${version}-${platform}.jar"))
-    minecraftVersion("1.20")
+    minecraftVersion("1.20.1")
+    group = "run paper"
 }

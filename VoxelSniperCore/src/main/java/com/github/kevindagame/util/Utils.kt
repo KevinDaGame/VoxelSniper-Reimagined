@@ -3,19 +3,24 @@ package com.github.kevindagame.util
 import java.util.*
 
 object Utils {
+    @JvmStatic
     fun <T> unmodifiableList(): List<T> {
-        return Collections.unmodifiableList(ArrayList<T>())
+        return listOf()
     }
 
+    @JvmStatic
     fun <T> unmodifiableList(arg: T): List<T> {
-        return Collections.unmodifiableList(newArrayList(arg))
+        return listOf(arg)
+    }
+
+    @JvmStatic
+    fun <T> unmodifiableList(vararg args: T): List<T> {
+        return listOf(*args)
     }
 
     @JvmStatic
     fun <T> newArrayList(vararg args: T): List<T> {
-        val lst: MutableList<T> = ArrayList()
-        lst.addAll(args)
-        return lst
+        return mutableListOf(*args)
     }
 
     @JvmStatic

@@ -8,7 +8,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven("https://maven.minecraftforge.net/")
-//        maven("https://papermc.io/repo/repository/maven-public/")
     }
 }
 

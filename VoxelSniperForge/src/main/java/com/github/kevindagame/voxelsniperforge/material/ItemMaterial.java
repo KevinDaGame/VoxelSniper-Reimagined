@@ -25,16 +25,6 @@ public final class ItemMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean isSolid() {
-        return false;
-    }
-
-    @Override
-    public boolean hasGravity() {
-        return false;
-    }
-
-    @Override
     public IBlockData createBlockData(String s) {
         throw new UnsupportedOperationException("Cannot create BlockData from Item");
     }
@@ -50,16 +40,7 @@ public final class ItemMaterial extends VoxelMaterial {
     }
 
     @Override
-    public boolean isFluid() {
-        return false;
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(item);
-    }
-
-    public Item getItem() {
-        return item;
     }
 }

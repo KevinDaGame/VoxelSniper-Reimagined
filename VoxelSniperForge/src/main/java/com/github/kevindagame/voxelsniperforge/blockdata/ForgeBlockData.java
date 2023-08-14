@@ -2,7 +2,9 @@ package com.github.kevindagame.voxelsniperforge.blockdata;
 
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
+import com.github.kevindagame.voxelsniperforge.blockdata.leaves.ForgeLeaves;
 import com.github.kevindagame.voxelsniperforge.blockdata.redstoneWire.ForgeRedstoneWire;
+import com.github.kevindagame.voxelsniperforge.blockdata.waterlogged.ForgeWaterlogged;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.google.common.base.Preconditions;
 import com.mojang.brigadier.StringReader;
@@ -13,7 +15,9 @@ import java.util.Map;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -89,7 +93,7 @@ public class ForgeBlockData implements IBlockData, Cloneable {
 
     @Override
     public IBlockData getCopy() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.clone();
     }
 
     @Override
@@ -150,6 +154,10 @@ public class ForgeBlockData implements IBlockData, Cloneable {
         Block b = blockData.getBlock();
         if (b instanceof RedStoneWireBlock)
             return new ForgeRedstoneWire(blockData);
+        if (b instanceof LeavesBlock)
+            return new ForgeLeaves(blockData);
+        if (b instanceof SimpleWaterloggedBlock)
+            return new ForgeWaterlogged(blockData);
         return new ForgeBlockData(blockData);
     }
 }

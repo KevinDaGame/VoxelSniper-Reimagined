@@ -6,7 +6,7 @@ import com.github.kevindagame.util.brushOperation.operation.BrushOperation
 
 class OperationExecutor<T>(
     private val strategy: ExecutorStrategy<T>,
-    val operations: List<T>,
+    val operations: List<BrushOperation>,
     val undo: Undo
 ) where T : BrushOperation {
     fun execute() {

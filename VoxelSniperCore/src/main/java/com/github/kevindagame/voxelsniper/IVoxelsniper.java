@@ -7,6 +7,8 @@ import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -47,6 +49,12 @@ public interface IVoxelsniper {
 
     @Nullable
     VoxelTreeType getTreeType(String namespace, String key);
+
+    /**
+     * The names for trees are different on spigot and forge, this should return the correct naming for an oak tree
+     */
+    @NotNull
+    VoxelTreeType getDefaultTreeType();
 
     List<VoxelTreeType> getTreeTypes();
 }

@@ -27,7 +27,7 @@ public class DrainBrush extends AbstractBrush {
         for (var pos : positions) {
             var block = pos.getBlock();
             var blockData = block.getBlockData();
-            if (blockData.getMaterial().isFluid()) {
+            if (block.isLiquid()) {
                 addOperation(new BlockOperation(pos, blockData, VoxelMaterial.AIR().createBlockData()));
             } else if (blockData instanceof IWaterlogged waterlogged && waterlogged.isWaterlogged()) {
                 var newData = (IWaterlogged) waterlogged.getCopy();

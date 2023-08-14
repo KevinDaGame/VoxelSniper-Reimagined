@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
 import com.github.kevindagame.util.brushOperation.operation.BlockStateOperation;
 import com.github.kevindagame.util.brushOperation.operation.CustomOperation;
@@ -18,6 +19,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -265,6 +267,31 @@ public class SignOverwriteBrush extends CustomBrush {
 
         this.signTextLines[lineIndex] = newText.toString();
         return i;
+    }
+
+    @NotNull
+    @Override
+    public List<String> registerArguments() {
+        return Utils.unmodifiableList("-1", "-2", "-3", "-4", "-clear", "-c", "-clearall", "-ca", "-multiple", "-m", "-s", "-save", "-o", "-open", "info");
+    }
+
+    @NotNull
+    @Override
+    public HashMap<String, List<String>> registerArgumentValues() {
+        HashMap<String, List<String>> args = new HashMap<>();
+
+        for (int i = 1; i < 5; i++) {
+            args.put("-" + i, Utils.unmodifiableList("[text]"));
+        }
+
+        args.put("-multiple", Utils.unmodifiableList("on", "off", "yes", "no"));
+        args.put("-m", Utils.unmodifiableList("on", "off", "yes", "no"));
+
+        for (String e :  new String[]{"s", "save", "o", "open"}) {
+            args.put("-" + e, Utils.unmodifiableList("name"));
+        }
+
+        return args;
     }
 
     private void displayBuffer(final SnipeData v) {

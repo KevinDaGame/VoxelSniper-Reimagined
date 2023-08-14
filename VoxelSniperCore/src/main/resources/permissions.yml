@@ -47,8 +47,6 @@ permissions:
 - name: voxelsniper.brush.overlay
 - name: voxelsniper.brush.painting
 - name: voxelsniper.brush.pull
-- name: voxelsniper.brush.punish
-- name: voxelsniper.brush.randomerode
 - name: voxelsniper.brush.regeneratechunk
 - name: voxelsniper.brush.ring
 - name: voxelsniper.brush.rot2d
@@ -57,24 +55,19 @@ permissions:
 - name: voxelsniper.brush.ruler
 - name: voxelsniper.brush.scanner
 - name: voxelsniper.brush.set
-- name: voxelsniper.brush.setredstoneflip
-- name: voxelsniper.brush.setredstonerotate
 - name: voxelsniper.brush.shellball
 - name: voxelsniper.brush.shellset
 - name: voxelsniper.brush.shellvoxel
 - name: voxelsniper.brush.signoverwrite
 - name: voxelsniper.brush.snipe
-- name: voxelsniper.brush.snowcone
-- name: voxelsniper.brush.spiralstaircase
 - name: voxelsniper.brush.splatterball
 - name: voxelsniper.brush.splatterdisc
 - name: voxelsniper.brush.splatteroverlay
 - name: voxelsniper.brush.splattervoxel
 - name: voxelsniper.brush.splattervoxeldisc
 - name: voxelsniper.brush.spline
-- name: voxelsniper.brush.stamp
-- name: voxelsniper.brush.stencil
-- name: voxelsniper.brush.stencillist
+#- name: voxelsniper.brush.stencil
+#- name: voxelsniper.brush.stencillist
 - name: voxelsniper.brush.threepointcircle
 - name: voxelsniper.brush.treesnipe
 - name: voxelsniper.brush.triangle
@@ -85,6 +78,7 @@ permissions:
 - name: voxelsniper.brush.voxeldiscface
 - name: voxelsniper.brush.warp
 - name: voxelsniper.brush.biomeball
+- name: voxelsniper.brush.schematic
 - name: voxelsniper.brush.*
   description: Allows player to use all brushes
 - name: voxelsniper.bypass.*

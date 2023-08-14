@@ -4,7 +4,6 @@ import com.github.kevindagame.voxelsniper.entity.painting.IPainting;
 import com.github.kevindagame.voxelsniperforge.entity.ForgeEntity;
 
 import java.util.List;
-import java.util.Objects;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.decoration.Painting;
@@ -34,8 +33,6 @@ public class ForgePainting extends ForgeEntity implements IPainting {
 
     @Override
     public int getArtId() {
-        String[] values = paintingVariants.stream().map(Objects::toString).toArray(String[]::new);
-
         var variant =  ((Painting) this.getEntity()).getVariant().get();
         var key = ForgeRegistries.PAINTING_VARIANTS.getKey(variant);
         var idx =  paintingVariants.indexOf(key);

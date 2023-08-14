@@ -9,6 +9,9 @@ import com.github.kevindagame.brush.SnipeBrush;
 import com.github.kevindagame.brush.perform.Performer;
 import com.github.kevindagame.brush.perform.PerformerBrush;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
+import com.github.kevindagame.voxelsniper.permissions.Permission;
+import com.github.kevindagame.voxelsniper.permissions.PermissionLoader;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -148,5 +151,50 @@ public class BrushesTest {
             }
         }
         System.out.println("Performer Arguments VALUES Test OK!");
+    }
+
+    @Test
+    public void testBrushPermissions() {
+        // Load all brushes and permissions
+        VoxelBrushManager brushes = VoxelBrushManager.initialize();
+        PermissionLoader permissions = PermissionLoader.getInstance();
+        permissions.load();
+
+        // check that every brush has a permission and that permission is registered in the permissions.yml file
+        for (BrushData brushData : brushes.getRegisteredBrushesMap().values()) {
+            Assert.assertNotNull("Brush permission must not be null (brush: " + brushData.getName() + ")", brushData.getPermission());
+            Permission permissionNode = permissions.getPermission(brushData.getPermission());
+            Assert.assertNotNull("Brush permission must be in permissions.yml (brush: " + brushData.getName() + ")", permissionNode);
+        }
+    }
+
+    @Test
+    public void testBrushPermissionsUsed() {
+        // Load all brushes and permissions
+        VoxelBrushManager brushes = VoxelBrushManager.initialize();
+        PermissionLoader permissions = PermissionLoader.getInstance();
+        permissions.load();
+
+        List<String> usedBrushPermissions = brushes.getRegisteredBrushesMap().values().stream().map(BrushData::getPermission).toList();
+        System.out.println(Arrays.toString(usedBrushPermissions.toArray(String[]::new)));
+        for (Permission p : permissions.getAllPermissions() ) {
+            var name = p.getName();
+            if (name.startsWith("voxelsniper.brush.") && !name.endsWith(".*"))
+                Assert.assertTrue("Brush permission is unused: " + name, usedBrushPermissions.contains(name));
+        }
+    }
+
+    @Test
+    public void testDuplicateBrushHandles() {
+        VoxelBrushManager brushes = VoxelBrushManager.initialize();
+        // put this into a hashset to remove duplicates (e.g. any brush that registers more than one alias)
+        Set<BrushData> brushDatas = new HashSet<>(brushes.getRegisteredBrushesMap().values());
+        List<String> usedHandles = new ArrayList<>();
+        for (BrushData brushData : brushDatas) {
+            for (String handle : brushData.getAliases()) {
+                Assert.assertFalse("Brush handle '" + handle + "' is used more than once!", usedHandles.contains(handle));
+                usedHandles.add(handle);
+            }
+        }
     }
 }

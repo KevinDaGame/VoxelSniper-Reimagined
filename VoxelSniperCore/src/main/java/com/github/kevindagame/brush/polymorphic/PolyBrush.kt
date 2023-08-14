@@ -42,8 +42,7 @@ class PolyBrush(
             }
         }
         if (operation != null) {
-            properties.add(PolyPropertiesEnum.EXCLUDEWATER)
-            properties.add(PolyPropertiesEnum.EXCLUDEAIR)
+            properties.addAll(operation.getProperties())
 
         }
         for (property in properties) {
@@ -88,7 +87,7 @@ class PolyBrush(
         }
         if (operation != null) {
             val brushSize = v.brushSize
-            val newMaterials = operation.apply(brushSize, this, excludeAir, excludeWater)
+            val newMaterials = operation.apply(brushSize, this, snipeAction, excludeAir, excludeWater)
             for (position in positions) {
                 val material: VoxelMaterial =
                     newMaterials[position.blockX - targetBlock.x + brushSize][position.blockY - targetBlock.y + brushSize][position.blockZ - targetBlock.z + brushSize]

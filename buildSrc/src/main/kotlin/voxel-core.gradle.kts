@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
@@ -24,6 +23,9 @@ repositories {
     maven {
         url = uri("https://repo.maven.apache.org/maven2/")
     }
+    maven {
+        url = uri("https://jitpack.io")
+    }
 }
 
 val shadowNoRuntime by configurations.creating {
@@ -40,6 +42,9 @@ dependencies {
     shadow("net.kyori:adventure-text-serializer-legacy:4.13.1")
 
     implementation(kotlin("stdlib-jdk8"))
+    implementation("com.github.SandroHc:schematic4j:0.1.0-SNAPSHOT") {
+        exclude("org.slf4j", "")
+    }
     shadowNoRuntime("com.google.code.gson:gson:2.10.1")
     shadow("org.yaml:snakeyaml:1.33")
 
@@ -87,6 +92,7 @@ tasks {
         relocate("net.kyori", "com.github.kevindagame.voxelsniper.libs.net.kyori")
         relocate("org.yaml.snakeyaml", "com.github.kevindagame.voxelsniper.libs.org.yaml.snakeyaml")
         relocate("kotlin", "com.github.kevindagame.voxelsniper.libs.kotlin")
+        exclude("org.apache.logging.log4j:log4j-core:2.11.1")
     }
 
     build {

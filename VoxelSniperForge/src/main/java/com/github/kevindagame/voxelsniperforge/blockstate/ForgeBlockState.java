@@ -10,6 +10,7 @@ import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
 import com.github.kevindagame.voxelsniperforge.blockstate.sign.ForgeSign;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,5 +68,18 @@ public class ForgeBlockState extends AbstractBlockState {
             VoxelSniper.voxelsniper.getLogger().log(java.util.logging.Level.WARNING, "Failed to set BlockData", e);
             return false;
         }
+    }
+
+    public void refreshSnapshot() {
+        // we might need this in the future
+        // this.load(tileEntity);
+    }
+
+    public void setFlag(int flags) {
+        // we might need this in the future
+    }
+
+    public void setWorldHandle(ServerLevel level) {
+        // we might need this in the future
     }
 }

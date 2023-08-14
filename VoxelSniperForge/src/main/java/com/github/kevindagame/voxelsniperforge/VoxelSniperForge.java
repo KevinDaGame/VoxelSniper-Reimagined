@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.command.VoxelCommandManager;
 import com.github.kevindagame.util.Messages;
+import com.github.kevindagame.util.schematic.SchematicReader;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
@@ -18,14 +19,25 @@ import com.github.kevindagame.voxelsniperforge.fileHandler.ForgeFileHandler;
 import com.github.kevindagame.voxelsniperforge.material.BlockMaterial;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
+import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.HugeFungusConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,6 +60,7 @@ import java.util.stream.Collectors;
 public class VoxelSniperForge implements IVoxelsniper {
 
     private Registry<Biome> biomeRegistry;
+    private Registry<ConfiguredFeature<?,?>> featureRegistry;
     // Define mod id in a common place for everything to reference
     public static final String MODID = "voxelsniperforge";
     private final Logger LOGGER;
@@ -56,6 +69,8 @@ public class VoxelSniperForge implements IVoxelsniper {
     private static VoxelSniperForge instance;
 
     private final Map<UUID, ForgePlayer> players = new HashMap<>();
+    private final Map<String, ForgeWorld> worlds = new HashMap<>();
+
     public static VoxelSniperForge getInstance() {
         return instance;
     }
@@ -75,6 +90,7 @@ public class VoxelSniperForge implements IVoxelsniper {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -95,18 +111,33 @@ public class VoxelSniperForge implements IVoxelsniper {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         this.fileHandler = new ForgeFileHandler(this);
-        MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
+        SchematicReader.initialize();
         Messages.load(this);
 
         voxelSniperConfiguration = new VoxelSniperConfiguration(this);
-//        Bukkit.getPluginManager().registerEvents(this.voxelSniperListener, this);
-//        Bukkit.getPluginManager().registerEvents(this, this);
-//        getLogger().info("Registered Sniper Listener.");
 
         var level = ServerLifecycleHooks.getCurrentServer().getAllLevels().iterator().next();
         this.biomeRegistry = level.registryAccess().registryOrThrow(Registries.BIOME);
+        this.featureRegistry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
         VoxelCommandManager.getInstance().registerBrushSubcommands();
+    }
 
+    @SubscribeEvent
+    public void onServerStopping(ServerStoppingEvent event) {
+        worlds.clear();
+        players.clear();
+    }
+
+    @SubscribeEvent
+    public void onLevelUnload(LevelEvent.Unload event) {
+        if (event.getLevel() instanceof ServerLevel) {
+            worlds.remove(event.getLevel().toString());
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
+        players.remove(event.getEntity().getUUID());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -131,7 +162,9 @@ public class VoxelSniperForge implements IVoxelsniper {
         return getPlayer(ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByName(name));
     }
 
-    public IPlayer getPlayer(@NotNull ServerPlayer p) {
+    @Nullable
+    public IPlayer getPlayer(@Nullable ServerPlayer p) {
+        if (p == null) return null;
         if (this.players.get(p.getUUID()) != null) return this.players.get(p.getUUID());
         ForgePlayer res = new ForgePlayer(p);
         this.players.put(res.getUniqueId(), res);
@@ -210,12 +243,36 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public VoxelTreeType getTreeType(String namespace, String key) {
-        return ForgeRegistries.TREE_DECORATOR_TYPES.containsKey(new ResourceLocation(namespace, key)) ? new VoxelTreeType(namespace, key) : null;
+        return featureRegistry.get(new ResourceLocation(namespace, key)) != null ? new VoxelTreeType(namespace, key) : null;
+    }
+
+    @Override
+    @NotNull
+    public VoxelTreeType getDefaultTreeType() {
+        return new VoxelTreeType("minecraft", "oak");
     }
 
     @Override
     public List<VoxelTreeType> getTreeTypes() {
-        return ForgeRegistries.TREE_DECORATOR_TYPES.getEntries().stream().map(treeType -> new VoxelTreeType(treeType.getKey().location().getNamespace(), treeType.getKey().location().getPath())).collect(Collectors.toList());
+        return featureRegistry.entrySet().stream().filter(e -> isTreeType(e.getValue())).map(e -> {
+                    var loc = e.getKey().location();
+                    return new VoxelTreeType(loc.getNamespace(), loc.getPath());
+                }).collect(Collectors.toList());
     }
 
+    public static boolean isTreeType(@NotNull ConfiguredFeature<?, ?> feature) {
+        return feature.config() instanceof TreeConfiguration ||
+                feature.config() instanceof HugeMushroomFeatureConfiguration ||
+                feature.config() instanceof HugeFungusConfiguration ||
+                feature.feature() instanceof ChorusPlantFeature;
+    }
+
+    @NotNull
+    public ForgeWorld getWorld(@NotNull ServerLevel level) {
+        var name = level.toString();
+        if (this.worlds.get(name) != null) return this.worlds.get(name);
+        ForgeWorld res = new ForgeWorld(level);
+        this.worlds.put(name, res);
+        return res;
+    }
 }

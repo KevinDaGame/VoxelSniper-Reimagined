@@ -38,7 +38,7 @@ public class EraserBrush extends AbstractBrush {
         for (var pos : positions) {
             var currentBlock = pos.getBlock();
             if (getExclusiveMaterials().contains(currentBlock.getMaterial())
-                    || (getSnipeAction() == SnipeAction.GUNPOWDER && currentBlock.getMaterial().isFluid())) {
+                    || (getSnipeAction() == SnipeAction.GUNPOWDER && currentBlock.isLiquid())) {
                 continue;
             }
             addOperation(new BlockOperation(pos, currentBlock.getBlockData(), VoxelMaterial.AIR().createBlockData()));

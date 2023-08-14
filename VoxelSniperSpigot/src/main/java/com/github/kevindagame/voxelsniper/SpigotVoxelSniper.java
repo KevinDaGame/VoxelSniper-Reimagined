@@ -4,6 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VersionChecker;
+import com.github.kevindagame.util.schematic.SchematicReader;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -13,6 +14,7 @@ import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsersCounter;
+import com.github.kevindagame.voxelsniper.integration.bstats.ServerSizeCategoryCounter;
 import com.github.kevindagame.voxelsniper.integration.plotsquared.PlotSquaredIntegration;
 import com.github.kevindagame.voxelsniper.integration.worldguard.WorldGuardIntegration;
 import com.github.kevindagame.voxelsniper.material.SpigotMaterial;
@@ -23,6 +25,7 @@ import com.github.kevindagame.voxelsniper.world.IWorld;
 import com.github.kevindagame.voxelsniper.world.SpigotWorld;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.DrilldownPie;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.*;
@@ -30,6 +33,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -93,6 +97,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         new BrushUsersCounter().registerListeners();
 
         // Initialize commands
+        SchematicReader.initialize();
         SpigotCommandManager.initialize();
 
         // Initialize metrics
@@ -110,8 +115,8 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         metrics.addCustomChart(new SimplePie("worldguard_integration", () -> WorldGuardIntegration.Companion.getEnabled() ? "enabled" : "disabled"));
         metrics.addCustomChart(new SimplePie("plotsquared_integration", () -> PlotSquaredIntegration.Companion.getEnabled() ? "enabled" : "disabled"));
         metrics.addCustomChart(new SingleLineChart("total_brush_uses_in_last_30_minutes", BrushUsageCounter::getTotalBrushUses));
-//        metrics.addCustomChart(new Metrics.MultiLineChart("uses_per_brush", BrushUsageCounter::getUsagePerBrush));
         metrics.addCustomChart(new SingleLineChart("total_snipers", BrushUsersCounter.Companion::getTotalBrushUses));
+        metrics.addCustomChart(new DrilldownPie("server_size_category_counter", () -> ServerSizeCategoryCounter.INSTANCE.getData(getServer().getOnlinePlayers().size())));
 
         // Do update check
         if (voxelSniperConfiguration.isUpdateCheckerEnabled()) {
@@ -134,6 +139,11 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         this.players.remove(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onWorldUnload(WorldUnloadEvent event) {
+        this.worlds.remove(event.getWorld().getName());
     }
 
     @NotNull
@@ -222,6 +232,12 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @NotNull
+    @Override
+    public VoxelTreeType getDefaultTreeType() {
+        return new VoxelTreeType("minecraft", "TREE");
     }
 
     @Override
