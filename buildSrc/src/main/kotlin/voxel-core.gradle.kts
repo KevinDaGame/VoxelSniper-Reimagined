@@ -54,8 +54,9 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:4.5.1")
 }
 
-configurations.testImplementation.extendsFrom(shadowNoRuntime)
-configurations.runtimeClasspath.extendsFrom(configurations.shadow.get())
+
+configurations.testImplementation.get().extendsFrom(shadowNoRuntime)
+configurations.runtimeClasspath.get().extendsFrom(configurations.shadow.get())
 
 java {
     toolchain {
