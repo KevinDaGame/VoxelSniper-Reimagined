@@ -60,7 +60,7 @@ configurations.runtimeClasspath.get().extendsFrom(configurations.shadow.get())
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(20))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
