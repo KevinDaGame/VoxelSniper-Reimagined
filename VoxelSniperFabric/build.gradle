@@ -10,7 +10,7 @@ group = "com.github.kevdadev"
 description='VoxelSniperFabric'
 
 ext {
-    platform = "fabric-" + getProperty("voxelsniper.fabric.minecraft_version")
+    platform = "fabric-alpha-" + getProperty("voxelsniper.fabric.minecraft_version")
 }
 
 repositories {
