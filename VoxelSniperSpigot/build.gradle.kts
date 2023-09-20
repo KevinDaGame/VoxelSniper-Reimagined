@@ -1,6 +1,6 @@
 plugins {
     id("voxel-implementation")
-    id("xyz.jpenilla.run-paper") version "1.0.6"
+    id("xyz.jpenilla.run-paper")
 }
 
 repositories {
