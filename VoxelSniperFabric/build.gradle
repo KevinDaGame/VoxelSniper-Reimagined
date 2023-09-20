@@ -1,20 +1,17 @@
-buildscript {
-    dependencies {
-        classpath("org.ow2.asm:asm:9.5")
-        classpath("org.ow2.asm:asm-analysis:9.5")
-        classpath("org.ow2.asm:asm-commons:9.5")
-        classpath("org.ow2.asm:asm-tree:9.5")
-    }
-}
-
-
 plugins {
     id 'fabric-loom'
     id 'maven-publish'
+    id 'voxel-implementation'
 }
 
-version = project.mod_version
-group = project.maven_group
+version = findProperty("voxelsniper.version")
+group = "com.github.kevdadev"
+
+description='VoxelSniperFabric'
+
+ext {
+    platform = "fabric-" + getProperty("voxelsniper.fabric.minecraft_version")
+}
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
@@ -26,23 +23,23 @@ repositories {
 
 dependencies {
     // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    minecraft "com.mojang:minecraft:${getProperty("voxelsniper.fabric.minecraft_version")}"
+    mappings "net.fabricmc:yarn:${getProperty("voxelsniper.fabric.yarn_mappings")}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${getProperty("voxelsniper.fabric.loader_version")}"
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${getProperty("voxelsniper.fabric.fabric_version")}"
 }
 
 processResources {
     inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
+    inputs.property "minecraft_version", getProperty("voxelsniper.fabric.minecraft_version")
+    inputs.property "loader_version", getProperty("voxelsniper.fabric.loader_version")
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+                "minecraft_version": getProperty("voxelsniper.fabric.minecraft_version"),
+                "loader_version": getProperty("voxelsniper.fabric.loader_version")
     }
 }
 
@@ -63,7 +60,6 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
-    archivesBaseName = project.archives_base_name
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.
     // If you remove this line, sources will not be generated.
