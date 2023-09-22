@@ -1,115 +1,117 @@
-package com.github.kevdadev.voxelsniperfabric;
+package com.github.kevdadev.voxelsniperfabric
 
-import com.github.kevindagame.voxelsniper.Environment;
-import com.github.kevindagame.voxelsniper.IVoxelsniper;
-import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
-import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
-import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
-import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
-import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
-import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
-import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
-import net.fabricmc.api.ModInitializer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.filehandler.FabricFileHandler
+import com.github.kevindagame.VoxelBrushManager
+import com.github.kevindagame.VoxelSniper
+import com.github.kevindagame.command.VoxelCommandManager
+import com.github.kevindagame.util.Messages
+import com.github.kevindagame.util.schematic.SchematicReader
+import com.github.kevindagame.voxelsniper.Environment
+import com.github.kevindagame.voxelsniper.IVoxelsniper
+import com.github.kevindagame.voxelsniper.biome.VoxelBiome
+import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType
+import com.github.kevindagame.voxelsniper.entity.player.IPlayer
+import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler
+import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration
+import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType
+import net.fabricmc.api.ModInitializer
+import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Logger;
+class VoxelSniperFabric : ModInitializer, IVoxelsniper {
 
-public class VoxelSniperFabric implements ModInitializer, IVoxelsniper {
+    private lateinit var voxelSniperConfiguration: VoxelSniperConfiguration
+    private lateinit var fileHandler: IFileHandler
+
     /**
      * Runs the mod initializer.
      */
-    @Override
-    public void onInitialize() {
+    override fun onInitialize() {
+        VoxelSniper.voxelsniper = this
+        val brushManager = VoxelBrushManager.initialize()
+        logger.log(
+            Level.INFO,
+            "Registered {0} Sniper Brushes with {1} handles.",
+            arrayOf<Any>(brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles())
+        )
 
+
+        fileHandler = FabricFileHandler()
+        SchematicReader.initialize()
+        Messages.load(this)
+
+        voxelSniperConfiguration = VoxelSniperConfiguration(this)
+
+        VoxelCommandManager.getInstance().registerBrushSubcommands();
     }
 
-    @Nullable
-    @Override
-    public IPlayer getPlayer(UUID uuid) {
-        return null;
+    override fun getPlayer(uuid: UUID): IPlayer? {
+        TODO()
     }
 
-    @Nullable
-    @Override
-    public IPlayer getPlayer(String name) {
-        return null;
+    override fun getPlayer(name: String): IPlayer? {
+        TODO()
     }
 
-    @Override
-    public Environment getEnvironment() {
-        return null;
+    override fun getEnvironment(): Environment {
+        TODO()
     }
 
-    @Override
-    public VoxelSniperConfiguration getVoxelSniperConfiguration() {
-        return null;
+    override fun getVoxelSniperConfiguration(): VoxelSniperConfiguration {
+        TODO()
     }
 
-    @Override
-    public IFileHandler getFileHandler() {
-        return null;
+    override fun getFileHandler(): IFileHandler {
+        return fileHandler
     }
 
-    @Override
-    public Logger getLogger() {
-        return null;
+    override fun getLogger(): Logger {
+        return LOGGER
     }
 
-    @Override
-    public List<String> getOnlinePlayerNames() {
-        return null;
+    override fun getOnlinePlayerNames(): List<String> {
+        TODO()
     }
 
-    @Nullable
-    @Override
-    public VoxelMaterial getMaterial(String namespace, String key) {
-        return null;
+    override fun getMaterial(namespace: String, key: String): VoxelMaterial? {
+        TODO()
     }
 
-    @Override
-    public List<VoxelMaterial> getMaterials() {
-        return null;
+    override fun getMaterials(): List<VoxelMaterial> {
+        TODO()
     }
 
-    @Nullable
-    @Override
-    public VoxelBiome getBiome(String namespace, String key) {
-        return null;
+    override fun getBiome(namespace: String, key: String): VoxelBiome? {
+        TODO()
     }
 
-    @Override
-    public List<VoxelBiome> getBiomes() {
-        return null;
+    override fun getBiomes(): List<VoxelBiome> {
+        TODO()
     }
 
-    @Nullable
-    @Override
-    public VoxelEntityType getEntityType(String namespace, String key) {
-        return null;
+    override fun getEntityType(namespace: String, key: String): VoxelEntityType? {
+        TODO()
     }
 
-    @Override
-    public List<VoxelEntityType> getEntityTypes() {
-        return null;
+    override fun getEntityTypes(): List<VoxelEntityType> {
+        TODO()
     }
 
-    @Nullable
-    @Override
-    public VoxelTreeType getTreeType(String namespace, String key) {
-        return null;
+    override fun getTreeType(namespace: String, key: String): VoxelTreeType? {
+        TODO()
     }
 
-    @NotNull
-    @Override
-    public VoxelTreeType getDefaultTreeType() {
-        return null;
+    override fun getDefaultTreeType(): VoxelTreeType {
+        TODO()
     }
 
-    @Override
-    public List<VoxelTreeType> getTreeTypes() {
-        return null;
+    override fun getTreeTypes(): List<VoxelTreeType> {
+        TODO()
+    }
+
+    companion object {
+        private val LOGGER = Logger.getLogger("VoxelSniperFabric")
     }
 }

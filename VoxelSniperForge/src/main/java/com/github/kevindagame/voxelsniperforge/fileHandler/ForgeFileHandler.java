@@ -16,8 +16,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class ForgeFileHandler implements IFileHandler {
     private final VoxelSniperForge voxelSniper;
 
-    public ForgeFileHandler(VoxelSniperForge spigotVoxelSniper) {
-        this.voxelSniper = spigotVoxelSniper;
+    public ForgeFileHandler(VoxelSniperForge voxelSniper) {
+        this.voxelSniper = voxelSniper;
     }
 
     @Override
