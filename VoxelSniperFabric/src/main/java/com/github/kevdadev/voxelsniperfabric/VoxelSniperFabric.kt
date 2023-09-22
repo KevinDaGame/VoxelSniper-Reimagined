@@ -44,6 +44,7 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
 
         voxelSniperConfiguration = VoxelSniperConfiguration(this)
 
+        FabricCommandManager.initialize()
         VoxelCommandManager.getInstance().registerBrushSubcommands();
     }
 
