@@ -4,8 +4,11 @@ plugins {
     id 'org.spongepowered.mixin'
 }
 
-def forge_mc_version = findProperty("voxelsniper.forge.mc-version") ?: "unspecified"
+def forge_mc_version = findProperty("voxelsniper.forge.mc_version") ?: "unspecified"
+def forge_version = findProperty("voxelsniper.forge.forge_version") ?: "unspecified"
+
 description='VoxelSniperForge'
+
 ext {
     platform = "forge-" + forge_mc_version
 }
@@ -100,7 +103,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft ('net.minecraftforge:forge:1.20.1-47.1.0') {
+    minecraft ('net.minecraftforge:forge:' + forge_mc_version + '-' + forge_version) {
         exclude group: 'org.slf4j'
     }
     shadow "net.kyori:adventure-text-serializer-gson:4.11.0"
