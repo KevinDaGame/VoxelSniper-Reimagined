@@ -15,7 +15,11 @@ import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType
+import com.mojang.serialization.Codec
 import net.fabricmc.api.ModInitializer
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.world.biome.source.BiomeSource
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -24,6 +28,8 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
 
     private lateinit var voxelSniperConfiguration: VoxelSniperConfiguration
     private lateinit var fileHandler: IFileHandler
+
+    private lateinit var biomeRegistries: Registry<Codec<out BiomeSource>>
 
     /**
      * Runs the mod initializer.
@@ -44,8 +50,10 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
 
         voxelSniperConfiguration = VoxelSniperConfiguration(this)
 
+        biomeRegistries = Registries.BIOME_SOURCE
+
         FabricCommandManager.initialize()
-        VoxelCommandManager.getInstance().registerBrushSubcommands();
+        VoxelCommandManager.getInstance().registerBrushSubcommands()
     }
 
     override fun getPlayer(uuid: UUID): IPlayer? {
@@ -57,7 +65,7 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getEnvironment(): Environment {
-        TODO()
+        return Environment.FABRIC
     }
 
     override fun getVoxelSniperConfiguration(): VoxelSniperConfiguration {
@@ -77,11 +85,11 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getMaterial(namespace: String, key: String): VoxelMaterial? {
-        TODO()
+        return null
     }
 
     override fun getMaterials(): List<VoxelMaterial> {
-        TODO()
+        return listOf()
     }
 
     override fun getBiome(namespace: String, key: String): VoxelBiome? {
@@ -89,15 +97,15 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getBiomes(): List<VoxelBiome> {
-        TODO()
+        return listOf()
     }
 
     override fun getEntityType(namespace: String, key: String): VoxelEntityType? {
-        TODO()
+        return VoxelEntityType("minecraft", "player")
     }
 
     override fun getEntityTypes(): List<VoxelEntityType> {
-        TODO()
+        return listOf()
     }
 
     override fun getTreeType(namespace: String, key: String): VoxelTreeType? {
@@ -105,11 +113,11 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getDefaultTreeType(): VoxelTreeType {
-        TODO()
+        return VoxelTreeType("minecraft", "oak")
     }
 
     override fun getTreeTypes(): List<VoxelTreeType> {
-        TODO()
+        return listOf()
     }
 
     companion object {
