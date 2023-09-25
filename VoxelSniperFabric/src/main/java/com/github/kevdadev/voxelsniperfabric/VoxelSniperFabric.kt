@@ -17,6 +17,8 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType
 import com.mojang.serialization.Codec
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.event.player.UseItemCallback
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.world.biome.source.BiomeSource
@@ -54,14 +56,19 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
 
         FabricCommandManager.initialize()
         VoxelCommandManager.getInstance().registerBrushSubcommands()
+
+        UseItemCallback.EVENT.register(FabricVoxelSniperListener())
+
+        ServerPlayConnectionEvents.JOIN.register(FabricPlayerManager)
+        ServerPlayConnectionEvents.DISCONNECT.register(FabricPlayerManager)
     }
 
     override fun getPlayer(uuid: UUID): IPlayer? {
-        TODO()
+        return FabricPlayerManager.getPlayer(uuid)
     }
 
     override fun getPlayer(name: String): IPlayer? {
-        TODO()
+        return FabricPlayerManager.getPlayerByName(name)
     }
 
     override fun getEnvironment(): Environment {
@@ -81,7 +88,7 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getOnlinePlayerNames(): List<String> {
-        TODO()
+        return FabricPlayerManager.getPlayers().map { it.getName() }
     }
 
     override fun getMaterial(namespace: String, key: String): VoxelMaterial? {
