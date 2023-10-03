@@ -1,7 +1,7 @@
 package com.github.kevindagame.voxelsniper.events.player;
 
 import com.github.kevindagame.brush.IBrush;
-import com.github.kevindagame.util.brushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.operation.BrushOperation;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.events.Cancellable;
 import com.github.kevindagame.voxelsniper.events.EventPriority;

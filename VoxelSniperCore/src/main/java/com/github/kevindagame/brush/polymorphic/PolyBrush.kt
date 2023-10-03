@@ -7,8 +7,8 @@ import com.github.kevindagame.brush.polymorphic.property.*
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
-import com.github.kevindagame.util.brushOperation.BiomeOperation
-import com.github.kevindagame.util.brushOperation.BlockOperation
+import com.github.kevindagame.util.brushOperation.operation.BiomeOperation
+import com.github.kevindagame.util.brushOperation.operation.BlockOperation
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome
 import com.github.kevindagame.voxelsniper.events.player.PlayerBrushChangedEvent
 import com.github.kevindagame.voxelsniper.location.BaseLocation

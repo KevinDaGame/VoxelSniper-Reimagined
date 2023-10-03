@@ -1,7 +1,7 @@
 package com.github.kevindagame.voxelsniper.world;
 
 import com.github.kevindagame.util.BlockIterator;
-import com.github.kevindagame.util.brushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.operation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.chunk.IChunk;
@@ -12,7 +12,6 @@ import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
 import com.github.kevindagame.voxelsniper.vector.VoxelVector;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
 
 public interface IWorld {

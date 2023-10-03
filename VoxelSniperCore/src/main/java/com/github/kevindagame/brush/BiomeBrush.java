@@ -3,7 +3,7 @@ package com.github.kevindagame.brush;
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.util.brushOperation.BiomeOperation;
+import com.github.kevindagame.util.brushOperation.operation.BiomeOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import org.jetbrains.annotations.NotNull;

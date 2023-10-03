@@ -2,7 +2,7 @@ package com.github.kevindagame.brush;
 
 import com.github.kevindagame.snipe.SnipeData;
 import com.github.kevindagame.util.*;
-import com.github.kevindagame.util.brushOperation.BlockOperation;
+import com.github.kevindagame.util.brushOperation.operation.BlockOperation;
 import com.github.kevindagame.voxelsniper.blockdata.waterlogged.IWaterlogged;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import org.jetbrains.annotations.NotNull;

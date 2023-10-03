@@ -3,7 +3,7 @@ package com.github.kevindagame.brush
 import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
-import com.github.kevindagame.util.brushOperation.BlockOperation
+import com.github.kevindagame.util.brushOperation.operation.BlockOperation
 import com.github.kevindagame.util.schematic.SchematicReader
 import com.github.kevindagame.util.schematic.VoxelSchematic
 import com.github.kevindagame.util.schematic.VoxelSchematicBlock

@@ -1,7 +1,7 @@
 package com.github.kevindagame.voxelsniperforge.world;
 
-import com.github.kevindagame.util.brushOperation.BlockStateOperation;
-import com.github.kevindagame.util.brushOperation.BrushOperation;
+import com.github.kevindagame.util.brushOperation.operation.BlockStateOperation;
+import com.github.kevindagame.util.brushOperation.operation.BrushOperation;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;

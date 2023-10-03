@@ -6,9 +6,9 @@ import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.Utils;
 import com.github.kevindagame.util.VoxelMessage;
-import com.github.kevindagame.util.brushOperation.BlockStateOperation;
-import com.github.kevindagame.util.brushOperation.CustomOperation;
-import com.github.kevindagame.util.brushOperation.CustomOperationContext;
+import com.github.kevindagame.util.brushOperation.operation.BlockStateOperation;
+import com.github.kevindagame.util.brushOperation.operation.CustomOperation;
+import com.github.kevindagame.util.brushOperation.operation.CustomOperationContext;
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState;
 import com.github.kevindagame.voxelsniper.blockstate.sign.ISign;
 

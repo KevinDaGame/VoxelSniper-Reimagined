@@ -1,4 +1,4 @@
-package com.github.kevindagame.util.brushOperation
+package com.github.kevindagame.util.brushOperation.operation
 
 import com.github.kevindagame.snipe.Undo
 import com.github.kevindagame.voxelsniper.entity.IEntity
