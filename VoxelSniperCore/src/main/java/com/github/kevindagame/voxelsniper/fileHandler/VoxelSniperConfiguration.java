@@ -7,19 +7,8 @@ import java.io.File;
 /**
  * Configuration storage defining global configurations for VoxelSniper.
  */
-public class VoxelSniperConfiguration {
+public class VoxelSniperConfiguration implements IVoxelSniperConfiguration {
 
-    public static final String CONFIG_IDENTIFIER_UNDO_CACHE_SIZE = "undo-cache-size";
-    public static final String CONFIG_IDENTIFIER_MAX_BRUSH_SIZE = "max-brush-size";
-    public static final String CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED = "message-on-login-enabled";
-    public static final String CONFIG_IDENTIFIER_DEFAULT_BRUSH = "default-brush";
-    public static final String CONFIG_IDENTIFIER_PLOTSQUARED_INTEGRATION_ENABLED = "plotsquared-integration-enabled";
-    public static final String CONFIG_IDENTIFIER_WORLDGUARD_INTEGRATION_ENABLED = "worldguard-integration-enabled";
-    public static final String CONFIG_IDENTIFIER_UPDATE_CHECKER_ENABLED = "update-checker-enabled";
-
-    public static final int DEFAULT_UNDO_CACHE_SIZE = 20;
-    public static final int DEFAULT_MAX_BRUSH_SIZE = 20;
-    public static final boolean DEFAULT_MESSAGE_ON_LOGIN_ENABLED = true;
     private static final boolean DEFAULT_USE_PLOTSQUARED = false;
     private static final boolean DEFAULT_USE_WORLDGUARD = false;
     private static final boolean DEFAULT_USE_UPDATE_CHECKER = true;
@@ -42,6 +31,7 @@ public class VoxelSniperConfiguration {
      *
      * @return the maximum amount of snipes stored in the undo cache of snipers
      */
+    @Override
     public int getUndoCacheSize() {
         return configuration.getInt(CONFIG_IDENTIFIER_UNDO_CACHE_SIZE, DEFAULT_UNDO_CACHE_SIZE);
     }
@@ -51,6 +41,7 @@ public class VoxelSniperConfiguration {
      *
      * @param size size of undo cache
      */
+    @Override
     public void setUndoCacheSize(int size) {
         configuration.set(CONFIG_IDENTIFIER_UNDO_CACHE_SIZE, size);
     }
@@ -60,6 +51,7 @@ public class VoxelSniperConfiguration {
      *
      * @return the maximum brush size
      */
+    @Override
     public int getMaxBrushSize() {
         return configuration.getInt(CONFIG_IDENTIFIER_MAX_BRUSH_SIZE, DEFAULT_MAX_BRUSH_SIZE);
     }
@@ -69,6 +61,7 @@ public class VoxelSniperConfiguration {
      *
      * @return true if message on login is enabled, false otherwise.
      */
+    @Override
     public boolean isMessageOnLoginEnabled() {
         return configuration.getBoolean(CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED, DEFAULT_MESSAGE_ON_LOGIN_ENABLED);
     }
@@ -78,6 +71,7 @@ public class VoxelSniperConfiguration {
      *
      * @param enabled Message on Login enabled
      */
+    @Override
     public void setMessageOnLoginEnabled(boolean enabled) {
         configuration.set(CONFIG_IDENTIFIER_MESSAGE_ON_LOGIN_ENABLED, enabled);
     }
@@ -87,6 +81,7 @@ public class VoxelSniperConfiguration {
      *
      * @return the default brush.
      */
+    @Override
     public String getDefaultBrush() {
         return configuration.getString(CONFIG_IDENTIFIER_DEFAULT_BRUSH, DEFAULT_BRUSH);
     }
@@ -96,6 +91,7 @@ public class VoxelSniperConfiguration {
      *
      * @return whether PlotSquared integration is enabled
      */
+    @Override
     public boolean isPlotSquaredIntegrationEnabled() {
         return configuration.getBoolean(CONFIG_IDENTIFIER_PLOTSQUARED_INTEGRATION_ENABLED, DEFAULT_USE_PLOTSQUARED);
     }
@@ -105,6 +101,7 @@ public class VoxelSniperConfiguration {
      *
      * @return whether WorldGuard integration is enabled
      */
+    @Override
     public boolean isWorldGuardIntegrationEnabled() {
         return configuration.getBoolean(CONFIG_IDENTIFIER_WORLDGUARD_INTEGRATION_ENABLED, DEFAULT_USE_WORLDGUARD);
     }
@@ -114,6 +111,7 @@ public class VoxelSniperConfiguration {
      *
      * @return whether the update checker is enabled
      */
+    @Override
     public boolean isUpdateCheckerEnabled() {
         return configuration.getBoolean(CONFIG_IDENTIFIER_UPDATE_CHECKER_ENABLED, DEFAULT_USE_UPDATE_CHECKER);
     }

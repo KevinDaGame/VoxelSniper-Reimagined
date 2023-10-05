@@ -11,6 +11,7 @@ import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
+import com.github.kevindagame.voxelsniper.fileHandler.IVoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType;
@@ -177,7 +178,7 @@ public class VoxelSniperForge implements IVoxelsniper {
     }
 
     @Override
-    public VoxelSniperConfiguration getVoxelSniperConfiguration() {
+    public IVoxelSniperConfiguration getVoxelSniperConfiguration() {
         return this.voxelSniperConfiguration;
     }
 

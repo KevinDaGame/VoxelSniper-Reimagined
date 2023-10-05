@@ -10,6 +10,7 @@ import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
 import com.github.kevindagame.voxelsniper.entity.player.SpigotPlayer;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
+import com.github.kevindagame.voxelsniper.fileHandler.IVoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.fileHandler.SpigotFileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.VoxelSniperConfiguration;
 import com.github.kevindagame.voxelsniper.integration.bstats.BrushUsageCounter;
@@ -256,7 +257,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
      * @return {@link VoxelSniperConfiguration} object for accessing global VoxelSniper options.
      */
     @Override
-    public VoxelSniperConfiguration getVoxelSniperConfiguration() {
+    public IVoxelSniperConfiguration getVoxelSniperConfiguration() {
         return voxelSniperConfiguration;
     }
 

@@ -7,16 +7,16 @@ import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.util.brushOperation.BlockOperation
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 
-class FlattenBrush : PerformerBrush() {
+class FlattenBrush : AbstractBrush() {
     override fun info(vm: VoxelMessage) {
         vm.brushName(name)
     }
 
-    override fun doArrow(v: SnipeData) {
+    override fun arrow(v: SnipeData) {
         flatten(v)
     }
 
-    override fun doPowder(v: SnipeData) {
+    override fun powder(v: SnipeData) {
         flatten(v)
     }
 
