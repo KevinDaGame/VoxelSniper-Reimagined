@@ -34,7 +34,8 @@ What version do I pick?
 | 1.16, 1.17, 1.18  | Not available                                                                        |
 | 1.19.4            | [8.9.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.9.0)   |
 | 1.20.0            | [8.12.0](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.12.0) |
-| 1.20.1            | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)      |
+| 1.20.1            | [8.12.3](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/tag/v8.12.3) |
+| 1.20.2            | [Latest](https://github.com/KevinDaGame/VoxelSniper-Reimagined/releases/latest)      |
 
 Compilation
 -----------
