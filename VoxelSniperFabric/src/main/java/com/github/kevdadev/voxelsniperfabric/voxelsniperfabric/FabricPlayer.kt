@@ -18,23 +18,30 @@ class FabricPlayer(private val player: ServerPlayerEntity) : IPlayer {
     private val sniper: Sniper = Sniper(this)
 
     override fun getType(): VoxelEntityType {
-        TODO("Not yet implemented")
+        return VoxelEntityType.getEntityType(player.type.toString())
     }
 
     override fun remove() {
-        TODO("Not yet implemented")
+        throw IllegalCallerException("Cannot remove a player")
     }
 
     override fun getEntityId(): Int {
-        TODO("Not yet implemented")
+        return player.id
     }
 
     override fun getLocation(): BaseLocation {
-        TODO("Not yet implemented")
+        return BaseLocation(
+            FabricWorld(player.serverWorld),
+            player.x,
+            player.y,
+            player.z,
+            player.yaw,
+            player.pitch
+        )
     }
 
     override fun getWorld(): IWorld {
-        TODO("Not yet implemented")
+        return FabricWorld(player.serverWorld)
     }
 
     override fun addPassenger(entity: IEntity?) {

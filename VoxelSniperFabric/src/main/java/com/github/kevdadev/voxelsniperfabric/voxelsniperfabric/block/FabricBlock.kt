@@ -1,5 +1,7 @@
 package com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.block
 
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.blockdata.FabricBlockData
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.blockstate.FabricBlockState
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.material.FabricMaterial
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.world.FabricWorld
 import com.github.kevindagame.voxelsniper.block.AbstractBlock
@@ -20,11 +22,14 @@ class FabricBlock(location: BaseLocation) :
         )
     ) {
     override fun setMaterial(material: VoxelMaterial?) {
-        TODO("Not yet implemented")
+        setMaterial(material, true)
     }
 
     override fun setMaterial(material: VoxelMaterial?, applyPhysics: Boolean) {
-        TODO("Not yet implemented")
+        ((location.world) as FabricWorld).world.setBlockState(
+            BlockPos(location.blockX, location.blockY, location.blockZ),
+            ((material as FabricMaterial).block.defaultState)
+        )
     }
 
     override fun getFace(block: IBlock?): BlockFace? {
@@ -32,11 +37,13 @@ class FabricBlock(location: BaseLocation) :
     }
 
     override fun getBlockData(): IBlockData {
-        TODO("Not yet implemented")
+        return FabricBlockData(((location.world) as FabricWorld).world.getBlockState(
+            BlockPos(location.blockX, location.blockY, location.blockZ)
+        ))
     }
 
     override fun setBlockData(blockData: IBlockData?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun setBlockData(blockData: IBlockData?, applyPhysics: Boolean) {
@@ -52,7 +59,9 @@ class FabricBlock(location: BaseLocation) :
     }
 
     override fun getState(): IBlockState {
-        TODO("Not yet implemented")
+        return FabricBlockState(((location.world) as FabricWorld).world.getBlockState(
+            BlockPos(location.blockX, location.blockY, location.blockZ)
+        ))
     }
 
     override fun isBlockFacePowered(face: BlockFace?): Boolean {

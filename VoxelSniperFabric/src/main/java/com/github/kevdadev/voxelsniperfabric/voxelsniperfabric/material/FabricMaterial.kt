@@ -12,19 +12,19 @@ class FabricMaterial(val block: Block, namespace: String, key: String): VoxelMat
     }
 
     override fun isAir(): Boolean {
-        TODO("Not yet implemented")
+        return block.defaultState.isAir
     }
 
     override fun isTransparent(): Boolean {
-        TODO("Not yet implemented")
+        return !block.defaultState.isOpaque
     }
 
     override fun isBlock(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun createBlockData(s: String?): IBlockData {
-        TODO("Not yet implemented")
+        return FabricBlockData(block.defaultState)
     }
 
     companion object {
