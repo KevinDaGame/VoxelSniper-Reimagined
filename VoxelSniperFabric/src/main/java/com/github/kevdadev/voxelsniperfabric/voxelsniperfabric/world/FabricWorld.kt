@@ -11,9 +11,10 @@ import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.treeType.VoxelTreeType
 import com.github.kevindagame.voxelsniper.world.IWorld
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.world.World
 
-class FabricWorld(val world: World): IWorld {
+class FabricWorld(val world: ServerWorld): IWorld {
     override fun getBlock(location: BaseLocation): IBlock {
         if(location.world != this) {
             throw IllegalArgumentException("Location is not in this world")

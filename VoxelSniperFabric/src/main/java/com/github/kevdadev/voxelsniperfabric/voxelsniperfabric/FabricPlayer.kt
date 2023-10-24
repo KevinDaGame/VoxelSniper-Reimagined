@@ -1,5 +1,6 @@
 package com.github.kevdadev.voxelsniperfabric.voxelsniperfabric
 
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.world.FabricWorld
 import com.github.kevindagame.snipe.Sniper
 import com.github.kevindagame.voxelsniper.entity.IEntity
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType
@@ -73,19 +74,21 @@ class FabricPlayer(private val player: ServerPlayerEntity) : IPlayer {
     }
 
     override fun hasPermission(permissionNode: String?): Boolean {
-        TODO("Not yet implemented")
+        return true
+        TODO("Add implementation")
     }
 
     override fun isSneaking(): Boolean {
-        TODO("Not yet implemented")
+        return player.isSneaking
     }
 
     override fun getName(): String {
-        TODO("Not yet implemented")
+        return player.name.string
     }
 
-    override fun teleport(location: BaseLocation?) {
-        TODO("Not yet implemented")
+    override fun teleport(location: BaseLocation) {
+        val world = location.world as FabricWorld
+        player.teleport(world.world, location.x, location.y, location.z, location.yaw, location.pitch)
     }
 
     override fun launchProjectile(type: VoxelEntityType?, velocity: VoxelVector?): IEntity {

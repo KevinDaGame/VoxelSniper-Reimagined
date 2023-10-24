@@ -1,6 +1,7 @@
 package com.github.kevdadev.voxelsniperfabric
 
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.filehandler.FabricFileHandler
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.material.FabricMaterial
 import com.github.kevindagame.VoxelBrushManager
 import com.github.kevindagame.VoxelSniper
 import com.github.kevindagame.command.VoxelCommandManager
@@ -19,8 +20,11 @@ import com.mojang.serialization.Codec
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
+import net.minecraft.block.Block
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.util.Identifier
 import net.minecraft.world.biome.source.BiomeSource
 import java.util.*
 import java.util.logging.Level
@@ -76,7 +80,7 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getVoxelSniperConfiguration(): VoxelSniperConfiguration {
-        TODO()
+        return voxelSniperConfiguration
     }
 
     override fun getFileHandler(): IFileHandler {
@@ -92,6 +96,10 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
     }
 
     override fun getMaterial(namespace: String, key: String): VoxelMaterial? {
+        val result = Registries.BLOCK.getOrEmpty(Identifier(namespace, key))
+        if (result.isPresent) {
+            return FabricMaterial(result.get(), namespace, key)
+        }
         return null
     }
 
