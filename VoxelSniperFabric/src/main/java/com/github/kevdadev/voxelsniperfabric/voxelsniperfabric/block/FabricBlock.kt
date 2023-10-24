@@ -11,6 +11,7 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 
 class FabricBlock(location: BaseLocation) :
@@ -43,7 +44,7 @@ class FabricBlock(location: BaseLocation) :
     }
 
     override fun setBlockData(blockData: IBlockData?) {
-
+        setBlockData(blockData, true)
     }
 
     override fun setBlockData(blockData: IBlockData?, applyPhysics: Boolean) {
@@ -59,9 +60,10 @@ class FabricBlock(location: BaseLocation) :
     }
 
     override fun getState(): IBlockState {
-        return FabricBlockState(((location.world) as FabricWorld).world.getBlockState(
+        val blockState: BlockState = ((location.world) as FabricWorld).world.getBlockState(
             BlockPos(location.blockX, location.blockY, location.blockZ)
-        ))
+        )
+        return FabricBlockState(this, blockState )
     }
 
     override fun isBlockFacePowered(face: BlockFace?): Boolean {

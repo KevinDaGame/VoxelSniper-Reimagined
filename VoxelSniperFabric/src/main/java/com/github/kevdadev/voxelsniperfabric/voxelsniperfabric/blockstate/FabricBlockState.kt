@@ -1,31 +1,47 @@
 package com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.blockstate
 
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.block.FabricBlock
+import com.github.kevindagame.VoxelSniper
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.blockstate.AbstractBlockState
-import com.github.kevindagame.voxelsniper.blockstate.IBlockState
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import net.minecraft.block.BlockState
+import java.util.logging.Level
 
-class FabricBlockState(val block: FabricBlock, blockState:BlockState): AbstractBlockState(block) {
+class FabricBlockState(val block: FabricBlock, blockState: BlockState) : AbstractBlockState(block) {
     override fun getMaterial(): VoxelMaterial {
-        TODO("Not yet implemented")
+        return block.material
     }
 
     override fun getBlockData(): IBlockData {
-        TODO("Not yet implemented")
+        return block.blockData
     }
 
     override fun update(): Boolean {
-        TODO("Not yet implemented")
+        return this.update(false)
     }
 
     override fun update(force: Boolean): Boolean {
-        TODO("Not yet implemented")
+        return this.update(force, true)
     }
 
     override fun update(force: Boolean, applyPhysics: Boolean): Boolean {
-        TODO("Not yet implemented")
+        if (this.world == null) {
+            return true
+        }
+        val block = getBlock()
+
+        if (block.getMaterial() !== this.material && !force) {
+            return false
+        }
+        return try {
+            block.setBlockData(blockData, applyPhysics)
+            true
+        } catch (e: Exception) {
+            VoxelSniper.voxelsniper.getLogger().log(Level.WARNING, "Failed to set BlockData", e)
+            false
+        }
+
     }
 
     companion object {
