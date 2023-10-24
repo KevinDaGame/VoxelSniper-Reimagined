@@ -46,7 +46,14 @@ class FabricPlayer(private val player: ServerPlayerEntity) : IPlayer {
     }
 
     override fun getEyeLocation(): BaseLocation {
-        TODO("Not yet implemented")
+        return BaseLocation(
+            FabricWorld(player.serverWorld),
+            player.x,
+            player.y + player.getEyeHeight(player.pose),
+            player.z,
+            player.yaw,
+            player.pitch
+        )
     }
 
     override fun getNearbyEntities(x: Int, y: Int, z: Int): MutableList<IEntity> {

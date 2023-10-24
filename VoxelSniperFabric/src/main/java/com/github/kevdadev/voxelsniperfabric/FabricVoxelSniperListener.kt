@@ -2,6 +2,8 @@ package com.github.kevdadev.voxelsniperfabric
 
 import com.github.kevindagame.VoxelSniper
 import com.github.kevindagame.snipe.Sniper
+import com.github.kevindagame.voxelsniper.block.IBlock
+import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.entity.player.PlayerEntity

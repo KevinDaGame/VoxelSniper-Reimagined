@@ -1,5 +1,7 @@
 package com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.block
 
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.material.FabricMaterial
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.world.FabricWorld
 import com.github.kevindagame.voxelsniper.block.AbstractBlock
 import com.github.kevindagame.voxelsniper.block.BlockFace
 import com.github.kevindagame.voxelsniper.block.IBlock
@@ -7,8 +9,16 @@ import com.github.kevindagame.voxelsniper.blockdata.IBlockData
 import com.github.kevindagame.voxelsniper.blockstate.IBlockState
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
+import net.minecraft.util.math.BlockPos
 
-class FabricBlock(location: BaseLocation?) : AbstractBlock(location, null) {
+class FabricBlock(location: BaseLocation) :
+    AbstractBlock(
+        location, FabricMaterial.fromFabricBlock(
+            ((location.world) as FabricWorld).world.getBlockState(
+                BlockPos(location.blockX, location.blockY, location.blockZ)
+            ).block
+        )
+    ) {
     override fun setMaterial(material: VoxelMaterial?) {
         TODO("Not yet implemented")
     }
