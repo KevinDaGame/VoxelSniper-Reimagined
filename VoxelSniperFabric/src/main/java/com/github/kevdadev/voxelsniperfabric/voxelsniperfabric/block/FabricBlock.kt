@@ -13,6 +13,7 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 
 class FabricBlock(location: BaseLocation) :
     AbstractBlock(
@@ -22,6 +23,8 @@ class FabricBlock(location: BaseLocation) :
             ).block
         )
     ) {
+
+    val blockPos = BlockPos(location.blockX, location.blockY, location.blockZ)
     override fun setMaterial(material: VoxelMaterial?) {
         setMaterial(material, true)
     }
@@ -38,9 +41,11 @@ class FabricBlock(location: BaseLocation) :
     }
 
     override fun getBlockData(): IBlockData {
-        return FabricBlockData(((location.world) as FabricWorld).world.getBlockState(
-            BlockPos(location.blockX, location.blockY, location.blockZ)
-        ))
+        return FabricBlockData(
+            ((location.world) as FabricWorld).world.getBlockState(
+                BlockPos(location.blockX, location.blockY, location.blockZ)
+            )
+        )
     }
 
     override fun setBlockData(blockData: IBlockData?) {
@@ -48,11 +53,43 @@ class FabricBlock(location: BaseLocation) :
     }
 
     override fun setBlockData(blockData: IBlockData?, applyPhysics: Boolean) {
-        TODO("Not yet implemented")
+        val world = getFabricWorld()
+        val oldState = world.getBlockState(this.blockPos)
+        val newState = (blockData as FabricBlockData).state
+
+        if (oldState.hasBlockEntity() && newState.block !== oldState.block) {
+            world.removeBlockEntity(this.blockPos)
+        }
+
+        if (applyPhysics) {
+            world.setBlockState(this.blockPos, newState, 3)
+        } else {
+            throw UnsupportedOperationException("Fabric does not support no physics yet")
+            //copied code from forge. Will need refactor
+//            try {
+//                if (newState is ExtendedBlockState) {
+//                    newState.setShouldUpdate(false)
+//                }
+//                val success: Boolean = world.setBlock(this.pos, newState, 2 or 16) // NOTIFY | NO_OBSERVER
+//                if (success) {
+//                    getFabricWorld().sendBlockUpdated(
+//                        this.pos,
+//                        old,
+//                        newState,
+//                        3
+//                    )
+//                }
+//            } finally {
+//                if (newState is ExtendedBlockState) newState.setShouldUpdate(true)
+//            }
+        }
+//        world.setBlock(this.pos, newState, 3)
+
+        material = blockData.material
     }
 
     override fun isEmpty(): Boolean {
-        TODO("Not yet implemented")
+        return getMaterial().isAir
     }
 
     override fun isLiquid(): Boolean {
@@ -63,7 +100,7 @@ class FabricBlock(location: BaseLocation) :
         val blockState: BlockState = ((location.world) as FabricWorld).world.getBlockState(
             BlockPos(location.blockX, location.blockY, location.blockZ)
         )
-        return FabricBlockState(this, blockState )
+        return FabricBlockState(this, blockState)
     }
 
     override fun isBlockFacePowered(face: BlockFace?): Boolean {
@@ -80,5 +117,9 @@ class FabricBlock(location: BaseLocation) :
 
     override fun isBlockPowered(): Boolean {
         TODO("Not yet implemented")
+    }
+
+    private fun getFabricWorld(): World {
+        return ((location.world) as FabricWorld).world
     }
 }
