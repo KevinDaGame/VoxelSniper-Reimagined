@@ -2,7 +2,7 @@ package com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.block
 
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.blockdata.FabricBlockData
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.blockstate.FabricBlockState
-import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.material.FabricMaterial
+import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.material.FabricBlockMaterial
 import com.github.kevdadev.voxelsniperfabric.voxelsniperfabric.world.FabricWorld
 import com.github.kevindagame.voxelsniper.block.AbstractBlock
 import com.github.kevindagame.voxelsniper.block.BlockFace
@@ -17,7 +17,7 @@ import net.minecraft.world.World
 
 class FabricBlock(location: BaseLocation) :
     AbstractBlock(
-        location, FabricMaterial.fromFabricBlock(
+        location, FabricBlockMaterial.fromFabricBlock(
             ((location.world) as FabricWorld).world.getBlockState(
                 BlockPos(location.blockX, location.blockY, location.blockZ)
             ).block
@@ -32,7 +32,7 @@ class FabricBlock(location: BaseLocation) :
     override fun setMaterial(material: VoxelMaterial?, applyPhysics: Boolean) {
         ((location.world) as FabricWorld).world.setBlockState(
             BlockPos(location.blockX, location.blockY, location.blockZ),
-            ((material as FabricMaterial).block.defaultState)
+            ((material as FabricBlockMaterial).block.defaultState)
         )
     }
 

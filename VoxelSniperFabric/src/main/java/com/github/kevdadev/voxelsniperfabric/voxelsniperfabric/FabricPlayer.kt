@@ -10,7 +10,10 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.vector.VoxelVector
 import com.github.kevindagame.voxelsniper.world.IWorld
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.Component.*
+import net.kyori.adventure.text.TextComponent
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.text.Text
 import java.util.*
 
 class FabricPlayer(private val player: ServerPlayerEntity) : IPlayer {
@@ -110,10 +113,17 @@ class FabricPlayer(private val player: ServerPlayerEntity) : IPlayer {
     }
 
     override fun getItemInHand(): VoxelMaterial {
-        TODO("Not yet implemented")
+        return VoxelMaterial.getMaterial(player.inventory.mainHandStack.item.toString())
     }
 
     override fun getSniper(): Sniper {
         return sniper
+    }
+
+    companion object {
+        fun toNative(component: Component): Text {
+            return Text.empty()
+            //TODO implement
+        }
     }
 }

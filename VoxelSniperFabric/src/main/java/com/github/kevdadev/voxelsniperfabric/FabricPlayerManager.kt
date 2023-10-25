@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayNetworkHandler
+import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 
 object FabricPlayerManager : ServerPlayConnectionEvents.Join, ServerPlayConnectionEvents.Disconnect {
@@ -22,6 +23,10 @@ object FabricPlayerManager : ServerPlayConnectionEvents.Join, ServerPlayConnecti
 
     fun getPlayer(uuid: UUID): IPlayer? {
         return players[uuid.toString()]
+    }
+
+    fun getPlayer(player: ServerPlayerEntity): IPlayer {
+        return players[player.uuid.toString()]!!
     }
 
     fun getPlayerByName(name: String): IPlayer? {
