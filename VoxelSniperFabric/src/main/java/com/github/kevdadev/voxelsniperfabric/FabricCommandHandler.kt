@@ -14,7 +14,7 @@ import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.function.Predicate
 
-class FabricCommandHandler(private val voxelCommand: VoxelCommand):
+class FabricCommandHandler(private val voxelCommand: VoxelCommand) :
     Predicate<ServerCommandSource>,
     SuggestionProvider<ServerCommandSource>,
     Command<ServerCommandSource> {

@@ -6,7 +6,7 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import net.minecraft.block.Block
 import net.minecraft.registry.Registries
 
-class FabricBlockMaterial(val block: Block, namespace: String, key: String): FabricMaterial(namespace,key) {
+class FabricBlockMaterial(val block: Block, namespace: String, key: String) : FabricMaterial(namespace, key) {
     override fun createBlockData(): IBlockData {
         return FabricBlockData(block.defaultState)
     }

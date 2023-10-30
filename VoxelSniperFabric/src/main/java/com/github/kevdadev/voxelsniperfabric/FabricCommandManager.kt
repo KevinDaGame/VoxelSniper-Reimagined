@@ -8,7 +8,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.builder.RequiredArgumentBuilder.argument
 import net.minecraft.server.command.ServerCommandSource
 
-class FabricCommandManager: VoxelCommandManager() {
+class FabricCommandManager : VoxelCommandManager() {
     override fun registerCommand(command: VoxelCommand?) {
         val identifiers: MutableList<String> = ArrayList(command!!.otherIdentifiers)
         identifiers.add(command.identifier)

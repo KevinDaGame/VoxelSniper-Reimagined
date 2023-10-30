@@ -11,11 +11,11 @@ class FabricBlockData(val state: BlockState) : IBlockData, Cloneable {
     }
 
     override fun matches(blockData: IBlockData?): Boolean {
-        if(blockData == null) return false
-        if(blockData !is FabricBlockData) return false
-        if(this == blockData) return true
+        if (blockData == null) return false
+        if (blockData !is FabricBlockData) return false
+        if (this == blockData) return true
 
-        if(state.block != blockData.state.block) return false
+        if (state.block != blockData.state.block) return false
 
         return this.merge(blockData) == this
     }
@@ -25,7 +25,7 @@ class FabricBlockData(val state: BlockState) : IBlockData, Cloneable {
     }
 
     override fun merge(newData: IBlockData): IBlockData {
-       TODO("Not yet implemented")
+        TODO("Not yet implemented")
     }
 
     override fun getCopy(): IBlockData {

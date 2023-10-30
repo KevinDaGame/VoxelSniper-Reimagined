@@ -10,8 +10,6 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import com.github.kevindagame.voxelsniper.vector.VoxelVector
 import com.github.kevindagame.voxelsniper.world.IWorld
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.Component.*
-import net.kyori.adventure.text.TextComponent
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import java.util.*

@@ -6,7 +6,7 @@ import com.github.kevindagame.voxelsniper.entity.IEntity
 import com.github.kevindagame.voxelsniper.world.IWorld
 import net.minecraft.world.chunk.Chunk
 
-class FabricChunk(val chunk: Chunk, val world: FabricWorld): IChunk {
+class FabricChunk(val chunk: Chunk, val world: FabricWorld) : IChunk {
     override fun getX(): Int {
         return chunk.pos.x
     }

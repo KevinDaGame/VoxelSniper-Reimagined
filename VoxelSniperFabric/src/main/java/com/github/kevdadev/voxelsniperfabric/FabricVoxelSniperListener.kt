@@ -2,8 +2,6 @@ package com.github.kevdadev.voxelsniperfabric
 
 import com.github.kevindagame.VoxelSniper
 import com.github.kevindagame.snipe.Sniper
-import com.github.kevindagame.voxelsniper.block.IBlock
-import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.entity.player.PlayerEntity
@@ -16,7 +14,7 @@ import java.util.*
 class FabricVoxelSniperListener : UseItemCallback {
     private val cooldown: MutableList<UUID> = mutableListOf()
     override fun interact(player: PlayerEntity, world: World, hand: Hand): TypedActionResult<ItemStack> {
-        if(hand != Hand.MAIN_HAND) return TypedActionResult.fail(player.getStackInHand(hand))
+        if (hand != Hand.MAIN_HAND) return TypedActionResult.fail(player.getStackInHand(hand))
         val voxelPlayer = VoxelSniper.voxelsniper.getPlayer(player.uuid)!!
         //check permission
 
