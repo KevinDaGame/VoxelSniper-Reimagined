@@ -7,7 +7,7 @@ plugins {
 version = findProperty("voxelsniper.version")
 group = "com.github.kevdadev"
 
-description='VoxelSniperFabric'
+description = 'VoxelSniperFabric'
 
 ext {
     platform = "fabric-alpha-" + getProperty("voxelsniper.fabric.minecraft_version")
@@ -68,7 +68,7 @@ java {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}"}
+        rename { "${it}_${project.archivesBaseName}" }
     }
 }
 

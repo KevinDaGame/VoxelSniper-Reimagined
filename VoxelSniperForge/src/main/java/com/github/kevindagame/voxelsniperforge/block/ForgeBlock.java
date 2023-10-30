@@ -54,7 +54,7 @@ public class ForgeBlock extends AbstractBlock {
     @Override
     public void setBlockData(IBlockData blockData, boolean applyPhysics) {
         var world = getLevel();
-        BlockState old = getLevel().getBlockState(this.pos);
+        BlockState old = world.getBlockState(this.pos);
         BlockState newState = ((ForgeBlockData) blockData).getState();
 
         if (old.hasBlockEntity() && newState.getBlock() != old.getBlock()) {
