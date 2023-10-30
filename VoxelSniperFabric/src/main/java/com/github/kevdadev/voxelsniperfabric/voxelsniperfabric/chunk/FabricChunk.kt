@@ -20,6 +20,6 @@ class FabricChunk(val chunk: Chunk, val world: FabricWorld): IChunk {
     }
 
     override fun getEntities(): MutableIterable<IEntity> {
-        throw NotImplementedError()
+        TODO("Not yet implemented")
     }
 }
