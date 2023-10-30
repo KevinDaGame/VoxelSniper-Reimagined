@@ -25,7 +25,7 @@ class FabricBlockData(val state: BlockState) : IBlockData, Cloneable {
     }
 
     override fun merge(newData: IBlockData): IBlockData {
-       TODO()
+       TODO("Not yet implemented")
     }
 
     override fun getCopy(): IBlockData {
