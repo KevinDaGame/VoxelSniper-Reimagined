@@ -43,8 +43,4 @@ class FabricBlockState(val block: FabricBlock, blockState: BlockState) : Abstrac
         }
 
     }
-
-    companion object {
-
-    }
 }
