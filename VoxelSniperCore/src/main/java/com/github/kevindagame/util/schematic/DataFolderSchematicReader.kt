@@ -2,6 +2,7 @@ package com.github.kevindagame.util.schematic
 
 import com.github.kevindagame.VoxelSniper
 import net.sandrohc.schematic4j.SchematicLoader
+import net.sandrohc.schematic4j.schematic.Schematic
 import java.io.File
 
 class DataFolderSchematicReader : ISchematicReader {
@@ -37,7 +38,13 @@ class DataFolderSchematicReader : ISchematicReader {
     }
 
     override fun readSchematicFile(file: File): VoxelSchematic {
-        val schematic = SchematicLoader.load(file)
+        val schematic: Schematic
+        try {
+            schematic = SchematicLoader.load(file)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Schematic ${file.name} is not valid")
+        }
+
         val voxelSchematicBuilder = VoxelSchematicBuilder()
 
         voxelSchematicBuilder.name = file.nameWithoutExtension

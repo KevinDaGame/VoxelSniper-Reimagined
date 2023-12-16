@@ -166,7 +166,7 @@ class SchematicBrush : AbstractBrush() {
                                 v.sendMessage(Messages.SCHEMATIC_LOADED_MULTIPLE.replace("%schematics%", this.schematics.joinToString(", ") { it.name }))
                             }
                         } catch (e: IllegalArgumentException) {
-                            v.sendMessage(Messages.INVALID_BRUSH_PARAM)
+                            v.sendMessage(Messages.FILE_LOAD_FAIL.replace("%exception.getMessage%", e.message ?: "Unknown error"))
                         }
                     }
                 }
