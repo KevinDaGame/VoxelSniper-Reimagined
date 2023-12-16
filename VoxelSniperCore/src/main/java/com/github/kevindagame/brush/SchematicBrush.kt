@@ -4,19 +4,22 @@ import com.github.kevindagame.snipe.SnipeData
 import com.github.kevindagame.util.Messages
 import com.github.kevindagame.util.VoxelMessage
 import com.github.kevindagame.util.brushOperation.BlockOperation
-import com.github.kevindagame.util.schematic.SchematicReader
-import com.github.kevindagame.util.schematic.VoxelSchematic
-import com.github.kevindagame.util.schematic.VoxelSchematicBlock
+import com.github.kevindagame.util.schematic.*
 import com.github.kevindagame.voxelsniper.location.BaseLocation
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial
 
 class SchematicBrush : AbstractBrush() {
+    private val schematicLoader: VoxelSchematicLoader
     private lateinit var schematicName: String
     private lateinit var schematics: List<VoxelSchematic>
     private var mode = PasteMode.FULL
     private var rotation = RotateMode.DEGREES_0
     private var flip = FlipMode.NONE
 
+    init {
+        val schematicReader: ISchematicReader = DataFolderSchematicReader()
+        this.schematicLoader = VoxelSchematicLoader(schematicReader)
+    }
     override fun info(vm: VoxelMessage) {
         vm.brushName(this.name)
         vm.custom(Messages.CHOSEN_SCHEMATIC.replace("%schematics%", if(this::schematics.isInitialized) schematics.joinToString(", ") { it.name } else "None"))
@@ -148,13 +151,13 @@ class SchematicBrush : AbstractBrush() {
         if (params.isNotEmpty()) {
             when (params[0]) {
                 "list" -> {
-                    v.sendMessage(Messages.SCHEMATIC_LIST.replace("%schematics%", SchematicReader.getPossibleNames().joinToString(", ")))
+                    v.sendMessage(Messages.SCHEMATIC_LIST.replace("%schematics%", schematicLoader.getSchematicNamesForAutoComplete().joinToString(", ")))
                 }
 
                 "schem" -> {
                     if (params.size > 1) {
                         try {
-                            val schematics = SchematicReader.read(params[1])
+                            val schematics = schematicLoader.gatherSchematics(params[1])
                             this.schematicName = params[1]
                             this.schematics = schematics
                             if (schematics.size == 1) {
@@ -212,7 +215,7 @@ class SchematicBrush : AbstractBrush() {
 
     override fun registerArgumentValues(): HashMap<String, List<String>> {
         return hashMapOf(
-            "schem" to SchematicReader.getPossibleNames(),
+            "schem" to schematicLoader.getSchematicNamesForAutoComplete(),
             "rotate" to RotateMode.values().map { it.name.lowercase().replace("degrees_", "") },
             "flip" to FlipMode.values().map { it.name.lowercase() },
             "mode" to PasteMode.values().map { it.name.lowercase() },
