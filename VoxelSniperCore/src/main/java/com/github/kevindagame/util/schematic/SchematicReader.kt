@@ -1,23 +1,23 @@
 package com.github.kevindagame.util.schematic
 
 import com.github.kevindagame.VoxelSniper
-import net.sandrohc.schematic4j.SchematicUtil
-import net.sandrohc.schematic4j.schematic.types.SchematicPosInteger
+import net.sandrohc.schematic4j.SchematicLoader
+
 import java.io.File
 
 object SchematicReader {
 
     private fun readSchematic(file: File): VoxelSchematic {
-        val schematic = SchematicUtil.load(file)
+        val schematic = SchematicLoader.load(file)
         val voxelSchematicBuilder = VoxelSchematicBuilder()
 
         voxelSchematicBuilder.name = file.nameWithoutExtension
 
-        for (y in 0 until schematic.height) {
-            for (x in 0 until schematic.width) {
-                for (z in 0 until schematic.length) {
-                    val pos = SchematicPosInteger(x, y, z)
-                    val block = schematic.getBlock(pos)
+        for (y in 0 until schematic.height()) {
+            for (x in 0 until schematic.width()) {
+                for (z in 0 until schematic.length()) {
+
+                    val block = schematic.block(x,y,z)
                     voxelSchematicBuilder.addBlock(x.toDouble(), y.toDouble(), z.toDouble(), block)
                 }
             }

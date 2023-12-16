@@ -17,3 +17,4 @@ plugins {
 include("VoxelSniperCore")
 include("VoxelSniperSpigot")
 include("VoxelSniperForge")
+//include("VoxelSniperFabric")
