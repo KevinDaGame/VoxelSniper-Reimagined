@@ -4,7 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.util.Messages;
 import com.github.kevindagame.util.VersionChecker;
-import com.github.kevindagame.util.schematic.SchematicReader;
+import com.github.kevindagame.util.schematic.DataFolderSchematicReader;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
 import com.github.kevindagame.voxelsniper.entity.entitytype.VoxelEntityType;
 import com.github.kevindagame.voxelsniper.entity.player.IPlayer;
@@ -97,7 +97,7 @@ public class SpigotVoxelSniper extends JavaPlugin implements IVoxelsniper, Liste
         new BrushUsersCounter().registerListeners();
 
         // Initialize commands
-        SchematicReader.initialize();
+        DataFolderSchematicReader.Companion.initialize();
         SpigotCommandManager.initialize();
 
         // Initialize metrics
