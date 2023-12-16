@@ -41,6 +41,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("net.sandrohc:schematic4j:1.1.0") {
         exclude("org.checkerframework", "")
+        exclude("org.slf4j", "")
     }
     shadowNoRuntime("com.google.code.gson:gson:2.10.1")
     shadow("org.yaml:snakeyaml:1.33")
