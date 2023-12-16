@@ -205,6 +205,10 @@ class SchematicBrush : AbstractBrush() {
                     }
                 }
 
+                else -> {
+                    v.sendMessage(Messages.INVALID_BRUSH_PARAM)
+                }
+
             }
         }
     }
