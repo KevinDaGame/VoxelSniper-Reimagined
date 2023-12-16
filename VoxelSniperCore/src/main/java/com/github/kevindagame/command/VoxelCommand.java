@@ -24,7 +24,12 @@ public abstract class VoxelCommand {
 
     public boolean execute(IPlayer player, String[] args) {
         if (getPermission() == null || getPermission().isEmpty() || player.hasPermission(getPermission())) {
-            return doCommand(player, args);
+            try {
+                return doCommand(player, args);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return true;
+            }
         } else {
             player.sendMessage(Messages.NO_PERMISSION_MESSAGE.replace("%permission%", getPermission()));
             return true;
