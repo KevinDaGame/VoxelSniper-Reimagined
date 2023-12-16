@@ -100,6 +100,30 @@ class SchematicLoaderTest {
     }
 
     @Test
+    fun gatherSchematics_no_match_throws_IllegalArgumentException() {
+        // Arrange
+        val schematicReaderMock = Mockito.mock(ISchematicReader::class.java)
+
+        Mockito.`when`(schematicReaderMock.getSchematicFolder("fancy_tree")).thenReturn(null)
+        Mockito.`when`(schematicReaderMock.getSchematicFile("fancy_tree")).thenReturn(null)
+
+        val schematicLoader = VoxelSchematicLoader(schematicReaderMock)
+        val name = "fancy_tree"
+
+        // Act
+        val exception = try {
+            schematicLoader.gatherSchematics(name)
+            null
+        } catch (e: IllegalArgumentException) {
+            e
+        }
+
+        // Assert
+        assert(exception != null)
+        assert(exception!!.message!!.contains(name))
+    }
+
+    @Test
     fun `getSchematicNamesForAutoComplete should return list of schematic names`() {
         // Arrange
         val expectedSchematicNames = listOf("schematic1", "schematic2", "schematic3")
