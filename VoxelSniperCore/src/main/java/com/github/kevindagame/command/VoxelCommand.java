@@ -28,6 +28,7 @@ public abstract class VoxelCommand {
                 return doCommand(player, args);
             } catch (Exception e) {
                 e.printStackTrace();
+                player.sendMessage(Messages.COMMAND_ERROR);
                 return true;
             }
         } else {
