@@ -1,9 +1,11 @@
 package com.github.kevindagame.util.schematic
 
 import com.github.kevindagame.VoxelSniper
+import net.sandrohc.schematic4j.SchematicFormat
 import net.sandrohc.schematic4j.SchematicLoader
 import net.sandrohc.schematic4j.schematic.Schematic
 import java.io.File
+import java.util.*
 
 class DataFolderSchematicReader : ISchematicReader {
     override fun getSchematicFile(name: String): File? {
@@ -49,14 +51,13 @@ class DataFolderSchematicReader : ISchematicReader {
 
         voxelSchematicBuilder.name = file.nameWithoutExtension
 
-        for (y in 0 until schematic.height()) {
-            for (x in 0 until schematic.width()) {
-                for (z in 0 until schematic.length()) {
-
-                    val block = schematic.block(x, y, z)
-                    voxelSchematicBuilder.addBlock(x.toDouble(), y.toDouble(), z.toDouble(), block)
-                }
-            }
+        schematic.blocks().forEach { block ->
+            voxelSchematicBuilder.addBlock(
+                block.left.x.toDouble(),
+                block.left.y.toDouble(),
+                block.left.z.toDouble(),
+                block.right
+            )
         }
         return voxelSchematicBuilder.build()
     }
@@ -86,7 +87,7 @@ class DataFolderSchematicReader : ISchematicReader {
                     if (file.isFile) {
                         schematics.add(file.nameWithoutExtension)
                     } else if (file.isDirectory) {
-                        if (file.listFiles()?.any { it.extension == "schem" } == true) {
+                        if (file.listFiles()?.any { SCHEMATIC_VALID_EXTENSIONS.contains(it.extension) } == true) {
                             schematics.add(file.name)
                         }
                     }
@@ -98,6 +99,11 @@ class DataFolderSchematicReader : ISchematicReader {
 
     companion object {
         const val SCHEMATIC_FILE_ROOT_PATH = "schematics/"
+
+        val SCHEMATIC_VALID_EXTENSIONS: List<String> = Arrays.stream(SchematicFormat.values())
+            .map { f: SchematicFormat -> f.fileExtension }
+            .distinct()
+            .toList()
 
         fun initialize() {
             val schematicsFolder = VoxelSniper.voxelsniper.fileHandler.getDataFile("schematics")

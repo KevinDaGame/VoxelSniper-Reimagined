@@ -4,7 +4,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import java.io.File
 
-class SchematicLoaderTest {
+class VoxelSchematicLoaderTest {
 
     @Test
     fun gatherSchematics_match_empty_folder_throw_IllegalArgumentException() {
