@@ -7,7 +7,7 @@ import com.github.kevindagame.VoxelBrushManager
 import com.github.kevindagame.VoxelSniper
 import com.github.kevindagame.command.VoxelCommandManager
 import com.github.kevindagame.util.Messages
-import com.github.kevindagame.util.schematic.SchematicReader
+import com.github.kevindagame.util.schematic.DataFolderSchematicReader
 import com.github.kevindagame.voxelsniper.Environment
 import com.github.kevindagame.voxelsniper.IVoxelsniper
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome
@@ -53,7 +53,7 @@ class VoxelSniperFabric : ModInitializer, IVoxelsniper {
 
 
         fileHandler = FabricFileHandler()
-        SchematicReader.initialize()
+        DataFolderSchematicReader.Companion.initialize()
         Messages.load(this)
 
         voxelSniperConfiguration = VoxelSniperConfiguration(this)

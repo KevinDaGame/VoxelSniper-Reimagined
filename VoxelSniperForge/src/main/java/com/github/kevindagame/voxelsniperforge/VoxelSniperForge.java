@@ -4,7 +4,7 @@ import com.github.kevindagame.VoxelBrushManager;
 import com.github.kevindagame.VoxelSniper;
 import com.github.kevindagame.command.VoxelCommandManager;
 import com.github.kevindagame.util.Messages;
-import com.github.kevindagame.util.schematic.SchematicReader;
+import com.github.kevindagame.util.schematic.DataFolderSchematicReader;
 import com.github.kevindagame.voxelsniper.Environment;
 import com.github.kevindagame.voxelsniper.IVoxelsniper;
 import com.github.kevindagame.voxelsniper.biome.VoxelBiome;
@@ -107,11 +107,10 @@ public class VoxelSniperForge implements IVoxelsniper {
         ForgePermissionManager.register(event);
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         this.fileHandler = new ForgeFileHandler(this);
-        SchematicReader.initialize();
+        DataFolderSchematicReader.Companion.initialize();
         Messages.load(this);
 
         voxelSniperConfiguration = new VoxelSniperConfiguration(this);
