@@ -372,7 +372,7 @@ public enum Messages implements ComponentLike {
     SCHEMATIC_SET_ROTATION,
     SCHEMATIC_SET_FLIP,
     SCHEMATIC_SET_MODE,
-    ;
+    COMMAND_ERROR;
     //</editor-fold>
 
 
