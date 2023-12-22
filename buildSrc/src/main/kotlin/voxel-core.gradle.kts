@@ -50,6 +50,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.5.1")
     testImplementation("org.mockito:mockito-inline:4.5.1")
+    testImplementation("net.sandrohc:schematic4j:1.1.0") {
+        exclude("org.checkerframework", "")
+        exclude("org.slf4j", "")
+    }
 }
 
 
