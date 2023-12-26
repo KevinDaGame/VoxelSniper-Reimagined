@@ -87,6 +87,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(shellVoxelBrush());
         brushManager.registerSniperBrush(signOverwriteBrush());
         brushManager.registerSniperBrush(snipeBrush());
+        brushManager.registerSniperBrush(snowBrush());
         brushManager.registerSniperBrush(splatterBallBrush());
         brushManager.registerSniperBrush(splatterDiscBrush());
         brushManager.registerSniperBrush(splatterOverlayBrush());
@@ -333,6 +334,9 @@ public class VoxelBrushManager {
 
     private static BrushData snipeBrush() {
         return new BrushBuilder().name("Snipe").alias("s", "snipe").setSupplier(SnipeBrush::new).setPermission("voxelsniper.brush.snipe").build();
+    }
+    private static BrushData snowBrush() {
+        return new BrushBuilder().name("Snow").alias("snow").setSupplier(SnowBrush::new).setPermission("voxelsniper.brush.snow").build();
     }
 
     private static BrushData splatterBallBrush() {
