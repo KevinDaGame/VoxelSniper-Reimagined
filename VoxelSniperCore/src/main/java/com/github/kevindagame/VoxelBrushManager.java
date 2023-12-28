@@ -66,6 +66,7 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(erodeBrush());
         brushManager.registerSniperBrush(extrudeBrush());
         brushManager.registerSniperBrush(fillDownBrush());
+        brushManager.registerSniperBrush(flattenBrush());
         brushManager.registerSniperBrush(flatOceanBrush());
         brushManager.registerSniperBrush(generateTreeBrush());
         brushManager.registerSniperBrush(jaggedLineBrush());
@@ -107,11 +108,11 @@ public class VoxelBrushManager {
         brushManager.registerSniperBrush(rot2DVertBrush());
         brushManager.registerSniperBrush(rot3DBrush());
 
-        //these brushes are currently removed/broken
-        //brushManager.registerSniperBrush(StencilBrush.class, "st", "stencil");
-        //brushManager.registerSniperBrush(StencilListBrush.class, "sl", "stencillist");
-
         return getInstance();
+    }
+
+    private static BrushData flattenBrush() {
+        return new BrushBuilder().name("Flatten").alias("flatten", "fl").setSupplier(FlattenBrush::new).setPermission("voxelsniper.brush.flatten").build();
     }
 
     // region <Brush Registration methods>
