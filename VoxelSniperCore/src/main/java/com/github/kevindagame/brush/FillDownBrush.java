@@ -34,35 +34,37 @@ public class FillDownBrush extends PerformerBrush {
             final double currentXSquared = Math.pow(x, 2);
 
             for (int z = -brushSize; z <= brushSize; z++) {
-                if (currentXSquared + Math.pow(z, 2) <= brushSizeSquared) {
-                    int y = 0;
-                    boolean found = false;
-                    if (this.fromExisting) {
-                        for (y = -v.getVoxelHeight(); y < v.getVoxelHeight(); y++) {
-                            final IBlock currentBlock = this.getWorld().getBlock(
-                                    targetBlock.getX() + x,
-                                    targetBlock.getY() + y,
-                                    targetBlock.getZ() + z);
-                            if (!currentBlock.isEmpty()) {
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            continue;
-                        }
-                        y--;
-                    }
-                    for (; y >= -targetBlock.getY(); --y) {
+                if (currentXSquared + Math.pow(z, 2) > brushSizeSquared) {
+                    continue;
+                }
+
+                int y = 0;
+                boolean found = false;
+                if (this.fromExisting) {
+                    for (y = -v.getVoxelHeight(); y < v.getVoxelHeight(); y++) {
                         final IBlock currentBlock = this.getWorld().getBlock(
                                 targetBlock.getX() + x,
                                 targetBlock.getY() + y,
                                 targetBlock.getZ() + z);
-                        if (currentBlock.isEmpty() || (fillLiquid && currentBlock.isLiquid())) {
-                            this.positions.add(currentBlock.getLocation());
-                        } else {
+                        if (!currentBlock.isEmpty()) {
+                            found = true;
                             break;
                         }
+                    }
+                    if (!found) {
+                        continue;
+                    }
+                    y--;
+                }
+                for (; y >= getWorld().getMinWorldHeight(); --y) {
+                    final IBlock currentBlock = this.getWorld().getBlock(
+                            targetBlock.getX() + x,
+                            targetBlock.getY() + y,
+                            targetBlock.getZ() + z);
+                    if (currentBlock.isEmpty() || (fillLiquid && currentBlock.isLiquid())) {
+                        this.positions.add(currentBlock.getLocation());
+                    } else {
+                        break;
                     }
                 }
             }
