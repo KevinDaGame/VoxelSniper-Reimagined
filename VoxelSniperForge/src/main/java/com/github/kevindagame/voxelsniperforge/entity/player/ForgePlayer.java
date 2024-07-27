@@ -14,6 +14,7 @@ import com.google.common.base.Preconditions;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -23,8 +24,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.permission.PermissionAPI;
+import net.neoforged.neoforge.server.permission.PermissionAPI;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -62,7 +63,8 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
 
     public static MutableComponent toNative(@NotNull Component component) {
         if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
-        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
+        throw new NotImplementedException();
+//        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
     }
 
     @Override
@@ -140,8 +142,8 @@ public class ForgePlayer extends ForgeEntity implements IPlayer {
     @Override
     public VoxelMaterial getItemInHand() {
         var itemStack = player.getMainHandItem();
-        ResourceLocation item = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
-        return item != null ? VoxelMaterial.getMaterial(item.getNamespace(), item.getPath()) : VoxelMaterial.AIR();
+        ResourceLocation item = BuiltInRegistries.ITEM.getKey(itemStack.getItem());
+        return VoxelMaterial.getMaterial(item.getNamespace(), item.getPath());
     }
 
     @NotNull

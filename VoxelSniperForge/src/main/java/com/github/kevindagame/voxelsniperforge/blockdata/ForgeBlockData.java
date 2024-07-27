@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ForgeBlockData implements IBlockData, Cloneable {
     protected BlockState state;
@@ -116,7 +115,7 @@ public class ForgeBlockData implements IBlockData, Cloneable {
             try {
                 // Material provided, force that material in
                 if (block != null) {
-                    data = ForgeRegistries.BLOCKS.getKey(block) + data;
+                    data = BuiltInRegistries.BLOCK.getKey(block) + data;
                 }
 
                 StringReader reader = new StringReader(data);

@@ -8,13 +8,13 @@ import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.location.ForgeLocation;
 import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.LogicalSide;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class ForgeVoxelSniperListener {
                     getItemStack(event),
                     getClickedBlock(event),
                     getBlockFace(event))) {
-                event.setCanceled(true);
+//                event.setCanceled(true);
                 cooldown.add(player.getUniqueId());
                 new Thread(() -> {
                     try {
@@ -91,10 +91,9 @@ public class ForgeVoxelSniperListener {
 
     private @Nullable
     VoxelMaterial getItemStack(PlayerInteractEvent event) {
-        var itemKey = ForgeRegistries.ITEMS.getKey(event.getItemStack().getItem());
-        var item = ForgeRegistries.ITEMS.getValue(itemKey);
+        var itemKey = BuiltInRegistries.ITEM.getKey(event.getItemStack().getItem());
         if (itemKey == null) return null;
-        return new ItemMaterial(item, itemKey.getNamespace(), itemKey.getPath());
+        return new ItemMaterial(event.getItemStack().getItem(), itemKey.getNamespace(), itemKey.getPath());
     }
 
     private Sniper.Action getAction(PlayerInteractEvent event) {

@@ -3,6 +3,7 @@ package com.github.kevindagame.voxelsniperforge.fileHandler;
 import com.github.kevindagame.voxelsniper.fileHandler.IFileHandler;
 import com.github.kevindagame.voxelsniperforge.VoxelSniperForge;
 
+import net.neoforged.fml.loading.FMLPaths;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -11,7 +12,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.logging.Level;
 
-import net.minecraftforge.fml.loading.FMLPaths;
 
 public class ForgeFileHandler implements IFileHandler {
     private final VoxelSniperForge voxelSniper;

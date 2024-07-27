@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkSource;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -50,6 +50,7 @@ import net.minecraft.world.ticks.LevelTickAccess;
 import net.minecraft.world.ticks.TickPriority;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class BlockStateListPopulator implements WorldGenLevel {
     private final ServerLevel level;
@@ -175,6 +176,12 @@ public class BlockStateListPopulator implements WorldGenLevel {
         return level.getHeightmapPos(heightmap, pos);
     }
 
+    @Nullable
+    @Override
+    public ChunkAccess getChunk(int i, int i1, ChunkStatus chunkStatus, boolean b) {
+        return null;
+    }
+
     @Override
     public int getHeight(@NotNull net.minecraft.world.level.levelgen.Heightmap.Types heightmap, int x, int z) {
         return level.getHeight(heightmap, x, z);
@@ -268,8 +275,8 @@ public class BlockStateListPopulator implements WorldGenLevel {
     }
 
     @Override
-    public void gameEvent(@NotNull GameEvent event, @NotNull Vec3 emitterPos, @NotNull GameEvent.Context emitter) {
-        // Used by ComposterBlock
+    public void gameEvent(Holder<GameEvent> holder, Vec3 vec3, GameEvent.Context context) {
+
     }
 
     @NotNull
@@ -287,11 +294,6 @@ public class BlockStateListPopulator implements WorldGenLevel {
     @NotNull
     @Override
     public List<? extends Player> players() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public ChunkAccess getChunk(int chunkX, int chunkZ, @NotNull ChunkStatus leastStatus, boolean create) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

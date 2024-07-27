@@ -40,16 +40,16 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeResolver;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.chunk.ChunkStatus;
-import net.minecraft.world.level.chunk.ImposterProtoChunk;
-import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
-
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ImposterProtoChunk;
+import net.minecraft.world.level.chunk.LevelChunk;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
@@ -151,7 +151,7 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     public void setBiome(int x, int y, int z, VoxelBiome selectedBiome) {
         var biome = level.registryAccess().registry(Registries.BIOME)
                 .orElseThrow()
-                .getHolderOrThrow(ResourceKey.create(Registries.BIOME, new ResourceLocation(selectedBiome.getKey())));
+                .getHolderOrThrow(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(selectedBiome.getNameSpace(), selectedBiome.getKey())));
         var chunkAccess = level.getChunk(new BlockPos(x, y, z));
         chunkAccess.fillBiomesFromNoise(makeResolver(new MutableInt(), chunkAccess, new BoundingBox(x, y, z, x, y, z), biome, biomeHolder -> true), level.getChunkSource().randomState().sampler());
         chunkAccess.setUnsaved(true);
@@ -164,62 +164,62 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
 
     @Override
     public void regenerateChunk(int x, int z) {
-        // copied from net.minecraft.server.commands.ResetChunksCommand, seems to work
-        ServerChunkCache serverchunkcache = this.level.getChunkSource();
-        serverchunkcache.chunkMap.debugReloadGenerator();
-
-        // clear all blocks
-        final ChunkPos chunkPos = new ChunkPos(x, z);
-        if (serverchunkcache.getChunk(x, z, false) != null) {
-            for(BlockPos blockpos : BlockPos.betweenClosed(chunkPos.getMinBlockX(), this.level.getMinBuildHeight(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), this.level.getMaxBuildHeight() - 1, chunkPos.getMaxBlockZ())) {
-                this.level.setBlock(blockpos, Blocks.AIR.defaultBlockState(), 16);
-            }
-        }
-
-        ProcessorMailbox<Runnable> processormailbox = ProcessorMailbox.create(Util.backgroundExecutor(), "worldgen-resetchunks");
-
-        // Generate chunk
-        for(ChunkStatus chunkstatus : ImmutableList.of(ChunkStatus.BIOMES, ChunkStatus.NOISE, ChunkStatus.SURFACE, ChunkStatus.CARVERS, ChunkStatus.FEATURES, ChunkStatus.INITIALIZE_LIGHT)) {
-            CompletableFuture<Unit> completablefuture = CompletableFuture.supplyAsync(() -> Unit.INSTANCE, processormailbox::tell);
-
-            if (serverchunkcache.getChunk(x, z, false) != null) {
-                List<ChunkAccess> list = Lists.newArrayList();
-                int range = Math.max(1, chunkstatus.getRange());
-
-                for(int z1 = z - range; z1 <= z + range; ++z1) {
-                    for(int x1 = x - range; x1 <= x + range; ++x1) {
-                        ChunkAccess chunkaccess = serverchunkcache.getChunk(x1, z1, chunkstatus.getParent(), true);
-                        ChunkAccess newChunkaccess;
-                        if (chunkaccess instanceof ImposterProtoChunk) {
-                            newChunkaccess = new ImposterProtoChunk(((ImposterProtoChunk)chunkaccess).getWrapped(), true);
-                        } else if (chunkaccess instanceof LevelChunk) {
-                            newChunkaccess = new ImposterProtoChunk((LevelChunk)chunkaccess, true);
-                        } else {
-                            newChunkaccess = chunkaccess;
-                        }
-                        list.add(newChunkaccess);
-                    }
-                }
-
-                completablefuture = completablefuture.thenComposeAsync((unit) -> chunkstatus.generate(processormailbox::tell, this.level, serverchunkcache.getGenerator(), this.level.getStructureManager(), serverchunkcache.getLightEngine(), (access) -> {
-                    throw new UnsupportedOperationException("Not creating full chunks here");
-                }, list).thenApply((either) -> {
-                    if (chunkstatus == ChunkStatus.NOISE) {
-                        either.left().ifPresent((access) -> Heightmap.primeHeightmaps(access, ChunkStatus.POST_FEATURES));
-                    }
-                    return Unit.INSTANCE;
-                }), processormailbox::tell);
-            }
-
-            this.level.getServer().managedBlock(completablefuture::isDone);
-        }
-
-        // fire blockChanged events
-        if (serverchunkcache.getChunk(x, z, false) != null) {
-            for(BlockPos blockpos1 : BlockPos.betweenClosed(chunkPos.getMinBlockX(), this.level.getMinBuildHeight(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), this.level.getMaxBuildHeight() - 1, chunkPos.getMaxBlockZ())) {
-                serverchunkcache.blockChanged(blockpos1);
-            }
-        }
+//        // copied from net.minecraft.server.commands.ResetChunksCommand, seems to work
+//        ServerChunkCache serverchunkcache = this.level.getChunkSource();
+//        serverchunkcache.chunkMap.debugReloadGenerator();
+//
+//        // clear all blocks
+//        final ChunkPos chunkPos = new ChunkPos(x, z);
+//        if (serverchunkcache.getChunk(x, z, false) != null) {
+//            for(BlockPos blockpos : BlockPos.betweenClosed(chunkPos.getMinBlockX(), this.level.getMinBuildHeight(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), this.level.getMaxBuildHeight() - 1, chunkPos.getMaxBlockZ())) {
+//                this.level.setBlock(blockpos, Blocks.AIR.defaultBlockState(), 16);
+//            }
+//        }
+//
+//        ProcessorMailbox<Runnable> processormailbox = ProcessorMailbox.create(Util.backgroundExecutor(), "worldgen-resetchunks");
+//
+//        // Generate chunk
+//        for(ChunkStatus chunkstatus : ImmutableList.of(ChunkStatus.BIOMES, ChunkStatus.NOISE, ChunkStatus.SURFACE, ChunkStatus.CARVERS, ChunkStatus.FEATURES, ChunkStatus.INITIALIZE_LIGHT)) {
+//            CompletableFuture<Unit> completablefuture = CompletableFuture.supplyAsync(() -> Unit.INSTANCE, processormailbox::tell);
+//
+//            if (serverchunkcache.getChunk(x, z, false) != null) {
+//                List<ChunkAccess> list = Lists.newArrayList();
+//                int range = Math.max(1, chunkstatus.getRange());
+//
+//                for(int z1 = z - range; z1 <= z + range; ++z1) {
+//                    for(int x1 = x - range; x1 <= x + range; ++x1) {
+//                        ChunkAccess chunkaccess = serverchunkcache.getChunk(x1, z1, chunkstatus.getParent(), true);
+//                        ChunkAccess newChunkaccess;
+//                        if (chunkaccess instanceof ImposterProtoChunk) {
+//                            newChunkaccess = new ImposterProtoChunk(((ImposterProtoChunk)chunkaccess).getWrapped(), true);
+//                        } else if (chunkaccess instanceof LevelChunk) {
+//                            newChunkaccess = new ImposterProtoChunk((LevelChunk)chunkaccess, true);
+//                        } else {
+//                            newChunkaccess = chunkaccess;
+//                        }
+//                        list.add(newChunkaccess);
+//                    }
+//                }
+//
+//                completablefuture = completablefuture.thenComposeAsync((unit) -> chunkstatus.generate(processormailbox::tell, this.level, serverchunkcache.getGenerator(), this.level.getStructureManager(), serverchunkcache.getLightEngine(), (access) -> {
+//                    throw new UnsupportedOperationException("Not creating full chunks here");
+//                }, list).thenApply((either) -> {
+//                    if (chunkstatus == ChunkStatus.NOISE) {
+//                        either.left().ifPresent((access) -> Heightmap.primeHeightmaps(access, ChunkStatus.POST_FEATURES));
+//                    }
+//                    return Unit.INSTANCE;
+//                }), processormailbox::tell);
+//            }
+//
+//            this.level.getServer().managedBlock(completablefuture::isDone);
+//        }
+//
+//        // fire blockChanged events
+//        if (serverchunkcache.getChunk(x, z, false) != null) {
+//            for(BlockPos blockpos1 : BlockPos.betweenClosed(chunkPos.getMinBlockX(), this.level.getMinBuildHeight(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), this.level.getMaxBuildHeight() - 1, chunkPos.getMaxBlockZ())) {
+//                serverchunkcache.blockChanged(blockpos1);
+//            }
+//        }
     }
 
     @Override
@@ -243,7 +243,7 @@ public record ForgeWorld(@NotNull ServerLevel level) implements IWorld {
     }
 
     private boolean generateTree(WorldGenLevel access, ChunkGenerator chunkGenerator, BlockPos pos, RandomSource random, VoxelTreeType treeType) {
-        var resource = new ResourceLocation(treeType.getNameSpace(), treeType.key());
+        var resource = ResourceLocation.fromNamespaceAndPath(treeType.getNameSpace(), treeType.key());
         ConfiguredFeature<?, ?> feature = this.level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).get(resource);
         if (feature == null || !VoxelSniperForge.isTreeType(feature)) return false;
         return feature.place(access, chunkGenerator, random, pos);

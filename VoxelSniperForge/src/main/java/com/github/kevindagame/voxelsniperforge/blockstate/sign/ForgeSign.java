@@ -11,6 +11,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 
 public class ForgeSign extends ForgeBlockState implements ISign {
@@ -39,10 +40,12 @@ public class ForgeSign extends ForgeBlockState implements ISign {
 
     public static MutableComponent toNative(@NotNull Component component) {
         if (component == Component.empty()) return net.minecraft.network.chat.Component.empty();
-        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
+//        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(component));
+        throw new NotImplementedException();
     }
 
     public static Component fromNative(@NotNull net.minecraft.network.chat.Component component) {
-        return GsonComponentSerializer.gson().deserialize(net.minecraft.network.chat.Component.Serializer.toJson(component));
+//        return GsonComponentSerializer.gson().deserialize(net.minecraft.network.chat.Component.Serializer.toJson(component));
+        throw new NotImplementedException();
     }
 }

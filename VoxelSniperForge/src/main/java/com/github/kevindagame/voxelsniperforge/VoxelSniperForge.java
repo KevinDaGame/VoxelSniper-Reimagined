@@ -21,7 +21,9 @@ import com.github.kevindagame.voxelsniperforge.material.ItemMaterial;
 import com.github.kevindagame.voxelsniperforge.permissions.ForgePermissionManager;
 import com.github.kevindagame.voxelsniperforge.world.ForgeWorld;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -32,21 +34,21 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.HugeFungusConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.server.permission.events.PermissionGatherEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.server.permission.events.PermissionGatherEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,14 +57,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(VoxelSniperForge.MODID)
 public class VoxelSniperForge implements IVoxelsniper {
 
     private Registry<Biome> biomeRegistry;
-    private Registry<ConfiguredFeature<?,?>> featureRegistry;
+    private Registry<ConfiguredFeature<?, ?>> featureRegistry;
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "voxelsniperforge";
+    public static final String MODID = "examplemod";
     private final Logger LOGGER;
     private ForgeFileHandler fileHandler;
     private VoxelSniperConfiguration voxelSniperConfiguration;
@@ -75,12 +77,10 @@ public class VoxelSniperForge implements IVoxelsniper {
         return instance;
     }
 
-    public VoxelSniperForge() {
+    public VoxelSniperForge(IEventBus modEventBus) {
         LOGGER = Logger.getLogger(MODID);
         VoxelSniper.voxelsniper = this;
         VoxelSniperForge.instance = this;
-
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -89,8 +89,8 @@ public class VoxelSniperForge implements IVoxelsniper {
         getLogger().log(Level.INFO, "Registered {0} Sniper Brushes with {1} handles.", new Object[]{brushManager.registeredSniperBrushes(), brushManager.registeredSniperBrushHandles()});
 
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
+        NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(new ForgeVoxelSniperListener(this));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -140,12 +140,15 @@ public class VoxelSniperForge implements IVoxelsniper {
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientModEvents {
-
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents
+    {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-
+        public static void onClientSetup(FMLClientSetupEvent event)
+        {
+            // Some client setup code
+            getInstance().LOGGER.info("HELLO FROM CLIENT SETUP");
+            getInstance().LOGGER.info("MINECRAFT NAME >> " + Minecraft.getInstance().getUser().getName());
         }
     }
 
@@ -199,13 +202,13 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public VoxelMaterial getMaterial(String namespace, String key) {
-        var resourceLocation = new ResourceLocation(namespace, key);
-        if (ForgeRegistries.BLOCKS.containsKey(resourceLocation)) {
-            var block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
+        var resourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, key);
+        if (BuiltInRegistries.BLOCK.containsKey(resourceLocation)) {
+            var block = BuiltInRegistries.BLOCK.get(resourceLocation);
             return new BlockMaterial(block, namespace, key);
         }
-        if (ForgeRegistries.ITEMS.containsKey(resourceLocation)) {
-            var item = ForgeRegistries.ITEMS.getValue(resourceLocation);
+        if (BuiltInRegistries.ITEM.containsKey(resourceLocation)) {
+            var item = BuiltInRegistries.ITEM.get(resourceLocation);
             return new ItemMaterial(item, namespace, key);
         }
         throw new IllegalArgumentException("Requested material does not exist");
@@ -213,13 +216,16 @@ public class VoxelSniperForge implements IVoxelsniper {
 
     @Override
     public List<VoxelMaterial> getMaterials() {
-        return ForgeRegistries.BLOCKS.getEntries().stream().map(block -> new BlockMaterial(block.getValue(), block.getKey().location().getNamespace(), block.getKey().location().getPath())).collect(Collectors.toList());
+        return BuiltInRegistries.BLOCK.stream().map(block -> {
+            var key = BuiltInRegistries.BLOCK.getKey(block);
+            return new BlockMaterial(block, key.getNamespace(), key.getPath());
+        }).collect(Collectors.toList());
     }
 
     @Nullable
     @Override
     public VoxelBiome getBiome(String namespace, String key) {
-        return biomeRegistry.get(new ResourceLocation(namespace, key)) != null ? new VoxelBiome(namespace, key) : null;
+        return biomeRegistry.get(ResourceLocation.fromNamespaceAndPath(namespace, key)) != null ? new VoxelBiome(namespace, key) : null;
     }
 
     @Override
@@ -230,19 +236,22 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Nullable
     @Override
     public VoxelEntityType getEntityType(String namespace, String key) {
-        var entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(namespace, key));
+        var entityType = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.fromNamespaceAndPath(namespace, key));
         return entityType != null ? new VoxelEntityType(namespace, key) : null;
     }
 
     @Override
     public List<VoxelEntityType> getEntityTypes() {
-        return ForgeRegistries.ENTITY_TYPES.getEntries().stream().map(entityType -> new VoxelEntityType(entityType.getKey().location().getNamespace(), entityType.getKey().location().getPath())).collect(Collectors.toList());
+        return BuiltInRegistries.ENTITY_TYPE.stream().map(entityType -> {
+            var key = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+            return new VoxelEntityType(key.getNamespace(), key.getPath());
+        }).collect(Collectors.toList());
     }
 
     @Nullable
     @Override
     public VoxelTreeType getTreeType(String namespace, String key) {
-        return featureRegistry.get(new ResourceLocation(namespace, key)) != null ? new VoxelTreeType(namespace, key) : null;
+        return featureRegistry.get(ResourceLocation.fromNamespaceAndPath(namespace, key)) != null ? new VoxelTreeType(namespace, key) : null;
     }
 
     @Override
@@ -254,9 +263,9 @@ public class VoxelSniperForge implements IVoxelsniper {
     @Override
     public List<VoxelTreeType> getTreeTypes() {
         return featureRegistry.entrySet().stream().filter(e -> isTreeType(e.getValue())).map(e -> {
-                    var loc = e.getKey().location();
-                    return new VoxelTreeType(loc.getNamespace(), loc.getPath());
-                }).collect(Collectors.toList());
+            var loc = e.getKey().location();
+            return new VoxelTreeType(loc.getNamespace(), loc.getPath());
+        }).collect(Collectors.toList());
     }
 
     public static boolean isTreeType(@NotNull ConfiguredFeature<?, ?> feature) {

@@ -3,9 +3,9 @@ package com.github.kevindagame.voxelsniperforge.material;
 import com.github.kevindagame.voxelsniper.blockdata.IBlockData;
 import com.github.kevindagame.voxelsniper.material.VoxelMaterial;
 import com.github.kevindagame.voxelsniperforge.blockdata.ForgeBlockData;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ public final class BlockMaterial extends VoxelMaterial {
     }
 
     public static VoxelMaterial fromForgeBlock(Block block) {
-        var tag = ForgeRegistries.BLOCKS.getKey(block);
+        var tag = BuiltInRegistries.BLOCK.getKey(block);
         if (tag == null || block.defaultBlockState().isAir()) return VoxelMaterial.AIR();
         return VoxelMaterial.getMaterial(tag.getNamespace(), tag.getPath());
     }
