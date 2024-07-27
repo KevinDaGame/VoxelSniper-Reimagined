@@ -11,8 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.7.22")
+    implementation("io.github.goooler.shadow:shadow-gradle-plugin:8.1.8")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.0.0")
     implementation("org.spongepowered:mixingradle:0.7.+")
 
     /* DO NOT TOUCH THIS. TOUCHING THIS WILL DESTROY YOUR LIFE AND LEAVE YOU CRIPPLED AND BROKEN.
@@ -29,12 +29,12 @@ dependencies {
 tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(17)
+        options.release.set(21)
     }
 
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "21"
         }
     }
 }
