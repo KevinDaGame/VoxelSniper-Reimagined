@@ -1,6 +1,5 @@
 package com.github.kevindagame.util;
 
-import com.github.kevindagame.snipe.Undo;
 import com.github.kevindagame.voxelsniper.block.BlockFace;
 import com.github.kevindagame.voxelsniper.block.IBlock;
 import com.github.kevindagame.voxelsniper.location.BaseLocation;
@@ -81,7 +80,7 @@ public class Shapes {
         return positions;
     }
 
-    public static List<BaseLocation> cylinder(BaseLocation centerPoint, RotationAxis axis, int brushSize, int height, int shift, boolean smooth) {
+    public static List<BaseLocation> cylinder(BaseLocation centerPoint, RotationAxis axis, int brushSize, int height, double shift, boolean smooth) {
         List<BaseLocation> positions = new ArrayList<>();
         for (int y = 0; y < height; y++) {
             var pos = axis.getLocationTranslator().invoke(centerPoint.getWorld(), 0, (int) (y - (height / 2.0) + 1 + shift), 0);
@@ -120,8 +119,6 @@ public class Shapes {
         final List<BaseLocation> positions = new ArrayList<>();
         final int absoluteHeight = Math.abs(height);
         final boolean negative = height < 0;
-
-        final Undo undo = new Undo();
 
         final int brushSizeTimesVoxelHeight = brushSize * absoluteHeight;
         final double stepScale = ((brushSize * brushSize) + brushSizeTimesVoxelHeight + brushSizeTimesVoxelHeight) / 5.0;

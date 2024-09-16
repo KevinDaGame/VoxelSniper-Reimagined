@@ -11,7 +11,6 @@ import com.github.kevindagame.voxelsniper.location.BaseLocation;
 import com.github.kevindagame.voxelsniper.location.VoxelLocation;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,9 +20,6 @@ import java.util.List;
  * @author Voxel
  */
 public class CloneStampBrush extends StampBrush {
-
-    private BaseLocation startingPoint;
-
 
     /**
      * The clone method is used to grab a snapshot of the selected area dictated blockPositionY targetBlock.x y z v.brushSize v.voxelHeight and v.cCen.
@@ -36,8 +32,8 @@ public class CloneStampBrush extends StampBrush {
     private void clone(final SnipeData v) {
         VoxelLocation point = getTargetBlock().getLocation().makeMutable();
         point.add(0, v.getcCen(), 0);
-        this.startingPoint = point.makeImmutable();
-        var positions = Shapes.cylinder(startingPoint, RotationAxis.Y, v.getBrushSize(), v.getVoxelHeight(), 0, false);
+        BaseLocation startingPoint = point.makeImmutable();
+        var positions = Shapes.cylinder(startingPoint, RotationAxis.Y, v.getBrushSize(), v.getVoxelHeight(), (v.getVoxelHeight() / 2.0) - 1, false);
         this.clone.clear();
         this.toStamp.clear();
         this.sorted = false;
