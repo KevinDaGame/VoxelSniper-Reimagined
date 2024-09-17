@@ -30,9 +30,8 @@ public class CloneStampBrush extends StampBrush {
      * @param v the caller
      */
     private void clone(final SnipeData v) {
-        VoxelLocation point = getTargetBlock().getLocation().makeMutable();
-        point.add(0, v.getcCen(), 0);
-        BaseLocation startingPoint = point.makeImmutable();
+        VoxelLocation startingPoint = getTargetBlock().getLocation().makeMutable();
+        startingPoint.add(0, v.getcCen(), 0);
         var positions = Shapes.cylinder(startingPoint, RotationAxis.Y, v.getBrushSize(), v.getVoxelHeight(), (v.getVoxelHeight() / 2.0) - 1, false);
         this.clone.clear();
         this.toStamp.clear();
