@@ -15,11 +15,11 @@ ext {
 
 java {
     archivesBaseName = 'VoxelSniperForge'
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
 compileJava {
-    options.release.set(17)
+    options.release.set(21)
 }
 
 minecraft {
