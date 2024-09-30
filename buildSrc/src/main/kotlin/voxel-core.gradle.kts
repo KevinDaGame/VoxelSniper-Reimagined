@@ -47,8 +47,7 @@ dependencies {
 
     testImplementation("com.google.code.gson:gson:2.10.1")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.5.1")
-    testImplementation("org.mockito:mockito-inline:4.5.1")
+    testImplementation("org.mockito:mockito-core:5.14.1")
 }
 
 
